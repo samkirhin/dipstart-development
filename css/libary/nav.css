@@ -1,0 +1,8 @@
+.pagern { text-align:center; margin-top:36px; color:#666666; font-size:12px;  }
+.pagern li { float:left; margin-left:6px; list-style-type:none;}
+.pagern a { color:#666666; font-size:12px; text-decoration:none;}
+.pagern a:hover {color: #6BB24B; text-decoration:underline;}
+li.page {  color:#FFFFFF; padding:4px 2px; margin-top:-4px;  }
+.pagern ul { margin-left:230px; }
+
+.innerpaginator ul { margin-left:370px;}

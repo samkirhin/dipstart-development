@@ -1,0 +1,42 @@
+.smiles { 
+
+    direction: ltr; /* Направление */ 
+
+    width: 962px; /* Ширина блока */ 
+
+    height: 100px; /* Высота блока */ 
+
+    overflow: scroll; /* Полоса прокрутки */ 
+
+    text-align: left; /* Выравнивание по левому краю */ 
+
+    padding: 5px; /* Поля вокруг текста */ 
+
+    border: 1px solid #808080; /* Параметры рамки */ 
+	
+	font-size: 10pt;
+	
+	cursor:pointer;
+	
+}
+.smiles_user { 
+
+    direction: ltr; /* Направление */ 
+
+    width: 562px; /* Ширина блока */ 
+
+    height: 100px; /* Высота блока */ 
+
+    overflow: scroll; /* Полоса прокрутки */ 
+
+    text-align: left; /* Выравнивание по левому краю */ 
+
+    padding: 5px; /* Поля вокруг текста */ 
+
+    border: 1px solid #808080; /* Параметры рамки */ 
+	
+	font-size: 10pt;
+	
+	cursor:pointer;
+	
+}

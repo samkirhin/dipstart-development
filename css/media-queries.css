@@ -1,0 +1,974 @@
+@media screen and (max-width: 1150px){
+	.container{
+		width:100%;
+	}
+	.wrap-slider .left,
+	.container .content,
+	.p-about .left {
+		width:58%;
+		margin-left: 2%;
+	}
+	.wrap-slider .right,
+	.container .sidebar,
+	.p-about .right {
+		width:38%;
+		margin-right: 2%;
+	}
+	.p-about .student{
+		float: right;
+	}
+
+	.contacts{
+		width: 240px;
+	}
+	.contacts h5{
+		margin-top: 0;
+	}
+
+	footer{
+		min-height: 160px;
+		/*height: auto;*/
+	}
+	footer .logo{
+		margin: 30px 0 0 15px;
+	}
+	footer .contacts{
+		width: 230px;
+		margin-bottom: 10px;
+	}
+	footer .contacts h5{
+		margin-bottom: 5px;
+	}
+	footer .contacts .phone,
+	footer .contacts .icq,
+	footer .contacts .e-mail,
+	footer .contacts .skype{
+		width: 165px;
+		max-width: 165px;
+		padding:0;
+		margin: 0;
+		padding-left: 30px;
+	}
+	.calc form .selectbox{
+		margin-right: 10px;
+		margin-bottom: 10px;
+	}
+	.calc-btn{
+		position: absolute;
+		right: 0;
+		margin: 0 30px 0 0;
+		padding: 0;
+		bottom: 15px;
+	}
+	.calc form{
+		width: 98%;
+		padding-left: 2%;
+		background-position: -10px 0;
+	}
+	.logo{
+		margin-top: 0;
+		margin: 0;
+	}
+	.shidden,
+	.logo-hidden{
+		display: none;
+	}
+	.p-about .container{
+		width: 96%;
+		padding: 0 2%;
+	}
+	.comment .post{
+		max-width: 65%;
+		margin-left: 30%;
+		padding: 2%;
+	}
+	.c-message textarea{
+		max-width: 90%;
+	}
+	.c-rate{
+		float: left;
+		padding-top: 2%;
+	}
+	.p-about .connect .buy ol{
+		width: 96%;
+	}
+	.p-about .connect .buy ol li:before{
+		top:0px;
+	}
+	.p-about .connect .buy img{
+		margin: 0 auto;
+		display: block;
+	}
+	.wrapper header{
+		padding-top: 40px;
+	}
+	#toppanel{
+		top:-40px!important;
+	}
+	.logo{
+		margin-top: -50px;
+	}
+	.reviews{
+		margin-top: -40px;
+	}
+	.contacts h5{
+		margin-bottom: 0;
+	}
+	.contacts .phone {
+		padding-bottom: 1px;
+	}
+	.contacts .e-mail{
+		margin-top: 2px;
+	}
+	.contacts .icq,
+	.contacts .skype{
+		margin-top: 0;
+	}
+	.contacts{
+		margin-top: -10px;
+	}
+	.wrap-header {
+		height: 105px;
+	}
+	.wrapper header {
+		height: 150px;
+	}
+	.wrap-slider .right{
+		width: 100%;
+		max-width: 100%;
+	}
+
+}
+
+@media screen and (max-width: 1024px){
+	.p-stocks .coupons{
+		width: 722px;
+		margin: 0 auto;
+	}
+	.wrap-slider .left, .container .content{
+		width:56%;
+		margin-right: 2%;
+	}
+	.wrap-slider .right, .container .sidebar{
+		width: 36%;
+		margin-left: 2%;
+	}
+	.our-authors > a{
+		background: url('../img/author-small.png');
+		width: 200px;
+		margin: 10px auto;
+	}
+	.our-authors > a:hover{
+		background: url('../img/author-small.png');
+	}
+	.our-authors .show{display:none;}
+	.our-authors .shidden{
+		display:block;
+		padding-left: 0;
+		text-align: center;
+	}
+	.news .shidden{
+		display: block;
+	}
+	.selectbox .select{
+		width: 25%;
+		font-size: 80%;
+		min-width: 82px;
+	}
+	.calc form .selectbox{
+		margin-right: 2%;
+		margin-bottom: 2%;
+	}
+	.selectbox .dropdown{
+		font-size: 80%;
+	}
+	.a-title .show{
+		display: none;
+	}
+	.wrap-authors .a-title, .news .a-title{
+		top:-15px;
+	}
+	.a-title .shidden{
+		width: 100%;
+	}
+	.wrap-slider .right
+	{
+		max-width: 375px;
+		width: 100%;
+	}
+	.wrap-slider{
+		width: 36%;
+	}
+	.prices{
+		padding-left: 15px;
+	}
+	.row-blocks .row-block{
+		margin-right: 35px;
+	}
+	.row-blocks.prices{
+		width: 575px;
+	}
+}
+
+@media screen and (max-width:960px){
+	.buy-phone a,
+	.buy-phone span{
+		font-size: 18px;
+	}
+	.buy-phone a{
+		width: 160px;
+	}
+	footer .logo{
+		display: none;
+	}
+	.logo, .logo a{
+		width:280px;
+	}
+	.logo a img{
+		max-width: 95%;
+		display: inherit;
+		margin: 0 auto;
+	}
+	.calc form .selectbox{
+		width: 45%;
+		float: left;
+	}
+	.selectbox .select {
+		width: 100%;
+		font-size: 80%;
+		min-width: 82px;
+		max-width: 60%;
+	}
+	html{
+		overflow-x: hidden;
+	}
+	.prices>div{
+		margin-right: 50px;
+	}
+	.prices {
+		width: 462px;
+	}
+	.crewman p{
+		font-size: 12px;
+	}
+	header .logo .logo-hidden{
+		display: none;
+	}
+	.row-blocks.prices{
+		width: 400px;
+		margin: 0 auto;
+		padding-left: 35px;
+	}
+	.row-blocks .course-work, .row-blocks .full-list-prices{
+		float: left;
+	}
+}
+@media screen and (max-width: 890px){
+	.contacts {
+		width: 230px;
+	}
+	.reviews {
+		width: 305px;
+		margin-left: 10px;
+	}
+	.main-menu li a{
+		font-size: 12px;
+	}
+	.left-first{
+		display: none;
+	}
+}
+@media screen and (max-width: 860px) {
+	.container{
+		width: 90%;
+		padding: 0 5%;
+	}
+	.wrap-slider .left,
+	.wrap-slider .right,
+	.container .content,
+	.container .sidebar {
+		width: 100%;
+		margin: 0;
+	}
+	.wrap-slider .left,
+	.wrap-slider .right{
+		max-width: 100%;
+	}
+	.slider, .buy-phone, .buy{
+		max-width: 650px;
+		margin: 0 auto;
+	}
+	.container{
+		margin-top: 20px
+	}
+	.container .content,
+	.container .sidebar {
+		max-width: 100%;
+	}
+	.calc form{
+		background-size: cover;
+		background-position: 0;
+		padding-top: 2%;
+		padding-bottom: 2%;
+	}
+	.wrap-authors .a-title, .news .a-title {
+		display: none;
+	}
+	.wrap-authors h3, .news h3, .partners h3, .our-crew h3{
+		/*left:10px;*/
+		font-size: 25px;
+		font-family: 'museo';
+		font-weight: 100;
+		display: block;
+		width: 98%;
+		text-align: left;
+		padding-left: 2%;
+		border-bottom: 3px solid #616161;
+
+	}
+	.wrap-authors, .news, .our-crew{
+		border: 3px solid #616161;
+		border-radius: 5px;
+	}
+	.our-crew{
+		background:#fff;
+	}
+	.wrap-authors, .news{
+		background-color: #fff;
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.wrap-authors h3, .news h3{
+		left:0;
+	}
+	.news-item, .crewman, .partners p, {
+		width: 96%;
+		padding: 2% 2%;
+	}
+	.author{
+		padding: 0;
+		margin: 2% 2%;
+	}
+
+	.crewman img{
+		left:2%;
+		top:15px;
+	}
+	.crewman h4, .crewman p{
+		margin-left: 40px
+	}
+	.crewman{
+		background:none;
+		height:auto;
+		min-height:135px;
+	}
+	.partners p{
+		padding: 0 2%;
+		width: 96%;
+	}
+	.reviews{
+		display: none;
+	}
+	.comment .post{
+		max-width: 60%;
+		margin-left: 35%;
+
+	}
+	.p-about .connect .buy{
+		max-width: 100%;
+	}
+	.our-authors{
+		position: absolute;
+		top:0px;
+		left: 50%;
+		margin-left: -210px;
+	}
+	.container{
+		position: relative;
+	}
+	.wrap-slider .left{
+		margin-top: 550px;
+	}
+	.container {
+		margin-top: 10px;
+	}
+	.buy{
+		text-align: center;
+		width: 390px;
+	}
+	.wrap-slider{
+		width: 100%;
+		padding-top: 500px;
+	}
+	.buy ol li{
+		text-align: left;
+	}
+	.main-page-title-h4{
+		text-align: center;
+	}
+
+	.row-blocks.prices {
+		width: 540px;
+		padding-left: 0;
+	}
+	.row-blocks .course-work, .row-blocks .full-list-prices{
+		margin-right: 0;
+	}
+}
+@media screen and (max-width: 780px){
+	.container {
+		margin-top: 155px;
+	}
+	header .logo .logo-hidden,
+	.reviews,
+	.js .slicknav_menu {
+		display: block;
+	}
+	header .logo .show,
+	header .logo span,
+	.js .main-menu,
+	.wrap-main-menu,
+	.reviews,
+	header .contacts{
+		display: none;
+	}
+	header .contacts{
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+		width: 230px;
+		float: none;
+	}
+	.logo{
+		position: absolute;
+		top:10px;
+		left:0;
+		display: block;
+		height: 39px;
+	}
+	.logo a{
+		height: 39px;
+	}
+	.wrapper header{
+		height: 0;
+	}
+	footer > div,
+	.soc-btn{
+		float: left;
+		margin: 0;
+		padding-left:15px;
+		padding-bottom: 15px;
+	}
+	footer > div{
+		padding-left: 0;
+	}
+	.wrap-footer{
+		width: 100%;
+	}
+	.p-about .left,
+	.p-about .right {
+		width: 96%;
+		/*padding: 0 2%;*/
+	}
+	.p-about .student{
+		float: left;
+		margin-right: 2%;
+		width: 30%;
+	}
+	.p-about .student .photo{
+		width: 100%;
+		height: auto;
+		padding-bottom: 10px;
+	}
+	.p-about .student .photo img{
+		max-width: 100%;
+		width: 100%;
+	}
+	.p-about .buy ol li:before{
+		display: none;
+	}
+	/*#toppanel{
+		right: 180px!important;
+	}*/
+	.slicknav_btn.slicknav_collapsed,
+	.slicknav_btn.slicknav_open{
+		z-index: 999;
+	}
+	.slicknav_menu{
+		/*padding-top: 33px;*/
+	}
+	.slicknav_btn.slicknav_collapsed,
+	.slicknav_btn.slicknav_open{
+		z-index: 1050!important;
+	}
+	#panel{
+		z-index: 1060!important;
+	}
+	.slicknav_btn.slicknav_collapsed, .slicknav_btn.slicknav_open{
+		right: 140px;
+	}
+	.wrapper header {
+		padding-top: 0;
+	}
+	footer .contacts{
+		height: 140px;
+	}
+	footer{
+		min-height: 290px;
+	}
+	.slicknav_btn.slicknav_collapsed, .slicknav_btn.slicknav_open{
+		right: 210px;
+	}
+	.logo span{
+		display: block!important;
+	}
+	.logo{
+		margin-top:60px;
+	}
+	header .contacts{
+		float: right;
+	}
+	.slicknav_btn.slicknav_collapsed, .slicknav_btn.slicknav_open{
+		float: left;
+		left: 0;
+	}
+	.p-stocks .coupons{
+		width: 331px;
+	}
+	#toppanel {
+		top: -60px!important;
+	}
+	header .contacts{
+		margin-top: 5px;
+	}
+	#toppanel{
+		top:0!important;
+	}
+	.wrap-header{
+		position: static;
+	}
+	body{
+		position: relative;
+	}
+	header .contacts{
+		position: absolute;
+		right:5px;
+	}
+}
+@media screen and (max-width:720px){
+	.login .sep,
+	.login .hello-user{
+		display: none!important;
+	}
+	.tab a.open, .tab a.close{
+		width: 50px!important;
+	}
+	.slicknav_btn.slicknav_collapsed, .slicknav_btn.slicknav_open {
+		right: 140px;
+	}
+}
+@media screen and (max-width: 640px){
+	.authors-item {
+		width: 50%;
+	}
+	.row-blocks.prices {
+		width: 385px;
+		padding-left: 40px;
+	}
+	.row-blocks .course-work, .row-blocks .full-list-prices{
+		margin-right: 35px;
+	}
+	.row-block.abstract, .row-block.report-practice, .row-block.full-list-prices{
+		margin-bottom: 40px;
+	}
+}
+@media screen and (max-width: 560px){
+	.logo{
+		width: 70%;
+		left: 50%;
+		margin-left: -35%;
+	}
+	.slicknav_btn.slicknav_collapsed, .slicknav_btn.slicknav_open{
+		float: left;
+		left: 0;
+	}
+	footer {
+		min-height: 420px;
+	}
+	header .contacts{
+		padding-top: 115px;
+		margin: 0 auto;
+		float: none;
+	}
+	.container {
+		margin-top: 250px;
+	}
+	header .contacts{
+		position: static;
+	}
+	.btns {
+		width: 200px;
+	}
+}
+@media screen and (max-width: 480px){
+	.prices{
+		width: 100%;
+	}
+	.buy-btn{
+		width: 168px;
+		left: 50%;
+		margin-left: -84px;
+	}
+	.borderradius .prices>div {
+		float: none;
+		margin: 45px auto;
+		width: 60%;
+	}
+	.buy-phone a, .buy-phone span{
+		font-size: 14px;
+	}
+	.buy-phone a{
+		width:130px;
+	}
+	.f-buy{
+		text-align: left;
+		padding-top: 0;
+	}
+	.f-buy .buy-btn{
+		position: static;
+		margin-left: 0;
+	}
+	.soc-btn{
+		padding-left: 0;
+	}
+	.p-about .buy-btn{
+		left:0;
+		margin-left: 0;
+	}
+	.p-about .student{
+		float: left;
+		margin-right: 2%;
+		width: 46%;
+	}
+	.wrap-footer{
+		width: 98%;
+		padding-left: 2%;
+	}
+	.parameters form{
+		width: 100%;
+	}
+	.parameters form label{
+		font-size: 14px;
+	}
+	.parameters form div input{
+
+		max-width: 150px;
+	}
+	.connect-contacts{
+		width: 98%;
+	}
+	.slider, .buy-phone span{
+		display: none;
+	}
+	.our-authors{
+		width: 90%;
+		margin-left: -45%;
+	}
+	.buy-phone{
+		display: block;
+		position: absolute;
+		top: -322px;
+		right: 0px;
+		background-position: 70% 25%;
+	}
+	.buy-phone a{
+		margin-left: 0;
+		float: left;
+		width: 100%;
+		text-align: right;
+		padding-left: 0;
+		color: #923735;
+		/*padding-right: 40px;*/
+		background-position: right;
+		font-size: 20px;
+		background-position: 44% 3px;
+	}
+	.slicknav_menu{
+		height: 100px;
+	}
+	.f-buy p{
+		margin:0;
+	}
+	footer .contacts{
+		margin-left: 0px;
+	}
+	.logo {
+		top: 55px;
+		width: 96%;
+		left:50%;
+		margin-left: -48%;
+	}
+	header .contacts{
+		padding-top: 125px;
+	}
+	.container {
+		margin-top: 280px;
+	}
+	#toppanel {
+		top: 0!important;
+	}
+	.wrap-slider {
+		width: 100%;
+		padding-top: 530px;
+	}
+	.buy-form form div input, .buy-form form div textarea, .buy-form form div select {
+		width: 96%;
+		padding: 5px 0;
+	}
+	.sidebar-buy{
+		top:895px;
+	}
+	.row-blocks.prices{
+		padding-left: 0;
+		width: 100%;
+	}
+}
+@media screen and (max-width: 420px){
+	/*header .logo .logo-hidden{
+		margin: 0;
+	}*/
+	/*.logo{
+		z-index: 2;
+		top:15px;
+	}
+	.logo a{
+		width: 170px;
+		margin: 0;
+	}*/
+	.slicknav_btn{
+		z-index: 3;
+	}
+	.parameters form div input{
+
+		max-width: 100px;
+	}
+	.comment .name,
+	.comment .post{
+		width: 100%;
+		max-width: 100%;
+		float: left;
+		clear: both;
+	}
+	.comment .post{
+		margin:0;
+		width: 96%;
+	}
+	.p-comments .rate{
+		float: left;
+		margin: 2% 0;
+	}
+	.connect-contacts div{
+		width: 100%;
+	}
+	.connect-contacts div p{
+		width: 40%;
+		min-width: 140px;
+		font-size: 11px;
+		line-height: 12px;
+	}
+	.connect-contacts div span{
+		float: right;
+		margin-right: 10px;
+		line-height: 32px;
+		font-size: 11px;
+	}
+	.p-about .connect .buy img{
+		max-width: 100%;
+	}
+	.wrap-slider .left {
+		margin-top: 650px;
+	}
+	.prices span {
+		font-size: 20px;
+	}
+	.wrap-slider {
+		width: 100%;
+		padding-top: 560px;
+	}
+	.buy{
+		width: 100%;
+	}
+	.buy-form form div label{
+		width: 96%;
+	}
+	.sidebar-buy {
+		top: 1115px;
+		display: none;
+	}
+	.buy{
+		padding-bottom: 100px;
+	}
+	.buy {
+		padding-bottom: 0;
+	}
+}
+@media screen and (max-width: 380px){
+	.crewman h4, .crewman p {
+		margin-left: 2px;
+	}
+	.crewman h4{
+		font-size: 16px;
+	}
+	.buy-phone a{
+		background-position: 37% 3px;
+	}
+	.authors-item {
+		width: 100%;
+	}
+	.wrap-slider {
+		width: 100%;
+		padding-top: 650px;
+	}
+	.prices h3{
+		font-size: 15px;
+	}
+	.buy-btn{
+		font-size:20px;
+	}
+	.bg-tg-table-plain{
+		width: 94%;
+		overflow: auto;
+	}
+}
+@media screen and (max-width: 320px){
+	.slicknav_menu{
+		min-height: 150px;
+	}
+	.buy-phone a{
+		left:50%;
+	}
+	.slicknav_btn{
+		margin: 55px auto 0;
+		float: none;
+		outline: none;
+	}
+	.logo a{
+		margin: 0 auto;
+	}
+	.logo{
+		width: 100%;
+	}
+	.borderradius .prices>div{
+		min-width: 170px;
+	}
+	.crewman h4,
+	.crewman p{
+		margin-left: 10px;
+	}
+	.calc form{
+		min-height: 280px;
+		padding: 15px 0 0 15px;
+	}
+	.calc form .selectbox{
+		width: 100%;
+	}
+	.buy {
+		border: 3px solid #616161;
+		border-radius: 5px;
+	}
+	.buy h4 {
+		border-bottom: 3px solid #616161;
+		line-height: 0px;
+		padding-left: 10px;
+		padding-bottom: 15px;
+	}
+	.buy ol li{
+		/*background-image: none;
+		color:#000;*/
+	}
+	.buy ol li p{
+		white-space: normal;
+	}
+	.wrap-slider .left {
+		margin-top: 680px;
+	}
+	.buy h4{
+		font-size: 14px;
+	}
+	.buy-phone a{
+		background-position: 29% 3px;
+	}
+	.author p{
+		padding-left: 0;
+	}
+	.slicknav_btn.slicknav_collapsed, .slicknav_btn.slicknav_open{
+		float: right;
+		right: 0;
+	}
+	.wrap-header .logo{
+		display: block!important;
+	}
+	.logo a{
+		margin: 0;
+	}
+	.slicknav_btn.slicknav_collapsed, .slicknav_btn.slicknav_open{
+		margin:0;
+		float: left;
+	}
+	.slicknav_menu {
+		min-height: 100px;
+	}
+	.logo {
+		width: 90%;
+	}
+	.p-stocks .coupon{
+		width: 270px;
+		max-width: 270px;
+	}
+	.coupon .top h5, .coupon .bottom h5,
+	.coupon .top span, .coupon .bottom span{
+		font-size: 12px;
+	}
+	.coupon .middle {
+		/*margin-top: 50px;*/
+	}
+	.coupon .middle h4,
+	.coupon .middle p{
+		font-size: 18px;
+	}
+	.tg-table-plain th{
+		padding-left: 0px;
+		text-align: center;
+	}
+	.bg-tg-table-plain, .p-about .title-prices-list{
+		padding: 0;
+	}
+	.connect-contacts div {
+		background: url(../img/connect-contacts.png) no-repeat -15px;
+	}
+	header .contacts {
+		padding-top: 145px;
+	}
+	.buy h4{
+		display: none;
+	}
+	.slicknav_menu{
+		padding-top: 30px;
+		height: 60px;
+		min-height: 60px;
+	}
+}
+@media screen and (max-width:280px){
+	.buy-phone a{
+		background-position: 20% 3px;
+	}
+	.author img{
+		display: none;
+	}
+
+}
+@media screen and (max-width:255px){
+	.buy-phone a{
+		background-position: 14% 3px;
+	}
+}

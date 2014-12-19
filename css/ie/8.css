@@ -1,0 +1,61 @@
+.lt-ie9 .prices > div{
+	margin-right: 25px
+}
+.lt-ie9 .prices > div h3{
+	margin-top: 100px;
+	padding-left: 5px;
+}
+.lt-ie9 .prices > div .buy-btn{
+	left:38px;
+}
+.lt-ie9 .f-buy .buy-btn, 
+.news h3,
+.wrap-authors h3 {
+	font-family: 'Tahoma'
+}
+.lt-ie9 .buy ol li.last-child:before{
+	left:3px;
+}
+.lt-ie9 .our-authors > a{
+	background: url('/img/ieconnect.png');
+	height: 39px;
+	width:328px;
+	margin:10px auto;	
+}
+.soc-btn a{
+	border:none;
+}
+@media screen and (max-width: 960px){
+	.lt-ie9 .prices .dyploma,
+	.lt-ie9 .prices .dissertation,
+	.lt-ie9 .prices .course-work,
+	.lt-ie9 .prices .abstract,
+	.lt-ie9 .prices .report-practice,
+	.lt-ie9 .prices .full-list-prices {
+		margin: 0!important;
+	}
+}
+@media screen and (max-width: 860px){
+	.lt-ie9 .calc{
+		max-width: 640px;
+		height: 179px;
+		padding-bottom: 55px;
+	}
+	.lt-ie9 .calc form{
+		max-width: 640px;
+		height: 179px;
+		padding: 0;
+		padding-top: 20px;
+		padding-left: 10px;
+	}
+	.lt-ie9 .calc form .calc-btn{
+		bottom: 20px;
+		right:25px;
+	}
+}
+
+@media screen and (max-width: 480px){
+	.lt-ie9 .prices > div .buy-btn{
+		margin-left: -10px;
+	}
+}

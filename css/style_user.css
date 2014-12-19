@@ -1,0 +1,307 @@
+* {margin: 0;padding: 0;}
+body {font: 12px/18px Arial, Tahoma, Verdana, sans-serif;width: 100%; background:#310b28; color:#404040;}
+a {color: blue; outline: none; text-decoration: underline;}
+a:hover {text-decoration: none;}
+p {margin: 0 0 10px;}
+img {border: none;}
+input {vertical-align: middle;}
+ul {list-style:none;}
+table {border-collapse: collapse; border-spacing: 0px;}
+#wrapper {max-width: 1200px; min-width:960px; width:100%; margin: 0 auto;}
+
+/* Header -----------------------------------------------------------------------------*/
+#header {background: #fff;}
+#header .task {border: 1px solid #dedede; width:98%; margin:0px auto; padding:10px;}
+#header .task:hover {border: 1px solid #999;}
+#header .task table.tk {position:relative; zoom:1; width:100%;}
+#header .task table.tk tr td {vertical-align:top; width:50%;}
+#header .task .info {position:relative; zoom:1; padding-right:10px;}
+#header .task .info table {border-collapse: collapse; border-spacing: 0px; border:0;}
+#header .task .info table tr td {min-width:150px; vertical-align:middle;}
+#header .task .info table tr td input{border: 1px solid #ccc; height:25px; width:100%;}
+#header .task .info table tr td select {border: 1px solid #ccc; padding:4px; width:100%;}
+#header .task .info table tr td.inf {background: url(images/info_icon.png) no-repeat center left; padding-left:25px;  font:12px/12px Arial; color:#0e4354; font-weight:bold; height:35px;}
+#header .task .task_title h1 {font:18px/18px Arial; color:#000; font-weight:bold;}
+#header .task .task_title h1 span {font:12px/12px Arial; color:#538217; font-weight:normal;}
+#header .task .task_title {padding:5px 0; position:relative;}
+#header .task .task_title .hide_task {font:11px/14px Arial; padding-right:20px; position:absolute; right:0px; top:8px; background: url(images/arrow-square.gif) no-repeat right bottom; width:98px; height:16px; color:#404040; font-weight:normal; cursor:pointer;}
+#header .task .task_title .hide_task.active {background: url(images/arrow-square.gif) no-repeat right top;}
+
+#header .task .info .sdr {background: url(images/soder_icon.png) no-repeat center left; font-weight:bold; color:#0e4354;  padding:10px 0 10px 25px; position:relative; zoom:1;}
+#header .task .info .sdr .hide_sdr {font:11px/14px Arial; padding-right:20px; position:absolute; right:0px; top:10px; background: url(images/arrow-square.gif) no-repeat right bottom; width:98px; height:16px; color:#404040; font-weight:normal; cursor:pointer;}
+#header .task .info .sdr .hide_sdr.active {background: url(images/arrow-square.gif) no-repeat right top;}
+#header .task .info #soder {border: 1px solid #dedede; padding:10px; }
+#header .task .info #soder textarea {border:0; font:12px/18px Arial; width:100%;}
+#header .task .dates {position:relative; padding-left:10px;}
+#header .task .dates .note textarea {border:0; font:12px/18px Arial; width:100%;}
+#header .task .dates .not {background: url(images/note_icon.png) no-repeat center left; font-weight:bold; color:#0e4354; padding:10px 0 10px 25px; position:relative;}
+#header .task .dates .not .hide_not {font:11px/14px Arial; padding-right:20px; position:absolute; right:0px; top:10px; background: url(images/arrow-square.gif) no-repeat right bottom; width:98px; height:16px; color:#404040; font-weight:normal; cursor:pointer;}
+#header .task .dates .not .hide_not.active {background: url(images/arrow-square.gif) no-repeat right top;}
+#header .task .dates .note {border: 1px solid #dedede; padding:10px;}
+#header .task .dates table {border-collapse: collapse; border-spacing: 0px; border:0;}
+#header .task .dates table tr td {min-width:170px; vertical-align:middle;}
+#header .task .dates table tr td input{border: 1px solid #ccc; height:25px; width:100%;}
+#header .task .dates table tr td select {border: 1px solid #ccc; padding:5px;}
+#header .task .dates table tr td.educe {background: url(images/educe_icon.png) no-repeat center left; padding-left:25px; font:12px/12px Arial; color:#0e4354; font-weight:bold; height:35px;}
+#header .task .dates table tr td.calebdar {background: url(images/calebdar_icon.png) no-repeat center left; padding-left:25px; font:12px/12px Arial; color:#0e4354; font-weight:bold; height:35px;}
+#header .task .dates table tr td.what {background: url(images/info_icon.png) no-repeat center left; padding-left:25px;  font:12px/12px Arial; color:#0e4354; font-weight:bold; height:35px;}
+#header .task .dates table tr td.time {background: url(images/time.png) no-repeat center left; padding-left:25px;  font:12px/12px Arial; color:#0e4354; font-weight:bold; height:35px;}
+#header .task .task_files  {padding:10px 10px 0 10px; font:12px/12px Arial; font-weight:bold; color:#0e4354; position:relative;}
+#header .task .task_files table tr td input[type="file"] {font:11px/11px Arial;}
+#header .task .task_files table tr td a.task_file {float:left; padding:10px 15px 10px 35px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; border: 1px solid #dedede; background: url(images/file_icon.png) no-repeat 10px center; color:#404040; font-weight:normal; margin-left:5px; text-decoration:none;}
+#header .task .task_files table tr td a:hover{text-decoration:underline;}
+#header .task .task_files table tr td a{padding:10px 10px 10px 5px; float:left;}
+#header .task .task_files input#save {position:absolute; right:0px; top:10px; border:0; background:url(images/save.png) no-repeat; width:113px; height:32px;}
+
+/* Middle -----------------------------------------------------------------------------*/
+#content {background: #fff; position:relative; zoom:1; padding:10px; margin:10px 0; border-radius:5px;}
+#content .chat_parts {width:100%; margin:0 auto;}
+#content .chat_parts table tr td {vertical-align:top;}
+#content .chat_parts .parts { margin-bottom:10px;}
+#content .chat_parts .parts .part_body {padding:10px; border: 1px solid #93B716; border-top:0;}
+#content .chat_parts .parts .part_body .status {padding-bottom:5px;}
+#content .chat_parts .parts .part_body .status input[type="text"]{border: 1px solid #ccc; height:22px; padding-left:5px; width:100px; margin-right:5px; line-height:100%;}
+#content .chat_parts .parts .part_body .status select {border: 1px solid #ccc; padding:4px; font:11px/11px Tahoma; width:106px; margin-right:5px;}
+#content .chat_parts .parts .part_body .status span {width:120px; display: inline-block;}
+#content .chat_parts .parts .part_body .status span {color:#0e4354; font-weight:bold;}
+#content .chat_parts .parts .part_body ul.attached_files {list-style:none; margin: 5px 0; padding:5px 0;border-top:1px solid #dedede;  border-bottom:1px solid #dedede;}
+#content .chat_parts .parts .part_body ul.attached_files li:first-child {color:#0e4354; font-weight:bold;}
+#content .chat_parts .parts .part_body ul.attached_files li {padding-bottom:5px;}
+#content .chat_parts .parts .part_body ul.attached_files li a.task_file { padding:5px 0 5px 35px; background: url(images/file_icon.png) no-repeat 10px center; color:#404040; font-weight:normal; margin-left:5px; text-decoration:none;}
+/*#content .chat_parts .parts .part_body ul.attached_files li a img{margin:5px 5px -5px 5px;}*/
+#content .chat_parts .parts .part_body .upload_file {padding-top:5px;}
+#content .chat_parts .parts .part_body ul.attached_files li a:hover{text-decoration:underline;}
+#content .chat_parts .parts .part_title{ background:#9e9f9b url(images/hide_icon.png) no-repeat right top; font:18px/18px Arial; color:#fff; text-shadow: 0 1px 2px #555; padding:10px; position:relative; clear:both; cursor:pointer; margin-top:10px;}
+#content .chat_parts .parts .part_title input[type="text"]{border: 0px solid #ccc; height:18px; padding-left:5px; width:100px;margin-right:5px; font:12px/12px Arial;}
+#content .chat_parts .parts .part_title.active { background:#93b716 url(images/hide_icon.png) no-repeat right bottom;}
+
+#content .chat_parts .chat {margin-left:15px; position:relative; zoom:1; margin-top:10px; border: 1px solid #4191C4; border-top:0;}
+#content .chat_parts .chat .chat_title { background:#4191c4; font:18px/18px Arial; color:#fff; text-shadow: 0 1px 2px #555; padding:10px; position:relative; }
+#content .chat_parts .chat .chat_title .show {position:absolute; top:8px; left:70px;}
+#content .chat_parts .chat .chat_title .show select{ border:1px solid #fff;}
+#content .chat_parts .chat .chat_title .show input[type="button"] {background:none; border:0; color:#fff; background: url(images/show.png) no-repeat left center; padding-left:25px; margin-left:10px; cursor:pointer;}
+#content .chat_parts .chat .chat_title .curent_date {position:absolute; top:15px; right:20px;}
+#content .chat_parts .chat .chat_title .curent_date span {font:12px/12px Arial;}
+#content .chat_parts .chat .chat_body {padding:10px 10px 10px 10px; height:400px; overflow:auto; position:relative; zoom:1;}
+#content .chat_parts .chat .chat_body .hide_tree {height:16px; background: url(images/arrow-square.gif) no-repeat right top;cursor:pointer; margin:0px 0 10px 0;}
+#content .chat_parts .chat .chat_body .hide_tree.active {background: url(images/arrow-square.gif) no-repeat right bottom;}
+#content .chat_parts .chat .chat_body .vetka {position:relative; zoom:1;} 
+#content .chat_parts .chat .chat_body .vetka ul.tree .hide_vetka.active {background: url(images/arrow-square.gif) no-repeat right bottom;}
+#content .chat_parts .chat .chat_body .vetka ul.tree {list-style:none; position:relative; zoom:1;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege {min-height:100px; position:relative; padding-bottom:15px; min-height:100px;}
+
+#content .chat_parts .chat .chat_body .vetka ul.tree.two {margin-left:60px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree #three {margin-left:120px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree #four {margin-left:180px;}
+
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .user {width:60px; position:absolute; top:0; left:0;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .user .ava{height:32px; width:32px; position:relative; margin: 0 auto;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .user .name {text-align:center;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .user .rating {text-align:center; color:#0e4354; font-weight:bold;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .user .rating a{text-decoration:none; color:red; font-weight:bold;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .user .name a {color:#538217; text-decoration:none; font-weight:bold;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .user .name a:hover{text-decoration:underline;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .text {margin-left:68px; margin-bottom:10px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .text .date {background: url(images/calebdar_icon.png) no-repeat left center; padding-left:25px; color:#0e4354; font-weight:bold;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer {position:relative;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .post{padding:5px 0 5px 35px; background: #fff url(images/answer_icon.png) no-repeat 10px center; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; border:1px solid #dedede; color:#0e4354; font-weight:bold; cursor:pointer; width:65px; position: relative; z-index: 2;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .include_file {position:absolute; top:4px; left:115px; width:18px; height:18px; background:url(images/file_icon.png) no-repeat center center;cursor:pointer;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .include_file input[type="file"] {font:10px/10px Arial; color:#0e4354; font-weight:bold; opacity:0; filter:alpha(opacity:0); font-size:26px; cursor:pointer; padding:0px; margin:0px; border:none; margin-left:0px; width:16px; height:16px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .sms {position:absolute; top:4px; left:205px; width:18px; height:18px; background:url(images/sms.jpg) no-repeat center center; color: #0E4354; font-weight:bold; cursor:pointer;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .mail {position:absolute; top:3px; left:235px; background:url(images/mail.jpg) no-repeat center center; color: #0E4354; font-weight:bold; width:18px; height:18px; cursor:pointer;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .quote {position:absolute; top:4px; left:145px; background:url(images/quote.jpg) no-repeat center center; color: #0E4354; font-weight:bold; width:18px; height:18px; cursor:pointer;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .shablon {position:absolute; top:4px; left:175px; background:url(images/shablon.jpg) no-repeat center center; color: #0E4354; font-weight:bold; width:18px; height:18px; cursor:pointer;}
+
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .post.active {border-bottom:0; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; border-bottom-right-radius: 0px 0px; border-bottom-left-radius: 0px 0px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .fast_send {border:1px solid #dedede; padding:5px; margin-top: -1px; border-top-left-radius: 0px 0px; border-top-right-radius: 5px 5px; border-bottom-right-radius: 5px 5px;border-bottom-left-radius: 5px 5px; display:none;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .fast_send table tr td textarea {border:1px solid #dedede; resize:vertical;  padding:5px; width:97%;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .fast_send table tr td input {border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;border:1px solid #ccc; text-transform:uppercase; font-size:11px; padding:12px 5px; font-weight:bold; color:#0e4354; background: url(images/send_bg.jpg) repeat-x; cursor:pointer;}
+
+/*#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege {min-height:100px; position:relative; margin-left:100px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .user {width:91px; position:absolute; top:0; left:0;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .user .ava{height:80px; width:91px; position:relative; background: url(images/ava.png) no-repeat top;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .user .name {text-align:center; padding-right:10px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .user .name a {color:#538217; text-decoration:none; font-weight:bold;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .user .name a:hover{text-decoration:underline;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .user .rating {text-align:center; padding-right:10px; color:#0e4354; font-weight:bold;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .text { margin-left:101px;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .text .date {background: url(images/calebdar_icon.png) no-repeat left center; padding-left:25px; color:#0e4354; font-weight:bold;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .fast_answer .post{padding:5px 0 5px 35px; background: #fff url(images/answer_icon.png) no-repeat 10px center; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; border:1px solid #dedede; color:#0e4354; font-weight:bold; cursor:pointer; width:65px; position: relative; z-index: 2;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .fast_answer .post.active {border-bottom:0;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .fast_answer .fast_send {border:1px solid #dedede; padding:5px; margin-top: -3px; border-top-left-radius: 0px 0px; border-top-right-radius: 5px 5px; border-bottom-right-radius: 5px 5px;border-bottom-left-radius: 5px 5px; display:none;}
+#content .chat_parts .chat .chat_body .vetka ul.tree li.two_messege .fast_answer .fast_send table tr td textarea {border:1px solid #dedede; resize:vertical; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; padding:5px; width:97%;}*/
+
+#content .chat_parts .chat .chat_body .vetka ul.tree li.messege .fast_answer .fast_send table tr td input {border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;border:1px solid #ccc; text-transform:uppercase; font-size:11px; padding:12px 5px; font-weight:bold; color:#0e4354; background: url(images/send_bg.jpg) repeat-x; cursor:pointer;}
+
+.messege_send {padding:5px 10px 10px 10px; border-top:1px solid #dedede; clear:both;}
+.messege_send form table tr td textarea {width:95%; border:1px solid #dedede; resize:vertical; padding:10px; }
+.messege_send form table tr td input[type="submit"] {border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;border:1px solid #ccc; text-transform:uppercase; font-size:11px; padding:18px; font-weight:bold; color:#0e4354; background: url(images/send_bg.jpg) repeat-x; cursor:pointer;}
+
+
+#content .chat_parts .note_block {border: 1px solid #dedede; padding:10px;}
+#content .chat_parts .note_block:hover {border: 1px solid #999;}
+#content .chat_parts .note_block .note_title {padding: 5px 0 5px 25px; background: url(images/note_icon.png) no-repeat left center; border-bottom:1px solid #dedede; margin-bottom:10px; font-weight:bold; text-transform:uppercase;}
+
+
+.edit {margin:10px 0; text-align:center;}
+.edit input#del {width:134px; height:34px; border:0; background:url(images/del.jpg) no-repeat;margin-right:3%;}
+.edit input#add {width:134px; height:34px; border:0; background:url(images/add.jpg) no-repeat;}
+select#select_user {border: 1px solid #ccc; padding:4px; width:150px;}
+.note_text.visible {display:block; }
+.note_text {display:block;}
+.note_text1 textarea {border:0; margin-top:10px; font: 12px/18px Arial; width:100%; resize:vertical;}
+.note_text1.visible {display:block; }
+.note_text1 {display:none;}
+.note_text textarea {border:0; margin-top:10px; font: 12px/18px Arial; width:100%; resize:vertical;}
+ul.tabs li.current {font:12px/12px Arial; color:#0e4354; font-weight:bold; padding:7px; border:1px solid #ccc; border-bottom:0;}
+ul.tabs li {display:inline-block; cursor:pointer; color:#919191; padding:5px; margin-left:5px;}
+ul.tabs li:first-child {margin-left:0;}
+input[type="button"] {cursor:pointer;}
+.options {position:absolute; top:-20px; right:20px; z-index:7;}
+.delete_mess {margin-right:5px;background:url(images/cross.png) no-repeat; height:16px; width:16px; cursor:pointer; display:inline-block;}
+.odobr_mes {margin-right:5px;background:url(images/tick.png) no-repeat; height:16px; width:16px; cursor:pointer;display:inline-block;}
+.edit_mes {margin-right:5px;background:url(images/pencil.png) no-repeat; height:16px; width:16px; cursor:pointer;display:inline-block;}
+.make_avtor {margin-right:5px;background:url(images/user_add.png) no-repeat; height:16px; width:16px; cursor:pointer;display:inline-block;}
+.del_avtor {margin-right:5px;background:url(images/user_delete.png) no-repeat; height:16px; width:16px; cursor:pointer;display:inline-block;}
+.ispolnittel {margin-right:5px;background:url(images/angel.png) no-repeat; height:16px; width:16px; cursor:pointer;display:inline-block;}
+.messge {position:relative;}
+.ispln {margin-right:5px; height:16px; display:inline-block; font:12px/18px Arial;}
+
+#center { width: 100%; margin: 0 auto; background:#fff;}
+#center table tr td {vertical-align:top;}
+#center table tr td .oplata {border:1px solid #dedede; padding:10px 10px 10px 10px; margin-right:10px;}
+#center table tr td .oplata:hover {border:1px solid #999;}
+.oplata table {border-spacing:0; border-collapse:collapse;}
+#center table tr td .oplata table tr td input[type="text"]{border: 1px solid #ccc; height:25px; padding-left:5px;  margin-right:5px;}
+#center table tr td .oplata table tr td:first-child { font:bold 12px/12px Arial; color: #0E4354;}
+#center table tr td .oplata table tr td { vertical-align:middle; padding-top:5px; padding-bottom:5px;}
+.oplata .title {text-transform:uppercase;padding-left:25px; background:url(images/money.jpg) no-repeat left center; font:bold 14px/14px Arial; margin-bottom:10px;}
+.oplata table tr td.e-mail {padding-left:25px; background:url(images/mail.jpg) no-repeat left 12px;}
+.oplata table tr td.bablo {padding-left:25px; background:url(images/bablo.jpg) no-repeat left 12px;}
+.oplata table tr td.baba {padding-top:10px!important;}
+.oplata table tr td.babe {padding-top:10px!important;}
+.oplata table tr td.baba input[type="text"]{border: 1px solid #ccc; height:25px; padding-left:5px; width:80px!important; margin-right:5px;}
+.oplata table tr td.baba input#author {width:90px; height:32px; background:url(images/author.jpg) no-repeat; border:0;}
+.oplata table tr td.baba input#manager {width:113px; height:32px; background:url(images/manger.jpg) no-repeat; border:0;}
+
+#center table tr td .srok {border:1px solid #dedede; padding:10px; min-height: 260px;}
+#center table tr td .srok:hover {border:1px solid #999;}
+.srok table {border-spacing:0; border-collapse:collapse;}
+#center table tr td .srok table tr td input[type="text"]{border: 1px solid #ccc; height:25px; padding-left:5px; width:120px; margin-right:5px;}
+#center table tr td .srok table tr td:first-child { font: 12px/12px Arial; font-weight:bold; color: #0E4354;}
+#center table tr td .srok table tr td {min-width:120px; vertical-align:middle; padding-top:5px; padding-bottom:5px;}
+.srok .title {text-transform:uppercase;padding-left:25px; background:url(images/date.jpg) no-repeat left center; font:bold 14px/14px Arial; margin-bottom:10px;}
+.srok table tr td.calendar {padding-left:25px; background:url(images/calebdar_icon.png) no-repeat left 12px;}
+.srok table tr td.time {padding-left:25px; background:url(images/time.png) no-repeat left 12px;}
+
+#center table tr td .sostoianie {border:1px solid #dedede; padding:10px; margin-left:10px; min-height:260px;}
+#center table tr td .sostoianie:hover {border:1px solid #999;}
+.sostoianie table {border-spacing:0; border-collapse:collapse;}
+#center table tr td .sostoianie table tr td input[type="text"]{border: 1px solid #ccc; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; height:25px; padding-left:5px; width:200px; margin-right:5px;}
+#center table tr td .sostoianie table tr td:first-child { font: 12px/12px Arial; font-weight:normal;}
+#center table tr td .sostoianie table tr td {color: #0E4354; font-weight:bold; min-width:15px; vertical-align:middle; padding-top:5px; padding-bottom:5px;}
+#center table tr td .sostoianie table tr td span {color:#538217; font-weight:normal; font:11px/11px Arial;}
+.sostoianie .title {text-transform:uppercase;padding-left:25px; background:url(images/sos.jpg) no-repeat left center; font:bold 14px/14px Arial; margin-bottom:10px;}
+.sostoianie table tr td.babe .select{position:relative;}
+.sostoianie table tr td.babe input#sell {width:192px; height:32px; background:url(images/sel.jpg) no-repeat; border:0;}
+.sostoianie table tr td.babe input#save {width:113px; height:32px; background:url(images/save.png) no-repeat; border:0;}
+.sostoianie table tr td.babe select {position:absolute; bottom:6px; left:220px;}
+
+.messege_send .sms {height:18px; background:url(images/sms.jpg) no-repeat left center; color: #0E4354; cursor:pointer; display:inline-block; padding:0 10px 0 20px;font:11px/18px Arial;}
+.messege_send .mail {background:url(images/mail.jpg) no-repeat left center; color: #0E4354; height:18px; cursor:pointer; display:inline-block; padding:0 10px 0 20px; font:11px/18px Arial;}
+.messege_send .shablon {background:url(images/shablon.jpg) no-repeat left center; color: #0E4354; height:18px; cursor:pointer; display:inline-block; padding:0 10px 0 20px; text-decoration:none; font:11px/18px Arial;}
+.messege_send .include_file {height: 18px; background: url(images/file_icon.png) no-repeat left center; display:inline-block; padding:0 10px 0 20px; margin-bottom:5px; cursor:pointer; font:11px/18px Arial; color: #0E4354;}
+span.today {font: 18px/18px Arial; color: black;}
+#template {width:580px; height:260px; background:#fff; padding:10px; display:none;}
+#template .spisok {float:left; width:250px;}
+#template .spisok ul li { padding:5px;}
+#template .spisok ul li a{font:12px/13px Arial; color:#0e4354; font-weight:bold; text-decoration:none;}
+#template .temp {width:320px; float:left;}
+#template .temp textarea {width:100%; padding:5px; height:200px;}
+#template .buttons {padding-top:15px;clear:both; text-align:center;}
+#template .buttons input#ok {width:113px; height:32px; background:url(images/ok.png) no-repeat; border:0;}
+#template .buttons input#cancel {width:113px; height:32px; background:url(images/cancel.png) no-repeat; border:0;}
+
+.chop {margin-left:20px; position:relative; zoom:1; margin-top:15px;}
+.chop .oplata {border:1px solid #dedede; padding:20px 20px 10px 20px;}
+.chop .oplata:hover {border:1px solid #999;}
+.oplata table {border-spacing:0; border-collapse:collapse;}
+.chop .oplata table tr td input[type="text"]{border: 1px solid #ccc; height:25px; padding-left:5px;  margin-right:5px; width:100%;}
+.chop .oplata table tr td:first-child { font: 12px/12px Arial; font-weight:bold; color: #0E4354;}
+.chop .oplata table tr td { vertical-align:middle!important; padding:10px 0;}
+.chop .oplata .title {text-transform:uppercase;padding-left:25px; background:url(images/money.jpg) no-repeat left center; 
+font:bold 14px/14px Arial; margin-bottom:10px;}
+.chop .oplata table tr td.e-mail {padding-left:25px; background:url(images/mail.jpg) no-repeat left 16px;}
+.chop .oplata table tr td.bablo {padding-left:25px; background:url(images/bablo.jpg) no-repeat left 16px;}
+.chop .oplata table tr td.baba {padding-top:10px!important;}
+.chop .oplata table tr td.babe {padding-top:10px!important;}
+.chop .oplata table tr td.baba input[type="text"]{border: 1px solid #ccc; height:25px; padding-left:5px; width:20%!important; margin-right:5px;}
+.chop .oplata table tr td.baba input#author {width:90px; height:32px; background:url(images/author.jpg) no-repeat; border:0;}
+.chop .oplata table tr td.baba input#manager {width:113px; height:32px; background:url(images/manger.jpg) no-repeat; border:0;}
+
+.chop .srok {border:1px solid #dedede; padding:20px; margin-top:20px;}
+.chop .srok:hover {border:1px solid #999;}
+.srok table {border-spacing:0; border-collapse:collapse;}
+.chop .srok table tr td input[type="text"]{border: 1px solid #ccc; height:25px; padding-left:5px; width:100%!important; margin-right:5px;}
+.chop .srok table tr td:first-child { font: 12px/12px Arial; font-weight:bold; color: #0E4354;}
+.chop .srok table tr td {min-width:120px; vertical-align:middle!important; padding-top:7px; padding-bottom:7px;}
+.chop .srok .title {text-transform:uppercase;padding-left:25px; background:url(images/date.jpg) no-repeat left center; font:14px/14px Arial; margin-bottom:20px;}
+.chop .srok table tr td.calendar {padding-left:25px; background:url(images/calebdar_icon.png) no-repeat left 12px;}
+.chop .srok table tr td.time {padding-left:25px; background:url(images/time.png) no-repeat left 12px;}
+
+.chop .sostoianie {border:1px solid #dedede; padding:20px 20px 10px 20px; min-height:280px; margin-top:20px;}
+.chop .sostoianie:hover {border:1px solid #999;}
+.chop .sostoianie table {border-spacing:0; border-collapse:collapse;}
+.chop .sostoianie table tr td input[type="text"]{border: 1px solid #ccc; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; height:25px; padding-left:5px; width:200px; margin-right:5px;}
+.chop .sostoianie table tr td:first-child { font: 12px/12px Arial; font-weight:normal;}
+.chop .sostoianie table tr td {color: #0E4354; font-weight:bold; min-width:30px; vertical-align:middle; padding-top:7px; padding-bottom:7px;}
+.chop .sostoianie table tr td span {color:#538217; font-weight:normal; font:11px/11px Arial;}
+.chop .sostoianie .title {text-transform:uppercase;padding-left:25px; background:url(images/sos.jpg) no-repeat left center; font:14px/14px Arial; margin-bottom:20px;}
+.chop .sostoianie table tr td.babe .select{position:relative; float:left;}
+.chop .sostoianie table tr td.babe input#sell {width:192px; height:32px; background:url(images/sel.jpg) no-repeat; border:0;}
+.chop .sostoianie table tr td.babe input#save {width:113px; height:32px; background:url(images/save.png) no-repeat; border:0; margin-right:10px; float:left;}
+.chop .sostoianie table tr td.babe select {position:absolute; bottom:6px; right:20px;}
+.zaga {font:18px/18px Arial;}
+.zaga input[type="text"] {height:25px; width:507px; border: 1px solid #CCC; padding-left:5px;}
+
+/*----------Бухгалтерия----------*/
+table.buh {margin-top:10px; border-collapse: collapse; border-spacing: 0px; border:0;}
+table.buh tr.hidden {display:none;}
+table.buh tr:hover {background:#ededed;}
+table.buh tr td {padding:3px 7px; border:1px solid #dedede;}
+table.buh tr td a {color:#206B9A; font-weight:normal;}
+table.buh tr th {padding:10px 10px; border:1px solid #1e5f88; font:bold 11px/11px Arial; background:#4191C4; color:#fff; text-transform:uppercase;}
+table.buh tr th:first-child {border:0; background:#fff; padding:0 7px 0 0!important;}
+table.buh_group {border-collapse: collapse; border-spacing: 0px; border:0px; border:1px solid #dedede; margin:10px 0;}
+table.buh_group tr td {border:1px solid #1e5f88; margin-top:10px; padding:3px 7px; font:12px/12px Arial;}
+table.buh_group tr td:first-child {border:1px solid #1e5f88!important; background:#fff;}
+.show_hide {width: 18px; height: 14px; background: url(images/toggle_plus.png) no-repeat center top; cursor: pointer;}
+.show_hide.active {height: 14px; background: url(images/toggle_plus.png) no-repeat center bottom;}
+tr.buh_grouped {display:none;}
+table.buh tr td {border:1px solid #1e5f88;}
+table.buh tr td:first-child {border:0; padding:0!important; background:#fff; padding:0 7px 0 0!important;}
+tr.buh_grouped.visible {display:table-row;}
+.show_hide_all {height: 14px; width:18px; background: url(images/toggle_plus.png) no-repeat center bottom; cursor: pointer;}
+.show_hide_all.active {height: 14px; background: url(images/toggle_plus.png) no-repeat center top;}
+td.gr {padding:0!important;}
+.button {background: #fff url(images/btn.png) no-repeat center right; min-height:14px;}
+table tr td.pay {background:#aace99!important; padding:3px 3px!important; }
+table tr td.payd {background:#e3d276!important; padding:3px 3px!important; }
+table tr td.deel {background:#ce9999!important; padding:3px 3px!important; }
+.filter {height:50px; position:fixed; top:0; left:0; width:100%;}
+.filter_body {max-width: 1200px; min-width:960px; width:100%; margin: 0 auto; background:#dedede; padding:2px 0;
+border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;}
+.filter_body table {margin:10px 0;}
+.filter_body table tr td label {color:#000;}
+.filter_body table tr td {padding-left:10px;}
+.filter_body table tr td input[type="text"]{border:1px solid #ccc; height:20px; vertical-align:middle;}
+.filter_body table tr td input[type="submit"]{padding:3px;}
+.have_group {font-weight:bold;}
+table.summ {border-collapse: separate; border-spacing: 1px; border:0;}
+table.summ tr th {padding:8px 8px; font:bold 12px/12px Tahoma; background:#fff; color:#000;}
+table.summ tr th:first-child {border:0; background:#fff; padding:0 7px 0 0!important;}
+hr {border-top:1px solid #ccc; border-bottom:1px solid #ededed; border-left:0; border-right:0; margin:7px 0;}
+.yii {position:absolute; bottom:13px; right:10px;}
+.yii input{margin-left:10px; padding:3px;}
+h1.buh_title {font:20px/20px Arial; color:#555; margin:10px 0 20px 26px;}
+input.add {position:absolute; top:20px; right:10px; padding:3px;}

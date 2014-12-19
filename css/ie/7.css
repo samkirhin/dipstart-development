@@ -1,0 +1,98 @@
+.lt-ie8 .main-menu li{
+	float: left;
+	display: block;
+}
+.lt-ie8 .main-menu li{
+	padding: 0 25px;
+}
+.lt-ie8 .main-menu .main-menu-first-child img{
+	height: 100%;
+	max-height: 18px;
+	max-width: 18px;
+
+}
+
+.lt-ie8 .calc form .selectbox{
+	margin-right: 10px
+}
+.lt-ie8 .calc form .selectbox .select{	
+	max-width: 130px;
+}
+.lt-ie8 .calc .calc-btn{
+	position: absolute;
+	right: 10px;
+	bottom: 15px;
+	margin: 0;
+	padding: 0;
+}
+.lt-ie8 .buy-phone{
+	position: relative;
+	width: 100%;
+	min-width: 100%;
+}
+.lt-ie8 .buy-phone a{
+	position: absolute;
+	right: 0;
+	margin: 0;
+	top:0;
+
+}
+.lt-ie8 .buy  ol {
+    list-style-type: none;
+}
+.lt-ie8 .buy ol li{
+	background-position: 0 0;
+	margin:0;
+	height: 24px;
+}
+.lt-ie8 .main-menu li a:hover{
+	background: none;
+}
+.lt-ie8 .f-buy{
+	padding-top:80px;
+}
+.lt-ie8 header .contacts{
+	width: 300px;
+}
+.lt-ie8 header .contacts h5{
+	margin-top: 0;
+}
+
+@media screen and (max-width: 1149px){
+	.lt-ie8 .main-menu li a{
+		min-width: 0;		
+		padding:0;
+	}
+	.lt-ie8 .main-menu li{
+		padding: 0;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	.lt-ie8 header .contacts{
+		width: 270px;
+	}
+	.lt-ie8 .calc form .selectbox{
+		cursor: default;
+	}
+	.lt-ie8 .calc form .selectbox .select{
+		cursor: pointer;
+	}
+	.lt-ie8 .crewman h4,
+	.lt-ie8 .crewman p{
+		margin-left: 150px;
+	}
+}
+@media screen and (max-width: 860px){
+	.left .buy-phone{
+		max-width: 650px;
+		min-width: 650px;
+	}
+
+}
+@media screen and (max-width: 640px){
+	.lt-ie8 .f-buy{
+		margin-top: 0;
+		padding-top: 0!important;
+		padding: 0px!important;
+	}
+}
