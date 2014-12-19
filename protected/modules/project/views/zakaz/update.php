@@ -37,3 +37,9 @@ $this->widget('application.modules.project.widgets.changes.ChangesWidget', array
     'project' => $model,
 ))
 ?>
+<?php
+    $this->widget('ZakazPartWidget', array(
+    'projectId'=>$model->id,
+    'userType'=>'1',
+    'action'=>'edit'
+));?>
