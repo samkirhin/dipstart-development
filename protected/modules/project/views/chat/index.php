@@ -45,11 +45,13 @@
             <?php if($message->moderated == 0): ?>
                 | <a href="<?php echo Yii::app()->createUrl("project/chat/approve",array("messageId"=>$message->id)); ?>" class="approve">Одобрить</a>
             <?php endif; ?>
+            <?php if (User::model()->getUserRole($message->sender) == 'Author'): ?>
             <?php if($executor != $message->sender): ?>
                 | <a href="<?php echo Yii::app()->createUrl("project/chat/setexecutor",array("orderId"=>$orderId, 'executorId' => $message->sender)); ?>" class="setexecutor">Назначить исполнителем</a>
             <?php else: ?>
             	   | <a href="<?php echo Yii::app()->createUrl("project/chat/delexecutor",array("orderId"=>$orderId)); ?>" class="delexecutor">Снять с проекта</a>
             	<?php endif; ?>
+            <?php  endif; ?>
             	<?php if(User::model()->getUserRole($message->recipient) == 'Manager'): ?>
                 | <a href="<?php echo Yii::app()->createUrl("project/chat/readdress",array("messageId"=>$message->id, 'ordererId' => $ordererId)); ?>" class="readdress">Переадресовать заказчику</a>
             <?php endif; ?>
