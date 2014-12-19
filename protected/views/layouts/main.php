@@ -62,6 +62,9 @@ $items = array(
                 array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest)
             );
+    if (User::model()->isAdmin()) {
+        echo '<a href="/index.php?r=project/payment/view">Бухгалтерия</a>';
+    }
 }else if (User::model()->isAuthor() || User::model()->isCustomer()) {
 $items = array(
 				array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index')),

@@ -27,6 +27,7 @@ return array(
         'application.modules.rights.components.*',
         'application.modules.project.*',
         'application.modules.project.models.*',
+        'application.modules.project.controllers.*',
         'application.extensions.yiifilemanager.*',
         'application.extensions.yiifilemanagerfilepicker.*',
         'application.extensions.helpers.EDownloadHelper',

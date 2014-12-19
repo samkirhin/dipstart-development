@@ -59,7 +59,7 @@ class ProjectChanges extends CActiveRecord {
     public function validateOnEmptyFileComment($field, $params) {
 
         $labels = $this->attributeLabels();
-        if (!$this->file && !$this->comment) {
+        if (!$this->file & !$this->comment) {
             $this->addError($field, $labels['file'] . ' и ' . $labels['comment'] . ' оба не могут быть пустыми!');
 
         }

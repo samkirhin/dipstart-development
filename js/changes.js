@@ -31,6 +31,9 @@ var ChangesController = function (projectId, isEdited) {
                     forEach(data['data'], function (key, el) {
                         //TODO добавить поле одбрения
                         var crudButton = "";
+                        if (el['filename'] == null) {
+                            el['filename'] = '';
+                        }
                         if (isEdited == 1) {
                             crudButton = '<div class="changes-crud-block"><div class="changes-button delete-changes-button"><i class="glyphicon-remove glyphicon"></i></div>'
                             + '<div class="changes-button edit-changes-button"><i class="glyphicon-edit glyphicon"></i></div></div>';

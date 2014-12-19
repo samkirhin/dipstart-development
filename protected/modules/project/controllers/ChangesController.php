@@ -78,7 +78,7 @@ class ChangesController extends Controller {
         if (!Yii::app()->request->isAjaxRequest) {
             return false;
         }
-        $model = new ProjectChanges;
+        $model = new ProjectChanges();
         $model->scenario = 'add';
         $model->project_id = (int)$ctr;
 
@@ -86,6 +86,9 @@ class ChangesController extends Controller {
         if (isset($_POST['ProjectChanges'])) {
             $model->attributes = $_POST['ProjectChanges'];
             $model->fileupload = CUploadedFile::getInstance($model, 'fileupload');
+            if (!empty($model->fileupload)) {
+                $model->file = 'no';
+            }
             if (User::model()->isManager()) {
                 $model->moderate = isset($_POST['ProjectChanges']['moderate']) ? (int)$_POST['ProjectChanges']['moderate'] : 0;
             }
@@ -94,8 +97,17 @@ class ChangesController extends Controller {
                 echo CJSON::encode(array('error' => CJSON::decode(CActiveForm::validate($model))));
                 Yii::app()->end();
             }
-            if ($model->isAllowedAdd() && $model->save(false)) {
-                echo CJSON::encode(array('success' => true));
+            try {
+                if ($model->isAllowedAdd() && $model->save(false)) {
+                    echo CJSON::encode(array('success' => true));
+                    Yii::app()->end();
+                } else {
+                    echo CJSON::encode(array('error' => array('text' => 'Вы не можете внести правки к этому проекту!')));
+                    Yii::app()->end();
+                }
+            } catch (CException $e) {
+                echo YII_DEBUG ? CJSON::encode(array('error' => array('text' => $e->getMessage()))) :
+                    CJSON::encode(array('error' => array('text' => 'Ошибка добавления!')));
                 Yii::app()->end();
             }
         }
