@@ -31,9 +31,27 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
+            /* if user is guest render default start page */
+                if (Yii::app()->user->isGuest) {
+                    $this->render('index', array(
+                        'role' => 'stranger'
+                    ));
+                } else {
+                    $userRole = User::model()->getUserRole();
+                    
+                    switch ($userRole) {
+                        case ('Author'):
+                        case ('Manager'):
+                        case ('Customer'):
+                        case ('Admin'):
+                            $this->render('main'.$userRole);
+                            break;
+                    }
+                }
+
+                // renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+		
 	}
 
 	/**

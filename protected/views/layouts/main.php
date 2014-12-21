@@ -29,77 +29,107 @@
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 <?php
-if (User::model()->isAdmin() || User::model()->isManager()){
-$items = array(
-				array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index')),
-
-                array('label'=>Yii::t('site','Projects'), 'url'=>array('/project'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
+    $items = array();
+    if (Yii::app()->user->isGuest) {
+            $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
+            $items[] = array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest);
+            $items[] = array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest);
+            $items[] = array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest);
+            $items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest);
+    } else {
+        $role = User::model()->getUserRole();
+        switch ($role){
+            case 'Admin':
+                
+                $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
+                $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project'), 'items' => array(
+                        array('label'=>Yii::t('site','Zakazs'), 'url'=>array('/project/zakaz')),
+                        array('label'=>Yii::t('site','Create Zakaz'), 'url'=>array('/project/zakaz/create')),
+                    ));
+                $items[] = array('label'=>Yii::t('site','Users'), 'url'=>array('/user'), 'items' => array(
+                         array('label'=>Yii::t('site','Profile Fields'), 'url'=>array('/user/profileField/admin')),
+                         array('label'=>Yii::t('site','Rights'), 'url'=>array('/rights')),
+                    ));
+                $items[] = array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'items' => array(
+                        array('label'=>Yii::t('site','Categories'), 'url'=>array('/categories/index')),
+                        array('label'=>Yii::t('site','Jobs'), 'url'=>array('/jobs/index')),
+                        array('label'=>Yii::t('site','Statuses'), 'url'=>array('/projectStatus/index')),
+                        array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
+                    ));
+                $items[] = array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'items' => array(
+                         array('label'=>Yii::t('site', 'Inbox'), 'url'=>array('/mailbox/message/inbox')),
+                         array('label'=>Yii::t('site', 'Sent'), 'url'=>array('/mailbox/message/sent')),
+                         array('label'=>Yii::t('site','Trash'), 'url'=>array('/mailbox/message/trash')),
+                    ));
+                $user = User::model()->findByPk(Yii::app()->user->id);
+                $items[] = array('label'=>'Бухгалтерия', 'url'=>array('/project/payment/view'), 'visible'=>$user->superuser);
+                $items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
+                
+                break;
+            case 'Manager':
+                
+                $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
+                $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project/zakaz/admin'), 'items' => array(
                     array('label'=>Yii::t('site','Zakazs'), 'url'=>array('/project/zakaz')),
                     array('label'=>Yii::t('site','Create Zakaz'), 'url'=>array('/project/zakaz/create')),
-
-                )),
-                array('label'=>Yii::t('site','Users'), 'url'=>array('/user'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
-                     array('label'=>Yii::t('site','Profile Fields'), 'url'=>array('/user/profileField/admin')),
-                     array('label'=>Yii::t('site','Rights'), 'url'=>array('/rights')),
-                )),
-                array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
+                ));
+                $items[] = array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
                     array('label'=>Yii::t('site','Categories'), 'url'=>array('/categories/index')),
                     array('label'=>Yii::t('site','Jobs'), 'url'=>array('/jobs/index')),
                     array('label'=>Yii::t('site','Statuses'), 'url'=>array('/projectStatus/index')),
                     array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
-                )),
-
-                array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest),
-
-                array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
+                ));
+                $items[] = array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
                      array('label'=>Yii::t('site', 'Inbox'), 'url'=>array('/mailbox/message/inbox')),
                      array('label'=>Yii::t('site', 'Sent'), 'url'=>array('/mailbox/message/sent')),
                      array('label'=>Yii::t('site','Trash'), 'url'=>array('/mailbox/message/trash')),
-                )),
-
-
-                array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest)
-            );
-    if (User::model()->isAdmin()) {
-        echo '<a href="/index.php?r=project/payment/view">Бухгалтерия</a>';
+                ));
+                $items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
+                
+                break;
+            case 'Author':
+                
+                $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
+                $items[] = array('label'=>'Личные данные', 'items'=>array(
+                    array('label'=>'Личный кабинет', 'url'=>array('#')),
+                    array('label'=>'Личный счет', 'url'=>array('#')),
+                    array('label'=>'Профиль', 'url'=>array('/user/profile/edit'))
+                ));
+                $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
+                    array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '2')),
+                    array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '4', 'executor' => Yii::app()->user->id)),
+                ));
+                $items[] = array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
+                     array('label'=>Yii::t('site', 'Inbox'), 'url'=>array('/mailbox/message/inbox')),
+                     array('label'=>Yii::t('site', 'Sent'), 'url'=>array('/mailbox/message/sent')),
+                     array('label'=>Yii::t('site','Trash'), 'url'=>array('/mailbox/message/trash')),
+                ));
+                $items[] = array('label'=>Yii::t('site','Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
+                
+                break;
+            
+            case 'Customer':
+                
+                $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
+                $items[] = array('label'=>'Личные данные', 'items'=>array(
+                    array('label'=>'Личный кабинет', 'url'=>array('#')),
+                    array('label'=>'Личный счет', 'url'=>array('#')),
+                    array('label'=>'Профиль', 'url'=>array('/user/profile/edit')),
+                ));
+                $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
+                    array('label'=>ProjectModule::t('Create Zakaz'), 'url'=>array('/project/zakaz/create')),
+                    array('label'=>'Мои заказы', 'url'=>array('#'))
+                ));
+                $items[] = array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
+                     array('label'=>Yii::t('site', 'Inbox'), 'url'=>array('/mailbox/message/inbox')),
+                     array('label'=>Yii::t('site', 'Sent'), 'url'=>array('/mailbox/message/sent')),
+                     array('label'=>Yii::t('site','Trash'), 'url'=>array('/mailbox/message/trash')),
+                ));
+                $items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
+                                
+                break;
+        }
     }
-}else if (User::model()->isAuthor() || User::model()->isCustomer()) {
-$items = array(
-				array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index')),
-
-                array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
-                    array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '2'), 'visible'=>User::model()->isAuthor()),
-                    array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '4', 'executor' => Yii::app()->user->id), 'visible'=>User::model()->isAuthor()),
-                    array('label'=>ProjectModule::t('Create Zakaz'), 'url'=>array('/project/zakaz/create'), 'visible'=> User::model()->isCustomer()),
-                    array('label'=>UserModule::t('Profile edit'), 'url'=>array('/user/profile/edit'), 'visible'=> User::model()->isCustomer()),
-
-                )),
-                array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest),
-
-                array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
-                     array('label'=>Yii::t('site', 'Inbox'), 'url'=>array('/mailbox/message/inbox')),
-                     array('label'=>Yii::t('site', 'Sent'), 'url'=>array('/mailbox/message/sent')),
-                     array('label'=>Yii::t('site','Trash'), 'url'=>array('/mailbox/message/trash')),
-                )),
-
-                array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest)
-
-        );
-}else{
- $items =  array(
-				array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index')),
-
-                array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest),
-
-				array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'), 'visible'=>!Yii::app()->user->isGuest)
-            );
-}
 ?>
 	<div id="mainMbMenu">
 		<?php $this->widget('application.extensions.mbmenu.MbMenu',array(

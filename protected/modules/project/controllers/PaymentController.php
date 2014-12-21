@@ -3,7 +3,8 @@
 class PaymentController extends CController {
     
     public function actionView() {
-        if (User::model()->getUserRole()!='Admin') {
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        if (!$user->superuser) {
             $this->redirect('/');
         } else {
             $dataProvider = new CActiveDataProvider('Payment', array(
