@@ -2,6 +2,14 @@
 
 class PaymentController extends CController {
     
+    protected $_request;
+    protected $_response;
+    
+    protected function _prepairJson() {
+        $this->_request = Yii::app()->jsonRequest;
+        $this->_response = new JsonHttpResponse();
+    }
+    
     public function actionView() {
         $user = User::model()->findByPk(Yii::app()->user->id);
         if (!$user->superuser) {
@@ -17,5 +25,11 @@ class PaymentController extends CController {
             ));
         }
     }
+    
+    public function actionSaveToPayments() {
+        
+    }
+    
+    
     
 }

@@ -37,7 +37,7 @@ var ZakazPartsView = function(orderId) {
         }), function (response) {
             if (response.data) {
                 self.editPart.empty();
-                self.templateEdit.tmpl(response.data.part).appendTo('.edit_part');
+                $.parseJSON(response.data.part).appendTo('.edit_part');
             } else {
             }
         }, 'json');

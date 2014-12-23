@@ -18,7 +18,11 @@ $this->menu = array(
 ?>
 
     <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
-
+<?php
+    $this->widget('application.modules.project.widgets.payment.PaymentWidget', array(
+        'projectId'=>$model->id
+    ));
+?>
 <?php if ($user->isCustomer()) {
     $this->renderPartial('_form', array('model' => $model));
 } elseif ($user->isManager() || $user->isAdmin()) {
@@ -38,8 +42,9 @@ $this->widget('application.modules.project.widgets.changes.ChangesWidget', array
 ))
 ?>
 <?php
-    $this->widget('ZakazPartWidget', array(
-    'projectId'=>$model->id,
-    'userType'=>'1',
-    'action'=>'edit'
-));?>
+    $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
+        'projectId'=>$model->id,
+        'userType'=>'1',
+        'action'=>'edit'
+    ));
+?>

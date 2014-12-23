@@ -1,8 +1,3 @@
-<?php
-/* @var $this ZakazPartsController */
-/* @var $model ZakazParts */
-/* @var $form CActiveForm */
-?>
 
 <div class="form">
 
@@ -18,11 +13,10 @@
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-
+        
 	<div class="row">
 		<?php echo $form->labelEx($model,'proj_id'); ?>
-		<?php echo $form->textField($model,'proj_id',array('size'=>11,'maxlength'=>11)); ?>
-		<?php echo $form->error($model,'proj_id'); ?>
+		<?php echo $model->proj_id; ?>
 	</div>
 
 	<div class="row">
@@ -32,55 +26,63 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'text'); ?>
-		<?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'text'); ?>
+		<?php echo $form->labelEx($model,'comment'); ?>
+		<?php echo $form->textArea($model,'comment',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->error($model,'comment'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'file'); ?>
-		<?php echo $form->textField($model,'file',array('size'=>60,'maxlength'=>255)); ?>
+		<?php $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                    array(
+                       'id'=>'EAjaxUpload',
+                       'config'=>array(
+                                       'action'=>$this->createUrl('zakazParts/upload/'.$model->id),
+                                       'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                                       'debug'=>false,
+                                       'allowedExtensions'=>array('jpg, '),
+                                       'sizeLimit'=>10*1024*1024,// maximum file size in bytes
+                                       'minSizeLimit'=>10*1024,// minimum file size in bytes
+                                       'onComplete'=>"js:function(id, fileName, responseJSON){ alert(fileName); }"
+                                      )
+                    )); ?>
+                <?php echo $form->hiddenField($model, 'file')?>
 		<?php echo $form->error($model,'file'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'date'); ?>
-		<?php echo $form->textField($model,'date'); ?>
-		<?php echo $form->error($model,'date'); ?>
+                <?php
+                    $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                        'name'=>'Zakaz[date]',
+                        // additional javascript options for the date picker plugin
+                        'language' => 'ru',
+                        'value' => $model->date,
+                        'options'=>array(
+                            'dateFormat'=>'yy-mm-dd',
+                            'showAnim'=>'drop',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                        ),
+                        'htmlOptions'=>array(
+                            'style'=>'height:20px;background-white:blue;color:black;',
+                        ),
+                    ));
+                ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'max_exec_date'); ?>
-		<?php echo $form->textField($model,'max_exec_date'); ?>
-		<?php echo $form->error($model,'max_exec_date'); ?>
+		<?php echo $form->labelEx($model,'author_id'); ?>
+		<?php echo $form->textField($model,'author_id'); ?>
+		<?php echo $form->error($model,'author_id'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'date_finish'); ?>
-		<?php echo $form->textField($model,'date_finish'); ?>
-		<?php echo $form->error($model,'date_finish'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'pages'); ?>
-		<?php echo $form->textField($model,'pages'); ?>
-		<?php echo $form->error($model,'pages'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'budget'); ?>
-		<?php echo $form->textField($model,'budget',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'budget'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'add_demands'); ?>
-		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'add_demands'); ?>
+		<?php echo $form->labelEx($model,'show'); ?>
+		<?php echo $form->textField($model,'show'); ?>
+		<?php echo $form->error($model,'show'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton('Save'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

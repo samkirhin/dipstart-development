@@ -292,3 +292,81 @@ Stack trace:
 #12 /projects/dipstart.my/www/protected/yiic(4): require_once('/projects/dipst...')
 #13 {main}
 ---
+2014/12/23 13:23:49 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dipstart.ProjectPayment' doesn't exist. The SQL statement executed was: ALTER TABLE `ProjectPayment` ADD PRIMARY KEY (`id` ).
+2014/12/23 13:24:19 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'ProjectPayments' already exists. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int,
+	`order_id` int,
+	`project_price` float(10,2),
+	`work_price` float(10,2),
+	`received` float(10,2),
+	`approved` float(10,2),
+	`to_receive` float(10,2),
+	`to_pay` float(10,2),
+	`payed` float(10,2)
+).
+2014/12/23 15:52:40 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1075 Incorrect table definition; there can be only one auto column and it must be defined as a key. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`order_id` int,
+	`project_price` float(10,2),
+	`work_price` float(10,2),
+	`received` float(10,2),
+	`approved_in` float(10,2),
+	`approved_out` float(10,2),
+	`to_receive` float(10,2),
+	`to_pay` float(10,2),
+	`payed` float(10,2)
+).
+2014/12/23 15:53:38 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1075 Incorrect table definition; there can be only one auto column and it must be defined as a key. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`order_id` int,
+	`project_price` float(10,2),
+	`work_price` float(10,2),
+	`received` float(10,2),
+	`approved_in` float(10,2),
+	`approved_out` float(10,2),
+	`to_receive` float(10,2),
+	`to_pay` float(10,2),
+	`payed` float(10,2)
+).
+2014/12/23 16:02:42 [error] [php] Missing argument 2 for CDbMigration::createTable(), called in /projects/dipstart.my/www/protected/migrations/m141223_101610_addPaymentSystemToOrders.php on line 7 and defined (/projects/dipstart.my/www/framework/db/CDbMigration.php:229)
+Stack trace:
+#0 /projects/dipstart.my/www/framework/cli/commands/MigrateCommand.php(385): m141223_101610_addPaymentSystemToOrders->up()
+#1 /projects/dipstart.my/www/framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp()
+#2 unknown(0): MigrateCommand->actionUp()
+#3 /projects/dipstart.my/www/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs()
+#4 /projects/dipstart.my/www/framework/console/CConsoleCommandRunner.php(71): MigrateCommand->run()
+#5 /projects/dipstart.my/www/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run()
+#6 /projects/dipstart.my/www/framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#7 /projects/dipstart.my/www/framework/yiic.php(33): CConsoleApplication->run()
+#8 /projects/dipstart.my/www/protected/yiic.php(7): require_once()
+#9 /projects/dipstart.my/www/protected/yiic(4): require_once()
+
+2014/12/23 16:03:53 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1075 Incorrect table definition; there can be only one auto column and it must be defined as a key. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int NOT NULL AUTO_INCREMENT
+).
+2014/12/23 16:04:55 [error] [php] Missing argument 3 for CDbMigration::addColumn(), called in /projects/dipstart.my/www/protected/migrations/m141223_101610_addPaymentSystemToOrders.php on line 11 and defined (/projects/dipstart.my/www/framework/db/CDbMigration.php:282)
+Stack trace:
+#0 /projects/dipstart.my/www/framework/cli/commands/MigrateCommand.php(385): m141223_101610_addPaymentSystemToOrders->up()
+#1 /projects/dipstart.my/www/framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp()
+#2 unknown(0): MigrateCommand->actionUp()
+#3 /projects/dipstart.my/www/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs()
+#4 /projects/dipstart.my/www/framework/console/CConsoleCommandRunner.php(71): MigrateCommand->run()
+#5 /projects/dipstart.my/www/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run()
+#6 /projects/dipstart.my/www/framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#7 /projects/dipstart.my/www/framework/yiic.php(33): CConsoleApplication->run()
+#8 /projects/dipstart.my/www/protected/yiic.php(7): require_once()
+#9 /projects/dipstart.my/www/protected/yiic(4): require_once()
+
+2014/12/23 16:06:08 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'ProjectPayments' already exists. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int,
+	`order_id` int,
+	`project_price` float(10,2),
+	`work_price` float(10,2),
+	`received` float(10,2),
+	`approved_in` float(10,2),
+	`approved_out` float(10,2),
+	`to_receive` float(10,2),
+	`to_pay` float(10,2),
+	`payed` float(10,2),
+	PRIMARY KEY (`id`)
+).

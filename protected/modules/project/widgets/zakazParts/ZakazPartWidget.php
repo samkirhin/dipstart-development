@@ -20,8 +20,7 @@ class ZakazPartWidget extends CWidget{
     }
     
     public function renderPartForm($type) {
-        $a = 0;
-        Yii::app()->controller->renderPartial('application.modules.project.components.views.'.$type, array(
+        Yii::app()->controller->renderPartial('application.modules.project.widgets.zakazParts.views.'.$type, array(
             'orderId' => $this->projectId
         ));
     }
