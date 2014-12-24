@@ -26,10 +26,119 @@ class PaymentController extends CController {
         }
     }
     
-    public function actionSaveToPayments() {
+    public function actionSavePaymentsToUser() {
+        $this->_prepairJson();
+        $orderId = $this->_request->getParam('order_id');
+        $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+            'ORDER_ID'=>$orderId
+        ));
+        if (!$payment) {
+            $payment = new ProjectPayments;
+            $payment->order_id = $order_id;
+            $payment->received = 0;
+            $payment->to_receive = 0;
+            $payment->to_pay = 0;
+        }
+        
+        $payment->project_price    = $this->_request->getParam('project_price');
+        $payment->to_receive       = $payment->to_receive + $this->_request->getParam('to_receive');
+        if ($payment->save()) {
+            $this->_response->setData(
+                array (
+                    'project_price' => $payment->project_price,
+                    'to_receive'    => $payment->to_receive
+                )
+            );
+        } else {
+            $this->_response->setData(
+                array (
+                    'result' => 'false'
+                )
+            );
+        }
+        $this->_response->send();
+    }
+    
+    public function actionSavePaymentsToAuthor() {
+        $this->_prepairJson();
+        $orderId = $this->_request->getParam('order_id');
+        $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+            'ORDER_ID'=>$orderId
+        ));
+        if (!$payment) {
+            $payment = new ProjectPayments;
+        }
+        
+        
+        $payment->work_price        = $this->_request->getParam('work_price');
+        $payment->to_pay            = $payment->to_pay + $this->_request->getParam('to_pay');
+        if ($payment->save()) {
+            $order = Zakaz::model()->findByPk($orderId);
+            $buh = new Payment;
+            $buh->approve = 0;
+            $buh->order_id = $orderId;
+            $buh->receive_date = date("Y-m-d");
+            $buh->theme = $order->title;
+            $user = User::model()->findByPk($order->executor);
+            $buh->user = $user->email;
+            $buh->summ = $payment->to_pay;
+            $buh->payment_type = 1;
+            $manag = User::model()->findByPk(Yii::app()->user->id);
+            $buh->manager = $manag->email;
+            $buh->save();
+            $this->_response->setData(
+                array (
+                    'work_price'    => $payment->work_price,
+                    'to_pay'        => $payment->to_pay
+                )
+            );
+        } else {
+            $this->_response->setData(
+                array (
+                    'result' => 'false'
+                )
+            );
+        }
+        $this->_response->send();
         
     }
     
-    
+    public function actionManagersApprove() {
+        $this->_prepairJson();
+        $orderId = $this->_request->getParam('order_id');
+        $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+            'ORDER_ID'=>$orderId
+        ));
+        $payment->received = $payment->received + $payment->to_receive;
+        $payment->to_receive = 0;
+        if ($payment->save()) {
+            $order = Zakaz::model()->findByPk($orderId);
+            $buh = new Payment;
+            $buh->approve = 0;
+            $buh->order_id = $orderId;
+            $buh->receive_date = date('Y-m-d');
+            $buh->theme = $order->title;
+            $user = User::model()->findByPk($order->user_id);
+            $buh->user = $user->email;
+            $buh->summ = $payment->received;
+            $buh->payment_type = 1;
+            $manag = User::model()->findByPk(Yii::app()->user->id);
+            $buh->manager = $manag->email;
+            $buh->save();
+            $this->_response->setData(
+                array (
+                    'received' => $payment->received
+                )
+            );
+        } else {
+            $this->_response->setData(
+                array (
+                    'result' => 'false'
+                )
+            );
+        }
+        $this->_response->send();
+        
+    }
     
 }

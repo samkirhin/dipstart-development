@@ -5,8 +5,8 @@ class m141223_101610_addPaymentSystemToOrders extends CDbMigration
 	public function safeUp()
 	{
             $this->createTable("ProjectPayments", array(
-                'id'            => 'int',
-                'order_id'      => 'int',
+                'id'            => 'int(11) NOT NULL AUTO_INCREMENT',
+                'order_id'      => 'int(11)',
                 'project_price' => 'float(10,2)',
                 'work_price'    => 'float(10,2)',
                 'received'      => 'float(10,2)',

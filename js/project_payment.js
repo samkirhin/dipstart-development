@@ -1,3 +1,65 @@
-var ProjectPayments = function() {
+var ProjectPayments = function(orderId) {
+    var self = this;
+    this.form = $('#project_payments');
+    this.orderId = orderId;
+    
+    /* Привязка имен */
+    this.p_price = this.form.find('.project_price_input');
+    this.w_price = this.form.find('.work_price_input');
+    this.t_pay = this.form.find('.to_pay_input');
+    this.t_receive = this.form.find('.to_receive_input');
+    this.received = this.form.find('.payment_received');
+    this.payed = this.form.find('.payment_payed');
+    this.to_receive = this.form.find('.payment_to_receive');
+    this.to_pay = this.form.find('.payment_to_pay');
+    
+    self.form.find('.send_user_payments').on('click', function() {
+        var proj_price = self.p_price.val();
+        var work_price = self.w_price.val();
+        var receive = self.t_receive.val();
+        $.post('index.php?r=project/payment/savePaymentsToUser', JSON.stringify({
+            'order_id': self.orderId,
+            'project_price': proj_price,
+            'to_receive': receive
+        }), function (response) {
+            if (response.data) {
+                self.t_receive.val('');
+                self.p_price.val(response.data.project_price);
+                self.to_receive.text(response.data.to_receive);
+            } else {
+            }
+        }, 'json');
         
+    });
+    
+    self.form.find('.send_author_payments').on('click', function() {
+        
+        var proj_price = self.p_price.val();
+        var work_price = self.w_price.val();
+        var pay = self.t_pay.val();
+        $.post('index.php?r=project/payment/savePaymentsToAuthor', JSON.stringify({
+            'order_id': self.orderId,
+            'work_price': work_price,
+            'to_pay': pay
+        }), function (response) {
+            if (response.data) {
+                self.t_pay.val('');
+                self.w_price.val(response.data.work_price);
+                self.to_pay.text(response.data.to_pay);
+            } else {
+            }
+        }, 'json');
+        
+    });
+    
+    self.form.find('.send_managers_approve'). on('click', function() {
+        $.post('index.php?r=project/payment/managersApprove', JSON.stringify({
+            'order_id': self.orderId
+        }), function (response) {
+            if (response.data) {
+                self.recieved.text(responce.data.received);
+            } else {
+            }
+        }, 'json');
+    });
 }

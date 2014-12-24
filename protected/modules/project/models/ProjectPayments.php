@@ -89,7 +89,23 @@ class ProjectPayments extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
+        
+        public function prepair($orderId) {
+            $model = self::model()->find('order_id = :ORDER_ID', array(
+                ':ORDER_ID' => $orderId
+            ));
+            $this->id = $model->id;
+            $this->order_id = $model->order_id;
+            $this->project_price = $model->project_price;
+            $this->work_price = $model->work_price;
+            $this->received = $model->received;
+            $this->approved_in = $model->approved_in;
+            $this->approved_out = $model->approved_out;
+            $this->to_receive = $model->to_receive;
+            $this->to_pay = $model->to_pay;
+            $this->payed = $model->payed;
+        }
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

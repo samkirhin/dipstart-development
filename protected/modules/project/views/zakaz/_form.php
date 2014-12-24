@@ -89,19 +89,6 @@
 	</div>
 
     <div class="row">
-		<?php echo $form->labelEx($model,'budget'); ?>
-		<?php echo $form->textField($model,'budget',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'budget'); ?>
-	</div>
-
-    <div class="row">
-		<?php echo $form->labelEx($model,'with_prepayment');
-		  $list = array('0' => ProjectModule::t('No'), '1' => ProjectModule::t('Yes'));
-          echo $form->dropDownList($model, 'with_prepayment', $list);?>
-		<?php echo $form->error($model,'with_prepayment'); ?>
-	</div>
-
-    <div class="row">
 		<?php echo $form->labelEx($model,'add_demands'); ?>
 		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53)); ?>
 		<?php echo $form->error($model,'add_demands'); ?>

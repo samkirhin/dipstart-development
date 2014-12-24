@@ -28,10 +28,6 @@ $this->menu = array(
 } elseif ($user->isManager() || $user->isAdmin()) {
     $this->renderPartial('_formManager', array('model' => $model));
 }
-
-if (!$model->isNewRecord) {
-    $this->renderPartial('_files', array('model' => $model));
-}
 ?>
 
     <h3><?php echo ProjectModule::t('Changes'); ?></h3>

@@ -370,3 +370,51 @@ Stack trace:
 	`payed` float(10,2),
 	PRIMARY KEY (`id`)
 ).
+2014/12/24 00:12:15 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AUTOINCREMENT,
+	`order_id` int,
+	`project_price` float(10,2),
+	`work_price` floa' at line 2. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int AUTOINCREMENT,
+	`order_id` int,
+	`project_price` float(10,2),
+	`work_price` float(10,2),
+	`received` float(10,2),
+	`approved_in` float(10,2),
+	`approved_out` float(10,2),
+	`to_receive` float(10,2),
+	`to_pay` float(10,2),
+	`payed` float(10,2),
+	PRIMARY KEY (`id`)
+).
+2014/12/24 00:13:14 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AUTOINCREMENT,
+	`order_id` int(11),
+	`project_price` float(10,2),
+	`work_price` ' at line 2. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int(11) AUTOINCREMENT,
+	`order_id` int(11),
+	`project_price` float(10,2),
+	`work_price` float(10,2),
+	`received` float(10,2),
+	`approved_in` float(10,2),
+	`approved_out` float(10,2),
+	`to_receive` float(10,2),
+	`to_pay` float(10,2),
+	`payed` float(10,2),
+	PRIMARY KEY (`id`)
+).
+2014/12/24 00:13:44 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AUTOINCREMENT,
+	`order_id` int(11),
+	`project_price` float(10,2),
+	`work_price` ' at line 2. The SQL statement executed was: CREATE TABLE `ProjectPayments` (
+	`id` int(11) NOT NULL AUTOINCREMENT,
+	`order_id` int(11),
+	`project_price` float(10,2),
+	`work_price` float(10,2),
+	`received` float(10,2),
+	`approved_in` float(10,2),
+	`approved_out` float(10,2),
+	`to_receive` float(10,2),
+	`to_pay` float(10,2),
+	`payed` float(10,2),
+	PRIMARY KEY (`id`)
+).

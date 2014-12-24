@@ -6,17 +6,17 @@ class PaymentWidget extends CWidget {
     
     public function init() {
         
+        Yii::app()->clientScript->registerScriptFile('/js/project_payment.js');
         $payments = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
             ':ORDER_ID' => $this->projectId
         ));
         if (!$payment) {
-            $model = new ProjectPayments();
-            $model->order_id = $this->projectId;
-            $project = Zakaz::model()->findByPk($this->projectId);
-            $model->project_price = $project->budget;
-            if ($model->save()) {
-                $payments = $model;
-            }
+            $payment = new ProjectPayments;
+            $payment->order_id = $this->projectId;
+            $payment->received = 0;
+            $payment->to_receive = 0;
+            $payment->to_pay = 0;
+            $payment->save();
         }
         $this->renderForm($payments);
         
@@ -28,9 +28,9 @@ class PaymentWidget extends CWidget {
             $userRole = 'Manager';
         }
         Yii::app()->controller->renderPartial('application.modules.project.widgets.payment.views.view'.$userRole, array(
-            'model' => $payment
+            'model'     => $payments,
+            'projectId' => $this->projectId
         ));
-    } 
-    
-    
+    }
+
 }

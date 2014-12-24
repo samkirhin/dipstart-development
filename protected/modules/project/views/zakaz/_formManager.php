@@ -130,43 +130,14 @@
 		<?php echo $form->error($model,'pages'); ?>
 	</td>
         <td>
-		<?php echo $form->labelEx($model,'budget'); ?>
-		<?php echo $form->textField($model,'budget',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'budget'); ?>
-	</td>
+            
+        </td>
         <td>
-		<?php echo $form->labelEx($model,'with_prepayment');
-		  $list = array('0' => ProjectModule::t('No'), '1' => ProjectModule::t('Yes'));
-          echo $form->dropDownList($model, 'with_prepayment', $list);?>
-		<?php echo $form->error($model,'with_prepayment'); ?>
-	</td>
-    </tr>
-    <tr>
-        <td>
-		<?php echo $form->labelEx($model,'customer_price'); ?>
-		<?php echo $form->textField($model,'customer_price',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'customer_price'); ?>
-	</td>
-        <td>
-		<?php echo $form->labelEx($model,'author_price'); ?>
-		<?php echo $form->textField($model,'author_price',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'author_price'); ?>
-	</td>
-        <td>
-		<?php echo $form->labelEx($model,'author_payed'); ?>
-		<?php echo $form->textField($model,'author_payed',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'author_payed'); ?>
+            
         </td>
     </tr>
+    
     </table>
-
-    <div class="row">
-		<?php echo $form->labelEx($model,'is_payed');
-		  $list = array('0' => ProjectModule::t('No'), '1' => ProjectModule::t('Yes'));
-          echo $form->dropDownList($model, 'is_payed', $list);?>
-		<?php echo $form->error($model,'is_payed'); ?>
-	</div>
-
 	<div class="row">
 		<?php echo $form->labelEx($model,'add_demands'); ?>
 		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53)); ?>

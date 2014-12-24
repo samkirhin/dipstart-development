@@ -1,4 +1,4 @@
-<div class="project_payments">
+<div id="project_payments">
     <table class="table table-striped" style="font-size: 12px">
         <tr>
             <td>

@@ -7,11 +7,6 @@ $this->breadcrumbs=array(
 	ProjectModule::t('Manage'),
 );
 
-$this->menu=array(
-	array('label'=>ProjectModule::t('List Zakaz'), 'url'=>array('index')),
-	array('label'=>ProjectModule::t('Create Zakaz'), 'url'=>array('create')),
-);
-
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
