@@ -12,10 +12,10 @@ return array(
     // application components
     'components' => array(
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=project',
+            'connectionString' => 'mysql:host=localhost;dbname=dipstart',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'ььь',
+            'password' => '',
             'charset' => 'utf8',
         ),
         // uncomment the following to use a MySQL database
