@@ -30,7 +30,7 @@ if ($user->isCustomer() || $user->isManager() || $user->isAdmin()) { ?>
             <?php echo $form->textArea($changes, 'comment', array('rows' => 6, 'cols' => 70)); ?>
         </div>
 
-        <?php if (User::model()->isManager()) { ?>
+        <?php if (User::model()->isManager() | User::model()->isAdmin()) { ?>
             <div class = "row">
                 <?php echo $form->labelEx($changes, 'moderate'); ?>
                 <?php echo $form->dropDownList($changes,

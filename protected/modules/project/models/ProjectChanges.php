@@ -262,7 +262,7 @@ class ProjectChanges extends CActiveRecord {
      */
     public function isAllowedAdd() {
 
-        if (User::model()->isManager()) {
+        if (User::model()->isManager() | User::model()->isAdmin()) {
             return true;
         }
         $project = Zakaz::model()->findByPk($this->project_id);
