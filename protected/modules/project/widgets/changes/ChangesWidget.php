@@ -23,11 +23,12 @@ class ChangesWidget extends CWidget {
     public function init() {
 
         $this->userObj = User::model();
+        $isApprove = ProjectChanges::approveAllowed() ? 'true' : 'false';
         $isEditable = ($this->userObj->isManager() | $this->userObj->isCustomer() | $this->userObj->isAdmin()) ? 'true' : 'false';
         $this->changes = new ProjectChanges();
         Yii::app()->clientScript->registerScriptFile('/js/jQuery.form.js');
         Yii::app()->clientScript->registerScriptFile('/js/changes.js');
-        Yii::app()->clientScript->registerScript('changes-script', "var changes = new ChangesController('{$this->project->id}', {$isEditable});
+        Yii::app()->clientScript->registerScript('changes-script', "var changes = new ChangesController('{$this->project->id}', {$isEditable}, {$isApprove});
 changes.init();", CClientScript::POS_END);
         Yii::app()->clientScript->registerCssFile('/css/changes.css');
 

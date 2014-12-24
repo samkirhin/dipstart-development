@@ -115,7 +115,7 @@ $this->widget('zii.widgets.CDetailView', array(
 	'attributes'=>$attr,
 )); ?>
 <?php
-    $this->widget('ZakazPartWidget', array(
+    $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
     'projectId'=>$model->id,
     'userType'=>'1',
     'action'=>'show'
