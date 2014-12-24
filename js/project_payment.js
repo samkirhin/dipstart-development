@@ -8,11 +8,10 @@ var ProjectPayments = function(orderId) {
     this.w_price = this.form.find('.work_price_input');
     this.t_pay = this.form.find('.to_pay_input');
     this.t_receive = this.form.find('.to_receive_input');
-    this.payment_received = this.form.find('.payment_received');
+    this.received = this.form.find('.payment_received');
     this.payed = this.form.find('.payment_payed');
     this.to_receive = this.form.find('.payment_to_receive');
     this.to_pay = this.form.find('.payment_to_pay');
-    this.payment_summary = this.form.find('.payment_summ');
     
     self.form.find('.send_user_payments').on('click', function() {
         var proj_price = self.p_price.val();
@@ -54,13 +53,11 @@ var ProjectPayments = function(orderId) {
     });
     
     self.form.find('.send_managers_approve'). on('click', function() {
-        
         $.post('index.php?r=project/payment/managersApprove', JSON.stringify({
             'order_id': self.orderId
         }), function (response) {
             if (response.data) {
-                self.to_receive.text(0);
-                self.payment_received.text(response.data.received);
+                self.recieved.text(responce.data.received);
             } else {
             }
         }, 'json');

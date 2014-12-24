@@ -30,13 +30,12 @@ if ($user->isCustomer() || $user->isManager() || $user->isAdmin()) { ?>
             <?php echo $form->textArea($changes, 'comment', array('rows' => 6, 'cols' => 70)); ?>
         </div>
 
-        <?php if (ProjectChanges::approveAllowed()) { ?>
+        <?php if (User::model()->isManager()) { ?>
             <div class = "row">
-                <label for = "ProjectChanges_moderate">Модерация</label>
+                <?php echo $form->labelEx($changes, 'moderate'); ?>
                 <?php echo $form->dropDownList($changes,
                     'moderate',
-                    array('1' => ProjectModule::t('Approved'), '0' => ProjectModule::t('Not approved')),
-                    array('style' => ''));
+                    array('1' => ProjectModule::t('Approved'), '0' => ProjectModule::t('Not approved')));
                 ?>
             </div>
         <?php } ?>

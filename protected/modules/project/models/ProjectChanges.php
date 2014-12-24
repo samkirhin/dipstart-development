@@ -50,8 +50,6 @@ class ProjectChanges extends CActiveRecord {
             array('comment', 'length', 'max' => 450),
             array('moderate', 'length', 'max' => 45),
             array('date_update, date_moderate', 'safe'),
-            array('moderate', 'safe', 'on' => 'approve'),
-            array('id, user_id, project_id, file, comment, date_create, date_update, date_moderate', 'unsafe', 'on' => 'approve'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, user_id, project_id, file, comment, date_create, date_update, date_moderate, moderate', 'safe', 'on' => 'search'),
@@ -237,11 +235,6 @@ class ProjectChanges extends CActiveRecord {
         return Yii::app()->basePath . '/' . self::FILE_PATH . '/' . $this->file;
     }
 
-    static public function approveAllowed() {
-
-        return (User::model()->isManager() || User::model()->isAdmin());
-    }
-
     /**
      * Returns path to dir where stored files
      *
@@ -269,7 +262,7 @@ class ProjectChanges extends CActiveRecord {
      */
     public function isAllowedAdd() {
 
-        if (User::model()->isManager() | User::model()->isAdmin()) {
+        if (User::model()->isManager()) {
             return true;
         }
         $project = Zakaz::model()->findByPk($this->project_id);

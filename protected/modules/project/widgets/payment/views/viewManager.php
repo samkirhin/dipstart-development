@@ -51,7 +51,7 @@
                 <b><span class="payment_to_receive"><?php echo $model->to_receive; ?></span></b>
             </td>
             <td>
-                Сумма на оплату:
+                Суммарно на оплату:
             </td>
             <td>
                 <b><span class="payment_to_pay"><?php echo $model->to_pay; ?></span></b>
@@ -62,7 +62,10 @@
                 Подтвердить платеж:
             </td>
             <td>
+                <div class="btn-group" role="group">
                 <button class="btn btn-default send_managers_approve">Подтвердить</button>
+                <button class="btn btn-default send_cancel_approve">Отменить</button>
+                </div>
             </td>
             <td>
                 Сумма платежей:

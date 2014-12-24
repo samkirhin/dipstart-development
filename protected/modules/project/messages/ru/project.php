@@ -57,6 +57,5 @@ return array(
     'Edit changes' => 'Изменить доработку',
     'Attach file' => 'Прикрепить файл',
     'Approved' => 'Одобрено',
-    'Not approved' => 'Не одобрено',
     'You are not allowed to edit!' => 'У Вас недостаточно прав для редактирования!',
 );
