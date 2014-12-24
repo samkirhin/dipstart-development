@@ -110,8 +110,9 @@ class PaymentController extends CController {
             'ORDER_ID'=>$orderId
         ));
         $payment->received = $payment->received + $payment->to_receive;
+        $to_res = $payment->to_receive;
         $payment->to_receive = 0;
-        if ($payment->save()) {
+        if ($payment->save() && $to_res != 0) {
             $order = Zakaz::model()->findByPk($orderId);
             $buh = new Payment;
             $buh->approve = 0;
@@ -120,7 +121,7 @@ class PaymentController extends CController {
             $buh->theme = $order->title;
             $user = User::model()->findByPk($order->user_id);
             $buh->user = $user->email;
-            $buh->summ = $payment->received;
+            $buh->summ = $to_res;
             $buh->payment_type = 1;
             $manag = User::model()->findByPk(Yii::app()->user->id);
             $buh->manager = $manag->email;
@@ -133,7 +134,7 @@ class PaymentController extends CController {
         } else {
             $this->_response->setData(
                 array (
-                    'result' => 'false'
+                    'received' => $payment->received
                 )
             );
         }
