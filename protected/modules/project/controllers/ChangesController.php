@@ -18,6 +18,7 @@ class ChangesController extends Controller {
         );
     }
 
+
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
@@ -30,6 +31,10 @@ class ChangesController extends Controller {
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                   'actions' => array('add', 'edit', 'list', 'delete', 'item'),
                   'users' => array('@'),
+            ),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                  'actions' => array('approve'),
+                  'expression' => array('ProjectChanges', 'approveAllowed')
             ),
             array('deny',  // deny all users
                   'users' => array('*'),
@@ -89,7 +94,7 @@ class ChangesController extends Controller {
             if (!empty($model->fileupload)) {
                 $model->file = 'no';
             }
-            if (User::model()->isManager()) {
+            if (ProjectChanges::approveAllowed()) {
                 $model->moderate = isset($_POST['ProjectChanges']['moderate']) ? (int)$_POST['ProjectChanges']['moderate'] : 0;
             }
 
@@ -114,6 +119,33 @@ class ChangesController extends Controller {
 
     }
 
+    public function actionApprove($id) {
+
+        if (!Yii::app()->request->isAjaxRequest) {
+            return false;
+        }
+        $model = $this->loadModel($id);
+        $model->scenario = 'approve';
+        if (!$model->isAllowedAdd()) {
+            echo CJSON::encode(array('error' => array('text' => array(ProjectModule::t('You are not allowed to change!')))));
+            Yii::app()->end();
+        }
+        if (isset($_REQUEST['moderate'])) {
+            $model->moderate = !$model->isModerate();
+            $model->date_update = date('Y-m-d H:i:s');
+            if (ProjectChanges::approveAllowed()) {
+                $model->date_moderate = date('Y-m-d H:i:s');
+            }
+
+            if ($model->save(false)) {
+                echo CJSON::encode(array('success' => true, 'approve' => ($model->isModerate() ? 'true' : 'false')));
+                Yii::app()->end();
+            }
+        }
+        echo CJSON::encode(array('error' => array('text' => array('Данные не переданы!'))));
+        Yii::app()->end();
+    }
+
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -135,7 +167,7 @@ class ChangesController extends Controller {
             $model->date_update = date('Y-m-d H:i:s');
             $model->attributes = $_POST['ProjectChanges'];
             $model->fileupload = CUploadedFile::getInstance($model, 'fileupload');
-            if (User::model()->isManager()) {
+            if (ProjectChanges::approveAllowed()) {
                 $model->date_moderate = date('Y-m-d H:i:s');
             }
             if (!$model->validate()) {
