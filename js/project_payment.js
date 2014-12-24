@@ -8,7 +8,7 @@ var ProjectPayments = function(orderId) {
     this.w_price = this.form.find('.work_price_input');
     this.t_pay = this.form.find('.to_pay_input');
     this.t_receive = this.form.find('.to_receive_input');
-    this.received = this.form.find('.payment_received');
+    this.payment_received = this.form.find('.payment_received');
     this.payed = this.form.find('.payment_payed');
     this.to_receive = this.form.find('.payment_to_receive');
     this.to_pay = this.form.find('.payment_to_pay');
@@ -57,7 +57,8 @@ var ProjectPayments = function(orderId) {
             'order_id': self.orderId
         }), function (response) {
             if (response.data) {
-                self.recieved.text(responce.data.received);
+                self.payment_received.text(response.data.received);
+                self.to_receive.text(0);
             } else {
             }
         }, 'json');

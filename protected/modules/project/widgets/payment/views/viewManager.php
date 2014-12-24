@@ -62,10 +62,7 @@
                 Подтвердить платеж:
             </td>
             <td>
-                <div class="btn-group" role="group">
                 <button class="btn btn-default send_managers_approve">Подтвердить</button>
-                <button class="btn btn-default send_cancel_approve">Отменить</button>
-                </div>
             </td>
             <td>
                 Сумма платежей:
