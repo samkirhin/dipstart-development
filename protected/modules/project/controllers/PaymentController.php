@@ -17,7 +17,7 @@ class PaymentController extends CController {
         } else {
             $dataProvider = new CActiveDataProvider('Payment', array(
                 'pagination' => array(
-                    'pageSize' => '20',
+                    'pageSize' => '50',
                 ),
             ));
             $this->render('index', array(
@@ -71,7 +71,8 @@ class PaymentController extends CController {
         
         
         $payment->work_price        = $this->_request->getParam('work_price');
-        $payment->to_pay            = $payment->to_pay + $this->_request->getParam('to_pay');
+        $paying = $this->_request->getParam('to_pay');
+        $payment->to_pay            = $payment->to_pay + $paying;
         if ($payment->save()) {
             $order = Zakaz::model()->findByPk($orderId);
             $buh = new Payment;
@@ -81,7 +82,7 @@ class PaymentController extends CController {
             $buh->theme = $order->title;
             $user = User::model()->findByPk($order->executor);
             $buh->user = $user->email;
-            $buh->summ = $payment->to_pay;
+            $buh->summ = $paying;
             $buh->payment_type = 1;
             $manag = User::model()->findByPk(Yii::app()->user->id);
             $buh->manager = $manag->email;
