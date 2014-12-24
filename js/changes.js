@@ -43,29 +43,35 @@ var ChangesController = function (projectId, isEdited, isAllowedApprove) {
 
                             var titleApprove = '';
                             var classApprove = '';
+                            var colorIco = 'black';
                             if (isAllowedApprove) {
 
                                 titleApprove = 'Отменить одобрение';
                                 classApprove = classApproveButtons;
+                                colorIco = 'green';
                                 if (el['moderate'] == 0) {
 
+                                    colorIco = 'red';
                                     classApprove = classNotApproveButtons;
                                     titleApprove = 'Одобрить';
                                 }
                                 crudButton = crudButton +
                                 '<div class="changes-button approve-changes-button" title="' + titleApprove + '">' +
-                                '<i class="' + classApprove + ' glyphicon"></i></div>';
+                                '<i class="' + classApprove + ' glyphicon" style="color:' + colorIco + '" ></i></div>';
                             } else if (isEdited) {
+
+                                colorIco = 'green';
                                 titleApprove = 'Одобрено';
                                 classApprove = classApproveButtons;
                                 if (el['moderate'] == 0) {
 
+                                    colorIco = 'red';
                                     classApprove = classNotApproveButtons;
                                     titleApprove = 'Не одобрено (на модерации)';
                                 }
                                 crudButton = crudButton +
                                 '<div class="changes-button" style="cursor:default;" title="' + titleApprove + '">' +
-                                '<i class="' + classApprove + ' glyphicon"></i></div>';
+                                '<i class="' + classApprove + ' glyphicon" style="color:' + colorIco + '"></i></div>';
                             }
                             crudButton = crudButton +
                             '<div class="changes-button edit-changes-button" title="Редактировать">' +
