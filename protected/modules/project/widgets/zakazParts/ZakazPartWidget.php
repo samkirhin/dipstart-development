@@ -16,6 +16,7 @@ class ZakazPartWidget extends CWidget{
                 $type = 'show';
                 break;
         }
+        
         $this->renderPartForm($type);
     }
     

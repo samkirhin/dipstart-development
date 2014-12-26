@@ -65,6 +65,60 @@ class ZakazPartsController extends Controller
             }
         }
         
+        public function actionApiEditPart() {
+            $this->_prepairJson();
+            $partId = $this->_request->getParam('id');
+            $model = ZakazParts::model()->findByPk($partId);
+            $model->comment = $this->_request->getParam('comment');
+            $model->date = $this->_request->getParam('date');
+            $model->title = $this->_request->getParam('title');
+            $files = $this->_request->getParam('files');
+            $path = '/uploads/additions/'.$partId.'/';
+            $this->checkDir($path);
+            foreach($files as $file) {
+                $list = explode('.', $file);
+                $newName = $this->getGuid();
+                $filePath = '/uploads/additions/temp/'.$file;
+                $fileNewPath = $path.$file;
+                $probe = rename($filePath, $fileNewPath);
+                $fileModel = new ZakazPartsFiles();
+                $fileModel->part_id = $model->id;
+                $fileModel->orig_name = $file;
+                $fileModel->file_name = implode('.', $list);
+                $fileModel->comment = '';
+                $fileModel->save();
+            }
+            $model->save();
+            $this->_response->setData(array(
+                result => true
+            ));
+            $this->_response->send();
+        }
+        
+        private function checkDir($path) {
+            if (!file_exists($path)){
+                mkdir($path, 0777, true);
+            }
+        }
+        
+        protected function getGuid(){
+            if (function_exists('com_create_guid')){
+                return com_create_guid();
+            }else{
+                mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+                $charid = strtoupper(md5(uniqid(rand(), true)));
+                $hyphen = chr(45);// "-"
+                $uuid = chr(123)// "{"
+                    .substr($charid, 0, 8).$hyphen
+                    .substr($charid, 8, 4).$hyphen
+                    .substr($charid,12, 4).$hyphen
+                    .substr($charid,16, 4).$hyphen
+                    .substr($charid,20,12)
+                    .chr(125);// "}"
+                return $uuid;
+            }
+        }
+        
         /*Создание новой части на основе имени и ИД-заказа*/
         public function actionApiCreate() {
             $this->_prepairJson();
@@ -111,12 +165,9 @@ class ZakazPartsController extends Controller
             $this->_prepairJson();
             $id = $this->_request->getParam('id');
             $model = ZakazParts::model()->findByPk($id);
-            $part = array();
-            $part = $this->renderPartial('_form', array (
-                'model' => $model
-            ));
+            
             $this->_response->setData(array(
-                    'part'=>$part
+                    'part'=>$model
                 ));
             $this->_response->send();
         }
@@ -124,9 +175,9 @@ class ZakazPartsController extends Controller
         public function actionUpload()
         {
             Yii::import("ext.EAjaxUpload.qqFileUploader");
-            $path = 'uploads/additions/';
-            mkdir($path, 0777, true);
-            $folder=$path;// folder for uploaded files
+//            $path = 'uploads/additions/temp/';
+//            mkdir($path, 0777, true);
+            $folder='uploads/additions/temp/';// folder for uploaded files
             $allowedExtensions = array("jpg");//array("jpg","jpeg","gif","exe","mov" and etc...
             $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
             $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);

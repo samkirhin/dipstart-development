@@ -143,4 +143,27 @@ class PaymentController extends CController {
         
     }
     
+    public function actionManagersCancel() {
+        
+        $this->_prepairJson();
+        $orderId = $this->_request->getParam('order_id');
+        $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+            'ORDER_ID'=>$orderId
+        ));
+        $payment->to_receive = 0;
+        if ($payment->save()) {
+            $this->_response->setData(
+                array (
+                    'to_receive' => $payment->to_receive
+                )
+            );
+        } else {
+            $this->_response->setData(
+                array (
+                    'to_receive' => $payment->to_receive
+                )
+            );
+        }
+        $this->_response->send();
+    }
 }

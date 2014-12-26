@@ -63,4 +63,15 @@ var ProjectPayments = function(orderId) {
             }
         }, 'json');
     });
+    
+    self.form.find('.send_managers_cancel'). on('click', function() {
+        $.post('index.php?r=project/payment/managersCancel', JSON.stringify({
+            'order_id': self.orderId
+        }), function (response) {
+            if (response.data) {
+                self.to_receive.text(response.data.to_receive);
+            } else {
+            }
+        }, 'json');
+    });
 }

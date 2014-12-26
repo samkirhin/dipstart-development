@@ -52,7 +52,55 @@
     </div>
     <!-- Див для редактирования части -->
     <div class="edit_part">
-        Edit part <button class="cancel">Отмена</button>
+        <table style="background-color:lightgrey; font-size: 14px" >
+        <tr>
+            <td width="100px">
+                id: <span class='id'>id</span>
+            </td>
+        </tr>
+        
+        <tr>
+            <td width="100px">
+                date: <input class='part_date' type='text' />
+            </td>
+        </tr>
+        <tr>
+            <td width="100px">
+                title: <input class='part_title' type='text' />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                    array(
+                       'id'=>'EAjaxUpload',
+                       'config'=>array(
+                                       'action'=>$this->createUrl('zakazParts/upload/'),
+                                       'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                                       'debug'=>false,
+                                       'allowedExtensions'=>array('jpg', 'gif', 'txt'),
+                                       'sizeLimit'=>10*1024*1024,// maximum file size in bytes
+                                       'minSizeLimit'=>10,// minimum file size in bytes
+                                       'onComplete'=>"js:function(id, fileName, responseJSON){ alert(fileName); }"
+                                      )
+                    ));
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                comment: <input class='part_comment' type='text' />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                author: <span class='author'>Author</span>
+            </td>
+        </tr>
+        </table>
+	
+        <button class="save_changes">Сохранить</button>
+        <button class="cancel">Отмена</button>
     </div>
 </div>
 <!-- Вызов скрипта для обраьртки вьюхи -->

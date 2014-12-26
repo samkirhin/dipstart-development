@@ -5,7 +5,7 @@ class m141219_203355_create_payment_system extends CDbMigration
 	public function safeUp()
 	{
             $this->createTable("Payment", array(
-                'id' => 'int',
+                'id' => 'int NOT NULL AUTO_INCREMENT',
                 'order_id' => 'int',
                 'receive_date' => 'date',
                 'pay_date' => 'date',
@@ -18,9 +18,9 @@ class m141219_203355_create_payment_system extends CDbMigration
                 'details_bank' => 'text',
                 'payment_type' => 'tinyint(1)',
                 'approve' => 'tinyint(1)',
-                'method' => 'varchar(100)'
+                'method' => 'varchar(100)',
+                'PRIMARY KEY (`id`)'
             ));
-            $this->addPrimaryKey('payment_pk', 'Payment', 'id');
 	}
 
 	public function down()

@@ -418,3 +418,13 @@ Stack trace:
 	`payed` float(10,2),
 	PRIMARY KEY (`id`)
 ).
+2014/12/26 02:31:16 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2),
+	PRIMARY KEY (`id`)
+)' at line 6. The SQL statement executed was: CREATE TABLE `ZakazPartsFiles` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`part_id` int(11),
+	`orig_name` varchar(100),
+	`file_name` varchar(100),
+	`comment` text(10,2),
+	PRIMARY KEY (`id`)
+).

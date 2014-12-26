@@ -2,6 +2,8 @@ var ZakazPartsView = function(orderId) {
     var self = this;
     this.form = $('#zakaz_parts');
     this.orderId = orderId;
+    this.partId = 0;
+    this.filename;
     
     /* Привязка имен */
     this.place = this.form.find('.show_parts');
@@ -36,8 +38,12 @@ var ZakazPartsView = function(orderId) {
             'id': id
         }), function (response) {
             if (response.data) {
-                self.editPart.empty();
-                $.parseJSON(response.data.part).appendTo('.edit_part');
+                self.partId = response.data.part.id;
+                self.editPart.find('span.id').text(response.data.part.id);
+                self.editPart.find('span.author').text(response.data.part.author_id);
+                self.editPart.find('input.part_title').val(response.data.part.title);
+                self.editPart.find('input.part_date').val(response.data.part.date);
+                self.editPart.find('input.part_comment').val(response.data.part.comment);
             } else {
             }
         }, 'json');
@@ -45,6 +51,41 @@ var ZakazPartsView = function(orderId) {
         self.place.hide();
         self.addForm.hide();
     }
+    
+    $(document).on('part_edit_add_file', function(filename){
+        self.filename = filename;
+        alert('This is '+filename);
+    });
+    
+    self.form.find('button.save_changes').on('click', function() {
+        var title = self.editPart.find('input.part_title').val();
+        var date = self.editPart.find('input.part_date').val();
+        var comment = self.editPart.find('input.part_comment').val();
+        var files = new Array();
+        var test = self.editPart.find('.qq-upload-file');
+        test.each(function(i){
+           files.push($(this).text()); 
+        });
+        $.post('index.php?r=project/zakazParts/apiEditPart', JSON.stringify({
+            'id': self.partId,
+            'title': title,
+            'date': date,
+            'comment': comment,
+            'files': files
+        }), function (response) {
+            if (response.data.saved) {
+                self.loadList();
+            } else {
+                self.partId = response.data.part.id;
+                self.editPart.find('span.id').text(response.data.part.id);
+                self.editPart.find('span.author').text(response.data.part.author_id);
+                self.editPart.find('input.part_title').val(response.data.part.title);
+                self.editPart.find('input.part_date').val(response.data.part.date);
+                self.editPart.find('input.part_comment').val(response.data.part.comment);
+            }
+        }, 'json');
+        
+    });
     
     this.loadList();
     
