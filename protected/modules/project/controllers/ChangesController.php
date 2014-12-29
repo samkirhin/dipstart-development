@@ -95,7 +95,9 @@ class ChangesController extends Controller {
                 $model->file = 'no';
             }
             if (ProjectChanges::approveAllowed()) {
-                $model->moderate = isset($_POST['ProjectChanges']['moderate']) ? (int)$_POST['ProjectChanges']['moderate'] : 0;
+                $model->moderate = 1;
+            } else {
+                $model->moderate = 0;
             }
 
             if (!$model->validate()) {
@@ -169,6 +171,9 @@ class ChangesController extends Controller {
             $model->fileupload = CUploadedFile::getInstance($model, 'fileupload');
             if (ProjectChanges::approveAllowed()) {
                 $model->date_moderate = date('Y-m-d H:i:s');
+                $model->moderate = 1;
+            } else {
+                $model->moderate = 0;
             }
             if (!$model->validate()) {
                 echo CJSON::encode(array('error' => CJSON::decode(CActiveForm::validate($model))));

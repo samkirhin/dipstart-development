@@ -13,7 +13,7 @@
  * @property string  $date_create
  * @property string  $date_update
  * @property string  $date_moderate
- * @property string  $moderate
+ * @property integer     $moderate
  */
 Yii::import('application.helpers.STranslate');
 
@@ -42,7 +42,7 @@ class ProjectChanges extends CActiveRecord {
             array('user_id, project_id, date_create', 'required'),
             array('user_id, project_id', 'numerical', 'integerOnly' => true),
             array('user_id, project_id, date_create', 'unsafe'),
-            array('user_id, project_id, date_create', 'safe', 'on' => 'add'),
+            array('user_id, project_id, date_create, moderate', 'safe', 'on' => 'add'),
             array('comment', 'safe', 'on' => 'edit'),
             array('file', 'length', 'max' => 350),
             array('file', 'validateOnEmptyFileComment'),
@@ -126,7 +126,6 @@ class ProjectChanges extends CActiveRecord {
 
         if ($this->isNewRecord) {
             $this->date_create = date('Y-m-d H:i:s');
-            $this->moderate = 0;
             if (!Yii::app()->user->isGuest) {
                 $this->user_id = Yii::app()->user->id;
             }
