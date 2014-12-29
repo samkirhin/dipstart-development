@@ -13,7 +13,7 @@ var ProjectPayments = function(orderId) {
     this.to_receive = this.form.find('.payment_to_receive');
     this.to_pay = this.form.find('.payment_to_pay');
     
-    self.form.find('.send_user_payments').on('click', function() {
+    this.sendPayments = function() {
         var proj_price = self.p_price.val();
         var work_price = self.w_price.val();
         var receive = self.t_receive.val();
@@ -30,10 +30,6 @@ var ProjectPayments = function(orderId) {
             }
         }, 'json');
         
-    });
-    
-    self.form.find('.send_author_payments').on('click', function() {
-        
         var proj_price = self.p_price.val();
         var work_price = self.w_price.val();
         var pay = self.t_pay.val();
@@ -49,6 +45,11 @@ var ProjectPayments = function(orderId) {
             } else {
             }
         }, 'json');
+        
+    }
+    
+    self.form.find('.send_user_payments').on('click', function() {
+        self.sendPayments();
         
     });
     

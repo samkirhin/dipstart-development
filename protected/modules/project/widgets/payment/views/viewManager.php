@@ -68,14 +68,16 @@
                 </div>
             </td>
             <td>
-                Сумма платежей:
+                
             </td>
             <td>
-                <b><span class="payment_summ"><?php $p = $model->payed + $model->to_pay;
-                    echo $p; ?></span></b>
+                
             </td>
         </tr>
         <tr>
+            <td>
+                
+            </td>
             <td>
                 
             </td>
@@ -84,9 +86,6 @@
             </td>
             <td>
                 
-            </td>
-            <td>
-                <button class="btn btn-primary send_author_payments">Сохранить</button>
             </td>
         </tr>
     </table>
