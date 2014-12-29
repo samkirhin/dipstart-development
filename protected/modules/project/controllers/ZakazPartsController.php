@@ -46,9 +46,23 @@ class ZakazPartsController extends Controller
             $this->_prepairJson();
             $zakazId = $this->_request->getParam('orderId');
             if (User::model()->isAdmin() || User::model()->isManager()) {
-                $parts = ZakazParts::model()->findAll('proj_id = :PROJ_ID',
+                $models = ZakazParts::model()->findAll('proj_id = :PROJ_ID',
                     array("PROJ_ID"=>$zakazId)
                 );
+                $parts = array();
+                foreach ($models as $model) {
+                    $part['id'] = $model->id;
+                    $part['proj_id'] = $model->proj_id;
+                    $part['title'] = $model->title;
+                    $part['date'] = $model->date;
+                    $part['author_id'] = $model->author_id;
+                    $part['show'] = $model->show;
+                    $part['comment'] = $model->comment;
+                    $part['files'] = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
+                        array("PART_ID"=>$model->id)
+                    );
+                    $parts[] = $part;
+                }
                 $this->_response->setData(array(
                     'parts'=>$parts
                 ));
@@ -73,24 +87,24 @@ class ZakazPartsController extends Controller
             $model->date = $this->_request->getParam('date');
             $model->title = $this->_request->getParam('title');
             $files = $this->_request->getParam('files');
-            $path = '/uploads/additions/'.$partId.'/';
+            $path = 'uploads/additions/'.$partId.'/';
             $this->checkDir($path);
             foreach($files as $file) {
                 $list = explode('.', $file);
                 $newName = $this->getGuid();
-                $filePath = '/uploads/additions/temp/'.$file;
-                $fileNewPath = $path.$file;
+                $filePath = $_SERVER['DOCUMENT_ROOT'].'uploads/additions/temp/'.$file;
+                $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'uploads/additions/'.$partId.'/'.$newName.".".$list['1'];
                 $probe = rename($filePath, $fileNewPath);
                 $fileModel = new ZakazPartsFiles();
                 $fileModel->part_id = $model->id;
                 $fileModel->orig_name = $file;
-                $fileModel->file_name = implode('.', $list);
+                $fileModel->file_name = $newName.".".$list['1'];
                 $fileModel->comment = '';
                 $fileModel->save();
             }
             $model->save();
             $this->_response->setData(array(
-                result => true
+                'result' => true
             ));
             $this->_response->send();
         }
@@ -108,15 +122,52 @@ class ZakazPartsController extends Controller
                 mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
                 $charid = strtoupper(md5(uniqid(rand(), true)));
                 $hyphen = chr(45);// "-"
-                $uuid = chr(123)// "{"
-                    .substr($charid, 0, 8).$hyphen
+                $uuid = substr($charid, 0, 8).$hyphen
                     .substr($charid, 8, 4).$hyphen
                     .substr($charid,12, 4).$hyphen
                     .substr($charid,16, 4).$hyphen
-                    .substr($charid,20,12)
-                    .chr(125);// "}"
+                    .substr($charid,20,12);// "}"
                 return $uuid;
             }
+        }
+        
+        public function actionApiEditFilesComment() {
+            $this->_prepairJson();
+            $fileid = $this->_request->getParam('id');
+            $file = new ZakazPartsFiles;
+            $id = $file->changeComment($fileid, $this->_request->getParam('comment'));
+            $this->_response->setData(array(
+                'id' => $id
+            ));
+            $this->_response->send();
+        }
+        
+        public function actionApiChangeIsShowed() {
+            $this->_prepairJson();
+            $partId = $this->_request->getParam('id');
+            $part = ZakazParts::model()->findByPk($partId);
+            if ($part->show == 1) {
+                $part->show = 0;
+            } else {
+                $part->show = 1;
+            }
+            $part->save();
+            $this->_response->setData(array(
+                'result' => true
+            ));
+            $this->_response->send();
+        }
+        
+        public function actionApiDeleteFile() {
+            $this->_prepairJson();
+            $fileid = $this->_request->getParam('id');
+            $file = new ZakazPartsFiles;
+            $result = $file->deleteFile($fileId);
+            unlink($_SERVER['DOCUMENT_ROOT'].'uploads/additions/'.$result['part'].'/'.$result['file']);
+            $this->_response->setData(array(
+                'id' => $result['part']
+            ));
+            $this->_response->send();
         }
         
         /*Создание новой части на основе имени и ИД-заказа*/
@@ -165,9 +216,12 @@ class ZakazPartsController extends Controller
             $this->_prepairJson();
             $id = $this->_request->getParam('id');
             $model = ZakazParts::model()->findByPk($id);
-            
+            $files = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
+                        array("PART_ID"=>$model->id)
+                    );
             $this->_response->setData(array(
-                    'part'=>$model
+                    'part' => $model,
+                    'files' => $files
                 ));
             $this->_response->send();
         }
@@ -175,18 +229,14 @@ class ZakazPartsController extends Controller
         public function actionUpload()
         {
             Yii::import("ext.EAjaxUpload.qqFileUploader");
-//            $path = 'uploads/additions/temp/';
-//            mkdir($path, 0777, true);
             $folder='uploads/additions/temp/';// folder for uploaded files
-            $allowedExtensions = array("jpg");//array("jpg","jpeg","gif","exe","mov" and etc...
+            $allowedExtensions = array('jpg', 'gif', 'txt', 'doc', 'docx');//array("jpg","jpeg","gif","exe","mov" and etc...
             $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
             $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
             $result = $uploader->handleUpload($folder);
             $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-
             $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
             $fileName=$result['filename'];//GETTING FILE NAME
-
             echo $return;// it's array
         }
 }

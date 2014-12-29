@@ -16,8 +16,8 @@
             </td>
         </tr>
         <tr>
-            <td>
-                file: '${file}'
+            <td class='files_to_${id}'>
+                
             </td>
             <td>
                 comment: '${comment}'

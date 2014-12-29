@@ -124,7 +124,7 @@ class qqFileUploader {
         }
 
         $pathinfo = pathinfo($this->file->getName());        
-        $filename=preg_replace("/[^\w\x7F-\xFF\s]/i", "", $pathinfo['filename']);
+        $filename=$pathinfo['filename'];
         if(!isset($filename) or empty($filename)) $filename=uniqid();
         $ext = $pathinfo['extension'];
 

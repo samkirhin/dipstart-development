@@ -47,7 +47,31 @@ class ZakazPartsFiles extends CActiveRecord
 		return array(
 		);
 	}
-
+        
+        public function changeComment($id, $comment) {
+            $file = self::model()->findByPk($id);
+            $file->comment = $comment;
+            if ($file->save()) {
+                return $file->part_id;
+            } else {
+                return false;
+            }
+            
+        }
+        
+        public function deleteFile($id) {
+            $file = self::model()->findByPk($id);
+            $result = array(
+                'part' => $file->part_id,
+                'file' => $file->file_name
+            );
+            if ($file->delete()) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+        
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -55,10 +79,10 @@ class ZakazPartsFiles extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'part_id' => 'Part',
-			'orig_name' => 'Orig Name',
-			'file_name' => 'File Name',
-			'comment' => 'Comment',
+			'part_id' => '№ части',
+			'orig_name' => 'Оригинальное имя',
+			'file_name' => 'Имя файла',
+			'comment' => 'Комментарий'
 		);
 	}
 

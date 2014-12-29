@@ -8,6 +8,7 @@ var ZakazPartsView = function(orderId) {
     /* Привязка имен */
     this.place = this.form.find('.show_parts');
     this.template = this.form.find('.zakazPartTemplate');
+    this.fileTemplate = this.form.find('.zakazFileTemplate');
     this.templateEdit = this.form.find('.editPartTemplate');
     this.buttonEdit = this.form.find('button.edit');
     this.buttonDelete = this.form.find('button.delete');
@@ -38,12 +39,32 @@ var ZakazPartsView = function(orderId) {
             'id': id
         }), function (response) {
             if (response.data) {
+                self.editPart.find('.qq-upload-list').empty();
                 self.partId = response.data.part.id;
                 self.editPart.find('span.id').text(response.data.part.id);
                 self.editPart.find('span.author').text(response.data.part.author_id);
                 self.editPart.find('input.part_title').val(response.data.part.title);
                 self.editPart.find('input.part_date').val(response.data.part.date);
                 self.editPart.find('input.part_comment').val(response.data.part.comment);
+                if (response.data.part.show == 1) {
+                    var but = self.editPart.find('.change_is_showed');
+                    but.attr('value', response.data.part.id);
+                    but.text('Не отображать');
+                } else {
+                    var but = self.editPart.find('.change_is_showed');
+                    but.attr('value', response.data.part.id);
+                    but.text('Отображать');
+                }
+                self.editPart.find('button.change_is_showed').on('click', function() {
+                    self.change_isshowed($(this).attr('value'));
+                });
+                self.fileTemplate.tmpl(response.data).appendTo('ul.qq-upload-list');
+                self.editPart.find('button.save_files_comment').on('click', function() {
+                    self.editFilesComment($(this).attr('value'));
+                });
+                self.editPart.find('button.delete_file').on('click', function() {
+                    self.deleteFile($(this).attr('value'));
+                });
             } else {
             }
         }, 'json');
@@ -52,10 +73,27 @@ var ZakazPartsView = function(orderId) {
         self.addForm.hide();
     }
     
-    $(document).on('part_edit_add_file', function(filename){
-        self.filename = filename;
-        alert('This is '+filename);
-    });
+    this.editFilesComment = function(id) {
+        var comment = self.editPart.find('.files_comment_'+id).val();
+        $.post('index.php?r=project/zakazParts/apiEditFilesComment', JSON.stringify({
+            'id': id,
+            'comment': comment
+        }), function (response) {
+            if (response.data) {
+                self.editPartShow(response.data.id);
+            }
+        }, 'json');
+    }
+    
+    this.change_isshowed = function(id) {
+        $.post('index.php?r=project/zakazParts/apiChangeIsShowed', JSON.stringify({
+            'id': id
+        }), function (response) {
+            if (response.data) {
+                self.editPartShow(id);
+            }
+        }, 'json');
+    }
     
     self.form.find('button.save_changes').on('click', function() {
         var title = self.editPart.find('input.part_title').val();
@@ -73,7 +111,8 @@ var ZakazPartsView = function(orderId) {
             'comment': comment,
             'files': files
         }), function (response) {
-            if (response.data.saved) {
+            if (response.data.result) {
+                self.editPart.find('.qq-upload-list').empty();
                 self.loadList();
             } else {
                 self.partId = response.data.part.id;

@@ -1,6 +1,14 @@
 <script src="/js/zakaz_parts.js"></script>
 <script src="/js/jquery.tmpl.min.js"></script>
 <div id="zakaz_parts">
+    <!--Тэмплэйт для редактирования файлов частей -->
+    <script class="zakazFileTemplate" type="text/x-jquery-tmpl">
+        {{each files}}
+            <li>
+                <a href="/uploads/additions/${part_id}/${file_name}">${orig_name}</a> Комментарий:<input type="text" class="files_comment_${id}" value="${comment}"><button class='save_files_comment' type='submit' value='${id}'>Сохранить</button>
+            </li>
+        {{/each}}
+    </script>
     <!-- Тэмплэйт для отображения частей -->
     <script class="zakazPartTemplate" type="text/x-jquery-tmpl">
         <table style="background-color:lightgrey; font-size: 14px" >
@@ -16,8 +24,9 @@
             </td>
         </tr>
         <tr>
-            <td>
-                file: '${file}'
+            <td>{{each files}}
+                    <a href="/uploads/additions/${part_id}/${file_name}">${orig_name}</a></br>
+                {{/each}}
             </td>
             <td>
                 comment: '${comment}'
@@ -75,14 +84,16 @@
                     array(
                        'id'=>'EAjaxUpload',
                        'config'=>array(
-                                       'action'=>$this->createUrl('zakazParts/upload/'),
-                                       'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
-                                       'debug'=>false,
-                                       'allowedExtensions'=>array('jpg', 'gif', 'txt'),
-                                       'sizeLimit'=>10*1024*1024,// maximum file size in bytes
-                                       'minSizeLimit'=>10,// minimum file size in bytes
-                                       'onComplete'=>"js:function(id, fileName, responseJSON){ alert(fileName); }"
-                                      )
+                            'action'=>$this->createUrl('zakazParts/upload/'),
+                            'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                            'debug'=>false,
+                            'allowedExtensions'=>array('jpg', 'gif', 'txt', 'doc', 'docx'),
+                            'sizeLimit'=>10*1024*1024,// maximum file size in bytes
+                            'minSizeLimit'=>10,// minimum file size in bytes
+                            'onComplete'=>"js:function(id, fileName, responseJSON){
+                                 alert(fileName + ' in ' + id);
+                             }"
+                        )
                     ));
                 ?>
             </td>
@@ -95,6 +106,11 @@
         <tr>
             <td>
                 author: <span class='author'>Author</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class='change_is_showed' type='submit' value=''>Отображать</button>
             </td>
         </tr>
         </table>
