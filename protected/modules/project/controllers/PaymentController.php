@@ -15,15 +15,77 @@ class PaymentController extends CController {
         if (!$user->superuser) {
             $this->redirect('/');
         } else {
-            $dataProvider = new CActiveDataProvider('Payment', array(
-                'pagination' => array(
-                    'pageSize' => '50',
-                ),
-            ));
-            $this->render('index', array(
-                'dataProvider' => $dataProvider,
-            ));
+            $this->render('admin');
         }
+    }
+    
+    public function actionApiView() {
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        if (!$user->superuser) {
+            $this->redirect('/');
+        } else {
+            $this->_prepairJson();
+            $sort = $this->_request->getParam('sort');
+            $type = $this->_request->getParam('type');
+            $searchField = $this->_request->getParam('search_field');
+            $searchType = $this->_request->getParam('search_type');
+            $searchString = $this->_request->getParam('search_string');
+            if (!$sort) {
+                $sort = 'receive_date';
+            }
+            if (!$type) {
+                $type = 'DESC';
+            }
+            if ($searchField == '' || $searchString == '' || $searchType == '') {
+                $sql = 'SELECT * FROM `Payment` ORDER BY `'.$sort.'` '.$type.' ; ';
+            } else {
+                switch ($searchType) {
+                    case 'bigger':
+                        $searchType = '<';
+                        break;
+                    case 'smaller':
+                        $searchType = '>';
+                        break;
+                    case 'equal':
+                        $searchType = '=';
+                        break;
+                }
+                $sql = 'SELECT * FROM `Payment` WHERE `'.$searchField.'` '.$searchType.' '.$searchString.' ORDER BY `'.$sort.'` '.$type.' ; ';
+            }
+            $data = Payment::model()->findAllBySql($sql);
+            $report = array();
+            $report['summary'] = 0;
+            $report['ids_count'] = 0;
+            foreach ($data as $row) {
+                $report['ids_count']++;
+                if ($row->payment_type == 0) {
+                    $report['summary'] = $report['summary'] + $row->summ;
+                } else {
+                    $report['summary'] = $report['summary'] - $row->summ;
+                }
+                
+            }
+            $this->_response->setData( array(
+                'data' => $data,
+                'report' => $report
+            ));
+            $this->_response->send();
+        }
+    }
+    
+    public function actionAdmin() {
+        $this->render('admin');
+    }
+    
+    public function actionApproveFromBookkeeper() {
+        $this->_prepairJson();
+        $id = $this->_request->getParam('id');
+        $payment = new Payment();
+        $result = $payment->approveFromBookkeeper($id);
+        $this->_response->setData(array(
+            'result' => $result
+        ));
+        $this->_response->send();
     }
     
     public function actionSavePaymentsToUser() {
@@ -123,7 +185,7 @@ class PaymentController extends CController {
             $user = User::model()->findByPk($order->user_id);
             $buh->user = $user->email;
             $buh->summ = $to_res;
-            $buh->payment_type = 1;
+            $buh->payment_type = 0;
             $manag = User::model()->findByPk(Yii::app()->user->id);
             $buh->manager = $manag->email;
             $buh->save();

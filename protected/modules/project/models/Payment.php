@@ -83,6 +83,16 @@ class Payment extends CActiveRecord
 		);
 	}
 
+        public function approveFromBookkeeper($id) {
+            $payment = self::model()->findByPk($id);
+            $payment->approve = 1;
+            if ($payment->save()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
