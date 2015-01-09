@@ -13,8 +13,36 @@ $this->menu=array(
 ?>
 
 <h1><?=ProjectModule::t('Zakazs')?></h1>
-
+<table class="table table-bordered">
+    <thead>
+        <th>
+            id
+        </th>
+        <th>
+            Заказчик
+        </th>
+        <th>
+            Категория
+        </th>
+        <th>
+            Тип
+        </th>
+        <th>
+            Название
+        </th>
+        <th>
+            Создан
+        </th>
+        <th>
+            Срок до
+        </th>
+        <th>
+            Статус
+        </th>
+        
+    </thead>
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>
+</table>

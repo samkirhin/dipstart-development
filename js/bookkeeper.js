@@ -10,6 +10,8 @@ var BookkeeperScript = function(){
     this.search_type = "";
     this.search_string = "";
     
+    
+    
     this.loadList = function () {
         $.post('index.php?r=project/payment/apiView', JSON.stringify({
             'sort': self.oldSearch,
@@ -23,16 +25,17 @@ var BookkeeperScript = function(){
                 self.summTemplate.tmpl(response.data.report).appendTo('.bookkeeperTable');
                 self.template.tmpl(response.data.data).appendTo('.bookkeeperTable');
                 self.form.find('button.approve_payment').on('click', function(){
-                    self.setApprove($(this).attr('value'));
+                    self.setApprove($(this).attr('value'), $(this).attr('pay_method'));
                 });
             } else {
             }
         }, 'json');
     }
     
-    this.setApprove = function(id) {
+    this.setApprove = function(id, method) {
         $.post('index.php?r=project/payment/approveFromBookkeeper', JSON.stringify({
-            'id': id
+            'id': id,
+            'method': method
         }), function (response) {
             self.loadList();
         }, 'json');

@@ -428,3 +428,21 @@ Stack trace:
 	`comment` text(10,2),
 	PRIMARY KEY (`id`)
 ).
+2015/01/08 18:28:42 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'var_char(100),
+	`event_id` int(11),
+	`description` text,
+	PRIMARY KEY (`id`)
+)' at line 3. The SQL statement executed was: CREATE TABLE `Events` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`type` var_char(100),
+	`event_id` int(11),
+	`description` text,
+	PRIMARY KEY (`id`)
+).
+2015/01/08 18:29:13 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'Events' already exists. The SQL statement executed was: CREATE TABLE `Events` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`type` varchar(100),
+	`event_id` int(11),
+	`description` text,
+	PRIMARY KEY (`id`)
+).

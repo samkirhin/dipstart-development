@@ -1,4 +1,5 @@
 <div id="project_payments">
+    <h3>Оплаты</h3>
     <table class="table table-striped" style="font-size: 12px">
         <tr>
             <td>

@@ -106,6 +106,7 @@ class ChangesController extends Controller {
             }
             try {
                 if ($model->isAllowedAdd() && $model->save(false)) {
+                    EventHelper::addChanges($model->project_id);
                     echo CJSON::encode(array('success' => true));
                     Yii::app()->end();
                 } else {

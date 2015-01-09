@@ -83,9 +83,11 @@ class Payment extends CActiveRecord
 		);
 	}
 
-        public function approveFromBookkeeper($id) {
+        public function approveFromBookkeeper($id, $method) {
             $payment = self::model()->findByPk($id);
+            $payment->method = $method;
             $payment->approve = 1;
+            $payment->pay_date = date("Y-m-d");
             if ($payment->save()) {
                 return true;
             } else {

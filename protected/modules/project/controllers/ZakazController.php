@@ -26,23 +26,23 @@ class ZakazController extends Controller
 	 */
 	public function accessRules()
 	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','download'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'yiifilemanagerfilepicker'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
+            return array(
+                array('allow',  // allow all users to perform 'index' and 'view' actions
+                    'actions'=>array('index','view','download'),
+                    'users'=>array('*'),
+                ),
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list'),
+                    'users'=>array('@'),
+                ),
+                array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker'),
+                    'users'=>array('admin'),
+                ),
+                array('deny',  // deny all users
+                    'users'=>array('*'),
+                ),
+            );
 	}
 
 	/**
@@ -51,8 +51,12 @@ class ZakazController extends Controller
 	 */
 	public function actionView($id)
 	{
+            $model = $this->loadModel($id);
+            $model->date = date("Y-m-d H:i", $model->date);
+            $model->max_exec_date = date("Y-m-d H:i", $model->max_exec_date);
+            $model->date_finish = date("Y-m-d H:i", $model->date_finish);
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=> $model
 		));
 	}
 
@@ -62,21 +66,24 @@ class ZakazController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Zakaz;
+            $model=new Zakaz;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
 
-		if(isset($_POST['Zakaz']))
-		{
-			$model->attributes=$_POST['Zakaz'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+            if(isset($_POST['Zakaz']))
+            {
+                $model->attributes=$_POST['Zakaz'];
+                if($model->save())
+                    if ($role != 'Manager') {
+                        EventHelper::createOrder($model->id);
+                    }
+                    $this->redirect(array('view','id'=>$model->id));
+            }
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
+            $this->render('create',array(
+                    'model'=>$model,
+            ));
 	}
 
 	/**
@@ -86,22 +93,59 @@ class ZakazController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+            $role = User::model()->getUserRole();
+            if ($role == 'Manager') {
+                $view = 'update';
+            } else {
+                $view = 'update';
+            }
         Yii::app()->session['project_id'] = $id;
         $model=$this->loadModel($id);
+        $times = array();
+        $times['date']['date'] = date("Y-m-d", $model->date);
+        $times['date']['hours'] = date("H", $model->date);
+        $times['date']['minutes'] = date("i", $model->date);
+        $times['date_finish']['date'] = date("Y-m-d", $model->date_finish);
+        $times['date_finish']['hours'] = date("H", $model->date_finish);
+        $times['date_finish']['minutes'] = date("i", $model->date_finish);
+        $times['max_exec_date']['date'] = date("Y-m-d", $model->max_exec_date);
+        $times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
+        $times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
+        $times['manager_informed']['date'] = date("Y-m-d", $model->manager_informed);
+        $times['manager_informed']['hours'] = date("H", $model->manager_informed);
+        $times['manager_informed']['minutes'] = date("i", $model->manager_informed);
+        $times['author_informed']['date'] = date("Y-m-d", $model->author_informed);
+        $times['author_informed']['hours'] = date("H", $model->author_informed);
+        $times['author_informed']['minutes'] = date("i", $model->author_informed);
+        
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
+            if(isset($_POST['Zakaz']))
+            {
+                $zakaz = $_POST['Zakaz'];
+                
+                $time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
+                $time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
+                $time[max_exec_date] = strtotime($zakaz[max_exec_date][date].' '.$zakaz[max_exec_date][hours].':'.$zakaz[max_exec_date][minutes]);
+                $time[manager_informed] = strtotime($zakaz[manager_informed][date].' '.$zakaz[manager_informed][hours].':'.$zakaz[manager_informed][minutes]);
+                $time[author_informed] = strtotime($zakaz[author_informed][date].' '.$zakaz[author_informed][hours].':'.$zakaz[author_informed][minutes]);
+                $model->attributes=$zakaz;
+                $model->date = $time[date];
+                $model->date_finish = $time[date_finish];
+                $model->max_exec_date = $time[max_exec_date];
+                $model->manager_informed = $time[manager_informed];
+                $model->author_informed = $time[author_informed];
+                
+                    if($model->save())
+                        if ($role != 'Manager') {
+                            EventHelper::editOrder($model->id);
+                        }
+                        $this->redirect(array('view','id'=>$model->id));
+            }
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Zakaz']))
-		{
-            //CVarDumper::dump($_POST['Zakaz']); die();
-            $model->attributes=$_POST['Zakaz'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
+		$this->render($view, array(
+                    'model'=>$model,
+                    'times'=>$times
 		));
 	}
 

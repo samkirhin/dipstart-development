@@ -27,7 +27,7 @@ if ($user->isCustomer() || $user->isManager() || $user->isAdmin()) { ?>
 
         <div class = "row">
             <?php echo $form->labelEx($changes, 'comment'); ?>
-            <?php echo $form->textArea($changes, 'comment', array('rows' => 6, 'cols' => 70)); ?>
+            <?php echo $form->textArea($changes, 'comment', array('rows' => 6, 'cols' => 60)); ?>
         </div>
 
         <?php if (ProjectChanges::approveAllowed()) { ?>

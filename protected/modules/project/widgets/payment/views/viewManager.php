@@ -1,17 +1,18 @@
-<div id="project_payments">
-    <table class="table table-striped" style="font-size: 12px">
+<div id="project_payments" style="margin:5px; display: block">
+    <h3>Оплаты</h3>
+    <table class="table table-striped" style="font-size: 12px; width:100%; table-layout: fixed;">
         <tr>
             <td>
                 Стоимость проекта:
             </td>
             <td>
-                <input type="text" class="project_price_input" value="<?php echo $model->project_price; ?>"/>
+                <input type="text" class="project_price_input" size="10" value="<?php echo $model->project_price; ?>"/>
             </td>
             <td>
                 Стоимость для автора:
             </td>
             <td>
-                <input type="text" class="work_price_input" value="<?php echo $model->work_price; ?>"/>
+                <input type="text" class="work_price_input" size="10" value="<?php echo $model->work_price; ?>"/>
             </td>
         </tr>
         <tr>
@@ -34,13 +35,13 @@
                 Выписать счет:
             </td>
             <td>
-                <input type="text" class="to_receive_input" value=""/>
+                <input type="text" size="10" class="to_receive_input" value=""/>
             </td>
             <td>
                 Отправить на оплату:
             </td>
             <td>
-                <input type="text" class="to_pay_input" value=""/>
+                <input type="text" size="10" class="to_pay_input" value=""/>
             </td>
         </tr>
         <tr>
@@ -62,7 +63,7 @@
                 Подтвердить платеж:
             </td>
             <td>
-                <div class="btn-group-sm" role="group">
+                <div class="btn-group-xs" role="group">
                 <button class="btn btn-default send_managers_approve">Подтвердить</button>
                 <button class="btn btn-default send_managers_cancel">Отмена</button>
                 </div>

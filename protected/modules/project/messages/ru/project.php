@@ -38,7 +38,8 @@ return array(
     'Customer Price' => 'Выставлено заказчику',
     'Autor Price' => 'Выставлено автору',
     'Payed' => 'Оплачено автору',
-    'Informed' => 'Информирован',
+    'Manager Informed' => 'Дата информирования (менеджер)',
+    'Author Informed' => 'Дата информирования (автор)',
     'Update Zakaz' => 'Редактировать заказ',
     'Update' => 'Редактировать',
     'Add Zakaz Part' => 'Добавить подзаказ',
@@ -59,4 +60,6 @@ return array(
     'Approved' => 'Одобрено',
     'Not approved' => 'Не одобрено',
     'You are not allowed to edit!' => 'У Вас недостаточно прав для редактирования!',
+    'author_notes' => 'Заметки для автора',
+    
 );

@@ -21,7 +21,7 @@ class RegistrationController extends Controller
 	 */
 	public function actionRegistration() {
             $model = new RegistrationForm;
-            $profile=new Profile;
+            $profile = new Profile;
             $profile->regMode = true;
             $profile->regType = (isset($_GET['role'])?$_GET['role']:'Author');
       			// ajax validator

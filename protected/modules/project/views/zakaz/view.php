@@ -11,21 +11,7 @@ $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs')=>array('index'),
 	$model->title,
 );
-if (User::model()->isAdmin() || User::model()->isManager()){
-$this->menu=array(
-	array('label'=>ProjectModule::t('List Zakaz'),  'url'=>array('index')),
-	array('label'=>ProjectModule::t('Create Zakaz'), 'url'=>array('create')),
-	array('label'=>ProjectModule::t('Update Zakaz'), 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>ProjectModule::t('Delete Zakaz'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>ProjectModule::t('Manage Zakaz'), 'url'=>array('admin')),
-);
-} else {
-$this->menu=array(
-    array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '2'), 'visible'=>User::model()->isAuthor()),
-    array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '4', 'user_id' => Yii::app()->user->id), 'visible'=>User::model()->isAuthor()),
-    array('label'=>Yii::t('site','Create Zakaz'), 'url'=>array('/project/zakaz/create'), 'visible'=> User::model()->isCustomer()),
-);
-}
+
 ?>
 
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
@@ -53,11 +39,6 @@ $attr = array(
 		'max_exec_date',
 		'date_finish',
 		'pages',
-		'budget',
-        'with_prepayment',
-        'customer_price',
-        'author_price',
-        'author_payed',
 		'add_demands',
 		array(
            'name' => 'status',
@@ -93,11 +74,6 @@ $attr = array(
 		'max_exec_date',
 		//'date_finish',
 		'pages',
-		'budget',
-        'with_prepayment',
-        //'customer_price',
-        //'author_price',
-        //'author_payed',
 		'add_demands',
 		array(
            'name' => 'status',

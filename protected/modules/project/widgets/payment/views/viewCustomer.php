@@ -1,5 +1,6 @@
 <div id="project_payments">
-    <table class="table table-striped" style="font-size: 12px">
+    <h3>Оплаты</h3>
+    <table class="table table-striped" style="font-size: 12px;table-layout: fixed;">
         <tr>
             <td>
                 Стоимость заказа:

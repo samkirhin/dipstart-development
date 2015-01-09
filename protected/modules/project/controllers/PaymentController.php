@@ -80,8 +80,12 @@ class PaymentController extends CController {
     public function actionApproveFromBookkeeper() {
         $this->_prepairJson();
         $id = $this->_request->getParam('id');
+        $method = $this->_request->getParam('method');
+        if (!$method) {
+            $method = 'Cash';
+        }
         $payment = new Payment();
-        $result = $payment->approveFromBookkeeper($id);
+        $result = $payment->approveFromBookkeeper($id, $method);
         $this->_response->setData(array(
             'result' => $result
         ));

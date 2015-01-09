@@ -17,6 +17,6 @@ $this->menu=array(
 
 <?php if (User::model()->isCustomer())
     $this->renderPartial('_form', array('model'=>$model));
- elseif (User::model()->isManager() || User::model()->isAdmin)
+ elseif (User::model()->isManager() || User::model()->isAdmin())
     $this->renderPartial('_formManager', array('model'=>$model));
 ?>

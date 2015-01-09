@@ -62,25 +62,99 @@
 		<?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>70)); ?>
 		<?php echo $form->error($model,'text'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'max_exec_date');
-		 $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-            'name'=>'Zakaz[max_exec_date]',
-            // additional javascript options for the date picker plugin
-            'language' => 'ru',
-            //'datevalue' => $model->max_exec_date ? $model->max_exec_date : date('d.m.yy'),
-            'options'=>array(
-                'dateFormat'=>'Y-m-d',
-                'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
-            ),
-            'htmlOptions'=>array(
-                'style'=>'height:20px;background-white:blue;color:black;',
-            ),
-        ));
-        ?>
-
-	</div>
+    
+    <table class="table table-striped" style="font-size: 12px">
+	<tr>
+            <td>
+                <?php echo $form->labelEx($model,'max_exec_date'); ?>
+            </td>
+            <td>
+    		<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                        'name'=>'Zakaz[max_exec_date][date]',
+                        // additional javascript options for the date picker plugin
+                        'language' => 'ru',
+                        'value' => $times['max_exec_date']['date'],
+                        'options'=>array(
+                            'dateFormat'=>'yy-mm-dd',
+                            'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                        ),
+                    'htmlOptions'=>array(
+                        'style'=>'height:20px;background-white:blue;color:black;',
+                    ),
+                ));
+            ?>
+            </td>
+            <td>
+                <select class="search_type_select" name="Zakaz[max_exec_date][hours]">
+                    <?php
+                        for ($i=0; $i<24; $i++) {
+                            if ($times['max_exec_date']['hours'] == $i) {
+                                echo "<option selected value='".$i."'>".$i."</option>";
+                            } else {
+                                echo "<option value='".$i."'>".$i."</option>";
+                            }
+                        }
+                    ?>
+                </select>
+                <select class="search_type_select" name="Zakaz[max_exec_date][minutes]">
+                    <?php
+                        for ($i=0; $i<60; $i++) {
+                            if ($times['max_exec_date']['minutes'] == $i) {
+                                echo "<option selected value='".$i."'>".$i."</option>";
+                            } else {
+                                echo "<option value='".$i."'>".$i."</option>";
+                            }
+                        }
+                    ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <?php echo $form->labelEx($model,'date_finish');?>
+            </td>
+            <td>
+                <?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                        'name'=>'Zakaz[date_finish][date]',
+                        // additional javascript options for the date picker plugin
+                        'language' => 'ru',
+                        'value' => $times['date_finish']['date'],
+                        'options'=>array(
+                        'dateFormat'=>'yy-mm-dd',
+                        'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                        ),
+                    'htmlOptions'=>array(
+                        'style'=>'height:20px;background-white:blue;color:black;',
+                    ),
+                ));
+            ?>
+	</td>
+        <td>
+                <select class="search_type_select" name="Zakaz[date_finish][hours]" >
+                    <?php
+                        for ($i=0; $i<24; $i++) {
+                            if ($times['date_finish']['hours'] == $i) {
+                                echo "<option selected value='".$i."'>".$i."</option>";
+                            } else {
+                                echo "<option value='".$i."'>".$i."</option>";
+                            }
+                        }
+                    ?>
+                </select>
+                <select class="search_type_select" name="Zakaz[date_finish][minutes]">
+                    <?php
+                        for ($i=0; $i<60; $i++) {
+                            if ($times['date_finish']['minutes'] == $i) {
+                                echo "<option selected value='".$i."'>".$i."</option>";
+                            } else {
+                                echo "<option value='".$i."'>".$i."</option>";
+                            }
+                        }
+                    ?>
+                </select>
+            </td>
+        </tr>
+</table>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'pages'); ?>
@@ -93,8 +167,12 @@
 		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53)); ?>
 		<?php echo $form->error($model,'add_demands'); ?>
 	</div>
-
-
+    <h3>Заметки</h3>
+    <div class="row">
+            <?php echo $form->labelEx($model,'user_notes'); ?>
+            <?php echo $form->textArea($model,'user_notes',array('rows'=>6, 'cols'=>53)); ?>
+            <?php echo $form->error($model,'user_notes'); ?>
+    </div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>

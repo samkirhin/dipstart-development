@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'Projects':
  * @property string $id
+ * @property integer $order_id
  * @property string $user_id
  * @property integer $category_id
  * @property integer $job_id
@@ -17,8 +18,10 @@
  * @property string $add_demands
  * @property integer $status
  * @property string $executor
+ * @property integer $event_creator_id
+ * @property integer $timestamp
  */
-class Zakaz extends CActiveRecord
+class Moderation extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -44,7 +47,7 @@ class Zakaz extends CActiveRecord
 			array('max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, user_notes, user_notes_show', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor', 'safe', 'on'=>'search'),
+			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor, event_creator_id, timestamp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +69,7 @@ class Zakaz extends CActiveRecord
 	{
 		return array(
                     'id' => 'ID',
+                    'order_id' => 'Order ID',
                     'user_id' => ProjectModule::t('User'),
                     'category_id' => ProjectModule::t('Category'),
                     'job_id' => ProjectModule::t('Job'),
@@ -82,7 +86,8 @@ class Zakaz extends CActiveRecord
                     'author_informed' => ProjectModule::t('Author Informed'),
                     'notes' => ProjectModule::t('Notes'),
                     'author_notes' => ProjectModule::t('author_notes'),
-                    
+                    'event_creator_id' => 'Event Creator',
+                    'timestamp' => 'timestamp'
 		);
 	}
 
@@ -105,6 +110,7 @@ class Zakaz extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+                $criteria->compare('order_id',$this->order_id,true);
 		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('job_id',$this->job_id);
@@ -121,7 +127,9 @@ class Zakaz extends CActiveRecord
 		$criteria->compare('with_prepayment',$this->with_prepayment);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('executor',$this->executor,true);
-
+                $criteria->compare('event_creator_id',$this->event_creator_id,true);
+                $criteria->compare('timestamp',$this->timestamp,true);
+                
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

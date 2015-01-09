@@ -28,13 +28,37 @@
                 ${summ}
             </td>
             <td>
-                ${detail_ya}
+                {{if details_ya == null}}
+                    Нет данных
+                {{else}}
+                    {{if approve == 0}}
+                        <button class="btn btn-xs btn-default approve_payment" value="${id}"  pay_method="Ya.money">${details_ya}</button>
+                    {{else}}
+                        ${details_ya}
+                    {{/if}}
+                {{/if}}
             </td>
             <td>
-                ${detail_wm}
+                {{if details_wm == null}}
+                    Нет данных
+                {{else}}
+                    {{if approve == 0}}
+                        <button class="btn btn-xs btn-default approve_payment" value="${id}"  pay_method="WebMoney">${details_wm}</button>
+                    {{else}}
+                        ${details_wm}
+                    {{/if}}
+                {{/if}}
             </td>
             <td>
-                ${detail_bank}
+                {{if details_bank == null}}
+                    Нет данных
+                {{else}}
+                    {{if approve == 0}}
+                        <button class="btn btn-xs btn-default approve_payment" value="${id}"  pay_method="Bank">${details_bank}</button>
+                    {{else}}
+                        ${details_bank}
+                    {{/if}}
+                {{/if}}
             </td>
             <td>
                 {{if payment_type == 0}}
@@ -45,7 +69,7 @@
             </td>
             <td>
                {{if approve == 0}}
-                    <button  class="btn btn-default btn-sm approve_payment" value="${id}" >Подтвердить</button>
+                    <button  class="btn btn-primary btn-xs approve_payment" value="${id}"  pay_method="Cash">Подтвердить</button>
                 {{else}}
                     Подтвержден
                 {{/if}}
@@ -106,7 +130,7 @@
 
     <button class="btn btn-sm btn-default send_search"> Поиск </button>
     <button class="btn btn-sm btn-default clear_search"> Отменить поиск </button>
-<table class="table table-striped" style="font-size: 10px;">
+<table class="table table-striped table-bordered" style="font-size: 10px;">
     <thead>
         <th>
             <button class="searching" sort="id">ID</button>
