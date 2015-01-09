@@ -58,7 +58,8 @@ class ChatController extends Controller {
 			$model->attributes = Yii::app()->request->getPost($model->tableName());
 			$model->date = date('Y-m-d H:i:s');
 			$model->save();
-			$model->message = '';
+			EventHelper::addMessage($model->order);
+                        $model->message = '';
 			$model->recipient = '';
 		}
 		if(User::model()->isAuthor()) {

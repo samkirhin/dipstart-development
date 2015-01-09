@@ -28,7 +28,7 @@ class Moderation extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Projects';
+		return 'ZakazModeration';
 	}
 
 	/**
@@ -39,12 +39,10 @@ class Moderation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, category_id, title, text', 'required'),
-			array('category_id, job_id, pages, status', 'numerical', 'integerOnly'=>true),
-			array('user_id', 'length', 'max'=>11),
+			array('order_id, category_id, job_id, pages, status', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
-			array('max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, user_notes, user_notes_show', 'safe'),
+			array('order_id, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, user_notes, user_notes_show', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor, event_creator_id, timestamp', 'safe', 'on'=>'search'),

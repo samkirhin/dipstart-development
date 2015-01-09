@@ -94,13 +94,28 @@ class ZakazController extends Controller
 	public function actionUpdate($id)
 	{
             $role = User::model()->getUserRole();
-            if ($role == 'Manager') {
-                $view = 'update';
-            } else {
-                $view = 'update';
-            }
+            $view = 'update';
+            $isModified = false;
         Yii::app()->session['project_id'] = $id;
         $model=$this->loadModel($id);
+        if (ModerationHelper::isOrderChanged($id)) {
+            if ($role == 'Customer' ) {
+                $view = 'orderInModerate';
+            } else {
+                $isModified = true;
+                $modelRows = $model->attributes;
+                $moderateModel = Moderation::model()->find('`order_id` = :ID', array(
+                    'ID'=>$id
+                ));
+                unset($modelRows[id]);
+                foreach ($modelRows as $key=>$value) {
+                    $model->$key = $moderateModel->$key;
+                }
+            }    
+        } else {
+            $a = 0;
+        }
+        
         $times = array();
         $times['date']['date'] = date("Y-m-d", $model->date);
         $times['date']['hours'] = date("H", $model->date);
@@ -129,24 +144,33 @@ class ZakazController extends Controller
                 $time[max_exec_date] = strtotime($zakaz[max_exec_date][date].' '.$zakaz[max_exec_date][hours].':'.$zakaz[max_exec_date][minutes]);
                 $time[manager_informed] = strtotime($zakaz[manager_informed][date].' '.$zakaz[manager_informed][hours].':'.$zakaz[manager_informed][minutes]);
                 $time[author_informed] = strtotime($zakaz[author_informed][date].' '.$zakaz[author_informed][hours].':'.$zakaz[author_informed][minutes]);
-                $model->attributes=$zakaz;
-                $model->date = $time[date];
-                $model->date_finish = $time[date_finish];
-                $model->max_exec_date = $time[max_exec_date];
-                $model->manager_informed = $time[manager_informed];
-                $model->author_informed = $time[author_informed];
                 
-                    if($model->save())
-                        if ($role != 'Manager') {
-                            EventHelper::editOrder($model->id);
-                        }
-                        $this->redirect(array('view','id'=>$model->id));
+                
+                if ($role != 'Manager' && $role != 'Admin') {
+                    ModerationHelper::saveToModerate($model, $zakaz, $time);
+                } else {
+                    $model->attributes=$zakaz;
+                    $model->date = $time[date];
+                    $model->date_finish = $time[date_finish];
+                    $model->max_exec_date = $time[max_exec_date];
+                    $model->manager_informed = $time[manager_informed];
+                    $model->author_informed = $time[author_informed];
+                }
+                
+                if($model->save())
+                    if ($role != 'Manager' && $role != 'admin') {
+                        EventHelper::editOrder($model->id);
+                    } else {
+                        ModerationHelper::clear($model->id);
+                    }
+                    $this->redirect(array('view','id'=>$model->id));
             }
 
-		$this->render($view, array(
-                    'model'=>$model,
-                    'times'=>$times
-		));
+            $this->render($view, array(
+                'model'=>$model,
+                'times'=>$times,
+                'isModified'=>$isModified
+            ));
 	}
 
 	/**
@@ -230,9 +254,10 @@ class ZakazController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
     public function actionDownload()
 	{
 	   EDownloadHelper::download($_GET['path']);
-       $this->redirect(Yii::app()->request->urlReferrer);
+            $this->redirect(Yii::app()->request->urlReferrer);
 	}
 }

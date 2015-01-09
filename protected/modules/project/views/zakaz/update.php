@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 ?>
 
     <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
-
+    <?php if ($isModified) echo '<span class="label label-warning" style="font-size:16px;"><b>Заказ на модерации</b></span>';?>
 <?php
     $this->widget('application.modules.project.widgets.payment.PaymentWidget', array(
         'projectId'=>$model->id
@@ -24,7 +24,7 @@ $this->breadcrumbs = array(
 }
 ?>
 
-    <h3><?php echo ProjectModule::t('Changes'); ?></h3>
+    <h3 ><?php echo ProjectModule::t('Changes'); ?></h3>
 
 <?php
     $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
