@@ -11,6 +11,7 @@
     </script>
     <!-- Тэмплэйт для отображения частей -->
     <script class="zakazPartTemplate" type="text/x-jquery-tmpl">
+        
         <table style="background-color:lightgrey; font-size: 14px" >
         <tr>
             <td width="100px">
@@ -37,10 +38,10 @@
         </tr>
         <tr>
             <td>
-                <button class='edit' type='submit' value='${id}'>Edit</button>
+                <button class='btn dtn-default btn-xs edit' type='submit' value='${id}'>Edit</button>
             </td>
             <td>
-                <button class='delete' value='${id}'>Delete</button>
+                <button class='btn dtn-default btn-xs delete' value='${id}'>Delete</button>
             </td>
             <td>
             </td>
@@ -48,7 +49,7 @@
         </table>
     </script>
     <h4>Части</h4>
-    <button class="add">Add</button>
+    <button class="add">Добавить часть</button>
     
     <!-- Див для отображения списка частей -->
     <div class="show_parts">
