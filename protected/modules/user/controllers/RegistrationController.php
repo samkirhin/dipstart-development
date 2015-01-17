@@ -50,10 +50,10 @@ class RegistrationController extends Controller
 						if ($model->save()) {
 							$connection=Yii::app()->db;
 							$sql="INSERT INTO AuthAssignment(itemname, userid) VALUES(:itemname,:userid)";
-$command=$connection->createCommand($sql);
-$command->bindParam(":itemname",$profile->regType,PDO::PARAM_STR);
-$command->bindParam(":userid",$model->id,PDO::PARAM_STR);
-$command->execute();
+							$command=$connection->createCommand($sql);
+							$command->bindParam(":itemname",$profile->regType,PDO::PARAM_STR);
+							$command->bindParam(":userid",$model->id,PDO::PARAM_STR);
+							$command->execute();
 
 							$profile->user_id=$model->id;
 							$profile->save();
