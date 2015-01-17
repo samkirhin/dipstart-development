@@ -22,6 +22,7 @@ class RegistrationController extends Controller
 	public function actionRegistration() {
             $model = new RegistrationForm;
             $profile = new Profile;
+            //$aa = new AuthAssignment;
             $profile->regMode = true;
             $profile->regType = (isset($_GET['role'])?$_GET['role']:'Author');
       			// ajax validator
@@ -47,6 +48,13 @@ class RegistrationController extends Controller
 						$model->status=((Yii::app()->controller->module->activeAfterRegister)?User::STATUS_ACTIVE:User::STATUS_NOACTIVE);
 						
 						if ($model->save()) {
+							$connection=Yii::app()->db;
+							$sql="INSERT INTO AuthAssignment(itemname, userid) VALUES(:itemname,:userid)";
+$command=$connection->createCommand($sql);
+$command->bindParam(":itemname",$profile->regType,PDO::PARAM_STR);
+$command->bindParam(":userid",$model->id,PDO::PARAM_STR);
+$command->execute();
+
 							$profile->user_id=$model->id;
 							$profile->save();
 							if (Yii::app()->controller->module->sendActivationMail) {

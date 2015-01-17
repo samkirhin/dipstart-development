@@ -160,6 +160,11 @@ class RDbAuthManager extends CDbAuthManager
 					LEFT JOIN {$this->rightsTable} t3 ON name=t3.itemname
 					WHERE t1.type=:type AND userid=:userid
 					ORDER BY t1.type DESC, weight ASC";
+				$sql = "SELECT name,t1.type,description,t1.bizrule,t1.data
+					FROM {$this->itemTable} t1
+					LEFT JOIN {$this->assignmentTable} t2 ON name=t2.itemname
+					WHERE t1.type=:type AND userid=:userid
+					ORDER BY t1.type DESC";
 				$command=$this->db->createCommand($sql);
 				$command->bindValue(':type', $type);
 				$command->bindValue(':userid', $userId);
