@@ -113,7 +113,7 @@ class ZakazController extends Controller
                 }
             }    
         } else {
-            $a = 0;
+            
         }
         
         $times = array();
