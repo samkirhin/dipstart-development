@@ -4,7 +4,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1><?php echo UserModule::t("Hello, please fill an anket for authors"); ?> :)</h1>
+<h1><?php echo UserModule::t("Hello, please fill an anket for authors".$profile->regType); ?> :)</h1>
 
 <?php if(Yii::app()->user->hasFlash('registration')): ?>
 <div class="success">
@@ -60,7 +60,9 @@ $this->breadcrumbs=array(
 			foreach($profileFields as $field) {
 			?>
 	<div class="row">
-		<?php echo $form->labelEx($profile,$field->varname); ?>
+		<?php
+		if (($field->varname == 'mailing_list') && ($profile->regType=='Customer')) continue;
+		echo $form->labelEx($profile,$field->varname); ?>
 		<?php
 		if($field->varname == 'discipline'){
         $htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
