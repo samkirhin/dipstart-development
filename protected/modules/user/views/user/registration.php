@@ -61,7 +61,7 @@ $this->breadcrumbs=array(
 			?>
 	<div class="row">
 		<?php
-		if (($field->varname == 'mailing_list') && ($profile->regType=='Customer')) continue;
+		if (($field->varname == 'mailing_list') && ($profile->regType=='Customer')) $list=array('style'=>'display:none;');
 		echo $form->labelEx($profile,$field->varname); ?>
 		<?php
 		if($field->varname == 'discipline'){
@@ -79,7 +79,7 @@ $this->breadcrumbs=array(
         }elseif ($widgetEdit = $field->widgetEdit($profile)) {
 			echo $widgetEdit;
 		} elseif ($field->range) {
-			echo $form->dropDownList($profile,$field->varname,Profile::range($field->range));
+			echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),$list);
 		} elseif ($field->field_type=="TEXT") {
             echo$form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
 		} else {
