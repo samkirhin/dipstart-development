@@ -54,6 +54,14 @@ $('.search-form form').submit(function(){
            'name' => 'job_id',
            'type' => 'raw',
            'value' => 'Jobs::model()->findByPk($data->job_id)->job_name',
+           'value' => function($data) {
+                $model = Jobs::model()->findByPk($data->job_id);
+                if ($model) {
+                    return $model->job_name;
+                } else {
+                    return '';
+                }
+           }
         ),
 		'title',
 		

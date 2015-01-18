@@ -97,7 +97,7 @@
                 ));
                 $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
                     array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '2')),
-                    array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '4', 'executor' => Yii::app()->user->id)),
+                    array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/ownList')),
                 ));
                 $items[] = array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
                      array('label'=>Yii::t('site', 'Inbox'), 'url'=>array('/mailbox/message/inbox')),

@@ -110,15 +110,11 @@ class Zakaz extends CActiveRecord
 		$criteria->compare('job_id',$this->job_id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('text',$this->text,true);
-		$criteria->compare('file',$this->file,true);
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('max_exec_date',$this->max_exec_date,true);
 		$criteria->compare('date_finish',$this->date_finish,true);
 		$criteria->compare('pages',$this->pages);
-		$criteria->compare('budget',$this->budget,true);
 		$criteria->compare('add_demands',$this->add_demands,true);
-		$criteria->compare('is_payed',$this->is_payed);
-		$criteria->compare('with_prepayment',$this->with_prepayment);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('executor',$this->executor,true);
 

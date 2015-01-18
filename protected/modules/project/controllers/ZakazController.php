@@ -32,7 +32,7 @@ class ZakazController extends Controller
                     'users'=>array('*'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list'),
+                    'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list', 'ownList'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -212,15 +212,25 @@ class ZakazController extends Controller
 			'model'=>$model,
 		));
 	}
+    
+    public function actionOwnList()
+    {
+        $model=new Zakaz('search');
+		$model->unsetAttributes();  // clear any default values
+        $model->executor = Yii::app()->user->id;
+
+		$this->render('list',array(
+			'model'=>$model,
+		));
+    }
 
     public function actionList()
 	{
 		$model=new Zakaz('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['status'])){
-			$model->attributes=array('status' => $_GET['status']);
-            if(isset($_GET['user_id']))
-               $model->attributes=array('status' => $_GET['status'], 'user_id' => $_GET['user_id']);
+		$model->unsetAttributes();  // clear any default values		
+        
+        if(isset($_GET['status'])){
+            $model->status = $_GET['status'];
         }
 
 		$this->render('list',array(

@@ -42,11 +42,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'file'); ?>
-		<?php echo $form->textField($model,'file',array('size'=>60,'maxlength'=>255)); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'date'); ?>
 		<?php echo $form->textField($model,'date'); ?>
 	</div>
@@ -67,24 +62,11 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'budget'); ?>
-		<?php echo $form->textField($model,'budget',array('size'=>60,'maxlength'=>100)); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'add_demands'); ?>
 		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>50)); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'is_payed'); ?>
-		<?php echo $form->textField($model,'is_payed'); ?>
-	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'with_prepayment'); ?>
-		<?php echo $form->textField($model,'with_prepayment'); ?>
-	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'status'); ?>
