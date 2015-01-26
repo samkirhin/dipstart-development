@@ -27,13 +27,7 @@
 		<?php echo $form->error($model,'user_id'); ?>
 	</div>-->
 
-    <div class="row">
-		<?php echo $form->labelEx($model,'executor');
-          $list = CHtml::listData(User::model()->findAllAuthors(), 'id', 'username');
-          echo $form->dropDownList($model, 'executor', $list, array('empty' => ProjectModule::t('Select a author')));?>
-        <?php //echo $form->textField($model,'executor',array('size'=>53,'maxlength'=>100)); ?>
-        <?php echo $form->error($model,'executor'); ?>
-	</div>
+    
 
 	<div class="row">
         <?php echo $form->labelEx($model,'category_id'); ?>
@@ -73,7 +67,7 @@
                         'name'=>'Zakaz[max_exec_date][date]',
                         // additional javascript options for the date picker plugin
                         'language' => 'ru',
-                        'value' => $times['max_exec_date']['date'],
+                        'value' => isset($times) ? $times['max_exec_date']['date'] : null,
                         'options'=>array(
                             'dateFormat'=>'yy-mm-dd',
                             'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
@@ -88,7 +82,7 @@
                 <select class="search_type_select" name="Zakaz[max_exec_date][hours]">
                     <?php
                         for ($i=0; $i<24; $i++) {
-                            if ($times['max_exec_date']['hours'] == $i) {
+                            if (isset($times) && $times['max_exec_date']['hours'] == $i) {
                                 echo "<option selected value='".$i."'>".$i."</option>";
                             } else {
                                 echo "<option value='".$i."'>".$i."</option>";
@@ -99,7 +93,7 @@
                 <select class="search_type_select" name="Zakaz[max_exec_date][minutes]">
                     <?php
                         for ($i=0; $i<60; $i++) {
-                            if ($times['max_exec_date']['minutes'] == $i) {
+                            if (isset($times) && $times['max_exec_date']['minutes'] == $i) {
                                 echo "<option selected value='".$i."'>".$i."</option>";
                             } else {
                                 echo "<option value='".$i."'>".$i."</option>";
@@ -118,7 +112,7 @@
                         'name'=>'Zakaz[date_finish][date]',
                         // additional javascript options for the date picker plugin
                         'language' => 'ru',
-                        'value' => $times['date_finish']['date'],
+                        'value' => isset($times) ? $times['date_finish']['date'] : null,
                         'options'=>array(
                         'dateFormat'=>'yy-mm-dd',
                         'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
@@ -133,7 +127,7 @@
                 <select class="search_type_select" name="Zakaz[date_finish][hours]" >
                     <?php
                         for ($i=0; $i<24; $i++) {
-                            if ($times['date_finish']['hours'] == $i) {
+                            if (isset($times) && $times['date_finish']['hours'] == $i) {
                                 echo "<option selected value='".$i."'>".$i."</option>";
                             } else {
                                 echo "<option value='".$i."'>".$i."</option>";
@@ -144,7 +138,7 @@
                 <select class="search_type_select" name="Zakaz[date_finish][minutes]">
                     <?php
                         for ($i=0; $i<60; $i++) {
-                            if ($times['date_finish']['minutes'] == $i) {
+                            if (isset($times) && $times['date_finish']['minutes'] == $i) {
                                 echo "<option selected value='".$i."'>".$i."</option>";
                             } else {
                                 echo "<option value='".$i."'>".$i."</option>";

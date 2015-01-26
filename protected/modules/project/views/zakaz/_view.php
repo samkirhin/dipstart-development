@@ -14,16 +14,16 @@
         <?php echo CHtml::encode(Categories::model()->findByPk($data->category_id)->cat_name); ?>
     </td>
     <td>   
-        <?php echo CHtml::encode(Jobs::model()->findByPk($data->job_id)->job_name); ?>
+        <?php echo $data->job_id > 0 ? CHtml::encode(Jobs::model()->findByPk($data->job_id)->job_name) : ''; ?>
     </td>
     <td>   
         <?php echo CHtml::encode($data->title); ?>
     </td>
     <td>   
-        <?php echo CHtml::encode(date("Y-m-d H:i", $model->date)); ?>
+        <?php echo CHtml::encode(date("Y-m-d H:i", $data->date)); ?>
     </td>
     <td>   
-        <?php echo CHtml::encode(date("Y-m-d H:i", $model->max_exec_date)); ?>
+        <?php echo CHtml::encode(date("Y-m-d H:i", $data->max_exec_date)); ?>
     </td>
     <td>   
         <p><a href="<?php echo Yii::app()->createUrl('project/chat', array('orderId' => $data->id)); ?>">Чат</a></p>

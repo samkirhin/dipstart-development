@@ -43,7 +43,7 @@ $attr = array(
 		array(
            'name' => 'status',
            'type' => 'raw',
-           'value' => ProjectStatus::model()->findByPk($model->status)->status,
+           'value' => $model->status > 0 ? ProjectStatus::model()->findByPk($model->status)->status : null,
         ),
         'is_payed',
         'informed',
@@ -66,7 +66,7 @@ $attr = array(
 		array(
            'name' => 'job_id',
            'type' => 'raw',
-           'value' => Jobs::model()->findByPk($model->job_id)->job_name,
+           'value' => $model->job_id > 0 ? Jobs::model()->findByPk($model->job_id)->job_name : null,
         ),
 		'title',
 		'text',
@@ -78,7 +78,7 @@ $attr = array(
 		array(
            'name' => 'status',
            'type' => 'raw',
-           'value' => ProjectStatus::model()->findByPk($model->status)->status,
+           'value' => $model->status > 0 ? ProjectStatus::model()->findByPk($model->status)->status : null,
         ),
         //'is_payed',
         //'informed',
