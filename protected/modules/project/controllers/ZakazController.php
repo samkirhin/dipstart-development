@@ -36,7 +36,7 @@ class ZakazController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker'),
+                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview'),
                     'users'=>array('admin'),
                 ),
                 array('deny',  // deny all users
@@ -59,6 +59,74 @@ class ZakazController extends Controller
 			'model'=> $model
 		));
 	}
+    protected $_request;
+    protected $_response;
+    protected function _prepairJson() {
+        $this->_request = Yii::app()->jsonRequest;
+        $this->_response = new JsonHttpResponse();
+    }
+    public function actionApiView() {
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        if (!$user->superuser) {
+            $this->redirect('/');
+        } else {
+            $this->_prepairJson();
+            $sort = $this->_request->getParam('sort');
+            $type = $this->_request->getParam('type');
+            $searchField = $this->_request->getParam('search_field');
+            $searchType = $this->_request->getParam('search_type');
+            $searchString = $this->_request->getParam('search_string');
+            if (!$sort) {
+                $sort = 'date';
+            }
+            if (!$type) {
+                $type = 'DESC';
+            }
+            if ($searchField == '' || $searchString == '' || $searchType == '') {
+				$criteria = new CDbCriteria;
+				$criteria->with = array('user','category','job');
+				$criteria->order = 't.'.$sort.' '.$type;
+                $data = Zakaz::model()->findAll($criteria);
+            } else {
+                $searchField=explode('.',$searchField);
+                switch ($searchType) {
+                    case 'bigger':
+                        $searchType = '<';
+                        break;
+                    case 'smaller':
+                        $searchType = '>';
+                        break;
+                    case 'equal':
+                        $searchType = '=';
+                        break;
+                }
+                if (count($searchField)==3){
+                    $dbName=ucfirst($searchField[1]);
+                    $searchStringReal = $dbName::model()->findByAttributes(array($searchField[0]=>$searchString));
+                }
+				$criteria = new CDbCriteria;
+				$criteria->with = array('user','category','job');
+				$criteria->condition='t.`'.$searchField[2].'` '.$searchType.' :scrit';
+				$criteria->params=array(':scrit'=>$searchStringReal['id']);
+				$criteria->order = 't.'.$sort.' '.$type;
+                $data = Zakaz::model()->findAll($criteria);
+            }
+            $report = array();
+            $report['summary'] = 0;
+            $report['ids_count'] = count($data);
+            foreach($data as $num=>$dat) {
+				$res[$num]=$data[$num]->getAttributes()
+				+$data[$num]->user->getAttributes()
+				+((isset($data[$num]->category))?$data[$num]->category->getAttributes():array('cat_name'=>'Не определена'))
+				+((isset($data[$num]->job))?$data[$num]->job->getAttributes():array('job_name'=>'Не определена'));
+				}
+            $this->_response->setData( array(
+                'data' => $res,
+                'report' => $report
+            ));
+            $this->_response->send();
+        }
+    }
 
 	/**
 	 * Creates a new model.
@@ -73,6 +141,7 @@ class ZakazController extends Controller
 
             if(isset($_POST['Zakaz']))
             {
+                $role = User::model()->getUserRole();
                 $model->attributes=$_POST['Zakaz'];
                 if($model->save())
                     if ($role != 'Manager') {
@@ -111,11 +180,11 @@ class ZakazController extends Controller
                 foreach ($modelRows as $key=>$value) {
                     $model->$key = $moderateModel->$key;
                 }
-            }    
+            }
         } else {
-            
+
         }
-        
+
         $times = array();
         $times['date']['date'] = date("Y-m-d", $model->date);
         $times['date']['hours'] = date("H", $model->date);
@@ -132,20 +201,20 @@ class ZakazController extends Controller
         $times['author_informed']['date'] = date("Y-m-d", $model->author_informed);
         $times['author_informed']['hours'] = date("H", $model->author_informed);
         $times['author_informed']['minutes'] = date("i", $model->author_informed);
-        
+
             // Uncomment the following line if AJAX validation is needed
             // $this->performAjaxValidation($model);
             if(isset($_POST['Zakaz']))
             {
                 $zakaz = $_POST['Zakaz'];
-                
+
                 $time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
                 $time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
                 $time[max_exec_date] = strtotime($zakaz[max_exec_date][date].' '.$zakaz[max_exec_date][hours].':'.$zakaz[max_exec_date][minutes]);
                 $time[manager_informed] = strtotime($zakaz[manager_informed][date].' '.$zakaz[manager_informed][hours].':'.$zakaz[manager_informed][minutes]);
                 $time[author_informed] = strtotime($zakaz[author_informed][date].' '.$zakaz[author_informed][hours].':'.$zakaz[author_informed][minutes]);
-                
-                
+
+
                 if ($role != 'Manager' && $role != 'Admin') {
                     ModerationHelper::saveToModerate($model, $zakaz, $time);
                 } else {
@@ -156,7 +225,7 @@ class ZakazController extends Controller
                     $model->manager_informed = $time[manager_informed];
                     $model->author_informed = $time[author_informed];
                 }
-                
+
                 if($model->save())
                     if ($role != 'Manager' && $role != 'admin') {
                         EventHelper::editOrder($model->id);
@@ -212,7 +281,7 @@ class ZakazController extends Controller
 			'model'=>$model,
 		));
 	}
-    
+
     public function actionOwnList()
     {
         $model=new Zakaz('search');
@@ -227,8 +296,8 @@ class ZakazController extends Controller
     public function actionList()
 	{
 		$model=new Zakaz('search');
-		$model->unsetAttributes();  // clear any default values		
-        
+		$model->unsetAttributes();  // clear any default values
+
         if(isset($_GET['status'])){
             $model->status = $_GET['status'];
         }
@@ -264,7 +333,7 @@ class ZakazController extends Controller
 			Yii::app()->end();
 		}
 	}
-        
+
     public function actionDownload()
 	{
 	   EDownloadHelper::download($_GET['path']);

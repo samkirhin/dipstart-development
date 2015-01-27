@@ -8,7 +8,7 @@ class Profile extends UActiveRecord
 	 * @var boolean $regMode
 	 */
 	public $regMode = false;
-    public $regType = 'Author';
+	public $regType = 'Author';
 	private $_model;
 	private $_modelReg;
 	private $_rules = array();
@@ -38,10 +38,10 @@ class Profile extends UActiveRecord
 		if (!$this->_rules) {
 			$required = array();
 			$numerical = array();
-			$float = array();		
+			$float = array();
 			$decimal = array();
 			$rules = array();
-			
+
 			$model=$this->getFields();
 
 			foreach ($model as $field) {
@@ -89,7 +89,7 @@ class Profile extends UActiveRecord
 					array_push($rules,$field_rule);
 				}
 			}
-			
+
 			array_push($rules,array(implode(',',$required), 'required'));
 			array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 			array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
@@ -108,8 +108,11 @@ class Profile extends UActiveRecord
 		// class name for the relations automatically generated below.
 		$relations = array(
 			'user'=>array(self::HAS_ONE, 'User', 'id'),
+			'categories'=>array(self::HAS_MANY, 'Categories', array('id'=>'discipline')),
+			'AuthAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
 		);
-		if (isset(Yii::app()->getModule('user')->profileRelations)) $relations = array_merge($relations,Yii::app()->getModule('user')->profileRelations);
+		if (isset(Yii::app()->getModule('user')->profileRelations))
+			$relations = array_merge($relations,Yii::app()->getModule('user')->profileRelations);
 		return $relations;
 	}
 
@@ -122,20 +125,20 @@ class Profile extends UActiveRecord
 			'user_id' => UserModule::t('User ID'),
 		);
 		$model=$this->getFields();
-		
+
 		foreach ($model as $field)
 			$labels[$field->varname] = ((Yii::app()->getModule('user')->fieldsMessage)?UserModule::t($field->title,array(),Yii::app()->getModule('user')->fieldsMessage):UserModule::t($field->title));
-			
+
 		return $labels;
 	}
-	
+
 	private function rangeRules($str) {
 		$rules = explode(';',$str);
 		for ($i=0;$i<count($rules);$i++)
 			$rules[$i] = current(explode("==",$rules[$i]));
 		return $rules;
 	}
-	
+
 	static public function range($str,$fieldValue=NULL) {
 		$rules = explode(';',$str);
 		$array = array();
@@ -143,45 +146,45 @@ class Profile extends UActiveRecord
 			$item = explode("==",$rules[$i]);
 			if (isset($item[0])) $array[$item[0]] = ((isset($item[1]))?$item[1]:$item[0]);
 		}
-		if (isset($fieldValue)) 
+		if (isset($fieldValue))
 			if (isset($array[$fieldValue])) return $array[$fieldValue]; else return '';
 		else
 			return $array;
 	}
-	
+
 	public function widgetAttributes() {
 		$data = array();
 		$model=$this->getFields();
-		
+
 		foreach ($model as $field) {
 			if ($field->widget) $data[$field->varname]=$field->widget;
 		}
 		return $data;
 	}
-	
+
 	public function widgetParams($fieldName) {
 		$data = array();
 		$model=$this->getFields();
-		
+
 		foreach ($model as $field) {
 			if ($field->widget) $data[$field->varname]=$field->widgetparams;
 		}
 		return $data[$fieldName];
 	}
-	
+
 	public function getFields() {
 		if ($this->regMode) {
 			if (!$this->_modelReg){
-                $criteria = new CDbCriteria();
-                if ($this->regType == 'Author'){
-                   $criteria->addInCondition('visible',array(2,3));
+				$criteria = new CDbCriteria();
+				if ($this->regType == 'Author'){
+				   $criteria->addInCondition('visible',array(2,3));
 				   $this->_modelReg=ProfileField::model()->findAll($criteria);
-                }elseif ($this->regType == 'Customer'){
-                   $criteria->addInCondition('visible',array(1,3)); 
+				}elseif ($this->regType == 'Customer'){
+				   $criteria->addInCondition('visible',array(1,3));
 				   $this->_modelReg=ProfileField::model()->findAll($criteria);
-                }
-           }
-            return $this->_modelReg;
+				}
+		   }
+			return $this->_modelReg;
 		} else {
 			if (!$this->_model)
 			  $this->_model=ProfileField::model()->forAll()->findAll();
@@ -189,15 +192,15 @@ class Profile extends UActiveRecord
 		}
 	}
 
-    public function beforeSave(){
-        if(parent::beforeSave()){
-            if ($this->discipline && is_array($this->discipline)) {
-               $this->discipline = implode(",", $this->discipline);
-            }
-            if ($this->job_type && is_array($this->job_type)) {
-               $this->job_type = implode(",", $this->job_type);
-            }
-        }
-        return parent::beforeSave();
-    }
+	public function beforeSave(){
+		if(parent::beforeSave()){
+			if ($this->discipline && is_array($this->discipline)) {
+			   $this->discipline = implode(",", $this->discipline);
+			}
+			if ($this->job_type && is_array($this->job_type)) {
+			   $this->job_type = implode(",", $this->job_type);
+			}
+		}
+		return parent::beforeSave();
+	}
 }

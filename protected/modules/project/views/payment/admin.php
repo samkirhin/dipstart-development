@@ -182,6 +182,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var bookkeeperScript = new BookkeeperScript();
+        var bookkeeperScript = new BookkeeperScript('index.php?r=project/payment/apiView','receive_date');
     });
 </script>

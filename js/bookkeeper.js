@@ -1,10 +1,10 @@
-var BookkeeperScript = function(){
+var BookkeeperScript = function(u,s){
     var self = this;
     this.form = $('#bookkeeperView');
     this.template = this.form.find('.bookkeeperTableTemplate');
     this.summTemplate = this.form.find('.bookkeeperSummTemplate');
     this.searchType = 'DESC';
-    this.oldSearch = 'receive_date';
+    this.oldSearch = s;
     this.isSearched = false;
     this.search_field = "";
     this.search_type = "";
@@ -13,7 +13,7 @@ var BookkeeperScript = function(){
     
     
     this.loadList = function () {
-        $.post('index.php?r=project/payment/apiView', JSON.stringify({
+        $.post(u, JSON.stringify({
             'sort': self.oldSearch,
             'type': self.searchType,
             'search_field': self.search_field,

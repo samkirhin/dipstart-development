@@ -47,12 +47,9 @@ class RegistrationController extends Controller
 						$model->status=((Yii::app()->controller->module->activeAfterRegister)?User::STATUS_ACTIVE:User::STATUS_NOACTIVE);
 						
 						if ($model->save()) {
-							$connection=Yii::app()->db;
-							$sql="INSERT INTO AuthAssignment(itemname, userid) VALUES(:itemname,:userid)";
-							$command=$connection->createCommand($sql);
-							$command->bindParam(":itemname",$profile->regType,PDO::PARAM_STR);
-							$command->bindParam(":userid",$model->id,PDO::PARAM_STR);
-							$command->execute();
+							$AuthAssignment = new AuthAssignment;
+							$AuthAssignment->attributes=array('itemname'=>$profile->regType,'userid'=>$model->id);
+							$AuthAssignment->save();
 
 							$profile->user_id=$model->id;
 							$profile->save();

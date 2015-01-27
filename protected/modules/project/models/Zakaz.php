@@ -56,6 +56,9 @@ class Zakaz extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
+			'category'=>array(self::HAS_ONE, 'Categories', array('id'=>'category_id')),
+			'job'=>array(self::HAS_ONE, 'Jobs', array('id'=>'job_id')),
 		);
 	}
 
@@ -82,7 +85,7 @@ class Zakaz extends CActiveRecord
                     'author_informed' => ProjectModule::t('Author Informed'),
                     'notes' => ProjectModule::t('Notes'),
                     'author_notes' => ProjectModule::t('author_notes'),
-                    
+
 		);
 	}
 

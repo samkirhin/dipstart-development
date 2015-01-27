@@ -39,13 +39,13 @@ class AdminController extends Controller
 	public function actionAdmin()
 	{
 		$model=new User('search');
-        $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['User']))
-            $model->attributes=$_GET['User'];
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['User']))
+			$model->attributes=$_GET['User'];
 
-        $this->render('index',array(
-            'model'=>$model,
-        ));
+		$this->render('index',array(
+			'model'=>$model,
+		));
 		/*$dataProvider=new CActiveDataProvider('User', array(
 			'pagination'=>array(
 				'pageSize'=>Yii::app()->controller->module->user_page_size,
@@ -144,6 +144,8 @@ class AdminController extends Controller
 			// we only allow deletion via POST request
 			$model = $this->loadModel();
 			$profile = Profile::model()->findByPk($model->id);
+			$AuthAssignment = AuthAssignment::model()->findByAttributes(array('userid'=>$model->id));
+			$AuthAssignment->delete();
 			$profile->delete();
 			$model->delete();
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -155,17 +157,17 @@ class AdminController extends Controller
 	}
 	
 	/**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
-     */
-    protected function performAjaxValidation($validate)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
-        {
-            echo CActiveForm::validate($validate);
-            Yii::app()->end();
-        }
-    }
+	 * Performs the AJAX validation.
+	 * @param CModel the model to be validated
+	 */
+	protected function performAjaxValidation($validate)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
+		{
+			echo CActiveForm::validate($validate);
+			Yii::app()->end();
+		}
+	}
 	
 	
 	/**
