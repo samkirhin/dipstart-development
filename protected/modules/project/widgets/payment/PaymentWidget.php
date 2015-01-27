@@ -10,6 +10,8 @@ class PaymentWidget extends CWidget {
         $payments = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
             ':ORDER_ID' => $this->projectId
         ));
+        /*
+         * убрал генерацию мусорных записей в таблицу
         if (!$payment) {
             $payment = new ProjectPayments;
             $payment->order_id = $this->projectId;
@@ -18,6 +20,8 @@ class PaymentWidget extends CWidget {
             $payment->to_pay = 0;
             $payment->save();
         }
+         * 
+         */
         $this->renderForm($payments);
         
     }
