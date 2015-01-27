@@ -143,11 +143,12 @@ class ZakazController extends Controller
             {
                 $role = User::model()->getUserRole();
                 $model->attributes=$_POST['Zakaz'];
-                if($model->save())
-                    if ($role != 'Manager') {
+                if($model->save()){
+                    if (!User::model()->isManager()) {
                         EventHelper::createOrder($model->id);
                     }
                     $this->redirect(array('view','id'=>$model->id));
+                }
             }
 
             $this->render('create',array(
