@@ -177,7 +177,7 @@ class ZakazController extends Controller
                 $moderateModel = Moderation::model()->find('`order_id` = :ID', array(
                     'ID'=>$id
                 ));
-                unset($modelRows[id]);
+                unset($modelRows[$id]);
                 foreach ($modelRows as $key=>$value) {
                     $model->$key = $moderateModel->$key;
                 }

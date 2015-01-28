@@ -138,7 +138,7 @@ return array(
     'Use Ctrl for multiply' => 'Используйте Ctrl для мульти выбора',
     'Profile Edit' => 'Редактировать профиль',
     'Change Password' => 'Изменить пароль',
-    '' => '',
+    'Account' => 'Личный счет',
     '' => '',
     '' => '',
     '' => '',

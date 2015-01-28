@@ -100,4 +100,45 @@ class ProfileController extends Controller
 		}
 		return $this->_model;
 	}
+    
+    /*
+     * отображение денежных средств
+     * отображаем только для автора\заказчика
+     */
+    public function actionAccount()
+    {
+        
+        if (User::model()->isCustomer()) {
+            
+            $sql = 'SELECT SUM(project_price) AS project_price, SUM(to_receive) AS to_receive, SUM(received) AS received FROM `ProjectPayments` WHERE order_id IN (SELECT id FROM Projects WHERE user_id = :user_id)';
+            
+            $columns = [
+                'project_price',
+                'to_receive',
+                'received'
+            ];
+            
+        } elseif (User::model()->isAuthor()) {
+            
+            $sql = 'SELECT SUM(work_price) AS work_price, SUM(to_pay) AS to_pay FROM `ProjectPayments` WHERE order_id IN (SELECT id FROM Projects WHERE executor = :user_id)';
+            
+            $columns = [
+                'work_price',
+                'to_pay'
+            ];
+            
+        } else {
+            throw new CHttpException(500);
+        }
+        
+        $command = Yii::app()->db->createCommand($sql);
+        $command->params = [':user_id'=>Yii::app()->user->id];
+        $result = $command->queryRow();
+        
+        foreach ($columns as $column) {
+            $params[$column] = (int)$result[$column];
+        }
+        
+        $this->render('account', $params);
+    }
 }

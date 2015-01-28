@@ -92,7 +92,7 @@
                 $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
                 $items[] = array('label'=>'Личные данные', 'items'=>array(
                     array('label'=>'Личный кабинет', 'url'=>array('#')),
-                    array('label'=>'Личный счет', 'url'=>array('#')),
+                    array('label'=>'Личный счет', 'url'=>array('/user/profile/account')),
                     array('label'=>'Профиль', 'url'=>array('/user/profile/edit'))
                 ));
                 $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
@@ -113,7 +113,7 @@
                 $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
                 $items[] = array('label'=>'Личные данные', 'items'=>array(
                     array('label'=>'Личный кабинет', 'url'=>array('#')),
-                    array('label'=>'Личный счет', 'url'=>array('#')),
+                    array('label'=>'Личный счет', 'url'=>array('/user/profile/account')),
                     array('label'=>'Профиль', 'url'=>array('/user/profile/edit')),
                 ));
                 $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
