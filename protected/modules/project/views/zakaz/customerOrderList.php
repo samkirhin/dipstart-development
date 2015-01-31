@@ -29,7 +29,7 @@
         [
             'header' => '',
             'type' => 'raw',
-            'value' => 'CHtml::link("чат", ["project/chat", "orderId"=>$data->id])'
+            'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
         ],
 	),
 )); ?>
