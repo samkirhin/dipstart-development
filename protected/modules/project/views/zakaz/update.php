@@ -20,7 +20,7 @@ $this->breadcrumbs = array(
 <?php if ($user->isCustomer()) {
     $this->renderPartial('_form', array('model' => $model, 'times' => $times));
 } elseif ($user->isManager() || $user->isAdmin()) {
-    $this->renderPartial('_formManager', array('model' => $model, 'times' => $times));
+    $this->renderPartial('_formUpdateManager', array('model' => $model, 'times' => $times));
 }
 ?>
 

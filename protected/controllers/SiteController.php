@@ -22,6 +22,7 @@ class SiteController extends Controller
 			    array('class'=>
 				    'ext.yiifilemanagerfilepicker.YiiFileManagerFilePickerAction'
             ),
+            'yiichat'=>array('class'=>'YiiChatAction'),
 		);
 	}
 
