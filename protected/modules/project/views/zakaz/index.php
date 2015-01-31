@@ -4,7 +4,7 @@
 <script class="bookkeeperTableTemplate" type="text/x-jquery-tmpl">
         <tr>
             <td>
-                ${id}
+                <a href="index.php?r=project/zakaz/update&id=${id}">${id}</a>
             </td>
             <td>
                 ${username}
