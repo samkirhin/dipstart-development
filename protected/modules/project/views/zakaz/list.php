@@ -37,37 +37,28 @@ $('.search-form form').submit(function(){
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'zakaz-grid',
 	'dataProvider'=>$model->search(),
-	'filter'=>$model,
+	//'filter'=>$model,
 	'columns'=>array(
 		'id',
 		array(
            'name' => 'user_id',
            'type' => 'raw',
-           'value' => 'User::model()->findByPk($data->user_id)->username',
+           'value' => '$data->user->username'
         ),
 		array(
            'name' => 'category_id',
            'type' => 'raw',
-           'value' => 'Categories::model()->findByPk($data->category_id)->cat_name',
+           'value' => 'isset($data->category) ? $data->category->cat_name : ""'
         ),
 		array(
            'name' => 'job_id',
            'type' => 'raw',
-           'value' => 'Jobs::model()->findByPk($data->job_id)->job_name',
-           'value' => function($data) {
-                $model = Jobs::model()->findByPk($data->job_id);
-                if ($model) {
-                    return $model->job_name;
-                } else {
-                    return '';
-                }
-           }
+           'value' => 'isset($data->job) ? $data->job->job_name : ""'
         ),
 		'title',
-		
 		array(
 			'class'=>'CButtonColumn',
-            'template'=>'{view}',
+            'template'=>'{view}'
 		),
 	),
 )); ?>

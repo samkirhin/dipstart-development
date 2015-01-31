@@ -32,7 +32,7 @@ class ZakazController extends Controller
                     'users'=>array('*'),
                 ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list', 'ownList','apiview'),
+                    'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -285,6 +285,10 @@ class ZakazController extends Controller
 
     public function actionOwnList()
     {
+        if (!User::model()->isAuthor()) {
+            throw new CHttpException(500);
+        }
+        
         $model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
         $model->executor = Yii::app()->user->id;
@@ -340,4 +344,21 @@ class ZakazController extends Controller
 	   EDownloadHelper::download($_GET['path']);
             $this->redirect(Yii::app()->request->urlReferrer);
 	}
+    
+    public function actionCustomerOrderList()
+    {
+        if (!User::model()->isCustomer()) {
+            throw new CHttpException(500);
+        }
+        
+        $criteria = new CDbCriteria();
+        $criteria->compare('user_id', Yii::app()->user->id);
+        $dataProvider = new CActiveDataProvider('Zakaz', [
+            'criteria' => $criteria
+        ]);
+        
+        $this->render('customerOrderList', [
+            'dataProvider' => $dataProvider
+        ]);
+    }
 }

@@ -13,7 +13,7 @@
             <a class="btn btn-default btn-block" href="/index.php?r=project/zakaz/create">Создать заказ</a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="/index.php?r=project/zakaz/index">Мои заказы</a>
+            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/project/zakaz/customerOrderList') ?>">Мои заказы</a>
         </td>
     </tr>
     <tr>

@@ -118,7 +118,7 @@
                 ));
                 $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
                     array('label'=>ProjectModule::t('Create Zakaz'), 'url'=>array('/project/zakaz/create')),
-                    array('label'=>'Мои заказы', 'url'=>array('#'))
+                    array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/customerOrderList'))
                 ));
                 $items[] = array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(
                      array('label'=>Yii::t('site', 'Inbox'), 'url'=>array('/mailbox/message/inbox')),
