@@ -51,82 +51,82 @@ class ZakazController extends Controller
 	 */
 	public function actionView($id)
 	{
-            $model = $this->loadModel($id);
-            $model->date = date("Y-m-d H:i", $model->date);
-            $model->max_exec_date = date("Y-m-d H:i", $model->max_exec_date);
-            $model->date_finish = date("Y-m-d H:i", $model->date_finish);
+			$model = $this->loadModel($id);
+			$model->date = date("Y-m-d H:i", $model->date);
+			$model->max_exec_date = date("Y-m-d H:i", $model->max_exec_date);
+			$model->date_finish = date("Y-m-d H:i", $model->date_finish);
 		$this->render('view',array(
 			'model'=> $model
 		));
 	}
-    protected $_request;
-    protected $_response;
-    protected function _prepairJson() {
-        $this->_request = Yii::app()->jsonRequest;
-        $this->_response = new JsonHttpResponse();
-    }
-    public function actionApiView() {
-        $user = User::model()->findByPk(Yii::app()->user->id);
-        if (!$user->superuser) {
-            $this->redirect('/');
-        } else {
-            $this->_prepairJson();
-            $sort = $this->_request->getParam('sort');
-            $type = $this->_request->getParam('type');
-            $searchField = $this->_request->getParam('search_field');
-            $searchType = $this->_request->getParam('search_type');
-            $searchString = $this->_request->getParam('search_string');
-            if (!$sort) {
-                $sort = 'date';
-            }
-            if (!$type) {
-                $type = 'DESC';
-            }
-            if ($searchField == '' || $searchString == '' || $searchType == '') {
+	protected $_request;
+	protected $_response;
+	protected function _prepairJson() {
+		$this->_request = Yii::app()->jsonRequest;
+		$this->_response = new JsonHttpResponse();
+	}
+	public function actionApiView() {
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		if (!$user->superuser) {
+			$this->redirect('/');
+		} else {
+			$this->_prepairJson();
+			$sort = $this->_request->getParam('sort');
+			$type = $this->_request->getParam('type');
+			$searchField = $this->_request->getParam('search_field');
+			$searchType = $this->_request->getParam('search_type');
+			$searchString = $this->_request->getParam('search_string');
+			if (!$sort) {
+				$sort = 'date';
+			}
+			if (!$type) {
+				$type = 'DESC';
+			}
+			if ($searchField == '' || $searchString == '' || $searchType == '') {
 				$criteria = new CDbCriteria;
 				$criteria->with = array('user','category','job');
 				$criteria->order = 't.'.$sort.' '.$type;
-                $data = Zakaz::model()->findAll($criteria);
-            } else {
-                $searchField=explode('.',$searchField);
-                switch ($searchType) {
-                    case 'bigger':
-                        $searchType = '<';
-                        break;
-                    case 'smaller':
-                        $searchType = '>';
-                        break;
-                    case 'equal':
-                        $searchType = '=';
-                        break;
-                }
-                if (count($searchField)==3){
-                    $dbName=ucfirst($searchField[1]);
-                    $searchStringReal = $dbName::model()->findByAttributes(array($searchField[0]=>$searchString));
-                }
+				$data = Zakaz::model()->findAll($criteria);
+			} else {
+				$searchField=explode('.',$searchField);
+				switch ($searchType) {
+					case 'bigger':
+						$searchType = '<';
+						break;
+					case 'smaller':
+						$searchType = '>';
+						break;
+					case 'equal':
+						$searchType = '=';
+						break;
+				}
+				if (count($searchField)==3){
+					$dbName=ucfirst($searchField[1]);
+					$searchStringReal = $dbName::model()->findByAttributes(array($searchField[0]=>$searchString));
+				}
 				$criteria = new CDbCriteria;
 				$criteria->with = array('user','category','job');
 				$criteria->condition='t.`'.$searchField[2].'` '.$searchType.' :scrit';
 				$criteria->params=array(':scrit'=>$searchStringReal['id']);
 				$criteria->order = 't.'.$sort.' '.$type;
-                $data = Zakaz::model()->findAll($criteria);
-            }
-            $report = array();
-            $report['summary'] = 0;
-            $report['ids_count'] = count($data);
-            foreach($data as $num=>$dat) {
+				$data = Zakaz::model()->findAll($criteria);
+			}
+			$report = array();
+			$report['summary'] = 0;
+			$report['ids_count'] = count($data);
+			foreach($data as $num=>$dat) {
 				$res[$num]=$data[$num]->getAttributes()
 				+$data[$num]->user->getAttributes()
 				+((isset($data[$num]->category))?$data[$num]->category->getAttributes():array('cat_name'=>'Не определена'))
 				+((isset($data[$num]->job))?$data[$num]->job->getAttributes():array('job_name'=>'Не определена'));
 				}
-            $this->_response->setData( array(
-                'data' => $res,
-                'report' => $report
-            ));
-            $this->_response->send();
-        }
-    }
+			$this->_response->setData( array(
+				'data' => $res,
+				'report' => $report
+			));
+			$this->_response->send();
+		}
+	}
 
 	/**
 	 * Creates a new model.
@@ -134,26 +134,26 @@ class ZakazController extends Controller
 	 */
 	public function actionCreate()
 	{
-            $model=new Zakaz;
+			$model=new Zakaz;
 
-            // Uncomment the following line if AJAX validation is needed
-            // $this->performAjaxValidation($model);
+			// Uncomment the following line if AJAX validation is needed
+			// $this->performAjaxValidation($model);
 
-            if(isset($_POST['Zakaz']))
-            {
-                $role = User::model()->getUserRole();
-                $model->attributes=$_POST['Zakaz'];
-                if($model->save()){
-                    if (!User::model()->isManager()) {
-                        EventHelper::createOrder($model->id);
-                    }
-                    $this->redirect(array('view','id'=>$model->id));
-                }
-            }
+			if(isset($_POST['Zakaz']))
+			{
+				$role = User::model()->getUserRole();
+				$model->attributes=$_POST['Zakaz'];
+				if($model->save()){
+					if (!User::model()->isManager()) {
+						EventHelper::createOrder($model->id);
+					}
+					$this->redirect(array('view','id'=>$model->id));
+				}
+			}
 
-            $this->render('create',array(
-                    'model'=>$model,
-            ));
+			$this->render('create',array(
+					'model'=>$model,
+			));
 	}
 
 	/**
@@ -163,84 +163,84 @@ class ZakazController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-            $role = User::model()->getUserRole();
-            $view = 'update';
-            $isModified = false;
-        Yii::app()->session['project_id'] = $id;
-        $model=$this->loadModel($id);
-        if (ModerationHelper::isOrderChanged($id)) {
-            if ($role == 'Customer' ) {
-                $view = 'orderInModerate';
-            } else {
-                $isModified = true;
-                $modelRows = $model->attributes;
-                $moderateModel = Moderation::model()->find('`order_id` = :ID', array(
-                    'ID'=>$id
-                ));
-                unset($modelRows[$id]);
-                foreach ($modelRows as $key=>$value) {
-                    $model->$key = $moderateModel->$key;
-                }
-            }
-        } else {
+			$role = User::model()->getUserRole();
+			$view = 'update';
+			$isModified = false;
+		Yii::app()->session['project_id'] = $id;
+		$model=$this->loadModel($id);
+		if (ModerationHelper::isOrderChanged($id)) {
+			if ($role == 'Customer' ) {
+				$view = 'orderInModerate';
+			} else {
+				$isModified = true;
+				$modelRows = $model->attributes;
+				$moderateModel = Moderation::model()->find('`order_id` = :ID', array(
+					'ID'=>$id
+				));
+				unset($modelRows[$id]);
+				foreach ($modelRows as $key=>$value) {
+					$model->$key = $moderateModel->$key;
+				}
+			}
+		} else {
 
-        }
+		}
 
-        $times = array();
-        $times['date']['date'] = date("Y-m-d", $model->date);
-        $times['date']['hours'] = date("H", $model->date);
-        $times['date']['minutes'] = date("i", $model->date);
-        $times['date_finish']['date'] = date("Y-m-d", $model->date_finish);
-        $times['date_finish']['hours'] = date("H", $model->date_finish);
-        $times['date_finish']['minutes'] = date("i", $model->date_finish);
-        $times['max_exec_date']['date'] = date("Y-m-d", $model->max_exec_date);
-        $times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
-        $times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
-        $times['manager_informed']['date'] = date("Y-m-d", $model->manager_informed);
-        $times['manager_informed']['hours'] = date("H", $model->manager_informed);
-        $times['manager_informed']['minutes'] = date("i", $model->manager_informed);
-        $times['author_informed']['date'] = date("Y-m-d", $model->author_informed);
-        $times['author_informed']['hours'] = date("H", $model->author_informed);
-        $times['author_informed']['minutes'] = date("i", $model->author_informed);
+		$times = array();
+		$times['date']['date'] = date("Y-m-d", $model->date);
+		$times['date']['hours'] = date("H", $model->date);
+		$times['date']['minutes'] = date("i", $model->date);
+		$times['date_finish']['date'] = date("Y-m-d", $model->date_finish);
+		$times['date_finish']['hours'] = date("H", $model->date_finish);
+		$times['date_finish']['minutes'] = date("i", $model->date_finish);
+		$times['max_exec_date']['date'] = date("Y-m-d", $model->max_exec_date);
+		$times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
+		$times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
+		$times['manager_informed']['date'] = date("Y-m-d", $model->manager_informed);
+		$times['manager_informed']['hours'] = date("H", $model->manager_informed);
+		$times['manager_informed']['minutes'] = date("i", $model->manager_informed);
+		$times['author_informed']['date'] = date("Y-m-d", $model->author_informed);
+		$times['author_informed']['hours'] = date("H", $model->author_informed);
+		$times['author_informed']['minutes'] = date("i", $model->author_informed);
 
-            // Uncomment the following line if AJAX validation is needed
-            // $this->performAjaxValidation($model);
-            if(isset($_POST['Zakaz']))
-            {
-                $zakaz = $_POST['Zakaz'];
+			// Uncomment the following line if AJAX validation is needed
+			// $this->performAjaxValidation($model);
+			if(isset($_POST['Zakaz']))
+			{
+				$zakaz = $_POST['Zakaz'];
 
-                $time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
-                $time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
-                $time[max_exec_date] = strtotime($zakaz[max_exec_date][date].' '.$zakaz[max_exec_date][hours].':'.$zakaz[max_exec_date][minutes]);
-                $time[manager_informed] = strtotime($zakaz[manager_informed][date].' '.$zakaz[manager_informed][hours].':'.$zakaz[manager_informed][minutes]);
-                $time[author_informed] = strtotime($zakaz[author_informed][date].' '.$zakaz[author_informed][hours].':'.$zakaz[author_informed][minutes]);
+				$time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
+				$time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
+				$time[max_exec_date] = strtotime($zakaz[max_exec_date][date].' '.$zakaz[max_exec_date][hours].':'.$zakaz[max_exec_date][minutes]);
+				$time[manager_informed] = strtotime($zakaz[manager_informed][date].' '.$zakaz[manager_informed][hours].':'.$zakaz[manager_informed][minutes]);
+				$time[author_informed] = strtotime($zakaz[author_informed][date].' '.$zakaz[author_informed][hours].':'.$zakaz[author_informed][minutes]);
 
 
-                if ($role != 'Manager' && $role != 'Admin') {
-                    ModerationHelper::saveToModerate($model, $zakaz, $time);
-                } else {
-                    $model->attributes=$zakaz;
-                    $model->date = $time[date];
-                    $model->date_finish = $time[date_finish];
-                    $model->max_exec_date = $time[max_exec_date];
-                    $model->manager_informed = $time[manager_informed];
-                    $model->author_informed = $time[author_informed];
-                }
+				if ($role != 'Manager' && $role != 'Admin') {
+					ModerationHelper::saveToModerate($model, $zakaz, $time);
+				} else {
+					$model->attributes=$zakaz;
+					$model->date = $time[date];
+					$model->date_finish = $time[date_finish];
+					$model->max_exec_date = $time[max_exec_date];
+					$model->manager_informed = $time[manager_informed];
+					$model->author_informed = $time[author_informed];
+				}
 
-                if($model->save())
-                    if ($role != 'Manager' && $role != 'admin') {
-                        EventHelper::editOrder($model->id);
-                    } else {
-                        ModerationHelper::clear($model->id);
-                    }
-                    $this->redirect(array('view','id'=>$model->id));
-            }
+				if($model->save())
+					if ($role != 'Manager' && $role != 'admin') {
+						EventHelper::editOrder($model->id);
+					} else {
+						ModerationHelper::clear($model->id);
+					}
+					$this->redirect(array('view','id'=>$model->id));
+			}
 
-            $this->render($view, array(
-                'model'=>$model,
-                'times'=>$times,
-                'isModified'=>$isModified
-            ));
+			$this->render($view, array(
+				'model'=>$model,
+				'times'=>$times,
+				'isModified'=>$isModified
+			));
 	}
 
 	/**
@@ -291,21 +291,21 @@ class ZakazController extends Controller
         
         $model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
-        $model->executor = Yii::app()->user->id;
+		$model->executor = Yii::app()->user->id;
 
 		$this->render('list',array(
 			'model'=>$model,
 		));
-    }
+	}
 
-    public function actionList()
+	public function actionList()
 	{
 		$model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
 
-        if(isset($_GET['status'])){
-            $model->status = $_GET['status'];
-        }
+		if(isset($_GET['status'])){
+			$model->status = $_GET['status'];
+		}
 
 		$this->render('list',array(
 			'model'=>$model,
@@ -339,10 +339,10 @@ class ZakazController extends Controller
 		}
 	}
 
-    public function actionDownload()
+	public function actionDownload()
 	{
 	   EDownloadHelper::download($_GET['path']);
-            $this->redirect(Yii::app()->request->urlReferrer);
+			$this->redirect(Yii::app()->request->urlReferrer);
 	}
     
     public function actionCustomerOrderList()
