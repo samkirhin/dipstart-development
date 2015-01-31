@@ -4,7 +4,7 @@
             <a class="btn btn-default btn-block" href="#">Личный кабинет</a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="#">Личный счет</a>
+            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/user/profile/account') ?>">Личный счет</a>
         </td>
         <td>
             <a class="btn btn-default btn-block" href="<?= $this->createUrl('/user/profile/edit') ?>">Профиль</a>
