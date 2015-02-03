@@ -95,7 +95,7 @@
                     array('label'=>'Личный счет', 'url'=>array('/user/profile/account')),
                     array('label'=>'Профиль', 'url'=>array('/user/profile/edit'))
                 ));
-                $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
+                $items[] = array('label'=>Yii::t('site','Projects'), 'items' => array(
                     array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '2')),
                     array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/ownList')),
                 ));

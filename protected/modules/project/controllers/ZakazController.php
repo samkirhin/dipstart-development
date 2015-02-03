@@ -286,7 +286,7 @@ class ZakazController extends Controller
     public function actionOwnList()
     {
         if (!User::model()->isAuthor()) {
-            throw new CHttpException(500);
+            throw new CHttpException(403, 'Доступ запрещен');
         }
         
         $model=new Zakaz('search');
