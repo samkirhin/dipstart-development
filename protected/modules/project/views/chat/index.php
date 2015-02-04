@@ -3,7 +3,12 @@
 /* @var $model ProjectMessages */
 /* @var $form CActiveForm */
 ?>
-<script src="/js/chat.js"></script>
+
+<?php $this->widget('zii.widgets.CDetailView', array(
+	'data'=>$order,
+	'attributes'=>$attributes,
+)); ?>
+
 <?php foreach($messages as $message): ?>
         <?php echo $message->date; ?> - 
         <?php

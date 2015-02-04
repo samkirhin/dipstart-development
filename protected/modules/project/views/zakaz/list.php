@@ -17,11 +17,7 @@ $this->breadcrumbs=array(
 	'dataProvider'=>$model->search(),
 	//'filter'=>$model,
 	'columns'=>array(
-        [
-            'name' => 'id',
-            'type' => 'raw',
-            'value' => 'CHtml::link($data->id, ["view", "id"=>$data->id])'
-        ],
+        'id',
 		'title',
 		array(
            'name' => 'user_id',
@@ -31,12 +27,12 @@ $this->breadcrumbs=array(
 		array(
            'name' => 'category_id',
            'type' => 'raw',
-           'value' => 'isset($data->category) ? $data->category->cat_name : ""'
+           'value' => 'isset($data->category) ? $data->category->cat_name : null'
         ),
 		array(
            'name' => 'job_id',
            'type' => 'raw',
-           'value' => 'isset($data->job) ? $data->job->job_name : ""'
+           'value' => 'isset($data->job) ? $data->job->job_name : null'
         ),
 		[
             'header' => '',
