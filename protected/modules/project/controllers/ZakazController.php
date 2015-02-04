@@ -51,10 +51,11 @@ class ZakazController extends Controller
 	 */
 	public function actionView($id)
 	{
-			$model = $this->loadModel($id);
-			$model->date = date("Y-m-d H:i", $model->date);
-			$model->max_exec_date = date("Y-m-d H:i", $model->max_exec_date);
-			$model->date_finish = date("Y-m-d H:i", $model->date_finish);
+		$model = $this->loadModel($id);
+		$model->date = date("Y-m-d H:i", $model->date);
+		$model->max_exec_date = date("Y-m-d H:i", $model->max_exec_date);
+		$model->date_finish = date("Y-m-d H:i", $model->date_finish);
+		$model->term_for_author = date("Y-m-d H:i", $model->term_for_author);
 		$this->render('view',array(
 			'model'=> $model
 		));
@@ -181,11 +182,9 @@ class ZakazController extends Controller
 				foreach ($modelRows as $key=>$value) {
 					$model->$key = $moderateModel->$key;
 				}
+				$model->id = $moderateModel->order_id;
 			}
-		} else {
-
 		}
-
 		$times = array();
 		$times['date']['date'] = date("Y-m-d", $model->date);
 		$times['date']['hours'] = date("H", $model->date);
@@ -193,6 +192,9 @@ class ZakazController extends Controller
 		$times['date_finish']['date'] = date("Y-m-d", $model->date_finish);
 		$times['date_finish']['hours'] = date("H", $model->date_finish);
 		$times['date_finish']['minutes'] = date("i", $model->date_finish);
+		$times['term_for_author']['date'] = date("Y-m-d", $model->term_for_author);
+		$times['term_for_author']['hours'] = date("H", $model->term_for_author);
+		$times['term_for_author']['minutes'] = date("i", $model->term_for_author);
 		$times['max_exec_date']['date'] = date("Y-m-d", $model->max_exec_date);
 		$times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
 		$times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
@@ -211,6 +213,7 @@ class ZakazController extends Controller
 
 				$time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
 				$time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
+				$time[term_for_author] = strtotime($zakaz[term_for_author][date].' '.$zakaz[term_for_author][hours].':'.$zakaz[term_for_author][minutes]);
 				$time[max_exec_date] = strtotime($zakaz[max_exec_date][date].' '.$zakaz[max_exec_date][hours].':'.$zakaz[max_exec_date][minutes]);
 				$time[manager_informed] = strtotime($zakaz[manager_informed][date].' '.$zakaz[manager_informed][hours].':'.$zakaz[manager_informed][minutes]);
 				$time[author_informed] = strtotime($zakaz[author_informed][date].' '.$zakaz[author_informed][hours].':'.$zakaz[author_informed][minutes]);
@@ -222,6 +225,7 @@ class ZakazController extends Controller
 					$model->attributes=$zakaz;
 					$model->date = $time[date];
 					$model->date_finish = $time[date_finish];
+					$model->term_for_author = $time[term_for_author];
 					$model->max_exec_date = $time[max_exec_date];
 					$model->manager_informed = $time[manager_informed];
 					$model->author_informed = $time[author_informed];
@@ -235,7 +239,6 @@ class ZakazController extends Controller
 					}
 					$this->redirect(array('view','id'=>$model->id));
 			}
-
 			$this->render($view, array(
 				'model'=>$model,
 				'times'=>$times,
@@ -288,7 +291,7 @@ class ZakazController extends Controller
         if (!User::model()->isAuthor()) {
             throw new CHttpException(500);
         }
-        
+
         $model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
 		$model->executor = Yii::app()->user->id;
@@ -320,7 +323,7 @@ class ZakazController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Zakaz::model()->findByPk($id);
+		$model=ZakazUpdate::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -344,19 +347,19 @@ class ZakazController extends Controller
 	   EDownloadHelper::download($_GET['path']);
 			$this->redirect(Yii::app()->request->urlReferrer);
 	}
-    
+
     public function actionCustomerOrderList()
     {
         if (!User::model()->isCustomer()) {
             throw new CHttpException(500);
         }
-        
+
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', Yii::app()->user->id);
         $dataProvider = new CActiveDataProvider('Zakaz', [
             'criteria' => $criteria
         ]);
-        
+
         $this->render('customerOrderList', [
             'dataProvider' => $dataProvider
         ]);
