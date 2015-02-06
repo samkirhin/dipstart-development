@@ -49,7 +49,15 @@ class ChatController extends Controller {
 	 *  Вывод и добавление сообщений
 	 */
 	public function actionIndex($orderId) {
+        
+        Yii::app()->clientScript->registerScriptFile('/js/chat.js');
+        
 		$order = Zakaz::model()->findByPk($orderId);
+        
+        if (!$order) {
+            throw new CHttpException(404, 'Не найден');
+        }
+        
 		$model = new ProjectMessages;
 		$model->sender = Yii::app()->user->id;
 		$model->moderated = 0;
@@ -82,13 +90,63 @@ class ChatController extends Controller {
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);
 		}
+        
+        $attributes = [
+            'id',
+            array(
+               'name' => 'user_id',
+               'type' => 'raw',
+               'value' => User::model()->findByPk($order->user_id)->username,
+            ),
+            array(
+               'name' => 'category_id',
+               'type' => 'raw',
+               'value' => Categories::model()->findByPk($order->category_id)->cat_name,
+            ),
+            array(
+               'name' => 'job_id',
+               'type' => 'raw',
+               'value' => $order->job_id > 0 ? Jobs::model()->findByPk($order->job_id)->job_name : null,
+            ),
+            'title',
+            'text',
+            [
+               'name' => 'date',
+               'value' => Yii::app()->dateFormatter->formatDateTime($order->date),
+            ],
+            [
+               'name' => 'max_exec_date',
+               'value' => Yii::app()->dateFormatter->formatDateTime($order->max_exec_date),
+            ],
+            [
+               'name' => 'date_finish',
+               'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
+            ],
+            'pages',
+            'add_demands',
+            array(
+               'name' => 'status',
+               'type' => 'raw',
+               'value' => $order->status > 0 ? ProjectStatus::model()->findByPk($order->status)->status : null,
+            ),
+        ];
+        
+        if (User::model()->isManager() || User::model()->isAdmin()) {
+            $attributes = CMap::mergeArray($attributes, [
+                'is_payed',
+                'informed',
+                'notes'
+            ]);
+        }
 		
 		$this->render('index', array(
 			'model' => $model,
+            'order' => $order,
 			'messages' => $messages,
 			'orderId' => $orderId,
 			'executor' => Zakaz::getExecutor($orderId),
-			'ordererId' =>$order->user_id
+			'ordererId' =>$order->user_id,
+            'attributes' => $attributes
 		));
 	}
 
