@@ -1,8 +1,12 @@
 <?php
 /* @var $this ZakazController */
 /* @var $model Zakaz */
+/* @var $profile Profile */
 
 $user = User::model();
+$author = $model->author->profile;
+$customer = $model->user->profile;
+
 $this->breadcrumbs = array(
     ProjectModule::t('Zakazs') => array('index'),
     $model->title => array('view', 'id' => $model->id),
@@ -12,6 +16,21 @@ $this->breadcrumbs = array(
 
     <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
     <?php if ($isModified) echo '<span class="label label-warning" style="font-size:16px;"><b>Заказ на модерации</b></span>';?>
+
+    <div>
+        Автор <br>
+        <?= $author->firstname ?> <?= $author->lastname ?> <br>
+        <?= $model->author->email ?> <br>
+        <?= $author->mob_tel ?>
+    </div>
+
+    <div>
+        Заказчик<br>
+        <?= $customer->firstname ?> <?= $customer->lastname ?> <br>
+        <?= $model->user->email ?> <br>
+        <?= $customer->mob_tel ?>
+    </div>
+
 <?php
     $this->widget('application.modules.project.widgets.payment.PaymentWidget', array(
         'projectId'=>$model->id

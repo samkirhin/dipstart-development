@@ -17,6 +17,8 @@
  * @property string $add_demands
  * @property integer $status
  * @property string $executor
+ * @property User $user
+ * @property User $author
  */
 class Zakaz extends CActiveRecord
 {
@@ -57,6 +59,7 @@ class Zakaz extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
+			'author' => [self::BELONGS_TO, 'User', 'executor'],
 			'category'=>array(self::HAS_ONE, 'Categories', array('id'=>'category_id')),
 			'job'=>array(self::HAS_ONE, 'Jobs', array('id'=>'job_id')),
 		);
