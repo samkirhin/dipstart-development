@@ -88,9 +88,9 @@ if ($model->status<3) {?>
 						'name'=>'Zakaz[date][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
-						'value' => $times['date']['date'],
+						'value' => Yii::app()->dateFormatter->formatDateTime($times['date']['date'], 'medium', ''),
 						'options'=>array(
-							'dateFormat'=>'yy-mm-dd',
+							'dateFormat'=>'dd.mm.yy',
 							'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
 						),
 						'htmlOptions'=>array(
@@ -133,9 +133,9 @@ if ($model->status<3) {?>
 						'name'=>'Zakaz[max_exec_date][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
-						'value' => $times['max_exec_date']['date'],
+						'value' => Yii::app()->dateFormatter->formatDateTime($times['max_exec_date']['date'], 'medium', ''),
 						'options'=>array(
-							'dateFormat'=>'yy-mm-dd',
+							'dateFormat'=>'dd.mm.yy',
 							'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
 						),
 					'htmlOptions'=>array(
@@ -178,9 +178,9 @@ if ($model->status<3) {?>
 						'name'=>'Zakaz[date_finish][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
-						'value' => $times['date_finish']['date'],
+						'value' => Yii::app()->dateFormatter->formatDateTime($times['date_finish']['date'], 'medium', ''),
 						'options'=>array(
-						'dateFormat'=>'yy-mm-dd',
+						'dateFormat'=>'dd.mm.yy',
 						'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
 						),
 						'htmlOptions'=>array(
@@ -223,9 +223,9 @@ if ($model->status<3) {?>
 						'name'=>'Zakaz[term_for_author][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
-						'value' => $times['term_for_author']['date'],
+						'value' => Yii::app()->dateFormatter->formatDateTime($times['term_for_author']['date'], 'medium', ''),
 						'options'=>array(
-						'dateFormat'=>'yy-mm-dd',
+						'dateFormat'=>'dd.mm.yy',
 						'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
 						),
 						'htmlOptions'=>array(
@@ -268,9 +268,9 @@ if ($model->status<3) {?>
 						'name'=>'Zakaz[manager_informed][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
-						'value' => $times['manager_informed']['date'],
+						'value' => Yii::app()->dateFormatter->formatDateTime($times['manager_informed']['date'], 'medium', ''),
 						'options'=>array(
-							'dateFormat'=>'yy-mm-dd',
+							'dateFormat'=>'dd.mm.yy',
 							'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
 						),
 					'htmlOptions'=>array(
@@ -313,9 +313,9 @@ if ($model->status<3) {?>
 						'name'=>'Zakaz[author_informed][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
-						'value' => $times['author_informed']['date'],
+						'value' => Yii::app()->dateFormatter->formatDateTime($times['author_informed']['date'], 'medium', ''),
 						'options'=>array(
-							'dateFormat'=>'yy-mm-dd',
+							'dateFormat'=>'dd.mm.yy',
 							'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
 						),
 					'htmlOptions'=>array(

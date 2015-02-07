@@ -9,6 +9,17 @@
 	'attributes'=>$attributes,
 )); ?>
 
+<h3 ><?php echo ProjectModule::t('Changes'); ?></h3>
+
+<?php $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
+        'project' => $order,
+    )); ?>
+
+<?php $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
+    'projectId'=>$order->id,
+    'userType'=>'1',
+)); ?>
+
 <?php foreach($messages as $message): ?>
         <?php echo $message->date; ?> - 
         <?php

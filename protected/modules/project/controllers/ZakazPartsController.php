@@ -47,14 +47,14 @@ class ZakazPartsController extends Controller
             $zakazId = $this->_request->getParam('orderId');
             if (User::model()->isAdmin() || User::model()->isManager()) {
                 $models = ZakazParts::model()->findAll('proj_id = :PROJ_ID',
-                    array("PROJ_ID"=>$zakazId)
+                    array(":PROJ_ID"=>$zakazId)
                 );
                 $parts = array();
                 foreach ($models as $model) {
                     $part['id'] = $model->id;
                     $part['proj_id'] = $model->proj_id;
                     $part['title'] = $model->title;
-                    $part['date'] = $model->date;
+                    $part['date'] = Yii::app()->dateFormatter->formatDateTime($model->date, 'medium' ,'');
                     $part['author_id'] = $model->author_id;
                     $part['show'] = $model->show;
                     $part['comment'] = $model->comment;
@@ -67,10 +67,9 @@ class ZakazPartsController extends Controller
                     'parts'=>$parts
                 ));
                 $this->_response->send();
-            }
-            if (User::model()->isCustomer()) {
-                $parts = ZakazParts::model()->findAll(array('proj_id = :PROJ_ID','show = :SHOW'),
-                    array("PROJ_ID"=>$zakazId, "SHOW"=>1)
+            } elseif (User::model()->isCustomer() || User::model()->isAuthor()) {
+                $parts = ZakazParts::model()->findAll('proj_id = :PROJ_ID AND `show` = :SHOW',
+                    array(":PROJ_ID"=>$zakazId, ":SHOW"=>1)
                 );
                 $this->_response->setData(array(
                     'parts'=>$parts
