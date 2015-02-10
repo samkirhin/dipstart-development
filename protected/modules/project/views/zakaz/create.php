@@ -15,8 +15,20 @@ $this->menu=array(
 
 <h1><?=ProjectModule::t('Create Zakaz')?></h1>
 
-<?php if (User::model()->isCustomer())
-    $this->renderPartial('_form', array('model'=>$model));
- elseif (User::model()->isManager() || User::model()->isAdmin())
-    $this->renderPartial('_formManager', array('model'=>$model));
+<?php 
+
+    if (User::model()->isCustomer()) {
+        $view = '_form';
+    }
+    elseif (User::model()->isManager() || User::model()->isAdmin()) {
+        $view = '_formManager';
+    } else {
+        throw new CHttpException(403);
+    }
+    
+    $this->renderPartial($view, [
+        'model'=>$model,
+        'times'=>$times
+        ]
+    );
 ?>
