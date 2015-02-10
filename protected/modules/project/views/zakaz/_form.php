@@ -69,7 +69,7 @@
                         'language' => 'ru',
                         'value' => isset($times) ? $times['max_exec_date']['date'] : null,
                         'options'=>array(
-                            'dateFormat'=>'yy-mm-dd',
+                            'dateFormat'=>'dd.mm.yy',
                             'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
                         ),
                     'htmlOptions'=>array(
@@ -114,7 +114,7 @@
                         'language' => 'ru',
                         'value' => isset($times) ? $times['date_finish']['date'] : null,
                         'options'=>array(
-                        'dateFormat'=>'yy-mm-dd',
+                        'dateFormat'=>'dd.mm.yy',
                         'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
                         ),
                     'htmlOptions'=>array(

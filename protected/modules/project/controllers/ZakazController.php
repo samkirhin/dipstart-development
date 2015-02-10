@@ -143,6 +143,10 @@ class ZakazController extends Controller
 			{
 				$role = User::model()->getUserRole();
 				$model->attributes=$_POST['Zakaz'];
+                
+                $model->max_exec_date = strtotime($model->max_exec_date['date'].' '.$model->max_exec_date['hours'].':'.$model->max_exec_date['minutes']);
+                $model->date_finish = strtotime($model->date_finish['date'].' '.$model->date_finish['hours'].':'.$model->date_finish['minutes']);
+                
 				if($model->save()){
 					if (!User::model()->isManager()) {
 						EventHelper::createOrder($model->id);
