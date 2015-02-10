@@ -96,11 +96,11 @@ class PaymentController extends CController {
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
-            'ORDER_ID'=>$orderId
+            ':ORDER_ID'=>$orderId
         ));
         if (!$payment) {
             $payment = new ProjectPayments;
-            $payment->order_id = $order_id;
+            $payment->order_id = $orderId;
             $payment->received = 0;
             $payment->to_receive = 0;
             $payment->to_pay = 0;
@@ -129,7 +129,7 @@ class PaymentController extends CController {
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
-            'ORDER_ID'=>$orderId
+            ':ORDER_ID'=>$orderId
         ));
         if (!$payment) {
             $payment = new ProjectPayments;
