@@ -16,27 +16,15 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 ));
-if ($model->status<3) {?>
-<div class="row">
+if ($model->status<3) $findAuthor=''; else $findAuthor=' hide';
+?>
+<div class="row findauthor<?php echo $findAuthor;?>">
 		<?php echo $form->labelEx($model,'status',array('style' => 'float: left;'));
-			echo $form->checkBox($model, 'status',array('onchange' => '
-				$.ajax({
-					url: \'index.php?r=project/zakaz/apiFindAuthor\',
-					type: \'POST\',
-					data: {
-						value: $(\'#ZakazUpdate_status\').prop(\'checked\'),
-						id: '.$model->id.'
-					},
-					success: function (data) {
-						if (!data[\'data\']) alert(\'Не удалось\');
-					}
-				});
-			', 'style' => 'margin-left: 1em;',
-			'checked' => ($model->status==2?'1':'0')
-			));
+			echo $form->checkBox($model, 'status',array( 'style' => 'margin-left: 1em;',
+				'checked' => ($model->status==2?'1':'0'),'data-id'=>$model->id));
 			echo $form->error($model,'status'); ?>
 </div>
-	<?php }
+	<?php
 		echo $form->errorSummary($model); ?>
 		<table>
 			<tr>
@@ -58,7 +46,7 @@ if ($model->status<3) {?>
 				</td>
 			</tr>
 		</table>
-	
+
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
@@ -85,7 +73,7 @@ if ($model->status<3) {?>
 			<td>
 				<?php
 					$this->widget('zii.widgets.jui.CJuiDatePicker',array(
-						'name'=>'Zakaz[date][date]',
+						'name'=>'ZakazUpdate[date][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
 						'value' => Yii::app()->dateFormatter->formatDateTime($times['date']['date'], 'medium', ''),
@@ -100,7 +88,7 @@ if ($model->status<3) {?>
 				?>
 			</td>
 			<td>
-				<select class="search_type_select" name="Zakaz[date][hours]">
+				<select class="search_type_select" name="ZakazUpdate[date][hours]">
 					<?php
 						for ($i=0; $i<24; $i++) {
 							if ($times['date']['hours'] == $i) {
@@ -111,7 +99,7 @@ if ($model->status<3) {?>
 						}
 					?>
 				</select>
-				<select class="search_type_select" name="Zakaz[date][minutes]">
+				<select class="search_type_select" name="ZakazUpdate[date][minutes]">
 					<?php
 						for ($i=0; $i<60; $i++) {
 							if ($times['date']['minutes'] == $i) {
@@ -130,7 +118,7 @@ if ($model->status<3) {?>
 			</td>
 			<td>
 			<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-						'name'=>'Zakaz[max_exec_date][date]',
+						'name'=>'ZakazUpdate[max_exec_date][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
 						'value' => Yii::app()->dateFormatter->formatDateTime($times['max_exec_date']['date'], 'medium', ''),
@@ -145,7 +133,7 @@ if ($model->status<3) {?>
 			?>
 			</td>
 			<td>
-				<select class="search_type_select" name="Zakaz[max_exec_date][hours]">
+				<select class="search_type_select" name="ZakazUpdate[max_exec_date][hours]">
 					<?php
 						for ($i=0; $i<24; $i++) {
 							if ($times['max_exec_date']['hours'] == $i) {
@@ -156,7 +144,7 @@ if ($model->status<3) {?>
 						}
 					?>
 				</select>
-				<select class="search_type_select" name="Zakaz[max_exec_date][minutes]">
+				<select class="search_type_select" name="ZakazUpdate[max_exec_date][minutes]">
 					<?php
 						for ($i=0; $i<60; $i++) {
 							if ($times['max_exec_date']['minutes'] == $i) {
@@ -175,7 +163,7 @@ if ($model->status<3) {?>
 			</td>
 			<td>
 				<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-						'name'=>'Zakaz[date_finish][date]',
+						'name'=>'ZakazUpdate[date_finish][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
 						'value' => Yii::app()->dateFormatter->formatDateTime($times['date_finish']['date'], 'medium', ''),
@@ -190,7 +178,7 @@ if ($model->status<3) {?>
 				?>
 			</td>
 			<td>
-				<select class="search_type_select" name="Zakaz[date_finish][hours]" >
+				<select class="search_type_select" name="ZakazUpdate[date_finish][hours]" >
 					<?php
 						for ($i=0; $i<24; $i++) {
 							if ($times['date_finish']['hours'] == $i) {
@@ -201,7 +189,7 @@ if ($model->status<3) {?>
 						}
 					?>
 				</select>
-				<select class="search_type_select" name="Zakaz[date_finish][minutes]">
+				<select class="search_type_select" name="ZakazUpdate[date_finish][minutes]">
 					<?php
 						for ($i=0; $i<60; $i++) {
 							if ($times['date_finish']['minutes'] == $i) {
@@ -220,7 +208,7 @@ if ($model->status<3) {?>
 			</td>
 			<td>
 				<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-						'name'=>'Zakaz[term_for_author][date]',
+						'name'=>'ZakazUpdate[term_for_author][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
 						'value' => Yii::app()->dateFormatter->formatDateTime($times['term_for_author']['date'], 'medium', ''),
@@ -235,7 +223,7 @@ if ($model->status<3) {?>
 				?>
 			</td>
 			<td>
-				<select class="search_type_select" name="Zakaz[term_for_author][hours]" >
+				<select class="search_type_select" name="ZakazUpdate[term_for_author][hours]" >
 					<?php
 						for ($i=0; $i<24; $i++) {
 							if ($times['term_for_author']['hours'] == $i) {
@@ -246,7 +234,7 @@ if ($model->status<3) {?>
 						}
 					?>
 				</select>
-				<select class="search_type_select" name="Zakaz[term_for_author][minutes]">
+				<select class="search_type_select" name="ZakazUpdate[term_for_author][minutes]">
 					<?php
 						for ($i=0; $i<60; $i++) {
 							if ($times['term_for_author']['minutes'] == $i) {
@@ -265,7 +253,7 @@ if ($model->status<3) {?>
 			</td>
 			<td>
 			<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-						'name'=>'Zakaz[manager_informed][date]',
+						'name'=>'ZakazUpdate[manager_informed][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
 						'value' => Yii::app()->dateFormatter->formatDateTime($times['manager_informed']['date'], 'medium', ''),
@@ -280,7 +268,7 @@ if ($model->status<3) {?>
 			?>
 			</td>
 			<td>
-				<select class="search_type_select" name="Zakaz[manager_informed][hours]">
+				<select class="search_type_select" name="ZakazUpdate[manager_informed][hours]">
 					<?php
 						for ($i=0; $i<24; $i++) {
 							if ($times['manager_informed']['hours'] == $i) {
@@ -291,7 +279,7 @@ if ($model->status<3) {?>
 						}
 					?>
 				</select>
-				<select class="search_type_select" name="Zakaz[manager_informed][minutes]">
+				<select class="search_type_select" name="ZakazUpdate[manager_informed][minutes]">
 					<?php
 						for ($i=0; $i<60; $i++) {
 							if ($times['manager_informed']['minutes'] == $i) {
@@ -310,7 +298,7 @@ if ($model->status<3) {?>
 			</td>
 			<td>
 			<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-						'name'=>'Zakaz[author_informed][date]',
+						'name'=>'ZakazUpdate[author_informed][date]',
 						// additional javascript options for the date picker plugin
 						'language' => 'ru',
 						'value' => Yii::app()->dateFormatter->formatDateTime($times['author_informed']['date'], 'medium', ''),
@@ -325,7 +313,7 @@ if ($model->status<3) {?>
 			?>
 			</td>
 			<td>
-				<select class="search_type_select" name="Zakaz[author_informed][date]">
+				<select class="search_type_select" name="ZakazUpdate[author_informed][date]">
 					<?php
 						for ($i=0; $i<24; $i++) {
 							if ($times['author_informed']['hours'] == $i) {
@@ -336,7 +324,7 @@ if ($model->status<3) {?>
 						}
 					?>
 				</select>
-				<select class="search_type_select" name="Zakaz[author_informed][date]">
+				<select class="search_type_select" name="ZakazUpdate[author_informed][date]">
 					<?php
 						for ($i=0; $i<60; $i++) {
 							if ($times['author_informed']['minutes'] == $i) {
@@ -349,20 +337,20 @@ if ($model->status<3) {?>
 				</select>
 			</td>
 		</tr>
-	<tr>    
+	<tr>
 		<td>
 			<?php echo $form->labelEx($model,'pages'); ?>
 			<?php echo $form->textField($model,'pages'); ?>
 			<?php echo $form->error($model,'pages'); ?>
 	</td>
 		<td>
-			
+
 		</td>
 		<td>
-			
+
 		</td>
 	</tr>
-	
+
 	</table>
 	<div class="row">
 			<?php echo $form->labelEx($model,'add_demands'); ?>
@@ -389,22 +377,22 @@ if ($model->status<3) {?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>
+		<?php echo CHtml::submitButton(ProjectModule::t('Save')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
 <div id="chatWindow"></div>
-<?php 
+<?php
 	$this->widget('YiiChatWidget',array(
-		'chat_id'=>'1',                   // a chat identificator
-		'identity'=>14,                      // the user, Yii::app()->user->id ?
-		'selector'=>'#chatWindow',          // were it will be inserted
-		'minPostLen'=>2,                    // min and
-		'maxPostLen'=>10,                   // max string size for post
-		'model'=>new ChatHandler(),    // the class handler. **** FOR DEMO, READ MORE LATER IN THIS DOC ****
-		'data'=>'any data',                 // data passed to the handler
-		// success and error handlers, both optionals.
+		'chat_id'=>$model->id,
+		'executor'=>$model->executor,
+		'identity'=>Yii::app()->user->id,
+		'selector'=>'#chatWindow',
+		'minPostLen'=>1,
+		'maxPostLen'=>5000,
+		'model'=>new ChatHandler(),
+		'data'=>'any data',
 		'onSuccess'=>new CJavaScriptExpression(
 			"function(code, text, post_id){   }"),
 		'onError'=>new CJavaScriptExpression(

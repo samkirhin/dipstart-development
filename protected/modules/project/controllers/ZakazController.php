@@ -36,7 +36,7 @@ class ZakazController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview'),
+                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview','apifindauthor'),
                     'users'=>array('admin'),
                 ),
                 array('deny',  // deny all users
@@ -66,6 +66,22 @@ class ZakazController extends Controller
 		$this->_request = Yii::app()->jsonRequest;
 		$this->_response = new JsonHttpResponse();
 	}
+	public function actionApiFindAuthor() {
+		$user = User::model()->findByPk(Yii::app()->user->id);
+		$request = Yii::app()->Request;
+		if (!$user->superuser)
+			$this->redirect('/');
+		else {
+			if (!($model = Moderation::model()->find('`order_id` = :ID', array('ID'=>$request->getParam('id')))))
+				$model = Zakaz::model()->findByPk($request->getParam('id'));
+			if ($request->getParam('value')=='true')
+				$model->status=2;
+			else
+				$model->status=1;
+			print_r($model->status);
+			$model->save();
+		}
+	}
 	public function actionApiView() {
 		$user = User::model()->findByPk(Yii::app()->user->id);
 		if (!$user->superuser) {
@@ -89,7 +105,7 @@ class ZakazController extends Controller
 				$criteria->order = 't.'.$sort.' '.$type;
 				$data = Zakaz::model()->findAll($criteria);
 			} else {
-				$searchField=explode('.',$searchField);
+				$searchFieldArr=explode('.',$searchField);
 				switch ($searchType) {
 					case 'bigger':
 						$searchType = '<';
@@ -101,15 +117,16 @@ class ZakazController extends Controller
 						$searchType = '=';
 						break;
 				}
-				if (count($searchField)==3){
+				if (count($searchFieldArr)==3){
 					$dbName=ucfirst($searchField[1]);
-					$searchStringReal = $dbName::model()->findByAttributes(array($searchField[0]=>$searchString));
+					$searchString = $dbName::model()->findByAttributes(array($searchFieldArr[0]=>$searchString))->id;
+					$searchField=$searchFieldArr[2];
 				}
 				$criteria = new CDbCriteria;
 				$criteria->with = array('user','category','job');
-				$criteria->condition='t.`'.$searchField[2].'` '.$searchType.' :scrit';
-				$criteria->params=array(':scrit'=>$searchStringReal['id']);
-				$criteria->order = 't.'.$sort.' '.$type;
+				$criteria->condition='`t`.`'.$searchField.'` '.$searchType.' :scrit';
+				$criteria->params=array(':scrit'=>$searchString);
+				$criteria->order = '`t`.`'.$sort.'` '.$type;
 				$data = Zakaz::model()->findAll($criteria);
 			}
 			$report = array();
@@ -207,9 +224,9 @@ class ZakazController extends Controller
 
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
-			if(isset($_POST['Zakaz']))
+			if(isset($_POST['ZakazUpdate']))
 			{
-				$zakaz = $_POST['Zakaz'];
+				$zakaz = $_POST['ZakazUpdate'];
 
 				$time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
 				$time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
@@ -232,17 +249,17 @@ class ZakazController extends Controller
 				}
 
 				if($model->save())
-					if ($role != 'Manager' && $role != 'admin') {
+					if ($role != 'Manager' && $role != 'Admin') {
 						EventHelper::editOrder($model->id);
 					} else {
 						ModerationHelper::clear($model->id);
 					}
-					$this->redirect(array('view','id'=>$model->id));
+					//$this->redirect(array('view','id'=>$model->id));
 			}
 			$this->render($view, array(
 				'model'=>$model,
 				'times'=>$times,
-				'isModified'=>$isModified
+				'isModified'=>$isModified,
 			));
 	}
 

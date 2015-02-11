@@ -56,6 +56,7 @@ class ZakazUpdate extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
+			'author' => [self::BELONGS_TO, 'User', 'executor'],
 			'category'=>array(self::HAS_ONE, 'Categories', array('id'=>'category_id')),
 			'job'=>array(self::HAS_ONE, 'Jobs', array('id'=>'job_id')),
 		);
@@ -126,24 +127,6 @@ class ZakazUpdate extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
-     protected function beforeSave()
-     {
-        if(parent::beforeSave())
-        {
-            if($this->isNewRecord)
-            {
-                $this->date=new CDbExpression('NOW()');
-                $this->user_id=Yii::app()->user->id;
-            }
-//            else
-//                $this->date = date('Y-m-d', strtotime($this->date));
-//                $this->date_finish = date('Y-m-d', strtotime($this->date_finish));
-//                $this->max_exec_date = date('Y-m-d', strtotime($this->max_exec_date));
-//                $this->informed = date('Y-m-d', strtotime($this->informed));
-        }
-        return parent::beforeSave();
-    }
 
     	public static function getExecutor($orderId) {
     		return self::model()->findByPk($orderId)->executor;

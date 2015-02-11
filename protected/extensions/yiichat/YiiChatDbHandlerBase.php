@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
  * YiiChatDbHandlerBase (YiiChat A Software Interface for YiiChat Source Providers)
- *	serve this widget using a database. 
+ *	serve this widget using a database.
  *	required: post.sql
  *
- *	this class is invoked because you specify it in your YiiChatWidget 
+ *	this class is invoked because you specify it in your YiiChatWidget
  *	arguments passed to the widget.
  *
  *	this is the object fields required: (as an indexed array)
@@ -17,7 +17,7 @@
  *
  *	the both methods in this handler receive:
  *
- *		$chat_id			the id provided in the widget, to discrimine 
+ *		$chat_id			the id provided in the widget, to discrimine
  *							between various chats.
  *
  *		$identity			the identity (ID) of the person who is in chat
@@ -27,8 +27,8 @@
  *		$data				a user-defined value passed from the widget
  *
  * @uses CWidget
- * @version 1.0 
- * @author Christian Salazar <christiansalazarh@gmail.com> 
+ * @version 1.0
+ * @author Christian Salazar <christiansalazarh@gmail.com>
  * @license FREE BSD
  */
 abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
@@ -43,9 +43,9 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 
 	// abstract optional
 	protected function getTableName(){
-		return "yiichat_post";
+		return "`ProjectMessages`";
 	}
-	
+
 	// abstract strict
 	protected function getDb(){}
 	protected function getIdentityName(){}
@@ -56,87 +56,65 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 	/**
 	 	post a message into your database.
 	 */
-	public function yiichat_post($chat_id, $identity, $message, $data){
+	public function yiichat_dapprove($messageId) {
+		$model = ProjectMessages::model()->findByPk($messageId);
+		$model->moderated = 1;
+		$model->save();
+	}
+	public function yiichat_dpost($post){
+		$model = ProjectMessages::model()->findByPk($post['id']);
+		$model->delete();
+	}
+	public function yiichat_dtoggle($post){
+		if (!($model = Moderation::model()->find('`order_id` = :ID', array('ID'=>$post['chat_id']))))
+			$model = Zakaz::model()->findByPk($post['chat_id']);
+		if ($_GET['data']=='minus') {
+			$model->executor = User::model()->find('username=:executor',array(':executor'=>$post['ex']))->id;
+			$model->status = 3;
+		}
+		else {
+			$model->executor = 0;
+			$model->status = 2;
+		}
+		$model->save();
+		print_r($model);
+	}
+	public function yiichat_post($chat_id, $identity, $message, $postdata, $data){
 		$this->_chat_id = $chat_id;
 		$this->_identity = $identity;
 		$this->_data = $data;
 		$message_filtered = trim($this->acceptMessage($message));
 		if($message_filtered != ""){
 			$obj = array(
-				"id"=>$this->createPostUniqueId(),
-				"chat_id"=>$chat_id,
-				"post_identity"=>$identity,
-				"owner"=>substr($this->getIdentityName(),0,20),
-				"created"=>time(),
-				"text"=>$message_filtered,
-				"data"=>serialize($data),
+				"order"=>$chat_id,
+				"sender"=>$identity,
+				"date"=>date('Y-m-d H:i:s'),
+				"message"=>$message_filtered,
 			);
-			$this->getDb()->createCommand()->insert(
-				$this->getTableName(),$obj);
+			if ($postdata['index']==0){
+				if ($postdata['recipient']=='Author'){
+					$obj['recipient']=Zakaz::model()->findByPk($chat_id)->executor;
+				} else if ($postdata['recipient']=='Customer')
+					$obj['recipient']=Zakaz::model()->findByPk($chat_id)->user_id;
+				else $obj['recipient']=0;
+				$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
+			}
+			else
+				$this->getDb()->createCommand()->update($this->getTableName(),$obj,'id=:id',array('id'=>$postdata['index']));
 			// now retrieve the post
-			$obj['time']=$this->getDateFormatted($obj['created']);
+			$obj['time']=$this->getDateFormatted($obj['date']);
+			$obj['owner']=substr($this->getIdentityName(),0,20);
 			return $obj;
 		}
 		else
 			return array();
 	}
-	/**
-	 	retrieve posts from your database, considering the last_id argument:
-		$last_id is the ID of the last post sent by the other person:
-			when -1: 
-				you must reetrive all posts this scenario occurs when 
-				the chat initialize, retriving your posts and those posted
-				by the others.
-			when >0: 
-				you must retrive thoses posts that match this criteria:
-					a) having an owner distinct as $identity
-					b) having an ID greater than $last_id
-				this scenario occurs when the post widget refreshs using
-				a timer, in order to receive the new posts since last_id.
-	 */
 	public function yiichat_list_posts($chat_id, $identity, $last_id, $data){
 		$this->_chat_id = $chat_id;
 		$this->_identity = $identity;
 		$this->_data = $data;
-		$limit = 3;
-		$where_string='';
-		$where_params=array();
-
-		// case all posts:
-		if($last_id == -1){
-			$where_string = '`order`=:chat_id';
-			$where_params = array(
-				':chat_id' => $chat_id,
-			);
-			$rows = $this->db->createCommand()
-			->select()
-			->from($this->getTableName())
-			->where($where_string,$where_params)
-			//->limit(1)
-			->order('date asc')
-			->queryAll();
-			foreach($rows as $k=>$v)
-				$rows[$k]['time']=$this->getDateFormatted($v['date']);
-			return $rows;
-		}
-		else{
-			// case timer, new posts since last_id, not identity
-			$where_string = '((`order`=:chat_id) and (`sender`<>:identity))';
-			$where_params = array(
-				':chat_id' => $chat_id,
-				':identity' => $identity,
-			);
-			$rows = $this->db->createCommand()
-			->select()
-			->from($this->getTableName())
-			->where($where_string,$where_params)
-			->order('date desc') // in this case desc,late will be sort asc 
-			->queryAll();
-			$ar = $this->getLastPosts($rows, $limit, $last_id);
-			foreach($ar as $k=>$v)
-				$ar[$k]['time']=$this->getDateFormatted($v['date']);
-			return $ar;
-		}
+		$messages=ProjectMessages::model()->with('senderObject')->findAll('`t`.`order` = :chat_id AND `t`.`id` > :last_id',array(':chat_id'=>$chat_id,':last_id'=>$last_id));
+		return $messages;
 	}
 
 	/**
@@ -319,7 +297,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			if(count($r) == count($r2)){
 				$ok=true;$n=-1;
 				for($i=0;$i<count($r);$i++)
-					if(!(($r[$i]['id'] == $r2[$i]['id']) &&	
+					if(!(($r[$i]['id'] == $r2[$i]['id']) &&
 						($r[$i]['created'] == $r2[$i]['created'])))
 							 { $ok=false; $n=$i; break; }
 				if($ok==true){

@@ -148,8 +148,8 @@
 
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> Dipstart.ru<br/>
-		<?=Yii::t('site','All rights reserved.')?><br/>
-                <!-- Yandex.Metrika informer -->
+		<?php echo Yii::t('site','All rights reserved.')?><br/>
+<!-- Yandex.Metrika informer -->
 <a href="https://metrika.yandex.ru/stat/?id=27826308&amp;from=informer"
 target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/27826308/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
 style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" onclick="try{Ya.Metrika.informer({i:this,id:27826308,lang:'ru'});return false}catch(e){}"/></a>

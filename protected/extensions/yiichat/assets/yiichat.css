@@ -9,7 +9,7 @@
 	padding: 3px;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 200px;
+	height: 21.5em;
 }
 
 .yiichat .posts .post {
@@ -37,5 +37,3 @@
 }
 .yiichat .posts .post .track .owner {
 }
-
-

@@ -2,13 +2,12 @@
 
 class DefaultController extends Controller
 {
-	
+
 	/**
 	 * Lists all models.
 	 */
 	public function actionIndex()
 	{
-		if (isset($_GET['s']))
 			switch ($_GET['s']) {
 				case 'Author':
 					$prof=Profile::model()->with('user','AuthAssignment')->findAll();
@@ -31,7 +30,7 @@ class DefaultController extends Controller
 						),
 					));
 					break;
-				case 'Customer':
+				default:
 					$dataProviderCustomer=new CActiveDataProvider('User', array(
 						'criteria'=>array(
 							'condition'=>'status>'.User::STATUS_BANNED,
@@ -48,7 +47,6 @@ class DefaultController extends Controller
 					));
 					break;
 			}
-		else $dataProviderAuthor='nos';
 
 		$this->render('/user/index',array(
 			'dataProviderAuthor'=>$dataProviderAuthor,

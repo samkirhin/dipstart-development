@@ -14,11 +14,11 @@ class ChatHandler extends YiiChatDbHandlerBase {
 	}
 	protected function createPostUniqueId(){
 		// generates a unique id. 40 char.
-		return hash('sha1',$this->getChatId().time().rand(1000,9999));      
+		return hash('sha1',$this->getChatId().time().rand(1000,9999));
 	}
 	protected function getIdentityName(){
 		// find the identity name here
-		// example: 
+		// example:
 		//  $model = MyPeople::model()->findByPk($this->getIdentity());
 		//  return $model->userFullName();
 		return User::model()->findByPk($this->getIdentity())->username;
@@ -33,8 +33,10 @@ class ChatHandler extends YiiChatDbHandlerBase {
 	}
 	public function yiichat_list_posts($chat_id, $identity, $last_id, $data){
 		$res=parent::yiichat_list_posts($chat_id, $identity, $last_id, $data);
-		foreach ($res as $k=>$r)
-			$res[$k]['owner']=User::model()->findByPk($res[$k]['sender'])->username;
+		foreach ($res as $k=>$v) {
+			$res[$k]->sender=$res[$k]->getRelated('senderObject');
+			if ($res[$k]->recipient > 0) $res[$k]->recipient=User::model()->findByPk($res[$k]->recipient);
+		}
 		return $res;
 	}
 }

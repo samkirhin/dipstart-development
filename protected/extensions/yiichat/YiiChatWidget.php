@@ -1,25 +1,28 @@
 <?php
 /**
- * YiiChatWidget 
+ * YiiChatWidget
  *
  *	Please refer to README about details.
  *
  *
  * @uses CWidget
- * @version 1.0 
- * @author Christian Salazar <christiansalazarh@gmail.com> 
+ * @version 1.0
+ * @author Christian Salazar <christiansalazarh@gmail.com>
  * @license FREE BSD
  */
 class YiiChatWidget extends CWidget {
 
 	public	$chat_id;	// chat main identificator
+	public	$executor;
 	public	$identity;	// ID, can be: Yii::app()->user->id
 	public	$selector;	// jQuery selector (holder)
 
-	public	$sendButtonText='Send';
+	public	$sendButtonText='Отправить';
+	public	$sendAuthorText='Отправить автору';
+	public	$sendCustomerText='Отправить заказчику';
 	public	$onError;
 	public	$onSuccess;
-	public  $defaultController='/site';	
+	public  $defaultController='/site';
 	public	$minPostLen=2;
 	public	$maxPostLen=140;
 	public  $model; // a model instance, it must implements IYiiChat
@@ -38,11 +41,11 @@ class YiiChatWidget extends CWidget {
 		if($this->onError==null || $this->onError=='')
 			$this->onError = new CJavaScriptExpression("function(err, txt){}");
 		if(!($this->onError instanceof CJavaScriptExpression))
-			throw new Exception("onError must be a CJavaScriptExpression");	
+			throw new Exception("onError must be a CJavaScriptExpression");
 		if($this->onSuccess==null || $this->onSuccess=='')
 			$this->onSuccess = new CJavaScriptExpression("function(code, txt, post_id){}");
 		if(!($this->onSuccess instanceof CJavaScriptExpression))
-			throw new Exception("onSuccess must be a CJavaScriptExpression");	
+			throw new Exception("onSuccess must be a CJavaScriptExpression");
 	}
 
 	public function run(){
@@ -56,8 +59,11 @@ class YiiChatWidget extends CWidget {
 		$options = CJavaScript::encode(array(
 			'selector'=>$this->selector,
 			'chat_id'=>$this->chat_id,
+			'executor'=>$this->executor,
 			'identity'=>$this->identity,
 			'sendButtonText'=>$this->sendButtonText,
+			'sendAuthorText'=>$this->sendAuthorText,
+			'sendCustomerText'=>$this->sendCustomerText,
 			'onError'=>$this->onError,
 			'onSuccess'=>$this->onSuccess,
 			'minPostLen'=>$this->minPostLen,
@@ -98,12 +104,17 @@ class YiiChatWidget extends CWidget {
 		$chat_id = $this->_getPost('chat_id',null);
 		$identity = $this->_getPost('identity',null);
 		$text = $this->_getPost('text');
+		$postdata = $this->_getPost('post');
 		$s = Yii::app()->session;
 		$model = $s[$chat_id.'_model'];
 		$data = $s[$chat_id.'_data'];
+		if(substr($action,0,1) == 'd'){
+				$func='yiichat_'.$action;
+				echo CJSON::encode($model->$func($this->_getPost()));
+		}
 		if(($action == 'sendpost') && $identity && $chat_id){
 			header("Content-type: application/json");
-			if($post = $model->yiichat_post($chat_id, $identity, $text, $data)){
+			if($post = $model->yiichat_post($chat_id, $identity, $text, $postdata, $data)){
 				if(!isset($post['chat_id']))
 					$post['chat_id']=$chat_id;
 				if(!isset($post['identity']))
@@ -117,10 +128,8 @@ class YiiChatWidget extends CWidget {
 		}
 		if(($action == 'init') && $identity && $chat_id){
 			$posts = $model->yiichat_list_posts($chat_id, $identity, -1, $data);
-			if($posts==null)
-				$posts = array();
-			$data = array('chat_id'=>$chat_id, 'identity'=>$identity,
-				'posts'=>$posts);
+			if($posts==null) $posts = array();
+			$data = array('chat_id'=>$chat_id, 'identity'=>$identity,'posts'=>$posts);
 			header("Content-type: application/json");
 			echo CJSON::encode($data);
 		}
@@ -136,15 +145,18 @@ class YiiChatWidget extends CWidget {
 		}
 	}
 
-	private function _getPost($attr, $def=''){
-		if(isset($_POST[$attr])){
-			$value = trim($_POST[$attr]);
-			if(($value == 'undefined') || ($value == null) || ($value==''))
+	private function _getPost($attr=false, $def=''){
+		if ($attr)
+			if(isset($_POST[$attr])){
+				$value = $_POST[$attr];
+				if(($value == 'undefined') || ($value == null) || ($value==''))
+					return $def;
+				return $value;
+			}
+			else{
 				return $def;
-			return $value;
-		}
-		else{
-			return $def;
-		}
+			}
+		else
+			return $_POST;
 	}
 }
