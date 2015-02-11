@@ -2,10 +2,12 @@
 /* @var $this ZakazController */
 /* @var $model Zakaz */
 /* @var $profile Profile */
+/* @var $author User */
+/* @var $customer User */
 
 $user = User::model();
-$author = $model->author->profile;
-$customer = $model->user->profile;
+$author = $model->author;
+$customer = $model->user;
 
 $this->breadcrumbs = array(
     ProjectModule::t('Zakazs') => array('index'),
@@ -17,18 +19,20 @@ $this->breadcrumbs = array(
     <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
     <?php if ($isModified) echo '<span class="label label-warning" style="font-size:16px;"><b>Заказ на модерации</b></span>';?>
 
+    <?php if ($author): ?>
     <div>
         Автор <br>
-        <?= $author->firstname ?> <?= $author->lastname ?> <br>
-        <?= $model->author->email ?> <br>
-        <?= $author->mob_tel ?>
+        <?= $author->profile->firstname ?> <?= $author->profile->lastname ?> <br>
+        <?= $author->email ?> <br>
+        <?= $author->profile->mob_tel ?>
     </div>
+    <?php endif; ?>
 
     <div>
         Заказчик<br>
-        <?= $customer->firstname ?> <?= $customer->lastname ?> <br>
-        <?= $model->user->email ?> <br>
-        <?= $customer->mob_tel ?>
+        <?= $customer->profile->firstname ?> <?= $customer->profile->lastname ?> <br>
+        <?= $customer->email ?> <br>
+        <?= $customer->profile->mob_tel ?>
     </div>
 
 <?php

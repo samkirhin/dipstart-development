@@ -153,6 +153,8 @@ class ZakazController extends Controller
 	public function actionCreate()
 	{
 			$model=new Zakaz;
+            $model->date_finish = strtotime(date("d.m.Y"));
+            $model->max_exec_date = strtotime(date("d.m.Y"));
 
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
@@ -161,6 +163,10 @@ class ZakazController extends Controller
 			{
 				$role = User::model()->getUserRole();
 				$model->attributes=$_POST['Zakaz'];
+                
+                $model->max_exec_date = strtotime($model->max_exec_date['date'].' '.$model->max_exec_date['hours'].':'.$model->max_exec_date['minutes']);
+                $model->date_finish = strtotime($model->date_finish['date'].' '.$model->date_finish['hours'].':'.$model->date_finish['minutes']);
+                
 				if($model->save()){
 					if (!User::model()->isManager()) {
 						EventHelper::createOrder($model->id);
@@ -168,9 +174,18 @@ class ZakazController extends Controller
 					$this->redirect(array('view','id'=>$model->id));
 				}
 			}
+            
+            $times = [];
+            $times['date_finish']['date'] = date("d.m.Y", $model->date_finish);
+            $times['date_finish']['hours'] = date("H", $model->date_finish);
+            $times['date_finish']['minutes'] = date("i", $model->date_finish);
+            $times['max_exec_date']['date'] = date("d.m.Y", $model->max_exec_date);
+            $times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
+            $times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
 
 			$this->render('create',array(
 					'model'=>$model,
+                    'times'=>$times
 			));
 	}
 
