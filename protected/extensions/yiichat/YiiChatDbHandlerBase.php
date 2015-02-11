@@ -99,8 +99,16 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				else $obj['recipient']=0;
 				$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 			}
-			else
-				$this->getDb()->createCommand()->update($this->getTableName(),$obj,'id=:id',array('id'=>$postdata['index']));
+			else {
+				if ($postdata['recipient']=='no') {
+					$obj['recipient']=0;
+					$this->getDb()->createCommand()->update($this->getTableName(), $obj, 'id=:id', array('id' => $postdata['index']));
+				}
+				else {
+					$obj['recipient']=$postdata['recipient'];
+					$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
+				}
+			}
 			// now retrieve the post
 			$obj['time']=$this->getDateFormatted($obj['date']);
 			$obj['owner']=substr($this->getIdentityName(),0,20);
@@ -113,7 +121,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		$this->_chat_id = $chat_id;
 		$this->_identity = $identity;
 		$this->_data = $data;
-		$messages=ProjectMessages::model()->with('senderObject')->findAll('`t`.`order` = :chat_id AND `t`.`id` > :last_id',array(':chat_id'=>$chat_id,':last_id'=>$last_id));
+		$messages=ProjectMessages::model()->with('senderObject','senderRole')->findAll('`t`.`order` = :chat_id AND `t`.`id` > :last_id',array(':chat_id'=>$chat_id,':last_id'=>$last_id));
 		return $messages;
 	}
 

@@ -142,7 +142,7 @@ var YiiChat = function(options){
 			}
 
 			var tmp_html = "<div class='time'>"+post.date+"</div>"
-				+ "<div class='owner'><a class='ownerref' href='http://dipstart.coolfire.pp.ua/index.php?r=user/user/view&id="+post.sender.id+"'>"+post.sender.username+"</a>";
+				+ "<div class='owner' data-ownerid='"+post.sender.id+"'><a class='ownerref' href='http://dipstart.coolfire.pp.ua/index.php?r=user/user/view&id="+post.sender.id+"'>"+post.sender.username+"</a>";
 				if (post.recipient!=0) tmp_html += "ответил"
 				+ "<a class='ownerref' href='http://dipstart.coolfire.pp.ua/index.php?r=user/user/view&id="+post.recipient.id+"'>"+post.recipient.username+"</a>";
 				tmp_html += "</div>";
@@ -153,10 +153,12 @@ var YiiChat = function(options){
 			if(options.identity != post.sender.id) {
 				if (post.moderated==0) tmp_html += "<button data-index=\""+post.id+"\"class=\"glyphicon-ok glyphicon\"></button>";
 				tmp_html += "<button data-index=\""+post.id+"\" class=\"glyphicon-envelope glyphicon\"></button>";
-				if(options.executor == post.sender.id)
-					tmp_html += "<button data-index=\""+post.id+"\" class=\"toggleexecutor glyphicon glyphicon-minus\"></button>";
-				else
-					tmp_html += "<button data-index=\""+post.id+"\" class=\"toggleexecutor glyphicon glyphicon-plus\"></button>";
+				if (post.sender.superuser.itemname=='Author') {
+					if (options.executor == post.sender.id)
+						tmp_html += "<button data-index=\"" + post.id + "\" class=\"toggleexecutor glyphicon glyphicon-minus\"></button>";
+					else
+						tmp_html += "<button data-index=\"" + post.id + "\" class=\"toggleexecutor glyphicon glyphicon-plus\"></button>";
+				}
 			}
 			tmp_html += "</div>";
 			p.find('.track').html(tmp_html);
@@ -169,7 +171,9 @@ var YiiChat = function(options){
 			btn_answer.click(function (){
 				msg.data('index',this.dataset.index);
 				msg.val('Вы писали: "'+$(this).closest('.post').find('.text').text()+'"');
-				$(msg).before('<div class="msg_answer">Ответить '+$(this).closest('.post').find('.owner').text()+'</div>');
+				if ($('.msg_answer').length==0) $(msg).before('<div class="msg_answer">Ответить '+$(this).closest('.post').find('.owner').text()+'</div>');
+				else $('.msg_answer').text('Ответить '+$(this).closest('.post').find('.owner').text());
+				$('.main_send').data('recipient',$(this).closest('.post').find('.owner').data('ownerid'));
 			});
 			var btn_remove = p.find('button.glyphicon-remove');
 			btn_remove.click(function (){
@@ -250,14 +254,14 @@ var YiiChat = function(options){
 	var log = chat.find('div.log');
 
 	you.html("<textarea rows=\"5\" cols=\"60\"></textarea><div class='exceded'></div><br/>");
-	you.append("<button data-recipient='no'>"+options.sendButtonText+"</button>");
+	you.append("<button class='main_send' data-recipient='no'>"+options.sendButtonText+"</button>");
 	you.append("<button data-recipient='Author'>"+options.sendAuthorText+"</button>");
 	you.append("<button data-recipient='Customer'>"+options.sendCustomerText+"</button>");
 	posts.html("");
 
 	var send = you.find('button');
 	var msg = you.find('textarea');
-	msg.data('index',0)
+	msg.data('index',0);
 	send.click(function(){
 		var text = jQuery.trim(msg.val());
 		if(text.length<options.minPostLen)
@@ -268,6 +272,8 @@ var YiiChat = function(options){
 			actionPost(text, function(ok){
 				if(ok==true){
 					msg.val("");
+					msg.data('index',0);
+					$(this).data('recipient',0);
 					scroll();
 					setTimeout(function(){ msg.focus(); },100);
 				}

@@ -21,7 +21,7 @@
 )); ?>
 
 <?php foreach($messages as $message): ?>
-        <?php echo $message->date; ?> - 
+        <?php echo $message->date; ?> -
         <?php
             $this->beginWidget('ProfileLinkWidget',array(
                 	'params'=>array(
@@ -56,7 +56,7 @@
         <?php endif; ?>
         <br/>
         <?php if (User::model()->isAdmin() || User::model()->isManager()): ?>
-            (<a href="<?php echo Yii::app()->createUrl("project/chat/edit",array("messageId"=>$message->id)); ?>" class="edit">Редактировать</a> | 
+            (<a href="<?php echo Yii::app()->createUrl("project/chat/edit",array("messageId"=>$message->id)); ?>" class="edit">Редактировать</a> |
             <a href="<?php echo Yii::app()->createUrl("project/chat/remove",array("messageId"=>$message->id)); ?>" class="del">Удалить</a>
             <?php if($message->moderated == 0): ?>
                 | <a href="<?php echo Yii::app()->createUrl("project/chat/approve",array("messageId"=>$message->id)); ?>" class="approve">Одобрить</a>
@@ -73,7 +73,7 @@
             <?php endif; ?>
             )<br/>
         <?php endif; ?>
-        
+
 <?php endforeach; ?>
 
 <div class="form">
@@ -102,7 +102,11 @@
         <p>Дополнительно отправить:</p>
         <p><input type="checkbox"> SMS</p>
         <p><input type="checkbox"> Email</p>
-        <?php echo CHtml::submitButton('Отправить'); ?>
+        <?php
+        echo CHtml::submitButton('Отправить');
+        echo CHtml::submitButton($middle_button, array('params'=>'recepient=customer'));
+        echo CHtml::submitButton('Отправить менеджеру', array('params'=>'recepient=manager'));
+        ?>
     </div>
 
 <?php $this->endWidget(); ?>

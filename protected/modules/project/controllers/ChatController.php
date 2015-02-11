@@ -49,15 +49,15 @@ class ChatController extends Controller {
 	 *  Вывод и добавление сообщений
 	 */
 	public function actionIndex($orderId) {
-        
+
         Yii::app()->clientScript->registerScriptFile('/js/chat.js');
-        
+
 		$order = Zakaz::model()->findByPk($orderId);
-        
+
         if (!$order) {
             throw new CHttpException(404, 'Не найден');
         }
-        
+
 		$model = new ProjectMessages;
 		$model->sender = Yii::app()->user->id;
 		$model->moderated = 0;
@@ -65,9 +65,21 @@ class ChatController extends Controller {
 		if(Yii::app()->request->getPost($model->tableName())) {
 			$model->attributes = Yii::app()->request->getPost($model->tableName());
 			$model->date = date('Y-m-d H:i:s');
+			switch (array_keys($_POST)[1]){
+				case 'yt2':
+					$model->recipient = 1;
+				break;
+				case 'yt1':
+					if(User::model()->isAuthor())
+						$model->recipient = Zakaz::model()->findByPk($model->order)->user_id;
+					if(User::model()->isCustomer())
+						$model->recipient = print_r(Zakaz::model()->findByPk($model->order)->executor);
+					if ($model->recipient==0) throw new CHttpException(404, 'Автор не назначен');
+				break;
+			}
 			$model->save();
 			EventHelper::addMessage($model->order);
-                        $model->message = '';
+			$model->message = '';
 			$model->recipient = '';
 		}
 		if(User::model()->isAuthor()) {
@@ -76,13 +88,15 @@ class ChatController extends Controller {
 			$criteria->addCondition('`order` = :oid');
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);
+			$middle_button = 'Отправить заказчику';
 		}
 		else if(User::model()->isCustomer()) {
 			$criteria=new CDbCriteria;
-			$criteria->addCondition('moderated=1');
+			$criteria->addCondition('moderated=1 OR sender='.Yii::app()->user->id);
 			$criteria->addCondition('`order` = :oid');
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);
+			$middle_button = 'Отправить автору';
 		}
 		else {
 			$criteria=new CDbCriteria;
@@ -90,7 +104,7 @@ class ChatController extends Controller {
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);
 		}
-        
+
         $attributes = [
             'id',
             array(
@@ -130,7 +144,7 @@ class ChatController extends Controller {
                'value' => $order->status > 0 ? ProjectStatus::model()->findByPk($order->status)->status : null,
             ),
         ];
-        
+
         if (User::model()->isManager() || User::model()->isAdmin()) {
             $attributes = CMap::mergeArray($attributes, [
                 'is_payed',
@@ -138,7 +152,7 @@ class ChatController extends Controller {
                 'notes'
             ]);
         }
-		
+
 		$this->render('index', array(
 			'model' => $model,
             'order' => $order,
@@ -146,7 +160,8 @@ class ChatController extends Controller {
 			'orderId' => $orderId,
 			'executor' => Zakaz::getExecutor($orderId),
 			'ordererId' =>$order->user_id,
-            'attributes' => $attributes
+            'attributes' => $attributes,
+            'middle_button' => $middle_button
 		));
 	}
 
