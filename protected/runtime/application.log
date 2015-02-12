@@ -446,3 +446,41 @@ Stack trace:
 	`description` text,
 	PRIMARY KEY (`id`)
 ).
+2015/02/12 18:15:52 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)' in /media/web/dipstart-development/framework/db/CDbConnection.php:382
+Stack trace:
+#0 /media/web/dipstart-development/framework/db/CDbConnection.php(330): CDbConnection->open()
+#1 /media/web/dipstart-development/framework/db/CDbConnection.php(308): CDbConnection->setActive(true)
+#2 /media/web/dipstart-development/framework/base/CModule.php(387): CDbConnection->init()
+#3 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(442): CModule->getComponent('db')
+#4 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(451): MigrateCommand->getDbConnection()
+#5 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(482): MigrateCommand->getMigrationHistory(-1)
+#6 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(84): MigrateCommand->getNewMigrations()
+#7 [internal function]: MigrateCommand->actionUp(Array)
+#8 /media/web/dipstart-development/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#9 /media/web/dipstart-development/framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#10 /media/web/dipstart-development/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#11 /media/web/dipstart-development/framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#12 /media/web/dipstart-development/framework/yiic.php(33): CApplication->run()
+#13 /media/web/dipstart-development/protected/yiic.php(7): require_once('/media/web/dips...')
+#14 /media/web/dipstart-development/protected/yiic(4): require_once('/media/web/dips...')
+#15 {main}
+---
+2015/02/12 18:18:34 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)' in /media/web/dipstart-development/framework/db/CDbConnection.php:382
+Stack trace:
+#0 /media/web/dipstart-development/framework/db/CDbConnection.php(330): CDbConnection->open()
+#1 /media/web/dipstart-development/framework/db/CDbConnection.php(308): CDbConnection->setActive(true)
+#2 /media/web/dipstart-development/framework/base/CModule.php(387): CDbConnection->init()
+#3 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(442): CModule->getComponent('db')
+#4 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(451): MigrateCommand->getDbConnection()
+#5 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(482): MigrateCommand->getMigrationHistory(-1)
+#6 /media/web/dipstart-development/framework/cli/commands/MigrateCommand.php(84): MigrateCommand->getNewMigrations()
+#7 [internal function]: MigrateCommand->actionUp(Array)
+#8 /media/web/dipstart-development/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#9 /media/web/dipstart-development/framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#10 /media/web/dipstart-development/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#11 /media/web/dipstart-development/framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#12 /media/web/dipstart-development/framework/yiic.php(33): CApplication->run()
+#13 /media/web/dipstart-development/protected/yiic.php(7): require_once('/media/web/dips...')
+#14 /media/web/dipstart-development/protected/yiic(4): require_once('/media/web/dips...')
+#15 {main}
+---

@@ -61,5 +61,7 @@ return array(
     'Not approved' => 'Не одобрено',
     'You are not allowed to edit!' => 'У Вас недостаточно прав для редактирования!',
     'author_notes' => 'Заметки для автора',
+    'edu_dep' => 'Учебное заведение',
+    'time_for_call' => 'Удобное время для связи',
     
 );

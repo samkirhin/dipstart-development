@@ -342,7 +342,7 @@ if ($model->status<3) $findAuthor=''; else $findAuthor=' hide';
 			<?php echo $form->labelEx($model,'pages'); ?>
 			<?php echo $form->textField($model,'pages'); ?>
 			<?php echo $form->error($model,'pages'); ?>
-	</td>
+		</td>
 		<td>
 
 		</td>
@@ -374,6 +374,18 @@ if ($model->status<3) $findAuthor=''; else $findAuthor=' hide';
 		<?php echo $form->labelEx($model, 'user_notes_show');?>
 		<?php echo $form->checkBox($model, 'user_notes_show'); ?>
 		<?php echo $form->error($model,'user_notes'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'time_for_call'); ?>
+		<?php echo $form->textField($model,'time_for_call'); ?>
+		<?php echo $form->error($model,'time_for_call'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'edu_dep'); ?>
+		<?php echo $form->textField($model,'edu_dep'); ?>
+		<?php echo $form->error($model,'edu_dep'); ?>
 	</div>
 
 	<div class="row buttons">

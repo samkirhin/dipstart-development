@@ -355,7 +355,7 @@ class ZakazController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=ZakazUpdate::model()->findByPk($id);
+		$model=Zakaz::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
