@@ -31,6 +31,7 @@ return array(
                 'application.extensions.yiifilemanager.*',
                 'application.extensions.yiifilemanagerfilepicker.*',
                 'application.extensions.helpers.EDownloadHelper',
+                'application.extensions.yiichat.*',
     ),
 	'modules'=>array(
         'user' => array(
