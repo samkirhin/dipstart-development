@@ -8,6 +8,7 @@
 
 <?php $form = $this->beginWidget('CActiveForm', array(
 	'id'=>'zakaz-form',
+    'action'=>isset ($model->id) ? $this->createUrl('zakaz/update', ['id'=>$model->id]) : '',
     //'type' => 'horizontal',
     //'htmlOptions' => array('class' => 'well'),
 	// Please note: When you enable ajax validation, make sure the corresponding

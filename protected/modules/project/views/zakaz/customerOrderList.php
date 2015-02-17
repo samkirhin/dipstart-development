@@ -4,11 +4,7 @@
 	'id'=>'zakaz-grid',
 	'dataProvider'=>$dataProvider,
 	'columns'=>array(
-        [
-            'type' => 'raw',
-            'name' => 'id',
-            'value' => 'CHtml::link($data->id, ["update", "id"=>$data->id])'
-        ],
+        'id',
         [
             'name' => 'category_id',
             'value' => 'isset($data->category) ? $data->category->cat_name : ""'

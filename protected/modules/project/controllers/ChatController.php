@@ -52,11 +52,31 @@ class ChatController extends Controller {
 
         Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 
-		$order = Zakaz::model()->findByPk($orderId);
+		$order = ZakazUpdate::model()->findByPk($orderId);
 
         if (!$order) {
             throw new CHttpException(404, 'Не найден');
         }
+        
+        $times = array();
+		$times['date']['date'] = date("Y-m-d", $order->date);
+		$times['date']['hours'] = date("H", $order->date);
+		$times['date']['minutes'] = date("i", $order->date);
+		$times['date_finish']['date'] = date("Y-m-d", $order->date_finish);
+		$times['date_finish']['hours'] = date("H", $order->date_finish);
+		$times['date_finish']['minutes'] = date("i", $order->date_finish);
+		$times['term_for_author']['date'] = date("Y-m-d", $order->term_for_author);
+		$times['term_for_author']['hours'] = date("H", $order->term_for_author);
+		$times['term_for_author']['minutes'] = date("i", $order->term_for_author);
+		$times['max_exec_date']['date'] = date("Y-m-d", $order->max_exec_date);
+		$times['max_exec_date']['hours'] = date("H", $order->max_exec_date);
+		$times['max_exec_date']['minutes'] = date("i", $order->max_exec_date);
+		$times['manager_informed']['date'] = date("Y-m-d", $order->manager_informed);
+		$times['manager_informed']['hours'] = date("H", $order->manager_informed);
+		$times['manager_informed']['minutes'] = date("i", $order->manager_informed);
+		$times['author_informed']['date'] = date("Y-m-d", $order->author_informed);
+		$times['author_informed']['hours'] = date("H", $order->author_informed);
+		$times['author_informed']['minutes'] = date("i", $order->author_informed);
 
 		$model = new ProjectMessages;
 		$model->sender = Yii::app()->user->id;
@@ -105,6 +125,7 @@ class ChatController extends Controller {
 			$messages = ProjectMessages::model()->findAll($criteria);
 		}
 
+        /*
         $attributes = [
             'id',
             array(
@@ -152,6 +173,8 @@ class ChatController extends Controller {
                 'notes'
             ]);
         }
+         * 
+         */
 
 		$this->render('index', array(
 			'model' => $model,
@@ -160,7 +183,8 @@ class ChatController extends Controller {
 			'orderId' => $orderId,
 			'executor' => Zakaz::getExecutor($orderId),
 			'ordererId' =>$order->user_id,
-            'attributes' => $attributes,
+            //'attributes' => $attributes,
+            'times' => $times,
             'middle_button' => $middle_button
 		));
 	}

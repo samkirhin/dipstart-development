@@ -263,13 +263,17 @@ class ZakazController extends Controller
 					$model->author_informed = $time[author_informed];
 				}
 
-				if($model->save())
+				if($model->save()) {
 					if ($role != 'Manager' && $role != 'Admin') {
 						EventHelper::editOrder($model->id);
 					} else {
 						ModerationHelper::clear($model->id);
 					}
+                    if ($role == 'Customer' ) {
+                        $view = 'orderInModerate';
+                    }
 					//$this->redirect(array('view','id'=>$model->id));
+                }
 			}
 			$this->render($view, array(
 				'model'=>$model,
