@@ -1,10 +1,10 @@
 $(document).ready(function(){
-	$('#ZakazUpdate_status').click(function (){
+	$('#Zakaz_status').click(function (){
 		$.ajax({
 			url: 'index.php?r=project/zakaz/apiFindAuthor',
 			type: 'post',
 			data: {
-				value: $('#ZakazUpdate_status').prop('checked').toString(),
+				value: $('#Zakaz_status').prop('checked').toString(),
 				id: $(this).data('id')
 			},
 			success: function (data) {
@@ -218,7 +218,7 @@ var YiiChat = function(options){
 					data: { chat_id: options.chat_id, id: setdata.index, ex: owner},
 					success: function(data){
 						$('.post').each(function(){
-							if ($(this).find('.owner').html()==owner)
+							if ($(this).find('.ownerref').html()==owner)
 								$(this).find('button.toggleexecutor').removeClass(oldaction).addClass('glyphicon-'+action);
 						});
 						if (oldaction == 'glyphicon-minus') $('.findauthor').removeClass('hide'); else $('.findauthor').removeClass('hide');

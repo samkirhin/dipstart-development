@@ -26,23 +26,23 @@ class ZakazController extends Controller
 	 */
 	public function accessRules()
 	{
-            return array(
-                array('allow',  // allow all users to perform 'index' and 'view' actions
-                    'actions'=>array('index','view','download'),
-                    'users'=>array('*'),
-                ),
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList'),
-                    'users'=>array('@'),
-                ),
-                array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview','apifindauthor'),
-                    'users'=>array('admin'),
-                ),
-                array('deny',  // deny all users
-                    'users'=>array('*'),
-                ),
-            );
+			return array(
+				array('allow',  // allow all users to perform 'index' and 'view' actions
+					'actions'=>array('index','view','download'),
+					'users'=>array('*'),
+				),
+				array('allow', // allow authenticated user to perform 'create' and 'update' actions
+					'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList'),
+					'users'=>array('@'),
+				),
+				array('allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview','apifindauthor'),
+					'users'=>array('admin'),
+				),
+				array('deny',  // deny all users
+					'users'=>array('*'),
+				),
+			);
 	}
 
 	/**
@@ -153,8 +153,8 @@ class ZakazController extends Controller
 	public function actionCreate()
 	{
 			$model=new Zakaz;
-            $model->date_finish = strtotime(date("d.m.Y"));
-            $model->max_exec_date = strtotime(date("d.m.Y"));
+			$model->date_finish = strtotime(date("d.m.Y"));
+			$model->max_exec_date = strtotime(date("d.m.Y"));
 
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
@@ -163,10 +163,10 @@ class ZakazController extends Controller
 			{
 				$role = User::model()->getUserRole();
 				$model->attributes=$_POST['Zakaz'];
-                
-                $model->max_exec_date = strtotime($model->max_exec_date['date'].' '.$model->max_exec_date['hours'].':'.$model->max_exec_date['minutes']);
-                $model->date_finish = strtotime($model->date_finish['date'].' '.$model->date_finish['hours'].':'.$model->date_finish['minutes']);
-                
+
+				$model->max_exec_date = strtotime($model->max_exec_date['date'].' '.$model->max_exec_date['hours'].':'.$model->max_exec_date['minutes']);
+				$model->date_finish = strtotime($model->date_finish['date'].' '.$model->date_finish['hours'].':'.$model->date_finish['minutes']);
+
 				if($model->save()){
 					if (!User::model()->isManager()) {
 						EventHelper::createOrder($model->id);
@@ -174,18 +174,18 @@ class ZakazController extends Controller
 					$this->redirect(array('view','id'=>$model->id));
 				}
 			}
-            
-            $times = [];
-            $times['date_finish']['date'] = date("d.m.Y", $model->date_finish);
-            $times['date_finish']['hours'] = date("H", $model->date_finish);
-            $times['date_finish']['minutes'] = date("i", $model->date_finish);
-            $times['max_exec_date']['date'] = date("d.m.Y", $model->max_exec_date);
-            $times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
-            $times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
+
+			$times = [];
+			$times['date_finish']['date'] = date("d.m.Y", $model->date_finish);
+			$times['date_finish']['hours'] = date("H", $model->date_finish);
+			$times['date_finish']['minutes'] = date("i", $model->date_finish);
+			$times['max_exec_date']['date'] = date("d.m.Y", $model->max_exec_date);
+			$times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
+			$times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
 
 			$this->render('create',array(
 					'model'=>$model,
-                    'times'=>$times
+					'times'=>$times
 			));
 	}
 
@@ -239,9 +239,9 @@ class ZakazController extends Controller
 
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
-			if(isset($_POST['ZakazUpdate']))
+			if(isset($_POST['Zakaz']))
 			{
-				$zakaz = $_POST['ZakazUpdate'];
+				$zakaz = $_POST['Zakaz'];
 
 				$time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
 				$time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
@@ -318,13 +318,13 @@ class ZakazController extends Controller
 		));
 	}
 
-    public function actionOwnList()
-    {
-        if (!User::model()->isAuthor()) {
-            throw new CHttpException(403, 'Доступ запрещен');
-        }
+	public function actionOwnList()
+	{
+		if (!User::model()->isAuthor()) {
+			throw new CHttpException(403, 'Доступ запрещен');
+		}
 
-        $model=new Zakaz('search');
+		$model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
 		$model->executor = Yii::app()->user->id;
 
@@ -380,20 +380,20 @@ class ZakazController extends Controller
 			$this->redirect(Yii::app()->request->urlReferrer);
 	}
 
-    public function actionCustomerOrderList()
-    {
-        if (!User::model()->isCustomer()) {
-            throw new CHttpException(500);
-        }
+	public function actionCustomerOrderList()
+	{
+		if (!User::model()->isCustomer()) {
+			throw new CHttpException(500);
+		}
 
-        $criteria = new CDbCriteria();
-        $criteria->compare('user_id', Yii::app()->user->id);
-        $dataProvider = new CActiveDataProvider('Zakaz', [
-            'criteria' => $criteria
-        ]);
+		$criteria = new CDbCriteria();
+		$criteria->compare('user_id', Yii::app()->user->id);
+		$dataProvider = new CActiveDataProvider('Zakaz', [
+			'criteria' => $criteria
+		]);
 
-        $this->render('customerOrderList', [
-            'dataProvider' => $dataProvider
-        ]);
-    }
+		$this->render('customerOrderList', [
+			'dataProvider' => $dataProvider
+		]);
+	}
 }

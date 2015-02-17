@@ -1,4 +1,7 @@
 /.idea
 /assets
 /protected/runtime/
+/protected/backup
 /protected/config/main.php
+/cgi-bin
+/uploads

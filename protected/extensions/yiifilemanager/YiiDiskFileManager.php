@@ -82,7 +82,7 @@ class YiiDiskFileManager extends YiiBaseFileManager {
 			return false;
 		$final_path = sprintf("%s/%s@%s", $this->get_storage_path($id),
 			$file_id,basename($file_path));
-		copy($file_path, $final_path);	
+		copy($file_path, $final_path);
 		return true;
 	}
 
@@ -109,9 +109,9 @@ class YiiDiskFileManager extends YiiBaseFileManager {
 		$real_path = sprintf("%s/%s",
 			$this->get_storage_path($id), $filedata['longfilename']);
 		unlink($real_path);
-		return true;	
+		return true;
 	}
-	
+
 	public function get_file_path($id, $file_id, $extra=array()) {
 		$info = parent::get_file_info($id, $file_id, $extra);
 		if($info != null)

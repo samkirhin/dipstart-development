@@ -16,7 +16,7 @@
 			'select_mode'=>'single',
 			'identity'=>"123456",
 			'fileman'=>Yii::app()->fileman,
-		);	
+		);
 	}
 
 	LAYOUT:
@@ -47,12 +47,12 @@
  */
 include_once ("IYiiFileManagerFilePicker.php");
 include_once ("YiiFilemanImageResizer.php");
-abstract class YiiFileManagerFilePicker extends CWidget 
+abstract class YiiFileManagerFilePicker extends CWidget
 	/* depends on interface: IYiiFileManagerFilePicker */ {
 
 	public $launch_selector='';		// "#file-picker" or leave empty
 	public $list_selector;			// "#file-viewer" required
-	public $uploader_selector;		// see also LAYOUT (id='myuploader') 
+	public $uploader_selector;		// see also LAYOUT (id='myuploader')
 	public $file_uploaders=3;
 
 	public $delete_confirm_message='';  // message string or empty to display nothing
@@ -60,10 +60,114 @@ abstract class YiiFileManagerFilePicker extends CWidget
 	public $no_selection_message='';
 	public $upload_file_button_text='Upload';
 
-	// the controller name and action name holding the 
+	// the controller name and action name holding the
 	//	static action: YiiFileManagerFilePickerAction
 	private $_default_action="yiifilemanagerfilepicker";
 	private $_default_controller="site";
+	public $mime_types = array(
+		// Image formats
+		'jpg'                          =>	array('image/jpeg','not-an-image.jpg'),
+		'jpeg'                         =>	array('image/jpeg','not-an-image.jpg'),
+		'gif'                          =>	array('image/gif','not-an-image.jpg'),
+		'png'                          =>	array('image/png','not-an-image.jpg'),
+		'bmp'							=>	array('image/bmp','not-an-image.jpg'),
+		'tif|tiff'						=>	array('image/tiff','not-an-image.jpg'),
+		'ico'							=>	array('image/x-icon','not-an-image.jpg'),
+		'djvu'							=>	array('image/x-djvu','djvu.png'),
+		'djvu'							=>	array('image/vnd.djvu','djvu.png'),
+
+		// Video formats
+		'asf|asx'                      => array('video/x-ms-asf','not-an-image.jpg'),
+		'wmv'                          => array('video/x-ms-wmv','not-an-image.jpg'),
+		'wmx'                          => array('video/x-ms-wmx','not-an-image.jpg'),
+		'wm'                           => array('video/x-ms-wm','not-an-image.jpg'),
+		'avi'                          => array('video/avi','not-an-image.jpg'),
+		'divx'                         => array('video/divx','not-an-image.jpg'),
+		'flv'                          => array('video/x-flv','not-an-image.jpg'),
+		'mov|qt'                       => array('video/quicktime','not-an-image.jpg'),
+		'mpeg|mpg|mpe'                 => array('video/mpeg','not-an-image.jpg'),
+		'mp4|m4v'                      => array('video/mp4','not-an-image.jpg'),
+		'ogv'                          => array('video/ogg','not-an-image.jpg'),
+		'webm'                         => array('video/webm','not-an-image.jpg'),
+		'mkv'                          => array('video/x-matroska','not-an-image.jpg'),
+
+		// Text formats
+		'txt|asc|c|cc|h'               => array('text/plain','not-an-image.jpg'),
+		'csv'                          => array('text/csv','not-an-image.jpg'),
+		'tsv'                          => array('text/tab-separated-values','not-an-image.jpg'),
+		'ics'                          => array('text/calendar','not-an-image.jpg'),
+		'rtx'                          => array('text/richtext','not-an-image.jpg'),
+		'css'                          => array('text/css','not-an-image.jpg'),
+		'sql'                          => array('text/sql','not-an-image.jpg'),
+		'htm|html'                     => array('text/html','not-an-image.jpg'),
+
+		// Audio formats
+		'mp3|m4a|m4b'                  => array('audio/mpeg','not-an-image.jpg'),
+		'ra|ram'                       => array('audio/x-realaudio','not-an-image.jpg'),
+		'wav'                          => array('audio/wav','not-an-image.jpg'),
+		'ogg|oga'                      => array('audio/ogg','not-an-image.jpg'),
+		'mid|midi'                     => array('audio/midi','not-an-image.jpg'),
+		'wma'                          => array('audio/x-ms-wma','not-an-image.jpg'),
+		'wax'                          => array('audio/x-ms-wax','not-an-image.jpg'),
+		'mka'                          => array('audio/x-matroska','not-an-image.jpg'),
+
+		// Misc application formats
+		'rtf'                          => array('application/rtf','not-an-image.jpg'),
+		'js'                           => array('application/javascript','not-an-image.jpg'),
+		'pdf'                          => array('application/pdf','not-an-image.jpg'),
+		'swf'                          => array('application/x-shockwave-flash','not-an-image.jpg'),
+		'tar'                          => array('application/x-tar','not-an-image.jpg'),
+		'zip'                          => array('application/zip','not-an-image.jpg'),
+		'gz|gzip'                      => array('application/x-gzip','not-an-image.jpg'),
+		'rar'                          => array('application/rar','not-an-image.jpg'),
+		'7z'                           => array('application/x-7z-compressed','not-an-image.jpg'),
+		'exe'                          => array('application/x-msdownload','not-an-image.jpg'),
+
+		// MS Office formats
+		'doc'                          => array('application/msword','docx.png'),
+		'pot|pps|ppt'                  => array('application/vnd.ms-powerpoint','not-an-image.jpg'),
+		'wri'                          => array('application/vnd.ms-write','not-an-image.jpg'),
+		'xla|xls|xlt|xlw'              => array('application/vnd.ms-excel','not-an-image.jpg'),
+		'mdb'                          => array('application/vnd.ms-access','not-an-image.jpg'),
+		'mpp'                          => array('application/vnd.ms-project','not-an-image.jpg'),
+		'docx'                         => array('application/vnd.openxmlformats-officedocument.wordprocessingml.document','docx.png'),
+		'docm'                         => array('application/vnd.ms-word.document.macroEnabled.12','not-an-image.jpg'),
+		'dotx'                         => array('application/vnd.openxmlformats-officedocument.wordprocessingml.template','not-an-image.jpg'),
+		'dotm'                         => array('application/vnd.ms-word.template.macroEnabled.12','not-an-image.jpg'),
+		'xlsx'                         => array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','not-an-image.jpg'),
+		'xlsm'                         => array('application/vnd.ms-excel.sheet.macroEnabled.12','not-an-image.jpg'),
+		'xlsb'                         => array('application/vnd.ms-excel.sheet.binary.macroEnabled.12','not-an-image.jpg'),
+		'xltx'                         => array('application/vnd.openxmlformats-officedocument.spreadsheetml.template','not-an-image.jpg'),
+		'xltm'                         => array('application/vnd.ms-excel.template.macroEnabled.12','not-an-image.jpg'),
+		'xlam'                         => array('application/vnd.ms-excel.addin.macroEnabled.12','not-an-image.jpg'),
+		'pptx'                         => array('application/vnd.openxmlformats-officedocument.presentationml.presentation','not-an-image.jpg'),
+		'pptm'                         => array('application/vnd.ms-powerpoint.presentation.macroEnabled.12','not-an-image.jpg'),
+		'ppsx'                         => array('application/vnd.openxmlformats-officedocument.presentationml.slideshow','not-an-image.jpg'),
+		'ppsm'                         => array('application/vnd.ms-powerpoint.slideshow.macroEnabled.12','not-an-image.jpg'),
+		'potx'                         => array('application/vnd.openxmlformats-officedocument.presentationml.template','not-an-image.jpg'),
+		'potm'                         => array('application/vnd.ms-powerpoint.template.macroEnabled.12','not-an-image.jpg'),
+		'ppam'                         => array('application/vnd.ms-powerpoint.addin.macroEnabled.12','not-an-image.jpg'),
+		'sldx'                         => array('application/vnd.openxmlformats-officedocument.presentationml.slide','not-an-image.jpg'),
+		'sldm'                         => array('application/vnd.ms-powerpoint.slide.macroEnabled.12','not-an-image.jpg'),
+		'onetoc|onetoc2|onetmp|onepkg' => array('application/onenote','not-an-image.jpg'),
+
+		// OpenOffice formats
+		'odt'                          => array('application/vnd.oasis.opendocument.text','not-an-image.jpg'),
+		'odp'                          => array('application/vnd.oasis.opendocument.presentation','not-an-image.jpg'),
+		'ods'                          => array('application/vnd.oasis.opendocument.spreadsheet','not-an-image.jpg'),
+		'o dg'                         => array('application/vnd.oasis.opendocument.graphics','not-an-image.jpg'),
+		'odc'                          => array('application/vnd.oasis.opendocument.chart','not-an-image.jpg'),
+		'odb'                          => array('application/vnd.oasis.opendocument.database','not-an-image.jpg'),
+		'odf'                          => array('application/vnd.oasis.opendocument.formula','not-an-image.jpg'),
+
+		// WordPerfect formats
+		'wp|wpd'                       => array('application/wordperfect','not-an-image.jpg'),
+
+		// iWork formats
+		'key'                          => array('application/vnd.apple.keynote','not-an-image.jpg'),
+		'numbers'                      => array('application/vnd.apple.numbers','not-an-image.jpg'),
+		'pages'                        => array('application/vnd.apple.pages','not-an-image.jpg'),
+		);
 
 	public $onBeforeLaunch;		// launched before to start showing the viewer
 	public $onBeforeAction;		// launched before the select or delete actions are to be taken
@@ -98,7 +202,7 @@ abstract class YiiFileManagerFilePicker extends CWidget
 					$this->onAfterAction);
 
 		if($this->onClientSideUploaderError == null)
-			$this->onClientSideUploaderError = 
+			$this->onClientSideUploaderError =
 				"function(messages){ var str=''; $(messages).each("
 					."function(i,m){ str += m; str += '\\n'; }); alert(str); }";
 		if(!($this->onClientSideUploaderError instanceof CJavaScriptExpression))
@@ -106,7 +210,7 @@ abstract class YiiFileManagerFilePicker extends CWidget
 					$this->onClientSideUploaderError);
 
 		if($this->onClientUploaderProgress == null)
-			$this->onClientUploaderProgress = 
+			$this->onClientUploaderProgress =
 				"function(status, progress){  }";
 		if(!($this->onClientUploaderProgress instanceof CJavaScriptExpression))
 				$this->onClientUploaderProgress = new CJavaScriptExpression(
@@ -175,7 +279,7 @@ abstract class YiiFileManagerFilePicker extends CWidget
 	});
 	$('{$this->list_selector}').yiiFileManagerFilePickerViewer_init({$options});
 ",CClientScript::POS_LOAD);
-	
+
 		// code when no launch selector is available
 		//  direct window mode
 		if($this->launch_selector == '')
@@ -207,7 +311,7 @@ abstract class YiiFileManagerFilePicker extends CWidget
 	}
 
 	public function yiifileman_get_mime_type($local_path){
-		// YOU SHOULD USE finfo INSTEAD OF mime_content_type. 
+		// YOU SHOULD USE finfo INSTEAD OF mime_content_type.
 		//	mime_content_type is used here for php compatibility
 		//	dont change here...! perform the change in your own derivated class
    		return mime_content_type($local_path);
@@ -223,13 +327,14 @@ abstract class YiiFileManagerFilePicker extends CWidget
 			return $local_path; // the same image
 		}else{
 			// a stupid text/data file, so it requires an image substitution.
-			return rtrim(dirname(__FILE__))."/not-an-image.jpg";
+			header('Content-type: text');
+			return rtrim(dirname(__FILE__))."/file_icons/".$this->mime_types[CFileHelper::getExtension($file_info['filename'])][1];
 		}
 	}
 
 	public function yiifileman_output_file($file_info, $local_path, $mimetype,$output_size){
 		// local_path can be an image file, or a data file, in the first case (image file)
-		//	we can easily output this file as image, as is.  
+		//	we can easily output this file as image, as is.
 		//  in case of data files a substitution imagen must be used in replace
 		header('Content-type: '.$mimetype);
 		$image_local_path = $this->yiifileman_get_image_substitution(
@@ -238,13 +343,13 @@ abstract class YiiFileManagerFilePicker extends CWidget
 			$imgres = new YiiFilemanImageResizer();
 			list($ow, $oh) = getimagesize($image_local_path);
 			$f = fopen($image_local_path,"r");
-			$newImage = $imgres->resize(fread($f,filesize($image_local_path)), 
+			$newImage = $imgres->resize(fread($f,filesize($image_local_path)),
 				$output_size[0], $output_size[1], 70, $ow, $oh);
 			fclose($f);
 			imagepng($newImage);
 			imagedestroy($newImage);
 		}else
-		echo file_get_contents($image_local_path);	
+		echo file_get_contents($image_local_path);
 	}
 
 	public function runAction($method){
@@ -281,7 +386,7 @@ abstract class YiiFileManagerFilePicker extends CWidget
 			return $this->yiifileman_do_rename_file($post['file_id'],$post['name']);
 		}else
 		if(isset($post['action'])){
-			// actions: "select" or "delete", 
+			// actions: "select" or "delete",
 			//	both receiving an array of selected file_id
 			$action = $post['action'];
 			$file_ids = $post['file_ids'];
@@ -299,14 +404,14 @@ abstract class YiiFileManagerFilePicker extends CWidget
 		}
 		return array();
 	}
-	
+
 	public function build_file_viewer_url($file_id){
 		return CHtml::normalizeUrl(array($this->_getActionPath(),
 			"class"=>$this->yiifileman_classname(),
 			"method"=>"viewer",
 			"size"=>"gallery",
 			"file_id"=>$file_id)
-		);	
+		);
 	}
 
 	// if the developper does not provide this method then we
@@ -370,26 +475,26 @@ abstract class YiiFileManagerFilePicker extends CWidget
 
 	/**
 		the action (select or delete) to be performed on a file_id set (array of file_id)
-		
+
 	 	@return bool true: the js component close the dialog (hide), or false: do nothing
 	 */
-	protected function yiifileman_on_action($action, $file_ids){
+	protected function yiifileman_on_action($fileaction, $file_ids){
 		extract($this->yiifileman_data());
-		if($action == 'select')
+		if($fileaction == 'select')
 			return true;
-		if(($action == 'delete') && ($allow_delete_files==true)){
-			//the remove_files method will remove only files if this files 
+		if(($fileaction == 'delete') && ($allow_delete_files==true)){
+			//the remove_files method will remove only files if this files
 			// belongs to the same provided $identity
 			return $fileman->remove_files($identity, $file_ids); // return the removal counter
 		}
 		else
-		return false;	
+		return false;
 	}
 
 	/**
 	 	this method is called when:
-			first:	
-				when a browser query to check if a selected file can be uploaded 
+			first:
+				when a browser query to check if a selected file can be uploaded
 				(yiifileman_on_pre_uploaded_file)
 			next:
 				when a browse send the files via ajax to the server
@@ -429,6 +534,6 @@ abstract class YiiFileManagerFilePicker extends CWidget
 
 	// user must override it
 	public function yiifileman_on_file_saved($file_id){
-	
+
 	}
 }

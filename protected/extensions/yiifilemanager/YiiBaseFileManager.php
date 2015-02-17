@@ -8,13 +8,13 @@
  * @author Christian Salazar H. <christiansalazarh@gmail.com>
  * @license http://opensource.org/licenses/bsd-license.php
  */
-abstract class YiiBaseFileManager 
-	extends CApplicationComponent 
-		implements IYiiFileManager 
+abstract class YiiBaseFileManager
+	extends CApplicationComponent
+		implements IYiiFileManager
 {
 	/**
 	  	Add files to repository.
-	 
+
 	 	@return	array an array of file_id (string)
 	 */
 	public function add_files($id, $local_file_path, $extra=array()){

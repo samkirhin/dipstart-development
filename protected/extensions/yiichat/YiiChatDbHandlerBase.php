@@ -76,8 +76,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			$model->executor = 0;
 			$model->status = 2;
 		}
-		$model->save();
-		print_r($model);
+		return $model->save();
 	}
 	public function yiichat_post($chat_id, $identity, $message, $postdata, $data){
 		$this->_chat_id = $chat_id;

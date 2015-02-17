@@ -73,6 +73,57 @@ class MessageController extends Controller
 		$dataProvider = new CActiveDataProvider( Message::model()->sent($this->module->getUserId()) );
 		$this->render('mailbox',array('dataProvider'=>$dataProvider));
 	}
+	public function actionSpam()
+	{
+		$this->module->registerConfig($this->getAction()->getId());
+		$cs = $this->module->getClientScript();
+		$cs->registerScriptFile($this->module->getAssetsUrl().'/js/compose.js');
+		$cs->registerScriptFile($this->module->getAssetsUrl().'/js/jquery.combobox.contacts.js');
+		$js = '$(".mailbox-compose").yiiMailboxCompose('.$this->module->getOptions().");";
+		$cs->registerScript('mailbox-js',$js,CClientScript::POS_READY);
+		if(!$this->module->authManager && (!$this->module->sendMsgs  || ($this->module->readOnly && !$this->module->isAdmin()) ))
+			die('1');
+
+		$t = time();
+		$conv = new Mailbox();
+		$conv->subject = 'spam';
+		$conv->to = '*';
+		$conv->initiator_id = $this->module->getUserId();
+		$conv->interlocutor_id = 999999999;
+		$conv->modified = $t;
+		$conv->bm_read = Mailbox::INITIATOR_FLAG;
+		if($this->module->isAdmin())
+			$msg = new Message('admin');
+		else
+			$msg = new Message('user');
+		$msg->text = 'test spam';
+		$validate = $conv->validate(array('text'),false); // html purify
+		$msg->created = $t;
+		$msg->sender_id = $conv->initiator_id;
+		$msg->recipient_id = $conv->interlocutor_id;
+		if($this->module->checksums) {
+			$msg->crc64 = Message::crc64($msg->text); // 64bit INT
+		}
+		else
+			$msg->crc64 = 0;
+		// Validate
+		$validate = $conv->validate(null,false); // don't clear errors
+		$validate = $msg->validate() && $validate;
+
+		if($validate)
+		{
+			$conv->save();
+			$msg->conversation_id = $conv->conversation_id;
+			$msg->save();
+			Yii::app()->user->setFlash('success', Yii::t("MailboxModule.mailbox", "Message has been sent!"));
+			$this->redirect(array('message/inbox'));
+		}
+		else
+		{
+			Yii::app()->user->setFlash('error', Yii::t("MailboxModule.mailbox", "Error sending message!"));
+		}
+		die;
+	}
 
 
 	public function actionTrash($ajax=null)
@@ -122,7 +173,7 @@ class MessageController extends Controller
 			if(strlen($_POST['Mailbox']['to'])>1)
 				$conv->interlocutor_id = $this->module->getUserId($_POST['Mailbox']['to']);
 			else
-				$conv->interlocutor_id = 0;
+				if ($_POST['Mailbox']['to']=='*') $conv->interlocutor_id = 999999999; else $conv->interlocutor_id = 0;
 			// ...if not check if To field is user id
 			if(!$conv->interlocutor_id)
 			{
