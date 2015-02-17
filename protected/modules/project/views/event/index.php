@@ -1,3 +1,8 @@
+<?
+/**
+ * @author Emericanec
+ */
+?>
 <div class="events">
     
     <h2>События</h2>
@@ -17,28 +22,31 @@
                 time
             </th>
         </thead>
-        <?php 
-        
-            foreach ($events as $event) {
-                echo '<tr>';
-                echo '<td>'.$event->id.'</td>';
-                echo '<td>'.$event->description.'</td>';
-                $href = Yii::app()->createUrl('project/zakaz/update', array('id' => $event->event_id));
-                switch ($event->type) {
-                    case EventHelper::TYPE_CREATE_ORDER:
-                    case EventHelper::TYPE_EDIT_ORDER:
-                    case EventHelper::TYPE_ADD_CHANGES:
-                    case EventHelper::TYPE_MESSAGE:
-                        echo '<td><a href="'.$href.'">Заказ</a></td>';
-                        break;
-                    case EventHelper::TYPE_NOTIFICATION:
-                        echo '<td> Ссылка отсутствует</td>';
-                }
-                echo '<td>'.date("Y-m-d H:i", $event->timestamp).'</td>';
-                
-                echo '</tr>';
-            }
-        
-        ?>
+        <? foreach ($events as $event) {?>
+         <tr>
+            <td><?=$event->id?></td>
+            <td><?=$event->description?></td>
+            <td>
+                <? if($event->type == EventHelper::TYPE_CREATE_ORDER) {?>
+                    <a href="<?=Yii::app()->createUrl('project/zakaz/preview', array('id' => $event->id))?>">Посмотреть</a>
+                <?}?>
+
+                <?
+                // пока так потом будет как я понял своя реализация для каждого типа
+                if(
+                    $event->type == EventHelper::TYPE_EDIT_ORDER ||
+                    $event->type == EventHelper::TYPE_ADD_CHANGES ||
+                    $event->type == EventHelper::TYPE_MESSAGE
+                ) {?>
+                    <a href="<?=Yii::app()->createUrl('project/zakaz/update', array('id' => $event->event_id))?>">Заказ</a>
+                <?}?>
+
+                <? if($event->type == EventHelper::TYPE_NOTIFICATION) {?>
+                    <td> Ссылка отсутствует</td>
+                <?}?>
+            </td>
+            <td><?=date("Y-m-d H:i", $event->timestamp)?></td>
+         </tr>
+        <?}?>
     </table>
 </div>

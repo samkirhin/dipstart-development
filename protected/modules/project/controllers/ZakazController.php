@@ -32,7 +32,7 @@ class ZakazController extends Controller
 					'users'=>array('*'),
 				),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-					'actions'=>array('create','update', 'admin', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList'),
+					'actions'=>array('create','update', 'admin', 'preview', 'moderationAnswer', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList'),
 					'users'=>array('@'),
 				),
 				array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -152,17 +152,28 @@ class ZakazController extends Controller
 	 */
 	public function actionCreate()
 	{
-			$model=new Zakaz;
+            // start author Emericanec
+            if(User::model()->isAdmin()) {
+                $modelName = 'Zakaz';
+                $model = new $modelName();
+
+            }else{
+                $modelName = 'Moderation';
+                $model = new $modelName();
+
+            }
+            // end author Emericanec
+
 			$model->date_finish = strtotime(date("d.m.Y"));
 			$model->max_exec_date = strtotime(date("d.m.Y"));
 
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
 
-			if(isset($_POST['Zakaz']))
+			if(isset($_POST[$modelName]))
 			{
 				$role = User::model()->getUserRole();
-				$model->attributes=$_POST['Zakaz'];
+				$model->attributes=$_POST[$modelName];
 
 				$model->max_exec_date = strtotime($model->max_exec_date['date'].' '.$model->max_exec_date['hours'].':'.$model->max_exec_date['minutes']);
 				$model->date_finish = strtotime($model->date_finish['date'].' '.$model->date_finish['hours'].':'.$model->date_finish['minutes']);
@@ -282,6 +293,68 @@ class ZakazController extends Controller
 			));
 	}
 
+    /**
+     * Превью заказа который должен быть отмодерирован
+     * @param $id
+     * @author Emericanec
+     */
+    public function actionPreview($id){
+        try {
+            $event = Events::model()->findByPk($id);
+            if ($event) {
+                $moderation = Moderation::model()->findByPk($event->event_id);
+                if ($moderation) {
+                    $this->render('preview', array(
+                        'model' => $moderation,
+                        'event' => $event
+                    ));
+                } else {
+                    throw new Exception("Заказ не найден или его уже отмодерировали");
+                }
+            } else {
+                throw new Exception("Событие с таким id не найдено");
+            }
+        }catch (Exception $e){
+            echo $e->getMessage();
+        }
+    }
+
+    /**
+     * Одобрение или нет заказа
+     * @param $answer
+     * @author Emericanec
+     */
+    public function actionModerationAnswer($id, $event_id, $answer){
+        $model = Moderation::model()->findByPk($id);
+        $event = Events::model()->findByPk($event_id);
+        if($model && $event) {
+            // если одобрили то создаем заказ и удаляем модерер и событие
+            if ($answer) {
+                $zakaz = new Zakaz();
+                $zakaz->attributes = $model->attributes;
+                $userId = $model->user_id;
+                if($zakaz->save()){
+                    // изза beforeSave такой костыль
+                    $zakaz->user_id = $userId;
+                    if($zakaz->save()) {
+                        $model->delete();
+                        $event->delete();
+                        $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
+                            'id' => $zakaz->id
+                        )));
+                    }
+                }
+            } else {
+                // если нет то просто удаляем
+                $model->delete();
+                $event->delete();
+                $this->redirect(Yii::app()->createUrl('project/event'));
+            }
+        }else{
+            throw new Exception("Заказ не найден или его уже отмодерировали");
+        }
+    }
+
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -359,9 +432,14 @@ class ZakazController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Zakaz::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+		$model = Zakaz::model()->findByPk($id);
+		if($model===null){
+            $model = Moderation::model()->findByPk($id);
+            if($model === null){
+                throw new CHttpException(404,'The requested page does not exist.');
+            }
+        }
+
 		return $model;
 	}
 
