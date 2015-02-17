@@ -3,6 +3,6 @@
 /protected/runtime/
 /protected/backup
 /protected/config/main.php
-/protected/config/config.php
 /cgi-bin
 /uploads
+protected/config/main.php
