@@ -52,7 +52,7 @@ class ChatController extends Controller {
 
         Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 
-		$order = ZakazUpdate::model()->findByPk($orderId);
+		$order = Zakaz::model()->findByPk($orderId);
 
         if (!$order) {
             throw new CHttpException(404, 'Не найден');
