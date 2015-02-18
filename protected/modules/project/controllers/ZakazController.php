@@ -309,8 +309,9 @@ class ZakazController extends Controller
                         'event' => $event
                     ));
                 } else {
-                    $event->delete();
-                    throw new Exception("Заказ не найден или его уже отмодерировали");
+                    if($event->delete()) {
+                        throw new Exception("Заказ не найден или его уже отмодерировали");
+                    }
                 }
             } else {
                 throw new Exception("Событие с таким id не найдено");
