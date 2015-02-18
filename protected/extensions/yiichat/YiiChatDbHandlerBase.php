@@ -93,7 +93,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			if ($postdata['index']==0){
 				if ($postdata['recipient']=='Author'){
 					$obj['recipient']=Zakaz::model()->findByPk($chat_id)->executor;
-					if ($obj['recipient']>0) {} else $obj['recipient']=0;
+					if ($obj['recipient']>0) {} else return false;
 				} else if ($postdata['recipient']=='Customer')
 					$obj['recipient']=Zakaz::model()->findByPk($chat_id)->user_id;
 				else $obj['recipient']=0;
