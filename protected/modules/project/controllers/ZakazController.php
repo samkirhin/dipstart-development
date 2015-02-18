@@ -309,6 +309,7 @@ class ZakazController extends Controller
                         'event' => $event
                     ));
                 } else {
+                    $event->delete();
                     throw new Exception("Заказ не найден или его уже отмодерировали");
                 }
             } else {
@@ -351,6 +352,7 @@ class ZakazController extends Controller
                 $this->redirect(Yii::app()->createUrl('project/event'));
             }
         }else{
+            $event->delete();
             throw new Exception("Заказ не найден или его уже отмодерировали");
         }
     }
