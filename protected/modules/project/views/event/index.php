@@ -29,7 +29,7 @@
             <td>
                 <?php if($event->type == EventHelper::TYPE_CREATE_ORDER) {?>
                     <a href="<?php echo Yii::app()->createUrl('project/zakaz/preview', array('id' => $event->id)); ?>">Посмотреть</a>
-                <?php}?>
+                <?php } ?>
 
                 <?php
                 // пока так потом будет как я понял своя реализация для каждого типа
@@ -39,14 +39,14 @@
                     $event->type == EventHelper::TYPE_MESSAGE
                 ) {?>
                     <a href="<?php echo Yii::app()->createUrl('project/zakaz/update', array('id' => $event->event_id));?>">Заказ</a>
-                <?php}?>
+                <?php } ?>
 
                 <?php if($event->type == EventHelper::TYPE_NOTIFICATION) {?>
                     <td> Ссылка отсутствует</td>
-                <?php}?>
+                <?php } ?>
             </td>
             <td><?php echo date("Y-m-d H:i", $event->timestamp); ?></td>
          </tr>
-        <?php }?>
+        <?php } ?>
     </table>
 </div>
