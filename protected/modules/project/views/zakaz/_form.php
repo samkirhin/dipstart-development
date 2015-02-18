@@ -4,7 +4,6 @@
 /* @var $form CActiveForm */
 ?>
 <div><a href='#' id='file-picker'><?php echo Yii::t('site','File manager');?></a>
-	<img src='' width='50%' id='selected-image' />
 </div>
 
 <!-- required div layout begins -->

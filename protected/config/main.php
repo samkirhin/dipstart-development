@@ -89,26 +89,13 @@ return array(
 			),
 		),
 
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),*/
-
-		// uncomment the following to use a MySQL database
-        //local server
-		/*'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=dipstart',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),
         */
         //dev server
         'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=dipstart',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => 'root',
+			'username' => 'dipstart',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
