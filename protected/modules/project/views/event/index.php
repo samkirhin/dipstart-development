@@ -22,31 +22,31 @@
                 time
             </th>
         </thead>
-        <? foreach ($events as $event) {?>
+        <?php foreach ($events as $event) {?>
          <tr>
-            <td><?=$event->id?></td>
-            <td><?=$event->description?></td>
+            <td><?php echo $event->id?></td>
+            <td><?php echo $event->description?></td>
             <td>
-                <? if($event->type == EventHelper::TYPE_CREATE_ORDER) {?>
-                    <a href="<?=Yii::app()->createUrl('project/zakaz/preview', array('id' => $event->id))?>">Посмотреть</a>
-                <?}?>
+                <?php if($event->type == EventHelper::TYPE_CREATE_ORDER) {?>
+                    <a href="<?php echo Yii::app()->createUrl('project/zakaz/preview', array('id' => $event->id)); ?>">Посмотреть</a>
+                <?php}?>
 
-                <?
+                <?php
                 // пока так потом будет как я понял своя реализация для каждого типа
                 if(
                     $event->type == EventHelper::TYPE_EDIT_ORDER ||
                     $event->type == EventHelper::TYPE_ADD_CHANGES ||
                     $event->type == EventHelper::TYPE_MESSAGE
                 ) {?>
-                    <a href="<?=Yii::app()->createUrl('project/zakaz/update', array('id' => $event->event_id))?>">Заказ</a>
-                <?}?>
+                    <a href="<?php echo Yii::app()->createUrl('project/zakaz/update', array('id' => $event->event_id));?>">Заказ</a>
+                <?php}?>
 
-                <? if($event->type == EventHelper::TYPE_NOTIFICATION) {?>
+                <?php if($event->type == EventHelper::TYPE_NOTIFICATION) {?>
                     <td> Ссылка отсутствует</td>
-                <?}?>
+                <?php}?>
             </td>
-            <td><?=date("Y-m-d H:i", $event->timestamp)?></td>
+            <td><?php echo date("Y-m-d H:i", $event->timestamp); ?></td>
          </tr>
-        <?}?>
+        <?php }?>
     </table>
 </div>
