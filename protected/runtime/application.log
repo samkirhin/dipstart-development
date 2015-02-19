@@ -503,3 +503,41 @@ Stack trace:
 #14 /Applications/MAMP/htdocs/dipstart/protected/yiic(4): require_once('/Applications/M...')
 #15 {main}
 ---
+2015/02/19 03:22:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: YES)' in /media/hosting/dipstart-development/framework/db/CDbConnection.php:382
+Stack trace:
+#0 /media/hosting/dipstart-development/framework/db/CDbConnection.php(330): CDbConnection->open()
+#1 /media/hosting/dipstart-development/framework/db/CDbConnection.php(308): CDbConnection->setActive(true)
+#2 /media/hosting/dipstart-development/framework/base/CModule.php(387): CDbConnection->init()
+#3 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(442): CModule->getComponent('db')
+#4 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(451): MigrateCommand->getDbConnection()
+#5 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(482): MigrateCommand->getMigrationHistory(-1)
+#6 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(84): MigrateCommand->getNewMigrations()
+#7 [internal function]: MigrateCommand->actionUp(Array)
+#8 /media/hosting/dipstart-development/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#9 /media/hosting/dipstart-development/framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#10 /media/hosting/dipstart-development/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#11 /media/hosting/dipstart-development/framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#12 /media/hosting/dipstart-development/framework/yiic.php(33): CApplication->run()
+#13 /media/hosting/dipstart-development/protected/yiic.php(7): require_once('/media/hosting/...')
+#14 /media/hosting/dipstart-development/protected/yiic(4): require_once('/media/hosting/...')
+#15 {main}
+---
+2015/02/19 03:22:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: YES)' in /media/hosting/dipstart-development/framework/db/CDbConnection.php:382
+Stack trace:
+#0 /media/hosting/dipstart-development/framework/db/CDbConnection.php(330): CDbConnection->open()
+#1 /media/hosting/dipstart-development/framework/db/CDbConnection.php(308): CDbConnection->setActive(true)
+#2 /media/hosting/dipstart-development/framework/base/CModule.php(387): CDbConnection->init()
+#3 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(442): CModule->getComponent('db')
+#4 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(451): MigrateCommand->getDbConnection()
+#5 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(482): MigrateCommand->getMigrationHistory(-1)
+#6 /media/hosting/dipstart-development/framework/cli/commands/MigrateCommand.php(84): MigrateCommand->getNewMigrations()
+#7 [internal function]: MigrateCommand->actionUp(Array)
+#8 /media/hosting/dipstart-development/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#9 /media/hosting/dipstart-development/framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#10 /media/hosting/dipstart-development/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#11 /media/hosting/dipstart-development/framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#12 /media/hosting/dipstart-development/framework/yiic.php(33): CApplication->run()
+#13 /media/hosting/dipstart-development/protected/yiic.php(7): require_once('/media/hosting/...')
+#14 /media/hosting/dipstart-development/protected/yiic(4): require_once('/media/hosting/...')
+#15 {main}
+---

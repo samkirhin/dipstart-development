@@ -151,7 +151,9 @@ var YiiChat = function(options){
 				+ "<button data-index=\""+post.id+"\" class=\"glyphicon-edit glyphicon\"></button>"
 				+ "<button data-index=\""+post.id+"\" class=\"glyphicon-remove glyphicon\"></button>";
 			if(options.identity != post.sender.id) {
-				if (post.moderated==0) tmp_html += "<button data-index=\""+post.id+"\"class=\"glyphicon-ok glyphicon\"></button>";
+				if (post.moderated==0 && post.sender.superuser.itemname=='Author' && post.sender.superuser.itemname=='Customer')
+					if (post.recipient.superuser.itemname=='Author' && post.recipient.superuser.itemname=='Customer')
+						tmp_html += "<button data-index=\""+post.id+"\"class=\"glyphicon-ok glyphicon\"></button>";
 				tmp_html += "<button data-index=\""+post.id+"\" class=\"glyphicon-envelope glyphicon\"></button>";
 				if (post.sender.superuser.itemname=='Author') {
 					if (options.executor == post.sender.id)
@@ -170,7 +172,6 @@ var YiiChat = function(options){
 			var btn_answer = p.find('button.glyphicon-envelope');
 			btn_answer.click(function (){
 				msg.data('index',this.dataset.index);
-				msg.val('Вы писали: "'+$(this).closest('.post').find('.text').text()+'"');
 				if ($('.msg_answer').length==0) $(msg).before('<div class="msg_answer">Ответить '+$(this).closest('.post').find('.owner').text()+'</div>');
 				else $('.msg_answer').text('Ответить '+$(this).closest('.post').find('.owner').text());
 				$('.main_send').data('recipient',$(this).closest('.post').find('.owner').data('ownerid'));
