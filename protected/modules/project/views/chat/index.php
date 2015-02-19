@@ -117,8 +117,8 @@
         <p><input type="checkbox"> Email</p>
         <?php
         echo CHtml::submitButton('Отправить');
-        echo CHtml::submitButton($middle_button, array('params'=>'recepient=customer'));
-        echo CHtml::submitButton('Отправить менеджеру', array('params'=>'recepient=manager'));
+        echo CHtml::submitButton($middle_button, array('name'=>'customer'));
+        echo CHtml::submitButton('Отправить менеджеру', array('name'=>'manager'));
         ?>
     </div>
 

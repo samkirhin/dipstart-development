@@ -27,10 +27,10 @@ class ChatController extends Controller {
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
+			/*array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array(),
 				'users'=>array('*'),
-			),
+			),*/
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('index'),
 				'users'=>array('@'),
@@ -86,10 +86,10 @@ class ChatController extends Controller {
 			$model->attributes = Yii::app()->request->getPost($model->tableName());
 			$model->date = date('Y-m-d H:i:s');
 			switch (array_keys($_POST)[1]){
-				case 'yt2':
+				case 'manager':
 					$model->recipient = 1;
 				break;
-				case 'yt1':
+				case 'customer':
 					if(User::model()->isAuthor())
 						$model->recipient = Zakaz::model()->findByPk($model->order)->user_id;
 					if(User::model()->isCustomer())
@@ -104,7 +104,7 @@ class ChatController extends Controller {
 		}
 		if(User::model()->isAuthor()) {
 			$criteria=new CDbCriteria;
-			$criteria->addCondition('moderated=1 OR sender='.Yii::app()->user->id);
+			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager"))) AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
 			$criteria->addCondition('`order` = :oid');
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);
@@ -112,7 +112,7 @@ class ChatController extends Controller {
 		}
 		else if(User::model()->isCustomer()) {
 			$criteria=new CDbCriteria;
-			$criteria->addCondition('moderated=1 OR sender='.Yii::app()->user->id);
+			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager"))) AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
 			$criteria->addCondition('`order` = :oid');
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);

@@ -427,7 +427,7 @@ abstract class YiiFileManagerFilePicker extends CWidget
 				$fileman->list_files($identity, $post), $post) as $fileinfo){
 			// we must return an URL pointing to this same service
 			$file_id = $fileinfo['file_id'];
-				$ar[$file_id] = array('url'=>$this->build_file_viewer_url($file_id),
+			if ($file_id!=null)	$ar[$file_id] = array('url'=>$this->build_file_viewer_url($file_id),
 						'filename'=>$fileinfo['filename'],'file_id'=>$file_id);
 		}
 		return $ar;
