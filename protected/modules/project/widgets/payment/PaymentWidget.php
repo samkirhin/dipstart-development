@@ -33,7 +33,8 @@ class PaymentWidget extends CWidget {
         }
         Yii::app()->controller->renderPartial('application.modules.project.widgets.payment.views.view'.$userRole, array(
             'model'     => $payments,
-            'projectId' => $this->projectId
+            'projectId' => $this->projectId,
+            'zakaz'     => Zakaz::model()->findByPk($this->projectId)
         ));
     }
 

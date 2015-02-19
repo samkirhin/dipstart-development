@@ -19,9 +19,18 @@
  * @property string $executor
  * @property User $user
  * @property User $author
+ * @property ProjectStatus $projectStatus
+ * @property string $payment_image
  */
 class Zakaz extends CActiveRecord
 {
+    
+    public function init()
+    {
+        parent::init();
+        
+        $this->status = 1;
+    }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -62,6 +71,7 @@ class Zakaz extends CActiveRecord
 			'author' => [self::BELONGS_TO, 'User', 'executor'],
 			'category'=>array(self::HAS_ONE, 'Categories', array('id'=>'category_id')),
 			'job'=>array(self::HAS_ONE, 'Jobs', array('id'=>'job_id')),
+            'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status')
 		);
 	}
 

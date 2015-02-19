@@ -72,7 +72,11 @@
                 
             </td>
             <td>
-                
+                <?php 
+                    if ($zakaz->payment_image) {
+                        echo CHtml::link('Чек', UploadPaymentImage::PAYMENT_DIR . $zakaz->payment_image);
+                    }
+                ?>
             </td>
         </tr>
         <tr>

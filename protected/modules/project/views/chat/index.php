@@ -4,18 +4,22 @@
 /* @var $form CActiveForm */
 ?>
 
-<?php /*$this->widget('zii.widgets.CDetailView', array(
-	'data'=>$order,
-	'attributes'=>$attributes,
-));*/ ?>
 <?php 
-
-    if (!ModerationHelper::isOrderChanged($order->id)) {
-        $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
+    if (User::model()->isAuthor()) {
+        
+        $this->widget('zii.widgets.CDetailView', array(
+            'data'=>$order,
+            'attributes'=>$attributes,
+        )); 
+        
     } else {
-        $this->renderPartial('/zakaz/orderInModerate');
+
+        if (!ModerationHelper::isOrderChanged($order->id)) {
+            $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
+        } else {
+            $this->renderPartial('/zakaz/orderInModerate');
+        }
     }
-    
 ?>
 
 <h3 ><?php echo ProjectModule::t('Changes'); ?></h3>

@@ -109,6 +109,13 @@ class PaymentController extends CController {
         $payment->project_price    = $this->_request->getParam('project_price');
         $payment->to_receive       = $payment->to_receive + $this->_request->getParam('to_receive');
         if ($payment->save()) {
+            
+            $zakaz = Zakaz::model()->findByPk($orderId);
+            if ($payment->project_price > 0 && $zakaz && $zakaz->status == 1) {
+                $zakaz->status = 2;
+                $zakaz->save(false);
+            }
+
             $this->_response->setData(
                 array (
                     'project_price' => $payment->project_price,

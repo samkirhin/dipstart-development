@@ -125,7 +125,7 @@ class ChatController extends Controller {
 			$messages = ProjectMessages::model()->findAll($criteria);
 		}
 
-        /*
+        
         $attributes = [
             'id',
             array(
@@ -173,8 +173,6 @@ class ChatController extends Controller {
                 'notes'
             ]);
         }
-         * 
-         */
 
 		$this->render('index', array(
 			'model' => $model,
@@ -183,7 +181,7 @@ class ChatController extends Controller {
 			'orderId' => $orderId,
 			'executor' => Zakaz::getExecutor($orderId),
 			'ordererId' =>$order->user_id,
-            //'attributes' => $attributes,
+            'attributes' => $attributes,
             'times' => $times,
             'middle_button' => $middle_button
 		));

@@ -23,6 +23,13 @@
  */
 class Moderation extends CActiveRecord
 {
+    
+    public function init()
+    {
+        parent::init();
+        
+        $this->status = 1;
+    }
 	/**
 	 * @return string the associated database table name
 	 */

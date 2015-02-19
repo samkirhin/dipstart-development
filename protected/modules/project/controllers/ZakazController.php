@@ -32,7 +32,7 @@ class ZakazController extends Controller
 					'users'=>array('*'),
 				),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-					'actions'=>array('create','update', 'admin', 'preview', 'moderationAnswer', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList'),
+					'actions'=>array('create','update', 'admin', 'preview', 'moderationAnswer', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList', 'uploadPayment'),
 					'users'=>array('@'),
 				),
 				array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -272,6 +272,10 @@ class ZakazController extends Controller
 					$model->max_exec_date = $time[max_exec_date];
 					$model->manager_informed = $time[manager_informed];
 					$model->author_informed = $time[author_informed];
+                    
+                    if (empty($zakaz[manager_informed][date])) {
+                        $model->status = 5;
+                    }
 				}
 
 				if($model->save()) {
@@ -286,12 +290,31 @@ class ZakazController extends Controller
 					//$this->redirect(array('view','id'=>$model->id));
                 }
 			}
+            
+            if ($isModified) {
+                $message = 'Заказ на модерации';
+            } else {
+                $message = $model->projectStatus->status;
+            }
 			$this->render($view, array(
 				'model'=>$model,
 				'times'=>$times,
-				'isModified'=>$isModified,
+				'message'=>$message,
 			));
 	}
+    
+    public function actionUploadPayment($id)
+    {
+        if(isset($_POST['UploadPaymentImage'])) {
+            $upload = new UploadPaymentImage;
+            $upload->orderId = $id;
+            $upload->file = CUploadedFile::getInstance($upload, 'file');
+            if ($upload->validate()) {
+                $upload->save();
+            }
+        }
+        $this->redirect(['chat/index', 'orderId'=>$id]);
+    }
 
     /**
      * Превью заказа который должен быть отмодерирован
@@ -416,11 +439,8 @@ class ZakazController extends Controller
 	public function actionList()
 	{
 		$model=new Zakaz('search');
-		$model->unsetAttributes();  // clear any default values
-
-		if(isset($_GET['status'])){
-			$model->status = $_GET['status'];
-		}
+		$model->unsetAttributes();
+		$model->status = 3;
 
 		$this->render('list',array(
 			'model'=>$model,
