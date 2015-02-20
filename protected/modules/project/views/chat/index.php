@@ -97,7 +97,7 @@ $this->widget('application.components.MyYiiFileManViewer'
 			}",
     ));
 ?>
-
+<?php echo 'Заметки для автора: '.$order->getAttribute('author_notes'); ?>
 <?php $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
     'projectId'=>$order->id,
     'userType'=>'1',
