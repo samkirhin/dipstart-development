@@ -2,7 +2,5 @@
 /assets
 /protected/runtime/
 /protected/backup
-/protected/config/
-/cgi-bin
-/uploads
 protected/config/
+/cgi-bin

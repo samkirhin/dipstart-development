@@ -31,6 +31,10 @@
                     <a href="<?php echo Yii::app()->createUrl('project/zakaz/preview', array('id' => $event->id)); ?>">Посмотреть</a>
                 <?php } ?>
 
+                <?php if($event->type == EventHelper::TYPE_UPDATE_PROFILE) {?>
+                    <a href="<?php echo Yii::app()->createUrl('user/profile/previewUpdate', array('id' => $event->event_id)); ?>">Посмотреть</a>
+                <?php } ?>
+
                 <?php
                 // пока так потом будет как я понял своя реализация для каждого типа
                 if(
