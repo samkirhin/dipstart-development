@@ -14,8 +14,8 @@ return array(
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=dipstart',
             'emulatePrepare' => true,
-            'username' => 'dipstart',
-            'password' => '',
+            'username' => 'root',
+            'password' => 'root',
             'charset' => 'utf8',
         ),
         'log' => array(
