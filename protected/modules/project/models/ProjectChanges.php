@@ -188,9 +188,9 @@ class ProjectChanges extends CActiveRecord {
     public function getListChanges($project_id) {
 
         $result = Yii::app()->db->createCommand()
-                                ->select('CONCAT("/' . self::FILE_PATH . '/",file)  as `file`, file as `filename`, comment, id, moderate')
+                                ->select('CONCAT("/' . self::FILE_PATH . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
                                 ->from(self::tableName())
-                                ->where('project_id =' . (int)$project_id)
+                                ->where('project_id =' . (int)$project_id . ' AND moderate=1')
                                 ->queryAll();
 
         return CHtml::encodeArray($result);
@@ -199,7 +199,7 @@ class ProjectChanges extends CActiveRecord {
     public function getItem($id) {
 
         $result = Yii::app()->db->createCommand()
-                                ->select('CONCAT("/' . self::FILE_PATH . '/",file)  as `file`, file as `filename`, comment, id, moderate')
+                                ->select('CONCAT("/' . self::FILE_PATH . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
                                 ->from(self::tableName())
                                 ->where('id =' . (int)$id)
                                 ->queryRow();

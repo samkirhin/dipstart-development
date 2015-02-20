@@ -86,7 +86,8 @@ var ChangesController = function (projectId, isEdited, isAllowedApprove) {
                             '<div class="changes-item">' +
                                 '<div id="changes-' + el['id'] + '">'+
                                     '<div class="changes-info">'+
-                                        '<a href="' + el['file'] + '">' + el['filename'] + '</a>' +
+                                        'Дата создания: '+el['date_create']+
+                                        '<br /><a href="' + el['file'] + '">' + el['filename'] + '</a>' +
                                         '<textarea rows=1 cols=60>' +el['comment'] + '</textarea>' +
                                     '</div>' +
                                     crudButton +
