@@ -6,7 +6,7 @@
  * Time: 20:46
  */
 $attributes = $model->attributeLabels();
-;?>
+?>
 
 <?php echo $attributes['title'];?>: <?php echo $model->title;?><br>
 <?php echo $attributes['text'];?>: <?php echo $model->text;?><br>
@@ -25,5 +25,5 @@ $attributes = $model->attributeLabels();
 <form method="post"
       action="<?php echo Yii::app()->createUrl('project/zakaz/moderationAnswer', array('id' => $model->id, 'event_id' => $event->id, 'answer' => 0));?>"
       style="display: inline-block">
-    <input type="submit" value="Неодобрить">
+    <input type="submit" value="Отклонить">
 </form>

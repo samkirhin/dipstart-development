@@ -67,9 +67,12 @@ class ChangesController extends Controller {
             return false;
         }
 
-        $project = ProjectChanges::model()->getItem((int)$id);
-
-        echo CJSON::encode(array('data' => $project));
+        if (Yii::app()->request->getPost('text')!=null) {
+            $project = ProjectChanges::model()->findByPk((int)$id);
+            $project->comment = Yii::app()->request->getPost('text');
+            $project->save();
+        }
+        echo CJSON::encode(array('data' => ProjectChanges::model()->getItem((int)$id)));
         Yii::app()->end();
 
     }

@@ -22,12 +22,12 @@ if ($user->isCustomer() || $user->isManager() || $user->isAdmin()) { ?>
 
         <div class = "row">
             <?php echo $form->labelEx($changes, 'fileupload'); ?>
-            <?php echo $form->fileField($changes, 'fileupload'); ?>
+            <?php echo $form->fileField($changes, 'fileupload', array('onchange'=>'$(\'#project-changes-form\').submit();')); ?>
         </div>
 
         <div class = "row">
-            <?php echo $form->labelEx($changes, 'comment'); ?>
-            <?php echo $form->textArea($changes, 'comment', array('rows' => 6, 'cols' => 60)); ?>
+            <?php //echo $form->labelEx($changes, 'comment'); ?>
+            <?php //echo $form->textArea($changes, 'comment', array('rows' => 6, 'cols' => 60)); ?>
         </div>
 
         <?php if (ProjectChanges::approveAllowed()) { ?>
@@ -41,8 +41,7 @@ if ($user->isCustomer() || $user->isManager() || $user->isAdmin()) { ?>
             </div>
         <?php } ?>
         <div class = "row buttons">
-            <?php echo CHtml::submitButton($changes->isNewRecord ? ProjectModule::t('Add changes') : ProjectModule::t('Edit changes'),
-                array());
+            <?php //echo CHtml::submitButton($changes->isNewRecord ? ProjectModule::t('Add changes') : ProjectModule::t('Edit changes'),array());
             ?>
         </div>
 

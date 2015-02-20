@@ -321,27 +321,27 @@ class ZakazController extends Controller
      * @param $id
      * @author Emericanec
      */
-    public function actionPreview($id){
-        try {
-            $event = Events::model()->findByPk($id);
-            if ($event) {
-                $moderation = Moderation::model()->findByPk($event->event_id);
-                if ($moderation) {
-                    $this->render('preview', array(
-                        'model' => $moderation,
-                        'event' => $event
-                    ));
-                } else {
-                    if($event->delete()) {
-                        throw new Exception("Заказ не найден или его уже отмодерировали");
-                    }
-                }
-            } else {
-                throw new Exception("Событие с таким id не найдено");
-            }
-        }catch (Exception $e){
-            echo $e->getMessage();
+    public function actionPreview($id)
+    {
+            
+        $event = Events::model()->findByPk($id);
+
+        if (!$event) {
+            throw new CHttpException(404, "Событие не найдено");
         }
+
+        $moderation = Moderation::model()->findByPk($event->event_id);
+        if ($moderation) {
+            $this->render('preview', array(
+                'model' => $moderation,
+                'event' => $event
+            ));
+        } else {
+            $event->delete();
+            $this->redirect(['/project/zakaz/update', 'id' => $event->event_id]);
+        }
+            
+        
     }
 
     /**
@@ -377,7 +377,7 @@ class ZakazController extends Controller
             }
         }else{
             $event->delete();
-            throw new Exception("Заказ не найден или его уже отмодерировали");
+            throw new CHttpException("Заказ не найден или его уже отмодерировали");
         }
     }
 

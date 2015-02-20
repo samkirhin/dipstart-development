@@ -28,8 +28,14 @@ class ChangesWidget extends CWidget {
         $this->changes = new ProjectChanges();
         Yii::app()->clientScript->registerScriptFile('/js/jQuery.form.js');
         Yii::app()->clientScript->registerScriptFile('/js/changes.js');
-        Yii::app()->clientScript->registerScript('changes-script', "var changes = new ChangesController('{$this->project->id}', {$isEditable}, {$isApprove});
-changes.init();", CClientScript::POS_END);
+        Yii::app()->clientScript->registerScript(
+            'changes-script',
+            "var changes = new ChangesController(
+                '{$this->project->id}',
+                {$isEditable},
+                {$isApprove});
+                changes.init();",
+            CClientScript::POS_END);
         Yii::app()->clientScript->registerCssFile('/css/changes.css');
 
     }
