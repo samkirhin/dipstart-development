@@ -3,7 +3,7 @@ var ZakazPartsView = function(orderId) {
     this.form = $('#zakaz_parts');
     this.orderId = orderId;
     this.partId = 0;
-    this.filename;
+    //this.filename;
     
     /* Привязка имен */
     this.place = this.form.find('.show_parts');
@@ -176,8 +176,6 @@ var ZakazPartsView = function(orderId) {
                     self.delete($(this).attr('value'));
                 });
     }
-    
-    
-    
-    
+
+
 }
