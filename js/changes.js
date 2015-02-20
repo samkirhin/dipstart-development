@@ -83,8 +83,15 @@ var ChangesController = function (projectId, isEdited, isAllowedApprove) {
                             '</div>';
                         }
                         result = result +
-                        '<div class="changes-item"><div id="changes-' + el['id'] + '"><div class="changes-info"><a href="' + el['file'] + '">' + el['filename'] + '</a>' +
-                        '<p>' + el['comment'] + '</p></div>' + crudButton + '</div></div>';
+                            '<div class="changes-item">' +
+                                '<div id="changes-' + el['id'] + '">'+
+                                    '<div class="changes-info">'+
+                                        '<a href="' + el['file'] + '">' + el['filename'] + '</a>' +
+                                        '<textarea rows=1 cols=60>' +el['comment'] + '</textarea>' +
+                                    '</div>' +
+                                    crudButton +
+                                '</div>'+
+                            '</div>';
                     });
 
                     $(containerListChanges).html(result);
@@ -142,19 +149,19 @@ var ChangesController = function (projectId, isEdited, isAllowedApprove) {
     this.clickEditChangesButton = function () {
 
         var currentElement = $(this);
-        self.resetChangesForm();
+        //self.resetChangesForm();
         var containerCurrentElement = currentElement.parent().parent();
-
-
         var changesId = containerCurrentElement.attr('id').split('-');
 
         $.ajax({
             url: urlItemChanges + '&id=' + changesId[1],
             dataType: 'json',
+            type: 'post',
+            data: { text: containerCurrentElement.find('textarea').val()},
             success: function (data) {
                 if ("data" in data) {
-                    changeForm.attr('action', urlEditChanges + '&id=' + changesId[1]);
-                    changeForm.find('textarea').val(data['data']['comment']);
+                    //changeForm.attr('action', urlEditChanges + '&id=' + changesId[1]);
+                    containerCurrentElement.find('textarea').val(data['data']['comment']);
                     changeForm.find('input[type=file]').val('');
                     changeForm.find('select').val(data['data']['moderate']);
                     containerCurrentElement.find('.changes-info').addClass(selectedClass);
