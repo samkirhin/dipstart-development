@@ -104,7 +104,7 @@ class ChatController extends Controller {
 		}
 		if(User::model()->isAuthor()) {
 			$criteria=new CDbCriteria;
-			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager"))) AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
+			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
 			$criteria->addCondition('`order` = :oid');
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);
@@ -112,7 +112,7 @@ class ChatController extends Controller {
 		}
 		else if(User::model()->isCustomer()) {
 			$criteria=new CDbCriteria;
-			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager"))) AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
+			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
 			$criteria->addCondition('`order` = :oid');
 			$criteria->params[':oid'] = (int) $orderId;
 			$messages = ProjectMessages::model()->findAll($criteria);
