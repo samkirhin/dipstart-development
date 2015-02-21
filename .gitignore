@@ -1,8 +1,9 @@
-/.idea
-/assets
-/protected/runtime/
-/protected/backup
-/protected/config/
-/cgi-bin
-/uploads
-protected/config/
+.gitignore
+*.cgi
+.idea
+assets
+protected/runtime
+protected/backup
+protected/config
+cgi-bin
+uploads
