@@ -254,26 +254,26 @@ class ZakazController extends Controller
 			{
 				$zakaz = $_POST['Zakaz'];
 
-				$time[date] = strtotime($zakaz[date][date].' '.$zakaz[date][hours].':'.$zakaz[date][minutes]);
-				$time[date_finish] = strtotime($zakaz[date_finish][date].' '.$zakaz[date_finish][hours].':'.$zakaz[date_finish][minutes]);
-				$time[term_for_author] = strtotime($zakaz[term_for_author][date].' '.$zakaz[term_for_author][hours].':'.$zakaz[term_for_author][minutes]);
-				$time[max_exec_date] = strtotime($zakaz[max_exec_date][date].' '.$zakaz[max_exec_date][hours].':'.$zakaz[max_exec_date][minutes]);
-				$time[manager_informed] = strtotime($zakaz[manager_informed][date].' '.$zakaz[manager_informed][hours].':'.$zakaz[manager_informed][minutes]);
-				$time[author_informed] = strtotime($zakaz[author_informed][date].' '.$zakaz[author_informed][hours].':'.$zakaz[author_informed][minutes]);
+				$time['date'] = strtotime($zakaz['date']['date'].' '.$zakaz['date']['hours'].':'.$zakaz['date']['minutes']);
+				$time['date_finish'] = strtotime($zakaz['date_finish']['date'].' '.$zakaz['date_finish']['hours'].':'.$zakaz['date_finish']['minutes']);
+				$time['term_for_author'] = strtotime($zakaz['term_for_author']['date'].' '.$zakaz['term_for_author']['hours'].':'.$zakaz['term_for_author']['minutes']);
+				$time['max_exec_date'] = strtotime($zakaz['max_exec_date']['date'].' '.$zakaz['max_exec_date']['hours'].':'.$zakaz['max_exec_date']['minutes']);
+				$time['manager_informed'] = strtotime($zakaz['manager_informed']['date'].' '.$zakaz['manager_informed']['hours'].':'.$zakaz['manager_informed']['minutes']);
+				$time['author_informed'] = strtotime($zakaz['author_informed']['date'].' '.$zakaz['author_informed']['hours'].':'.$zakaz['author_informed']['minutes']);
 
 
 				if ($role != 'Manager' && $role != 'Admin') {
 					ModerationHelper::saveToModerate($model, $zakaz, $time);
 				} else {
 					$model->attributes=$zakaz;
-					$model->date = $time[date];
-					$model->date_finish = $time[date_finish];
-					$model->term_for_author = $time[term_for_author];
-					$model->max_exec_date = $time[max_exec_date];
-					$model->manager_informed = $time[manager_informed];
-					$model->author_informed = $time[author_informed];
+					$model->date = $time['date'];
+					$model->date_finish = $time['date_finish'];
+					$model->term_for_author = $time['term_for_author'];
+					$model->max_exec_date = $time['max_exec_date'];
+					$model->manager_informed = $time['manager_informed'];
+					$model->author_informed = $time['author_informed'];
                     
-                    if (empty($zakaz[manager_informed][date])) {
+                    if (empty($zakaz['manager_informed']['date'])) {
                         $model->status = 5;
                     }
 				}
