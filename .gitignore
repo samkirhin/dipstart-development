@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .gitignore
 *.cgi
 .idea
@@ -7,3 +8,11 @@ protected/backup
 protected/config
 cgi-bin
 uploads
+=======
+/.idea
+/assets
+/protected/runtime/
+/protected/backup
+protected/config/
+/cgi-bin
+>>>>>>> b9e1c7b99ed8e88aba455f25b3268a06cfc1ef55

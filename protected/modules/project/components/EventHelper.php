@@ -7,6 +7,7 @@ class EventHelper {
     const TYPE_ADD_CHANGES = 3;
     const TYPE_NOTIFICATION = 4;
     const TYPE_MESSAGE = 5;
+    const TYPE_UPDATE_PROFILE = 6; // изменение профайла
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
     
@@ -72,6 +73,13 @@ class EventHelper {
         
         self::sendEvent($creator, self::TYPE_NOTIFICATION, $text);
         
+    }
+
+    public static function updateProfile() {
+        $creator = Yii::app()->user->id;
+        $userName = User::model()->findByPk($creator)->username;
+        $text = 'Пользователь изменил данные в профиле '.$userName;
+        self::sendEvent($creator, self::TYPE_UPDATE_PROFILE, $text);
     }
     
 }

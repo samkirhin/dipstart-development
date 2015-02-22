@@ -13,6 +13,9 @@ class Profile extends UActiveRecord
 	private $_modelReg;
 	private $_rules = array();
 
+	// первичная модель
+	private $_modelSave;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
@@ -200,7 +203,36 @@ class Profile extends UActiveRecord
 			if ($this->job_type && is_array($this->job_type)) {
 			   $this->job_type = implode(",", $this->job_type);
 			}
+			// запрашиваем модерацию перед сохранением данных профиля
+			if((!$this->isNewRecord) && (!Yii::app()->user->checkAccess('Manager'))) {
+				$this->getChanges();
+				return !parent::beforeSave();
+			}
 		}
 		return parent::beforeSave();
+	}
+	public function afterFind() {
+		$this->_modelSave = $this->attributes;
+		return parent::afterFind();
+	}
+	/*
+	 * список изменений для записи
+	 */
+	protected function getChanges() {
+		$res = false;
+		if (!empty($this->_modelSave)) {
+			foreach ($this->_modelSave as $key => $value) {
+				if ($this->$key != $value) {
+					UpdateProfile::addRecord($key,$value,$this->$key);
+					$res = true;
+				}
+			}
+			if($res) {
+				// можно внести в конфигу
+				Yii::import('application.modules.project.components.EventHelper');
+				EventHelper::updateProfile();
+			}
+		}
+		return $res;
 	}
 }
