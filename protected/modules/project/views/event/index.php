@@ -27,33 +27,20 @@
             <td><?php echo $event->id?></td>
             <td><?php echo $event->description?></td>
             <td>
-                <?php 
-                
-                    if($event->type != EventHelper::TYPE_NOTIFICATION) {
-                        echo CHtml::link('Посмотреть', ['/project/zakaz/preview', 'id' => $event->id]); 
-                    } else {
+                <?php switch ($event->type) {
+                    case EventHelper::TYPE_UPDATE_PROFILE:
+                        echo CHtml::link(
+                                'Посмотреть',
+                                Yii::app()->createUrl('user/profile/previewUpdate', ['id' => $event->event_id])    
+                            );
+                    break;
+                    case EventHelper::TYPE_NOTIFICATION:
                         echo '<td> Ссылка отсутствует</td>';
-                    }
-                ?>
-
-                <?php if($event->type == EventHelper::TYPE_UPDATE_PROFILE) {?>
-                    <a href="<?php echo Yii::app()->createUrl('user/profile/previewUpdate', array('id' => $event->event_id)); ?>">Посмотреть</a>
-                <?php } ?>
-
-                <?php
-                /*
-                // пока так потом будет как я понял своя реализация для каждого типа
-                if(
-                    $event->type == EventHelper::TYPE_EDIT_ORDER ||
-                    $event->type == EventHelper::TYPE_ADD_CHANGES ||
-                    $event->type == EventHelper::TYPE_MESSAGE
-                ) {?>
-                    <a href="<?php echo Yii::app()->createUrl('project/zakaz/update', array('id' => $event->event_id));?>">Заказ</a>
-                <?php } ?>
-
-                <?php if($event->type == EventHelper::TYPE_NOTIFICATION) {?>
-                    <td> Ссылка отсутствует</td>
-                <?php }*/ ?>
+                    break;
+                    default:
+                        echo CHtml::link('Посмотреть', ['/project/zakaz/preview', 'id' => $event->id]); 
+                    break;
+                }?>
             </td>
             <td><?php echo date("Y-m-d H:i", $event->timestamp); ?></td>
          </tr>
