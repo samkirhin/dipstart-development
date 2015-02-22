@@ -3,7 +3,7 @@
 class ZakazPartWidget extends CWidget{
     
     public $projectId;
-    public $userType;
+    public $userType='1';
     public $action = 'view';
     
     
@@ -22,7 +22,8 @@ class ZakazPartWidget extends CWidget{
     
     public function renderPartForm($type) {
         Yii::app()->controller->renderPartial('application.modules.project.widgets.zakazParts.views.'.$type, array(
-            'orderId' => $this->projectId
+            'orderId' => $this->projectId,
+            'userType' => $this->userType
         ));
     }
 }

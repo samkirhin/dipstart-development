@@ -11,6 +11,7 @@
     <!-- Шаблон отображения списка частей -->
     <script class="zakazPartTemplate" type="text/x-jquery-tmpl">
         <table style="background-color:grey;" >
+        <?php if ($userType=='1'):?>
         <tr>
             <td>
                 id: '${id}'
@@ -33,6 +34,15 @@
                 author: '${author_id}'
             </td>
         </tr>
+        <?php else :?>
+        {{each file}}
+            <tr>
+                <td>
+                    orig_name: <a href="/uploads/additions/${part_id}/${file_name}">'${orig_name}'</a>
+                </td>
+            </tr>
+        {{/each}}
+        <?php endif;?>
         </table>
     </script>
     <h4>Части</h4>

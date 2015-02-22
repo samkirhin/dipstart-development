@@ -71,9 +71,9 @@ class ZakazPartsController extends Controller
                 $parts = ZakazParts::model()->findAll('proj_id = :PROJ_ID AND `show` = :SHOW',
                     array(':PROJ_ID'=>$zakazId, ':SHOW'=>1)
                 );
-                $this->_response->setData(array(
-                    'parts'=>$parts
-                ));
+                foreach ($parts as $k => $part)
+                $parts[$k]['file']=$part->getRelated('files');
+                $this->_response->setData(array('parts'=>$parts));
                 $this->_response->send();
             }
         }
