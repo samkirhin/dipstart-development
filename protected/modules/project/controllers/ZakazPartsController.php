@@ -69,7 +69,7 @@ class ZakazPartsController extends Controller
                 $this->_response->send();
             } elseif (User::model()->isCustomer() || User::model()->isAuthor()) {
                 $parts = ZakazParts::model()->findAll('proj_id = :PROJ_ID AND `show` = :SHOW',
-                    array(":PROJ_ID"=>$zakazId, ":SHOW"=>1)
+                    array(':PROJ_ID'=>$zakazId, ':SHOW'=>1)
                 );
                 $this->_response->setData(array(
                     'parts'=>$parts
@@ -91,8 +91,8 @@ class ZakazPartsController extends Controller
             foreach($files as $file) {
                 $list = explode('.', $file);
                 $newName = $this->getGuid();
-                $filePath = $_SERVER['DOCUMENT_ROOT'].'uploads/additions/temp/'.$file;
-                $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'uploads/additions/'.$partId.'/'.$newName.".".$list['1'];
+                $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$file;
+                $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$partId.'/'.$newName.".".$list['1'];
                 $probe = rename($filePath, $fileNewPath);
                 $fileModel = new ZakazPartsFiles();
                 $fileModel->part_id = $model->id;

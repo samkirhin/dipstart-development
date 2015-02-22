@@ -97,10 +97,11 @@ $this->widget('application.components.MyYiiFileManViewer'
 			}",
     ));
 ?>
-<?php echo 'Заметки для автора: '.$order->getAttribute('author_notes'); ?>
+<?php if (User::model()->isAuthor()) echo 'Заметки для автора: '.$order->getAttribute('author_notes'); ?>
 <?php $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
     'projectId'=>$order->id,
     'userType'=>'1',
+    'action'=>((Yii::app()->user->id==$executor)?'edit':'show')
 )); ?>
 
 <?php foreach($messages as $message): ?>

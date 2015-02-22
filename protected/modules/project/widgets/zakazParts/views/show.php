@@ -36,21 +36,6 @@
         </table>
     </script>
     <h4>Части</h4>
-    <?php $this->widget('ext.EAjaxUpload.EAjaxUpload',
-        array(
-            'id'=>'EAjaxUpload',
-            'config'=>array(
-                'action'=>$this->createUrl('zakazParts/upload/'),
-                'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
-                'debug'=>false,
-                'allowedExtensions'=>array('jpg', 'gif', 'txt', 'doc', 'docx'),
-                'sizeLimit'=>10*1024*1024,// maximum file size in bytes
-                'minSizeLimit'=>10,// minimum file size in bytes
-                'onComplete'=>"js:function(id, fileName, responseJSON){
-                                 alert(fileName + ' in ' + id);
-                             }"
-            )
-        ));?>
     <div class="show_parts">
         
     </div>
