@@ -47,7 +47,7 @@ $this->breadcrumbs=array(
     </script>
 
 <h1><?=ProjectModule::t('Zakazs')?></h1>
-<span> <b>Фильтр</b> </span></br>
+<span> <b>Фильтр</b> </span><br>
 
     <select class="search_field_select" >
         <option>Поле для поиска:</option>
@@ -106,7 +106,7 @@ $this->breadcrumbs=array(
 	'itemView'=>'_view',
 ));*/ ?>
 </table>
-
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         var bookkeeperScript = new BookkeeperScript('index.php?r=project/zakaz/apiView','date');

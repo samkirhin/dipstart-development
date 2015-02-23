@@ -66,7 +66,7 @@ return array(
             ),
             'authManager'=>array(
                 'class'=>'RDbAuthManager',
-                'defaultRoles' => array('Guest') // ��������� ����
+                'defaultRoles' => array('Guest')
             ),
             'booster' => array(
                 'class' => 'application.extensions.booster.components.Booster',
@@ -119,6 +119,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@dipstart.ru',
+		'adminEmail'=>'webmaster@dipstart.coolfire.pp.ua',
 	),
 );

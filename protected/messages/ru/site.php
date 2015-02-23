@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'stranger' => 'Странник',
     'Categories' => 'Категории',
     'Create Categories' => 'Добавить категории',
     'Manage Categories' => 'Управлять списком',

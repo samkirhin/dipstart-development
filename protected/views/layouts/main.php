@@ -149,6 +149,7 @@
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> Dipstart.ru<br/>
 		<?php echo Yii::t('site','All rights reserved.')?><br/>
+<?php /* заколебало. отключу пока. (c) coolfire
 <!-- Yandex.Metrika informer -->
 <a href="https://metrika.yandex.ru/stat/?id=27826308&amp;from=informer"
 target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/27826308/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
@@ -180,7 +181,7 @@ style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" tit
 })(document, window, "yandex_metrika_callbacks");
 </script>
 <noscript><div><img src="//mc.yandex.ru/watch/27826308" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+<!-- /Yandex.Metrika counter -->*/?>
 	</div><!-- footer -->
 
 </div><!-- page -->
