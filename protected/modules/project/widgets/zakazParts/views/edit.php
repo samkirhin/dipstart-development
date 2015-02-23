@@ -49,8 +49,10 @@
         </table>
     </script>
     <h4>Части</h4>
-    <button class="add">Добавить часть</button>
-    
+    <?php if ($userType==0) :?>
+        <button class="add">Добавить часть</button>
+    <?php endif;?>
+
     <!-- Див для отображения списка частей -->
     <div class="show_parts">
         

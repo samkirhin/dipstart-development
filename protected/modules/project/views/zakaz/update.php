@@ -43,8 +43,10 @@ $this->breadcrumbs = array(
     ));
 ?>
 <?php if ($user->isCustomer()) {
+    $UT=1;
     $this->renderPartial('_form', array('model' => $model, 'times' => $times));
 } elseif ($user->isManager() || $user->isAdmin()) {
+    $UT=0;
     $this->renderPartial('_formUpdateManager', array('model' => $model, 'times' => $times));
 }
 ?>
@@ -59,7 +61,7 @@ $this->breadcrumbs = array(
 <?php
     $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
         'projectId'=>$model->id,
-        'userType'=>'1',
+        'userType'=>$UT,
         'action'=>'edit'
     ));
 ?>
