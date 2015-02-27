@@ -65,9 +65,7 @@ class ChatController extends Controller {
 		$times['date_finish']['date'] = date("Y-m-d", $order->date_finish);
 		$times['date_finish']['hours'] = date("H", $order->date_finish);
 		$times['date_finish']['minutes'] = date("i", $order->date_finish);
-		$times['term_for_author']['date'] = date("Y-m-d", $order->term_for_author);
-		$times['term_for_author']['hours'] = date("H", $order->term_for_author);
-		$times['term_for_author']['minutes'] = date("i", $order->term_for_author);
+		
 		$times['max_exec_date']['date'] = date("Y-m-d", $order->max_exec_date);
 		$times['max_exec_date']['hours'] = date("H", $order->max_exec_date);
 		$times['max_exec_date']['minutes'] = date("i", $order->max_exec_date);

@@ -38,7 +38,6 @@ $attr = array(
 		'date',
 		'max_exec_date',
 		'date_finish',
-		'term_for_author',
 		'pages',
 		'add_demands',
 		array(

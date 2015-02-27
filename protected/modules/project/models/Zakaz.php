@@ -52,10 +52,10 @@ class Zakaz extends CActiveRecord
 			array('user_id', 'length', 'max'=>11),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
-			array('text, max_exec_date, date_finish, term_for_author, author_informed, manager_informed, date, add_demands, notes, author_notes, user_notes, user_notes_show, time_for_call, edu_dep', 'safe'),
+			array('text, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, user_notes, user_notes_show, time_for_call, edu_dep', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, term_for_author, author_informed, manager_informed, pages, add_demands, status, executor', 'safe', 'on'=>'search'),
+			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -90,7 +90,6 @@ class Zakaz extends CActiveRecord
 			'date' => ProjectModule::t('Date'),
 			'max_exec_date' => ProjectModule::t('Max Date'),
 			'date_finish' => ProjectModule::t('Date Finish'),
-                    'term_for_author' => ProjectModule::t('Term for author'),
 			'pages' => ProjectModule::t('Pages'),
 			'add_demands' => ProjectModule::t('Add Demands'),
 			'status' => ProjectModule::t('Status'),

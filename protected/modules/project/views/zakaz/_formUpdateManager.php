@@ -278,51 +278,7 @@ $this->widget('zii.widgets.jui.CJuiButton',array(
 				</select>
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<?php echo $form->labelEx($model,'term_for_author');?>
-			</td>
-			<td>
-				<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-						'name'=>'Zakaz[term_for_author][date]',
-						// additional javascript options for the date picker plugin
-						'language' => 'ru',
-						'value' => Yii::app()->dateFormatter->formatDateTime($times['term_for_author']['date'], 'medium', ''),
-						'options'=>array(
-						'dateFormat'=>'dd.mm.yy',
-						'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
-						),
-						'htmlOptions'=>array(
-							'style'=>'height:20px;background-white:blue;color:black;',
-						),
-					));
-				?>
-			</td>
-			<td>
-				<select class="search_type_select" name="Zakaz[term_for_author][hours]" >
-					<?php
-						for ($i=0; $i<24; $i++) {
-							if ($times['term_for_author']['hours'] == $i) {
-								echo "<option selected value='".$i."'>".$i."</option>";
-							} else {
-								echo "<option value='".$i."'>".$i."</option>";
-							}
-						}
-					?>
-				</select>
-				<select class="search_type_select" name="Zakaz[term_for_author][minutes]">
-					<?php
-						for ($i=0; $i<60; $i++) {
-							if ($times['term_for_author']['minutes'] == $i) {
-								echo "<option selected value='".$i."'>".$i."</option>";
-							} else {
-								echo "<option value='".$i."'>".$i."</option>";
-							}
-						}
-					?>
-				</select>
-			</td>
-		</tr>
+		
 		<tr>
 			<td>
 				<?php echo $form->labelEx($model,'manager_informed'); ?>
@@ -389,7 +345,7 @@ $this->widget('zii.widgets.jui.CJuiButton',array(
 			?>
 			</td>
 			<td>
-				<select class="search_type_select" name="Zakaz[author_informed][date]">
+				<select class="search_type_select" name="Zakaz[author_informed][hours]">
 					<?php
 						for ($i=0; $i<24; $i++) {
 							if ($times['author_informed']['hours'] == $i) {
@@ -400,7 +356,7 @@ $this->widget('zii.widgets.jui.CJuiButton',array(
 						}
 					?>
 				</select>
-				<select class="search_type_select" name="Zakaz[author_informed][date]">
+				<select class="search_type_select" name="Zakaz[author_informed][minutes]">
 					<?php
 						for ($i=0; $i<60; $i++) {
 							if ($times['author_informed']['minutes'] == $i) {

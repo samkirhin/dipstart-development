@@ -55,7 +55,6 @@ class ZakazController extends Controller
 		$model->date = date("Y-m-d H:i", $model->date);
 		$model->max_exec_date = date("Y-m-d H:i", $model->max_exec_date);
 		$model->date_finish = date("Y-m-d H:i", $model->date_finish);
-		$model->term_for_author = date("Y-m-d H:i", $model->term_for_author);
 		$this->render('view',array(
 			'model'=> $model
 		));
@@ -229,24 +228,31 @@ class ZakazController extends Controller
 			}
 		}
 		$times = array();
-		$times['date']['date'] = date("Y-m-d", $model->date);
-		$times['date']['hours'] = date("H", $model->date);
-		$times['date']['minutes'] = date("i", $model->date);
-		$times['date_finish']['date'] = date("Y-m-d", $model->date_finish);
-		$times['date_finish']['hours'] = date("H", $model->date_finish);
-		$times['date_finish']['minutes'] = date("i", $model->date_finish);
-		$times['term_for_author']['date'] = date("Y-m-d", $model->term_for_author);
-		$times['term_for_author']['hours'] = date("H", $model->term_for_author);
-		$times['term_for_author']['minutes'] = date("i", $model->term_for_author);
-		$times['max_exec_date']['date'] = date("Y-m-d", $model->max_exec_date);
-		$times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
-		$times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
-		$times['manager_informed']['date'] = date("Y-m-d", $model->manager_informed);
-		$times['manager_informed']['hours'] = date("H", $model->manager_informed);
-		$times['manager_informed']['minutes'] = date("i", $model->manager_informed);
-		$times['author_informed']['date'] = date("Y-m-d", $model->author_informed);
-		$times['author_informed']['hours'] = date("H", $model->author_informed);
-		$times['author_informed']['minutes'] = date("i", $model->author_informed);
+        if ($model->date > 0) {
+            $times['date']['date'] = date("Y-m-d", $model->date);
+            $times['date']['hours'] = date("H", $model->date);
+            $times['date']['minutes'] = date("i", $model->date);
+        }
+        if ($model->date_finish > 0) {
+            $times['date_finish']['date'] = date("Y-m-d", $model->date_finish);
+            $times['date_finish']['hours'] = date("H", $model->date_finish);
+            $times['date_finish']['minutes'] = date("i", $model->date_finish);
+        }
+		if ($model->max_exec_date > 0) {
+            $times['max_exec_date']['date'] = date("Y-m-d", $model->max_exec_date);
+            $times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
+            $times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
+        }
+        if ($model->manager_informed > 0) {
+            $times['manager_informed']['date'] = date("Y-m-d", $model->manager_informed);
+            $times['manager_informed']['hours'] = date("H", $model->manager_informed);
+            $times['manager_informed']['minutes'] = date("i", $model->manager_informed);
+        }
+        if ($model->author_informed > 0) {
+            $times['author_informed']['date'] = date("Y-m-d", $model->author_informed);
+            $times['author_informed']['hours'] = date("H", $model->author_informed);
+            $times['author_informed']['minutes'] = date("i", $model->author_informed);
+        }
 
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
@@ -254,12 +260,11 @@ class ZakazController extends Controller
 			{
 				$zakaz = $_POST['Zakaz'];
 
-				$time['date'] = strtotime($zakaz['date']['date'].' '.$zakaz['date']['hours'].':'.$zakaz['date']['minutes']);
-				$time['date_finish'] = strtotime($zakaz['date_finish']['date'].' '.$zakaz['date_finish']['hours'].':'.$zakaz['date_finish']['minutes']);
-				$time['term_for_author'] = strtotime($zakaz['term_for_author']['date'].' '.$zakaz['term_for_author']['hours'].':'.$zakaz['term_for_author']['minutes']);
-				$time['max_exec_date'] = strtotime($zakaz['max_exec_date']['date'].' '.$zakaz['max_exec_date']['hours'].':'.$zakaz['max_exec_date']['minutes']);
-				$time['manager_informed'] = strtotime($zakaz['manager_informed']['date'].' '.$zakaz['manager_informed']['hours'].':'.$zakaz['manager_informed']['minutes']);
-				$time['author_informed'] = strtotime($zakaz['author_informed']['date'].' '.$zakaz['author_informed']['hours'].':'.$zakaz['author_informed']['minutes']);
+				$time['date'] = !empty($zakaz['date']['date']) ? strtotime($zakaz['date']['date'].' '.$zakaz['date']['hours'].':'.$zakaz['date']['minutes']) : 0;
+				$time['date_finish'] = !empty($zakaz['date_finish']['date']) ? strtotime($zakaz['date_finish']['date'].' '.$zakaz['date_finish']['hours'].':'.$zakaz['date_finish']['minutes']) : 0;
+				$time['max_exec_date'] = !empty($zakaz['max_exec_date']['date']) ? strtotime($zakaz['max_exec_date']['date'].' '.$zakaz['max_exec_date']['hours'].':'.$zakaz['max_exec_date']['minutes']) : 0;
+				$time['manager_informed'] = !empty($zakaz['manager_informed']['date']) ? strtotime($zakaz['manager_informed']['date'].' '.$zakaz['manager_informed']['hours'].':'.$zakaz['manager_informed']['minutes']) : 0;
+				$time['author_informed'] = !empty($zakaz['author_informed']['date']) ? strtotime($zakaz['author_informed']['date'].' '.$zakaz['author_informed']['hours'].':'.$zakaz['author_informed']['minutes']) : 0;
 
 
 				if ($role != 'Manager' && $role != 'Admin') {
@@ -268,12 +273,11 @@ class ZakazController extends Controller
 					$model->attributes=$zakaz;
 					$model->date = $time['date'];
 					$model->date_finish = $time['date_finish'];
-					$model->term_for_author = $time['term_for_author'];
 					$model->max_exec_date = $time['max_exec_date'];
 					$model->manager_informed = $time['manager_informed'];
 					$model->author_informed = $time['author_informed'];
                     
-                    if (empty($zakaz['manager_informed']['date'])) {
+                    if ($model->manager_informed === 0) {
                         $model->status = 5;
                     }
 				}
@@ -281,11 +285,13 @@ class ZakazController extends Controller
 				if($model->save()) {
 					if ($role != 'Manager' && $role != 'Admin') {
 						EventHelper::editOrder($model->id);
+                        $view = 'orderInModerate';
 					} else {
 						ModerationHelper::clear($model->id);
+                        $this->redirect(array('update','id'=>$model->id));
 					}
                     if ($role == 'Customer' ) {
-                        $view = 'orderInModerate';
+                        //$view = 'orderInModerate';
                     }
 					//$this->redirect(array('view','id'=>$model->id));
                 }
