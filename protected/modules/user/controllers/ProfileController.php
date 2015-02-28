@@ -144,49 +144,56 @@ class ProfileController extends Controller
     /*
      * список изменений в профиле пользователя
      */
-    public function actionPreviewUpdate($id) {
-    	$models = UpdateProfile::model()->findAllByAttributes(array(
-    		'user'=>$id,
-    		'status'=>null,
-    	));
-    	// сменим всем событиям статус на выполненый у данного пользователя
-		Yii::import('application.modules.project.components.EventHelper');
-		$eventList = Events::model()->findAllByAttributes(array(
-			'type' => EventHelper::TYPE_UPDATE_PROFILE,
-			'event_id' => $id,
-			// 'status' => EventHelper::STATUS_ACTIVE,
+	public function actionPreviewUpdate($id) {
+		$models = UpdateProfile::model()->findAllByAttributes(array(
+			'user'=>$id,
+			'status'=>null,
 		));
 
-		foreach ($eventList as $event) {
-			$event->status = EventHelper::STATUS_DONE;
-			$event->save();
-		}
-
-    	$user = User::model()->findbyPk($id);
-    	$this->render('previewUpdate',array('models'=>$models,'user'=>$user));
-    }
-    /*
+		$user = User::model()->findbyPk($id);
+		$this->render('previewUpdate',array('models'=>$models,'user'=>$user));
+	}
+	/*
      * меняем статус изменения в профиле
      */
-    public function actionChStatus($id,$status){
-    	$model = UpdateProfile::model()->findByPk($id);
-    	if ($status == 'appove') {
-    		$model->status = 1;
-    		$attribute = $model->attribute;
-    		$profile = Profile::model()->findbyPk($model->user);
-    		$profile->$attribute = $model->to_data;
-    		if ($profile->save(false)) $model->save();
-    		if (YII_DEBUG) CVarDumper::dump($profile->errors);
-    	}
+	public function actionChStatus($id,$status){
+		$model = UpdateProfile::model()->findByPk($id);
+		if ($status == 'appove') {
+			$model->status = 1;
+			$attribute = $model->attribute;
+			$profile = Profile::model()->findbyPk($model->user);
+			$profile->$attribute = $model->to_data;
+			if ($profile->save(false)) $model->save();
+			if (YII_DEBUG) CVarDumper::dump($profile->errors);
+		}
 
-    	if ($status == 'reject') {
-    		$model->status = 0;
-    		$model->save();
-    	}
+		if ($status == 'reject') {
+			$model->status = 0;
+			$model->save();
+		}
 
-    	if (Yii::app()->request->isAjaxRequest) {
-    		Yii::app()->end();
-    	}
-    	Yii::app()->redirect(Yii::app()->request->urlReferrer);
-    }
+		$countRecord = UpdateProfile::model()->countByAttributes(array(
+			'user'=>$model->user,
+			'status'=>null,
+		));
+
+		//если записей для редактирования нет, то удаляем сообщения из списка сообщений
+		if ($countRecord <= 0){
+			// сменим всем событиям статус на выполненый у данного пользователя
+			Yii::import('application.modules.project.components.EventHelper');
+			$eventList = Events::model()->findAllByAttributes(array(
+				'type' => EventHelper::TYPE_UPDATE_PROFILE,
+				'event_id' => $model->user,
+			));
+
+			foreach ($eventList as $event) {
+				$event->delete();
+			}
+		}
+		// ответ
+		if (Yii::app()->request->isAjaxRequest) {
+			Yii::app()->end();
+		}
+		Yii::app()->redirect(Yii::app()->request->urlReferrer);
+	}
 }
