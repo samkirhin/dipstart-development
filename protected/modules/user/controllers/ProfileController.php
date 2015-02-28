@@ -189,4 +189,28 @@ class ProfileController extends Controller
     	}
     	Yii::app()->redirect(Yii::app()->request->urlReferrer);
     }
+    /*
+     * смена типа "Рассылать сообщения"
+     */
+    public function actionUpdateMailingList() {
+    	$profiles = Profile::model()->findAll();
+    	$error_list = array();
+    	foreach ($profiles as $profile) {
+    		$profile->mailing_list = "icq";
+    		$profile->save();
+    		if ($profile->errors)
+    			$error_list[] =[
+    				'id_profile'=>$profile->user_id,
+    				'errors_list'=>CHtml::errorSummary($profile),
+    			];
+    	}
+    	if (!empty($error_list)){
+    		foreach ($error_list as $key => $value) {
+    			echo '<h3>User</h3> '.$error_list->id_profile.':</br>';
+    			echo '<h3>Errors</h3> '.$error_list->id_profile.':</br>';
+    		}
+    	} else {
+    		echo '<h3>Success</h3>';
+    	}
+    }
 }
