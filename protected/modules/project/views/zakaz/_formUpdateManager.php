@@ -400,13 +400,6 @@ $this->widget('zii.widgets.jui.CJuiButton',array(
 		<?php echo $form->textArea($model,'author_notes',array('rows'=>6, 'cols'=>53)); ?>
 		<?php echo $form->error($model,'author_notes'); ?>
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'user_notes'); ?>
-		<?php echo $form->textArea($model,'user_notes',array('rows'=>6, 'cols'=>53)); ?>
-		<?php echo $form->labelEx($model, 'user_notes_show');?>
-		<?php echo $form->checkBox($model, 'user_notes_show'); ?>
-		<?php echo $form->error($model,'user_notes'); ?>
-	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'time_for_call'); ?>

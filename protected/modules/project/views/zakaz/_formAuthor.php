@@ -150,13 +150,6 @@
 		<?php echo $form->error($model,'add_demands'); ?>
 	</div>
     <h3>Заметки</h3>
-    
-    
-    <div class="row">
-            <?php echo $form->labelEx($model,'user_notes'); ?>
-            <?php echo $form->textArea($model,'user_notes',array('rows'=>6, 'cols'=>53)); ?>
-            <?php echo $form->error($model,'user_notes'); ?>
-    </div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>
