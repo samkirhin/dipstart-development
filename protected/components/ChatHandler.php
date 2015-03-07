@@ -35,8 +35,11 @@ class ChatHandler extends YiiChatDbHandlerBase {
 		$res=parent::yiichat_list_posts($chat_id, $identity, $last_id, $data);
 		foreach ($res as $k=>$v) {
 			$res[$k]->sender=$res[$k]->getRelated('senderObject');
-			$res[$k]->sender->superuser=$res[$k]->getRelated('senderRole');
-			if ($res[$k]->recipient > 0) $res[$k]->recipient=User::model()->findByPk($res[$k]->recipient);
+			$res[$k]->sender->superuser=$res[$k]->sender->getRelated('AuthAssignment');
+			if ($res[$k]->recipient > 0) {
+                $res[$k]->recipient = $res[$k]->getRelated('recipientObject');
+                $res[$k]->recipient->superuser=$res[$k]->recipient->getRelated('AuthAssignment');
+            }
 		}
 		return $res;
 	}

@@ -151,8 +151,8 @@ var YiiChat = function(options){
 				+ "<button data-index=\""+post.id+"\" class=\"glyphicon-edit glyphicon\"></button>"
 				+ "<button data-index=\""+post.id+"\" class=\"glyphicon-remove glyphicon\"></button>";
 			if(options.identity != post.sender.id) {
-				if (post.moderated==0 && post.sender.superuser.itemname=='Author' && post.sender.superuser.itemname=='Customer')
-					if (post.recipient.superuser.itemname=='Author' && post.recipient.superuser.itemname=='Customer')
+				if (post.moderated==0 && (post.sender.superuser.itemname=='Author' || post.sender.superuser.itemname=='Customer'))
+					if (post.recipient.superuser.itemname=='Author' || post.recipient.superuser.itemname=='Customer')
 						tmp_html += "<button data-index=\""+post.id+"\"class=\"glyphicon-ok glyphicon\"></button>";
 				tmp_html += "<button data-index=\""+post.id+"\" class=\"glyphicon-envelope glyphicon\"></button>";
 				if (post.sender.superuser.itemname=='Author') {

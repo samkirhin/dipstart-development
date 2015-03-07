@@ -123,7 +123,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		$this->_chat_id = $chat_id;
 		$this->_identity = $identity;
 		$this->_data = $data;
-		$messages=ProjectMessages::model()->with('senderObject','senderRole')->findAll('`t`.`order` = :chat_id AND `t`.`id` > :last_id',array(':chat_id'=>$chat_id,':last_id'=>$last_id));
+		$messages=ProjectMessages::model()->findAll('`t`.`order` = :chat_id AND `t`.`id` > :last_id',array(':chat_id'=>$chat_id,':last_id'=>$last_id));
 		return $messages;
 	}
 

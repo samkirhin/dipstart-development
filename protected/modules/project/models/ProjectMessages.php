@@ -33,9 +33,8 @@ class ProjectMessages extends CActiveRecord
 	public function relations()
 	{
 		return array(
-			'senderObject'=>array(self::HAS_ONE, 'User', array('id'=>'sender')),
-			'recipientObject'=>array(self::HAS_ONE, 'User', array('id'=>'recipient')),
-			'senderRole'=>array(self::HAS_ONE, 'AuthAssignment',array('userid'=>'sender'))
+            'senderObject'=>array(self::HAS_ONE, 'User', array('id'=>'sender')),
+            'recipientObject'=>array(self::HAS_ONE, 'User', array('id'=>'recipient')),
 		);
 	}
 
