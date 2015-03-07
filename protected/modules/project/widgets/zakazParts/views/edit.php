@@ -35,6 +35,9 @@
             <td>
                 author: '${author_id}'
             </td>
+            <td>
+                author: '${author}'
+            </td>
         </tr>
         <tr>
             <td>

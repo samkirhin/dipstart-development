@@ -33,6 +33,9 @@
             <td>
                 author: '${author_id}'
             </td>
+            <td>
+                author: '${author}'
+            </td>
         </tr>
         <?php else :?>
         {{each file}}

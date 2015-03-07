@@ -56,6 +56,7 @@ class ZakazPartsController extends Controller
                     $part['title'] = $model->title;
                     $part['date'] = Yii::app()->dateFormatter->formatDateTime($model->date, 'medium' ,'');
                     $part['author_id'] = $model->author_id;
+                    $part['author'] = User::model()->findByPk($model->author_id)->username;
                     $part['show'] = $model->show;
                     $part['comment'] = $model->comment;
                     $part['files'] = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
