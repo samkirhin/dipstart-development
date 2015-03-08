@@ -78,18 +78,28 @@ class PaymentController extends CController {
     }
     
     public function actionApproveFromBookkeeper() {
+        
         $this->_prepairJson();
         $id = $this->_request->getParam('id');
         $method = $this->_request->getParam('method');
         if (!$method) {
             $method = 'Cash';
         }
-        $payment = new Payment();
-        $result = $payment->approveFromBookkeeper($id, $method);
+        
+        $payment = Payment::model()->findByPk($id);
+        if (!$payment) {
+            $this->_response->setData(array(
+                'result'  => false,
+                'message' => 'Not found'
+            ));
+            Yii::app()->end();
+        }
+        
         $this->_response->setData(array(
-            'result' => $result
+            'result' => $payment->approveFromBookkeeper($method)
         ));
         $this->_response->send();
+        
     }
     
     public function actionSavePaymentsToUser() {
@@ -106,8 +116,8 @@ class PaymentController extends CController {
             $payment->to_pay = 0;
         }
         
-        $payment->project_price    = $this->_request->getParam('project_price');
-        $payment->to_receive       = $payment->to_receive + $this->_request->getParam('to_receive');
+        $payment->project_price = $this->_request->getParam('project_price');
+        $payment->to_receive   += (int) $this->_request->getParam('to_receive');
         if ($payment->save()) {
             
             $zakaz = Zakaz::model()->findByPk($orderId);
@@ -143,9 +153,9 @@ class PaymentController extends CController {
         }
         
         
-        $payment->work_price        = $this->_request->getParam('work_price');
-        $paying = $this->_request->getParam('to_pay');
-        $payment->to_pay            = $payment->to_pay + $paying;
+        $payment->work_price = $this->_request->getParam('work_price');
+        $paying              = (int) $this->_request->getParam('to_pay');
+        $payment->to_pay    += $paying;
         if ($payment->save()) {
             $order = Zakaz::model()->findByPk($orderId);
             $buh = new Payment;

@@ -83,16 +83,29 @@ class Payment extends CActiveRecord
 		);
 	}
 
-        public function approveFromBookkeeper($id, $method) {
-            $payment = self::model()->findByPk($id);
-            $payment->method = $method;
-            $payment->approve = 1;
-            $payment->pay_date = date("Y-m-d");
-            if ($payment->save()) {
-                return true;
-            } else {
+        public function approveFromBookkeeper($method) {
+            
+            $tran = Yii::app()->db->beginTransaction();
+            
+            try {
+                
+                $this->method = $method;
+                $this->approve = 1;
+                $this->pay_date = date("Y-m-d");
+                $this->save(false);
+                
+                $payment = ProjectPayments::model()->findByAttributes(['order_id' => $this->order_id]);
+                $payment->payed += $this->summ;
+                $payment->save(false);
+            
+                $tran->commit();
+                
+            } catch (Exception $ex) {
+                $tran->rollback();
                 return false;
             }
+            
+            return true;
         }
         
 	/**
