@@ -53,6 +53,7 @@ class ZakazParts extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'files' => array(self::HAS_MANY, 'ZakazPartsFiles', array('part_id'=>'id')),
+            'author' => array(self::HAS_ONE, 'User', array('id'=>'author_id'))
 		);
 	}
 
@@ -65,11 +66,13 @@ class ZakazParts extends CActiveRecord
 			'id' => 'ID',
 			'proj_id' => 'ID Проекта',
 			'title' => 'Название',
-			'comment' => 'Комментарий',
-			'file' => 'Файл',
+            'file' => 'Файл',
 			'date' => 'Дата',
-                        'author_id' => 'Автор',
-                        'show' => 'Отображение'
+            'payment' => 'Оплачено',
+            'comment' => 'Комментарий',
+            'show' => 'Отображение',
+            'author_id' => 'Автор ID',
+            'author' => 'Автор',
 		);
 	}
 

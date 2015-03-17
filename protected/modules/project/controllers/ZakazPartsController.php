@@ -56,10 +56,10 @@ class ZakazPartsController extends Controller
                     $part['title'] = $model->title;
                     $part['date'] = Yii::app()->dateFormatter->formatDateTime($model->date, 'medium' ,'');
                     $part['author_id'] = $model->author_id;
-                    $part['author'] = User::model()->findByPk($model->author_id)->username;
+                    $part['author'] = $model->getRelated('author')->username;
                     $part['show'] = $model->show;
                     $part['comment'] = $model->comment;
-                    $part['files'] = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
+                    $part['file'] = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
                         array("PART_ID"=>$model->id)
                     );
                     $parts[] = $part;
@@ -69,12 +69,18 @@ class ZakazPartsController extends Controller
                 ));
                 $this->_response->send();
             } elseif (User::model()->isCustomer() || User::model()->isAuthor()) {
-                $parts = ZakazParts::model()->findAll('proj_id = :PROJ_ID AND `show` IN (:SHOW)',
-                    array(':PROJ_ID'=>$zakazId, ':SHOW'=>'(1'.(User::model()->isAuthor()?',0)':')'))
+                $model = ZakazParts::model()->findAll('proj_id = :PROJ_ID AND `show` IN (1'.(User::model()->isAuthor()?',0)':')'),
+                    array(':PROJ_ID'=>$zakazId)
                 );
-                foreach ($parts as $k => $part)
-                    $parts[$k]['file']=$part->getRelated('files');
-                $this->_response->setData(array('parts'=>$parts,'test'=>'test'));
+                $parts = array();
+                foreach ($model as $k => $part) {
+                    foreach ($part as $kk => $vv) {
+                        $parts[$k][$kk]=$vv;
+                    }
+                    $parts[$k]['file'] = $part->getRelated('files');
+                    $parts[$k]['author'] = $part->getRelated('author')->username;
+                }
+                $this->_response->setData(array('parts'=>$parts));
                 $this->_response->send();
             }
         }
@@ -234,6 +240,9 @@ class ZakazPartsController extends Controller
             $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
             $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
             $result = $uploader->handleUpload($folder);
+            if ($result['success']) {
+
+            }
             $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
             $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
             $fileName=$result['filename'];//GETTING FILE NAME

@@ -3,7 +3,7 @@
 <div id="zakaz_parts">
     <!--Тэмплэйт для редактирования файлов частей -->
     <script class="zakazFileTemplate" type="text/x-jquery-tmpl">
-        {{each files}}
+        {{each file}}
             <li>
                 <a href="/uploads/additions/${part_id}/${file_name}">${orig_name}</a> Комментарий:<input type="text" class="files_comment_${id}" value="${comment}"><button class='save_files_comment' type='submit' value='${id}'>Сохранить</button>
             </li>
@@ -25,7 +25,7 @@
             </td>
         </tr>
         <tr>
-            <td>{{each files}}
+            <td>{{each file}}
                     <a href="/uploads/additions/${part_id}/${file_name}">${orig_name}</a></br>
                 {{/each}}
             </td>
@@ -40,12 +40,15 @@
             </td>
         </tr>
         <tr>
+            <?php if (User::model()->isAdmin()): ?>
             <td>
                 <button class='btn dtn-default btn-xs edit' type='submit' value='${id}'>Edit</button>
             </td>
             <td>
                 <button class='btn dtn-default btn-xs delete' value='${id}'>Delete</button>
             </td>
+            <?php else:
+            endif; ?>
             <td>
             </td>
         </tr>

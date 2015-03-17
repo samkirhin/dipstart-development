@@ -171,10 +171,21 @@ class ChatController extends Controller {
                 'notes'
             ]);
         }
+        $parts = array();
+        if (User::model()->isAdmin() || User::model()->isManager()) {
+            $models = new CActiveDataProvider('ZakazParts',array('criteria'=>array('proj_id'=>$orderId)));
+        } elseif (User::model()->isCustomer() || User::model()->isAuthor()) {
+            $models = new CActiveDataProvider('ZakazParts',array(
+                'criteria'=>array(
+                    'condition'=>'proj_id='.$orderId.' AND `show` IN (1'.(User::model()->isAuthor()?',0)':')'),
+                ),
+            ));
+        }
 
 		$this->render('index', array(
 			'model' => $model,
             'order' => $order,
+            'parts' => $models,
 			'messages' => $messages,
 			'orderId' => $orderId,
 			'executor' => Zakaz::getExecutor($orderId),

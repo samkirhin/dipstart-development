@@ -11,7 +11,6 @@
     <!-- Шаблон отображения списка частей -->
     <script class="zakazPartTemplate" type="text/x-jquery-tmpl">
         <table style="background-color:grey;" >
-        <?php if ($userType=='1'):?>
         <tr>
             <td>
                 id: '${id}'
@@ -37,7 +36,6 @@
                 author: '${author}'
             </td>
         </tr>
-        <?php else :?>
         {{each file}}
             <tr>
                 <td>
@@ -45,7 +43,6 @@
                 </td>
             </tr>
         {{/each}}
-        <?php endif;?>
         </table>
     </script>
     <h4>Части</h4>

@@ -36,18 +36,15 @@
     <hr/>
     <div id='myuploader'>
         <label rel='pin'><b>Upload Files
-                <img style='float: left;' src='images/pin.png'></b></label>
+                <img src='images/pin.png'></b></label>
         <br/>
         <div class='files'></div>
         <div class='progressbar'>
-            <div style='float: left;'>
-                Uploading your file(s), please wait...</div>
-            <img style='float: left;' src='images/progressbar.gif' />
-            <div style=
-                 'float: left; margin-right:10px;'class='progress'>
+            <div>Uploading your file(s), please wait...</div>
+            <img src='images/progressbar.gif' />
+            <div class='progress'>
             </div>
-            <img style='float: left;' class='canceljob'
-                 src='images/delete.png' title='cancel the upload'/>
+            <img class='canceljob' src='images/delete.png' title='cancel the upload'/>
         </div>
     </div>
     <hr/>
@@ -98,12 +95,26 @@ $this->widget('application.components.MyYiiFileManViewer'
     ));
 ?>
 <?php if (User::model()->isAuthor()) echo 'Заметки для автора: '.$order->getAttribute('author_notes'); ?>
-<?php $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
+<?php /*$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
     'projectId'=>$order->id,
     'userType'=>(User::model()->isCustomer()?'0':'1'),
     'action'=>(Yii::app()->user->id==$executor?'edit':'show')
-)); ?>
-
+));*/ ?>
+<table>
+    <tr>
+        <?php
+        foreach (ZakazParts::model()->attributeLabels() as $k=>$v) {
+            echo '<th>'.CHtml::encode($v).'</th>';
+        }
+        ?>
+    </tr>
+    <?php
+        $this->widget('zii.widgets.CListView', array(
+            'dataProvider'=>$parts,
+            'itemView'=>'_part',
+        ));
+    ?>
+</table>
 <?php foreach($messages as $message): ?>
         <?php echo $message->date; ?> -
         <?php

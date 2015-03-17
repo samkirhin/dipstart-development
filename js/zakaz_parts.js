@@ -27,6 +27,7 @@ var ZakazPartsView = function(orderId) {
             if (response.data) {
                 self.place.empty();
                 self.template.tmpl(response.data.parts).appendTo('.show_parts');
+                self.fileTemplate.tmpl(response.data).appendTo('ul.qq-upload-list');
                 self.addActions();
             } else {
             }
