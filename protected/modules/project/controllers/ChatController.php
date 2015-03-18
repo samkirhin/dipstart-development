@@ -127,11 +127,6 @@ class ChatController extends Controller {
         $attributes = [
             'id',
             array(
-               'name' => 'user_id',
-               'type' => 'raw',
-               'value' => User::model()->findByPk($order->user_id)->username,
-            ),
-            array(
                'name' => 'category_id',
                'type' => 'raw',
                'value' => Categories::model()->findByPk($order->category_id)->cat_name,
