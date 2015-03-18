@@ -20,11 +20,6 @@ $this->breadcrumbs=array(
         'id',
 		'title',
 		array(
-           'name' => 'user_id',
-           'type' => 'raw',
-           'value' => '$data->user->username'
-        ),
-		array(
            'name' => 'category_id',
            'type' => 'raw',
            'value' => 'isset($data->category) ? $data->category->cat_name : null'
