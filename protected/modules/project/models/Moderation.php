@@ -146,7 +146,7 @@ class Moderation extends CActiveRecord
         {
             if($this->isNewRecord)
             {
-                $this->date=new CDbExpression('NOW()');
+                $this->date=time();
                 $this->user_id=Yii::app()->user->id;
             }
 //            else

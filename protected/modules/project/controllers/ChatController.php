@@ -144,12 +144,8 @@ class ChatController extends Controller {
             'title',
             'text',
             [
-               'name' => 'date',
-               'value' => Yii::app()->dateFormatter->formatDateTime($order->date),
-            ],
-            [
-               'name' => 'max_exec_date',
-               'value' => Yii::app()->dateFormatter->formatDateTime($order->max_exec_date),
+               'name' => 'author_informed',
+               'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
             ],
             [
                'name' => 'date_finish',
