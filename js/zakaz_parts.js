@@ -95,7 +95,9 @@ var ZakazPartsView = function(orderId) {
             }
         }, 'json');
     }
-    
+
+
+    /*Бинд на кнопку сохранения в edit*/
     self.form.find('button.save_changes').on('click', function() {
         var title = self.editPart.find('input.part_title').val();
         var date = self.editPart.find('input.part_date').val();
@@ -105,6 +107,7 @@ var ZakazPartsView = function(orderId) {
         test.each(function(i){
            files.push($(this).text()); 
         });
+
         $.post('index.php?r=project/zakazParts/apiEditPart', JSON.stringify({
             'id': self.partId,
             'title': title,
@@ -167,7 +170,19 @@ var ZakazPartsView = function(orderId) {
             }
         }, 'json');
     })
-    
+
+    /* file approve */
+    this.approve = function (data) {
+        $.post('index.php?r=project/zakazParts/apiApprove', JSON.stringify({
+            'data': data
+        }), function (response) {
+            if (response.data) {
+                self.loadList();
+            } else {
+            }
+        }, 'json');
+    }
+
     /* Бинд кнопок редактирования и удаления */
     this.addActions = function() {
         self.form.find('button.edit').on('click', function() {
@@ -175,6 +190,10 @@ var ZakazPartsView = function(orderId) {
                 });
         self.form.find('button.delete').on('click', function() {
                     self.delete($(this).attr('value'));
+                });
+        /*Бинд на кнопку must approved*/
+        self.form.find('button.must_approved').on('click', function() {
+                    self.approve($(this).data());
                 });
     }
 

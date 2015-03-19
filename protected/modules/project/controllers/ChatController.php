@@ -168,6 +168,7 @@ class ChatController extends Controller {
         } elseif (User::model()->isCustomer() || User::model()->isAuthor()) {
             $models = new CActiveDataProvider('ZakazParts',array(
                 'criteria'=>array(
+                    //'select'=>'orig_name',
                     'condition'=>'proj_id='.$orderId.' AND `show` IN (1'.(User::model()->isAuthor()?',0)':')'),
                 ),
             ));

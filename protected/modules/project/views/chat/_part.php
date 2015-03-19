@@ -14,27 +14,31 @@
                 'summaryCssClass'=>'hidden',
             ));
             echo '</td>';
-        } else echo '<td>'.CHtml::encode($v).'</td>';
+        } else if (User::model()->isAuthor()) echo '<td>'.CHtml::encode($v).'</td>';
     }
-    echo '<td>'.CHtml::encode($data->author->username).'</td><td>';
-    $this->widget('ext.EAjaxUpload.EAjaxUpload',
-    array(
-        'id'=>'fileUpload'.$data->id,
-        'postParams'=>array(
-            'params'=>json_encode($data),
-        ),
-        'config'=>array(
-            'action'=>$this->createUrl('zakazParts/upload/'),
-            'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
-            'debug'=>false,
-            'allowedExtensions'=>array('jpg', 'gif', 'txt', 'doc', 'docx'),
-            'sizeLimit'=>10*1024*1024,// maximum file size in bytes
-            'minSizeLimit'=>10,// minimum file size in bytes
-            'onComplete'=>"js:function(id, fileName, responseJSON){
-                                 alert(fileName + ' in ' + id);
-                             }"
-        )
-    ));
+    if (User::model()->isAuthor()) {
+        echo '<td>' . CHtml::encode($data->author->username) . '</td><td>';
+        $this->widget('ext.EAjaxUpload.EAjaxUpload',
+            array(
+                'id' => 'fileUpload' . $data->id,
+                'postParams' => array(
+                    'id' => $data->id,
+                    'proj_id' => $data->proj_id,
+                ),
+                'config' => array(
+                    'action' => $this->createUrl('zakazParts/upload/'),
+                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                    'debug' => false,
+                    'allowedExtensions' => array('jpg', 'gif', 'txt', 'doc', 'docx'),
+                    'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+                    'minSizeLimit' => 10,// minimum file size in bytes
+                    'onComplete' => "js:function(id, fileName, responseJSON){
+                                         alert(fileName + ' in ' + id);
+                                     }"
+                )
+            )
+        );
+    }
     echo '</td>';
 ?>
 </tr>

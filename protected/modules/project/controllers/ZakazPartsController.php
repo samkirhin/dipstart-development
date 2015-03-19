@@ -62,6 +62,19 @@ class ZakazPartsController extends Controller
                     $part['file'] = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
                         array("PART_ID"=>$model->id)
                     );
+                    $for_moderation = array_diff(scandir(YiiBase::getPathOfAlias('webroot').'/uploads/additions/temp'), array('..', '.'));
+                    foreach ($for_moderation as $k=>$v)
+                        if(preg_match('/_'.$model->id.'./i',$v)){
+                            $for_moderation[$k]=array(
+                                'comment'=>0,
+                                'file_name'=>0,
+                                'id'=>0,
+                                'orig_name'=>preg_replace('/_'.$model->id.'/i','',$v),
+                                'part_id'=>$model->id,
+                                'for_approved'=>'Must approved',
+                            );
+                        } else unset($for_moderation[$k]);
+                    $part['file'] = array_merge($part['file'],$for_moderation);
                     $parts[] = $part;
                 }
                 $this->_response->setData(array(
@@ -84,7 +97,24 @@ class ZakazPartsController extends Controller
                 $this->_response->send();
             }
         }
-        
+        public function actionApiApprove() {
+            $this->_prepairJson();
+            $data = $this->_request->getParam('data');
+            $path = 'uploads/additions/'.$data['id'].'/';
+            $list = explode('.', $data['orig_name']);
+            $newName = $this->getGuid();
+            $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$list[0].'_'.$data['id'].'.'.$list[1];
+            $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$data['id'].'/'.$newName.".".$list['1'];
+            $probe = rename($filePath, $fileNewPath);
+            $fileModel = new ZakazPartsFiles();
+            $fileModel->part_id = $data['id'];
+            $fileModel->orig_name = $data['orig_name'];
+            $fileModel->file_name = $newName.".".$list['1'];
+            $fileModel->comment = '';
+            $fileModel->save();
+            $this->_response->setData(true);
+            $this->_response->send();
+        }
         public function actionApiEditPart() {
             $this->_prepairJson();
             $partId = $this->_request->getParam('id');
@@ -238,10 +268,12 @@ class ZakazPartsController extends Controller
             $folder='uploads/additions/temp/';// folder for uploaded files
             $allowedExtensions = array('jpg', 'gif', 'txt', 'doc', 'docx');//array("jpg","jpeg","gif","exe","mov" and etc...
             $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
+            $pi = pathinfo($_GET['qqfile']);
+            $_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
             $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-            $result = $uploader->handleUpload($folder);
+            $result = $uploader->handleUpload($folder,true);
             if ($result['success']) {
-
+                EventHelper::addChanges($_GET['proj_id']);
             }
             $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
             $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE

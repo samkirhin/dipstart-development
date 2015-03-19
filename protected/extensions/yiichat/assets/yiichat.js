@@ -152,7 +152,7 @@ var YiiChat = function(options){
 				+ "<button data-index=\""+post.id+"\" class=\"glyphicon-remove glyphicon\"></button>";
 			if(options.identity != post.sender.id) {
 				if (post.moderated==0 && (post.sender.superuser.itemname=='Author' || post.sender.superuser.itemname=='Customer'))
-					if (post.recipient.superuser.itemname=='Author' || post.recipient.superuser.itemname=='Customer')
+					if (post.recipient!=0 && (post.recipient.superuser.itemname=='Author' || post.recipient.superuser.itemname=='Customer'))
 						tmp_html += "<button data-index=\""+post.id+"\"class=\"glyphicon-ok glyphicon\"></button>";
 				tmp_html += "<button data-index=\""+post.id+"\" class=\"glyphicon-envelope glyphicon\"></button>";
 				if (post.sender.superuser.itemname=='Author') {
@@ -196,7 +196,7 @@ var YiiChat = function(options){
 			btn_ok.click(function (){
 				setdata=this.dataset;
 				jQuery.ajax({ cache: false, type: 'post',
-					url: options.action+'&action=dapproved&data=not_used',
+					url: options.action+'&action=dapprove&data=not_used',
 					data: { chat_id: options.chat_id, id: setdata.index},
 					success: function(data){
 						clear();

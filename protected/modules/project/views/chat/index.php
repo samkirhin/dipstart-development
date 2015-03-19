@@ -95,16 +95,11 @@ $this->widget('application.components.MyYiiFileManViewer'
     ));
 ?>
 <?php if (User::model()->isAuthor()) echo 'Заметки для автора: '.$order->getAttribute('author_notes'); ?>
-<?php /*$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
-    'projectId'=>$order->id,
-    'userType'=>(User::model()->isCustomer()?'0':'1'),
-    'action'=>(Yii::app()->user->id==$executor?'edit':'show')
-));*/ ?>
 <table>
     <tr>
         <?php
         foreach (ZakazParts::model()->attributeLabels() as $k=>$v) {
-            echo '<th>'.CHtml::encode($v).'</th>';
+            if (User::model()->isAuthor() || $k=='file')echo '<th>'.CHtml::encode($v).'</th>';
         }
         ?>
     </tr>

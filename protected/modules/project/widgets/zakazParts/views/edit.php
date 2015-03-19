@@ -11,47 +11,55 @@
     </script>
     <!-- Тэмплэйт для отображения частей -->
     <script class="zakazPartTemplate" type="text/x-jquery-tmpl">
-        
+        <style type="text/css">
+            table tr td {
+                width: 30%;
+            }
+        </style>
+
         <table style="background-color:lightgrey; font-size: 14px" >
-        <tr>
-            <td width="100px">
-                id: '${id}'
-            </td>
-            <td width="100px">
-                date: '${date}'
-            </td>
-            <td width="100px">
-                title: '${title}'
-            </td>
-        </tr>
-        <tr>
-            <td>{{each file}}
-                    <a href="/uploads/additions/${part_id}/${file_name}">${orig_name}</a></br>
-                {{/each}}
-            </td>
-            <td>
-                comment: '${comment}'
-            </td>
-            <td>
-                author: '${author_id}'
-            </td>
-            <td>
-                author: '${author}'
-            </td>
-        </tr>
-        <tr>
-            <?php if (User::model()->isAdmin()): ?>
-            <td>
-                <button class='btn dtn-default btn-xs edit' type='submit' value='${id}'>Edit</button>
-            </td>
-            <td>
-                <button class='btn dtn-default btn-xs delete' value='${id}'>Delete</button>
-            </td>
-            <?php else:
-            endif; ?>
-            <td>
-            </td>
-        </tr>
+            <tr>
+                <td width="100px">
+                    id: '${id}'
+                </td>
+                <td width="100px">
+                    date: '${date}'
+                </td>
+                <td width="100px">
+                    title: '${title}'
+                </td>
+            </tr>
+            <tr>
+                <td>{{each file}}
+                        <a id='part_file' href="/uploads/additions/${part_id}/${file_name}">
+                            ${orig_name}
+                        </a><br>
+
+                        {{if typeof(for_approved)!='undefined'}}
+                            <button data-id="${part_id}" data-orig_name="${orig_name}" class="btn dtn-default btn-xs must_approved">
+                                ${for_approved}
+                            </button>
+                        {{/if}}
+                    {{/each}}
+                </td>
+                <td>
+                    comment: '${comment}'
+                </td>
+                <td>
+                    author: '${author_id}'
+                </td>
+                <td>
+                    author: '${author}'
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class='btn dtn-default btn-xs edit' type='submit' value='${id}'>Edit</button>
+                </td>
+                <td>
+                    <button class='btn dtn-default btn-xs delete' value='${id}'>Delete</button>
+                </td>
+            </tr>
         </table>
     </script>
     <h4>Части</h4>
