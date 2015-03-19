@@ -335,6 +335,11 @@ class ZakazController extends Controller
         if (!$event) {
             throw new CHttpException(404, "Событие не найдено");
         }
+        
+        if ($event->type == EventHelper::TYPE_MESSAGE) {
+            $event->delete();
+            $this->redirect(['/project/zakaz/update', 'id' => $event->event_id]);
+        }
 
         $moderation = Moderation::model()->findByPk($event->event_id);
         if ($moderation) {
