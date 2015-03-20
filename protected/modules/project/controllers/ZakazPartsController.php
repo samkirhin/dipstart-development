@@ -105,14 +105,15 @@ class ZakazPartsController extends Controller
             $newName = $this->getGuid();
             $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$list[0].'_'.$data['id'].'.'.$list[1];
             $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$data['id'].'/'.$newName.".".$list['1'];
-            $probe = rename($filePath, $fileNewPath);
-            $fileModel = new ZakazPartsFiles();
-            $fileModel->part_id = $data['id'];
-            $fileModel->orig_name = $data['orig_name'];
-            $fileModel->file_name = $newName.".".$list['1'];
-            $fileModel->comment = '';
-            $fileModel->save();
-            $this->_response->setData(true);
+            if (rename($filePath, $fileNewPath)) {
+                $fileModel = new ZakazPartsFiles();
+                $fileModel->part_id = $data['id'];
+                $fileModel->orig_name = $data['orig_name'];
+                $fileModel->file_name = $newName . "." . $list['1'];
+                $fileModel->comment = '';
+                $fileModel->save();
+                $this->_response->setData(true);
+            } else $this->_response->setData(false);
             $this->_response->send();
         }
         public function actionApiEditPart() {
