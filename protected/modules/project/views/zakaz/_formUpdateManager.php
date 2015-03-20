@@ -11,19 +11,14 @@
 	<div class='body'></div>
 	<hr/>
 	<div id='myuploader'>
-		<label rel='pin'><b>Upload Files
-			<img style='float: left;' src='images/pin.png'></b></label>
+		<label rel='pin'><b>Upload Files<img src='images/pin.png'></b></label>
 		<br/>
 		<div class='files'></div>
 		<div class='progressbar'>
-			<div style='float: left;'>
-				Uploading your file(s), please wait...</div>
-			<img style='float: left;' src='images/progressbar.gif' />
-			<div style=
-				'float: left; margin-right:10px;'class='progress'>
-			</div>
-			<img style='float: left;' class='canceljob'
-				src='images/delete.png' title='cancel the upload'/>
+			<div >Uploading your file(s), please wait...</div>
+			<img src='images/progressbar.gif' />
+			<div 'class='progress'></div>
+			<img class='canceljob' src='images/delete.png' title='cancel the upload'/>
 		</div>
 	</div>
 	<hr/>
