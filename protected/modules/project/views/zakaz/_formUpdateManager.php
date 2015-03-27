@@ -29,11 +29,16 @@
 <!-- required div layout ends -->
 
 <hr/>Logger:<br/><div id='logger'></div>
-
+<button id="spam">Spam</button>
 <?php
-	// the widget
-	//
-	$this->widget('application.components.MyYiiFileManViewer'
+$spamurl = Yii::app()->getBaseUrl(true);
+    Yii::app()->getClientScript()->registerScript(
+    "button_spam", "
+            $('#spam').click(function(){
+                $.post('{$spamurl}/index.php?r=project/zakaz/spam&id={$model->id}');
+            });
+        ",CClientScript::POS_LOAD);
+$this->widget('application.components.MyYiiFileManViewer'
 	,array(
 		// layout selectors:
 		'launch_selector'=>'#file-picker',

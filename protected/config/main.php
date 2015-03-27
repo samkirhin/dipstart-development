@@ -32,6 +32,7 @@ return array(
                 'application.extensions.yiifilemanagerfilepicker.*',
                 'application.extensions.helpers.EDownloadHelper',
                 'application.extensions.yiichat.*',
+                'ext.YiiMailer.YiiMailer',
     ),
 	'modules'=>array(
         'user' => array(
@@ -119,6 +120,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@dipstart.coolfire.pp.ua',
+		'adminEmail'=>'webmaster@dipstart.ru',
 	),
 );

@@ -36,7 +36,7 @@ class ZakazController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview','apifindauthor'),
+                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview','apifindauthor','spam'),
                     'users'=>array('admin'),
                 ),
 				array('deny',  // deny all users
@@ -512,4 +512,28 @@ class ZakazController extends Controller
 			'dataProvider' => $dataProvider
 		]);
 	}
+    public function actionSpam(){
+        $job = Zakaz::model()->findByPk($_GET['id'])->job_id;
+        $discipline = Zakaz::model()->findByPk($_GET['id'])->category_id;
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition('profile.discipline',$discipline);
+        $criteria->addSearchCondition('profile.job_type',$job);
+        $authors = User::model()->with('profile')->findAll($criteria);
+        $debug = '';
+        $mail = new YiiMailer('contact', array('message' => 'Message to send', 'name' => 'John Doe', 'description' => 'Contact form'));
+        $mail->SMTPDebug = 2;
+        $mail->Debugoutput = function($str, $level) {
+            $GLOBALS['debug'] .= "$level: $str\n";
+        };
+        $mail->setFrom(Yii::app()->params['adminEmail'], 'John Doe');
+        $mail->setSubject('Mail subject');
+        foreach ($authors as $author) {
+            $mail->setTo($author['email']);
+            $mail->send();
+//            print_r($mail);
+//            echo json_encode($author['email']);
+        }
+        echo $debug;
+        return Yii::app()->end();
+    }
 }
