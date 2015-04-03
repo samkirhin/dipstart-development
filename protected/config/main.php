@@ -19,22 +19,30 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-                'application.modules.user.*',
-                'application.modules.user.models.*',
-                'application.modules.user.components.*',
-                'application.modules.rights.*',
-                'application.modules.rights.models.*',
-                'application.modules.rights.components.*',
-                'application.modules.project.*',
-                'application.modules.project.models.*',
-                'application.modules.project.controllers.*',
-                'application.extensions.yiifilemanager.*',
-                'application.extensions.yiifilemanagerfilepicker.*',
-                'application.extensions.helpers.EDownloadHelper',
-                'application.extensions.yiichat.*',
-                'ext.YiiMailer.YiiMailer',
+        'application.modules.user.*',
+        'application.modules.user.models.*',
+        'application.modules.user.components.*',
+        'application.modules.rights.*',
+        'application.modules.rights.models.*',
+        'application.modules.rights.components.*',
+        'application.modules.project.*',
+        'application.modules.project.models.*',
+        'application.modules.project.controllers.*',
+        'application.extensions.yiifilemanager.*',
+        'application.extensions.yiifilemanagerfilepicker.*',
+        'application.extensions.helpers.EDownloadHelper',
+        'application.extensions.yiichat.*',
+        'ext.YiiMailer.YiiMailer',
+
     ),
 	'modules'=>array(
+        'SimplePaypal' => array(
+            'components' => array(
+                'paypalManager' => array(
+                    'class' => 'SimplePaypal.components.Paypal',
+                ),
+            ),
+        ),
         'user' => array(
         // названия таблиц взяты по умолчанию, их можно изменить
             'tableUsers' => 'Users',
