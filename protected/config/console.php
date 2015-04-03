@@ -12,10 +12,10 @@ return array(
     // application components
     'components' => array(
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=dipstart',
+            'connectionString' => 'mysql:host=localhost;dbname=project',
             'emulatePrepare' => true,
-            'username' => 'dipstart',
-            'password' => '',
+            'username' => 'garry',
+            'password' => '158358',
             'charset' => 'utf8',
         ),
         'log' => array(

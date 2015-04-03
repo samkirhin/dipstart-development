@@ -19,22 +19,30 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-                'application.modules.user.*',
-                'application.modules.user.models.*',
-                'application.modules.user.components.*',
-                'application.modules.rights.*',
-                'application.modules.rights.models.*',
-                'application.modules.rights.components.*',
-                'application.modules.project.*',
-                'application.modules.project.models.*',
-                'application.modules.project.controllers.*',
-                'application.extensions.yiifilemanager.*',
-                'application.extensions.yiifilemanagerfilepicker.*',
-                'application.extensions.helpers.EDownloadHelper',
-                'application.extensions.yiichat.*',
-                'ext.YiiMailer.YiiMailer',
+        'application.modules.user.*',
+        'application.modules.user.models.*',
+        'application.modules.user.components.*',
+        'application.modules.rights.*',
+        'application.modules.rights.models.*',
+        'application.modules.rights.components.*',
+        'application.modules.project.*',
+        'application.modules.project.models.*',
+        'application.modules.project.controllers.*',
+        'application.extensions.yiifilemanager.*',
+        'application.extensions.yiifilemanagerfilepicker.*',
+        'application.extensions.helpers.EDownloadHelper',
+        'application.extensions.yiichat.*',
+        'ext.YiiMailer.YiiMailer',
+
     ),
 	'modules'=>array(
+        'SimplePaypal' => array(
+            'components' => array(
+                'paypalManager' => array(
+                    'class' => 'SimplePaypal.components.Paypal',
+                ),
+            ),
+        ),
         'user' => array(
         // названия таблиц взяты по умолчанию, их можно изменить
             'tableUsers' => 'Users',
@@ -93,10 +101,10 @@ return array(
         */
         //dev server
         'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=dipstart',
+			'connectionString' => 'mysql:host=localhost;dbname=project',
 			'emulatePrepare' => true,
-			'username' => 'dipstart',
-			'password' => '',
+			'username' => 'garry',
+			'password' => '158358',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -120,6 +128,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@dipstart.ru',
+		'adminEmail'=>'info@dipstart.ru',
 	),
 );
