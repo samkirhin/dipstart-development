@@ -41,7 +41,7 @@
                 Отправить на оплату:
             </td>
             <td>
-                <input type="text" size="10" class="to_pay_input" value=""/>
+                <input type="text" size="10" class="to_pay_input" value="" <?php if ($model->received == 0) echo 'readonly' ?>/>
             </td>
         </tr>
         <tr>
