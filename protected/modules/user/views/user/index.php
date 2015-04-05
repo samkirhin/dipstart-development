@@ -35,7 +35,7 @@ switch ($_GET['s']) {
 				array(
 					'name' => 'username',
 					'type'=>'raw',
-					'value' => 'CHtml::link(CHtml::encode($data["username"]),array("user/view","id"=>$data["id"]))',
+					'value' => 'CHtml::link(CHtml::encode($data->username),array("/user/admin/update","id"=>$data->id))',
 				),
 				'firstname',
 				'lastname',
@@ -63,7 +63,7 @@ switch ($_GET['s']) {
 				array(
 					'name' => 'username',
 					'type'=>'raw',
-					'value' => 'CHtml::link(CHtml::encode($data->username),array("user/view","id"=>$data->id))',
+					'value' => 'CHtml::link(CHtml::encode($data->username),array("/user/admin/update","id"=>$data->id))',
 				),
 				'email',
 				array(
