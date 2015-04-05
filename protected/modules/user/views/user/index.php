@@ -29,13 +29,13 @@ switch ($_GET['s']) {
 		echo '<h2>'.UserModule::t("List Author User").'</h2>';
 		$this->widget('zii.widgets.grid.CGridView', array(
 			'id'=>'itemGrid',
-			'dataProvider'=>$dataProviderAuthor,
+			'dataProvider'=>$dataProvider,
 			'columns'=>array(
 				'id',
 				array(
 					'name' => 'username',
 					'type'=>'raw',
-					'value' => 'CHtml::link(CHtml::encode($data->username),array("/user/admin/update","id"=>$data->id))',
+					'value' => 'CHtml::link(CHtml::encode($data["username"]),array("/user/admin/update","id"=>$data["id"]))',
 				),
 				'firstname',
 				'lastname',
@@ -48,7 +48,7 @@ switch ($_GET['s']) {
 	default:
 		echo '<h2>'.UserModule::t("List Customer User").'</h2>';
 		$this->widget('zii.widgets.grid.CGridView', array(
-			'dataProvider'=>$dataProviderCustomer,
+			'dataProvider'=>$dataProvider,
 			'columns'=>array(
 				array(
 					'type'=>'raw',
