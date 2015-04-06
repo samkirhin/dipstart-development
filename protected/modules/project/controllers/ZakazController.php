@@ -277,8 +277,14 @@ class ZakazController extends Controller
 					$model->manager_informed = $time['manager_informed'];
 					$model->author_informed = $time['author_informed'];
                     
-                    if ($model->manager_informed === 0) {
+                    if ($model->manager_informed == 0) {
                         $model->status = 5;
+                    } else {
+                        if ($model->executor > 0) {
+                            $model->status = 4;
+                        } else {
+                            $model->status = 3;
+                        }
                     }
 				}
 
@@ -305,7 +311,7 @@ class ZakazController extends Controller
 			$this->render($view, array(
 				'model'=>$model,
 				'times'=>$times,
-				'message'=>$message,
+				'message'=>$message
 			));
 	}
     
