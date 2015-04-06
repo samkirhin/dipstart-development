@@ -21,7 +21,7 @@
             <a class="btn btn-default btn-block" href="<?php echo Yii::app()->createUrl('project/event'); ?>">События</a>
         </td>
         <td>
-            
+            <a class="btn btn-default btn-block" href="<?php echo Yii::app()->createUrl('project/sms/send'); ?>">Отправить смс</a>
         </td>
         <td>
             
