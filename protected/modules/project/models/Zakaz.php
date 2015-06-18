@@ -254,6 +254,8 @@ class Zakaz extends CActiveRecord
             if($this->isNewRecord)
             {
                 $this->date=time();
+                $this->manager_informed = time();
+                $this->author_informed = $this->date + ($this->max_exec_date - $this->date) / 2;
                 $this->user_id=Yii::app()->user->id;
             }
 //            else

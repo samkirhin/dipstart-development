@@ -114,10 +114,10 @@ return array(
 
         //dev server
         'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=dipstart',
+			'connectionString' => 'mysql:host=localhost;dbname=project',
 			'emulatePrepare' => true,
-			'username' => 'dipstart',
-			'password' => '',
+			'username' => 'garry',
+			'password' => '158358',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -141,6 +141,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@dipstart.ru',
+		'adminEmail'=>'info@dipstart.ru',
 	),
 );
