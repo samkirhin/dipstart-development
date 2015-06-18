@@ -146,7 +146,7 @@ var YiiChat = function (options) {
                 }
 
                 var tmp_html = "<div class='time'>" + post.date + "</div>"
-                    + "<div class='owner' data-ownerid='" + post.sender.id + "'><a class='ownerref' href='/user/user/view?id=" + post.sender.id + "'>" + post.sender.username + "</a>";
+                    + "<div class='owner' data-ownerid='" + post.sender.superuser.userid + "'><a class='ownerref' href='/user/user/view?id=" + post.sender.id + "'>" + post.sender.username + "</a>";
                 if (post.recipient != 0) tmp_html += " ответил "
                 + "<a class='ownerref' href='/user/user/view?id=" + post.recipient.id + "'>" + post.recipient.username + "</a>";
                 tmp_html += "</div>";
@@ -218,7 +218,7 @@ var YiiChat = function (options) {
                 btn_toggleexecutor.click(function () {
                     setdata = this.dataset;
                     oldaction = $('#post_' + setdata.index).find('button.toggleexecutor').attr('class').split(' ')[2];
-                    owner = $('#post_' + setdata.index).find('.ownerref').html();
+                    owner = $('#post_' + setdata.index).find('.track').find('.owner').data('ownerid');
                     if (oldaction == 'glyphicon-minus') action = 'plus'; else action = 'minus';
                     jQuery.ajax({
                         cache: false, type: 'post',
@@ -226,7 +226,7 @@ var YiiChat = function (options) {
                         data: {chat_id: options.chat_id, id: setdata.index, ex: owner},
                         success: function (data) {
                             $('.post').each(function () {
-                                if ($(this).find('.ownerref').html() == owner)
+                                if ($(this).find('.owner').data('ownerid') == owner)
                                     $(this).find('button.toggleexecutor').removeClass(oldaction).addClass('glyphicon-' + action);
                             });
                             if (oldaction == 'glyphicon-minus') $('.findauthor').removeClass('hide'); else $('.findauthor').removeClass('hide');

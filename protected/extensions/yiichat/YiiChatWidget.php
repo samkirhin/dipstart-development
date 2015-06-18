@@ -108,12 +108,12 @@ class YiiChatWidget extends CWidget {
 		$s = Yii::app()->session;
 		$model = $s[$chat_id.'_model'];
 		$data = $s[$chat_id.'_data'];
+        header("Content-type: application/json");
 		if(substr($action,0,1) == 'd'){
 				$func='yiichat_'.$action;
 				echo CJSON::encode($model->$func($this->_getPost()));
 		}
 		if(($action == 'sendpost') && $identity && $chat_id){
-			header("Content-type: application/json");
 			if($post = $model->yiichat_post($chat_id, $identity, $text, $postdata, $data)){
 				if(!isset($post['chat_id']))
 					$post['chat_id']=$chat_id;
@@ -130,14 +130,12 @@ class YiiChatWidget extends CWidget {
 			$posts = $model->yiichat_list_posts($chat_id, $identity, -1, $data);
 			if($posts==null) $posts = array();
 			$data = array('chat_id'=>$chat_id, 'identity'=>$identity,'posts'=>$posts);
-			header("Content-type: application/json");
 			echo CJSON::encode($data);
 		}
 		if(($action == 'timer') && $identity && $chat_id){
 			$posts = $model->yiichat_list_posts($chat_id, $identity, $this->_getPost('last_id'), $data);
 			if($posts==null) $posts = array();
 			$data = array('chat_id'=>$chat_id, 'identity'=>$identity,'posts'=>$posts);
-			header("Content-type: application/json");
 			echo CJSON::encode($data);
 		}
 	}

@@ -69,7 +69,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		if (!($model = Moderation::model()->find('`order_id` = :ID', array('ID'=>$post['chat_id']))))
 			$model = Zakaz::model()->findByPk($post['chat_id']);
 		if ($_GET['data']=='minus') {
-			$model->executor = User::model()->find('username=:executor',array(':executor'=>$post['ex']))->id;
+			$model->executor = $post['ex'];
 			$model->status = 4;
 		}
 		else {
