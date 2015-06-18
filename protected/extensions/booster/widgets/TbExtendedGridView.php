@@ -207,30 +207,17 @@ class TbExtendedGridView extends TbGridView {
 	 */
 	public function init(){
 
-		if (preg_match(
-			'/extendedsummary/i',
-			$this->template
-		) && !empty($this->extendedSummary) && isset($this->extendedSummary['columns'])
-		) {
-			$this->template .= "\n{extendedSummaryContent}";
-			$this->displayExtendedSummary = true;
-		}
-		if (!empty($this->chartOptions) && @$this->chartOptions['data'] && $this->dataProvider->getItemCount()) {
-			$this->displayChart = true;
-		}
-		if ($this->bulkActions !== array() && isset($this->bulkActions['actionButtons'])) {
-			if (!isset($this->bulkActions['class'])) {
-				$this->bulkActions['class'] = 'booster.widgets.TbBulkActions';
-			}
+		if ($this->shouldEnableExtendedSummary())
+			$this->prepareDisplayingExtendedSummary();
 
-			$this->bulk = Yii::createComponent($this->bulkActions, $this);
-			$this->bulk->init();
-		}
-		// if(isset($this->bulkActions['selectableEqualsChecked']) && $this->bulkActions['selectableEqualsChecked'] === true) {
-			$this->selectionChanged = 'js:function(id) {
-				$("#"+id+" input[type=checkbox]").change();
-			}';
-		// }
+		if ($this->shouldEnableChart() && $this->hasData())
+			$this->enableChart();
+
+		if ($this->shouldEnableBulkActions())
+			$this->enableBulkActions();
+
+		$this->fillSelectionChangedProperty();
+
 		parent::init();
 	}
 
@@ -492,7 +479,7 @@ class TbExtendedGridView extends TbGridView {
 			++$cnt;
 		}
 
-		$xAxisData = [];
+		$xAxisData = array();
 		
 		$xAxisData[] = array('categories'=>array());
 		if(!empty($this->chartOptions['data']['xAxis'])){
@@ -593,7 +580,17 @@ class TbExtendedGridView extends TbGridView {
 	 *
 	 * Renders a table body row.
 	 *
+	 * This method is a copy-paste from CGridView.renderTableRow(),
+	 * because we cannot override *just* the `renderDataCell` routine (it's polymorphic)
+	 * and Yii doesn't have a seam in place for us to do this.
+	 * @see https://github.com/yiisoft/yii/pull/3571
+	 *
+	 * Only meaningful change in here is the replacement of the `$column->renderDataCell($row)`
+	 * with our own method.
+	 *
 	 * @param integer $row the row number (zero-based).
+	 *
+	 * @deprecated This method will be removed after Yii 1.1.17 release.
 	 */
 	public function renderTableRow($row)
 	{
@@ -625,13 +622,8 @@ class TbExtendedGridView extends TbGridView {
 		}
 
 		echo CHtml::openTag('tr', $htmlOptions);
-		foreach ($this->columns as $column) {
-			echo $this->displayExtendedSummary && !empty($this->extendedSummary['columns']) ? $this->parseColumnValue(
-				$column,
-				$row
-			) : $column->renderDataCell($row);
-		}
-
+		foreach ($this->columns as $column)
+			$this->renderDataCellProcessingSummariesIfNeeded($column, $row);
 		echo CHtml::closeTag('tr');
 	}
 
@@ -658,22 +650,22 @@ class TbExtendedGridView extends TbGridView {
 	 */
 	public function renderExtendedSummaryContent()
 	{
-		if (($count = $this->dataProvider->getItemCount()) <= 0) {
+		if ($this->dataProvider->getItemCount() <= 0)
 			return;
-		}
 
-		if (!empty($this->extendedSummaryTypes)) {
-			echo '<div id="' . $this->id . '-extended-summary" style="display:none">';
-			if (isset($this->extendedSummary['title'])) {
-				echo '<h3>' . $this->extendedSummary['title'] . '</h3>';
-			}
-			foreach ($this->extendedSummaryTypes as $summaryType) {
-				/** @var $summaryType TbOperation */
-				$summaryType->run();
-				echo '<br/>';
-			}
-			echo '</div>';
+		if (empty($this->extendedSummaryTypes))
+			return;
+
+		echo '<div id="' . $this->id . '-extended-summary" style="display:none">';
+		if (isset($this->extendedSummary['title'])) {
+			echo '<h3>' . $this->extendedSummary['title'] . '</h3>';
 		}
+		foreach ($this->extendedSummaryTypes as $summaryType) {
+			/** @var $summaryType TbOperation */
+			$summaryType->run();
+			echo '<br/>';
+		}
+		echo '</div>';
 	}
 
 	/**
@@ -791,28 +783,22 @@ class TbExtendedGridView extends TbGridView {
 	/**
 	 *### .parseColumnValue()
 	 *
-	 * @param CDataColumn $column
-	 * @param integer $row the current row number
-	 *
-	 * @return string
+	 * @param CGridColumn $column
+	 * @param string $value Value of the $column rendered by $column->renderDataCell($row).
 	 */
-	protected function parseColumnValue($column, $row)
+	protected function processColumnValue($column, $value)
 	{
-		ob_start();
-		$column->renderDataCell($row);
-		$value = ob_get_clean();
+		if (!($column instanceof CDataColumn))
+			return;
 
-		if ($column instanceof CDataColumn && array_key_exists($column->name, $this->extendedSummary['columns'])) {
-			// lets get the configuration
-			$config = $this->extendedSummary['columns'][$column->name];
-			// add the required column object in
-			$config['column'] = $column;
-			// build the summary operation object
-			$op = $this->getSummaryOperationInstance($column->name, $config);
-			// process the value
-			$op->processValue($value);
-		}
-		return $value;
+		if (!array_key_exists($column->name, $this->extendedSummary['columns']))
+			return;
+
+		$config = $this->extendedSummary['columns'][$column->name];
+		$config['column'] = $column;
+
+		$this->getSummaryOperationInstance($column->name, $config)
+			->processValue($value);
 	}
 
 	/**
@@ -858,7 +844,7 @@ class TbExtendedGridView extends TbGridView {
 	 *
 	 * @param string $name
 	 *
-	 * @return CDataColumn|null
+	 * @return TbDataColumn|null
 	 */
 	protected function getColumnByName($name)
 	{
@@ -868,6 +854,112 @@ class TbExtendedGridView extends TbGridView {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function shouldEnableExtendedSummary()
+	{
+		return preg_match(
+			'/extendedsummary/i',
+			$this->template
+		) && !empty($this->extendedSummary) && isset($this->extendedSummary['columns']);
+	}
+
+	private function prepareDisplayingExtendedSummary()
+	{
+		$this->template .= "\n{extendedSummaryContent}";
+		$this->displayExtendedSummary = true;
+	}
+
+	private function shouldEnableChart()
+	{
+		return !empty($this->chartOptions) && (bool)@$this->chartOptions['data'];
+	}
+
+	/**
+	 * @return int
+	 */
+	private function hasData()
+	{
+		return $this->dataProvider->getItemCount();
+	}
+
+	private function enableChart()
+	{
+		$this->displayChart = true;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function shouldEnableBulkActions()
+	{
+		return $this->bulkActions !== array() && isset($this->bulkActions['actionButtons']);
+	}
+
+	private function enableBulkActions()
+	{
+		if (!isset($this->bulkActions['class'])) {
+			$this->bulkActions['class'] = 'booster.widgets.TbBulkActions';
+		}
+
+		$this->bulk = Yii::createComponent($this->bulkActions, $this);
+		$this->bulk->init();
+	}
+
+	private function fillSelectionChangedProperty()
+	{
+		$this->selectionChanged = $this->makeDefaultSelectionChangedJavascript();
+	}
+
+	/**
+	 * @return string
+	 */
+	private function makeDefaultSelectionChangedJavascript()
+	{
+		return 'js:function(id) {
+			$("#"+id+" input[type=checkbox]").change();
+		}';
+	}
+
+	/**
+	 * This method will become `renderDataCell` after Yii 1.1.17 will be released
+	 * @see https://github.com/yiisoft/yii/pull/3571
+	 *
+	 * @param CGridColumn $column
+	 * @param integer $row
+	 */
+	private function renderDataCellProcessingSummariesIfNeeded($column, $row)
+	{
+		$value = $this->getRenderedDataCellValue($column, $row);
+
+		if ($this->isExtendedSummaryEnabled())
+			$this->processColumnValue($column, $value);
+
+		echo $value;
+	}
+
+	/**
+	 * @param CGridColumn $column
+	 * @param integer $row
+	 *
+	 * @return string
+	 */
+	private function getRenderedDataCellValue($column, $row)
+	{
+		ob_start();
+		$column->renderDataCell($row);
+		return ob_get_clean();
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function isExtendedSummaryEnabled()
+	{
+		return $this->displayExtendedSummary && !empty($this->extendedSummary['columns']);
 	}
 
 }

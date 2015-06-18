@@ -9,7 +9,6 @@ class ProfileFieldController extends Controller
 	private $_model;
 	private static $_widgets = array();
 	public $defaultAction = 'admin';
-	public $layout='//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -81,7 +80,6 @@ class ProfileFieldController extends Controller
 				}
 			}
 		}
-		//echo '<pre>'; print_r($widgets[1]); die();
 		$js = "
 
 	var name = $('#name'),

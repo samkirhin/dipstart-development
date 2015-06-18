@@ -27,7 +27,7 @@ class TbEditableField extends TbEditable
     public $attribute = null;
    
     /**
-    * @var instance of model that is created always:
+    * @var mixed instance of model that is created always:
     * E.g. if related model does not exist, it will be `newed` to be able to get Attribute label, etc
     * for live update. 
     */
@@ -174,16 +174,19 @@ class TbEditableField extends TbEditable
     {   
     	return in_array('EMongoEmbeddedDocument', class_parents($model, false));
 	}
-	
-    /**
-    * Resolves model and returns array of values:
-    * - staticModel: static class of model, need for checki safety of attribute
-    * - real model: containing attribute. Can be null
-    * - attribute: it will be without dots for activerecords 
-    * 
-    * @param mixed $model
-    * @param mixed $attribute
-    */
+
+	/**
+	 * Resolves model and returns array of values:
+	 * - staticModel: static class of model, need for checki safety of attribute
+	 * - real model: containing attribute. Can be null
+	 * - attribute: it will be without dots for activerecords
+	 *
+	 * @param CActiveRecord $model
+	 * @param string $attribute
+	 *
+	 * @throws CException
+	 * @return array
+	 */
     public static function resolveModels($model, $attribute) 
     {
     	//attribute contains dot: related model, trying to resolve
@@ -201,10 +204,7 @@ class TbEditableField extends TbEditable
                 if($model->$name instanceof CModel) {
                     $model = $model->$name;
                 } else {
-                    //related model not exist! Render text only.
-                    //$this->apply = false;
                     $resolved = false;
-                    //$this->text = $originalText;
                     break;
                 }
             }

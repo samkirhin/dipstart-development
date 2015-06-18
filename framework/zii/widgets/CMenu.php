@@ -269,7 +269,9 @@ class CMenu extends CWidget
 			}
 			if(!isset($item['label']))
 				$item['label']='';
-			if($this->encodeLabel)
+            if(!isset($item['encodeLabel']))
+                $item['encodeLabel']=true;
+			if($this->encodeLabel && $item['encodeLabel'])
 				$items[$i]['label']=CHtml::encode($item['label']);
 			$hasActiveChild=false;
 			if(isset($item['items']))

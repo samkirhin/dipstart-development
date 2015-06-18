@@ -24,12 +24,85 @@
  */
 class Zakaz extends CActiveRecord
 {
-    
+    private $_job_name;
+    private $_cat_name;
+
+    public $dateTimeIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
+    public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
+
+    public function getDbmax_exec_date()
+    {
+        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->max_exec_date, $this->dateTimeIncomeFormat));
+    }
+
+    public function setDbmax_exec_date($datetime)
+    {
+        $this->max_exec_date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+    }
+    public function getDbmanager_informed()
+    {
+        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->manager_informed, $this->dateTimeIncomeFormat));
+    }
+
+    public function setDbmanager_informed($datetime)
+    {
+        $this->manager_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+    }
+    public function getDbauthor_informed()
+    {
+        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->author_informed, $this->dateTimeIncomeFormat));
+    }
+
+    public function setDbauthor_informed($datetime)
+    {
+        $this->author_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+    }
+    public function getDbdate_finish()
+    {
+        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->date_finish, $this->dateTimeIncomeFormat));
+    }
+
+    public function setDbdate_finish($datetime)
+    {
+        $this->date_finish = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+    }
+    public function getDbdate()
+    {
+        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->date, $this->dateTimeIncomeFormat));
+    }
+
+    public function setDbdate($datetime)
+    {
+        $this->date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+    }
+    public function getJobName()
+    {
+        if ($this->_job_name === null && $this->job !== null)
+        {
+            $this->_job_name = $this->job->job_name;
+        }
+        return $this->_job_name;
+    }
+    public function setJobName($value)
+    {
+        $this->_job_name = $value;
+    }
+    public function getCatName()
+    {
+        if ($this->_cat_name === null && $this->job !== null)
+        {
+            $this->_cat_name = $this->category->cat_name;
+        }
+        return $this->_cat_name;
+    }
+    public function setCatName($value)
+    {
+        $this->_cat_name = $value;
+    }
+
     public function init()
     {
         parent::init();
-        
-        $this->status = 1;
     }
 	/**
 	 * @return string the associated database table name
@@ -52,10 +125,10 @@ class Zakaz extends CActiveRecord
 			array('user_id', 'length', 'max'=>11),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
-			array('text, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
+			array('text, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor', 'safe', 'on'=>'search'),
+			array('id, jobName, catName, title, dateCreation, dateFinish, managerInformed', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -82,6 +155,8 @@ class Zakaz extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+            'jobName'=>'Вид работ',
+            'catName'=>'Категория',
 			'user_id' => ProjectModule::t('User'),
 			'category_id' => ProjectModule::t('Category'),
 			'job_id' => ProjectModule::t('Job'),
@@ -122,23 +197,54 @@ class Zakaz extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+        $criteria->with = array('job','category');
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('user_id',$this->user_id,true);
-		$criteria->compare('category_id',$this->category_id);
-		$criteria->compare('job_id',$this->job_id);
+        $criteria->compare('job.job_name',$this->job->job_name);
+		$criteria->compare('category.cat_name',$this->category->cat_name);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('text',$this->text,true);
-		$criteria->compare('date',$this->date,true);
-		$criteria->compare('max_exec_date',$this->max_exec_date,true);
-		$criteria->compare('date_finish',$this->date_finish,true);
-		$criteria->compare('pages',$this->pages);
-		$criteria->compare('add_demands',$this->add_demands,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('executor',$this->executor,true);
+        $criteria->compare('date',$this->date,true);
+        $criteria->compare('manager_informed',$this->date,true);
+        $criteria->compare('date_finish',$this->date_finish,true);
+        $criteria->compare('executor',$this->executor);
+        $criteria->compare('status',$this->status);
+        $sort = new CSort();
+        $sort->defaultOrder = 't.id ASC';
+        $sort->attributes = array(
+            'jobName'=> array(
+                'asc' => 'job.job_name',
+                'desc' => 'job.job_name desc',
+            ),
+            'catName'=> array(
+                'asc' => 'category.cat_name',
+                'desc' => 'category.cat_name desc',
+            ),
+            'id'=> array(
+                'asc' => 't.id',
+                'desc' => 't.id desc',
+            ),
+            'title'=> array(
+                'asc' => 't.title',
+                'desc' => 't.title desc',
+            ),
+            'dateCreation'=> array(
+                'asc' => 't.date',
+                'desc' => 't.date desc',
+            ),
+            'managerInformed'=> array(
+                'asc' => 't.manager_informed',
+                'desc' => 't.manager_informed desc',
+            ),
+            'dateFinish'=> array(
+                'asc' => 't.date_finish',
+                'desc' => 't.date_finish desc',
+            ),
+        );
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'sort'=>$sort,
+            'pagination'=>false,
+        ));
 	}
 
      protected function beforeSave()

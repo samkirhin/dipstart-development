@@ -3,10 +3,10 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name . ' - Login';
+/*$this->pageTitle=Yii::app()->name . ' - Login';
 $this->breadcrumbs=array(
 	'Login',
-);
+);*/
 ?>
 
 <h1>Login</h1>
@@ -19,6 +19,38 @@ $this->breadcrumbs=array(
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
+        'afterValidate'=>'js:function(form, data, hasError) {
+            if (!hasError){
+                str = $("#login-form").serialize() + "&ajax=login-form";
+
+                $.ajax({
+                    type: "POST",
+                    url: "' . Yii::app()->createUrl('user/login') . '",
+                    data: str,
+                    dataType: "json",
+                    beforeSend : function() {
+                        $("#login").attr("disabled",true);
+                    },
+                    success: function(data, status) {
+                        if(data.authenticated)
+                        {
+                            $("#login-form").hide;
+                            window.location = data.redirectUrl;
+                        }
+                        else
+                        {
+                            $.each(data, function(key, value) {
+                                var div = "#"+key+"_em_";
+                                $(div).text(value);
+                                $(div).show();
+                            });
+                            $("#login").attr("disabled",false);
+                        }
+                    },
+                });
+                return false;
+            }
+        }',
 	),
 )); ?>
 

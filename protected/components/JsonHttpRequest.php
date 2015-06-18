@@ -5,7 +5,7 @@
  */
 class JsonHttpRequest extends BaseHttpRequest implements IHttpRequest {
 
-    private $_params = array();
+    public $_params = array();
 
     private function parseParams() {
         $this->_params = CJSON::decode($this->getRawBody());

@@ -54,7 +54,6 @@ class UActiveForm extends CActiveForm
 		parent::run();
 		$cs = Yii::app()->getClientScript();
 		$js = "// UActiveForm\n$('".'#'.implode(', #',$this->disableAjaxValidationAttributes)."').die('focusout','');";
-		//echo '<pre>'; print_r(); die();
 		$cs->registerScript(__CLASS__.'#dialog', $js);
 		
 		if(is_array($this->focus))

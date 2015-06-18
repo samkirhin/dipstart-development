@@ -2,13 +2,7 @@
 
 class ModerationHelper {
 
-	public static function saveToModerate($model, $data, $time) {
-
-		$data[date] = $time[date];
-		$data[date_finish] = $time[date_finish];
-		$data[max_exec_date] = $time[max_exec_date];
-		$data[manager_informed] = $time[manager_informed];
-		$data[author_informed] = $time[author_informed];
+	public static function saveToModerate($model, $post) {
 
 		$moderData = new Moderation;
 		foreach ($model->attributes as $key=>$val) {
@@ -19,7 +13,7 @@ class ModerationHelper {
 			}
 		}
 		$changed = false;
-		foreach ($data as $name=>$value) {
+		foreach ($post as $name=>$value) {
 			if (($value != $moderData->$name) && ($name != 'id')) {
 				$moderData->$name = $value;
 				$changed = true;

@@ -453,6 +453,7 @@ class TbEditable extends CWidget
             'viewseparator', 
             'showbuttons',
             'send',
+            'disabled',
                ) as $option) {
             if ($this->$option !== null) {
                 $options[$option] = $this->$option;
@@ -507,8 +508,6 @@ class TbEditable extends CWidget
         foreach(array('init', 'shown', 'save', 'hidden') as $event) {
             $eventName = 'on'.ucfirst($event);
             if (isset($this->$eventName)) {
-                // CJavaScriptExpression appeared only in 1.1.11, will turn to it later
-                //$event = ($this->onInit instanceof CJavaScriptExpression) ? $this->onInit : new CJavaScriptExpression($this->onInit);
                 $eventJs = (strpos($this->$eventName, 'js:') !== 0 ? 'js:' : '') . $this->$eventName;
                 $script .= "\n.on('".$event."', ".CJavaScript::encode($eventJs).")";
             }
@@ -520,8 +519,8 @@ class TbEditable extends CWidget
 
         //wrap in anonymous function for live update
         if($this->liveTarget) {
-            $script .= "\n $('body').on('ajaxUpdate.editable', function(e){ if(e.target.id == '".$this->liveTarget."') yiiEditable(); });";
-            $script = "(function yiiEditable() {\n ".$script."\n}());";
+            $script2 = "\n$('body').on('ajaxUpdate.editable',function(e){ if(e.target.id == '".$this->liveTarget."') yiiEditable2(); });";
+            $script = "(function yiiEditable() {function yiiEditable2() {\n\t$script\n} $script2 yiiEditable2(); }\n());";
         }
         
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '-' . $selector, $script);
@@ -548,7 +547,7 @@ class TbEditable extends CWidget
             $widget = Yii::app()->widgetFactory->createWidget(
                 $this->getOwner(),
                 'booster.widgets.TbDateTimePicker',
-                array('options' => $this->options['datetimepicker'])
+                array('options' => isset($this->options['datetimepicker']) ? $this->options['datetimepicker'] : array())
             );
             $widget->registerLanguageScript();
         }
@@ -689,8 +688,6 @@ class TbEditable extends CWidget
         } else {
             //support of composite keys: convert to string: e.g. 'id-1_lang-ru'
             if(is_array($pk)) {
-                //below not works in PHP < 5.3, see https://github.com/vitalets/x-editable-yii/issues/39
-                //$pk = join('_', array_map(function($k, $v) { return $k.'-'.$v; }, array_keys($pk), $pk));
                 $buffer = array();
                 foreach($pk as $k => $v) {
                     $buffer[] = $k.'-'.$v;
@@ -702,14 +699,16 @@ class TbEditable extends CWidget
         
         return $this->name.'_'.$pk;
     }
-    
-    /**
-    * Returns is autotext should be applied to widget: 
-    * e.g. for 'select' to display text for id
-    * 
-    * @param mixed $options
-    * @param mixed $type
-    */
+
+	/**
+	 * Returns is autotext should be applied to widget:
+	 * e.g. for 'select' to display text for id
+	 *
+	 * @param mixed $options
+	 * @param mixed $type
+	 *
+	 * @return bool
+	 */
     public static function isAutotext($options, $type) 
     {
          return (!isset($options['autotext']) || $options['autotext'] !== 'never') 
@@ -723,19 +722,21 @@ class TbEditable extends CWidget
             'select2'
          ));
     }
-    
-    /**
-    * Returns php-array as valid x-editable source in format: 
-    * [{value: 1, text: 'text1'}, {...}]
-    * 
-    * See https://github.com/vitalets/x-editable-yii/issues/37
-    * 
-    * @param mixed $models
-    * @param mixed $valueField
-    * @param mixed $textField
-    * @param mixed $groupField
-    * @param mixed $groupTextField
-    */
+
+	/**
+	 * Returns php-array as valid x-editable source in format:
+	 * [{value: 1, text: 'text1'}, {...}]
+	 *
+	 * See https://github.com/vitalets/x-editable-yii/issues/37
+	 *
+	 * @param mixed $models
+	 * @param mixed $valueField
+	 * @param mixed $textField
+	 * @param mixed $groupField
+	 * @param mixed $groupTextField
+	 *
+	 * @return array
+	 */
     public static function source($models, $valueField='', $textField='', $groupField='', $groupTextField='')
     {
         $listData=array();
@@ -792,7 +793,7 @@ class TbEditable extends CWidget
     /**
     * injects ajaxUpdate event into widget
     *
-    * @param mixed $widget
+    * @param TbGridView $widget
     */
     public static function attachAjaxUpdateEvent($widget)
     {

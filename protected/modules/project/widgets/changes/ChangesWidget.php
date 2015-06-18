@@ -14,35 +14,30 @@
  * @property ProjectChanges $changes
  * @property Zakaz          $project
  */
-class ChangesWidget extends CWidget {
+class ChangesWidget extends CWidget
+{
 
     public $changes;
     public $project;
     protected $userObj;
 
-    public function init() {
+    public function init()
+    {
 
         $this->userObj = User::model();
-        $isApprove = ProjectChanges::approveAllowed() ? 'true' : 'false';
-        $isEditable = ($this->userObj->isManager() | $this->userObj->isCustomer() | $this->userObj->isAdmin()) ? 'true' : 'false';
-        $this->changes = new ProjectChanges();
-        Yii::app()->clientScript->registerScriptFile('/js/jQuery.form.js');
-        Yii::app()->clientScript->registerScriptFile('/js/changes.js');
-        Yii::app()->clientScript->registerScript(
-            'changes-script',
-            "var changes = new ChangesController(
-                '{$this->project->id}',
-                {$isEditable},
-                {$isApprove});
-                changes.init();",
-            CClientScript::POS_END);
-        Yii::app()->clientScript->registerCssFile('/css/changes.css');
-
+        $this->changes = new CArrayDataProvider(Yii::app()->db->createCommand()
+            ->select('CONCAT("/' . 'uploads/changes_documents' . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
+            ->from('ProjectChanges')
+            ->where('project_id =' . (int)$this->project->id . ($this->userObj->isAuthor() ? ' AND moderate=1' : ''))
+            ->queryAll(),
+            array(
+                'pagination' => false,
+            ));
     }
 
-    public function run() {
-
-        $this->render('default', array('changes' => $this->changes, 'project' => $this->project, 'user' => $this->userObj));
+    public function run()
+    {
+        if (count($this->changes->rawData) > 0) $this->render('default', array('changes' => $this->changes, 'project' => $this->project, 'user' => $this->userObj));
     }
 
 }

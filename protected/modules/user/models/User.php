@@ -6,9 +6,6 @@ class User extends CActiveRecord
 	const STATUS_ACTIVE=1;
 	const STATUS_BANNED=-1;
 
-	//TODO: Delete for next version (backward compatibility)
-	const STATUS_BANED=-1;
-
 	/**
 	 * The followings are the available columns in table 'users':
 	 * @var integer $id
@@ -179,7 +176,7 @@ class User extends CActiveRecord
 			),
 		));
 	}
-	public function getUserRole($userId = 0) {
+	public function getUserRole($userId = false) {
 		$authorizer = Rights::module()->getAuthorizer();
 		if($userId) {
 			$roles = $authorizer->getAuthItems(2, $userId);
@@ -207,7 +204,7 @@ class User extends CActiveRecord
 	}
 
 	public function isAuthor(){
-		if ($this->getUserRole()=='Author') return TRUE;
+		if (Yii::app()->user->id && $this->getUserRole()=='Author') return true;
 		else    return FALSE;
 	}
 

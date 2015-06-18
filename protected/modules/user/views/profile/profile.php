@@ -20,7 +20,6 @@ $this->renderPartial('_menu',array());
 		$profileFields=ProfileField::model()->forOwner()->sort()->findAll();
 		if ($profileFields) {
 			foreach($profileFields as $field) {
-				//echo "<pre>"; print_r($profile); die();
 			?>
 	<tr>
 		<th class="label"><?php echo CHtml::encode(UserModule::t($field->title)); ?></th>

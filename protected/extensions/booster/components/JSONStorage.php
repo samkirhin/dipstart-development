@@ -189,23 +189,22 @@ class JSONStorage extends CComponent
 	 */
 	public function load()
 	{
-		// load data
-		if (file_exists($this->getFile())) {
-			$json = file_get_contents($this->getFile());
-			if (strlen($json) == 0) {
-				return;
-			}
+		$filename = $this->getFile();
+		if (!file_exists($filename))
+			return;
 
-			$this->data = $this->decode($json);
+		$json = file_get_contents($filename);
+		if (strlen($json) == 0)
+			return;
 
-			if ($this->data === null) {
-				throw new Exception('Error while trying to decode ' . $this->getFile() . '.');
-			}
+		$data = $this->decode($json);
+		if ($data === null)
+			throw new Exception('Error while trying to decode ' . $filename . '.');
 
-			if (!$this->verify()) {
-				throw new Exception($this->getFile() . ' failed checksum validation.');
-			}
-		}
+		$this->data = $data;
+
+		if (!$this->verify())
+			throw new Exception($filename . ' failed checksum validation.');
 	}
 
 	/**
@@ -227,7 +226,7 @@ class JSONStorage extends CComponent
 	 *
 	 * @param string $key the name of the key that will hold the data
 	 * @param array $data the data to save
-	 * @param null $registry the name of the registry
+	 * @param string $registry the name of the registry
 	 *
 	 * @return bool
 	 */
@@ -248,7 +247,7 @@ class JSONStorage extends CComponent
 	 * Retrieves a data value from the registry
 	 *
 	 * @param string $key the name of the key that holds the data
-	 * @param null $registry the registry name
+	 * @param string $registry the registry name
 	 *
 	 * @return mixed the data in the key value, null otherwise
 	 */
@@ -269,7 +268,7 @@ class JSONStorage extends CComponent
 	 * Removes data from a key in the registry
 	 *
 	 * @param string $key the key name that holds the data to remove
-	 * @param null $registry the registry name
+	 * @param string $registry the registry name
 	 *
 	 * @return bool true if successful, false otherwise
 	 */
@@ -292,7 +291,7 @@ class JSONStorage extends CComponent
 	/**
 	 * Retrieves the number of keys in registry
 	 *
-	 * @param null $registry the registry name
+	 * @param string $registry the registry name
 	 *
 	 * @return int the data length
 	 */
@@ -373,9 +372,9 @@ class JSONStorage extends CComponent
 	private function flush()
 	{
 		// check if writeback is needed
-		if ($this->dirty == false) {
+		if ($this->dirty == false)
 			return true;
-		}
+
 		// prepare to writeback to file
 		$data = $this->data;
 		$registry = $this->encode($this->data[self::REGISTRY]);
@@ -383,20 +382,17 @@ class JSONStorage extends CComponent
 		$data[self::META]["hash"] = md5($registry);
 
 		// overwrite existing data
-		if (file_put_contents($this->getFile(), $this->encode($data))) {
-			return true;
-		} else {
-			throw new Exception(strtr(
-				'Unable to write back to {FILE}. Data will be lost!',
-				array('{FILE}' => $this->getFile())
-			));
-		}
+		$written = file_put_contents($this->getFile(), $this->encode($data));
+		if ($written === false)
+			throw new Exception(strtr( 'Unable to write back to {FILE}. Data will be lost!', array('{FILE}' => $this->getFile()) ));
+
+		return true;
 	}
 
 	/**
 	 * JSON encodes the data
 	 *
-	 * @param string $data
+	 * @param mixed $data
 	 *
 	 * @return string
 	 */

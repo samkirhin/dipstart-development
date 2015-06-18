@@ -18,10 +18,6 @@ class SiteController extends Controller
 			'page'=>array(
 				'class'=>'CViewAction',
 			),
-            'yiifilemanagerfilepicker'=>
-			    array('class'=>
-				    'ext.yiifilemanagerfilepicker.YiiFileManagerFilePickerAction'
-            ),
             'yiichat'=>array('class'=>'YiiChatAction'),
 		);
 	}
@@ -32,27 +28,13 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-            /* if user is guest render default start page */
-                if (Yii::app()->user->isGuest) {
-                    $this->render('index', array(
-                        'role' => 'stranger'
-                    ));
-                } else {
-                    $userRole = User::model()->getUserRole();
-                    
-                    switch ($userRole) {
-                        case ('Author'):
-                        case ('Manager'):
-                        case ('Customer'):
-                        case ('Admin'):
-                            $this->render('main'.$userRole);
-                            break;
-                    }
-                }
-
-                // renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		
+        if (Yii::app()->user->isGuest) {
+            $this->render('index', array(
+                'role' => 'stranger'
+            ));
+        } else {
+            $this->render('main');
+        }
 	}
 
 	/**
@@ -93,32 +75,6 @@ class SiteController extends Controller
 			}
 		}
 		$this->render('contact',array('model'=>$model));
-	}
-
-	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
 	}
 
 	/**

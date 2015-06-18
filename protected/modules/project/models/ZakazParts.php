@@ -18,6 +18,18 @@
  */
 class ZakazParts extends CActiveRecord
 {
+    public $dateTimeIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
+    public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
+
+    public function getDbdate()
+    {
+        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->date, $this->dateTimeIncomeFormat));
+    }
+
+    public function setDbdate($datetime)
+    {
+        $this->date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+    }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,7 +52,7 @@ class ZakazParts extends CActiveRecord
 			array('payment', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, proj_id, title, comment, file, date, author_id, payment, show', 'safe', 'on'=>'search'),
+			array('id, proj_id, title, comment, file, dbdate, author_id, payment, show', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,20 +72,21 @@ class ZakazParts extends CActiveRecord
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
+	public function attributeLabels($user=true)
 	{
-		return array(
-			'id' => 'ID',
-			'proj_id' => 'ID Проекта',
-			'title' => 'Название',
-            'file' => 'Файл',
-			'date' => 'Дата',
-            'payment' => 'Оплачено',
-            'comment' => 'Комментарий',
-            'show' => 'Отображение',
-            'author_id' => 'Автор ID',
-            'author' => 'Автор',
-		);
+        $res['title'] = 'Название';
+        $res['file'] = 'Файл';
+        $res['date'] = 'Дата';
+        $res['payment'] = 'Оплачено';
+        $res['comment'] = 'Комментарий';
+        $res['author_id'] = 'Автор ID';
+        $res['author'] = 'Автор';
+        if ($user) {
+            $res['id'] = 'ID';
+            $res['proj_id'] = 'ID Проекта';
+            $res['show'] = 'Отображение';
+        }
+        return $res;
 	}
 
 	/**

@@ -17,7 +17,7 @@ var ProjectPayments = function(orderId) {
         var proj_price = self.p_price.val();
         var work_price = self.w_price.val();
         var receive = self.t_receive.val();
-        $.post('index.php?r=project/payment/savePaymentsToUser', JSON.stringify({
+        $.post('/project/payment/savePaymentsToUser', JSON.stringify({
             'order_id': self.orderId,
             'project_price': proj_price,
             'to_receive': receive
@@ -33,7 +33,7 @@ var ProjectPayments = function(orderId) {
         var proj_price = self.p_price.val();
         var work_price = self.w_price.val();
         var pay = self.t_pay.val();
-        $.post('index.php?r=project/payment/savePaymentsToAuthor', JSON.stringify({
+        $.post('/project/payment/savePaymentsToAuthor', JSON.stringify({
             'order_id': self.orderId,
             'work_price': work_price,
             'to_pay': pay
@@ -54,7 +54,7 @@ var ProjectPayments = function(orderId) {
     });
     
     self.form.find('.send_managers_approve'). on('click', function() {
-        $.post('index.php?r=project/payment/managersApprove', JSON.stringify({
+        $.post('/project/payment/managersApprove', JSON.stringify({
             'order_id': self.orderId
         }), function (response) {
             if (response.data) {
@@ -66,7 +66,7 @@ var ProjectPayments = function(orderId) {
     });
     
     self.form.find('.send_managers_cancel'). on('click', function() {
-        $.post('index.php?r=project/payment/managersCancel', JSON.stringify({
+        $.post('/project/payment/managersCancel', JSON.stringify({
             'order_id': self.orderId
         }), function (response) {
             if (response.data) {

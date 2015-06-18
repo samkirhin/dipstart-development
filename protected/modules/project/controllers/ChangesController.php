@@ -5,7 +5,6 @@ class ChangesController extends Controller {
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout = '//layouts/column2';
 
     /**
      * @return array action filters
@@ -41,8 +40,13 @@ class ChangesController extends Controller {
             ),
         );
     }
+    public function init(){
+        parent::init();
+        header("Content-type: application/json");
+    }
 
-    public function actionList($project) {
+    public function actionList($project)
+    {
 
         /**
          * @var $projects ProjectChanges[]
@@ -52,10 +56,29 @@ class ChangesController extends Controller {
         }
 
         $projects = ProjectChanges::model()->getListChanges((int)$project);
-
-        echo CJSON::encode(array('success' => true, 'data' => $projects));
+        //echo CJSON::encode(array('success' => true, 'data' => $projects));
+        foreach ($projects as $data) {?>
+            <div id="list-changes-block" class="list-changes-block">
+                <div class="list-changes-filename">
+                    <a href="<?php echo $data['file']; ?>"><?php echo $data['filename']; ?></a>
+                </div>
+                <div class="comment list-changes-comment">
+                    <?php echo $data['comment']; ?>
+                </div>
+            </div>
+            <?php if (ProjectChanges::approveAllowed()) { ?>
+                <div class="row">
+                    Модерация
+                    <?php echo CHtml::dropDownList(
+                        'moderate',
+                        $data['moderate'],
+                        array('1' => ProjectModule::t('Approved'), '0' => ProjectModule::t('Not approved')),
+                        array('onchange' => '$.post(\''.Yii::app()->createUrl('/project/changes/approve?id='.$data['id']).'\',{moderate:'.$data['moderate'].'});'));
+                    ?>
+                </div>
+            <?php } ?>
+        <?php }
         Yii::app()->end();
-
     }
 
     public function actionItem($id) {
@@ -81,15 +104,15 @@ class ChangesController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionAdd($ctr) {
+    public function actionAdd($project) {
 
         if (!Yii::app()->request->isAjaxRequest) {
             return false;
         }
+
         $model = new ProjectChanges();
         $model->scenario = 'add';
-        $model->project_id = (int)$ctr;
-
+        $model->project_id = (int)$project;
 
         if (isset($_POST['ProjectChanges'])) {
             $model->attributes = $_POST['ProjectChanges'];

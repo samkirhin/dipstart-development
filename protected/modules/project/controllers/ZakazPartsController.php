@@ -120,28 +120,32 @@ class ZakazPartsController extends Controller
             $this->_prepairJson();
             $partId = $this->_request->getParam('id');
             $model = ZakazParts::model()->findByPk($partId);
-            $model->comment = $this->_request->getParam('comment');
+            foreach ($this->_request->_params as $par=>$val)
+                $model->$par =$val;
+            /*$model->comment = $this->_request->getParam('comment');
             $model->date = $this->_request->getParam('date');
-            $model->title = $this->_request->getParam('title');
-            $files = $this->_request->getParam('files');
-            $path = 'uploads/additions/'.$partId.'/';
-            $this->checkDir($path);
-            foreach($files as $file) {
-                $list = explode('.', $file);
-                $newName = $this->getGuid();
-                $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$file;
-                $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$partId.'/'.$newName.".".$list['1'];
-                $probe = rename($filePath, $fileNewPath);
-                $fileModel = new ZakazPartsFiles();
-                $fileModel->part_id = $model->id;
-                $fileModel->orig_name = $file;
-                $fileModel->file_name = $newName.".".$list['1'];
-                $fileModel->comment = '';
-                $fileModel->save();
+            $model->title = $this->_request->getParam('title');*/
+            if ($this->_request->isParam('files')) {
+                $files = $this->_request->getParam('files');
+                $path = 'uploads/additions/'.$partId.'/';
+                $this->checkDir($path);
+                foreach($files as $file) {
+                    $list = explode('.', $file);
+                    $newName = $this->getGuid();
+                    $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$file;
+                    $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$partId.'/'.$newName.".".$list['1'];
+                    $probe = rename($filePath, $fileNewPath);
+                    $fileModel = new ZakazPartsFiles();
+                    $fileModel->part_id = $model->id;
+                    $fileModel->orig_name = $file;
+                    $fileModel->file_name = $newName.".".$list['1'];
+                    $fileModel->comment = '';
+                    $fileModel->save();
+                }
             }
-            $model->save();
+
             $this->_response->setData(array(
-                'result' => true
+                'result' => $model->save()
             ));
             $this->_response->send();
         }
@@ -199,7 +203,7 @@ class ZakazPartsController extends Controller
             $this->_prepairJson();
             $fileid = $this->_request->getParam('id');
             $file = new ZakazPartsFiles;
-            $result = $file->deleteFile($fileId);
+            $result = $file->deleteFile($fileid);
             unlink($_SERVER['DOCUMENT_ROOT'].'uploads/additions/'.$result['part'].'/'.$result['file']);
             $this->_response->setData(array(
                 'id' => $result['part']
@@ -267,11 +271,12 @@ class ZakazPartsController extends Controller
         {
             Yii::import("ext.EAjaxUpload.qqFileUploader");
             $folder='uploads/additions/temp/';// folder for uploaded files
-            $allowedExtensions = array('jpg', 'gif', 'txt', 'doc', 'docx');//array("jpg","jpeg","gif","exe","mov" and etc...
+            $config['allowedExtensions'] = array('jpg', 'gif', 'txt', 'doc', 'docx');
+            $config['disAllowedExtensions'] = array("exe");
             $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
             $pi = pathinfo($_GET['qqfile']);
             $_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
-            $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+            $uploader = new qqFileUploader($config, $sizeLimit);
             $result = $uploader->handleUpload($folder,true);
             if ($result['success']) {
                 EventHelper::addChanges($_GET['proj_id']);

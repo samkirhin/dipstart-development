@@ -1,4 +1,8 @@
-<h1><?=ProjectModule::t('Zakazs')?></h1>
+<div class="row">
+    <div class="col-md-12">
+        <h3><?=ProjectModule::t('Zakazs')?></h3>
+    </div>
+</div>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'zakaz-grid',
@@ -28,4 +32,5 @@
             'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
         ],
 	),
+    'htmlOptions'=>array('class'=>'col-md-12 table table-striped table-bordered'),
 )); ?>

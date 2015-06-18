@@ -1,15 +1,34 @@
 <?php
 
-class PaymentController extends CController {
-    
+class PaymentController extends Controller {
+
     protected $_request;
     protected $_response;
-    
+
+    public function filters()
+    {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete', // we only allow deletion via POST request
+        );
+    }
+    public function accessRules()
+    {
+        return array(
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions'=>array('admin','apiview','approvefrombookkeeper','managersapprove','managerscancel','savepaymentstoauthor','savepaymentstouser','view'),
+                'users'=>array('admin','manager'),
+            ),
+            array('deny',  // deny all users
+                'users'=>array('*'),
+            ),
+        );
+    }
     protected function _prepairJson() {
         $this->_request = Yii::app()->jsonRequest;
         $this->_response = new JsonHttpResponse();
     }
-    
+
     public function actionView() {
         $user = User::model()->findByPk(Yii::app()->user->id);
         if (!$user->superuser) {
@@ -18,7 +37,7 @@ class PaymentController extends CController {
             $this->render('admin');
         }
     }
-    
+
     public function actionApiView() {
         $user = User::model()->findByPk(Yii::app()->user->id);
         if (!$user->superuser) {
@@ -63,7 +82,7 @@ class PaymentController extends CController {
                 } else {
                     $report['summary'] = $report['summary'] - $row->summ;
                 }
-                
+
             }
             $this->_response->setData( array(
                 'data' => $data,
@@ -72,20 +91,20 @@ class PaymentController extends CController {
             $this->_response->send();
         }
     }
-    
+
     public function actionAdmin() {
         $this->render('admin');
     }
-    
+
     public function actionApproveFromBookkeeper() {
-        
+
         $this->_prepairJson();
         $id = $this->_request->getParam('id');
         $method = $this->_request->getParam('method');
         if (!$method) {
             $method = 'Cash';
         }
-        
+
         $payment = Payment::model()->findByPk($id);
         if (!$payment) {
             $this->_response->setData(array(
@@ -94,14 +113,14 @@ class PaymentController extends CController {
             ));
             Yii::app()->end();
         }
-        
+
         $this->_response->setData(array(
             'result' => $payment->approveFromBookkeeper($method)
         ));
         $this->_response->send();
-        
+
     }
-    
+
     public function actionSavePaymentsToUser() {
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
@@ -115,11 +134,11 @@ class PaymentController extends CController {
             $payment->to_receive = 0;
             $payment->to_pay = 0;
         }
-        
+
         $payment->project_price = $this->_request->getParam('project_price');
         $payment->to_receive   += (int) $this->_request->getParam('to_receive');
         if ($payment->save()) {
-            
+
             $zakaz = Zakaz::model()->findByPk($orderId);
             if ($payment->project_price > 0 && $zakaz && $zakaz->status == 1) {
                 $zakaz->status = 2;
@@ -141,7 +160,7 @@ class PaymentController extends CController {
         }
         $this->_response->send();
     }
-    
+
     public function actionSavePaymentsToAuthor() {
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
@@ -151,8 +170,8 @@ class PaymentController extends CController {
         if (!$payment) {
             $payment = new ProjectPayments;
         }
-        
-        
+
+
         $payment->work_price = $this->_request->getParam('work_price');
         $paying              = (int) $this->_request->getParam('to_pay');
         $payment->to_pay    += $paying;
@@ -184,9 +203,9 @@ class PaymentController extends CController {
             );
         }
         $this->_response->send();
-        
+
     }
-    
+
     public function actionManagersApprove() {
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
@@ -223,11 +242,11 @@ class PaymentController extends CController {
             );
         }
         $this->_response->send();
-        
+
     }
-    
+
     public function actionManagersCancel() {
-        
+
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(

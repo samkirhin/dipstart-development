@@ -8,7 +8,33 @@ Thank you all
 
 Antonio Ramirez.
 
-## YiiBooster latest development alpha  
+## YiiBooster latest development alpha
+- **(enh)** upgrade to select2 3.5.1 and select2-bootstrap-css 1.4.1
+- **(enh)** upgrade to font-awesome 4.3.0
+- **(fix)** fix TbButtonGroupColumn doesn't conform to bootstrap 3+ - #977 
+- **(fix)** fix Userdoc for select2 still references 'bootstrap.widgets'
+- **(enh)** Added support to TbActiveForm to use TbChosen widget (YaroslavMolchan)
+- **(fix)** fix editable events from being reregistered by yiiEditable() #954
+- **(fix)** fix TbGroupGridView support for rowHtmlOptionsExpression #920
+  
+## YiiBooster version 4.1.0
+- **(enh)** upgarde to Bootstrap 3.2.0 - #882
+- **(enh)** upgarde to bootstrap-switch 3.0.2 - #867
+- **(enh)** add callbacks support to TbFileUpload
+- **(enh)** update TbHtml to the latest 1.3.0, and addeing its dependency TbArray  
+- **(enh)** update bootstrap-datepicker to the latest 1.3.1 (fixes #987, #873)
+- **(fix)** TbActiveForm fix "[a]attr" format attribute #856 
+- **(fix)** allow multi relational column - #872  
+- **(fix)** fix TbButton dropdown items -maybe removed in a future release-
+- **(fix)** fix wrong fint size of jQuery UI button type "link"
+- **(fix)** fix TbButton type link
+- **(fix)** fix TbMenu encodes drop down menu items twice - #887
+- **(fix)** fix TbActiveForm allow to overwrite clientOptions[errorCssClass, successCssClass, inputContainer], and errorMessageCssClass - #891
+- **(fix)** fix TbEditable validating datetimepicker options existence in case of type datetime
+- **(fix)** fix datepicker z-index problem - #873
+- **(fix)** fix markdownEditorGroup Preview Button does not function correctly - #900 
+- **(enh)** upgraded to bootstrap markdown 2.5.0
+- **(enh)** upgraded to bootstrap-daterangepicker-1.3.12 - #852
 
 ## YiiBooster version 4.0.1
 - **(fix)** fix gii generated TbActiveForm code - #851

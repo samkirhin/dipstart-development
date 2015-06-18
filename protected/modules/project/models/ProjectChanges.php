@@ -190,7 +190,7 @@ class ProjectChanges extends CActiveRecord {
         $result = Yii::app()->db->createCommand()
                                 ->select('CONCAT("/' . self::FILE_PATH . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
                                 ->from(self::tableName())
-                                ->where('project_id =' . (int)$project_id . ' AND moderate=1')
+                                ->where('project_id =' . (int)$project_id . (User::model()->isAuthor()?' AND moderate=1':''))
                                 ->queryAll();
 
         return CHtml::encodeArray($result);

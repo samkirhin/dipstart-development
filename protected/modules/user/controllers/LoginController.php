@@ -11,6 +11,7 @@ class LoginController extends Controller
 	{
 		if (Yii::app()->user->isGuest) {
 			$model=new UserLogin;
+            $this->performAjaxValidation($model);
 			// collect user input data
 			if(isset($_POST['UserLogin']))
 			{
@@ -25,12 +26,20 @@ class LoginController extends Controller
 				}
 			}
 			// display the login form
+            Yii::app()->theme='admin';
 			$this->render('/user/login',array('model'=>$model));
 		} else
 			$this->redirect(Yii::app()->controller->module->returnUrl);
 	}
-	
-	private function lastViset() {
+    protected function performAjaxValidation($model)
+    {
+        if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+    private function lastViset() {
 		$lastVisit = User::model()->notsafe()->findByPk(Yii::app()->user->id);
 		$lastVisit->lastvisit = time();
 		$lastVisit->save();

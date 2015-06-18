@@ -143,11 +143,19 @@ class TbActiveForm extends CActiveForm {
 		
 		self::addCssClass($this->htmlOptions, 'form' . self::$typeClasses[$this->type]);
 		
-		$this->errorMessageCssClass = 'help-block error';
+		if (!isset($this->errorMessageCssClass)) {
+			$this->errorMessageCssClass = 'help-block error';
+		}
 
-		$this->clientOptions['errorCssClass'] = 'has-error';
-		$this->clientOptions['successCssClass'] = 'has-success';
-		$this->clientOptions['inputContainer'] = 'div.form-group';
+		if(!isset($this->clientOptions['errorCssClass'])){
+			$this->clientOptions['errorCssClass'] = 'has-error';
+		}
+		if(!isset($this->clientOptions['successCssClass'])){
+			$this->clientOptions['successCssClass'] = 'has-success';
+		}
+		if(!isset($this->clientOptions['inputContainer'])){
+			$this->clientOptions['inputContainer'] = 'div.form-group';
+		}
 
 		parent::init();
 	}
@@ -182,7 +190,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated url field group.
 	 * @see CActiveForm::urlField
@@ -209,7 +216,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string the generated email field group.
 	 * @see CActiveForm::emailField
@@ -236,7 +242,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated number filed group.
 	 * @see CActiveForm::numberField
@@ -263,7 +268,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated range field group.
 	 * @see CActiveForm::rangeField
@@ -290,7 +294,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated date field group.
 	 * @see CActiveForm::dateField
@@ -317,7 +320,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated date field group.
 	 * @see CActiveForm::timeField
@@ -344,7 +346,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated date field group.
 	 * @see CActiveForm::telField
@@ -371,7 +372,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated text field group.
 	 * @see CActiveForm::textField
@@ -424,7 +424,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated password field group.
 	 * @see CActiveForm::passwordField
@@ -449,7 +448,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated text area group.
 	 * @see CActiveForm::textArea
@@ -474,7 +472,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated file field group.
 	 * @see CActiveForm::fileField
@@ -501,7 +498,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated radio button group.
 	 * @see CActiveForm::radioButton
@@ -553,7 +549,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated checkbox group.
 	 * @see CActiveForm::checkbox
@@ -605,8 +600,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $data Data for generating the list options (value=>display).
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated drop down list group.
 	 * @see CActiveForm::dropDownList
@@ -617,9 +610,7 @@ class TbActiveForm extends CActiveForm {
 		$this->initOptions($options, true);
 		$widgetOptions = $options['widgetOptions'];
 		
-		// if(!isset($widgetOptions['data']))
-			// throw new CException('$options["widgetOptions"]["data"] must exist');
-		
+
 		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 		
 		$fieldData = array(array($this, 'dropDownList'), array($model, $attribute, $widgetOptions['data'], $widgetOptions['htmlOptions']));
@@ -636,8 +627,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $data
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated list box group.
 	 * @see CActiveForm::listBox
@@ -647,10 +636,7 @@ class TbActiveForm extends CActiveForm {
 		
 		$this->initOptions($options, true);
 		$widgetOptions = $options['widgetOptions'];
-		
-		// if(!isset($widgetOptions['data']))
-			// throw new CException('$options["widgetOptions"]["data"] must exist');
-		
+
 		$this->addCssClass($widgetOptions['htmlOptions'], 'form-control');
 
 		$fieldData = array(array($this, 'listBox'), array($model, $attribute, $widgetOptions['data'], $widgetOptions['htmlOptions']));
@@ -667,8 +653,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $data Value-label pairs used to generate the check box list.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated checkbox list group.
 	 * @see CActiveForm::checkboxList
@@ -680,9 +664,7 @@ class TbActiveForm extends CActiveForm {
 
 		$widgetOptions = $options['widgetOptions']['htmlOptions'];
 		
-		// if(!isset($options['widgetOptions']['data']))
-			// throw new CException('$options["widgetOptions"]["data"] must exist');
-		
+
 		if (!isset($widgetOptions['labelOptions']['class']))
 			$widgetOptions['labelOptions']['class'] = 'checkbox';
 		
@@ -711,8 +693,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $data Value-label pairs used to generate the radio button list.
-	 * @param array $htmlOptions Additional HTML attributes.
 	 * @param array $options Group attributes.
 	 * @return string The generated radio button list group.
 	 * @see CActiveForm::radioButtonList
@@ -724,9 +704,7 @@ class TbActiveForm extends CActiveForm {
 		
 		$widgetOptions = $options['widgetOptions']['htmlOptions'];
 		
-		// if(!isset($options['widgetOptions']['data']))
-			// throw new CException('$options["widgetOptions"]["data"] must exist');
-		
+
 		if (!isset($widgetOptions['labelOptions']['class']))
 			$widgetOptions['labelOptions']['class'] = 'radio';
 		
@@ -755,7 +733,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated toggle button group.
 	 * @see TbToggleButton
@@ -775,7 +752,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated date picker group.
 	 * @see TbDatePicker
@@ -795,7 +771,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated date range picker group.
 	 * @see TbDateRangePicker
@@ -815,7 +790,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated time picker group.
 	 * @see TbTimePicker
@@ -835,7 +809,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated date-time picker group.
 	 * @see TbDateTimePicker
@@ -855,7 +828,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated select2 group.
 	 * @see TbSelect2
@@ -867,6 +839,26 @@ class TbActiveForm extends CActiveForm {
 	}
 
 	/**
+	 * Generates a chosen group for a model attribute.
+	 *
+	 * This method is a wrapper for {@link TbChosen} widget and {@link customFieldGroup}.
+	 * Please check {@link TbChosen} documentation for detailed information about $widgetOptions.
+	 * About $options argument parameters see {@link TbActiveForm} documentation.
+	 *
+	 * @param CModel $model The data model.
+	 * @param string $attribute The attribute.
+	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
+	 * @param array $options Group attributes.
+	 * @return string The generated chosen group.
+	 * @see TbChosen
+	 * @see customFieldGroup
+	 */
+	public function chosenGroup($model, $attribute, $options = array()) {
+		
+		return $this->widgetGroupInternal('booster.widgets.TbChosen', $model, $attribute, $options);
+	}
+        
+	/**
 	 * Generates a redactor editor group for a model attribute.
 	 *
 	 * This method is a wrapper for {@link TbRedactorJs} widget and {@link customFieldGroup}.
@@ -875,7 +867,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated redactor editor group.
 	 * @see TbRedactorJs
@@ -895,7 +886,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated html5 editor group.
 	 * @see TbHtml5Editor
@@ -915,7 +905,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated markdown editor group.
 	 * @see TbMarkdownEditorJs
@@ -935,7 +924,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated CKEditor group.
 	 * @see TbCKEditor
@@ -955,7 +943,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated type-ahead group.
 	 * @see TbTypeahead
@@ -975,7 +962,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated masked text field group.
 	 * @see CMaskedTextField
@@ -995,7 +981,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated color picker group.
 	 * @see TbColorPicker
@@ -1016,15 +1001,13 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $htmlOptions Additional HTML attributes for captcha text field.
-	 * @param array $widgetOptions List of initial property values for the CCaptcha widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated color picker group.
 	 * @see CCaptcha
 	 * @see CActiveForm::textField
 	 * @see customFieldGroup
 	 */
-	public function captchaGroup($model, $attribute, $htmlOptions = array(), $options = array()) {
+	public function captchaGroup($model, $attribute, $options = array()) {
 		
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
@@ -1047,7 +1030,6 @@ class TbActiveForm extends CActiveForm {
 	 *
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated color picker group.
 	 * @see TbPassfield
@@ -1108,12 +1090,10 @@ class TbActiveForm extends CActiveForm {
 	 * @param string $className The widget class name or class in dot syntax (e.g. application.widgets.MyWidget).
 	 * @param CModel $model The data model.
 	 * @param string $attribute The attribute.
-	 * @param array $widgetOptions List of initial property values for the widget (Property Name => Property Value).
 	 * @param array $options Group attributes.
 	 * @return string The generated widget group.
 	 */
 	protected function widgetGroupInternal($className, &$model, &$attribute, &$options) {
-		// if(empty($options['widgetOptions']['mask'])) exit;
 		$this->initOptions($options);
 		$widgetOptions = $options['widgetOptions'];
 		$widgetOptions['model'] = $model;
@@ -1204,15 +1184,19 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function horizontalGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array(); // array('class' => 'form-group');
+		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array();
 		self::addCssClass($groupOptions, 'form-group');
 		
-		if ($model->hasErrors($attribute))
+		$_attribute = $attribute;
+		CHtml::resolveName($model, $_attribute);
+		if ($model->hasErrors($_attribute))
 			self::addCssClass($groupOptions, 'has-error');
 		
 		echo CHtml::openTag('div', $groupOptions);
 
-		self::addCssClass($options['labelOptions'], 'col-sm-3 control-label');
+		if (!isset($options['labelOptions']['class']) || !preg_match('/col-\w{2}-\d{1,2}/', $options['labelOptions']['class']))
+			$this->addCssClass($options['labelOptions'], 'col-sm-3');
+		self::addCssClass($options['labelOptions'], 'control-label');
 		if (isset($options['label'])) {
 			if (!empty($options['label'])) {
 				echo CHtml::label($options['label'], CHtml::activeId($model, $attribute), $options['labelOptions']);
@@ -1223,12 +1207,12 @@ class TbActiveForm extends CActiveForm {
 			echo $this->labelEx($model, $attribute, $options['labelOptions']);
 		}
 		
-		// TODO: is this good to be applied in vertical and inline?
 		if(isset($options['wrapperHtmlOptions']) && !empty($options['wrapperHtmlOptions']))
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
 		else 
 			$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
-		$this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
+		if (!isset($wrapperHtmlOptions['class']) || !preg_match('/col-\w{2}-\d{1,2}/', $wrapperHtmlOptions['class']))
+			$this->addCssClass($wrapperHtmlOptions, 'col-sm-9');
 		echo CHtml::openTag('div', $wrapperHtmlOptions);
 
 		if (!empty($options['prepend']) || !empty($options['append'])) {
@@ -1271,7 +1255,9 @@ class TbActiveForm extends CActiveForm {
 		$groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array();
 		self::addCssClass($groupOptions, 'form-group');
 		
-		if ($model->hasErrors($attribute))
+		$_attribute = $attribute;
+		CHtml::resolveName($model, $_attribute);
+		if ($model->hasErrors($_attribute))
 			self::addCssClass($groupOptions, 'has-error');
 		
 		echo CHtml::openTag('div', $groupOptions);
@@ -1285,6 +1271,12 @@ class TbActiveForm extends CActiveForm {
 			echo $this->labelEx($model, $attribute, $options['labelOptions']);
 		}
 	
+		if(isset($options['wrapperHtmlOptions']) && !empty($options['wrapperHtmlOptions']))
+			$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
+		else
+			$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
+		echo CHtml::openTag('div', $wrapperHtmlOptions);
+		
 		if (!empty($options['prepend']) || !empty($options['append'])) {
 			$this->renderAddOnBegin($options['prepend'], $options['append'], $options['prependOptions']);
 		}
@@ -1308,7 +1300,7 @@ class TbActiveForm extends CActiveForm {
 			echo CHtml::tag($this->hintTag, $options['hintOptions'], $options['hint']);
 		}
 		
-		echo '</div>';
+		echo '</div></div>';
 	}
 
 	/**
@@ -1321,8 +1313,18 @@ class TbActiveForm extends CActiveForm {
 	 */
 	protected function inlineGroup(&$fieldData, &$model, &$attribute, &$options) {
 		
-        echo '<div class="form-group">';
+        $groupOptions = isset($options['groupOptions']) ? $options['groupOptions']: array(); // array('class' => 'form-group');
+		self::addCssClass($groupOptions, 'form-group');
+		
+		echo CHtml::openTag('div', $groupOptions);
 
+		 // TODO: do we need a wrapper for inline groups?
+        if(isset($options['wrapperHtmlOptions']) && !empty($options['wrapperHtmlOptions']))
+        	$wrapperHtmlOptions = $options['wrapperHtmlOptions'];
+        else
+        	$wrapperHtmlOptions = $options['wrapperHtmlOptions'] = array();
+        echo CHtml::openTag('div', $wrapperHtmlOptions);
+        
 		if (!empty($options['prepend']) || !empty($options['append']))
 			$this->renderAddOnBegin($options['prepend'], $options['append'], $options['prependOptions']);
 
@@ -1339,7 +1341,7 @@ class TbActiveForm extends CActiveForm {
             echo $this->error($model, $attribute, $options['errorOptions'], $options['enableAjaxValidation'], $options['enableClientValidation']);
         }
 
-        echo "</div>\r\n"; 
+        echo "</div></div>\r\n"; 
 	}
 
 	/**
@@ -1390,6 +1392,7 @@ class TbActiveForm extends CActiveForm {
 
 	/**
 	 * @param array $options
+	 * @param bool $initData
 	 */
 	protected function initOptions(&$options, $initData = false) {
 		

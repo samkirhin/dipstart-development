@@ -169,6 +169,10 @@ class TbButton extends TbWidget {
 		if ($this->isValidContext()) {
 			$classes[] = 'btn-' . $this->getContextClass();
 		}
+		
+		if($this->buttonType == self::BUTTON_LINK) {
+			$classes[] = 'btn-link';
+		}
 
 		$validSizes = array(
 			self::SIZE_LARGE, 
@@ -237,7 +241,7 @@ class TbButton extends TbWidget {
 
 		if (isset($this->icon)) { // no need for implode as newglyphicon only supports one icon
 			if (strpos($this->icon, 'icon') === false && strpos($this->icon, 'fa') === false) {
-				$this->icon = 'glyphicon glyphicon-' . $this->icon; // implode(' glyphicon-', explode(' ', $this->icon));
+				$this->icon = 'glyphicon glyphicon-' . $this->icon;
 				$this->label = '<span class="' . $this->icon . '"></span> ' . $this->label;
 			} else { // to support font awesome icons
 				$this->label = '<i class="' . $this->icon . '"></i> ' . $this->label;
@@ -290,8 +294,9 @@ class TbButton extends TbWidget {
 			return;
 		}
 		
+		// TODO: I think we have to drop this -allowing button to has items- it is the same as TbButtonGroup with bugs!
 		if ($this->hasDropdown()) {
-			
+			echo '<div class="btn-group">';
 			echo $this->createButton();
 		
 			$this->controller->widget(
@@ -303,6 +308,7 @@ class TbButton extends TbWidget {
 					'id' => isset($this->dropdownOptions['id']) ? $this->dropdownOptions['id'] : null,
 				)
 			);
+			echo '</div>';
 		} else {
 			echo $this->createButton();
 		}
@@ -361,11 +367,13 @@ class TbButton extends TbWidget {
 				return $this->createToggleButton('checkbox');
 				
 			default:
-			case self::BUTTON_BUTTON:
 				return CHtml::htmlButton($this->label, $this->htmlOptions);
 		}
 	}
 	
+	/**
+	 * @param string $toggleType
+	 */
 	protected function createToggleButton($toggleType) {
 		
 		$html = '';

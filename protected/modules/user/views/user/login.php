@@ -56,7 +56,7 @@ $this->breadcrumbs=array(
 </div><!-- form -->
 
 
-<?php
+<?php /*
 $form = new CForm(array(
     'elements'=>array(
         'username'=>array(
@@ -79,4 +79,4 @@ $form = new CForm(array(
         ),
     ),
 ), $model);
-?>
+*/?>

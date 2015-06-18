@@ -31,7 +31,7 @@ class PaymentWidget extends CWidget {
         if ($userRole == 'Admin') {
             $userRole = 'Manager';
         }
-        Yii::app()->controller->renderPartial('application.modules.project.widgets.payment.views.view'.$userRole, array(
+        $this->render('view'.$userRole, array(
             'model'     => $payments,
             'projectId' => $this->projectId,
             'zakaz'     => Zakaz::model()->findByPk($this->projectId)

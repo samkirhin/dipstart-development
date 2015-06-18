@@ -13,4 +13,22 @@ defined('YII_DEBUG') or define('YII_DEBUG',true);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
 require_once($yii);
+//xhprof_enable();
 Yii::createWebApplication($config)->run();
+//$xhprof_data = xhprof_disable();
+//$XHPROF_ROOT = realpath(dirname(__FILE__) .'/../xhprof');
+//include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+//include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+
+// save raw data for this profiler run using default
+// implementation of iXHProfRuns.
+//$xhprof_runs = new XHProfRuns_Default();
+
+// save the run under a namespace "xhprof_foo"
+//$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_dipstart");
+
+/*echo "---------------\n".
+    "Assuming you have set up the http based UI for \n".
+    "XHProf at some address, you can view run at \n".
+    "<a href='http://xhprof.coolfire.pp.ua/xhprof_html/index.php?run=$run_id&source=xhprof_dipstart'>here</a>\n".
+    "---------------\n";

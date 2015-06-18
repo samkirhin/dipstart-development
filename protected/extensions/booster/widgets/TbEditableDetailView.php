@@ -18,23 +18,6 @@ Yii::import('zii.widgets.CDetailView');
  */
 class TbEditableDetailView extends CDetailView
 {
-    /**
-    * @var string submit url for all editables in detailview
-    */
-    /*
-     commented due to using magic methods and setting any of default TbEditableField param
-     from top level config of TbEditableDetailView
-    */
-    //public $url = null;
-
-    /**
-    * @var array additional params to send on server
-    */
-    /*
-     commented due to using magic methods and setting any of default TbEditableField param
-     from top level config of TbEditableDetailView
-    */
-    //public $params = null;
 
     public function init()
     {
@@ -105,26 +88,42 @@ class TbEditableDetailView extends CDetailView
      *
      * These properties can also be set for the {@link TbEditableDetailView} as default values.
      */
-    private function getEditableProperties() {
-        if(!isset($this->_editableProperties)) {
+    private function getEditableProperties()
+    {
+        if(!isset($this->_editableProperties))
+        {
             $reflection = new ReflectionClass('TbEditableField');
-            $this->_editableProperties = array_map(function($d){return $d->getName();},$reflection->getProperties());
+            $this->_editableProperties = array_map(
+	            function(ReflectionProperty $d) { return $d->getName(); },
+	            $reflection->getProperties()
+            );
         }
         return $this->_editableProperties;
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see CComponent::__get()
-     */
+	/**
+	 * (non-PHPdoc)
+	 * @see CComponent::__get()
+	 *
+	 * @param string $key
+	 *
+	 * @throws CException
+	 * @return mixed
+	 */
     public function __get($key) {
         return (array_key_exists($key,$this->_data) ? $this->_data[$key] : parent::__get($key));
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see CComponent::__set()
-     */
+	/**
+	 * (non-PHPdoc)
+	 * @see CComponent::__set()
+	 *
+	 * @param string $key
+	 * @param mixed $value
+	 *
+	 * @throws CException
+	 * @return mixed|void
+	 */
     public function __set($key, $value) {
         if(in_array($key,$this->getEditableProperties())) {
             $this->_data[$key] = $value;
@@ -133,10 +132,14 @@ class TbEditableDetailView extends CDetailView
         }
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see CComponent::__isset()
-     */
+	/**
+	 * (non-PHPdoc)
+	 * @see CComponent::__isset()
+	 *
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
     public function __isset($name) {
         return array_key_exists($name,$this->_data)||parent::__isset($name);
     }

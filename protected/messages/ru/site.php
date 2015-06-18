@@ -78,7 +78,6 @@ return array(
     'Captcha' => 'Каптча',
     'Please enter the letters as they are shown in the image above.' => 'Пожалуйста, введите буквы как на картинке выше.',
     'Letters are not case-sensitive.' => 'Регистр не имеет значения.',
-    'Select a Background image' => '',
     'Upload Files' => 'Загрузить файлы',
     'click here' => 'жмите сюда',
     'Uploading your file(s), please wait...' => 'Подождите, идет загрузка...',
@@ -93,7 +92,13 @@ return array(
     'Inbox' => 'Входящие',
     'Sent' => 'Исходящие',
     'Trash' => 'Корзина',
-
-
-
+    'Personal area'=>'Личный кабинет',
+    'Personal account'=>'Личный счет',
+    'Profile'=>'Профиль',
+    'Orders'=>'Заказы',
+    'New orders'=>'Новые заказы',
+    'My orders'=>'Мои заказы',
+    'Create order'=>'Создать заказ',
+    'Order statuses'=>'Статусы заазов',
+    'Events'=>'События',
 );

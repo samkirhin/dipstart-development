@@ -125,7 +125,7 @@ table.table {
 
 .grid-view .button-column {
     text-align: center;
-    width: 65px;
+    width: 67px;
 }
 
 .grid-view .checkbox-column {
@@ -565,4 +565,8 @@ Kure2012.
 .form.gii .tooltip {
     opacity: 1;
     font-size: 1em;
+}
+
+label.radio {
+	padding-left: 20px;
 }

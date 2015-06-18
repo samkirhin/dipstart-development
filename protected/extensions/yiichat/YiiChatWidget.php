@@ -134,12 +134,9 @@ class YiiChatWidget extends CWidget {
 			echo CJSON::encode($data);
 		}
 		if(($action == 'timer') && $identity && $chat_id){
-			$posts = $model->yiichat_list_posts(
-					$chat_id, $identity, $this->_getPost('last_id'), $data);
-			if($posts==null)
-				$posts = array();
-			$data = array('chat_id'=>$chat_id, 'identity'=>$identity,
-				'posts'=>$posts);
+			$posts = $model->yiichat_list_posts($chat_id, $identity, $this->_getPost('last_id'), $data);
+			if($posts==null) $posts = array();
+			$data = array('chat_id'=>$chat_id, 'identity'=>$identity,'posts'=>$posts);
 			header("Content-type: application/json");
 			echo CJSON::encode($data);
 		}

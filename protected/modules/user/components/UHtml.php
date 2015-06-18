@@ -71,7 +71,6 @@ class UHtml extends CHtml
                 
                 if ($model->$attribute != '0' && isset($model->$attribute))
                 {
-                		//echo "<pre>"; print_r(date('Y-m-d',$model->$attribute)); die();
                         // intval removes leading zero
                         $day = intval(date('j',$model->$attribute));
                         $month = intval(date('m',$model->$attribute));
@@ -171,8 +170,6 @@ class UHtml extends CHtml
                         $year = '0000';
                 }
                 
-                //echo "<pre>"; print_r(array($day,$month,$year)); die();
-
                 $return  = parent::dropDownList($htmlOptions['name'].'[day]', $day,$dayOptions);
                 $return .= parent::dropDownList($htmlOptions['name'].'[month]', $month,$monthOptions);
                 $return .= parent::dropDownList($htmlOptions['name'].'[year]', $year,$yearOptions);

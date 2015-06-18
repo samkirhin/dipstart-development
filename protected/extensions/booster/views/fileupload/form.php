@@ -4,11 +4,12 @@
  *
  * @var TbFileUpload $this
  * @var array $htmlOptions
+ * @var string $name
  */
 ?>
 <?php echo CHtml::beginForm($this->url, 'post', $this->htmlOptions); ?>
 <div class="fileupload-buttonbar">
-    <div class="span7">
+    <div class="col-sm-7">
         <!-- The fileinput-button span is used to style the file input field as button -->
 		<span class="btn btn-success fileinput-button"> <i class="icon-plus icon-white"></i> <span>Add files...</span>
 			<?php
@@ -32,7 +33,7 @@
         </button>
         <input type="checkbox" class="toggle">
     </div>
-    <div class="span5 fileupload-progress fade">
+    <div class="col-sm-5 fileupload-progress fade">
         <!-- The global progress bar -->
         <div class="progress progress-success progress-striped active" role="progressbar">
             <div class="bar" style="width:0;"></div>
@@ -45,7 +46,7 @@
 <div class="fileupload-loading"></div>
 <br>
 <!-- The table listing the files available for upload/download -->
-<div class="row-fluid">
+<div class="container-fluid" style="margin-bottom: 15px;">
     <table class="table table-striped">
         <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
     </table>

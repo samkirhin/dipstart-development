@@ -14,6 +14,11 @@ return array(
     'language' => 'ru',
 	// preloading 'log' component
 	'preload'=>array('log','booster'),
+    'theme' => explode('.',$_SERVER['SERVER_NAME'])[0],
+    'aliases'=>array(
+		'bootstrap'=>realpath(__DIR__.'/../extensions/yiistrap'),
+		'booster'=>realpath(__DIR__.'/../extensions/booster'),
+	),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -33,7 +38,8 @@ return array(
         'application.extensions.helpers.EDownloadHelper',
         'application.extensions.yiichat.*',
         'ext.YiiMailer.YiiMailer',
-
+        'bootstrap.helpers.TbHtml',
+        'ext.juidatetimepicker.EJuiDateTimePicker',
     ),
 	'modules'=>array(
         'SimplePaypal' => array(
@@ -49,46 +55,53 @@ return array(
             'tableProfiles' => 'Profiles',
             'tableProfileFields' => 'ProfilesFields',
         ),
+        'organization',
         'rights',
         'project',
-        'mailbox'=>
-            array(
-            'userClass' => 'User',
-            'userIdColumn' => 'id',
-            'usernameColumn' =>  'username',
-            ),
        // uncomment the following to enable the Gii tool
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'158358',
+			'password'=>'sunrise',
+            'generatorPaths' => array('booster.gii'),
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1','217.175.0.36'),
+			'ipFilters'=>array('127.0.0.1','::1','192.168.0.*','217.175.0.36'),
 		),
-
 	),
 	// application components
 	'components'=>array(
-            'user'=>array(
-                'class' => 'RWebUser',
-                'loginUrl'=>array('user/login'),
-                'allowAutoLogin'=>false,
+        'clientScript' => array
+        (
+            'class' => 'CClientScript',
+            'scriptMap' => array
+            (
+                'jquery.js' => '/js/jquery-1.11.2.js',
             ),
-            'authManager'=>array(
-                'class'=>'RDbAuthManager',
-                'defaultRoles' => array('Guest')
-            ),
-            'booster' => array(
-                'class' => 'application.extensions.booster.components.Booster',
-            ),
-            'fileman' => array(
-                            'class'=>'application.extensions.yiifilemanager.YiiDiskFileManager',
-                            'storage_path' => 'uploads',
-            ),
-            'jsonRequest' => array(
-                'class' => 'JsonHttpRequest'
-            ),
+        ),
+        'user'=>array(
+            'class' => 'RWebUser',
+            'loginUrl'=>array('user/login'),
+            'allowAutoLogin'=>false,
+        ),
+        'authManager'=>array(
+            'class'=>'RDbAuthManager',
+            'defaultRoles' => array('Guest'),
+            'connectionID'=>'db'
+        ),
+        'bootstrap' => array(
+            'class' => 'bootstrap.components.TbApi',
+        ),
+        'booster' => array(
+            'class' => 'application.extensions.booster.components.Booster',
+            'minify' => false,
+        ),
+        'fileman' => array(
+                        'class'=>'application.extensions.yiifilemanager.YiiDiskFileManager',
+                        'storage_path' => 'uploads',
+        ),
+        'jsonRequest' => array(
+            'class' => 'JsonHttpRequest'
+        ),
 		// uncomment the following to enable URLs in path-format
-		/*
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -96,9 +109,9 @@ return array(
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
+            'showScriptName'=>false,
 		),
 
-        */
         //dev server
         'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=dipstart',

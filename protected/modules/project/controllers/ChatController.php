@@ -6,7 +6,7 @@ class ChatController extends Controller {
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/main';
 	/**
 	 * @return array action filters
 	 */
@@ -32,7 +32,7 @@ class ChatController extends Controller {
 				'users'=>array('*'),
 			),*/
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index'),
+				'actions'=>array('index','upload'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -51,6 +51,7 @@ class ChatController extends Controller {
 	public function actionIndex($orderId) {
 
         Yii::app()->clientScript->registerScriptFile('/js/chat.js');
+        Yii::app()->session['project_id'] = $orderId;
 
 		$order = Zakaz::model()->findByPk($orderId);
 
@@ -58,24 +59,6 @@ class ChatController extends Controller {
             throw new CHttpException(404, 'Не найден');
         }
         
-        $times = array();
-		$times['date']['date'] = date("Y-m-d", $order->date);
-		$times['date']['hours'] = date("H", $order->date);
-		$times['date']['minutes'] = date("i", $order->date);
-		$times['date_finish']['date'] = date("Y-m-d", $order->date_finish);
-		$times['date_finish']['hours'] = date("H", $order->date_finish);
-		$times['date_finish']['minutes'] = date("i", $order->date_finish);
-		
-		$times['max_exec_date']['date'] = date("Y-m-d", $order->max_exec_date);
-		$times['max_exec_date']['hours'] = date("H", $order->max_exec_date);
-		$times['max_exec_date']['minutes'] = date("i", $order->max_exec_date);
-		$times['manager_informed']['date'] = date("Y-m-d", $order->manager_informed);
-		$times['manager_informed']['hours'] = date("H", $order->manager_informed);
-		$times['manager_informed']['minutes'] = date("i", $order->manager_informed);
-		$times['author_informed']['date'] = date("Y-m-d", $order->author_informed);
-		$times['author_informed']['hours'] = date("H", $order->author_informed);
-		$times['author_informed']['minutes'] = date("i", $order->author_informed);
-
 		$model = new ProjectMessages;
 		$model->sender = Yii::app()->user->id;
 		$model->moderated = 0;
@@ -88,11 +71,10 @@ class ChatController extends Controller {
 					$model->recipient = 1;
 				break;
 				case 'customer':
+                    if(User::model()->isCustomer())
+                        $model->recipient = 2;
 					if(User::model()->isAuthor())
-						$model->recipient = Zakaz::model()->findByPk($model->order)->user_id;
-					if(User::model()->isCustomer())
-						$model->recipient = print_r(Zakaz::model()->findByPk($model->order)->executor);
-					if ($model->recipient==0) throw new CHttpException(404, 'Автор не назначен');
+						$model->recipient = 3;
 				break;
 			}
 			$model->save();
@@ -164,12 +146,13 @@ class ChatController extends Controller {
         }
         $parts = array();
         if (User::model()->isAdmin() || User::model()->isManager()) {
-            $models = new CActiveDataProvider('ZakazParts',array('criteria'=>array('proj_id'=>$orderId)));
+            $parts = new CActiveDataProvider('ZakazParts',array('criteria'=>array('proj_id'=>$orderId)));
         } elseif (User::model()->isCustomer() || User::model()->isAuthor()) {
-            $models = new CActiveDataProvider('ZakazParts',array(
+            $parts = new CActiveDataProvider('ZakazParts',array(
                 'criteria'=>array(
                     //'select'=>'orig_name',
                     'condition'=>'proj_id='.$orderId.' AND `show` IN (1'.(User::model()->isAuthor()?',0)':')'),
+                    'select'=>array('id','title','file','date','comment','author_id','proj_id'),
                 ),
             ));
         }
@@ -177,13 +160,10 @@ class ChatController extends Controller {
 		$this->render('index', array(
 			'model' => $model,
             'order' => $order,
-            'parts' => $models,
+            'parts' => $parts,
 			'messages' => $messages,
-			'orderId' => $orderId,
 			'executor' => Zakaz::getExecutor($orderId),
-			'ordererId' =>$order->user_id,
             'attributes' => $attributes,
-            'times' => $times,
             'middle_button' => $middle_button
 		));
 	}
@@ -241,9 +221,26 @@ class ChatController extends Controller {
 	/**
 	 * Переназначить сообщение автору заказа
 	 */
-	public function actionReaddress($messageId, $ordererId) {
-		$model = ProjectMessages::model()->findByPk($messageId);
-		$model->recipient = $ordererId;
-		$model->save();
-	}
+    public function actionReaddress($messageId, $ordererId) {
+        $model = ProjectMessages::model()->findByPk($messageId);
+        $model->recipient = $ordererId;
+        $model->save();
+    }
+	public function actionUpload() {
+        Yii::import("ext.EAjaxUpload.qqFileUploader");
+        $folder='uploads/'.$_GET['id'].'/';// folder for uploaded files
+        $config['allowedExtensions'] = array('jpg', 'gif', 'txt', 'doc', 'docx');
+        $config['disAllowedExtensions'] = array("exe");
+        $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
+        $uploader = new qqFileUploader($config, $sizeLimit);
+        $_GET['qqfile']='#pre#'.$_GET['qqfile'];
+        $result = $uploader->handleUpload($folder,true);
+        if ($result['success']) {
+            EventHelper::addChanges($_GET['proj_id']);
+        }
+        $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+        $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
+        $fileName=$result['filename'];//GETTING FILE NAME
+        echo $return;// it's array
+    }
 }

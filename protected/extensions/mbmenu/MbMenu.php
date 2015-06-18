@@ -15,8 +15,8 @@ class MbMenu extends CMenu
 {
     private $baseUrl;
     private $nljs;
-    
-    public $cssFile;       
+
+    public $cssFile;
     public $activateParents=true;
     
     /**
@@ -145,10 +145,16 @@ class MbMenu extends CMenu
 	  	  foreach($items as $item)
 	  	  {
 	  	  	echo CHtml::openTag('li', isset($item['itemOptions']) ? $item['itemOptions'] : array());
+              /*
 	  	  	if(isset($item['url']))
 	  	  		echo CHtml::link('<span>'.$item['label'].'</span>',$item['url'],isset($item['linkOptions']) ? $item['linkOptions'] : array());
 	  	  	else
 	  	  		echo CHtml::link('<span>'.$item['label'].'</span>',"javascript:void(0);",isset($item['linkOptions']) ? $item['linkOptions'] : array());
+              */
+              if(isset($item['url']))
+                  echo CHtml::link($item['label'],$item['url'],isset($item['linkOptions']) ? $item['linkOptions'] : array());
+              else
+                  echo CHtml::link('<span>'.$item['label'].'</span>',"javascript:void(0);",isset($item['linkOptions']) ? $item['linkOptions'] : array());
 	  	  	if(isset($item['items']) && count($item['items']))
 	  	  	{
 	  	  		echo "\n".CHtml::openTag('ul',$this->submenuHtmlOptions)."\n";
@@ -209,16 +215,16 @@ class MbMenu extends CMenu
     */
     public function run()
     {
-          $this->publishAssets();
-          $this->registerClientScripts();
-			    $this->registerCssFile($this->cssFile);    
-          $htmlOptions['id']='nav-container';
-          echo CHtml::openTag('div',$htmlOptions)."\n";          
-          $htmlOptions['id']='nav-bar';
-          echo CHtml::openTag('div',$htmlOptions)."\n";
-          parent::run();
-          echo CHtml::closeTag('div');
-          echo CHtml::closeTag('div');
+        $this->publishAssets();
+        $this->registerClientScripts();
+        //$this->registerCssFile($this->cssFile);
+        $htmlOptions['id']='nav-container';
+        echo CHtml::openTag('div',$htmlOptions)."\n";
+        $htmlOptions['id']='nav-bar';
+        echo CHtml::openTag('div',$htmlOptions)."\n";
+        parent::run();
+        echo CHtml::closeTag('div');
+        echo CHtml::closeTag('div');
     }
 	
 }

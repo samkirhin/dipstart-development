@@ -60,13 +60,16 @@ class qqUploadedFileForm {
 
 class qqFileUploader {
     private $allowedExtensions = array();
+    private $disAllowedExtensions = array();
     private $sizeLimit = 10485760;
     private $file;
 
-    function __construct(array $allowedExtensions = array(), $sizeLimit = 10485760){
-        $allowedExtensions = array_map("strtolower", $allowedExtensions);
+    function __construct(array $config = array(), $sizeLimit = 10485760){
+        $allowedExtensions = array_map("strtolower", $config['allowedExtensions']);
+        $disAllowedExtensions = array_map("strtolower", $config['disAllowedExtensions']);
 
         $this->allowedExtensions = $allowedExtensions;
+        $this->disAllowedExtensions = $disAllowedExtensions;
         $this->sizeLimit = $sizeLimit;
 
         $this->checkServerSettings();
@@ -128,10 +131,11 @@ class qqFileUploader {
         if(!isset($filename) or empty($filename)) $filename=uniqid();
         $ext = $pathinfo['extension'];
 
-        if($this->allowedExtensions && !in_array(strtolower($ext), $this->allowedExtensions)){
-            $these = implode(', ', $this->allowedExtensions);
-            return array('error' => 'File has an invalid extension, it should be one of '. $these . '.');
-        }
+        if (empty($this->disAllowedExtensions))
+            if($this->allowedExtensions && !in_array(strtolower($ext), $this->allowedExtensions)){
+                $these = implode(', ', $this->allowedExtensions);
+                return array('error' => 'File has an invalid extension, it should be one of '. $these . '.');
+            }
 
         if(!$replaceOldFile){
             /// don't overwrite previous files that were uploaded

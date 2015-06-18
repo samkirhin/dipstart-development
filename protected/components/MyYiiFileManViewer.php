@@ -20,7 +20,7 @@ class MyYiiFileManViewer
 			//optional, only change if you're not using default siteController
 			//for holding the required static action (see README).
 
-			'controller'=>'/project/zakaz',
+			'controller'=>'/site',
 			'action'=>'yiifilemanagerfilepicker',
 
 		);
@@ -47,10 +47,10 @@ class MyYiiFileManViewer
 		if(false==$this->_my_own_space_checker(Yii::app()->user->id, $filesize)){
 			$reason="size exceded, file too large.";
 			return false;
-		}elseif(false==$this->_my_mimetype_allowed($filename)){
+		}/*elseif(false==$this->_my_mimetype_allowed($filename)){
 			$reason="file type not supported";
 			return false;
-		}else
+		}*/else
 			return true;
 	}
 

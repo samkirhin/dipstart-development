@@ -34,7 +34,7 @@ class MyYiiChatHandler extends CComponent implements IYiiChat {
 	/**
 	 	post a message into your database.
 	 */
-	public function yiichat_post($chat_id, $identity, $message, $data){
+	public function yiichat_post($chat_id, $identity, $message, $post, $data){
 		return array(
 			'id'=>time()+rand(10000,99999), 
 			'text'=>$message, 

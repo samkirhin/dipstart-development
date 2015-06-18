@@ -6,7 +6,7 @@ class ZakazController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	//public $layout='//layouts/column2';
 	/**
 	 * @return array action filters
 	 */
@@ -27,16 +27,12 @@ class ZakazController extends Controller
 	public function accessRules()
 	{
 			return array(
-				/*array('allow',  // allow all users to perform 'index' and 'view' actions
-					'actions'=>array('index','view','download'),
-					'users'=>array('*'),
-				),*/
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions'=>array('view','index','create','update', 'admin', 'preview', 'moderationAnswer', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList', 'uploadPayment'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('admin','delete', 'yiifilemanagerfilepicker','apiview','apifindauthor','spam'),
+                    'actions'=>array('admin','delete', 'apiview','apifindauthor','spam'),
                     'users'=>array('admin'),
                 ),
 				array('deny',  // deny all users
@@ -52,9 +48,6 @@ class ZakazController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
-		$model->date = date("Y-m-d H:i", $model->date);
-		$model->max_exec_date = date("Y-m-d H:i", $model->max_exec_date);
-		$model->date_finish = date("Y-m-d H:i", $model->date_finish);
 		$this->render('view',array(
 			'model'=> $model
 		));
@@ -77,7 +70,6 @@ class ZakazController extends Controller
 				$model->status=2;
 			else
 				$model->status=1;
-			print_r($model->status);
 			$model->save();
 		}
 	}
@@ -163,39 +155,31 @@ class ZakazController extends Controller
             }
             // end author Emericanec
 
-			$model->date_finish = strtotime(date("d.m.Y"));
-			$model->max_exec_date = strtotime(date("d.m.Y"));
-
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
 
 			if(isset($_POST[$modelName]))
 			{
-				$role = User::model()->getUserRole();
 				$model->attributes=$_POST[$modelName];
 
-                $model->max_exec_date = strtotime($_POST['Zakaz']['max_exec_date']['date'].' '.$_POST['Zakaz']['max_exec_date']['hours'].':'.$_POST['Zakaz']['max_exec_date']['minutes']);
-				$model->date_finish = strtotime($_POST['Zakaz']['date_finish']['date'].' '.$_POST['Zakaz']['date_finish']['hours'].':'.$_POST['Zakaz']['date_finish']['minutes']);
-
+                if (!(User::model()->isManager() || User::model()->isAdmin())) {
+                    $model->dbmanager_informed = date('d.m.Y H:i');
+                    $model->dbdate = date('d.m.Y H:i');
+                    $d1=date_create();
+                    $d2=date_create($_POST['Moderation']['dbmax_exec_date']);
+                    $d1->modify('+'.intval(date_diff($d1,$d2)->d/2).' days');
+                    $model->dbauthor_informed = $d1->format('d.m.Y H:i');
+                }
 				if($model->save()){
-					if (!User::model()->isManager()) {
+					if (!(User::model()->isManager() || User::model()->isAdmin())) {
 						EventHelper::createOrder($model->id);
 					}
 					$this->redirect(array('view','id'=>$model->id));
 				}
 			}
 
-			$times = [];
-			$times['date_finish']['date'] = date("d.m.Y", $model->date_finish);
-			$times['date_finish']['hours'] = date("H", $model->date_finish);
-			$times['date_finish']['minutes'] = date("i", $model->date_finish);
-			$times['max_exec_date']['date'] = date("d.m.Y", $model->max_exec_date);
-			$times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
-			$times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
-
 			$this->render('create',array(
 					'model'=>$model,
-					'times'=>$times
 			));
 	}
 
@@ -206,9 +190,9 @@ class ZakazController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-			$role = User::model()->getUserRole();
-			$view = 'update';
-			$isModified = false;
+        $role = User::model()->getUserRole();
+        $view = 'update';
+        $isModified = false;
 		Yii::app()->session['project_id'] = $id;
 		$model=$this->loadModel($id);
 		if (ModerationHelper::isOrderChanged($id)) {
@@ -227,56 +211,17 @@ class ZakazController extends Controller
 				$model->id = $moderateModel->order_id;
 			}
 		}
-		$times = array();
-        if ($model->date > 0) {
-            $times['date']['date'] = date("Y-m-d", $model->date);
-            $times['date']['hours'] = date("H", $model->date);
-            $times['date']['minutes'] = date("i", $model->date);
-        }
-        if ($model->date_finish > 0) {
-            $times['date_finish']['date'] = date("Y-m-d", $model->date_finish);
-            $times['date_finish']['hours'] = date("H", $model->date_finish);
-            $times['date_finish']['minutes'] = date("i", $model->date_finish);
-        }
-		if ($model->max_exec_date > 0) {
-            $times['max_exec_date']['date'] = date("Y-m-d", $model->max_exec_date);
-            $times['max_exec_date']['hours'] = date("H", $model->max_exec_date);
-            $times['max_exec_date']['minutes'] = date("i", $model->max_exec_date);
-        }
-        if ($model->manager_informed > 0) {
-            $times['manager_informed']['date'] = date("Y-m-d", $model->manager_informed);
-            $times['manager_informed']['hours'] = date("H", $model->manager_informed);
-            $times['manager_informed']['minutes'] = date("i", $model->manager_informed);
-        }
-        if ($model->author_informed > 0) {
-            $times['author_informed']['date'] = date("Y-m-d", $model->author_informed);
-            $times['author_informed']['hours'] = date("H", $model->author_informed);
-            $times['author_informed']['minutes'] = date("i", $model->author_informed);
-        }
 
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
 			if(isset($_POST['Zakaz']))
 			{
 				$zakaz = $_POST['Zakaz'];
-
-				$time['date'] = !empty($zakaz['date']['date']) ? strtotime($zakaz['date']['date'].' '.$zakaz['date']['hours'].':'.$zakaz['date']['minutes']) : 0;
-				$time['date_finish'] = !empty($zakaz['date_finish']['date']) ? strtotime($zakaz['date_finish']['date'].' '.$zakaz['date_finish']['hours'].':'.$zakaz['date_finish']['minutes']) : 0;
-				$time['max_exec_date'] = !empty($zakaz['max_exec_date']['date']) ? strtotime($zakaz['max_exec_date']['date'].' '.$zakaz['max_exec_date']['hours'].':'.$zakaz['max_exec_date']['minutes']) : 0;
-				$time['manager_informed'] = !empty($zakaz['manager_informed']['date']) ? strtotime($zakaz['manager_informed']['date'].' '.$zakaz['manager_informed']['hours'].':'.$zakaz['manager_informed']['minutes']) : 0;
-				$time['author_informed'] = !empty($zakaz['author_informed']['date']) ? strtotime($zakaz['author_informed']['date'].' '.$zakaz['author_informed']['hours'].':'.$zakaz['author_informed']['minutes']) : 0;
-
-
 				if ($role != 'Manager' && $role != 'Admin') {
-					ModerationHelper::saveToModerate($model, $zakaz, $time);
+					ModerationHelper::saveToModerate($model, $zakaz);
 				} else {
 					$model->attributes=$zakaz;
-					$model->date = $time['date'];
-					$model->date_finish = $time['date_finish'];
-					$model->max_exec_date = $time['max_exec_date'];
-					$model->manager_informed = $time['manager_informed'];
-					$model->author_informed = $time['author_informed'];
-                    
+
                     if ($model->manager_informed === 0) {
                         $model->status = 5;
                     }
@@ -290,9 +235,6 @@ class ZakazController extends Controller
 						ModerationHelper::clear($model->id);
                         $this->redirect(array('update','id'=>$model->id));
 					}
-                    if ($role == 'Customer' ) {
-                        //$view = 'orderInModerate';
-                    }
 					//$this->redirect(array('view','id'=>$model->id));
                 }
 			}
@@ -304,7 +246,6 @@ class ZakazController extends Controller
             }
 			$this->render($view, array(
 				'model'=>$model,
-				'times'=>$times,
 				'message'=>$message,
 			));
 	}
@@ -337,8 +278,9 @@ class ZakazController extends Controller
         }
         
         if ($event->type == EventHelper::TYPE_MESSAGE) {
+            $rid=$event->event_id;
             $event->delete();
-            $this->redirect(['/project/zakaz/update', 'id' => $event->event_id]);
+            $this->redirect(['/project/zakaz/update', 'id' => $rid]);
         }
 
         $moderation = Moderation::model()->findByPk($event->event_id);
@@ -348,8 +290,9 @@ class ZakazController extends Controller
                 'event' => $event
             ));
         } else {
+            $rid=$event->event_id;
             $event->delete();
-            $this->redirect(['/project/zakaz/update', 'id' => $event->event_id]);
+            $this->redirect(['/project/zakaz/update', 'id' => $rid]);
         }
             
         
@@ -367,8 +310,9 @@ class ZakazController extends Controller
             // если одобрили то создаем заказ и удаляем модерер и событие
             if ($answer) {
                 $zakaz = new Zakaz();
-                $zakaz->attributes = $model->attributes;
                 $userId = $model->user_id;
+                foreach ($model->attributes as $k=>$v)
+                    $zakaz->setAttribute($k,$v);
                 if($zakaz->save()){
                     // изза beforeSave такой костыль
                     $zakaz->user_id = $userId;
@@ -402,7 +346,7 @@ class ZakazController extends Controller
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
+		if(Yii::app()->getRequest()->getParam('ajax',false))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
@@ -411,10 +355,18 @@ class ZakazController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Zakaz');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+        $model = new Zakaz('search');
+        $model->unsetAttributes();
+        if(isset($_GET['ajax'])) {
+            $model->setAttributes($_POST['Zakaz'], false);
+            $this->renderPartial('index', array(
+                'model' => $model,
+            ), false, true);
+        }
+        else
+            $this->render('index',array(
+                'model'=>$model,
+            ));
 	}
 
 	/**
@@ -440,18 +392,17 @@ class ZakazController extends Controller
 
 		$model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
-		$model->executor = Yii::app()->user->id;
-
+            $model->executor = Yii::app()->user->id;
 		$this->render('list',array(
 			'model'=>$model,
 		));
 	}
 
-	public function actionList()
+	public function actionList($status)
 	{
 		$model=new Zakaz('search');
 		$model->unsetAttributes();
-		$model->status = 3;
+		if (User::model()->isAuthor()) {$model->executor = 0;$model->status=3;}
 
 		$this->render('list',array(
 			'model'=>$model,
@@ -530,10 +481,8 @@ class ZakazController extends Controller
         foreach ($authors as $author) {
             $mail->setTo($author['email']);
             $mail->send();
-//            print_r($mail);
-//            echo json_encode($author['email']);
         }
         echo $debug;
-        return Yii::app()->end();
+        Yii::app()->end();
     }
 }

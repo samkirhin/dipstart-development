@@ -7,15 +7,15 @@
  *
  * @author Ruslan Fadeev <fadeevr@gmail.com>
  *
- * @var Bootstrap $this
+ * @var Booster $this
  */
 return array(
 	'font-awesome' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/4.1.0/' : $this->getAssetsUrl().'/font-awesome/',
+		'baseUrl' => $this->enableCdn ? '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/' : $this->getAssetsUrl().'/font-awesome/',
 		'css' => array(($this->minify || $this->enableCdn) ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
 	'bootstrap.js' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/bootstrap/3.1.1/' : $this->getAssetsUrl() . '/bootstrap/',
+		'baseUrl' => $this->enableCdn ? 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/' : $this->getAssetsUrl() . '/bootstrap/',
 		'js' => array($this->minify ? 'js/bootstrap.min.js' : 'js/bootstrap.js'),
 		'depends' => array('jquery'),
 	),
@@ -30,10 +30,12 @@ return array(
 	'bootbox' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/bootbox/',
 		'js' => array($this->minify ? 'bootbox.min.js' : 'bootbox.js'),
+		'depends' => array('bootstrap.js'),
 	),
 	'notify' => array(
 		'baseUrl' => $this->getAssetsUrl() . '/notify/',
-		'js' => array($this->minify ? 'notify.min.js' : 'notify.js')
+		'js' => array($this->minify ? 'notify.min.js' : 'notify.js'),
+		'depends' => array('jquery'),
 	),
     'bootstrap-noconflict' => array(
         'baseUrl' => $this->getAssetsUrl(),
@@ -50,8 +52,8 @@ return array(
     ),
 	'datepicker' => array(
 		'depends' => array('jquery'),
-		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/' : $this->getAssetsUrl() . '/bootstrap-datepicker/',
-		'css' => array('css/datepicker3.css'), // $this->minify ? 'css/datepicker.min.css' : 'css/datepicker.css'),
+		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/' : $this->getAssetsUrl() . '/bootstrap-datepicker/',
+		'css' => array('css/datepicker3.css'), // array($this->minify ? 'css/datepicker3.min.css' : 'css/datepicker3.css'),
 		'js' => array($this->minify ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js', 'js/bootstrap-datepicker-noconflict.js') 
 		// ... the noconflict code is in its own file so we do not want to touch the original js files to ease upgrading lib
 	),
@@ -145,7 +147,7 @@ return array(
 		'depends' => array('bootstrap.js'),
 		'baseUrl' => $this->getAssetsUrl() . '/bootstrap-markdown',
 		'css' => array('css/bootstrap-markdown.min.css'),
-		'js' => array('js/bootstrap-markdown.js'),
+		'js' => array('js/bootstrap-markdown.js', 'js/to-markdown.js', 'js/markdown.js'),
 	),
 	'switch' => array(
 		'depends' => array('bootstrap.js'),
