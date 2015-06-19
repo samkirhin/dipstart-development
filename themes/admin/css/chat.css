@@ -1,0 +1,451 @@
+.chat_frame {
+    border: 1px solid rgb(222, 222, 222);
+    margin-top: 30px;
+}
+.chat_frame .title {
+    background: rgb(58, 146, 192);
+    padding: 10px 20px;
+}
+.chat_frame #dialog {
+    height: 500px;
+    overflow: auto;
+}
+.chat_frame .send_box {
+    border-top: 1px solid rgb(222, 222, 222);
+    padding: 10px;
+}
+.rm {
+    padding: 5px;
+    cursor: pointer;
+}
+.im .u-block {
+    width: 222px;
+    margin: 8px 0 0;
+}
+.im .u-progress-text {
+    width: 222px;
+}
+.im_file_list {
+    width: 620px;
+}
+img[alt="user"] {
+    width: 32px;
+    height: 32px;
+}
+#dialog {
+    height: 304px;
+    overflow: auto;
+    width: 100%;
+}
+
+#dialog .post .user {
+    float: left;
+}
+
+.inform {
+    margin: 10px 0 20px 0; 
+    padding: 0;
+    font-size: 14px;
+    line-height: 14px;
+}
+.inform p{
+    font-size: 14px;
+    line-height: 20px;
+    width: 100%;
+    background-color: #F9F9F9;
+    margin: 0;
+    text-align: center;
+}
+table.detail-view tr.odd {
+    background-color: #ffffff;
+}
+
+.chat-area {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    height: 300px;
+}
+.form-control[disabled] {
+    background-color: #ffffff;
+    cursor: default;
+}
+
+.order-parts .part , .order-parts .order-notes, .order-info  {
+            background: #f8f6f7;
+            border: 1px solid #beb8b8;
+            padding: 4px;
+            position: relative;
+            width: 350px;
+        }
+        .order-parts .part.minimized    {
+            height: 28px;
+            margin-bottom: 20px;
+            padding: 0 4px;
+        }
+
+.order-parts .part.minimized .name  {
+                color: #484647;
+                font-size: 16px;
+                height: 100%;
+                line-height: 28px;
+                text-align: center;
+                width: 100%;
+            }
+            .order-parts .part.minimized .open-part {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+            }
+
+            .order-parts .part.full  {
+                margin-bottom: 20px;
+            }
+            .order-parts .part .part-header , .order-parts .notes-header   {
+                border-bottom: 1px solid #beb8b8;
+                height: 32px;
+                line-height: 32px;
+            }
+                .order-parts .part .part-header input[type="text"]    {
+                    border: 1px solid #beb8b8;
+                    border-radius: 0;
+                    height: 19px;
+                    line-height: 19px;
+                    text-align: center;
+                }
+                .order-parts .part .part-header input.date-time {
+                    margin-right: 4px;
+                    width: 73px;
+                }
+                .order-parts .part .part-header input.part-name {
+                    width: 110px;
+                }
+                .order-parts .part .part-header .close-part {
+                    margin-right: 2px;
+                }
+
+            .order-parts .part .part-body   {}
+                .order-parts .part .part-body .row   {
+                    margin-bottom: 40px;
+                }
+                    .order-parts .part .part-body .row.info {
+                        font-size: 15px;
+                    }
+                        .order-parts .part .part-body .row.info label   {
+                            width: 150px;
+                        }
+                .order-parts .part .part-body label {
+                    font-size: 13px;
+                    min-height: 27px;
+                    line-height: 27px;
+                    margin-bottom: 0;
+                }
+                .order-parts input[type="text"]  {
+                    border-radius: 0;
+                    height: 15px;
+                    width: 52px;
+                }
+                .order-parts select    {
+                    width: auto;
+                }
+                .order-parts textarea  {
+                    border-radius: 0;
+                    height: 94px;
+                    width: 336px;
+                }
+                    .order-parts .customSelect   {
+                        background: #eae8e9 url( /img/arrow-bottom-icon.png ) no-repeat 95% center;
+                        border-radius: 0;
+                        border: 1px solid #d0d0d0;
+                        height: 25px;
+                        line-height: 25px;
+                    }
+                        .order-parts .customSelectInner {
+                            padding-left: 10px;
+                        }
+
+                .order-parts .part .part-body .action-btn   {
+                    background: #84b0dd;
+                    border-radius: 10px;
+                    color: #fff;
+                    cursor: pointer;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin-left: 10px;
+                    padding: 0 8px;
+                    text-align: center;
+                }
+
+                .order-parts .part .part-body .btn  {
+                    border: 1px solid #beb8b8;
+                    border-radius: 0;
+                    height: 25px;
+                    line-height: 25px;
+                    position: relative;
+                    width: 150px !important;
+                }
+
+                .order-parts .order-notes .btn{
+                    border-radius: 0;
+                    display: inline-block;
+                    height: 25px;
+                    line-height: 25px;
+                    margin-right: 9px;
+                    padding: 0 20px;
+                }
+
+                .order-parts .order-notes .btn:last-child   {
+                    margin-right: 0;
+                }
+
+    .order-parts .add-part  {
+        padding: 0 4px !important;
+        border-radius: 0;
+        margin: 10px 0 10px;
+        width: 100% !important;
+    }
+
+
+/* Akordeon */
+.akordeon
+{
+    width: 100%;
+    color: #333333;
+    font-family: Arial;
+    font-size: 12px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    behavior: url(PIE.htc);
+}
+.akordeon-item
+{
+    position: relative;
+    margin-top: 10px;
+    border: solid 1px #cccccc;
+}
+.akordeon-item:first-child
+{
+    position: relative;
+    margin-top: 0px;
+}
+.akordeon-item .akordeon-item-head
+{
+    height: 36px;
+    background-color: #f8f6f7;
+    padding-top: 12px;
+}
+.akordeon-item .akordeon-item-body
+{
+    background-color: #f8f6f7;
+    border-bottom: none;
+    overflow: hidden;
+}
+.akordeon-icon
+{
+    float: right;
+    cursor: pointer;
+}
+.akordeon-heading
+{
+    float: left;
+    padding-left: 20px;
+    font-weight: bold;    
+}
+.akordeon-heading h3 {
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0;
+}
+
+.akordeon-icon span
+{
+    color: #91d0ea;
+    font-size: 36px;
+    position: absolute;
+    right: 6px;
+    top: -14px;
+    font-weight: bold;
+    text-align: center;
+}
+.akordeon-item.expanded .akordeon-icon span
+{
+    top: -14px;
+    color: #f62265;
+}
+.akordeon-item-head-container
+{
+    width: 100%;
+    position: absolute;
+    left: -8px;
+    cursor: pointer;
+}
+
+.akordeon-item.expanded .akordeon-item-body
+{
+    border-top: 0px;
+}
+.akordeon-item.collapsed
+{
+}
+
+.akordeon-item.expanded .akordeon-heading
+{
+    color: #333;
+}
+
+.akordeon-item.expanded .akordeon-item-head
+{
+    background-color: #f8f6f7;
+}
+.akordeon-item-content
+{
+    padding: 10px;
+    height: 150px;
+    overflow:auto;
+}
+.akordeon-border-bottom
+{
+    border-bottom: 0px;
+}
+.akordeon-border-top
+{
+    border-top: solid 1px black;
+}
+.akordeon-item.expanded .akordeon-item-body.akordeon-border-bottom
+{
+    border-bottom: 0px;
+    height: auto !important;
+}
+.akordeon-item.akordeon-item-first .akordeon-item-head
+{
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.akordeon-item.akordeon-item-last.collapsed .akordeon-item-head
+{
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom: none;
+}
+.akordeon-item.akordeon-item-last.expanded .akordeon-item-head
+{
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -moz-border-radius-bottomleft: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.akordeon-item.akordeon-item-last.expanded .akordeon-item-body
+{
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.grey-line {
+    width: 94%;
+    height: 1px;
+    margin: 0 3%;
+    background-color: #cccccc;
+}
+
+.changes-info {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    line-height: 20px;
+}
+.changes-info textarea{
+    width: 100%
+}
+
+.fileUploader:before {
+    content: "";
+    display: block;
+    background: url(../img/clip-icon.png) no-repeat center center;
+    width: 9px;
+    height: 18px;
+    float: left;
+    margin: -5px 5px 0 0;
+}
+.cost-bg {
+    margin: 0;
+    height: 40px;
+    background-color: #f8f6f7;
+    border-bottom: solid 1px #cccccc;
+    border-left: solid 1px #cccccc;
+    border-right: solid 1px #cccccc;
+}
+.cost-text-block {
+    font-size: 12px;
+    line-height: 12px;
+    text-align: center;
+    margin-top: 12px;
+    width: 120px;
+    float: left;
+}
+.cost-input-block {
+    font-size: 12px;
+    line-height: 12px;
+    margin-top: 8px;
+    width: 80%;
+    float: left;
+}
+.cost-input-block input{
+    padding: 3px 5px;
+}
+.message-block {
+    padding: 10px;
+    font-size: 12px;
+    line-height: 12px;
+    border: solid 1px #cccccc;
+    border-top: none;
+    margin: 0;
+}
+.message-block-dop {
+    margin: 15px 0;
+}
+.message-block-dop input{
+    margin:0;
+    float:left;
+}
+.message-block-dop p{
+    line-height: 12px;
+    float:left;
+    margin-left:5px;
+}
+
+.comments-block {
+    width: 100%;
+    height: 150px;
+    margin: 10px 0 0 0;
+    padding: 0;
+    background-color: #f8f6f7;
+    border: solid 1px #cccccc;
+}
+.comments-block p{
+    margin: 10px 0 0 0;    
+}
+
+.message-btn input{
+    background: #22C3EB;
+    padding: 10px;
+    border: none;
+    margin: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+}
+}

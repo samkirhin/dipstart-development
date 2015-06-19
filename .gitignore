@@ -5,3 +5,4 @@ protected/backup
 protected/config
 cgi-bin
 uploads
+protected/config/main.php

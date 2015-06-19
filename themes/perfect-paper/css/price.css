@@ -1,0 +1,93 @@
+/* New Submenu Renaming */
+.submenuAboutWrapper, .submenuPageWrapper{border-bottom:1px solid #ededed;}
+.aboutSubmenu, .pageSubmenu{display:block;list-style-type:none;margin:0;padding:0;border-top:1px solid #ededed;}
+.aboutSubmenu li, .pageSubenu li{display:inline-block;margin-left:-4px;}
+.aboutSubmenu li a, .pageSubenu li a{display:inline-block;color:#666;padding:14px 15px 10px;}
+.aboutSubmenu li a:hover, .pageSubenu li a:hover{border-bottom:4px solid #1b8cd4;color:#1b8cd4;}
+.aboutSubmenu li.active a, .pageSubmenu li.active a{border-bottom:4px solid #1b8cd4;color:#1b8cd4;font-weight:bold;}
+.aboutSubmenu li.first, .pageSubmenu li.first{margin-left:0;}
+/* New Submenu Additions */
+
+/* Blog Open Position */
+.blogPositionWrapper {
+    display: block;
+    width: 100%;
+    background-color: #f6f6f6;
+    position:relative;
+}
+.blogPositionLeft {
+    width: 70%;
+    display: inline-block;
+    padding: 15px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.blogPositionRight {
+    width: 30%;
+    display: inline-block;
+    margin-right: -4px;
+    padding: 15px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.positionTitle {
+    font-size: 160%;
+    margin:0;
+    padding: 0;
+}
+.positionTitleSub, a.positionCtaSub {
+    font-style: italic;
+    color: grey;
+    margin: 0;
+    padding: 0;
+}
+.blogPositionDisclaimer {
+    padding: 8px 15px;
+    margin: 0;
+    background-color: #555;
+}
+.blogPositionDisclaimer p {
+    font-style: italic;
+    color: white;
+    font-size: 80%;
+    padding: 0;
+    margin:0;
+}
+.blogPositionDisclaimer a {
+    color: white;
+    text-decoration: underline;
+}
+
+.blogPositionRight {
+    position: absolute;
+    line-height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    top: 50%;
+    margin-top: -37px;
+}
+.blogPositionRight a {
+    text-align: center;
+}
+
+/* Blog Open Positions */
+@media only screen and (max-device-width: 568px) and (min-device-width: 1px), screen and (max-width: 568px) and (min-width: 1px) {
+    .blogPositionLeft {
+        width: 100%;
+    }
+    .positionTitle, .positionTitleSub {
+        text-align: center !important;
+    }
+    .blogPositionRight {
+        width: 100%;
+        position: static;
+        margin-top:-20px;
+    }
+
+
+}
+.price-row a {
+	cursor: pointer;
+}

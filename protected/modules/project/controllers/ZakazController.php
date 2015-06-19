@@ -195,6 +195,11 @@ class ZakazController extends Controller
         $isModified = false;
 		Yii::app()->session['project_id'] = $id;
 		$model=$this->loadModel($id);
+        if (Yii::app()->request->getParam('close') == 'yes'){
+            $model->status = 5;
+            $model->save();
+            $this->redirect(array('update','id'=>$model->id));
+        }
 		if (ModerationHelper::isOrderChanged($id)) {
 			if ($role == 'Customer' ) {
 				$view = 'orderInModerate';
@@ -221,10 +226,6 @@ class ZakazController extends Controller
 					ModerationHelper::saveToModerate($model, $zakaz);
 				} else {
 					$model->attributes=$zakaz;
-
-                    if ($model->manager_informed === 0) {
-                        $model->status = 5;
-                    }
 				}
 
 				if($model->save()) {
@@ -238,7 +239,7 @@ class ZakazController extends Controller
 					//$this->redirect(array('view','id'=>$model->id));
                 }
 			}
-            
+
             if ($isModified) {
                 $message = 'Заказ на модерации';
             } else {
@@ -397,6 +398,22 @@ class ZakazController extends Controller
 			'model'=>$model,
 		));
 	}
+    public function actionCustomerOrderList()
+    {
+        if (!User::model()->isCustomer()) {
+            throw new CHttpException(500);
+        }
+
+        $criteria = new CDbCriteria();
+        $criteria->compare('user_id', Yii::app()->user->id);
+        $model = new CActiveDataProvider('Zakaz', [
+            'criteria' => $criteria
+        ]);
+
+        $this->render('customerOrderList', [
+            'dataProvider' => $model
+        ]);
+    }
 
 	public function actionList($status)
 	{
@@ -447,22 +464,6 @@ class ZakazController extends Controller
 			$this->redirect(Yii::app()->request->urlReferrer);
 	}
 
-	public function actionCustomerOrderList()
-	{
-		if (!User::model()->isCustomer()) {
-			throw new CHttpException(500);
-		}
-
-		$criteria = new CDbCriteria();
-		$criteria->compare('user_id', Yii::app()->user->id);
-		$dataProvider = new CActiveDataProvider('Zakaz', [
-			'criteria' => $criteria
-		]);
-
-		$this->render('customerOrderList', [
-			'dataProvider' => $dataProvider
-		]);
-	}
     public function actionSpam(){
         $job = Zakaz::model()->findByPk($_GET['id'])->job_id;
         $discipline = Zakaz::model()->findByPk($_GET['id'])->category_id;

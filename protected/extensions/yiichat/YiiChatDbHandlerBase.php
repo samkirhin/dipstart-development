@@ -56,10 +56,10 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 	/**
 	 	post a message into your database.
 	 */
-	public function yiichat_dapprove($messageId) {
-		$model = ProjectMessages::model()->findByPk($messageId);
+	public function yiichat_dapprove($post) {
+		$model = ProjectMessages::model()->findByPk($post['id']);
 		$model->moderated = 1;
-		$model->save();
+		return $model->save();
 	}
 	public function yiichat_dpost($post){
 		$model = ProjectMessages::model()->findByPk($post['id']);

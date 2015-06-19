@@ -1,0 +1,12 @@
+.accordion {
+    border: 1px solid #9E9F9B;
+}
+.accordion dt {
+    padding: 10px 20px;
+    width: 270px;
+}
+.accordion dd {
+    width: 290px;
+    margin: 0;
+    padding: 10px 10px 5px;
+}

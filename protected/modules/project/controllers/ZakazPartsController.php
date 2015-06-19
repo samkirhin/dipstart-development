@@ -104,7 +104,9 @@ class ZakazPartsController extends Controller
             $list = explode('.', $data['orig_name']);
             $newName = $this->getGuid();
             $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$list[0].'_'.$data['id'].'.'.$list[1];
-            $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$data['id'].'/'.$newName.".".$list['1'];
+            $newDir = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$data['id'];
+            $fileNewPath = $newDir.'/'.$newName.".".$list['1'];
+            if (!file_exists($newDir)) mkdir($newDir);
             if (rename($filePath, $fileNewPath)) {
                 $fileModel = new ZakazPartsFiles();
                 $fileModel->part_id = $data['id'];

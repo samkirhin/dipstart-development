@@ -160,7 +160,7 @@ var YiiChat = function (options) {
                             tmp_html += "<button data-index=\"" + post.id + "\"class=\"glyphicon-ok glyphicon\"></button>";
                     tmp_html += "<button data-index=\"" + post.id + "\" class=\"glyphicon-envelope glyphicon\"></button>";
                     if (post.sender.superuser.itemname == 'Author') {
-                        if (options.executor == post.sender.id)
+                        if (options.executor == post.sender.superuser.userid)
                             tmp_html += "<button data-index=\"" + post.id + "\" class=\"toggleexecutor glyphicon glyphicon-minus\"></button>";
                         else
                             tmp_html += "<button data-index=\"" + post.id + "\" class=\"toggleexecutor glyphicon glyphicon-plus\"></button>";

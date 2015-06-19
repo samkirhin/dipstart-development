@@ -1,0 +1,58 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+body .modal {
+    width: 800px;
+    margin-left: -400px;
+}
+
+body .overflowed    {
+    height: 100px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+body > .container   {
+    margin: 0 1%;
+    width: 98%;
+}
+
+.search-results tr:not(.header):hover td {
+    background: #33CC99;
+    cursor: pointer;
+}
+
+.centercontext  {
+    text-align: center !important;
+}
+
+.mainPageMenu td    {
+    text-align: center;
+}
+
+tr[data-href] td   {
+    cursor: pointer;
+}
+
+.tablesorter th{
+    cursor: pointer;
+}
+
+.nav > li > span    {
+    display: block;
+    float: none;
+    padding: 10px 15px 10px;
+}
+
+.rightBorder {
+    border-right: solid 1px #b3b3b3;
+}
+.order-contacts {
+    background-color: #ebebeb;
+}
+.order-contacts p{
+    padding: 10px;
+    margin: 0;
+}

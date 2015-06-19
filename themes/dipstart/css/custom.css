@@ -1,0 +1,783 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400,500,700,300;
+    src: url('http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&subset=cyrillic,latin');
+}
+.container {
+    min-width: 1004px !important;
+}
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+}
+h1 {
+    font-size: 24px;
+    margin-top: 0px;
+}
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.adminka-content {
+    min-height: 800px;    
+}
+.nav-tabs {
+    border-bottom: none;
+}
+.order-contacts {
+    background-color: #fff;
+}
+.authorText {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 70px;
+}
+.authorName {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 170px;
+}
+.authorMail {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 170px;
+}
+.authorPhone {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 144px;
+}
+.customerText {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 85px;
+}
+.customerName {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 160px;
+}
+.customerMail {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 160px;
+}
+.customerPhone {
+    position: relative;
+    float: left;
+    margin-top:10px;
+    padding: 0;
+    width: 144px;
+}
+
+.rightBorder {
+    border-right: solid 1px #cccccc;
+}
+
+.notesBlock {
+    height: auto;
+    margin-top: 10px;
+    padding: 0;
+    background-color: #f8f6f7;
+    border: solid 1px #cccccc;
+}
+.notesBlockTitle {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+}
+.notesBlockTitle:before {
+    content: "";
+    display: block;
+    background: url(../images/table-icon.png) no-repeat;
+    width: 19px;
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 5px;
+    position: relative;
+    float: left;
+}
+.notesBlockBtn {
+    margin: 5px 0 0 0;
+}
+.notesBlockTextarea {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.notesBlockArea {
+    padding-left: 0;
+    padding-right: 0;
+}
+.btnNotes
+{
+    width: 48%;
+    margin: 0 1%;
+}
+.panel-group {
+    margin-bottom: 0px;
+}
+.list-view {
+    padding-top: 0px;
+}
+.panel {
+    box-shadow: none;
+}
+.parts {
+    padding: 0;
+    margin-top: 10px;
+}
+.partStatus {
+    width: 16px;
+    height: 16px;
+    margin: 0 10px 0 0;
+    background: url(../images/check.png) no-repeat center center;
+    float:left;
+}
+.partTitle {
+    float: left;
+}
+
+.addPart {
+  border-radius: 0;
+  margin: 10px 0 10px;
+  width: 100% !important;
+}
+
+.edits {
+    padding: 0;
+    margin-top: 10px;
+}
+.editStatus {
+    width: 16px;
+    height: 16px;
+    margin: 0 10px 0 0;
+    background: url(../images/check.png) no-repeat center center;
+    float:left;
+}
+.editTitle {
+    float: left;
+}
+
+.addPart {
+  border-radius: 0;
+  margin: 10px 0 10px;
+  width: 100% !important;
+}
+.statusBlock 
+{
+    padding: 0;
+    margin: 0px 0 20px 0;
+}
+.grey-line {
+    width: 94%;
+    height: 1px;
+    margin: 0 3%;
+    background-color: #cccccc;
+    float:left;
+}
+.addPart 
+{
+    margin: 10px 0 0 0;
+}
+
+.changes-info
+{
+    padding: 0px !important;
+    margin: 0 10px !important;
+}
+.changes-info textarea
+{
+    width: 100%;
+}
+.payTable input {
+    width: 80px;
+}
+.colTime
+{
+    width: 120px;
+}
+label
+{
+    font-weight: normal;
+}
+.aboutZakaz
+{
+
+}
+.aboutZakaz textarea{
+    width: 100%;
+    resize: none;
+}
+.panel-title {
+    position: relative;
+    text-align: left;
+    font-size: 14px;
+}
+.chatBlock {
+    border: solid 1px #367fa9;
+    margin-top: 15px;
+    margin-right: 15px;
+    border-top: none;
+}
+.chatBlockBg {
+    background: #ffffff;
+    margin-top: 10px;
+    padding-bottom: 15px;
+}
+.yiichat .chat-header {
+    background: #367fa9;
+    height: 36px;
+    line-height: 30px;
+}
+.mt5 {
+     margin-top: 0px;
+}
+.pull-left {
+    position: relative;
+    float: left;
+    margin-right: 10px;
+}
+.yiichat .chat-header .pull-left select{
+    -webkit-appearance: menulist-button;
+    width: 90px;
+    position: absolute;
+    opacity: 0;
+    height: 25px;
+    font-size: 12px;
+    left: 10px;
+    top: 6px;
+}
+.chat-header .customSelect {
+    margin: 6px 0 0 10px;
+    background: #fff url('../images/arrow-bottom-icon.png') no-repeat 93% center;
+    border-radius: 5px;
+    height: 25px;
+    line-height: 22px;
+    padding-right: 7px;
+}
+.chat-header .customSelectInner {
+    text-align: center;
+}
+
+.terms-columns {
+    border-right: dotted 1px #444444;
+}
+.terms-columns-last {
+    border-right: none;
+}
+.terms-columns label {
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+}
+.terms-columns p {
+    margin-bottom: 5px;
+}
+.terms-columns input {
+    margin-bottom: 5px;
+    width: 49%;
+}
+.panel-default {
+    border-color: #dddddd;
+}
+.post {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: dotted 1px #cccccc !important;
+}
+.posts {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted rgb(238, 238, 238);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.track {
+    width: 205px;
+    background-color: #f9f9f9 !important;
+}
+.zero-edge {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.left-column {
+    border-right: solid 10px #ecf0f5;
+    background: none repeat scroll 0% 0% #FFF;
+    margin-top: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    min-height: 976px;
+    height: auto;
+    padding: 15px;
+}
+.you {
+    display: inline-flex;
+    width: 100%;
+}
+.you textarea {
+    width: 540px;
+    margin: 0 10px 10px 10px;
+    height: 115px;
+    resize: none;
+}
+.terms-block {
+    padding-bottom: 15px;
+    padding-right: 15px !important;
+    background: none repeat scroll 0% 0% #FFF;
+    margin-top: 10px;
+}
+
+.button_send {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width: 165px;
+}
+.button_author {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width: 165px;
+}
+.button_customer {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width: 165px;
+}
+.paytable {
+    font-size: 12px; 
+    width: 50%; 
+    position: relative;
+    float: left;
+    table-layout: fixed;
+}
+.paytable td {
+    height: 39px;
+    border-top: none !important;
+}
+.pay-save-btn {
+    float: right;
+    margin-right: 15px;
+    margin-top: 15px;
+}
+.payment-block {
+    background: #fff;
+    margin-top: 10px;
+    padding: 0 15px 15px 15px;
+}
+.info-block {
+    margin-top: 10px;
+}
+.panel-group .panel {
+    border-radius: 0px;
+}
+.terms-save-btn {
+    margin-top: 10px;
+    margin-right: 15px;
+    float: right;
+}
+.label {
+    border-radius: 0px;
+    font-size: 14px;
+}
+.panel-heading-white {
+    background-color: #fff !important;
+}
+.authorName p:before {
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/user.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.authorMail p:before {
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/mail.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.authorPhone p:before {
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/phone.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.customerName p:before{
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/user.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.customerMail p:before{
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/mail.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.customerPhone p:before{
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/phone.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.partStatus {
+    background: url(../images/check.png) no-repeat center center;
+    width: 16px;
+    height: 16px;
+}
+
+#show-msg {
+    color: #fff;
+}
+#Zakaz_category_id {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_job_id {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_title {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_time_for_call {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_edu_dep {
+    width: 100%;
+    padding: 3px;
+}
+.info-column label {
+    margin-top: 5px;
+    font-weight: 700;
+}
+.info-buttons {
+    margin-top: 10px;
+}
+
+.create-zakaz-block {
+    background: #ffffff;
+    padding: 15px;
+}
+.create-form-selects label {
+    position: relative;
+    float: left;
+    font-weight: 700;
+    padding-top: 5px;
+}
+.create-form-selects select {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.create-form-selects input {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.create-form-selects textarea {
+    position: relative;
+    float: left;
+    width: 100%;
+    resize: none;
+}
+.white-bg {
+    background-color: #ffffff;
+}
+.inside-block {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.block-with-border {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px 10px 15px 10px;
+    border: solid 1px #ecf0f5;
+}
+.create-terms select {
+    width: 40px;
+    margin-right: 10px;
+}
+.create-terms > table > tbody > tr > td{
+    border-top: 1px dotted #DDD;
+}
+.create-terms > table > tbody > tr > td:first-child{
+    border-right: 1px dotted #DDD;
+}
+.create-terms > table > thead > tr > th{
+    border-bottom: none;
+}
+.create-terms > table > thead > tr > th:first-child{
+    border-right: 1px dotted #DDD;
+}
+.white-block {
+    background: #ffffff;
+    padding: 15px;
+}
+.pager {
+    margin: 15px 0px 0px !important;
+    position: relative;
+    float: right;
+}
+ul.yiiPager li {
+    margin-right: 5px;
+}
+
+ul.yiiPager .selected a {
+    background: #fff none repeat scroll 0% 0% !important;    
+    color: #0E509E !important;
+    font-weight: bold;
+}
+ul.yiiPager a:link, ul.yiiPager a:visited {
+    border: 1px solid #9AAFE5;
+    font-weight: bold;
+    color: #0E509E;
+    padding: 5px 10px !important;
+    text-decoration: none;
+}
+.pager li > a, .pager li > span {
+    border-radius: 3px;
+}
+.search-form {
+    padding: 15px;
+    border: solid 1px #ecf0f5;
+}
+.wide {
+    padding: 0 15px;
+}
+.wide label{
+    width: 160px;
+}
+.list-view> .items > .view:nth-child(odd){
+    background-color: #E5F1F4;
+    padding: 5px 0;
+    padding-left: 10px;
+}
+.list-view> .items > .view:nth-child(even){
+    background-color: #F8F8F8;
+    padding: 5px 0;
+    padding-left: 10px;
+}
+.mailbox-menu {
+    margin-bottom: 15px;
+}
+.mailbox-menu-newmsg {
+    margin-left: 5px;
+    float: left;
+    margin-right: 10px;  
+    border-right: dotted 1px #9AAFE5;
+    padding-right: 10px;
+}
+#mailbox-inbox {
+    float: left;
+    margin-right: 10px;
+    border-right: dotted 1px #9AAFE5;
+    padding-right: 10px;
+}
+#mailbox-sent {
+    float: left;
+    margin-right: 10px;
+    border-right: dotted 1px #9AAFE5;
+    padding-right: 10px;
+}
+#mailbox-trash {
+    float: left;
+    margin-right: 10px;
+}
+#mailbox-items {
+    margin-bottom: 15px;
+}
+.mailbox-items-tbl > tbody > tr:nth-child(odd){
+    background-color: #E5F1F4;
+    padding: 5px 0;
+}
+.mailbox-items-tbl > tbody > tr:nth-child(even){
+    background-color: #F8F8F8;
+    padding: 5px 0;
+}
+.mailbox-items-tbl > tbody > tr > td{
+    border-right: dotted 1px #DDD; 
+}
+.mailbox-items-tbl > tbody > tr > td:last-child{
+    border-right: none; 
+}
+.mailbox-input-row {
+    margin-bottom: 15px;
+}
+.mailbox-support-list {
+    margin-top: 15px;
+}
+.button-new-message {
+    position: relative;
+    float: right;
+    margin-top: 15px;
+}
+.topMenu {
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.first-page-btn {
+    margin-bottom: 15px;
+}
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #E5F1F4;
+}
+.table-striped > tbody > tr:nth-of-type(2n) {
+    background-color: #F8F8F8;
+}
+.table > tbody > tr > td {
+    border-top: none;
+}
+.table > thead > tr > th {
+    border-bottom: none;
+}
+.title-name {
+    position: relative;
+    float: left;
+}
+.title-time {
+    position: relative;
+    float: right;
+}
+.panel-heading {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+.panel-default {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+.panel-body {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+#ProjectMessages_message {
+    resize: none;
+    width: 100%;
+    height: 160px;
+}
+.chat-view {
+    margin-bottom: 15px;
+    padding: 0;
+    overflow-y: scroll;
+    height: 250px;
+    border: solid 1px #dddddd;
+    padding: 10px;
+}
+.user-chat-block {
+    border: solid 1px #ABABAB;
+    padding: 10px;
+}
+.btn-chat {
+    font-family: 'Arial', sans-serif !important;
+    font-size: 14px;
+    line-height: 14px;
+    background-color: #337AB7;
+    background: #337AB7;
+    color: #ffffff;
+    margin-bottom: 3px;
+    padding: 10px;
+}
+.btn-chat:focus, .btn-chat:hover, .btn-chat:active {
+    color: #ffffff;
+}
+.btn-user {
+    font-family: 'Arial', sans-serif !important;
+    font-size: 14px;
+    line-height: 14px;
+    background-color: #337AB7;
+    background: #337AB7;
+    color: #ffffff;
+    margin: 10px 0px;
+    padding: 10px;
+}
+.btn-user:focus, .btn-user:hover, .btn-user:active {
+    color: #ffffff;
+}
+.btn-adminka {
+    margin-bottom: 15px;    
+}
+.items {
+    width: 100%;
+    position: relative;
+    float: left;
+}
+.btn-save {
+    padding-top: 5px !important;
+    padding-bottom: 10px !important;
+    float: right;
+    margin-bottom: 0px !important;
+}
+
+.price-for-work-avtor > label{
+    margin-right: 5px;
+}
+.notes-author {
+    border: solid 1px #dddddd;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.btn-upload {
+    position: relative;
+    float: right;
+    margin-right: 10px;
+}
+.part-title {
+    color: #444;
+    overflow-x: hidden;
+    font-weight: 700;
+    text-decoration: none;
+}
+.qq-upload-list {
+    margin: 15px 18px;
+    padding: 0px;
+    list-style: outside none disc;
+}

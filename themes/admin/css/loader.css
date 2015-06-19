@@ -1,0 +1,44 @@
+.body {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: black;
+    z-index: 100;
+}
+
+.body .slogan {
+    color: white; 
+    text-align: center; 
+    margin-top: 5px; 
+    font-size: 14px;
+}
+
+.body .u-block {
+    background: #cdcdcd;
+    width: 98%;
+    height: 20px;
+    float: left;
+    margin: 8px 0 10px 10px;
+    border-radius: 3px;
+}
+
+.body .u-progress {
+    background: #5182bb;
+    border-radius: 3px;
+    height: 100%;
+}
+
+.body .u-progress-text {
+    position: absolute;
+    text-align: center; 
+    width: 98%; 
+    margin-top: 3px;
+    color: black; 
+    font-weight: bold;
+    padding: 0;
+}
+
+.upload-part-file {
+    cursor: pointer;
+}

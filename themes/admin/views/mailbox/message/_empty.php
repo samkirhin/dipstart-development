@@ -1,0 +1,1 @@
+<div class="mailbox-empty"><?=Yii::t('MailboxModule.mailbox', 'You have no messages in your folder')?> <?php echo $this->getAction()->getId(); ?>.</div>
