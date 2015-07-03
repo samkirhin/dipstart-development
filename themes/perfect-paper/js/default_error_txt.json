@@ -1,0 +1,18 @@
+{
+    "1": {
+        "JQVname" : ["required"],
+        "text" : "Can't be empty"
+    },
+    "5": {
+        "JQVname" : ["maxlength","minlength"],
+        "text" : "Length failed"
+    },
+    "9": {
+        "JQVname" : ["equalTo"],
+        "text" : "Not match"
+    },
+    "6":{
+        "JQVname" : ["email","url","date","digits"],
+        "text" : "Incorrect value"
+    }
+}

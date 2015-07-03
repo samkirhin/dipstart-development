@@ -1,0 +1,360 @@
+body {
+	min-height: 800px !important;
+}
+article {
+	min-height: 400px;
+}
+.paperhelper h1 {
+	font-size: 40px;
+}
+.paperhelper h2 {
+	font-size: 40px;
+}
+.paperhelper h3 {
+	font-size: 40px;
+}
+/* Альтернативный шрифт для кнопок и форм */
+.alternative {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 1.5em !important;
+}
+.alternative-select {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 21px;
+}
+.center {
+	text-align: center;
+	margin: 0 auto;
+}
+#header {
+	display: block;
+	padding-top: 2em;
+}
+.logo {
+	background: url(../img/logo.png) no-repeat;
+	width: 273px;
+	height: 91px;
+}
+.lock {
+	background: url(../img/lock.png);
+	background-repeat: no-repeat;
+	width: 30px;
+	height: 30px;
+	margin-top: 20px;
+	align: center;
+}
+.contact {
+	background: url(../img/recall.png);
+	background-repeat: no-repeat;
+	width: 53px;
+	height: 52px;
+	margin-top: 5px;
+}
+.contact-footer {
+	background: url(../img/recall.png);
+	background-repeat: no-repeat;
+	width: 50%;
+	float: left;
+}
+#menu {
+	margin-top: 20px;
+}
+/* Кнопка заказа */
+.button4 {
+	position: relative;
+	display: inline-block;
+	font-family: Arial, Helvetica, FreeSans, "Liberation Sans", "Nimbus Sans L", sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+	color: rgb(245,245,245);
+	text-shadow: 0 -1px rgba(0,0,0,.1);
+	text-decoration: none;
+	user-select: none;
+	padding: .3em 1em;
+	outline: none;
+	margin-top: 4px;
+	float: right;
+	border: none;
+	-webkit-transform: skewX(-10deg);
+	transform: skewX(-10deg);
+	border-radius: 5px;
+	background: #BB2939 linear-gradient(#BB0000, #BB0000);
+	box-shadow: inset #BB294F 0 -1px 1px, inset 0 1px 1px #BB2926, #BB2962 0 0 0 1px, rgba(0,0,0,.3) 0 2px 5px;
+	-webkit-animation: pulsate 2.5s linear infinite;
+	animation: pulsate 2.5s linear infinite;
+}
+.button4:visited, .button4:focus {
+	text-decoration: none;
+}
+.button4:hover {
+	-webkit-animation-play-state: paused;
+	animation-play-state: paused;
+	cursor: pointer;
+	color: #CECECE;
+}
+.button4:active {
+	top: 1px;
+	color: #fff;
+	text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;
+	box-shadow: 0 -1px 3px rgba(0,0,0,.3), 0 1px 1px #fff, inset 0 1px 2px rgba(0,0,0,.8), inset 0 -1px 0 rgba(0,0,0,.05);
+}
+.mobileOrder {
+	display: none;
+	margin: 10px auto 10px;
+	float: right !important;
+	width: 145px;
+	height: 30px;
+	line-height: 14px;
+}
+ @media only screen and (max-width:941px) {
+.notmobileOrder {
+	display: none;
+}
+}
+@media only screen and (max-width:940px) {
+.mobileOrder {
+	display: block;
+	float: none !important;
+	margin-bottom: 20px;
+}
+}
+/* Конец блока кнопки заказа */
+
+
+
+.atention {
+	font-size: 1.7em;
+	color: #E11616;
+	line-height: 30px;
+}
+.privilege h4 {
+	font-size: 30px;
+}
+.privilege h4 span {
+	color: #F00;
+}
+.privilege p {
+	font-size: 17px;
+}
+.author h5 {
+	font-size: 22px;
+}
+.author span {
+	font-style: italic;
+	font-size: 16px;
+}
+.author p {
+	font-size: 18px;
+}
+.author img {
+	margin-top: 10px;
+}
+.navbar .nav>li>a {
+	font-size: 15px;
+	font-weight: 700;
+	color: #456a8c !important;
+}
+.comment {
+	height: 160px;
+	font-style: italic;
+}
+.comment-frame {
+	background: url(../img/arrow.png);
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 31px;
+}
+.commentator-01 {
+	background: url(../img/comm1.png);
+	background-repeat: no-repeat;
+	width: 72px;
+	height: 77px;
+	margin-left: 40%;
+}
+.commentator-02 {
+	background: url(../img/comm2.png);
+	background-repeat: no-repeat;
+	width: 72px;
+	height: 77px;
+	margin-left: 40%;
+}
+.commentator-03 {
+	background: url(../img/comm3.png);
+	background-repeat: no-repeat;
+	width: 72px;
+	height: 77px;
+	margin-left: 40%;
+}
+.comment-info {
+	color: #F00;
+	text-align: center;
+	font-style: italic;
+}
+.comment-info span {
+	font-style: italic;
+	text-align: center;
+	color: #000000;
+}
+.spec-list li {
+	list-style-image: url("../img/bullet-list.png");
+	margin-left: 25%;
+	margin-right: 20%;
+	margin-bottom: 20px;
+	line-height: 16px;
+}
+.spec-list-2 li {
+	list-style-image: url("../img/bullet-list.png");
+	margin-left: 18%;
+	margin-right: 16%;
+	margin-bottom: 20px;
+	line-height: 16px;
+}
+.spec-list-faq li {
+	list-style-image: url("../img/bullet-list.png");
+	margin-left: 2%;
+	margin-right: 16%;
+	margin-bottom: 20px;
+	line-height: 16px;
+}
+.spec-list-faq li span {
+	font-size: 20px;
+}
+.copyright {
+	float: none;
+	text-align: center;
+}
+.copyright {
+	font: normal normal 12px serif;
+	color: #303231;
+	width: 20%;
+	float: left;
+}
+.copyright span {
+	font: normal normal 24px serif;
+}
+#footer {
+	padding-bottom: 30px;
+}
+/* Block for slider */
+.knopka {
+	background: #C01313;
+	border-radius: 35px;
+	display: block;
+	float: left;
+	width: 35px;
+	height: 35px;
+	position: relative;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	line-height: 35px;
+	text-decoration: none;
+	font-size: 18px;
+	opacity: 1 !important;
+}
+.sled {
+	margin: 15% 0 0 0;
+}
+.pred {
+	margin: 235px 0 0 30px;
+}
+.knopka:hover {
+	color: #C01313 !important;
+	background: #fff !important;
+}
+.knopka:active {
+	color: #000000;
+}
+.knopka a {
+	color: #000000 !important;
+}
+/* classes for comments page */
+.comment-page, .add-comment {
+	background: rgba(227, 227, 227, 0.5);
+	margin-top: 20px;
+	border-radius: 5px;
+	border: 3px solid #c8c8c8;
+	margin-bottom: 15px;
+	padding: 10px;
+	margin-right: 15%;
+	width: 100%;
+}
+.comment-page .name {
+	color: #5f5f5f;
+	width: 150px;
+	padding-left: 10px;
+}
+.comment-page .name span {
+	color: #8f3634;
+}
+.rate {
+	background: url(../img/star-empty.png);
+	width: 115px;
+	height: 23px;
+	max-width: 115px;
+	margin-left: 10px;
+}
+.rate div {
+	background: url(../img/full-star.png);
+	width: 0;
+	height: 100%;
+}
+.comment-page .post {
+	background: #fff;
+	border: 1px solid #c8c8c8;
+	padding: 10px;
+	width: 65%;
+	border-radius: 5px;
+	margin-left: 150px;
+	margin-top: -40px;
+	margin-bottom: 5px;
+}
+/* Bullets for terms */
+.buy {
+	padding: 0 20px;
+	cursor: default;
+}
+.buy > p {
+	font-size: 12px;
+}
+element.style {
+}
+.p-about .buy ol li p {
+	font-size: 16px;
+}
+.buy ol li p {
+	color: #333333;
+	margin: 0;
+	font-size: 16px;
+	display: inline;
+}
+.buy ol {
+	margin: 15px 35px 15px 0;
+	list-style-type: none;
+	counter-reset: item;
+	list-style-position: inside;
+	color: white;
+	padding: 0;
+}
+.buy ol > li:before {
+	content: counter(item, decimal) "";
+	counter-increment: item;
+}
+.buy ol li {
+	color: #fff;
+	font-size: 16px;
+	background-image: url('../img/bullet.png');
+	background-position: top left;
+	background-repeat: no-repeat;
+	padding-left: 7px;
+	line-height: 24px;
+	margin-bottom: 5px;
+	position: relative;
+}
+.buy ol li p {
+	padding-left: 10px;
+}
+
+.btn-deadline {
+    padding: 6px 18px !important;
+}

@@ -1,0 +1,48 @@
+.panel-container-default .panel-heading a.col-md-4 {
+	font-weight: bold;
+	font-size: 14px;
+}
+.panel-container-default .panel-heading a.col-md-4:hover {
+	text-decoration: none;
+}
+.panel-container-default label .glyphicon {
+	top: 2px;
+	left: 8px;
+}
+.panel-container-default textarea {
+	resize: none;
+}
+.order-price-block {
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	color: #838383;
+	font-size: 20px;
+	padding: 15px 0;
+	text-align: center;
+}
+.form-container {
+	padding: 30px 15px 0px 15px;
+}
+.tab-pane.form-container {
+	padding: 30px 0px 0px 0px;
+}
+a.glyphicon {
+	color:#333;
+}
+a.glyphicon:hover {
+	text-decoration:none;
+}
+/* Spinner */
+.spinner {
+	width: auto;
+	display: block;
+}
+.spinner input {
+	text-align: center;
+	width: 60px !important;
+	margin-left: 8px;
+	margin-right: 8px;
+	border-radius: 4px
+}
+
+/* End Spinner */
