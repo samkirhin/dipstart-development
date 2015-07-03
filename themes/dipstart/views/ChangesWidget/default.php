@@ -4,7 +4,7 @@
 /* @var $changes ProjectChanges */
 ?>
 
-
+<h4><?php echo ProjectModule::t('Changes'); ?></h4>
 <div class="row zero-edge">
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">

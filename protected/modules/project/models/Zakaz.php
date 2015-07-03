@@ -26,54 +26,110 @@ class Zakaz extends CActiveRecord
 {
     private $_job_name;
     private $_cat_name;
+    private $date_finishstart;
+    private $date_finishend;
 
     public $dateTimeIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
+    public $dateIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
+    public $dateOutcomeFormat = 'dd.MM.yyyy';
 
-    public function getDbmax_exec_date()
-    {
-        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->max_exec_date, $this->dateTimeIncomeFormat));
+    public function getDbdate_finishstart(){
+        if ($this->date_finishstart!='') {
+            return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->date_finishstart, $this->dateTimeIncomeFormat));
+        }
     }
-
-    public function setDbmax_exec_date($datetime)
+    public function setDbdate_finishstart($datetime)
     {
-        $this->max_exec_date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+        if ($datetime!=''){
+            $this->date_finishstart = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
+        }
     }
-    public function getDbmanager_informed()
-    {
-        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->manager_informed, $this->dateTimeIncomeFormat));
+    public function getDbdate_finishend(){
+        if ($this->date_finishend!='') {
+            return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->date_finishend, $this->dateTimeIncomeFormat));
+        }
     }
-
-    public function setDbmanager_informed($datetime)
+    public function setDbdate_finishend($datetime)
     {
-        $this->manager_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
-    }
-    public function getDbauthor_informed()
-    {
-        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->author_informed, $this->dateTimeIncomeFormat));
-    }
-
-    public function setDbauthor_informed($datetime)
-    {
-        $this->author_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
-    }
-    public function getDbdate_finish()
-    {
-        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->date_finish, $this->dateTimeIncomeFormat));
-    }
-
-    public function setDbdate_finish($datetime)
-    {
-        $this->date_finish = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+        if ($datetime!=''){
+            $this->date_finishend = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
+        }
     }
     public function getDbdate()
     {
-        return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->date, $this->dateTimeIncomeFormat));
+        if ($this->date!='') {
+            if ($this->date=='0000-00-00 00:00:00') return '';
+            if (strlen($this->date) == 19) return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->date, $this->dateTimeIncomeFormat));
+            elseif (strlen($this->date) == 10) return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->date, $this->dateTimeIncomeFormat));
+        }
     }
-
+    public function getDbmax_exec_date()
+    {
+        if ($this->max_exec_date!='') {
+            if ($this->max_exec_date=='0000-00-00 00:00:00') return '';
+            if (strlen($this->max_exec_date) == 19) return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->max_exec_date, $this->dateTimeIncomeFormat));
+            elseif (strlen($this->max_exec_date) == 10) return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->max_exec_date, $this->dateTimeIncomeFormat));
+        }
+    }
+    public function getDbmanager_informed()
+    {
+        if ($this->manager_informed!='') {
+            if ($this->manager_informed=='0000-00-00 00:00:00') return '';
+            if (strlen($this->manager_informed) == 19) return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->manager_informed, $this->dateTimeIncomeFormat));
+            elseif (strlen($this->manager_informed) == 10) return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->manager_informed, $this->dateTimeIncomeFormat));
+        }
+    }
+    public function getDbdate_finish()
+    {
+        if ($this->date_finish!='') {
+            if ($this->date_finish=='0000-00-00 00:00:00') return '';
+            if (strlen($this->date_finish) == 19) return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->date_finish, $this->dateTimeIncomeFormat));
+            elseif (strlen($this->date_finish) == 10) return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->date_finish, $this->dateTimeIncomeFormat));
+        }
+    }
+    public function getDbauthor_informed()
+    {
+        if ($this->author_informed!='') {
+            if ($this->author_informed=='0000-00-00 00:00:00') return '';
+            if (strlen($this->author_informed) == 19) return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->author_informed, $this->dateTimeIncomeFormat));
+            elseif (strlen($this->author_informed) == 10) return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->author_informed, $this->dateTimeIncomeFormat));
+        }
+    }
+    public function setDbmax_exec_date($datetime)
+    {
+        if ($datetime!=''){
+            if (strlen($datetime) == 16) $this->max_exec_date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+            elseif (strlen($datetime) == 10) $this->max_exec_date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
+        }
+    }
+    public function setDbdate_finish($datetime)
+    {
+        if ($datetime!=''){
+            if (strlen($datetime) == 16) $this->date_finish = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+            elseif (strlen($datetime) == 10) $this->date_finish = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
+        }
+    }
     public function setDbdate($datetime)
     {
-        $this->date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+        if ($datetime!=''){
+            if (strlen($datetime) == 16) $this->date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+            elseif (strlen($datetime) == 10) $this->date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
+        }
+    }
+    public function setDbmanager_informed($datetime)
+    {
+        if ($datetime!=''){
+            if (strlen($datetime) == 16) $this->manager_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+            elseif (strlen($datetime) == 10) $this->manager_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
+        }
+    }
+    public function setDbauthor_informed($datetime)
+    {
+        if ($datetime!=''){
+            if (strlen($datetime) == 16) $this->author_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
+            elseif (strlen($datetime) == 10) $this->author_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
+        }
     }
     public function getJobName()
     {
@@ -125,7 +181,7 @@ class Zakaz extends CActiveRecord
 			array('user_id', 'length', 'max'=>11),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
-			array('text, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
+			array('text, dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, jobName, catName, title, dateCreation, dateFinish, managerInformed', 'safe', 'on'=>'search'),
@@ -191,20 +247,37 @@ class Zakaz extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
+    public function search_upd()
+    {
+        $criteria = new CDbCriteria;
+        $criteria->with = array('job', 'category');
+        $criteria->offset=$this->id;
+        $sort = new CSort();
+        $sort->defaultOrder = 't.id ASC';
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'sort'=>$sort,
+            'pagination'=>array('pageSize'=>1),
+        ));
+    }
 	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
-
-        $criteria->with = array('job','category');
-		$criteria->compare('id',$this->id,true);
-        $criteria->compare('job.job_name',$this->job->job_name);
-		$criteria->compare('category.cat_name',$this->category->cat_name);
-		$criteria->compare('title',$this->title,true);
-        $criteria->compare('date',$this->date,true);
-        $criteria->compare('manager_informed',$this->date,true);
-        $criteria->compare('date_finish',$this->date_finish,true);
+        $criteria = new CDbCriteria;
+        $criteria->with = array('job', 'category');
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('job_id', $this->jobName);
+        $criteria->compare('category_id', $this->catName);
+        $criteria->compare('title', $this->title, true);
+        $criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
+        $criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
+        if (isset($this->dbdate_finishend) && isset($this->dbdate_finishstart)) {
+            $criteria->addCondition('"' . $this->dbdate_finishstart . '"<=DATE_FORMAT(date_finish, "%d.%m.%Y")<="' . $this->dbdate_finishend . '"');
+            $criteria->addCondition('date_finish is not NULL');
+        }
+        else
+            $criteria->compare('DATE_FORMAT(date_finish, "%d.%m.%Y")', substr($this->dbdate_finishstart,0,10), true);
         $criteria->compare('executor',$this->executor);
         $criteria->compare('status',$this->status);
         $sort = new CSort();

@@ -43,29 +43,16 @@ $attr = array(
         'name'=>'max_exec_date',
         'value'=>$model->dbmax_exec_date,
     ),
-    array(
-        'name'=>'author_informed',
-        'value'=>$model->dbauthor_informed,
-    ),
     'pages',
     'add_demands',
-    array(
-       'name' => 'status',
-       'type' => 'raw',
-       'value' => $model->status > 0 ? ProjectStatus::model()->findByPk($model->status)->status : null,
-    ),
-    //'is_payed',
-    //'informed',
-    //'notes',
-
 );
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>$attr,
 )); ?>
-<?php
+<?php /*
     $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
     'projectId'=>$model->id,
     'userType'=>'1',
     'action'=>'show'
-));?>
+));*/?>

@@ -25,6 +25,7 @@ class EventHelper {
         $message->description = $description;
         $message->timestamp = time();
         $message->status = self::STATUS_ACTIVE;
+
         if ($message->save()) {
             return true;
         } else {
@@ -54,17 +55,17 @@ class EventHelper {
     }
     
     public static function addChanges($id) {
-        
+
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." оставил дополнение к заказу";
         self::sendEvent($id, self::TYPE_ADD_CHANGES, $description);
         
     }
     
-    public static function addMessage($id) {
+    public static function addMessage($id,$message='') {
         
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." оставил сообщение";
+        $description = "Пользователь ".$userName." оставил сообщение: \"".$message."\"";
         self::sendEvent($id, self::TYPE_MESSAGE, $description);
         
     }

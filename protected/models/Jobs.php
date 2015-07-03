@@ -44,6 +44,13 @@ class Jobs extends CActiveRecord
 		);
 	}
 
+    public static function getAll(){
+        $crit=new CDbCriteria;
+        foreach (self::model()->findAll() as $k=>$v)
+            $res[$v['id']]=$v['job_name'];
+        return $res;
+    }
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

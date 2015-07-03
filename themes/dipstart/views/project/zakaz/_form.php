@@ -50,7 +50,7 @@
 	</div>
 
 	<table class="table table-striped" style="font-size: 12px">
-	<tr>
+	    <tr>
 			<td>
 				<?php echo $form->labelEx($model,'max_exec_date'); ?>
 			</td>
@@ -109,35 +109,3 @@
 ?>
 
 </div><!-- form -->
-
-<?php 
-
-    if (!$model->isNewRecord && $model->status == 2):
-        $upload = new UploadPaymentImage;
-?>
-
-<div class="form">
-
-<?php $form = $this->beginWidget('CActiveForm', array(
-	'id'=>'check-form',
-    'action'=>['zakaz/uploadPayment', 'id'=>$model->id],
-	'enableAjaxValidation'=>false,
-    'htmlOptions' => array(
-		'enctype'=>'multipart/form-data',
-	)
-)); ?>
-    
-    <div class="row">
-		Скан чека
-		<?php echo $form->fileField($upload,'file'); ?>
-	</div>
-    
-    <div class="row buttons">
-		<?php echo CHtml::submitButton('Загрузить'); ?>
-	</div>
-    
-<?php $this->endWidget(); ?>
-    
-</div>
-
-<?php endif; ?>

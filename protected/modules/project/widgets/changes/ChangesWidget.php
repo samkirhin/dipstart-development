@@ -37,7 +37,8 @@ class ChangesWidget extends CWidget
 
     public function run()
     {
-        if (count($this->changes->rawData) > 0) $this->render('default', array('changes' => $this->changes, 'project' => $this->project, 'user' => $this->userObj));
+        if (count($this->changes->rawData) > 0 || User::model()->isCustomer())
+            $this->render('default', array('changes' => $this->changes, 'project' => $this->project, 'user' => $this->userObj));
     }
 
 }

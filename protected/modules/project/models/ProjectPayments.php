@@ -49,7 +49,7 @@ class ProjectPayments extends CActiveRecord
 			'work_price' => 'Цена',
 			'received' => 'Получено',
 			'approved_in' => 'Подтверждено входящий',
-                        'approved_out' => 'Подтверждено исходящий',
+            'approved_out' => 'Подтверждено исходящий',
 			'to_receive' => 'На получение',
 			'to_pay' => 'На оплату',
 			'payed' => 'Оплачено',

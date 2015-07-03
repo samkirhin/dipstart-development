@@ -46,4 +46,20 @@ $(document).ready(function() {
  		});
 		return false;
 	});
+    $('.btn-chat').click(function(){
+        var order=$('#order').val();
+        $.post('/project/chat?orderId='+order,{
+            ProjectMessages:{
+                message:$('#message').val(),
+                recipient:this.name,
+                order:order
+            }
+        },function(data){
+            $('#chat').html(data);
+            $('.chat-view').scrollTop(10000);
+            $('#message').val('');
+        });
+        return false;
+    });
+    $('.chat-view').scrollTop(10000);
 });

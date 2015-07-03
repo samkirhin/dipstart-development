@@ -2,6 +2,8 @@
 /* @var $this ProjectMessagesController */
 /* @var $model ProjectMessages */
 /* @var $form CActiveForm */
+$order = Zakaz::model()->findByPk($orderId);
+Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
 <div class="container">
@@ -17,23 +19,38 @@
                 <?php endif;?>
                 <div class="col-xs-12">
                     <?php
-                    $this->widget('zii.widgets.CListView', array(
-                        'dataProvider' => $parts,
-                        'itemView' => '_part',
-                        'summaryCssClass' => 'hidden',
-                        'emptyText' => '',
-                        'enablePagination' => false,
+                    $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
+                        'projectId' => $order->id,
                     ));
                     ?>
                 </div>
                 <hr/>
                 <div class="col-xs-12">
-                    <h4 style="margin-top: 0px;"><?php echo ProjectModule::t('Changes'); ?></h4>
                     <?php $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
                         'project' => $order,
                     )); ?>
                 </div>
             </div>
+            <?php
+            if (1) {
+                $upload = new UploadPaymentImage;
+                $form = $this->beginWidget('CActiveForm', array(
+                    'id' => 'check-form',
+                    'action' => ['zakaz/uploadPayment', 'id' => $model->id],
+                    'enableAjaxValidation' => false,
+                    'htmlOptions' => array(
+                        'enctype' => 'multipart/form-data',
+                    )
+                )); ?>
+                <div class="row">
+                    Скан чека <?php echo $form->fileField($upload, 'file'); ?>
+                </div>
+                <div class="row buttons">
+                    <?php echo CHtml::submitButton('Загрузить'); ?>
+                </div>
+                <?php $this->endWidget();
+            }
+            ?>
             <?php
             $this->widget('ext.EAjaxUpload.EAjaxUpload',
                 array(
@@ -42,7 +59,7 @@
                         'id' => $order->id,
                     ),
                     'config' => array(
-                        'action' => $this->createUrl('/project/chat/upload?id='.$order->id),
+                        'action' => $this->createUrl('/project/chat/upload',array('id'=>$order->id)),
                         'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
                         'disAllowedExtensions'=>array('exe'),
                         'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
@@ -51,71 +68,48 @@
                     )
                 )
             );
+            $path=Yii::getPathOfAlias('webroot').'/uploads/'.$order->id.'/';
+            if (file_exists($path))
+                foreach (array_diff(scandir($path), array('..', '.')) as $k=>$v)
+                    if (!strstr($v,'#pre#')) echo '<a href="' . $path.$v . '" id="file" >'.$v.'</a><br />';
             ?>
         </div>
         <div class="col-xs-8">
-            <div class="form">
-                <?php $form = $this->beginWidget('CActiveForm', array(
-                    'id' => 'project-messages-sendmessage-form',
-                    'enableAjaxValidation' => false,
-                )); ?>
-                <?php echo $form->errorSummary($model); ?>
-                <div class="col-xs-12 user-chat-block">
-                    <div class="col-xs-12 chat-view">
-                        <!-- Вывод чата -->
-                        <?php foreach ($messages as $message):
-                            echo "$message->date - {$message->senderObject->profile->firstname} {$message->senderObject->profile->lastname}";
-                            switch ($message->recipient){
-                                case '1':
-                                    echo " написал менеджеру";
-                                    break;
-                                case '2':
-                                    if ($order->executor>0)
-                                        echo " написал {$order->author->profile->firstname} {$order->author->profile->lastname}";
-                                    else echo " написал автору";
-                                    break;
-                                case '3':
-                                    echo " написал {$order->user->profile->firstname} {$order->user->profile->lastname}";
-                                    break;
-                            }
-                            echo " : $message->message";
-                            if ($message->cost) echo "<div class=\"comment\">Цена за работу: $message->cost</div>";
-                            if ($message->sender != Yii::app()->user->id): ?>
-                            (<a href="" class="request" user="<?php echo $message->senderObject->id; ?>"
-                                username="<?php echo $message->senderObject->username; ?>">Ответить</a>)
-                            <?php endif; ?>
-                            <br/>
-                        <?php endforeach; ?>
-
-                        <!-- Конец вывода чата -->
-                    </div>
-                    <div class="col-xs-12" style="padding-left: 0;">
+            <div id="chat" class="col-xs-12 user-chat-block">
+                <?php $this->renderPartial('chat',array('orderId'=>$order->id));?>
+            </div>
+                <?php
+                if (!Yii::app()->request->isAjaxRequest){
+                    echo CHtml::form(); ?>
+                    <div class="col-xs-12">
                         <?php if (User::model()->isAuthor()): ?>
 
                             <div class="price-for-work-avtor">
-                                <label for="ProjectMessages_cost" class="control-label">Цена за работу:</label>
-                                <?php echo $form->textField($model, 'cost'); ?>
-                                <?php echo $form->error($model, 'cost'); ?>
+                                <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
+                                <?php echo CHtml::textField('cost'); ?>
                             </div>
                         <?php endif; ?>
-                        <?php echo $form->labelEx($model, 'message', array('id' => 'msgLabel')); ?>
-                        <?php echo $form->textArea($model, 'message', array('rows' => 6, 'class' => 'col-xs-12')); ?>
-                        <?php echo $form->error($model, 'message'); ?>
+                        <?php echo CHtml::label('Сообщение','message', array('id' => 'msgLabel')); ?>
+                        <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12')); ?>
                     </div>
 
 
                     <div class="row buttons col-xs-12">
                         <?php
+                        if(User::model()->isAuthor()) {
+                            $middle_button = 'Отправить заказчику';
+                        } else if(User::model()->isCustomer()) {
+                            $middle_button = 'Отправить автору';
+                        }
                         echo '<div  class="col-xs-6" style="padding: 0px 5px;">' . CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-chat col-xs-12')) . '</div>';
                         echo '<div class="col-xs-6" style="padding: 0px 5px;">' . CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-chat col-xs-12')) . '</div>';
                         ?>
                     </div>
-                    <?php echo $form->hiddenField($model, 'order'); ?>
-                    <?php echo $form->hiddenField($model, 'recipient', array('id' => 'recipient')); ?>
-                    <?php $this->endWidget(); ?>
-                </div>
-            </div>
-            <!-- form -->
+                    <?php echo CHtml::hiddenField('order',$order->id);
+                    CHtml::endForm();
+                }
+                ?>
+                <!-- form -->
         </div>
         <div class="col-xs-12 info-block" style="margin-bottom: 15px;">
             <div class="panel-group" id="info-block">
@@ -136,8 +130,36 @@
 
                                     $this->widget('zii.widgets.CDetailView', array(
                                         'data' => $order,
-                                        'attributes' => $attributes,
-                                    ));
+                                        'attributes' => array(
+                                            'id',
+                                            array(
+                                                'name' => 'category_id',
+                                                'type' => 'raw',
+                                                'value' => Categories::model()->findByPk($order->category_id)->cat_name,
+                                            ),
+                                            array(
+                                                'name' => 'job_id',
+                                                'type' => 'raw',
+                                                'value' => $order->job_id > 0 ? Jobs::model()->findByPk($order->job_id)->job_name : null,
+                                            ),
+                                            'title',
+                                            'text',
+                                            [
+                                                'name' => 'author_informed',
+                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
+                                            ],
+                                            [
+                                                'name' => 'date_finish',
+                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
+                                            ],
+                                            'pages',
+                                            'add_demands',
+                                            array(
+                                                'name' => 'status',
+                                                'type' => 'raw',
+                                                'value' => $order->status > 0 ? ProjectStatus::model()->findByPk($order->status)->status : null,
+                                            ),
+                                    )));
 
                                 } else {
 

@@ -96,16 +96,16 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				} else if ($postdata['recipient']=='Customer')
 					$obj['recipient']=3;
 				else $obj['recipient']=0;
-				$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
+				$newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 			}
 			else {
 				if ($postdata['recipient']=='no') {
 					$obj['recipient']=0;
-					$this->getDb()->createCommand()->update($this->getTableName(), $obj, 'id=:id', array('id' => $postdata['index']));
+                    $newid=$this->getDb()->createCommand()->update($this->getTableName(), $obj, 'id=:id', array('id' => $postdata['index']));
 				}
 				else {
 					$obj['recipient']=$postdata['recipient'];
-					$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
+                    $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}
 			}
 			// now retrieve the post
@@ -160,166 +160,5 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			return array();
 		}
 	}
-
-	public function runTestTimer(){
-		$tests = array(
-			array(
-			'testid'=>'1',
-			'last_id'=>'aa',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'rr', 'created'=>1004, 'post_identity'=>'200'),
-				array('id'=>'aa', 'created'=>1002, 'post_identity'=>'200'),
-				array('id'=>'zz', 'created'=>1001, 'post_identity'=>'200'),
-				),
-			'results'=>array(
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				),
-			),//test n
-
-			array(
-			'testid'=>'2',
-			'last_id'=>'pp',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'rr', 'created'=>1004, 'post_identity'=>'200'),
-				array('id'=>'aa', 'created'=>1002, 'post_identity'=>'200'),
-				array('id'=>'zz', 'created'=>1001, 'post_identity'=>'200'),
-				),
-			'results'=>array(),
-			),//test n
-
-			array(
-			'testid'=>'3',
-			'last_id'=>'qq',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'rr', 'created'=>1004, 'post_identity'=>'200'),
-				array('id'=>'aa', 'created'=>1002, 'post_identity'=>'200'),
-				array('id'=>'zz', 'created'=>1001, 'post_identity'=>'200'),
-				),
-			'results'=>array(),
-			),//test n
-
-			array(
-			'testid'=>'4',
-			'last_id'=>'99',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'rr', 'created'=>1004, 'post_identity'=>'200'),
-				array('id'=>'aa', 'created'=>1002, 'post_identity'=>'200'),
-				array('id'=>'zz', 'created'=>1001, 'post_identity'=>'200'),
-				),
-			'results'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				),
-			),//test n
-
-			array(
-			'testid'=>'5',
-			'last_id'=>'bb',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'rr', 'created'=>1004, 'post_identity'=>'200'),
-				array('id'=>'aa', 'created'=>1002, 'post_identity'=>'200'),
-				array('id'=>'zz', 'created'=>1001, 'post_identity'=>'200'),
-				),
-			'results'=>array(),
-			),//test n
-
-			array(
-			'testid'=>'6',
-			'last_id'=>'',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'rr', 'created'=>1004, 'post_identity'=>'200'),
-				array('id'=>'aa', 'created'=>1002, 'post_identity'=>'200'),
-				array('id'=>'zz', 'created'=>1001, 'post_identity'=>'200'),
-				),
-			'results'=>array(
-				array('id'=>'kk', 'created'=>1006, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				),
-			),//test n
-
-			array(
-			'testid'=>'7',
-			'last_id'=>'',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				),
-			'results'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				),
-			),//test n
-
-			array(
-			'testid'=>'8',
-			'last_id'=>'',
-			'limit'=>3,
-			'rows'=>array(
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				),
-			'results'=>array(
-				array('id'=>'99', 'created'=>1007, 'post_identity'=>'200'),
-				array('id'=>'qq', 'created'=>1009, 'post_identity'=>'200'),
-				),
-			),//test n
-
-			array(
-			'testid'=>'9',
-			'last_id'=>'',
-			'limit'=>3,
-			'rows'=>array(
-				),
-			'results'=>array(
-				),
-			),//test n
-		);
-		foreach($tests as $test){
-			echo "TEST#".$test['testid'].", last_id[".$test['last_id']."]: ";
-			$r = $this->getLastPosts($test['rows'],$test['limit'],$test['last_id']);
-			$r2 = $test['results'];
-			if(count($r) == count($r2)){
-				$ok=true;$n=-1;
-				for($i=0;$i<count($r);$i++)
-					if(!(($r[$i]['id'] == $r2[$i]['id']) &&
-						($r[$i]['created'] == $r2[$i]['created'])))
-							 { $ok=false; $n=$i; break; }
-				if($ok==true){
-					echo "OK<br/>";
-				}else
-				echo "<br/>ERR_".$n."<br/>".json_encode($r)."<br/>, MUSTBE:<br/>".json_encode($r2);
-			}
-			else {
-				echo "<br/>ERR_SIZE<br/>".json_encode($r)."<br/>, MUSTBE:<br/>".json_encode($r2);
-			}
-			echo "<br/>";
-		}
-	}
-
 }
 ?>

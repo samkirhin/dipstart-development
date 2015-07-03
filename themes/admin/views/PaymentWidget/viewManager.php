@@ -76,7 +76,7 @@
                 Отправить на оплату:
             </td>
             <td>
-                <input type="text" size="10" class="to_pay_input" value=""/>
+                <input type="text" size="10" class="to_pay_input" value="" <?php if($model->received=='') echo 'disabled';?>/>
             </td>
         </tr>
         <tr>

@@ -32,3 +32,4 @@ Yii::createWebApplication($config)->run();
     "XHProf at some address, you can view run at \n".
     "<a href='http://xhprof.coolfire.pp.ua/xhprof_html/index.php?run=$run_id&source=xhprof_dipstart'>here</a>\n".
     "---------------\n";
+*/

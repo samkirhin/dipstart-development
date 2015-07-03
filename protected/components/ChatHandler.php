@@ -37,8 +37,22 @@ class ChatHandler extends YiiChatDbHandlerBase {
 		foreach ($res as $k=>$v) {
             $res1[$k]=$v->attributes;
             $res1[$k]['sender']=array();
-			$res1[$k]['sender']['username']=$res[$k]->senderObject->profile->firstname.' '.$res[$k]->senderObject->profile->lastname;
+			$res1[$k]['sender']['fullusername']=$res[$k]->senderObject->profile->firstname.' '.$res[$k]->senderObject->profile->lastname;
 			$res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes;
+            switch($res1[$k]['sender']['superuser']['itemname']){
+                case 'Admin':
+                    $res1[$k]['sender']['username']='Админ';
+                    break;
+                case 'Manager':
+                    $res1[$k]['sender']['username']='Менеджер';
+                    break;
+                case 'Author':
+                    $res1[$k]['sender']['username']='Автор';
+                    break;
+                case 'Customer':
+                    $res1[$k]['sender']['username']='Заказчик';
+                    break;
+            }
 			if ($res[$k]->recipient > 0) {
                 $res1[$k]['recipient'] = array();
                 switch ($res[$k]->recipient){
@@ -51,12 +65,14 @@ class ChatHandler extends YiiChatDbHandlerBase {
                             $res1[$k]['recipient']['username']='автору';
                             $res1[$k]['recipient']['superuser']='Author';
                         } else {
-                            $res1[$k]['recipient']['username'] = $order->author->profile->firstname.' '.$order->author->profile->lastname;
+                            $res1[$k]['recipient']['username']='автору';
+                            $res1[$k]['recipient']['fullusername'] = $order->author->profile->firstname.' '.$order->author->profile->lastname;
                             $res1[$k]['recipient']['superuser'] = $order->author->profile->AuthAssignment->attributes;
                         }
                         break;
                     case 3:
-                        $res1[$k]['recipient']['username'] = $order->user->profile->firstname.' '.$order->user->profile->lastname;
+                        $res1[$k]['recipient']['username']='заказчику';
+                        $res1[$k]['recipient']['fullusername'] = $order->user->profile->firstname.' '.$order->user->profile->lastname;
                         $res1[$k]['recipient']['superuser'] = $order->user->profile->AuthAssignment->attributes;
                         break;
                 }

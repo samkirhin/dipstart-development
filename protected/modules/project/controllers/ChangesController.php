@@ -56,7 +56,6 @@ class ChangesController extends Controller {
         }
 
         $projects = ProjectChanges::model()->getListChanges((int)$project);
-        //echo CJSON::encode(array('success' => true, 'data' => $projects));
         foreach ($projects as $data) {?>
             <div id="list-changes-block" class="list-changes-block">
                 <div class="list-changes-filename">

@@ -19,7 +19,11 @@ $this->breadcrumbs = array(
 
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
     <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
-    
+    <div class="row">
+        <?php
+        //$this->renderPartial('_order_list_update');
+        ?>
+    </div>
     <div class="row order-contacts">
         <?php if ($author): ?>
         <div class="col-xs-6 rightBorder">
@@ -51,13 +55,16 @@ $this->breadcrumbs = array(
 
             <div class="row">
                 <div class="col-xs-12">
+                    <button class="btn btn-primary" onclick="spam(<?php echo $model->id; ?>);" href="">Spam</button>
+                </div>
+                <div class="col-xs-12">
                     <h4>Примечания (по всему заказу)</h4>
 
                     <?php $form = $this->beginWidget('CActiveForm', array(
                         'id' => 'zakaz-form',
-                        'enableAjaxValidation' => true,
-                        'enableClientValidation'=>true,
-                        'action'=>Yii::app()->createUrl('zakaz/update'),
+                        //'enableAjaxValidation' => true,
+                        //'enableClientValidation'=>true,
+                        //'action'=>Yii::app()->createAbsoluteUrl('/zakaz/update',array('id'=>$model->id)),
                         'clientOptions'=>array(
                             'validationDelay'=>2000,
                             'validateOnType'=>true,
@@ -76,7 +83,7 @@ $this->breadcrumbs = array(
                         <?php echo $form->labelEx($model, 'author_notes'); ?>
                         <?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
-                    <?php echo CHtml::ajaxSubmitButton('Save',''); ?>
+                    <?php echo CHtml::submitButton('Save',''); ?>
 
                     <?php $this->endWidget(); ?>
                 </div>
@@ -102,7 +109,54 @@ $this->breadcrumbs = array(
                 'project' => $model,
             ))
             ?>
+            <div class="row zero-edge">
+                <?php
+                echo CHtml::form('', 'post', array('id' => 'up_file', 'enctype' => 'multipart/form-data'));
+                ?>
+                <div class="col-xs-12">
+                    <?php echo CHtml::label('Прикрепить файл', 'fileupload'); ?>
+                    <?php echo CHtml::fileField('ProjectChanges[fileupload]', $fileupload, array('class' => 'col-xs-12 btn btn-user')); ?>
+                </div>
+
+                <div class="col-xs-12">
+                    <?php echo CHtml::label('Комментарий', 'comment'); ?>
+                    <?php echo CHtml::textArea('ProjectChanges[comment]', $comment, array('class' => 'col-xs-12')); ?>
+                </div>
+                <?php echo CHtml::endForm(); ?>
+                <?php
+                $url = Yii::app()->createUrl("/project/changes/add",array('project'=>$project->id));
+                echo CHtml::htmlButton(ProjectModule::t('Add changes'), array(
+                    'class' => 'col-xs-12 btn btn-primary addPart',
+                    'onclick' => "javascript: send('$url')",
+                ));?>
+            </div>
             <!-- Конец блока правок частей менеджера -->
+            <?php
+            $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                array(
+                    'id' => 'justFileUpload',
+                    'postParams' => array(
+                        'id' => $model->id,
+                    ),
+                    'config' => array(
+                        'action' => $this->createUrl('/project/chat/upload',array('id'=>$model->id)),
+                        'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                        'disAllowedExtensions'=>array('exe'),
+                        'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+                        'minSizeLimit' => 10,// minimum file size in bytes
+                        'onComplete' => "js:function(id, fileName, responseJSON){}"
+                    )
+                )
+            );
+            $path=Yii::getPathOfAlias('webroot').'/uploads/'.$model->id.'/';
+            if (file_exists($path)) {
+                foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
+                    echo str_replace('#pre#', '', $v) . '<br />';
+                    if (strstr($v, '#pre#'))
+                        echo '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">Approve</button>';
+                }
+            }
+            ?>
         </div>
     
          <!-- Right column -->

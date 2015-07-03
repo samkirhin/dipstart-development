@@ -32,7 +32,7 @@ class ZakazController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('admin','delete', 'apiview','apifindauthor','spam'),
+                    'actions'=>array('admin','delete', 'apiview','apifindauthor','spam','apiapprovefile'),
                     'users'=>array('admin'),
                 ),
 				array('deny',  // deny all users
@@ -167,7 +167,7 @@ class ZakazController extends Controller
                     $model->dbdate = date('d.m.Y H:i');
                     $d1=date_create();
                     $d2=date_create($_POST['Moderation']['dbmax_exec_date']);
-                    $d1->modify('+'.intval(date_diff($d1,$d2)->d/2).' days');
+                    $d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
                     $model->dbauthor_informed = $d1->format('d.m.Y H:i');
                 }
 				if($model->save()){
@@ -190,6 +190,10 @@ class ZakazController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        if (Yii::app()->request->isAjaxRequest){
+            $this->renderPartial('_order_list_update');
+            Yii::app()->end();
+        }
         $role = User::model()->getUserRole();
         $view = 'update';
         $isModified = false;
@@ -358,8 +362,13 @@ class ZakazController extends Controller
 	{
         $model = new Zakaz('search');
         $model->unsetAttributes();
-        if(isset($_GET['ajax'])) {
-            $model->setAttributes($_POST['Zakaz'], false);
+        if(Yii::app()->request->isAjaxRequest) {
+
+            array_walk($_POST['Zakaz'],function(&$v,$k){
+                if (substr($k,0,2))
+                    if (strlen($v)>10) $v=substr($v,0,10);
+            });
+            $model->setAttributes(Yii::app()->request->getParam('Zakaz'));
             $this->renderPartial('index', array(
                 'model' => $model,
             ), false, true);
@@ -464,14 +473,14 @@ class ZakazController extends Controller
 			$this->redirect(Yii::app()->request->urlReferrer);
 	}
 
-    public function actionSpam(){
-        $job = Zakaz::model()->findByPk($_GET['id'])->job_id;
-        $discipline = Zakaz::model()->findByPk($_GET['id'])->category_id;
+    public function actionSpam($order_id){
+        $job = Zakaz::model()->findByPk($order_id)->job_id;
+        $discipline = Zakaz::model()->findByPk($order_id)->category_id;
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('profile.discipline',$discipline);
         $criteria->addSearchCondition('profile.job_type',$job);
         $authors = User::model()->with('profile')->findAll($criteria);
-        $debug = '';
+        if(empty($authors)) echo json_encode(array('error'=>'Нет авторов'));
         $mail = new YiiMailer('contact', array('message' => 'Message to send', 'name' => 'John Doe', 'description' => 'Contact form'));
         $mail->SMTPDebug = 2;
         $mail->Debugoutput = function($str, $level) {
@@ -481,9 +490,21 @@ class ZakazController extends Controller
         $mail->setSubject('Mail subject');
         foreach ($authors as $author) {
             $mail->setTo($author['email']);
-            $mail->send();
+            //$mail->send();
+            print_r($author);
         }
-        echo $debug;
+        header('Content-type: application/json');
+
         Yii::app()->end();
+    }
+    public function actionApiApproveFile() {
+        $this->_prepairJson();
+        $data = $this->_request->getParam('data');
+        $path=Yii::getPathOfAlias('webroot').'/uploads/'.$data['id'].'/';
+        if (!file_exists($path)) mkdir($path);
+        if (rename($path.$data['name'], $path.str_replace('#pre#', '', $data['name']))) {
+            $this->_response->setData(true);
+        } else $this->_response->setData(false);
+        $this->_response->send();
     }
 }

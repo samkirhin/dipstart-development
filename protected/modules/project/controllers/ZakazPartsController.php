@@ -124,9 +124,6 @@ class ZakazPartsController extends Controller
             $model = ZakazParts::model()->findByPk($partId);
             foreach ($this->_request->_params as $par=>$val)
                 $model->$par =$val;
-            /*$model->comment = $this->_request->getParam('comment');
-            $model->date = $this->_request->getParam('date');
-            $model->title = $this->_request->getParam('title');*/
             if ($this->_request->isParam('files')) {
                 $files = $this->_request->getParam('files');
                 $path = 'uploads/additions/'.$partId.'/';
@@ -154,7 +151,7 @@ class ZakazPartsController extends Controller
         
         private function checkDir($path) {
             if (!file_exists($path)){
-                mkdir($path, 0777, true);
+                mkdir($path, 0755, true);
             }
         }
         
@@ -271,11 +268,12 @@ class ZakazPartsController extends Controller
         
         public function actionUpload()
         {
+            $this->_prepairJson();
             Yii::import("ext.EAjaxUpload.qqFileUploader");
-            $folder='uploads/additions/temp/';// folder for uploaded files
+            $folder='uploads/additions/temp/';
             $config['allowedExtensions'] = array('jpg', 'gif', 'txt', 'doc', 'docx');
             $config['disAllowedExtensions'] = array("exe");
-            $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
+            $sizeLimit = 10 * 1024 * 1024;
             $pi = pathinfo($_GET['qqfile']);
             $_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
             $uploader = new qqFileUploader($config, $sizeLimit);
@@ -283,9 +281,7 @@ class ZakazPartsController extends Controller
             if ($result['success']) {
                 EventHelper::addChanges($_GET['proj_id']);
             }
-            $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-            $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
-            $fileName=$result['filename'];//GETTING FILE NAME
-            echo $return;// it's array
+            $this->_response->setData($result);
+            $this->_response->send();
         }
 }

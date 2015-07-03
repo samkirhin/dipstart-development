@@ -48,7 +48,6 @@ function send(url) {
         datatype: 'json',
         success: function (data,textStatus,errorThrown) {
             jQuery("#list_files").load(url.replace('add','list'));
-            console.log(data);
             if (data.error) alert(data.error.ProjectChanges_file);
         },
         error: function (data,textStatus,errorThrown) {
@@ -70,6 +69,29 @@ function approve(obj){
             console.log(response);
         }
     }, 'json');
+}
+function approveFile(obj){
+    var data=$(obj).data();
+    $.post('/project/zakaz/apiApproveFile', JSON.stringify({
+        'data': data
+    }), function (response) {
+        if (response.data)obj.remove();
+    }, 'json');
+}
+function spam(orderid){
+    $.ajax({
+        url: '/project/zakaz/spam?order_id='+orderid,
+        type: 'POST',
+        datatype: 'json',
+        success: function (data,textStatus,errorThrown) {
+            if(data.error) alert(data.error);
+        },
+        error: function (data,textStatus,errorThrown) {
+            console.log(data);
+            alert(data);
+        }
+    });
+    return false;
 }
 /*$( document ).ready( function() {
     $('#partEdit').on('click',function(event){

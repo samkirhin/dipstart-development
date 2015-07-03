@@ -10,6 +10,12 @@ class ChatController extends Controller {
 	/**
 	 * @return array action filters
 	 */
+    protected $_request;
+    protected $_response;
+    protected function _prepairJson() {
+        $this->_request = Yii::app()->jsonRequest;
+        $this->_response = new JsonHttpResponse();
+    }
 
 	public function filters()
 	{
@@ -27,16 +33,12 @@ class ChatController extends Controller {
 	public function accessRules()
 	{
 		return array(
-			/*array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array(),
-				'users'=>array('*'),
-			),*/
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('index','upload'),
-				'users'=>array('@'),
+				'expression'=>array('ChatController','allowOnlyOwner'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin', 'yiifilemanagerfilepicker', 'approve', 'remove', 'edit', 'setexecutor', 'delexecutor', 'readdress'),
+				'actions'=>array('admin', 'approve', 'remove', 'edit', 'setexecutor', 'delexecutor', 'readdress'),
 				'users'=>array('admin', 'manager'),
 			),
 			array('deny',  // deny all users
@@ -44,129 +46,59 @@ class ChatController extends Controller {
 			),
 		);
 	}
+    public static function allowOnlyOwner(){
+        if(User::model()->isAdmin()){
+            return true;
+        }
+        else{
+            $zakaz = Zakaz::model()->findByPk($_GET["orderId"]);
+            if(User::model()->isCustomer())
+                return ($zakaz->user->id === Yii::app()->user->id);
+            if(User::model()->isAuthor())
+                return (($zakaz->executor == 0) || ($zakaz->executor === Yii::app()->user->id));
+        }
+    }
 
 	/**
 	 *  Вывод и добавление сообщений
 	 */
-	public function actionIndex($orderId) {
+    public function actionIndex($orderId)
+    {
 
-        Yii::app()->clientScript->registerScriptFile('/js/chat.js');
         Yii::app()->session['project_id'] = $orderId;
 
-		$order = Zakaz::model()->findByPk($orderId);
-
-        if (!$order) {
-            throw new CHttpException(404, 'Не найден');
-        }
-        
-		$model = new ProjectMessages;
-		$model->sender = Yii::app()->user->id;
-		$model->moderated = 0;
-		$model->order = $orderId;
-		if(Yii::app()->request->getPost($model->tableName())) {
-			$model->attributes = Yii::app()->request->getPost($model->tableName());
-			$model->date = date('Y-m-d H:i:s');
-			switch (array_keys($_POST)[1]){
-				case 'manager':
-					$model->recipient = 1;
-				break;
-				case 'customer':
-                    if(User::model()->isCustomer())
-                        $model->recipient = 2;
-					if(User::model()->isAuthor())
-						$model->recipient = 3;
-				break;
-			}
-			$model->save();
-			EventHelper::addMessage($model->order);
-			$model->message = '';
-			$model->recipient = '';
-		}
-		if(User::model()->isAuthor()) {
-			$criteria=new CDbCriteria;
-			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient=2 OR recipient=0)');
-			$criteria->addCondition('`order` = :oid');
-			$criteria->params[':oid'] = (int) $orderId;
-			$messages = ProjectMessages::model()->findAll($criteria);
-			$middle_button = 'Отправить заказчику';
-		}
-		else if(User::model()->isCustomer()) {
-			$criteria=new CDbCriteria;
-			$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient=3 OR recipient=0)');
-			$criteria->addCondition('`order` = :oid');
-			$criteria->params[':oid'] = (int) $orderId;
-			$messages = ProjectMessages::model()->findAll($criteria);
-			$middle_button = 'Отправить автору';
-		}
-		else {
-			$criteria=new CDbCriteria;
-			$criteria->addCondition('`order` = :oid');
-			$criteria->params[':oid'] = (int) $orderId;
-			$messages = ProjectMessages::model()->findAll($criteria);
-		}
-
-        
-        $attributes = [
-            'id',
-            array(
-               'name' => 'category_id',
-               'type' => 'raw',
-               'value' => Categories::model()->findByPk($order->category_id)->cat_name,
-            ),
-            array(
-               'name' => 'job_id',
-               'type' => 'raw',
-               'value' => $order->job_id > 0 ? Jobs::model()->findByPk($order->job_id)->job_name : null,
-            ),
-            'title',
-            'text',
-            [
-               'name' => 'author_informed',
-               'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
-            ],
-            [
-               'name' => 'date_finish',
-               'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
-            ],
-            'pages',
-            'add_demands',
-            array(
-               'name' => 'status',
-               'type' => 'raw',
-               'value' => $order->status > 0 ? ProjectStatus::model()->findByPk($order->status)->status : null,
-            ),
-        ];
-
-        if (User::model()->isManager() || User::model()->isAdmin()) {
-            $attributes = CMap::mergeArray($attributes, [
-                'is_payed',
-                'informed',
-                'notes'
-            ]);
-        }
-        $parts = array();
-        if (User::model()->isAdmin() || User::model()->isManager()) {
-            $parts = new CActiveDataProvider('ZakazParts',array('criteria'=>array('proj_id'=>$orderId)));
-        } elseif (User::model()->isCustomer() || User::model()->isAuthor()) {
-            $parts = new CActiveDataProvider('ZakazParts',array(
-                'criteria'=>array(
-                    //'select'=>'orig_name',
-                    'condition'=>'proj_id='.$orderId.' AND `show` IN (1'.(User::model()->isAuthor()?',0)':')'),
-                    'select'=>array('id','title','file','date','comment','author_id','proj_id'),
-                ),
+        if (Yii::app()->request->isAjaxRequest) {
+            if (Yii::app()->request->getPost(ProjectMessages::model()->tableName())) {
+                $model = new ProjectMessages;
+                $model->sender = Yii::app()->user->id;
+                $model->moderated = 0;
+                $model->order = $orderId;
+                $model->attributes = Yii::app()->request->getPost($model->tableName());
+                $model->date = date('Y-m-d H:i:s');
+                switch ($model->recipient) {
+                    case 'manager':
+                        $model->recipient = 1;
+                        break;
+                    case 'customer':
+                        if (User::model()->isCustomer())
+                            $model->recipient = 2;
+                        if (User::model()->isAuthor())
+                            $model->recipient = 3;
+                        break;
+                }
+                $model->save();
+                EventHelper::addMessage($model->id, $orderId);
+            }
+            $this->renderPartial('chat', array(
+                'orderId' => $orderId,
             ));
+            Yii::app()->end();
         }
-
-		$this->render('index', array(
-			'model' => $model,
-            'order' => $order,
-            'parts' => $parts,
-			'messages' => $messages,
-			'executor' => Zakaz::getExecutor($orderId),
-            'attributes' => $attributes,
-            'middle_button' => $middle_button
-		));
-	}
+        $this->render('index', array(
+            'orderId' => $orderId,
+            'executor' => Zakaz::getExecutor($orderId),
+        ));
+    }
 
 	/**
 	 * Одобрить сообщение
@@ -227,6 +159,7 @@ class ChatController extends Controller {
         $model->save();
     }
 	public function actionUpload() {
+        $this->_prepairJson();
         Yii::import("ext.EAjaxUpload.qqFileUploader");
         $folder='uploads/'.$_GET['id'].'/';// folder for uploaded files
         $config['allowedExtensions'] = array('jpg', 'gif', 'txt', 'doc', 'docx');
@@ -238,9 +171,9 @@ class ChatController extends Controller {
         if ($result['success']) {
             EventHelper::addChanges($_GET['proj_id']);
         }
-        $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-        $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
-        $fileName=$result['filename'];//GETTING FILE NAME
-        echo $return;// it's array
+        $result['fileSize']=filesize($folder.$result['filename']);//GETTING FILE SIZE
+        $result['fileName']=$result['filename'];//GETTING FILE NAME
+        $this->_response->setData($result);
+        $this->_response->send();
     }
 }

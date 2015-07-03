@@ -17,7 +17,12 @@ var ProjectPayments = function(orderId) {
         var proj_price = self.p_price.val();
         var work_price = self.w_price.val();
         var receive = self.t_receive.val();
-        $.post('/project/payment/savePaymentsToUser', JSON.stringify({
+        var pay = self.t_pay.val();
+        if (pay>work_price){
+            alert('Сумма оплаты превышает лимит');
+            return false;
+        }
+        if (receive!='') {$.post('/project/payment/savePaymentsToUser', JSON.stringify({
             'order_id': self.orderId,
             'project_price': proj_price,
             'to_receive': receive
@@ -28,12 +33,9 @@ var ProjectPayments = function(orderId) {
                 self.to_receive.text(response.data.to_receive);
             } else {
             }
-        }, 'json');
-        
-        var proj_price = self.p_price.val();
-        var work_price = self.w_price.val();
-        var pay = self.t_pay.val();
-        $.post('/project/payment/savePaymentsToAuthor', JSON.stringify({
+        }, 'json');}
+        else
+        {$.post('/project/payment/savePaymentsToAuthor', JSON.stringify({
             'order_id': self.orderId,
             'work_price': work_price,
             'to_pay': pay
@@ -44,9 +46,9 @@ var ProjectPayments = function(orderId) {
                 self.to_pay.text(response.data.to_pay);
             } else {
             }
-        }, 'json');
+        }, 'json');}
         
-    }
+    };
     
     self.form.find('.send_user_payments').on('click', function() {
         self.sendPayments();

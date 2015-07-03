@@ -17,20 +17,22 @@ $this->breadcrumbs=array(
         'id',
         //'status',
         'title',
-        'jobName',
-        'catName',
+        array(
+            'name'=>'jobName',
+            'filter'=>Jobs::getAll(),
+            'value'=>'$data->jobName'
+        ),
+        array(
+            'name'=>'catName',
+            'filter'=>Categories::getAll(),
+        ),
         array(
             'name'=>'date',
             'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'model'=>$model,
                 'attribute'=>'dbdate',
                 'language'=>'ru',
-                'defaultOptions'=>array(
-                    'dateFormat'=>'dd.mm.yy',
-                    'regional'=>'ru',
-                ),
-            ),
-            true),
+                ),true),
             'value'=>'$data->dbdate'
         ),
         array(
@@ -39,26 +41,20 @@ $this->breadcrumbs=array(
                 'model'=>$model,
                 'attribute'=>'dbmanager_informed',
                 'language'=>'ru',
-                'defaultOptions'=>array(
-                    'dateFormat'=>'dd.mm.yy',
-                    'regional'=>'ru',
-                ),
-            ),
-                true),
+                ), true),
             'value'=>'$data->dbmanager_informed',
         ),
         array(
             'name'=>'date_finish',
             'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'model'=>$model,
-                'attribute'=>'dbdate_finish',
+                'attribute'=>'dbdate_finishstart',
                 'language'=>'ru',
-                'defaultOptions'=>array(
-                    'dateFormat'=>'dd.mm.yy',
-                    'regional'=>'ru',
-                ),
-            ),
-                true),
+                ), true).$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                    'model'=>$model,
+                    'attribute'=>'dbdate_finishend',
+                    'language'=>'ru',
+                ), true),
             'value'=>'$data->dbdate_finish',
         ),
         array(
@@ -79,6 +75,6 @@ $this->breadcrumbs=array(
 <?php
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {
-    $('#Zakaz_dbdate').datepicker(jQuery.extend(jQuery.datepicker.regional['ru']));
+    $('[id ^= Zakaz_db]').datepicker(jQuery.extend(jQuery.datepicker.regional['ru']));
 }
 ");

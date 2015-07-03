@@ -33,7 +33,7 @@ var BookkeeperScript = function(u,s){
     }
     
     this.setApprove = function(id, method) {
-        $.post('index.php?r=project/payment/approveFromBookkeeper', JSON.stringify({
+        $.post('/project/payment/approveFromBookkeeper', JSON.stringify({
             'id': id,
             'method': method
         }), function (response) {

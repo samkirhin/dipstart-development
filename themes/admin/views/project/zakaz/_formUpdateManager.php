@@ -131,7 +131,7 @@
                                     <?php echo $form->textArea($model, 'text', array('rows' => 6, 'cols' => 70)); ?>
                                     <?php echo $form->error($model, 'text'); ?>
 
-                                    <h3 style="display: none;"> Сроки выполнения </h3>
+                                    <h3> Сроки выполнения </h3>
 
                                     <table class="table table-striped" style="font-size: 12px;">
                                         <thead>

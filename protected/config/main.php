@@ -114,10 +114,10 @@ return array(
 
         //dev server
         'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=project',
+			'connectionString' => 'mysql:host=localhost;dbname=dipstart',
 			'emulatePrepare' => true,
-			'username' => 'garry',
-			'password' => '158358',
+			'username' => 'dipstart',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(

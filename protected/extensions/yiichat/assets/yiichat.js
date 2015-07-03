@@ -29,7 +29,7 @@ var YiiChat = function (options) {
         var actionPost = function (text, callback, data) {
             busy();
             jQuery.ajax({
-                cache: false, type: 'post',
+                cache: false, type: 'post', dataType: 'json',
                 url: options.action + '&action=sendpost&data=not_used',
                 data: {chat_id: options.chat_id, identity: options.identity, text: text, post: data},
                 success: function (post) {
@@ -39,10 +39,11 @@ var YiiChat = function (options) {
                         options.onError('post_rejected', text);
                         callback(false);
                     } else {
-                        add(post, data.index);
+                        actionTimer();
                         callback(true);
                         options.onSuccess('post', text, post);
                     }
+                    $('#send_buttons').children().each(function(){$(this).show()});
                     clear();
                 },
                 error: function (e) {
@@ -56,7 +57,7 @@ var YiiChat = function (options) {
         var actionInit = function (callback) {
             busy();
             jQuery.ajax({
-                cache: false, type: 'post',
+                cache: false, type: 'post', dataType: 'json',
                 url: options.action + '&action=init&data=not_used',
                 data: {chat_id: options.chat_id, identity: options.identity},
                 success: function (_posts) {
@@ -123,12 +124,14 @@ var YiiChat = function (options) {
         //	id: postid, owner: 'i am', time: 'the time stamp', text: 'the post'
         //  chat_id: the_chat_id, identity: whoami_id
         var add = function (post, postn) {
+            var p=0;
             if (postn == 0) {
                 posts.append("<div id='post_" + post.id + "' class='post'>"
                 + "<div class='track'></div>"
                 + "<div class='text'></div>"
                 + "</div>");
-                var p = posts.find(".post[id='post_" + post.id + "']");
+                p = posts.find(".post[id='post_" + post.id + "']");
+
                 p.data('post', post);
                 var flag = false;
                 if (options.identity == post.sender.id) {
@@ -146,9 +149,9 @@ var YiiChat = function (options) {
                 }
 
                 var tmp_html = "<div class='time'>" + post.date + "</div>"
-                    + "<div class='owner' data-ownerid='" + post.sender.superuser.userid + "'><a class='ownerref' href='/user/user/view?id=" + post.sender.id + "'>" + post.sender.username + "</a>";
+                    + "<div class='owner' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/user/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
                 if (post.recipient != 0) tmp_html += " ответил "
-                + "<a class='ownerref' href='/user/user/view?id=" + post.recipient.id + "'>" + post.recipient.username + "</a>";
+                + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/user/view?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
                 tmp_html += "</div>";
                 if (post.cost > 0) tmp_html += "<div class='cost'>Цена:" + post.cost + "</div>";
                 tmp_html += "<div class='buttons'>"
@@ -176,9 +179,14 @@ var YiiChat = function (options) {
                 var btn_answer = p.find('button.glyphicon-envelope');
                 btn_answer.click(function () {
                     msg.data('index', this.dataset.index);
-                    if ($('.msg_answer').length == 0) $(msg).before('<div class="msg_answer">Ответить ' + $(this).closest('.post').find('.owner').text() + '</div>');
-                    else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').text());
-                    $('.main_send').data('recipient', $(this).closest('.post').find('.owner').data('ownerid'));
+                    var answer=$('.msg_answer');
+                    if (answer.length == 0) $(msg).parent().before('<div class="col-xs-12 msg_answer">Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text() + 'у</div>');
+                    else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
+                    $('#send_buttons').children().each(function(){$(this).hide()});
+                    if (answer.text()=='Ответить Автору') $('.button_author').show();
+                    if (answer.text()=='Ответить Заказчику') $('.button_customer').show();
+                    if (answer.text()=='Ответить Админу') $('.button_send').show();
+                    if (answer.text()=='Ответить Менеджеру') $('.button_send').show();
                 });
                 var btn_remove = p.find('button.glyphicon-remove');
                 btn_remove.click(function () {
@@ -217,8 +225,9 @@ var YiiChat = function (options) {
                 var btn_toggleexecutor = p.find('.track').find('button.toggleexecutor');
                 btn_toggleexecutor.click(function () {
                     setdata = this.dataset;
-                    oldaction = $('#post_' + setdata.index).find('button.toggleexecutor').attr('class').split(' ')[2];
-                    owner = $('#post_' + setdata.index).find('.track').find('.owner').data('ownerid');
+                    tmp_post = $('#post_' + setdata.index);
+                    oldaction = tmp_post.find('button.toggleexecutor').attr('class').split(' ')[2];
+                    owner = tmp_post.find('.track').find('.owner').data('ownerid');
                     if (oldaction == 'glyphicon-minus') action = 'plus'; else action = 'minus';
                     jQuery.ajax({
                         cache: false, type: 'post',
@@ -239,9 +248,9 @@ var YiiChat = function (options) {
                     });
                 });
             } else
-                var p = posts.find(".post[id='post_" + postn + "']");
+                p = posts.find(".post[id='post_" + postn + "']");
             p.find('.text').html(post.message);
-        }
+        };
 
         var scroll = function () {
             //window.location = '#'+posts.find('.post:last').attr('id');
@@ -250,17 +259,19 @@ var YiiChat = function (options) {
                 h += $(this).outerHeight();
             });
             posts.scrollTop(h);
-        }
+        };
 
+        ctrl=false;
         var chat = jQuery(options.selector);
         chat.addClass('yiichat mt5');
-        chat.html('<div class="posts">posts</div><div class="you">you</div><div class="log"></div>');
+        chat.html('<div class="posts">posts</div><div class="you">you</div><div class="col-xs-12 log">Нажать ctrl+enter для ' +
+            'отправки сообщения всем</div>');
         var posts = chat.find('div.posts');
         var you = chat.find('div.you');
         var log = chat.find('div.log');
 
-        you.html('<textarea class="pull-left im-msg-inp" rows="1" cols="1"></textarea><div class="exceded"></div>');
-        you.append('<div class="buttons pull-right"></div>');
+        you.html('<textarea class="pull-left im-msg-inp"></textarea><div class="exceded"></div>');
+        you.append('<div id="send_buttons" class="buttons pull-right"></div>');
         var buttons = you.find('div.buttons');
         buttons.append("<button class='button_send btn-primary pull-left btn smooth im-send' data-recipient='no'>" + options.sendButtonText + "</button>");
         buttons.append("<button class='button_author btn-primary pull-left btn smooth im-send' data-recipient='Author'>" + options.sendAuthorText + "</button>");
@@ -289,7 +300,25 @@ var YiiChat = function (options) {
                     }
                 }, {index: msg.data('index'), recipient: $(this).data('recipient')});
         });
+        msg.keydown(function (e) {
+            if (e.keyCode==17) ctrl=true;
+            else if (e.keyCode==13 && ctrl){
+                var text = jQuery.trim(msg.val());
+                actionPost(text, function (ok) {
+                    if (ok == true) {
+                        msg.val("");
+                        msg.data('index', 0);
+                        $(this).data('recipient', 0);
+                        scroll();
+                        setTimeout(function () {
+                            msg.focus();
+                        }, 100);
+                    }
+                }, {index: msg.data('index'), recipient: 'no'});
+            }
+        });
         msg.keyup(function (e) {
+            if (e.keyCode==17) ctrl=false;
             var text = jQuery.trim(msg.val());
             if (text.length > options.maxPostLen) {
                 msg.css({color: 'red'});
