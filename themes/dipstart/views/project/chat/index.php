@@ -32,11 +32,11 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 </div>
             </div>
             <?php
-            if (1) {
+            if (User::model()->isCustomer() && ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id))->to_receive>0) {
                 $upload = new UploadPaymentImage;
                 $form = $this->beginWidget('CActiveForm', array(
                     'id' => 'check-form',
-                    'action' => ['zakaz/uploadPayment', 'id' => $model->id],
+                    'action' => ['zakaz/uploadPayment', 'id' => $order->id],
                     'enableAjaxValidation' => false,
                     'htmlOptions' => array(
                         'enctype' => 'multipart/form-data',
