@@ -151,7 +151,8 @@ class Moderation extends CActiveRecord
 			array('order_id, category_id, job_id, pages, status', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
-            array('text, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
+            array('text, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
+            array('dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor, event_creator_id, timestamp', 'safe'),
@@ -244,27 +245,10 @@ class Moderation extends CActiveRecord
 		));
 	}
 
-     protected function beforeSave()
-     {
-        if($res=parent::beforeSave())
-        {
-            if($this->isNewRecord)
-            {
-                $this->date=time();
-                $this->user_id=Yii::app()->user->id;
-            }
-//            else
-//                $this->date = date('Y-m-d', strtotime($this->date));
-//                $this->date_finish = date('Y-m-d', strtotime($this->date_finish));
-//                $this->max_exec_date = date('Y-m-d', strtotime($this->max_exec_date));
-//                $this->informed = date('Y-m-d', strtotime($this->informed));
-        }
-        return $res;
+    public static function getExecutor($orderId)
+    {
+        return self::model()->findByPk($orderId)->executor;
     }
-
-    	public static function getExecutor($orderId) {
-    		return self::model()->findByPk($orderId)->executor;
-    	}
 
 	/**
 	 * Returns the static model of the specified AR class.

@@ -315,19 +315,14 @@ class ZakazController extends Controller
             // если одобрили то создаем заказ и удаляем модерер и событие
             if ($answer) {
                 $zakaz = new Zakaz();
-                $userId = $model->user_id;
                 foreach ($model->attributes as $k=>$v)
                     $zakaz->setAttribute($k,$v);
                 if($zakaz->save()){
-                    // изза beforeSave такой костыль
-                    $zakaz->user_id = $userId;
-                    if($zakaz->save()) {
-                        $model->delete();
-                        $event->delete();
-                        $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
-                            'id' => $zakaz->id
-                        )));
-                    }
+                    $model->delete();
+                    $event->delete();
+                    $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
+                        'id' => $zakaz->id
+                    )));
                 }
             } else {
                 // если нет то просто удаляем
