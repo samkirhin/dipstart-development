@@ -90,6 +90,14 @@
             </form>
         </div>
     </div>
+	<div id="control-menu">
+		<? $this->widget('application.extensions.booster.widgets.TbMenu',array(
+			'items'=> $this->menu,
+			'type'=>'tabs',
+			'htmlOptions'=>array('class'=>'userMenu'),
+		));
+		?>
+	</div>
     </header>
     
     <div class="row">

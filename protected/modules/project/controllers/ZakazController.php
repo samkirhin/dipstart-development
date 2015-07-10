@@ -163,6 +163,7 @@ class ZakazController extends Controller
 				$model->attributes=$_POST[$modelName];
 
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
+					$model->user_id = Yii::app()->user->id;
                     $model->dbmanager_informed = date('d.m.Y H:i');
                     $model->dbdate = date('d.m.Y H:i');
                     $d1=date_create();

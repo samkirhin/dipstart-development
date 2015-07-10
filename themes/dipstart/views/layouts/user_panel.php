@@ -65,7 +65,7 @@ $this->endWidget();
 <?php else: ?>
 Привет, <?php echo User::model()->findByPk(Yii::app()->user->id)->username; ?>!</p>
 <?php $this->widget('application.extensions.booster.widgets.TbMenu',array(
-    'items'=> $this->menu,
+    'items'=> $this->authMenu,
     'type'=>'list',
     'htmlOptions'=>array('class'=>'login-menu'),
 ));

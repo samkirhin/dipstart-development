@@ -148,6 +148,7 @@ class Moderation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('category_id, job_id, title, max_exec_date', 'required'),
 			array('order_id, category_id, job_id, pages, status', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),

@@ -11,7 +11,7 @@ $role = User::model()->getUserRole();
 switch ($role){
     case 'Admin':
 
-        $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/'));
+        $items[] = array('label'=>Yii::t('site','Home'), 'url'=>Yii::app()->getBaseUrl(true));
         $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project'), 'items' => array(
             array('label'=>Yii::t('site','Zakazs'), 'url'=>array('/project/zakaz')),
             array('label'=>Yii::t('site','Create Zakaz'), 'url'=>array('/project/zakaz/create')),
