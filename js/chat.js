@@ -52,7 +52,8 @@ $(document).ready(function() {
             ProjectMessages:{
                 message:$('#message').val(),
                 recipient:this.name,
-                order:order
+				order: order,
+				cost: $('.price-for-work-avtor input').val()
             }
         },function(data){
             $('#chat').html(data);

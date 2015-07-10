@@ -52,26 +52,28 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
             }
             ?>
             <?php
-            $this->widget('ext.EAjaxUpload.EAjaxUpload',
-                array(
-                    'id' => 'justFileUpload',
-                    'postParams' => array(
-                        'id' => $order->id,
-                    ),
-                    'config' => array(
-                        'action' => $this->createUrl('/project/chat/upload',array('id'=>$order->id)),
-                        'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
-                        'disAllowedExtensions'=>array('exe'),
-                        'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
-                        'minSizeLimit' => 10,// minimum file size in bytes
-                        'onComplete' => "js:function(id, fileName, responseJSON){}"
+            if (file_exists($path) || User::model()->isCustomer()) {
+                $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                    array(
+                        'id' => 'justFileUpload',
+                        'postParams' => array(
+                            'id' => $order->id,
+                        ),
+                        'config' => array(
+                            'action' => $this->createUrl('/project/chat/upload', array('id' => $order->id)),
+                            'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                            'disAllowedExtensions' => array('exe'),
+                            'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+                            'minSizeLimit' => 10,// minimum file size in bytes
+                            'onComplete' => "js:function(id, fileName, responseJSON){}"
+                        )
                     )
-                )
-            );
-            $path=Yii::getPathOfAlias('webroot').'/uploads/'.$order->id.'/';
+                );
+            }
+            $path = Yii::getPathOfAlias('webroot') . '/uploads/' . $order->id . '/';
             if (file_exists($path))
-                foreach (array_diff(scandir($path), array('..', '.')) as $k=>$v)
-                    if (!strstr($v,'#pre#')) echo '<a href="' . $path.$v . '" id="file" >'.$v.'</a><br />';
+                foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
+                    if (!strstr($v, '#pre#')) echo '<a href="' . $path . $v . '" id="file" >' . $v . '</a><br />';
             ?>
         </div>
         <div class="col-xs-8">

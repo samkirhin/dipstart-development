@@ -33,10 +33,14 @@ class ChatController extends Controller {
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','upload'),
-				'expression'=>array('ChatController','allowOnlyOwner'),
-			),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array('index'),
+                'expression' => array('ChatController', 'allowOnlyOwner'),
+            ),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array('upload'),
+                'users' => array('@'),
+            ),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin', 'approve', 'remove', 'edit', 'setexecutor', 'delexecutor', 'readdress'),
 				'users'=>array('admin', 'manager'),
@@ -87,7 +91,7 @@ class ChatController extends Controller {
                         break;
                 }
                 $model->save();
-                EventHelper::addMessage($model->id, $orderId);
+                EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(
                 'orderId' => $orderId,
@@ -159,7 +163,6 @@ class ChatController extends Controller {
         $model->save();
     }
 	public function actionUpload() {
-        $this->_prepairJson();
         Yii::import("ext.EAjaxUpload.qqFileUploader");
         $folder='uploads/'.$_GET['id'].'/';// folder for uploaded files
         $config['allowedExtensions'] = array('jpg', 'gif', 'txt', 'doc', 'docx');
@@ -173,7 +176,6 @@ class ChatController extends Controller {
         }
         $result['fileSize']=filesize($folder.$result['filename']);//GETTING FILE SIZE
         $result['fileName']=$result['filename'];//GETTING FILE NAME
-        $this->_response->setData($result);
-        $this->_response->send();
+        echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }
 }

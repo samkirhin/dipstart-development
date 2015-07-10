@@ -1,4 +1,3 @@
-
 <?php
 /* @var $this ZakazController */
 /* @var $model Zakaz */
@@ -151,7 +150,7 @@ $this->breadcrumbs = array(
             $path=Yii::getPathOfAlias('webroot').'/uploads/'.$model->id.'/';
             if (file_exists($path)) {
                 foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
-                    echo str_replace('#pre#', '', $v) . '<br />';
+                    echo '<a href="' . $path . $v . '">' . str_replace('#pre#', '', $v) . '</a><br />';
                     if (strstr($v, '#pre#'))
                         echo '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">Approve</button>';
                 }

@@ -5,6 +5,7 @@
  * Date: 05.05.15
  * Time: 15:55
  */
+if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 ?>
 
 <div class="row zero-edge" style="margin-top:10px;">
@@ -28,14 +29,11 @@
             </div>
             <div id="collapseOne<?php echo $data['id']; ?>" class="panel-collapse collapse">
                 <div class="panel-body">
-
-                    <p>
-                        <?php echo $data['title']; ?>
-                        <?php
-                        if (User::model()->isAuthor()) {
-                            ?>
-                            <textarea class="col-xs-12" disabled><?php echo $data['comment']; ?></textarea>
-                        <?php } ?>
+                    <?php
+                    if (User::model()->isAuthor()) {
+                        ?>
+                        <textarea class="col-xs-12" disabled><?php echo $data['comment']; ?></textarea>
+                    <?php } ?>
 
                     <div class="part_files">
                         <?php foreach ($data['files'] as $k => $v){
@@ -47,24 +45,24 @@
                         } ?>
                     </div>
 
-                        <?php if (User::model()->isAuthor()) $this->widget('ext.EAjaxUpload.EAjaxUpload',
-                            array(
-                                'id' => 'EAjaxUpload'.$data['id'],
-                                'config' => array(
-                                    'action' => Yii::app()->createUrl('/project/zakazParts/upload',array('proj_id'=>$data['proj_id'],'id'=>$data['id'])),
-                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
-                                    'disAllowedExtensions' => array('exe'),
-                                    'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
-                                    'minSizeLimit' => 10,// minimum file size in bytes
-                                    'onComplete' => "js:function(id, fileName, responseJSON){}"
-                                )
+                    <?php if (User::model()->isAuthor()) $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                        array(
+                            'id' => 'EAjaxUpload' . $data['id'],
+                            'config' => array(
+                                'action' => Yii::app()->createUrl('/project/zakazParts/upload', array('proj_id' => $data['proj_id'], 'id' => $data['id'])),
+                                'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                                'disAllowedExtensions' => array('exe'),
+                                'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+                                'minSizeLimit' => 10,// minimum file size in bytes
+                                'onComplete' => "js:function(id, fileName, responseJSON){}"
                             )
-                        );
-                        ?>
-                    </p>
+                        )
+                    );
+                    ?>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
+<?php } ?>

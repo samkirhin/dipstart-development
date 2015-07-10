@@ -12,7 +12,6 @@ class EventHelper {
     const STATUS_DONE = 1;
     
     protected static function sendEvent($event, $type, $description) {
-        
         $message = new Events;
         if (!$type) {
             $type = 'Не передан тип';
@@ -31,7 +30,6 @@ class EventHelper {
         } else {
             return false;
         }
-        
     }
     
     protected static function eventTemplate($type, $description, $id) {
@@ -39,41 +37,31 @@ class EventHelper {
     }
 
     public static function createOrder($id) {
-        
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." создал заказ";
         self::sendEvent($id, self::TYPE_CREATE_ORDER, $description);
-        
     }
     
     public static function editOrder($id) {
-        
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." отредактировал заказ";
         self::sendEvent($id, self::TYPE_EDIT_ORDER, $description);
-        
     }
     
     public static function addChanges($id) {
-
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." оставил дополнение к заказу";
         self::sendEvent($id, self::TYPE_ADD_CHANGES, $description);
-        
     }
     
     public static function addMessage($id,$message='') {
-        
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." оставил сообщение: \"".$message."\"";
         self::sendEvent($id, self::TYPE_MESSAGE, $description);
-        
     }
     
     public static function notification($text, $creator) {
-        
         self::sendEvent($creator, self::TYPE_NOTIFICATION, $text);
-        
     }
 
     public static function updateProfile() {
@@ -82,5 +70,4 @@ class EventHelper {
         $text = 'Пользователь изменил данные в профиле '.$userName;
         self::sendEvent($creator, self::TYPE_UPDATE_PROFILE, $text);
     }
-    
 }
