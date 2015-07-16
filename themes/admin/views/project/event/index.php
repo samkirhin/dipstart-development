@@ -15,13 +15,13 @@
                 id
             </th>
             <th>
-                description
+                Описание
             </th>
             <th>
-                eventLink
+                Ссылка
             </th>
             <th>
-                time
+                Дата и время
             </th>
         </thead>
         <?php foreach ($events as $event) {?>

@@ -7,7 +7,7 @@
  */
 ?>
 
-<div class="row zero-edge" style="margin-top:10px;">
+<div class="row zero-edge">
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -44,20 +44,21 @@
                                onkeyup="change_title(this.value,<?php echo $data['id']; ?>);"/>
                         <textarea onkeyup="change_comment(this.value,<?php echo $data['id']; ?>);" class="col-xs-12"><?php echo $data['comment']; ?></textarea>
 
-                    <div class="part_files">
-                        <?php foreach ($data['files'] as $k => $v){
-                            echo '<div class="row"><a href="' . $v['file_name'] . '" id="parts_file" data-part="' . $data['id'] . '">' . $v['orig_name'] . '</a>';
+                        <?php 
+						$tmp = '';
+						foreach ($data['files'] as $k => $v){
+                            $tmp .= '<li><a href="' . $v['file_name'] . '" id="parts_file" data-part="' . $data['id'] . '">' . $v['orig_name'] . '</a>';
                             if ($v['id']==0)
-                                echo '<button id="approve_file" data-id="' . $data['id'] . '" data-orig_name="' . $v['orig_name'] . '" class="right btn" onclick="approve(this)">Approve</button>';
-                            echo '</div>';
-                        } ?>
-                    </div>
-                        <?php $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                                $tmp .= '<button id="approve_file" data-id="' . $data['id'] . '" data-orig_name="' . $v['orig_name'] . '" class="right btn" onclick="approve(this)">Одобрить</button>';
+                            $tmp .= '</li>';
+                        }
+
+                        $this->widget('ext.EAjaxUpload.EAjaxUpload',
                             array(
                                 'id' => 'EAjaxUpload'.$data['id'],
                                 'config' => array(
                                     'action' => Yii::app()->createUrl('/project/zakazParts/upload?id='.$data['id']),
-                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><ul class="qq-upload-list">'.$tmp.'</ul><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить материал</div></div></div>',
                                     'disAllowedExtensions' => array('exe'),
                                     'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
                                     'minSizeLimit' => 10,// minimum file size in bytes

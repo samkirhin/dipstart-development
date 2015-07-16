@@ -321,11 +321,12 @@ class Zakaz extends CActiveRecord
         ));
 	}
 
-    public static function getExecutor($orderId)
-    {
+    public static function getExecutor($orderId) {
         return self::model()->findByPk($orderId)->executor;
     }
-
+    public static function getPaymentImage($orderId) {
+        return self::model()->findByPk($orderId)->payment_image;
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

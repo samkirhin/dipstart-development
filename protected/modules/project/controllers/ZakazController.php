@@ -264,6 +264,7 @@ class ZakazController extends Controller
             $upload->file = CUploadedFile::getInstance($upload, 'file');
             if ($upload->validate()) {
                 $upload->save();
+				EventHelper::chekUploaded($id);
             }
         }
         $this->redirect(['chat/index', 'orderId'=>$id]);

@@ -1,4 +1,4 @@
-/* Skin "Simple" by Renat Rafikov */
+/* Skin "adaptive_dipstart" by Artem */
 body {
   font-family:arial, sans-serif;
   color:#333;
@@ -98,9 +98,15 @@ h1, h2 {
 h1 {
   font-size:22px;
 }
+
+h5, .h5 {
+ font-size: 13px;
+}
+
 h3, h4, h5, h6 {
   font-weight:bold;
   color:#000;
+  text-transform: uppercase;
 }
 
 .form label {
@@ -283,6 +289,7 @@ margin-right: 2px;
 border: 1px solid #C6D9F1;
 border-bottom:1px solid #fff;
 color: #6797CC;
+padding: 10px 25px;
 }
 
 label {
@@ -311,7 +318,14 @@ margin: 20px;
 }
 
 .comment, .add-comment {
-border: 1px solid #DDD;
+    border: none;
+    margin-bottom: 25px;
+    background: none;
+    border-radius: 0;
+    font-style: italic;
+    font-size: 13px;
+    margin-top: 0;
+    padding-left: 5px;
 }
 
 .container {
@@ -345,4 +359,209 @@ margin-top: 15px;
 padding: 15px 10px;
 }
 
-.col-xs-12 h1, .col-md-4 h3, .col-md-12 h3 {display:none;}
+.col-xs-12 h1, .col-md-4 h3, .col-md-12 h3, .content-clearfix h1, #zakaz-grid .summary {display:none;} 
+
+#zakaz-grid {padding:0;}
+
+.text-to-pay {  
+    font-size: 20px;
+    text-transform: uppercase;
+    color: green;
+}
+
+.footer a {margin-right: 0;}
+
+a, a:hover, a:focus, a:active, a:visited {text-decoration: none;}
+
+.aboutZakaz textarea {
+padding: 5px 10px;
+}
+
+.nav-tabs > li {
+    width: 160px; 
+    text-align: center;
+}
+
+#touch-menu {display:none;}
+
+#Zakaz_pages {margin: 25px 10px 0 10px;}
+
+.aboutZakaz .row {margin-bottom: 20px;}
+
+#up_file label {
+margin: 0;
+margin-top: 25px;
+padding: 0;
+}
+
+#up_file input {
+color: gray;
+font-size: 13px;
+padding: 5px 0 0 0;
+background: none;
+height: 35px;
+margin: 0;
+}
+
+#new-changes-collapse {
+border: 1px solid #ddd;
+padding: 15px;
+margin-top: 15px;
+background-color: #F8F8F8;
+}
+
+#justFileUpload {padding: 15px;}
+.qq-upload-drop-area {
+display: block!important;
+position: relative;
+background-color: #fff;
+border: 1px solid #DDDDDD;
+margin-left: 0;
+width: 100%;
+height: auto;
+min-height: 100px;
+margin-top: 20px;
+overflow: hidden;
+}
+.qq-upload-drop-area span {
+margin-top: 15px;
+margin-left: 0;
+font-size: 2.1rem;
+font-weight: bold;
+text-transform: uppercase;
+color: #EDEDED;
+position: relative;
+}
+.qq-upload-button {width: 90%; background-color: green;margin: 15px auto;}
+.qq-upload-list {margin:0;}
+.info-block {margin-top: 30px;} 
+.panel-title a{color: #337AB7;} 
+
+#ProjectChanges_fileupload{
+background: green;
+border-radius: 0;
+border: none;
+}
+
+#new-changes-link a {
+/* border: 1px solid #DDDDDD; */
+color: #337AB7;
+padding: 10px;
+}
+
+.qq-upload-list li {
+text-align: left;
+padding-left: 20px;
+list-style-type: none;
+}
+a.file {color:green;font-weight: bold;}
+li.gray-file a.file {color:silver;font-weight: normal;}
+
+.list-changes-block {
+border: 1px solid #DDDDDD;
+padding: 10px;
+margin-bottom: 15px;
+background-color: #F8F8F8;
+}
+
+.btn {border-radius:0;}
+
+#UploadPaymentImage_file {
+padding: 15px 0px;
+font-size: 13px;
+width: 100%;
+cursor: pointer;
+}
+
+.check-button-upload input{
+background-color: green;
+color: #fff;
+border: none;
+padding: 5px 20px;
+width: 100%;
+}
+
+.chek-image-link a img{
+margin-top:20px;
+}
+
+.text_scan {
+width: 100%;
+text-align: center;
+display: block;
+text-transform: uppercase;
+margin-top: 20px;
+}
+
+.price-for-work-avtor + #msgLabel {margin-top: 15px;}
+
+.materials {
+border: 1px solid #ddd;
+margin: 15px;
+}
+
+.materials h5 {
+margin: 15px;
+}
+
+.materials-files {
+list-style-type: none;
+padding-left: 15px;
+}
+
+.btn, input[type="submit"], input[type="file"] {opacity:0.8;border-radius:0;}
+.btn:hover, input[type="submit"]:hover, input[type="file"]:hover {opacity:1; transition: all 0.2s ease;	cursor: pointer;}
+
+.chek-image-link {margin-top: 10px;}
+
+.chek-is-approving + .chek-image-link {float: right;}
+
+.chek-is-approving {
+margin-top: 10px;
+font-size: 13px;
+float: left;
+}
+
+
+
+
+/** Adaptive **/
+
+.logo, .login, .header-contacts, .header-adress {width:50%;font-size: 11px;}
+
+ 
+@media (min-width: 590px) {
+.logo, .login, .header-contacts, .header-adress { font-size: 12px; }
+}
+
+@media (min-width: 655px) {
+.logo, .login, .header-contacts, .header-adress { font-size: 13px; }
+
+}
+
+@media (min-width: 769px) {
+header .row {margin-bottom: 20px;}
+.logo {margin-bottom: 20px; width:100%;}
+.logo a {width: 275px; margin:0 auto; display:block;}
+.login {clear:both;}
+.login, .header-contacts, .header-adress {width: 33%; float: left; font-size: 14px;}
+}
+
+@media (max-width: 835px) {
+.nav-tabs > li {width: auto;}
+.table th, .table tr{font-size: 13px;}
+}
+@media (max-width: 600px) {
+.nav-tabs > li {width:100%;}
+}
+
+@media (min-width: 992px) {
+.col-md-3 { width: 25%; }
+.login {clear:none;}
+}
+
+@media (min-width: 1305px) {
+   
+}
+
+/** /Adaptive **/

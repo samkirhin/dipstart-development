@@ -101,6 +101,7 @@ class ChatController extends Controller {
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
+			'chek_image' => Zakaz::getPaymentImage($orderId),
         ));
     }
 
@@ -169,7 +170,7 @@ class ChatController extends Controller {
         $config['disAllowedExtensions'] = array("exe");
         $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
         $uploader = new qqFileUploader($config, $sizeLimit);
-        $_GET['qqfile']='#pre#'.$_GET['qqfile'];
+        if(!(User::model()->isAdmin())) $_GET['qqfile']='#pre#'.$_GET['qqfile'];
         $result = $uploader->handleUpload($folder,true);
         if ($result['success']) {
             EventHelper::addChanges($_GET['proj_id']);

@@ -16,7 +16,7 @@ class PaymentController extends Controller {
     {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions'=>array('admin','apiview','approvefrombookkeeper','managersapprove','managerscancel','savepaymentstoauthor','savepaymentstouser','view'),
+                'actions'=>array('admin','apiview','approvefrombookkeeper','managersapprove','managerscancel','savepayments','savepaymentstoauthor','savepaymentstouser','view'),
                 'users'=>array('admin','manager'),
             ),
             array('deny',  // deny all users
@@ -121,6 +121,65 @@ class PaymentController extends Controller {
 
     }
 
+	public function actionSavePayments() {
+        $this->_prepairJson();
+        $orderId = $this->_request->getParam('order_id');
+        $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+            ':ORDER_ID'=>$orderId
+        ));
+        if (!$payment) {
+            $payment = new ProjectPayments;
+            $payment->order_id = $orderId;
+            $payment->received = 0;
+            $payment->to_receive = 0;
+            $payment->to_pay = 0;
+        }
+        $payment->project_price = $this->_request->getParam('project_price');
+        $payment->to_receive   += (int) $this->_request->getParam('to_receive');
+        $payment->work_price = $this->_request->getParam('work_price');
+        $paying              = (int) $this->_request->getParam('to_pay');
+        $payment->to_pay    += $paying;
+        if ($payment->save()) {
+			//(To User)
+            $zakaz = Zakaz::model()->findByPk($orderId);
+            if ($payment->project_price > 0 && $zakaz && $zakaz->status == 1) {
+                $zakaz->status = 2;
+                $zakaz->save(false);
+            }
+			//(To Author)
+            $order = Zakaz::model()->findByPk($orderId);
+			if ($paying>0){
+				$buh = new Payment;
+				$buh->approve = 0;
+				$buh->order_id = $orderId;
+				$buh->receive_date = date("Y-m-d");
+				$buh->theme = $order->title;
+				$user = User::model()->findByPk($order->executor);
+				$buh->user = $user->email;
+				$buh->summ = $paying;
+				$buh->payment_type = 1;
+				$manag = User::model()->findByPk(Yii::app()->user->id);
+				$buh->manager = $manag->email;
+				$buh->save();
+			}
+            $this->_response->setData(
+                array (
+                    'project_price' => $payment->project_price,
+                    'to_receive'    => $payment->to_receive,
+                    'work_price'    => $payment->work_price,
+                    'to_pay'        => $payment->to_pay
+                )
+            );
+        } else {
+            $this->_response->setData(
+                array (
+                    'result' => 'false'
+                )
+            );
+        }
+        $this->_response->send();
+	}
+	/*
     public function actionSavePaymentsToUser() {
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
@@ -204,7 +263,7 @@ class PaymentController extends Controller {
         }
         $this->_response->send();
 
-    }
+    }*/
 
     public function actionManagersApprove() {
         $this->_prepairJson();
@@ -216,7 +275,13 @@ class PaymentController extends Controller {
         $to_res = $payment->to_receive;
         $payment->to_receive = 0;
         if ($payment->save() && $to_res != 0) {
-            $order = Zakaz::model()->findByPk($orderId);
+			$order = Zakaz::model()->findByPk($orderId);
+			//remove chek
+			$dir = Yii::getPathOfAlias('webroot') . UploadPaymentImage::PAYMENT_DIR;
+			if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
+			$order->payment_image = null;
+			$order->save();
+			//
             $buh = new Payment;
             $buh->approve = 0;
             $buh->order_id = $orderId;

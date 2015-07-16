@@ -36,22 +36,6 @@
                 <b><span class="payment_to_receive"><?php echo $model->to_receive; ?></span></b>
             </td>
         </tr>
-        <tr>
-            <td>
-                Подтвердить платеж:
-            </td>
-            <td>
-                <div class="btn-group-xs" role="group">
-                <button class="btn btn-default send_managers_approve">Подтвердить</button>
-                <button class="btn btn-default send_managers_cancel">Отмена</button>
-                <?php 
-                    if ($zakaz->payment_image) {
-                        echo CHtml::link('Чек', UploadPaymentImage::PAYMENT_DIR . $zakaz->payment_image);
-                    }
-                ?>
-                </div>
-            </td>
-        </tr>
     </table>
     <table class="table table-striped paytable">
        <tr>
@@ -87,16 +71,22 @@
                 <b><span class="payment_to_pay"><?php echo $model->to_pay; ?></span></b>
             </td>
         </tr>
-        <tr>
-            <td>
-                
-            </td>
-            <td>
-                
-            </td>
-        </tr>
     </td>
     </table>
+	<? //if($model->to_receive>0){ ?>
+	<div class="confirm-the-payment">
+		<span>Подтвердить платеж:</span>
+		<div class="btn-group-xs" role="group">
+		<button class="btn btn-default send_managers_approve">Подтвердить</button>
+		<button class="btn btn-default send_managers_cancel">Отмена</button>
+		<?php 
+			if ($zakaz->payment_image) {
+				echo CHtml::link('Чек', UploadPaymentImage::PAYMENT_DIR . $zakaz->payment_image, array ('target' => '_blank' ));
+			}
+		?>
+		</div>
+	</div>
+	<? //} ?>
     <button class="btn btn-primary pay-save-btn send_user_payments">Сохранить</button>
     </div>
 

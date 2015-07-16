@@ -27,12 +27,15 @@ class ZakazPartWidget extends CWidget{
         $this->arrDataProvider->setData($tempdata);
     }
 
-    public function run()
-    {
-        $this->widget('zii.widgets.CListView', array(
+    public function run() {
+        /*$this->widget('zii.widgets.CListView', array(
             'dataProvider' => $this->arrDataProvider,
             'itemView'=>'newview',
             'summaryText'=>'',
         ));
+		*/
+		$data = $this->arrDataProvider->getData();
+		foreach ($data as $item)
+		$this->render('newview', $item);
     }
 }

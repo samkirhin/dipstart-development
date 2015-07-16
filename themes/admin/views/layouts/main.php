@@ -11,7 +11,7 @@ $role = User::model()->getUserRole();
 switch ($role){
     case 'Admin':
 
-        $items[] = array('label'=>Yii::t('site','Home'), 'url'=>Yii::app()->getBaseUrl(true));
+        //$items[] = array('label'=>Yii::t('site','Home'), 'url'=>Yii::app()->getBaseUrl(true));
         $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project'), 'items' => array(
             array('label'=>Yii::t('site','Zakazs'), 'url'=>array('/project/zakaz')),
             array('label'=>Yii::t('site','Create Zakaz'), 'url'=>array('/project/zakaz/create')),
@@ -35,7 +35,7 @@ switch ($role){
         break;
     case 'Manager':
 
-        $items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/'));
+        //$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/'));
         $items[] = array('label'=>Yii::t('site','Users'), 'url'=>array('/user'));
         $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project/zakaz/admin'), 'items' => array(
             array('label'=>Yii::t('site','Zakazs'), 'url'=>array('/project/zakaz')),
@@ -52,6 +52,7 @@ switch ($role){
 
         break;
 }
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin.css');
 ?>
 <!DOCTYPE html>
 <html lang="ru">

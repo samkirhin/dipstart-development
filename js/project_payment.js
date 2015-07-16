@@ -22,7 +22,27 @@ var ProjectPayments = function(orderId) {
             alert('Сумма оплаты превышает лимит');
             return false;
         }
-        if (receive!='') {$.post('/project/payment/savePaymentsToUser', JSON.stringify({
+		
+		if (proj_price!='') {$.post('/project/payment/savePayments', JSON.stringify({
+            'order_id': self.orderId,
+            'project_price': proj_price,
+            'to_receive': receive,
+            'work_price': work_price,
+            'to_pay': pay
+        }), function (response) {
+            if (response.data) {
+                self.t_receive.val('');
+                self.p_price.val(response.data.project_price);
+                self.to_receive.text(response.data.to_receive);
+                self.t_pay.val('');
+                self.w_price.val(response.data.work_price);
+                self.to_pay.text(response.data.to_pay);
+            } else {
+				alert('Ошибка связи с сервером');
+            }
+        }, 'json');}
+		
+        /*if (receive!='') {$.post('/project/payment/savePaymentsToUser', JSON.stringify({
             'order_id': self.orderId,
             'project_price': proj_price,
             'to_receive': receive
@@ -46,7 +66,7 @@ var ProjectPayments = function(orderId) {
                 self.to_pay.text(response.data.to_pay);
             } else {
             }
-        }, 'json');}
+        }, 'json');}*/
         
     };
     

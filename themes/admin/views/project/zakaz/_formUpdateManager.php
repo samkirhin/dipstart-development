@@ -19,7 +19,7 @@
         <div class="col-xs-6" style="float:right;">
             <?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary terms-save-btn')); ?>
         </div>
-        <div class="col-xs-4 terms-columns">
+        <div class="col-xs-4 terms-columns terms-column-1">
             <p><?php echo $form->labelEx($model, 'max_exec_date'); ?></p>
 
             <?php
@@ -28,7 +28,7 @@
                 'attribute' => 'dbmax_exec_date',
             ));?>
         </div>
-        <div class="col-xs-4 terms-columns">
+        <div class="col-xs-4 terms-columns terms-column-2">
             <p><?php echo $form->labelEx($model, 'manager_informed'); ?></p>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
@@ -36,7 +36,7 @@
                 'attribute' => 'dbmanager_informed',
             ));?>
         </div>
-        <div class="col-xs-4 terms-columns terms-columns-last">
+        <div class="col-xs-4 terms-columns terms-column-3 terms-columns-last">
             <p><?php echo $form->labelEx($model, 'author_informed'); ?></p>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
@@ -54,8 +54,25 @@
 </div>
 
 <div class="col-xs-12 chatBlockBg">
-    <div class="chatBlock">
-        <div id="chatWindow"></div>
+    <div class="chatBlock chtpl0-chatblock chtpl0-admin">
+		<div class="chtpl0-panel chtpl0-up">
+			<button class="chtpl0-show">Показать сообщения</button>
+		</div>
+        <div id="chatWindow" class="chtpl0-chat"></div>
+		<div class="chtpl0-panel chtpl0-down">
+			<input type="checkbox"><p>Отправить на почту</p>
+			<input type="checkbox"><p>Отправить SMS</p>
+			<button class="chtpl0-template"></button><p>Шаблон</p>
+		</div>
+		<div class="chtpl0-form">
+			<textarea></textarea>
+			<div class="chtpl0-subm">
+				<h5>Отправить сообщение</h5>
+				<br>
+				<button class="chtpl0-submit1">Автору</button>
+				<button class="chtpl0-submit2">Заказчику</button>
+			</div>
+		</div>
         <?php
         $this->widget('YiiChatWidget', array(
             'chat_id' => $model->id,
@@ -136,8 +153,7 @@
                                     <table class="table table-striped" style="font-size: 12px;">
                                         <thead>
                                         <th>Наименование</th>
-                                        <th>Дата</th>
-                                        <th>Время</th>
+                                        <th>Дата/Время</th>
                                         </thead>
                                         <tr>
                                             <td>
@@ -168,9 +184,6 @@
                                                 <?php echo $form->labelEx($model, 'pages'); ?>
                                                 <?php echo $form->textField($model, 'pages'); ?>
                                                 <?php echo $form->error($model, 'pages'); ?>
-                                            </td>
-                                            <td>
-
                                             </td>
                                             <td>
 

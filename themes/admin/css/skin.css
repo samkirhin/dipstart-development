@@ -1,0 +1,161 @@
+/* Skin "adaptive_admin" by Artem */
+
+a, a:hover, a:focus, a:active, a:visited {text-decoration: none;}
+
+.btn {opacity:0.8;border-radius:0;}
+.btn:hover {opacity:1; transition: all 0.2s ease;	cursor: pointer;}
+
+.chatBlock {
+border: none;
+margin: 15px 0;
+width: 100%;
+padding: 0;
+}
+
+.you textarea {
+width: 80%;
+margin: 0;
+margin-right: 20px;
+border: 1px solid #ddd;
+}
+
+.yiichat .posts {
+border: 1px solid #ddd;
+padding: 10px;
+}
+
+.notesBlockTextarea {border: 1px solid #ddd;}
+
+.hasDatepicker {
+border: 1px solid #ccc;
+padding-left: 5px;
+width: 120px;
+}
+
+.label-warning {
+background-color: #2BBA2B;
+padding: 8px 15px;
+margin-right: 10px;
+float: left;
+border-radius: 5px;
+}
+
+#close_order {
+float: right;
+background: #D36666;
+color: #fff;
+}
+
+textarea.col-xs-12 {
+border: 1px solid #ddd;
+margin: 15px 0;
+}
+
+.panel-body input {border: 1px solid #ddd;padding-left: 10px;}
+
+a.parts_file {
+display: block;
+margin: 10px;
+}
+
+.list-changes-comment {
+margin: 10px 0;
+font-style: italic;
+font-size: 13px;
+}
+
+.terms-columns input {
+width: 120px;
+}
+
+.list-changes-block {
+border: 1px solid #eee;
+margin-bottom: 15px;
+padding: 10px;
+background-color: #FAFAFA;
+}
+
+.panel-title a {
+color: #337AB7;
+font-weight: bold;
+text-transform: uppercase;
+padding-top: 5px;
+}
+
+.panel-group .panel {
+margin-bottom: 30px;
+margin-top: 20px;
+}
+
+.form label {
+display: inline-block;
+text-transform: uppercase;
+font-size: 12px;
+color: #727272;
+font-weight: normal;
+margin-top: 15px;
+}
+
+textarea, select {border: 1px solid #ddd;}
+
+.chtpl0-panel
+{
+height: 50px;
+width: 100%;
+}
+
+.chtpl0-form {
+margin-top: 20px;
+}
+
+.confirm-the-payment {
+float:left;
+margin-top: 20px;
+}
+
+.confirm-the-payment span {
+/* float: left; */
+margin-top: 20px;
+}
+
+.btn-group-xs {
+margin-top: 5px;
+}
+
+.btn-xs, .btn-group-xs > .btn {
+    padding: 5px 15px;
+    margin-right: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 0;
+}
+
+.btn-group-xs a{
+border: 1px solid #CCC;
+padding: 7px 25px 9px 20px;
+}
+
+#project_payments h4 {
+text-transform: uppercase;
+font-size: 16px;
+margin-top: 15px;
+}
+
+#approveFile_file {
+border-radius: 0;
+margin: 5px 15px;
+margin-right:0;
+float:right;
+}
+
+#approveFile_file + br {clear:both;}
+
+.link-to-material {
+margin: 5px 15px;
+margin-left: 0;
+display: block;
+float: left;
+padding-top: 5px;
+}
+
+.pay-save-btn {border-radius:0;}

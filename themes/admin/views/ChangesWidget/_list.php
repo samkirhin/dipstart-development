@@ -5,9 +5,8 @@
     <div class="list-changes-comment">
         <?php echo $data['comment']; ?>
     </div>
-</div>
 <?php if (ProjectChanges::approveAllowed()) { ?>
-    <div class="row">
+    <div class="list-changes-moderate">
         Модерация
         <?php echo CHtml::dropDownList(
             'moderate',
@@ -17,3 +16,4 @@
         ?>
     </div>
 <?php } ?>
+</div>

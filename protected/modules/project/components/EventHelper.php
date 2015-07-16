@@ -8,6 +8,7 @@ class EventHelper {
     const TYPE_NOTIFICATION = 4;
     const TYPE_MESSAGE = 5;
     const TYPE_UPDATE_PROFILE = 6; // изменение профайла
+	const TYPE_CHEK_UPLOADED = 7;
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
     
@@ -52,6 +53,11 @@ class EventHelper {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." оставил дополнение к заказу";
         self::sendEvent($id, self::TYPE_ADD_CHANGES, $description);
+    }
+    public static function chekUploaded($id) {
+        $userName = User::model()->findByPk(Yii::app()->user->id)->username;
+        $description = "Пользователь ".$userName." загрузил чек";
+        self::sendEvent($id, self::TYPE_CHEK_UPLOADED, $description);
     }
     
     public static function addMessage($id,$message='') {

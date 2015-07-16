@@ -18,13 +18,15 @@ class UploadPaymentImage extends CFormModel
     {
         $order = Zakaz::model()->findByPk($this->orderId);
         
-        if ($order && $this->file instanceof CUploadedFile && $order->status == 2) {
-                
+        if ($order && $this->file instanceof CUploadedFile && ($order->status == 2 || $order->status == 3 || $order->status == 4)) {
+
             $dir = Yii::getPathOfAlias('webroot') . self::PAYMENT_DIR;
             if (!is_dir($dir)) {
                 mkdir($dir, 0775, true);
             }
 
+			if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
+			
             $order->payment_image = md5(uniqid('')) . '.' . $this->file->extensionName;
             $order->status = 3;
             $order->save(false);

@@ -54,9 +54,9 @@ $this->breadcrumbs = array(
 
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-primary" onclick="spam(<?php echo $model->id; ?>);" href="">Spam</button>
+                    <button class="btn btn-primary" onclick="spam(<?php echo $model->id; ?>);" href="">Рассылка</button>
                 </div>
-                <div class="col-xs-12">
+                <div class="col-xs-12 notes">
                     <h4>Примечания (по всему заказу)</h4>
 
                     <?php $form = $this->beginWidget('CActiveForm', array(
@@ -82,7 +82,7 @@ $this->breadcrumbs = array(
                         <?php echo $form->labelEx($model, 'author_notes'); ?>
                         <?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
-                    <?php echo CHtml::submitButton('Save',''); ?>
+                    <?php echo CHtml::submitButton('Сохранить',''); ?>
 
                     <?php $this->endWidget(); ?>
                 </div>
@@ -102,35 +102,25 @@ $this->breadcrumbs = array(
             </div>
             <!-- Конец блока добавления частей менеджера -->
             <!-- Начало блока правок частей менеджера -->
-            <h4><?php echo ProjectModule::t('Changes'); ?></h4>
             <?php
             $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
                 'project' => $model,
             ))
             ?>
-            <div class="row zero-edge">
-                <?php
-                echo CHtml::form('', 'post', array('id' => 'up_file', 'enctype' => 'multipart/form-data'));
-                ?>
-                <div class="col-xs-12">
-                    <?php echo CHtml::label('Прикрепить файл', 'fileupload'); ?>
-                    <?php echo CHtml::fileField('ProjectChanges[fileupload]', $fileupload, array('class' => 'col-xs-12 btn btn-user')); ?>
-                </div>
-
-                <div class="col-xs-12">
-                    <?php echo CHtml::label('Комментарий', 'comment'); ?>
-                    <?php echo CHtml::textArea('ProjectChanges[comment]', $comment, array('class' => 'col-xs-12')); ?>
-                </div>
-                <?php echo CHtml::endForm(); ?>
-                <?php
-                $url = Yii::app()->createUrl("/project/changes/add",array('project'=>$project->id));
-                echo CHtml::htmlButton(ProjectModule::t('Add changes'), array(
-                    'class' => 'col-xs-12 btn btn-primary addPart',
-                    'onclick' => "javascript: send('$url')",
-                ));?>
-            </div>
             <!-- Конец блока правок частей менеджера -->
             <?php
+			$url = '/uploads/'.$model->id.'/';
+            $path = Yii::getPathOfAlias('webroot').$url;
+			$tmp = '';
+            if (file_exists($path)) {
+                foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
+                    $tmp .= '<li><a class="link-to-material" href="' . $url . $v . '">' . str_replace('#pre#', '', $v) . '</a>';
+                    if (strstr($v, '#pre#'))
+                        $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">Одобрить</button>';
+					$tmp .= '</li>';
+                }
+            }
+			
             $this->widget('ext.EAjaxUpload.EAjaxUpload',
                 array(
                     'id' => 'justFileUpload',
@@ -139,7 +129,7 @@ $this->breadcrumbs = array(
                     ),
                     'config' => array(
                         'action' => $this->createUrl('/project/chat/upload',array('id'=>$model->id)),
-                        'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                        'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить материал</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
                         'disAllowedExtensions'=>array('exe'),
                         'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
                         'minSizeLimit' => 10,// minimum file size in bytes
@@ -147,14 +137,6 @@ $this->breadcrumbs = array(
                     )
                 )
             );
-            $path=Yii::getPathOfAlias('webroot').'/uploads/'.$model->id.'/';
-            if (file_exists($path)) {
-                foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
-                    echo '<a href="' . $path . $v . '">' . str_replace('#pre#', '', $v) . '</a><br />';
-                    if (strstr($v, '#pre#'))
-                        echo '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">Approve</button>';
-                }
-            }
             ?>
         </div>
     

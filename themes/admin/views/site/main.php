@@ -5,3 +5,5 @@
  * Date: 28.05.15
  * Time: 22:22
  */
+$this->redirect('/project/event');
+?>

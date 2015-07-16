@@ -124,11 +124,26 @@ var YiiChat = function (options) {
         //	id: postid, owner: 'i am', time: 'the time stamp', text: 'the post'
         //  chat_id: the_chat_id, identity: whoami_id
         var add = function (post, postn) {
+			//alert(post.sender.owner_id);
             var p=0;
             if (postn == 0) {
-                posts.append("<div id='post_" + post.id + "' class='post'>"
-                + "<div class='track'></div>"
-                + "<div class='text'></div>"
+				var tmp_html = '';
+                //if (options.identity != post.sender.id) {
+                    if (post.sender.superuser.itemname == 'Author') {
+                        if (options.executor == post.sender.superuser.userid)
+							tmp_html = "toggleexecutor executor-unset";
+                        else
+                            tmp_html = "toggleexecutor executor-set";
+                    }else if (post.sender.superuser.itemname == 'Customer') {
+						tmp_html = "chtpl0-user-icon-4 usual-cursor";
+					}else{
+						tmp_html = "chtpl0-user-icon-3 usual-cursor";
+					}
+				//}
+                posts.append("<div id='post_" + post.id + "' class='post chtpl0-msg'>"
+				+ "<button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>"
+                + "<div class='chtpl0-content'></div>"
+				+ "<div class='chtpl0-buttons'></div>"
                 + "</div>");
                 p = posts.find(".post[id='post_" + post.id + "']");
 
@@ -148,47 +163,54 @@ var YiiChat = function (options) {
                         p.addClass(options.othersPostCssStyle);
                 }
 
-                var tmp_html = "<div class='time'>" + post.date + "</div>"
-                    + "<div class='owner' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/user/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
+                tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/user/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
                 if (post.recipient != 0) tmp_html += " ответил "
                 + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/user/view?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
-                tmp_html += "</div>";
+                tmp_html += "  |</div>";
+				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>"
+				//tmp_html += "<div class='chtpl0-time'>" + post.date + "</div>"
                 if (post.cost > 0) tmp_html += "<div class='cost'>Цена:" + post.cost + "</div>";
-                tmp_html += "<div class='buttons'>"
-                + "<button data-index=\"" + post.id + "\" class=\"glyphicon-edit glyphicon\"></button>"
-                + "<button data-index=\"" + post.id + "\" class=\"glyphicon-remove glyphicon\"></button>";
-                if (options.identity != post.sender.id) {
+                //tmp_html += "</div>";
+				tmp_html += "<div class='text'></div>"
+                p.find('.chtpl0-content').html(tmp_html);
+				
+				tmp_html = '';//"<div class='buttons'>"
+				if (options.identity != post.sender.id) {
+					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
+					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-share\">Переслать</button>";
+				}
+				tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-delete\">Удалить</button>";
+				if (options.identity != post.sender.id) {
                     if (post.moderated == 0 && (post.sender.superuser.itemname == 'Author' || post.sender.superuser.itemname == 'Customer'))
                         if (post.recipient != 0 && (post.recipient.superuser.itemname == 'Author' || post.recipient.superuser.itemname == 'Customer'))
-                            tmp_html += "<button data-index=\"" + post.id + "\"class=\"glyphicon-ok glyphicon\"></button>";
-                    tmp_html += "<button data-index=\"" + post.id + "\" class=\"glyphicon-envelope glyphicon\"></button>";
-                    if (post.sender.superuser.itemname == 'Author') {
-                        if (options.executor == post.sender.superuser.userid)
-                            tmp_html += "<button data-index=\"" + post.id + "\" class=\"toggleexecutor glyphicon glyphicon-minus\"></button>";
-                        else
-                            tmp_html += "<button data-index=\"" + post.id + "\" class=\"toggleexecutor glyphicon glyphicon-plus\"></button>";
-                    }
+							tmp_html += "<button data-index=\"" + post.id + "\"class=\"chtpl0-accept\">Одобрить</button>";
+                    
                 }
-                tmp_html += "</div>";
-                p.find('.track').html(tmp_html);
-                var btn_edit = p.find('button.glyphicon-edit');
+                
+				p.find('.chtpl0-buttons').html(tmp_html);
+
+                var btn_edit = p.find('button.chtpl0-share');
                 btn_edit.click(function () {
                     msg.data('index', this.dataset.index);
                     msg.val($(this).closest('.post').find('.text').text());
                 });
-                var btn_answer = p.find('button.glyphicon-envelope');
+                var btn_answer = p.find('button.chtpl0-answer');
                 btn_answer.click(function () {
-                    msg.data('index', this.dataset.index);
-                    var answer=$('.msg_answer');
-                    if (answer.length == 0) $(msg).parent().before('<div class="col-xs-12 msg_answer">Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text() + 'у</div>');
-                    else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
-                    $('#send_buttons').children().each(function(){$(this).hide()});
-                    if (answer.text()=='Ответить Автору') $('.button_author').show();
-                    if (answer.text()=='Ответить Заказчику') $('.button_customer').show();
-                    if (answer.text()=='Ответить Админу') $('.button_send').show();
-                    if (answer.text()=='Ответить Менеджеру') $('.button_send').show();
+					var recepient = $(this).closest('.post').find('.owner').find('.ownerref:first').text();
+					if (recepient != 'Админ' && recepient != 'Менеджер'){
+						msg.data('index', this.dataset.index);
+						var answer=$('.msg_answer');
+						if (answer.length == 0) $(msg).parent().before('<div class="col-xs-12 msg_answer">Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text() + 'у</div>');
+						else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
+						$('#send_buttons').children().each(function(){$(this).hide()});
+						answer=$('.msg_answer');
+						if (answer.text()=='Ответить Автору') $('.button_author').show();
+						if (answer.text()=='Ответить Заказчику') $('.button_customer').show();
+						//if (answer.text()=='Ответить Админу') $('.button_send').show();
+						//if (answer.text()=='Ответить Менеджеру') $('.button_send').show();
+					}
                 });
-                var btn_remove = p.find('button.glyphicon-remove');
+                var btn_remove = p.find('button.chtpl0-delete');
                 btn_remove.click(function () {
                     setdata = this.dataset;
                     jQuery.ajax({
@@ -205,7 +227,7 @@ var YiiChat = function (options) {
                         }
                     });
                 });
-                var btn_ok = p.find('button.glyphicon-ok');
+                var btn_ok = p.find('button.chtpl0-accept');
                 btn_ok.click(function () {
                     setdata = this.dataset;
                     jQuery.ajax({
@@ -214,7 +236,11 @@ var YiiChat = function (options) {
                         data: {chat_id: options.chat_id, id: setdata.index},
                         success: function (data) {
                             clear();
-                            $(this).remove();
+                            $('.post').each(function () {
+								var this_btn = $(this).find('button.chtpl0-accept');
+                                if (this_btn.data('index') == setdata.index)
+                                    this_btn.remove();
+                            });
                         },
                         error: function (e) {
                             clear();
@@ -222,13 +248,13 @@ var YiiChat = function (options) {
                         }
                     });
                 });
-                var btn_toggleexecutor = p.find('.track').find('button.toggleexecutor');
+                var btn_toggleexecutor = p.find('button.toggleexecutor');
                 btn_toggleexecutor.click(function () {
                     setdata = this.dataset;
                     tmp_post = $('#post_' + setdata.index);
-                    oldaction = tmp_post.find('button.toggleexecutor').attr('class').split(' ')[2];
-                    owner = tmp_post.find('.track').find('.owner').data('ownerid');
-                    if (oldaction == 'glyphicon-minus') action = 'plus'; else action = 'minus';
+                    oldaction = tmp_post.find('button.toggleexecutor').attr('class').split(' ')[1];
+                    owner = tmp_post.find('.chtpl0-content').find('.owner').data('ownerid');
+                    if (oldaction == 'executor-unset') action = 'set'; else action = 'unset';
                     jQuery.ajax({
                         cache: false, type: 'post',
                         url: options.action + '&action=dtoggle&data=' + action,
@@ -236,9 +262,9 @@ var YiiChat = function (options) {
                         success: function (data) {
                             $('.post').each(function () {
                                 if ($(this).find('.owner').data('ownerid') == owner)
-                                    $(this).find('button.toggleexecutor').removeClass(oldaction).addClass('glyphicon-' + action);
+                                    $(this).find('button.toggleexecutor').removeClass(oldaction).addClass('executor-' + action);
                             });
-                            if (oldaction == 'glyphicon-minus') $('.findauthor').removeClass('hide'); else $('.findauthor').removeClass('hide');
+                            if (oldaction == 'executor-unset') $('.findauthor').removeClass('hide'); else $('.findauthor').removeClass('hide');
                             clear();
                         },
                         error: function (e) {
@@ -263,19 +289,22 @@ var YiiChat = function (options) {
 
         ctrl=false;
         var chat = jQuery(options.selector);
-        chat.addClass('yiichat mt5');
-        chat.html('<div class="posts">posts</div><div class="you">you</div><div class="col-xs-12 log">Нажать ctrl+enter для ' +
-            'отправки сообщения всем</div>');
-        var posts = chat.find('div.posts');
-        var you = chat.find('div.you');
-        var log = chat.find('div.log');
+        chat.addClass('yiichat mt5 posts');
+        //chat.html('<div class="posts">posts</div><div class="you">you</div><div class="col-xs-12 log">Нажать ctrl+enter для ' + 'отправки сообщения всем</div>');
+        //var posts = chat.find('div.posts');
+		var posts = chat;
+        //var you = chat.find('div.you');
+		var you = jQuery(".chtpl0-form");
+        //var log = chat.find('div.log');
+		var log = jQuery(".chtpl0-show");
 
         you.html('<textarea class="pull-left im-msg-inp"></textarea><div class="exceded"></div>');
-        you.append('<div id="send_buttons" class="buttons pull-right"></div>');
+        you.append('<div id="send_buttons" class="buttons pull-right chtpl0-subm"></div>');
         var buttons = you.find('div.buttons');
-        buttons.append("<button class='button_send btn-primary pull-left btn smooth im-send' data-recipient='no'>" + options.sendButtonText + "</button>");
-        buttons.append("<button class='button_author btn-primary pull-left btn smooth im-send' data-recipient='Author'>" + options.sendAuthorText + "</button>");
-        buttons.append("<button class='button_customer btn-primary pull-left btn smooth im-send' data-recipient='Customer'>" + options.sendCustomerText + "</button>");
+		buttons.append("<h5>Отправить сообщение</h5><br>");
+        //buttons.append("<button class='button_send btn-primary pull-left btn smooth im-send' data-recipient='no'>" + options.sendButtonText + "</button>");
+        buttons.append("<button class='chtpl0-submit1 button_author btn-primary pull-left btn smooth im-send' data-recipient='Author'>" + options.sendAuthorText + "</button>");
+        buttons.append("<button class='chtpl0-submit2 button_customer btn-primary pull-left btn smooth im-send' data-recipient='Customer'>" + options.sendCustomerText + "</button>");
         posts.html("");
 
         var send = buttons.find('button');
