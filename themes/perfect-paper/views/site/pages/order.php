@@ -1,17 +1,20 @@
+<?php
+$form=$this->beginWidget('CActiveForm',array(
+    'htmlOptions'=>array('class'=>'form-horizontal'),
+));
+?>
 <div class="panel panel-default panel-container-default">
-    <div class="panel-heading clearfix">
-        <a href="#" class="col-md-4 text-center">1. Paper details</a>
-        <a href="#" class="col-md-4 text-center">2. Price calculator</a>
-        <a href="#" class="col-md-4 text-center">3. Contact information</a>
-    </div>
-    <div class="panel-body form-container">
-        <form class="form-horizontal" role="form">
-
+    <ul class="nav nav-tabs panel-heading clearfix" id="tab-panel">
+        <li class="active"><a id="top_tab-1" href="#tab-1" class="col-xs-12 text-center" data-toggle="tab">1. Paper details</a></li>
+        <li><a id="top_tab-2" href="#tab-2" class="col-xs-12 text-center" data-toggle="tab">2. Price calculator</a></li>
+        <li><a id="top_tab-3" href="#tab-3" class="col-xs-12 text-center" data-toggle="tab">3. Contact information</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="panel-body form-container tab-pane active" id="tab-1">
             <div class="form-group">
                 <label for="type_of_paper" class="col-sm-3 control-label">Type of paper:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
-
                 <div class="col-sm-9">
                     <select id="type_of_paper" name="type_of_paper" class="form-control">
                         <optgroup label="Essays">
@@ -65,7 +68,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="subject" class="col-sm-3 control-label">Subject:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
@@ -125,8 +127,6 @@
                     </select>
                 </div>
             </div>
-
-
             <div class="form-group">
                 <label class="col-sm-3 control-label">Paper format:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
@@ -135,91 +135,74 @@
                 <div class="col-sm-9">
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option1">MLA
+                            <input type="radio" name="paper_format" id="paper_format_MLA">MLA
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option2">APA
+                            <input type="radio" name="paper_format" id="paper_format_APA">APA
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option3">Chicago / Turabian
+                            <input type="radio" name="paper_format" id="paper_format_Chicago">Chicago / Turabian
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option4">Harvard
+                            <input type="radio" name="paper_format" id="paper_format_Harvard">Harvard
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option5">Other
+                            <input type="radio" name="paper_format" id="paper_format_Other">Other
                         </label>
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox"> Add an Abstract page to my paper
+                            <input name="add_abstract" type="checkbox"> Add an Abstract page to my paper
                         </label>
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="col-sm-3 control-label">Sources:
+                <label for="sources" class="col-sm-3 control-label">Sources:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
-
                 <div class="col-sm-9">
-
-
                     <div class="input-group spinner">
-
                         <button class="btn btn-primary pull-left" type="button">+</button>
-
-                        <input type="text" class="form-control pull-left" value="1">
-
+                        <input name="sources" id="sources" type="text" class="form-control pull-left" value="1">
                         <button class="btn btn-primary pull-left" type="button">-</button>
-
                     </div>
-
-
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="col-sm-3 control-label">Topic:
+                <label for="topic" class="col-sm-3 control-label">Topic:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
-
                 <div class="col-sm-9">
-                    <input type="text" class="form-control">
+                    <input id="topic" name="topic" type="text" class="form-control">
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="col-sm-3 control-label">Paper details:
+                <label for="paper_details" class="col-sm-3 control-label">Paper details:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
-
                 <div class="col-sm-9">
-                    <textarea class="form-control" rows="4"></textarea>
+                    <textarea name="paper_details" id="paper_details" class="form-control" rows="4"></textarea>
                 </div>
             </div>
-
-            <div class="form-group">
+            <div class="radio">
                 <label class="col-sm-3 control-label">Additional Materials:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
-
                 <div class="col-sm-9">
                     <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option6">Not needed
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="additional_materials" id="not" checked>Not needed
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option7">Needed, I will provide them later
+                            <input type="radio" name="additional_materials" id="later">Needed, I will provide them later
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option8">Needed, I won't be able to provide them
+                            <input type="radio" name="additional_materials" id="wont">Needed, I won't be able to provide them
                         </label>
                     </div>
                 </div>
@@ -234,21 +217,334 @@
                 </div>
             </div>
             <div class="form-group">
-
                 <div class="col-sm-12 order-price-block">
                     <span>Approximate price:</span><strong id="appr_price_step2">$9.97</strong>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-12">
-                    <button type="submit" class="btn btn-danger pull-right">GO to Step 2</button>
+                    <button id="click_to_tab" data-tab="2" class="btn btn-danger pull-right">GO to Step 2</button>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="panel-body form-container tab-pane" id="tab-2">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Type of service:
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </label>
+                <div class="col-sm-9">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option1">Writing from scratch
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option2">Editing/proofreading
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Academic Level:
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </label>
+                <div class="col-sm-9">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option3">Undergraduate
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option4">Bachelor
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option5">Professional
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> I want to order VIP customer service
+                            <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pages_number" class="col-sm-3 control-label">Number of pages:
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </label>
+                <div class="col-sm-3">
+                    <div class="input-group spinner">
+                        <button class="btn btn-primary pull-left" type="button">+</button>
+                        <input id="pages_number" type="text" class="form-control pull-left" value="1">
+                        <button class="btn btn-primary pull-left" type="button">-</button>
+                    </div>
+                </div>
+                <label for="slides_number" class="col-sm-3 control-label">Number of slides:
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </label>
+                <div class="col-sm-3">
+                    <div class="input-group spinner">
+                        <button class="btn btn-primary pull-left" type="button">+</button>
+                        <input id="slides_number" type="text" class="form-control pull-left" value="1">
+                        <button class="btn btn-primary pull-left" type="button">-</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-4">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option6">Single Spaced
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option7">Double Spaced
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <p class="bg-info" style="padding: 6px; text-align: center">1 page = 275 words</p></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">First Draft Deadline:
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </label>
+                <div class="col-sm-3">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option8">3
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option9">6
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option10">12
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option11">24
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option12">2
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option13">3
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option14">6
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option15">10
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option16">14
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-offset-3 col-sm-3">Hours</div>
+                <div class="col-sm-6">Days</div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    The deadline for the first draft is <strong>25 Jun 12 AM</strong>.
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                    We estimate that your final submission deadline is <strong>26 Jun 07 PM</strong>.
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Preferred writer:
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </label>
+                <div class="col-sm-9">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary" style="padding: 16px 15px !important;">
+                            <input type="radio" name="options" id="option17">Regular writer
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option18">Advanced regular<br>writer
+                        </label>
+                        <label class="btn btn-primary" style="padding: 16px 15px !important;">
+                            <input type="radio" name="options" id="option19">My previous writer
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option20">TOP writer:<br>Fullfiled by top 10 writers
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <a href="#">Have a discount?</a> (optional)
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Preferred payment system:
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                </label>
+                <div class="col-sm-9">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option21">Credit card
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="options" id="option22">PayPal
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <p class="bg-info" style="padding: 15px;">Please note that overseas transactions from the territory of the European Union might include additional charges, stipulated by your Government. They will be reflected on the payment page and your bank statement. <strong>PaperHelper.com</strong> does not have the authority to fix or scale down the VAT or any other fees.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 order-price-block">
+                    <span>Total price:</span><strong id="appr_price_step3">$17.97</strong>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <a href="#tab-1" id="click_to_tab" data-tab="1"><strong><</strong> Back to Step 1</button></a>
+                </div>
+                <div class="col-sm-6">
+                    <button id="click_to_tab"  data-tab="3" class="btn btn-danger pull-right">Go to Step 3</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body form-container tab-pane" id="tab-3">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#new" data-toggle="tab">I am new here</a></li>
+                <li><a href="#sign-in" data-toggle="tab">Sign in</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane form-container active" id="new">
+                    <div class="form-group">
+                        <label for="email" class="col-sm-3 control-label">Email:</label>
+                        <div class="col-sm-9">
+                            <input id="email" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_email" class="col-sm-3 control-label">Confirm email:</label>
+                        <div class="col-sm-9">
+                            <input id="confirm_email" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name" class="col-sm-3 control-label">First Name:</label>
+                        <div class="col-sm-9">
+                            <input id="first_name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name" class="col-sm-3 control-label">Last name:</label>
+                        <div class="col-sm-9">
+                            <input id="last_name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass" class="col-sm-3 control-label">Password:
+                            <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                        </label>
+                        <div class="col-sm-9">
+                            <input id="pass" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_pass" class="col-sm-3 control-label">Confirm password:</label>
+                        <div class="col-sm-9">
+                            <input id="confirm_pass" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="col-sm-3 control-label">Country:</label>
+                        <div id="country" class="col-sm-9">
+                            <select id="country" class="form-control">
+                                <option>Choose...</option>
+                                <option>Lorem ipsum</option>
+                                <option>Dolor sit amet</option>
+                                <option>Consecteur adipising</option>
+                                <option>Elit nulliam</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cellphone" class="col-sm-3 control-label">Cell phone:
+                            <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                        </label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                            <span class="input-group-addon">
+                                +225
+                            </span>
+                                <input id="cellphone" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <i class="clearfix">
+                                By proceeding to the next step, you are accepting our <a href="#">Terms of Use</a>, <a href="#">Privacy Policy</a> and <a href="#">Money Back Guarantee</a>.
+                            </i>
+                            <i class="clearfix">
+                                By proceeding to the next step, you express your prior affirmative consent to receive emails and sms from us.
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane form-container" id="sign-in">
+                    <div class="form-group">
+                        <label for="have_email" class="col-sm-3 control-label">Email:
+                            <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                        </label>
 
+                        <div class="col-sm-9">
+                            <input id="have_email" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="have_password" class="col-sm-3 control-label">Password:
+                            <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                        </label>
+                        <div class="col-sm-9">
+                            <input id="have_password" type="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <i class="clearfix">
+                                By proceeding to the next step, you are accepting our <a href="#">Terms of Use</a>, <a href="#">Privacy Policy</a> and <a href="#">Money Back Guarantee</a>.
+                            </i>
+                            <i class="clearfix">
+                                By proceeding to the next step, you express your prior affirmative consent to receive emails and sms from us.
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <a href="#tab-2" id="click_to_tab" data-tab="2"><strong><</strong> Back to Step 2</button></a>
+                    </div>
+                    <div class="col-sm-12">
+                        <button id="secure_pay" class="btn btn-danger pull-right">Proceed to Secure Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
+<?php
+$this->endWidget();
+?>
 <script type="text/javascript">
     (function ($) {
         var sin=$('.spinner input');
@@ -259,11 +555,16 @@
             sin.val( parseInt(sin.val(), 10) - 1);
         });
     })(jQuery);
-</script>
 
-<script>
-    $('a[data-toggle="tooltip"]').tooltip({
-        animated: 'fade',
-        placement: 'top'
+    $('form').on('click','#click_to_tab',function(){
+        $('#tab-panel a[href="#tab-'+$(this).data('tab')+'"]').tab('show');
+        return false;
+    });
+    $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
+        console.log(e);
+        //e.target; // activated tab
+        //e.relatedTarget.active(); // previous tab
+        //e.preventDefault();
+        return true;
     });
 </script>

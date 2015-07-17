@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-                               <script>
             var partner_id = 98;
             var sub_id = 0;    
             document.write(""+
@@ -217,6 +207,3 @@
                 }
                 return false;
             }
-                
-            
-        </script>
