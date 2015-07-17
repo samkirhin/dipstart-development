@@ -46,6 +46,7 @@ ul li, ol li {
   cursor:default;
 }
 
+.qq-upload-fail .qq-upload-failed-text {display:inline;}
 
 .info {
   padding:0 0 1em 2%;
@@ -522,12 +523,16 @@ font-size: 13px;
 float: left;
 }
 
-
+.qq-upload-success .qq-upload-failed-text {display:none;}
+.qq-upload-success {margin-top:10px;}
+.qq-upload-file {float:left;margin-right:5px;color:silver;text-transform:none;font-size:12px;}
+.qq-upload-size {color:silver;text-transform:none;font-size:12px;}
 
 
 /** Adaptive **/
 
 .logo, .login, .header-contacts, .header-adress {width:50%;font-size: 11px;}
+
 
  
 @media (min-width: 590px) {

@@ -2,13 +2,15 @@
 
 class EventHelper {
     
-    const TYPE_CREATE_ORDER = 1;
-    const TYPE_EDIT_ORDER = 2;
-    const TYPE_ADD_CHANGES = 3;
-    const TYPE_NOTIFICATION = 4;
-    const TYPE_MESSAGE = 5;
-    const TYPE_UPDATE_PROFILE = 6; // изменение профайла
-	const TYPE_CHEK_UPLOADED = 7;
+    const TYPE_CREATE_ORDER = 1;    // Пользователь %..% оформил заказ
+    const TYPE_EDIT_ORDER = 2;      // Пользователь %..% изменил информацию о заказе
+    const TYPE_ADD_CHANGES = 3;     // Пользователь %..% прикрепил замечания
+    const TYPE_NOTIFICATION = 4;    //
+    const TYPE_MESSAGE = 5;         //
+    const TYPE_UPDATE_PROFILE = 6;  // Пользователь %..% изменил информацию профиля
+	const TYPE_CHEK_UPLOADED = 7;   // Пользователь %..% загрузил чек
+	const TYPE_PART_DONE = 8;       // Пользователь %..% загрузил часть работы
+	const TYPE_MATERIALS_ADDED = 5; // Пользователь %..% прикрепил файлы в заказ
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
     
@@ -51,13 +53,23 @@ class EventHelper {
     
     public static function addChanges($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." оставил дополнение к заказу";
+        $description = "Пользователь ".$userName." прикрепил замечания";
         self::sendEvent($id, self::TYPE_ADD_CHANGES, $description);
     }
     public static function chekUploaded($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." загрузил чек";
         self::sendEvent($id, self::TYPE_CHEK_UPLOADED, $description);
+    }
+    public static function partDone($id) {
+        $userName = User::model()->findByPk(Yii::app()->user->id)->username;
+        $description = "Пользователь ".$userName." загрузил часть работы";
+        self::sendEvent($id, self::TYPE_PART_DONE, $description);
+    }
+    public static function materialsAdded($id) {
+        $userName = User::model()->findByPk(Yii::app()->user->id)->username;
+        $description = "Пользователь ".$userName." прикрепил файлы в заказ";
+        self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
     }
     
     public static function addMessage($id,$message='') {

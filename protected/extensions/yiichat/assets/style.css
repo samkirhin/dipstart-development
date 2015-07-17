@@ -16,6 +16,9 @@ body{
 */
 p {font-size: 13px;}
 
+.qq-upload-failed-text {display:none;}
+.qq-upload-fail .qq-upload-failed-text {display:inline;}
+
 .chtpl0-chatblock{
 	font-family: 'Roboto';
 	background-color: #f0f0f0;
@@ -545,3 +548,17 @@ font-size: 13px;
 
 #accordion .panel-default {margin-bottom: 0;}
 
+ul.qq-upload-list li.qq-upload-success {margin-top:10px;}
+ul.qq-upload-list li.qq-upload-success span.qq-upload-file {
+margin-right: 10px;
+color: silver;
+text-transform: none;
+display: inline;
+width: auto;
+}
+ul.qq-upload-list li.qq-upload-success span.qq-upload-size {
+color:silver;
+text-transform:none;
+display: inline;
+width: auto;
+}

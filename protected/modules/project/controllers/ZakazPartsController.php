@@ -271,7 +271,7 @@ class ZakazPartsController extends Controller
             $this->_prepairJson();
             Yii::import("ext.EAjaxUpload.qqFileUploader");
             $folder='uploads/additions/temp/';
-            $config['allowedExtensions'] = array('jpg', 'gif', 'txt', 'doc', 'docx');
+            $config['allowedExtensions'] = array('jpg', 'jpeg', 'png', 'gif', 'txt', 'doc', 'docx');
             $config['disAllowedExtensions'] = array("exe");
             $sizeLimit = 10 * 1024 * 1024;
             $pi = pathinfo($_GET['qqfile']);
@@ -279,9 +279,11 @@ class ZakazPartsController extends Controller
             $uploader = new qqFileUploader($config, $sizeLimit);
             $result = $uploader->handleUpload($folder,true);
             if ($result['success']) {
-                EventHelper::addChanges($_GET['proj_id']);
+                EventHelper::partDone($_GET['proj_id']);
             }
-            $this->_response->setData($result);
-            $this->_response->send();
+            /*$this->_response->setData($result);
+            $this->_response->send();*/
+			chmod($folder.$_GET['qqfile'],0666);
+			echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
         }
 }

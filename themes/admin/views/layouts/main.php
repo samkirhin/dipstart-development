@@ -65,10 +65,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin.
 <body>
 
 <div class="container">
-	<div class="row">
+	<div class="row main-header">
 		<div class="header-logo"></div>
 	</div>
-	<div class="row">
+	<div class="row main-menu">
 				<?php
 				$this->widget('application.extensions.booster.widgets.TbMenu',array(
                     'justified'=>true,

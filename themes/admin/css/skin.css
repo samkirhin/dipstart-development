@@ -2,6 +2,21 @@
 
 a, a:hover, a:focus, a:active, a:visited {text-decoration: none;}
 
+h3, .h3 {
+	font-size: 15px;
+	text-transform: uppercase;
+}
+h2, .h2 {
+	font-size: 20px;
+	text-transform: uppercase;
+	text-align: center;
+}
+h1, .h1 {
+	font-size: 18px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
 .btn {opacity:0.8;border-radius:0;}
 .btn:hover {opacity:1; transition: all 0.2s ease;	cursor: pointer;}
 
@@ -142,20 +157,124 @@ margin-top: 15px;
 }
 
 #approveFile_file {
-border-radius: 0;
-margin: 5px 15px;
-margin-right:0;
-float:right;
+	border-radius: 0;
+	margin: 5px 0;
+	float: right;
+	padding: 1px 10px;
+	font-size: 13px;
 }
 
 #approveFile_file + br {clear:both;}
 
-.link-to-material {
-margin: 5px 15px;
-margin-left: 0;
-display: block;
-float: left;
-padding-top: 5px;
+a.link-to-material {
+	margin: 5px 0;
+	display: block;
+	float: left;
+	padding-top: 5px;
+	overflow: hidden;
+	width: 65%;
+	word-wrap: break-word;
 }
 
 .pay-save-btn {border-radius:0;}
+
+.topMenu, .nav-pills {
+padding:0;
+margin:0;
+border-bottom: 2px solid #E3E3E3;
+background:#fff;
+}
+
+.nav-pills > li > a {
+	border-radius: 0;
+	border-right: 1px dotted #ddd;
+}
+
+.dropdown-menu > li > a {
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+.nav-justified > .dropdown .dropdown-menu {
+	top: auto;
+	left: auto;
+	min-width: 217px;
+	border-radius: 0;
+	border: none;
+}
+
+.nav-justified > li > a {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 12px;
+	color: #4A4A4A;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+	text-decoration: none;
+	background-color: #eee;
+	transition-duration: 0.4s;
+}
+
+.main-menu {
+position: fixed;
+z-index: 1500;
+left: 0;
+}
+
+.main-menu + h1 {
+	margin-top: 50px;
+}
+
+.info-block {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.table-striped label {margin-top: 0;}
+
+.operations {
+	margin-top: 50px;
+	display: block;
+	list-style-type: none;
+	padding: 0;
+ border: 1px solid #CEDFED;
+}
+
+.operations li {
+border-right: 1px dotted #CEDFED;
+display: table-cell;
+width: 1%;
+padding:0;
+}
+
+.operations li:hover{
+background:#EBF6FF;
+transition-duration: 0.4s;
+}
+
+.operations li a{
+background:none;
+display: block;
+padding: 5px;
+text-align: center;
+}
+
+.inside-block {
+	padding-top: 35px;
+	padding-bottom: 10px;
+}
+
+.qq-upload-success {margin-top:10px;}
+.qq-upload-file {float:left;margin-right:5px;color:silver;text-transform:none;}
+.qq-upload-size {color:silver;text-transform:none;} 
+
+.qq-upload-file {
+	display: inline;
+	margin-right: 5px;
+}
+
+.qq-upload-list {
+	padding-bottom: 10px;
+}
+

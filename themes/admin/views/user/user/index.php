@@ -3,13 +3,17 @@ $this->breadcrumbs=array(
 	UserModule::t("Users"),
 );
 if(UserModule::isAdmin()) {
-	$this->layout='//layouts/column2';
+	//$this->layout='//layouts/column2';
 	$this->menu=array(
 		array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin')),
 		array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('profileField/admin')),
 		array('label'=>UserModule::t('List Author User'), 'url'=>array('/user&s=Author')),
 		array('label'=>UserModule::t('List Customer User'), 'url'=>array('/user&s=Customer')),
 	);
+	$this->widget('zii.widgets.CMenu', array(
+		'items'=>$this->menu,
+		'htmlOptions'=>array('class'=>'operations'),
+	));
 }
 ?>
 <table>

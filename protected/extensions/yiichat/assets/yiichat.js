@@ -124,22 +124,22 @@ var YiiChat = function (options) {
         //	id: postid, owner: 'i am', time: 'the time stamp', text: 'the post'
         //  chat_id: the_chat_id, identity: whoami_id
         var add = function (post, postn) {
-			//alert(post.sender.owner_id);
+			//alert(post.sender.owner_id);    //!!!!!!!! <---------- underfined !!!!!!!!!!!!!!!!!!!!
             var p=0;
             if (postn == 0) {
 				var tmp_html = '';
-                //if (options.identity != post.sender.id) {
-                    if (post.sender.superuser.itemname == 'Author') {
-                        if (options.executor == post.sender.superuser.userid)
-							tmp_html = "toggleexecutor executor-unset";
-                        else
-                            tmp_html = "toggleexecutor executor-set";
-                    }else if (post.sender.superuser.itemname == 'Customer') {
-						tmp_html = "chtpl0-user-icon-4 usual-cursor";
-					}else{
-						tmp_html = "chtpl0-user-icon-3 usual-cursor";
-					}
-				//}
+
+				if (post.sender.superuser.itemname == 'Author') {
+					if (options.executor == post.sender.superuser.userid)
+						tmp_html = "toggleexecutor executor-unset";
+					else
+						tmp_html = "toggleexecutor executor-set";
+				}else if (post.sender.superuser.itemname == 'Customer') {
+					tmp_html = "chtpl0-user-icon-4 usual-cursor";
+				}else{
+					tmp_html = "chtpl0-user-icon-3 usual-cursor";
+				}
+
                 posts.append("<div id='post_" + post.id + "' class='post chtpl0-msg'>"
 				+ "<button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>"
                 + "<div class='chtpl0-content'></div>"

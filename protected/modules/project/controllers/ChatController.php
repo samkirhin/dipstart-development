@@ -166,17 +166,18 @@ class ChatController extends Controller {
 	public function actionUpload() {
         Yii::import("ext.EAjaxUpload.qqFileUploader");
         $folder='uploads/'.$_GET['id'].'/';// folder for uploaded files
-        $config['allowedExtensions'] = array('jpg', 'gif', 'txt', 'doc', 'docx');
+        $config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx');
         $config['disAllowedExtensions'] = array("exe");
         $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
         $uploader = new qqFileUploader($config, $sizeLimit);
         if(!(User::model()->isAdmin())) $_GET['qqfile']='#pre#'.$_GET['qqfile'];
         $result = $uploader->handleUpload($folder,true);
-        if ($result['success']) {
-            EventHelper::addChanges($_GET['proj_id']);
+        if ($result['success'] && User::model()->isCustomer()) {
+            EventHelper::materialsAdded($_GET['id']);
         }
         $result['fileSize']=filesize($folder.$result['filename']);//GETTING FILE SIZE
         $result['fileName']=$result['filename'];//GETTING FILE NAME
+		chmod($folder.$result['fileName'],0666);
         echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }
 }

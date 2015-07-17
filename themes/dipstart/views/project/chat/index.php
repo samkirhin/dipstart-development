@@ -69,8 +69,13 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
                     if (!strstr($v, '#pre#') || User::model()->isCustomer()) {
 						$tmp = '';
-						if(strstr($v, '#pre#')) $tmp = ' class="gray-file"';
-						$html_string .= '<li'.$tmp.'><a href="' . $url . $v . '" class="file" >' . $v . '</a></li><br />'."\n";
+						if(strstr($v, '#pre#')) {
+							$tmp = ' class="gray-file"';
+							$v0 = substr($v,5);
+						} else {
+							$v0 = $v;
+						}
+						$html_string .= '<li'.$tmp.'><a target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a></li><br />'."\n";
 					}
 			} else mkdir($path);
             if (User::model()->isCustomer()) {
