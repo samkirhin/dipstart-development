@@ -124,7 +124,6 @@ var YiiChat = function (options) {
         //	id: postid, owner: 'i am', time: 'the time stamp', text: 'the post'
         //  chat_id: the_chat_id, identity: whoami_id
         var add = function (post, postn) {
-			//alert(post.sender.owner_id);    //!!!!!!!! <---------- underfined !!!!!!!!!!!!!!!!!!!!
             var p=0;
             if (postn == 0) {
 				var tmp_html = '';
@@ -167,20 +166,20 @@ var YiiChat = function (options) {
                 if (post.recipient != 0) tmp_html += " ответил "
                 + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/user/view?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
                 tmp_html += "  |</div>";
-				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>"
+				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>";
 				//tmp_html += "<div class='chtpl0-time'>" + post.date + "</div>"
                 if (post.cost > 0) tmp_html += "<div class='cost'>Цена:" + post.cost + "</div>";
                 //tmp_html += "</div>";
-				tmp_html += "<div class='text'></div>"
+				tmp_html += "<div class='text'></div>";
                 p.find('.chtpl0-content').html(tmp_html);
 				
 				tmp_html = '';//"<div class='buttons'>"
-				if (options.identity != post.sender.id) {
+				if (options.identity != post.sender.superuser.userid) {
 					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
 					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-share\">Переслать</button>";
 				}
 				tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-delete\">Удалить</button>";
-				if (options.identity != post.sender.id) {
+				if (options.identity != post.sender.superuser.userid) {
                     if (post.moderated == 0 && (post.sender.superuser.itemname == 'Author' || post.sender.superuser.itemname == 'Customer'))
                         if (post.recipient != 0 && (post.recipient.superuser.itemname == 'Author' || post.recipient.superuser.itemname == 'Customer'))
 							tmp_html += "<button data-index=\"" + post.id + "\"class=\"chtpl0-accept\">Одобрить</button>";
@@ -191,9 +190,14 @@ var YiiChat = function (options) {
 
                 var btn_edit = p.find('button.chtpl0-share');
                 btn_edit.click(function () {
-                    msg.data('index', this.dataset.index);
-                    msg.val($(this).closest('.post').find('.text').text());
-                });
+                    actionPost($(this).closest('.post').find('.text').text(), function (ok) {
+                        if (ok == true) {
+                            scroll();
+                            setTimeout(function () {
+                                msg.focus();
+                            }, 100);
+                        }
+                    }, {index: this.dataset.index, recipient: 'redir'});                });
                 var btn_answer = p.find('button.chtpl0-answer');
                 btn_answer.click(function () {
 					var recepient = $(this).closest('.post').find('.owner').find('.ownerref:first').text();

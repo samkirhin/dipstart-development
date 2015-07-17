@@ -92,9 +92,9 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			);
 			if ($postdata['index']==0){
 				if ($postdata['recipient']=='Author'){
-					$obj['recipient']=2;
+					$obj['recipient']=$obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['executor'];
 				} else if ($postdata['recipient']=='Customer')
-					$obj['recipient']=3;
+					$obj['recipient']=$obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user'];
 				else $obj['recipient']=0;
 				$newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 			}
@@ -103,14 +103,24 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 					$obj['recipient']=0;
                     $newid=$this->getDb()->createCommand()->update($this->getTableName(), $obj, 'id=:id', array('id' => $postdata['index']));
 				}
+				else if($postdata['recipient']=='redir'){
+                    $sender = ProjectMessages::model()->findByPk($postdata['index'])->senderObject->AuthAssignment['itemname'];
+                    $obj['sender'] = ProjectMessages::model()->findByPk($postdata['index'])->attributes['sender'];
+                    $obj['moderated']=1;
+                    if ($sender=='Customer') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['executor'];
+                    if ($sender=='Author') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user'];
+                    $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
+                }
 				else {
 					$obj['recipient']=$postdata['recipient'];
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}
 			}
 			// now retrieve the post
-			$obj['sender']=User::model()->findByPk($obj['sender']);
-			$obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
+            $obj['sender']=User::model()->findByPk($obj['sender']);
+            $obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
+            $obj['recipient']=User::model()->findByPk($obj['recipient']);
+            $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
 			$obj['time']=$this->getDateFormatted($obj['date']);
 			$obj['owner']=substr($this->getIdentityName(),0,20);
 			return $obj;

@@ -53,35 +53,28 @@ class ChatHandler extends YiiChatDbHandlerBase {
                     $res1[$k]['sender']['username']='Заказчик';
                     break;
             }
+            $res1[$k]['sender']['username']=$res1[$k]['sender']['fullusername'];
 			if ($res[$k]->recipient > 0) {
                 $res1[$k]['recipient'] = array();
-                switch ($res[$k]->recipient){
-                    case 1:
+                $res1[$k]['recipient']['fullusername']=$res[$k]->recipientObject->profile->firstname.' '.$res[$k]->recipientObject->profile->lastname;
+                $res1[$k]['recipient']['superuser']=$res[$k]->recipientObject->getRelated('AuthAssignment')->attributes;
+                switch ($res1[$k]['recipient']['superuser']['itemname']){
+                    case 'Admin':
+                        $res1[$k]['recipient']['username']='админу';
+                        break;
+                    case 'Manager':
                         $res1[$k]['recipient']['username']='менеджеру';
-                        $res1[$k]['recipient']['superuser']='Manager';
                         break;
-                    case 2:
-                        if (Zakaz::model()->findByPk($res[$k]->order)->executor==0){
-                            $res1[$k]['recipient']['username']='автору';
-                            $res1[$k]['recipient']['superuser']='Author';
-                        } else {
-                            $res1[$k]['recipient']['username']='автору';
-                            $res1[$k]['recipient']['fullusername'] = $order->author->profile->firstname.' '.$order->author->profile->lastname;
-                            $res1[$k]['recipient']['superuser'] = $order->author->profile->AuthAssignment->attributes;
-                        }
+                    case 'Author':
+                        $res1[$k]['recipient']['username']='автору';
                         break;
-                    case 3:
+                    case 'Customer':
                         $res1[$k]['recipient']['username']='заказчику';
-                        $res1[$k]['recipient']['fullusername'] = $order->user->profile->firstname.' '.$order->user->profile->lastname;
-                        $res1[$k]['recipient']['superuser'] = $order->user->profile->AuthAssignment->attributes;
                         break;
                 }
-                //$res1[$k]['recipient']['username'] = Zakaz::model()->findByPk($res[$k]->order)->author->profile->firstname.' '.Zakaz::model()->findByPk($res[$k]->recipient)->author->profile->lastname;
-                //$res1[$k]['recipient']['superuser'] = Zakaz::model()->findByPk($res[$k]->order)->author->profile->AuthAssignment->attributes;
-                //if (!isset($res1[$k]['recipient']['superuser']['itemname'])) $res1[$k]['recipient']['superuser']['itemname']=$res1[$k]['sender']['superuser']['itemname'];
+                $res1[$k]['recipient']['username']=$res1[$k]['recipient']['fullusername'];
             }
 		}
-        //print_r($res1);
 		return $res1;
 	}
 }
