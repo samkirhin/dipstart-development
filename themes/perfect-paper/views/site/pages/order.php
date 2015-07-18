@@ -1,4 +1,5 @@
 <?php
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/price.js');
 $form=$this->beginWidget('CActiveForm',array(
     'htmlOptions'=>array('class'=>'form-horizontal'),
 ));

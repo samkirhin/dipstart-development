@@ -1,11 +1,11 @@
 function count_price_local(data_form)
 {  
 
-   var data_array = new Array();
-   var data_array = data_form.split('&');
-   var temp_var = new Array();
+   var data_array = [];
+   data_array = data_form.split('&');
+   var temp_var = [];
 
-var elem_form = new Array();
+var elem_form = [];
 elem_form = {
     'type_of_work':null,
     'academic_level':null,
@@ -22,12 +22,12 @@ elem_form = {
     'plagiarism_report':null,
     'abstract_page':null,
     'top_priority':null
-}
+};
     var temp;
     
-    var top_academic_level =  new Array();
+    var top_academic_level =  [];
     //top_academic_level = {8 : 8, 13 : 10}
-    top_academic_level = {13 : 10}
+    top_academic_level = {13 : 10};
     
    $.each(data_array, function(i, val) {
        temp_var = data_array[i].split('=');
@@ -35,7 +35,7 @@ elem_form = {
      });
      var name_type_of_paper = $(ORDER_FORM_ID).find("[name='type_of_paper']").find("[value='"+elem_form['type_of_paper']+"']").text();
      if(name_type_of_paper == 'Admission essay' || name_type_of_paper == 'Personal statement' || name_type_of_paper == 'Application letter' || name_type_of_paper == 'Cover letter'  || name_type_of_paper == 'Resume'  || name_type_of_paper == 'Curriculum vitae'){
-         elem_form['academic_level'] = ((!isNaN(top_academic_level[client_id])?top_academic_level[client_id]:5)*1+100*client_id)*1;
+         elem_form['academic_level'] = ((!isNaN(top_academic_level[client_id])?top_academic_level[client_id]:5)+100*client_id)*1;
      }
                      
      var tow_coef = type_of_work_coef[client_id+'_'+elem_form['type_of_work']];

@@ -27,13 +27,13 @@ class ZakazController extends Controller
 	public function accessRules()
 	{
 			return array(
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                /*array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions'=>array('view','index','create','update', 'admin', 'preview', 'moderationAnswer', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList', 'uploadPayment'),
                     'users'=>array('@'),
-                ),
+                ),*/
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
                     'actions'=>array('admin','delete', 'apiview','apifindauthor','spam','apiapprovefile'),
-                    'users'=>array('admin'),
+                    'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
 					'users'=>array('*'),

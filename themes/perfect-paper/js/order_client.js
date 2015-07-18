@@ -9,7 +9,7 @@ $(document).ready(function() {
         if ($(this).hasClass('disabled')) {
             $(this).removeClass('active');
             return false;
-        };
+        }
         
         $(this).parents('.radio-group').find('.button-group.active').removeClass('active');
         $(this).parent('.button-group').addClass('active');
@@ -52,7 +52,6 @@ $(document).ready(function() {
             current_tab.addClass('active');
         }
     });
-    
 });
 
 /* -------- All tooltip ---------- */
