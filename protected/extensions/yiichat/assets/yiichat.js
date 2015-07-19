@@ -316,22 +316,23 @@ var YiiChat = function (options) {
         msg.data('index', 0);
         send.click(function () {
             var text = jQuery.trim(msg.val());
-            if (text.length < options.minPostLen)
-                options.onError('very_short_text', text);
-            else if (text.length > options.maxPostLen)
-                options.onError('very_large_text', text);
-            else
-                actionPost(text, function (ok) {
-                    if (ok == true) {
-                        msg.val("");
-                        msg.data('index', 0);
-                        $(this).data('recipient', 0);
-                        scroll();
-                        setTimeout(function () {
-                            msg.focus();
-                        }, 100);
-                    }
-                }, {index: msg.data('index'), recipient: $(this).data('recipient')});
+            actionPost(text, function (ok) {
+                if (ok == true) {
+                    msg.val("");
+                    msg.data('index', 0);
+                    $(this).data('recipient', 0);
+                    scroll();
+                    setTimeout(function () {
+                        msg.focus();
+                    }, 100);
+                }
+            },
+                {
+                    index: msg.data('index'),
+                    recipient: $(this).data('recipient'),
+                    flags: Array.prototype.map.call( $("input:checkbox:checked"), function( input ) {return input.id;})
+                }
+            );
         });
         msg.keydown(function (e) {
             if (e.keyCode==17) ctrl=true;

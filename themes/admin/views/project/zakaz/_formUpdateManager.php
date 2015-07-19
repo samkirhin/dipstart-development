@@ -60,8 +60,8 @@
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
 		<div class="chtpl0-panel chtpl0-down">
-			<input type="checkbox"><p>Отправить на почту</p>
-			<input type="checkbox"><p>Отправить SMS</p>
+			<input id="send_email" type="checkbox"><p>Отправить на почту</p>
+			<input id="send_sms" type="checkbox"><p>Отправить SMS</p>
 			<button class="chtpl0-template"></button><p>Шаблон</p>
 		</div>
 		<div class="chtpl0-form">
