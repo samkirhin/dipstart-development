@@ -532,6 +532,13 @@ float: left;
 .qq-upload-file {float:left;margin-right:5px;color:silver;text-transform:none;font-size:12px;}
 .qq-upload-size {color:silver;text-transform:none;font-size:12px;}
 
+.panel-body textarea {
+	z-index: 10;
+	max-width: 100%;
+}
+#new-changes-collapse textarea {
+	max-width: 100%;
+}
 
 /** Adaptive **/
 

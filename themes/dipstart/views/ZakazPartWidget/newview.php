@@ -45,7 +45,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 							} ?>
 						</div>
 
-						<?php if (User::model()->isAuthor()) $this->widget('ext.EAjaxUpload.EAjaxUpload',
+						<?php if (User::model()->isExecutor($data['proj_id'])) $this->widget('ext.EAjaxUpload.EAjaxUpload',
 							array(
 								'id' => 'EAjaxUpload' . $data['id'],
 								'config' => array(

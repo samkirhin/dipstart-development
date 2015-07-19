@@ -207,6 +207,14 @@ class User extends CActiveRecord
 		if (Yii::app()->user->id && $this->getUserRole()=='Author') return true;
 		else    return FALSE;
 	}
+	public function isExecutor($project_id){
+		if (Yii::app()->user->id && $this->getUserRole()=='Author') {
+			$zakaz = Zakaz::model()->findByPk($project_id);
+			if(Yii::app()->user->id == $zakaz->executor)
+				return true;
+			else return false;
+		} else return FALSE;
+	}
 
 	public function getCreatetime() {
 		return strtotime($this->create_at);

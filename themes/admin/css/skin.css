@@ -39,7 +39,10 @@ border: 1px solid #ddd;
 padding: 10px;
 }
 
-.notesBlockTextarea {border: 1px solid #ddd;}
+.notesBlockTextarea {
+border: 1px solid #ddd;
+max-width: 100%;
+}
 
 .hasDatepicker {
 border: 1px solid #ccc;
@@ -287,4 +290,8 @@ text-align: center;
 }
 .panel-body textarea {
 	z-index: 10;
+	max-width: 100%;
+}
+#new-changes-collapse textarea {
+	max-width: 100%;
 }

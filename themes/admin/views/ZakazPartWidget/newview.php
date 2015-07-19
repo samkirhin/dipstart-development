@@ -58,7 +58,7 @@
                                 'id' => 'EAjaxUpload'.$data['id'],
                                 'config' => array(
                                     'action' => Yii::app()->createUrl('/project/zakazParts/upload?id='.$data['id']),
-                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><ul class="qq-upload-list">'.$tmp.'</ul><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить материал</div></div></div>',
+                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><ul class="qq-upload-list">'.$tmp.'</ul><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить файл</div></div></div>',
                                     'disAllowedExtensions' => array('exe'),
                                     'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
                                     'minSizeLimit' => 10,// minimum file size in bytes
