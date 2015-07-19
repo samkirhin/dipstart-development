@@ -21,7 +21,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 							</a>
 						</h4>
 					</div>
-					<div class="title-time">
+					<div class="title-time">Дата сдачи:<br />
 						<?php
 						if (User::model()->isAuthor()) echo $data['dbdate'];
 						?>

@@ -436,7 +436,11 @@ position: relative;
 .qq-upload-button {width: 90%; background-color: green;margin: 15px auto;}
 .qq-upload-list {margin:0;}
 .info-block {margin-top: 30px;} 
-.panel-title a{color: #337AB7;} 
+.panel-title a{
+color: #337AB7;
+width: 100%;
+display: block;
+} 
 
 #ProjectChanges_fileupload{
 background: green;

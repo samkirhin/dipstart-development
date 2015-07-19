@@ -95,6 +95,8 @@ color: #337AB7;
 font-weight: bold;
 text-transform: uppercase;
 padding-top: 5px;
+width: 100%;
+display: block;
 }
 
 .panel-group .panel {
