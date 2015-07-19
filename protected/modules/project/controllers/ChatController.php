@@ -85,9 +85,9 @@ class ChatController extends Controller {
                         break;
                     case 'customer':
                         if (User::model()->isCustomer())
-                            $model->recipient = 2;
+                            $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['executor'];
                         if (User::model()->isAuthor())
-                            $model->recipient = 3;
+                            $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                         break;
                 }
                 $model->save();

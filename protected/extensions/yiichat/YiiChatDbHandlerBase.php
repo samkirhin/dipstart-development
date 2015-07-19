@@ -92,10 +92,10 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			);
 			if ($postdata['index']==0){
 				if ($postdata['recipient']=='Author'){
-					$obj['recipient']=$obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['executor'];
-				} else if ($postdata['recipient']=='Customer')
-					$obj['recipient']=$obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user'];
-				else $obj['recipient']=0;
+					$obj['recipient'] = Zakaz::model()->findByPk($chat_id)->attributes['executor'];
+				} else if ($postdata['recipient']=='Customer') {
+					$obj['recipient'] = Zakaz::model()->findByPk($chat_id)->attributes['user_id'];
+				} else $obj['recipient']=0;
 				$newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 			}
 			else {
@@ -112,6 +112,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
                 }
 				else {
+					die;
 					$obj['recipient']=$postdata['recipient'];
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}

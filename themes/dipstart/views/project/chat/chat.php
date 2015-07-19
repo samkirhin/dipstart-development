@@ -32,19 +32,7 @@ else {
     <?php
     foreach ($messages as $message):
         echo "$message->date - {$message->senderObject->profile->firstname} {$message->senderObject->profile->lastname}";
-        switch ($message->recipient) {
-            case '1':
-                echo " написал менеджеру";
-                break;
-            case '2':
-                if ($order->executor > 0)
-                    echo " написал {$message->recipientObject->profile->firstname} {$message->recipientObject->profile->lastname}";
-                else echo " написал автору";
-                break;
-            case '3':
-                echo " написал {$message->recipientObject->profile->firstname} {$message->recipientObject->profile->lastname}";
-                break;
-        }
+        echo " написал {$message->recipientObject->profile->firstname} {$message->recipientObject->profile->lastname}";
         echo " : $message->message";
         if ($message->cost) echo "<div class=\"comment\">Цена за работу: $message->cost</div>";
         if ($message->sender != Yii::app()->user->id): ?>
