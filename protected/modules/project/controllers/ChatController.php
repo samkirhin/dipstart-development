@@ -104,65 +104,6 @@ class ChatController extends Controller {
 			'chek_image' => Zakaz::getPaymentImage($orderId),
         ));
     }
-
-	/**
-	 * Одобрить сообщение
-	 */
-	public function actionApprove($messageId) {
-		$model = ProjectMessages::model()->findByPk($messageId);
-		$model->moderated = 1;
-		$model->save();
-	}
-
-	/**
-	 *  Удалить сообщение
-	 */
-	public function actionRemove($messageId) {
-		$model = ProjectMessages::model()->findByPk($messageId);
-		$model->delete();
-	}
-
-	/**
-	 * Редактировать сообщение
-	 */
-	public function actionEdit($messageId) {
-		$model = ProjectMessages::model()->findByPk($messageId);
-		if(Yii::app()->request->getPost($model->tableName())) {
-			$model->attributes = Yii::app()->request->getPost($model->tableName());
-			$model->save();
-			$this->redirect(Yii::app()->createUrl('project/chat', array('orderId' => $model->order)));
-		}
-		$this->render('edit', array(
-			'model' => $model
-		));
-	}
-
-	/**
-	 * Назначить исполнителя
-	 */
-	public function actionSetExecutor($orderId, $executorId) {
-		$model = Zakaz::model()->findByPk($orderId);
-		$model->executor = $executorId;
-		$model->save();
-	}
-
-	/**
-	 * Снять исполнителя с заказа
-	 */
-	public function actionDelExecutor($orderId) {
-		$model = Zakaz::model()->findByPk($orderId);
-		$model->executor = 0;
-		$model->save();
-	}
-
-	/**
-	 * Переназначить сообщение автору заказа
-	 */
-    public function actionReaddress($messageId, $ordererId) {
-        $model = ProjectMessages::model()->findByPk($messageId);
-        $model->recipient = $ordererId;
-        $model->save();
-    }
 	public function actionUpload() {
         Yii::import("ext.EAjaxUpload.qqFileUploader");
         $folder='uploads/'.$_GET['id'].'/';// folder for uploaded files
