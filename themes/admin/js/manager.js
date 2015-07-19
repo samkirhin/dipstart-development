@@ -67,6 +67,7 @@ function approve(obj){
     }), function (response) {
         if (response.data) {
             console.log(response);
+			$(obj).remove();
         }
     }, 'json');
 }

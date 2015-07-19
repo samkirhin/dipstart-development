@@ -49,7 +49,7 @@
 						foreach ($data['files'] as $k => $v){
                             $tmp .= '<li><a href="' . $v['file_name'] . '" id="parts_file" data-part="' . $data['id'] . '">' . $v['orig_name'] . '</a>';
                             if ($v['id']==0)
-                                $tmp .= '<button id="approve_file" data-id="' . $data['id'] . '" data-orig_name="' . $v['orig_name'] . '" class="right btn" onclick="approve(this)">Одобрить</button>';
+                                $tmp .= '<button data-id="' . $data['id'] . '" data-orig_name="' . $v['orig_name'] . '" class="zakaz_part_approve_file right btn" onclick="approve(this)">Одобрить</button>';
                             $tmp .= '</li>';
                         }
 

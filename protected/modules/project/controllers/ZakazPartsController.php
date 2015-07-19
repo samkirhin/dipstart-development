@@ -100,15 +100,19 @@ class ZakazPartsController extends Controller
         public function actionApiApprove() {
             $this->_prepairJson();
             $data = $this->_request->getParam('data');
-            $path = 'uploads/additions/'.$data['id'].'/';
-            $list = explode('.', $data['orig_name']);
+			$path = 'uploads/additions/'.$data['id'].'/';
+			$list = explode('.', $data['orig_name']);
+			$extention = array_pop($list);
             $newName = $this->getGuid();
-            $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$list[0].'_'.$data['id'].'.'.$list[1];
+			$filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.implode('.',$list).'_'.$data['id'].'.'.$extention;
             $newDir = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$data['id'];
-            $fileNewPath = $newDir.'/'.$newName.".".$list['1'];
-            if (!file_exists($newDir)) mkdir($newDir);
+            $fileNewPath = $newDir.'/'.$newName.".".$extention;
+            if (!file_exists($newDir)) {
+				mkdir($newDir);
+				chmod($newDir, 777);
+			}
             if (rename($filePath, $fileNewPath)) {
-                $fileModel = new ZakazPartsFiles();
+				$fileModel = new ZakazPartsFiles();
                 $fileModel->part_id = $data['id'];
                 $fileModel->orig_name = $data['orig_name'];
                 $fileModel->file_name = $newName . "." . $list['1'];
