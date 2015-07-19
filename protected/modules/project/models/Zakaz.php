@@ -212,8 +212,8 @@ class Zakaz extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-            'jobName'=>'Вид работ',
-            'catName'=>'Категория',
+            'jobName'=>'Имя работы',
+            'catName'=>'Наименование учебной дисциплина',
 			'user_id' => ProjectModule::t('User'),
 			'category_id' => ProjectModule::t('Category'),
 			'job_id' => ProjectModule::t('Job'),
