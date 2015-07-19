@@ -128,3 +128,10 @@ due_date_doctoral["threeDays"] = 50;
 due_date_doctoral["twoDays"] = 57;
 due_date_doctoral["oneDay"] = 63;
 due_date_doctoral["twelveHours"] = 70;
+
+$(document).ready(function(){
+    $('.calc_elem').each(function(item,i){
+        //console.log(i);
+        $(i).on('change',calc());
+    });
+});

@@ -27,10 +27,10 @@ class ZakazController extends Controller
 	public function accessRules()
 	{
 			return array(
-                /*array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions'=>array('view','index','create','update', 'admin', 'preview', 'moderationAnswer', 'yiifilemanagerfilepicker','list', 'ownList','customerOrderList', 'uploadPayment'),
                     'users'=>array('@'),
-                ),*/
+                ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
                     'actions'=>array('view','index','create','update', 'admin', 'preview', 'moderationAnswer','admin','delete', 'apiview','apifindauthor','spam','apiapprovefile'),
                     'users'=>array('admin','manager'),
@@ -222,38 +222,38 @@ class ZakazController extends Controller
 			}
 		}
 
-			// Uncomment the following line if AJAX validation is needed
-			// $this->performAjaxValidation($model);
-			if(isset($_POST['Zakaz']))
-			{
-				$zakaz = $_POST['Zakaz'];
-				if ($role != 'Manager' && $role != 'Admin') {
-					ModerationHelper::saveToModerate($model, $zakaz);
-				} else {
-					$model->attributes=$zakaz;
-				}
-
-				if($model->save()) {
-					if ($role != 'Manager' && $role != 'Admin') {
-						EventHelper::editOrder($model->id);
-                        $view = 'orderInModerate';
-					} else {
-						ModerationHelper::clear($model->id);
-                        $this->redirect(array('update','id'=>$model->id));
-					}
-					//$this->redirect(array('view','id'=>$model->id));
-                }
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+		if(isset($_POST['Zakaz']))
+		{
+			$zakaz = $_POST['Zakaz'];
+			if ($role != 'Manager' && $role != 'Admin') {
+				ModerationHelper::saveToModerate($model, $zakaz);
+			} else {
+				$model->attributes=$zakaz;
 			}
 
-            if ($isModified) {
-                $message = 'Заказ на модерации';
-            } else {
-                $message = $model->projectStatus->status;
-            }
-			$this->render($view, array(
-				'model'=>$model,
-				'message'=>$message,
-			));
+			if($model->save()) {
+				if ($role != 'Manager' && $role != 'Admin') {
+					EventHelper::editOrder($model->id);
+					$view = 'orderInModerate';
+				} else {
+					ModerationHelper::clear($model->id);
+					$this->redirect(array('update','id'=>$model->id));
+				}
+				//$this->redirect(array('view','id'=>$model->id));
+			}
+		}
+
+		if ($isModified) {
+			$message = 'Заказ на модерации';
+		} else {
+			$message = $model->projectStatus->status;
+		}
+		$this->render($view, array(
+			'model'=>$model,
+			'message'=>$message,
+		));
 	}
     
     public function actionUploadPayment($id)

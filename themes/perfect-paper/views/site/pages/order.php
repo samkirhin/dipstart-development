@@ -17,7 +17,7 @@ $form=$this->beginWidget('CActiveForm',array(
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
                 <div class="col-sm-9">
-                    <select id="type_of_paper" name="type_of_paper" class="form-control">
+                    <select id="type_of_paper" name="type_of_paper" class="form-control calc_elem">
                         <optgroup label="Essays">
                             <option value="100016">Annotated bibliography</option>
                             <option value="100017">Argumentative essay</option>
@@ -71,10 +71,10 @@ $form=$this->beginWidget('CActiveForm',array(
             </div>
             <div class="form-group">
                 <label for="subject" class="col-sm-3 control-label">Subject:
-                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
+                    <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Subject"></a>
                 </label>
                 <div class="col-sm-9">
-                    <select name="subject" id="subject" class="form-control">
+                    <select name="subject" id="subject" class="form-control calc_elem">
                         <option value="">Choose...</option>
                         <option value="1">Accounting</option>
                         <option value="2">Anthropology</option>
@@ -136,19 +136,19 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_MLA">MLA
+                            <input type="radio" name="paper_format" class="calc_elem" id="paper_format_MLA">MLA
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_APA">APA
+                            <input type="radio" name="paper_format" class="calc_elem" id="paper_format_APA">APA
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_Chicago">Chicago / Turabian
+                            <input type="radio" name="paper_format" class="calc_elem" id="paper_format_Chicago">Chicago / Turabian
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_Harvard">Harvard
+                            <input type="radio" name="paper_format" class="calc_elem" id="paper_format_Harvard">Harvard
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_Other">Other
+                            <input type="radio" name="paper_format" class="calc_elem" id="paper_format_Other">Other
                         </label>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                         <label>
-                            <input name="add_abstract" type="checkbox"> Add an Abstract page to my paper
+                            <input name="add_abstract" class="calc_elem" type="checkbox"> Add an Abstract page to my paper
                         </label>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div class="input-group spinner">
                         <button class="btn btn-primary pull-left" type="button">+</button>
-                        <input name="sources" id="sources" type="text" class="form-control pull-left" value="1">
+                        <input name="sources" id="sources" type="text" class="form-control pull-left calc_elem" value="1">
                         <button class="btn btn-primary pull-left" type="button">-</button>
                     </div>
                 </div>
@@ -219,7 +219,7 @@ $form=$this->beginWidget('CActiveForm',array(
             </div>
             <div class="form-group">
                 <div class="col-sm-12 order-price-block">
-                    <span>Approximate price:</span><strong id="appr_price_step2">$9.97</strong>
+                    <span>Approximate price:</span><strong id="appr_price_step2" class="appr_price">$9.97</strong>
                 </div>
             </div>
             <div class="form-group">

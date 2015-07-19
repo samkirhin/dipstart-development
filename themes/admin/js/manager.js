@@ -93,8 +93,8 @@ function spam(orderid){
     });
     return false;
 }
-/*$( document ).ready( function() {
-    $('#partEdit').on('click',function(event){
-        console.log(event);
+$( document ).ready( function() {
+    $('#Zakaz_notes').on('keyup',function(event){
+        console.log($(this).val());
     });
-});*/
+});
