@@ -175,7 +175,7 @@ var YiiChat = function (options) {
 				
 				tmp_html = '';//"<div class='buttons'>"
 				if (options.identity != post.sender.superuser.userid) {
-					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
+					tmp_html += "<button data-sender=" + post.sender.superuser.itemname + " data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
 					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-share\">Переслать</button>";
 				}
 				tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-delete\">Удалить</button>";
@@ -201,18 +201,16 @@ var YiiChat = function (options) {
                 var btn_answer = p.find('button.chtpl0-answer');
                 btn_answer.click(function () {
 					var recepient = $(this).closest('.post').find('.owner').find('.ownerref:first').text();
-					if (recepient != 'Админ' && recepient != 'Менеджер'){
-						msg.data('index', this.dataset.index);
-						var answer=$('.msg_answer');
-						if (answer.length == 0) $(msg).parent().before('<div class="col-xs-12 msg_answer">Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text() + 'у</div>');
-						else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
-						$('#send_buttons').children().each(function(){$(this).hide()});
-						answer=$('.msg_answer');
-						if (answer.text()=='Ответить Автору') $('.button_author').show();
-						if (answer.text()=='Ответить Заказчику') $('.button_customer').show();
-						//if (answer.text()=='Ответить Админу') $('.button_send').show();
-						//if (answer.text()=='Ответить Менеджеру') $('.button_send').show();
-					}
+                    msg.data('index', this.dataset.index);
+                    var answer=$('.msg_answer');
+                    if (answer.length == 0) $(msg).parent().before('<div class="col-xs-12 msg_answer">Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text() + 'у</div>');
+                    else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
+                    $('#send_buttons').children().each(function(){$(this).hide()});
+                    answer=$('.msg_answer');
+                    if ($(this).data('sender')=='Author') $('.button_author').show();
+                    if ($(this).data('sender')=='Customer') $('.button_customer').show();
+                    //if (answer.text()=='Ответить Админу') $('.button_send').show();
+                    //if (answer.text()=='Ответить Менеджеру') $('.button_send').show();
                 });
                 var btn_remove = p.find('button.chtpl0-delete');
                 btn_remove.click(function () {
