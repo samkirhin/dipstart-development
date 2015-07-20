@@ -1,5 +1,6 @@
 <?php
 
+
 class ZakazPartsController extends Controller
 {
     
@@ -108,8 +109,7 @@ class ZakazPartsController extends Controller
             $newDir = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$data['id'];
             $fileNewPath = $newDir.'/'.$newName.".".$extention;
             if (!file_exists($newDir)) {
-				mkdir($newDir);
-				chmod($newDir, 777);
+				mkdir($newDir,0777);
 			}
             if (rename($filePath, $fileNewPath)) {
 				$fileModel = new ZakazPartsFiles();
