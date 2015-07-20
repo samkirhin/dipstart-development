@@ -292,8 +292,10 @@ class ZakazController extends Controller
 
         $moderation = Moderation::model()->findByPk($event->event_id);
         if ($moderation) {
+			$profile = Profile::model()->findByPk($moderation->user_id);
             $this->render('preview', array(
                 'model' => $moderation,
+				'profile' => $profile,
                 'event' => $event
             ));
         } else {
@@ -355,10 +357,10 @@ class ZakazController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
+	public function actionIndex($all=0) {
         $model = new Zakaz('search');
         $model->unsetAttributes();
+		if($all == 1) $model->setAttribute('status', -1);
         if(Yii::app()->request->isAjaxRequest) {
 
             array_walk($_POST['Zakaz'],function(&$v,$k){
