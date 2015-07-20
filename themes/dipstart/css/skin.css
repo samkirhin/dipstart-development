@@ -437,9 +437,10 @@ position: relative;
 .qq-upload-list {margin:0;}
 .info-block {margin-top: 30px;} 
 .panel-title a{
-color: #337AB7;
-width: 100%;
-display: block;
+	color: #337AB7;
+	width: 100%;
+	display: block;
+	text-align: center;
 } 
 
 #ProjectChanges_fileupload{
@@ -448,10 +449,17 @@ border-radius: 0;
 border: none;
 }
 
+#new-changes-link {
+	text-align: center;
+}
 #new-changes-link a {
-/* border: 1px solid #DDDDDD; */
+border: 1px solid #DDDDDD;
 color: #337AB7;
 padding: 10px;
+display: inline-block;
+text-align: center;
+background-color: #337AB7;
+color: white;
 }
 
 .qq-upload-list li {

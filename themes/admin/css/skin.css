@@ -94,12 +94,13 @@ background-color: #FAFAFA;
 }
 
 .panel-title a {
-color: #337AB7;
-font-weight: bold;
-text-transform: uppercase;
-padding-top: 5px;
-width: 100%;
-display: block;
+	color: #337AB7;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding-top: 5px;
+	width: 100%;
+	display: block;
+	text-align: center;
 }
 
 .panel-group .panel {

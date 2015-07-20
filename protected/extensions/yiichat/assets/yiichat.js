@@ -262,11 +262,22 @@ var YiiChat = function (options) {
                         url: options.action + '&action=dtoggle&data=' + action,
                         data: {chat_id: options.chat_id, id: setdata.index, ex: owner},
                         success: function (data) {
+							var cost = '';
                             $('.post').each(function () {
-                                if ($(this).find('.owner').data('ownerid') == owner)
+                                if ($(this).find('.owner').data('ownerid') == owner) {
                                     $(this).find('button.toggleexecutor').removeClass(oldaction).addClass('executor-' + action);
+									if ($(this).find('.cost')) cost = Number($(this).find('.cost').text().match(/\d+/));
+								}
                             });
-                            if (oldaction == 'executor-unset') $('.findauthor').removeClass('hide'); else $('.findauthor').removeClass('hide');
+                            if (oldaction == 'executor-unset'){
+								//$('.findauthor').removeClass('hide');
+								$('.work_price_input').val(0);
+							} else {
+								//$('.findauthor').removeClass('hide');
+								//cost = 
+								cost = prompt("Введите стоимость для автора", cost);
+								$('.work_price_input').val(cost);
+							}
                             clear();
                         },
                         error: function (e) {
