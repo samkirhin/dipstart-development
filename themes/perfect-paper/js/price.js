@@ -129,9 +129,13 @@ due_date_doctoral["twoDays"] = 57;
 due_date_doctoral["oneDay"] = 63;
 due_date_doctoral["twelveHours"] = 70;
 
+function calc(par){
+    console.log(par)
+}
+
 $(document).ready(function(){
     $('.calc_elem').each(function(item,i){
         //console.log(i);
-        $(i).on('change',calc());
+	$(i).on('change',calc($(this)));
     });
 });
