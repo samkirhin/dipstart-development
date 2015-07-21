@@ -367,15 +367,22 @@ class ZakazController extends Controller
                 if (substr($k,0,2))
                     if (strlen($v)>10) $v=substr($v,0,10);
             });
-            $model->setAttributes(Yii::app()->request->getParam('Zakaz'));
+			$params = Yii::app()->request->getParam('Zakaz');
+            $model->setAttributes($params);
+			Yii::app()->user->setState('ZakazFilterState', $params);
             $this->renderPartial('index', array(
                 'model' => $model,
             ), false, true);
         }
-        else
+        else {
+			$params = Yii::app()->user->getState('ZakazFilterState');
+			if ( isset($params) ) {
+				$model->setAttributes($params);
+			}
             $this->render('index',array(
                 'model'=>$model,
             ));
+		}
 	}
 
 	/**
@@ -473,27 +480,29 @@ class ZakazController extends Controller
 	}
 
     public function actionSpam($order_id){
-        $job = Zakaz::model()->findByPk($order_id)->job_id;
-        $discipline = Zakaz::model()->findByPk($order_id)->category_id;
+		header('Content-type: application/json');
+		$zakaz = Zakaz::model()->findByPk($order_id);
+        $job = $zakaz->job_id;
+        $discipline = $zakaz->category_id;
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('profile.discipline',$discipline);
         $criteria->addSearchCondition('profile.job_type',$job);
         $authors = User::model()->with('profile')->findAll($criteria);
         if(empty($authors)) echo json_encode(array('error'=>'Нет авторов'));
-        $mail = new YiiMailer('contact', array('message' => 'Message to send', 'name' => 'John Doe', 'description' => 'Contact form'));
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = function($str, $level) {
-            $GLOBALS['debug'] .= "$level: $str\n";
-        };
-        $mail->setFrom(Yii::app()->params['adminEmail'], 'John Doe');
-        $mail->setSubject('Mail subject');
-        foreach ($authors as $author) {
-            $mail->setTo($author['email']);
+        //$mail = new YiiMailer('contact', array('message' => 'Message to send', 'name' => 'John Doe', 'description' => 'Contact form'));
+        //$mail->SMTPDebug = 2;
+        //$mail->Debugoutput = function($str, $level) {
+        //    $GLOBALS['debug'] .= "$level: $str\n";
+        //};
+        //$mail->setFrom(Yii::app()->params['adminEmail'], 'John Doe');
+        //$mail->setSubject('Mail subject');
+        //foreach ($authors as $author) {
+        //    $mail->setTo($author['email']);
             //$mail->send();
-            print_r($author);
-        }
-        header('Content-type: application/json');
-
+            //print_r($author);
+		//	echo json_encode(array('success'=>'ok'));
+        //}
+		echo 'ok =)';
         Yii::app()->end();
     }
     public function actionApiApproveFile() {

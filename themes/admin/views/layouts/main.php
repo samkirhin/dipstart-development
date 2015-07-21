@@ -63,20 +63,19 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin.
 	<title><?php echo Yii::app()->controller->pageTitle;?></title>
 </head>
 <body>
-
+<div class="main-menu">
+			<?php
+			$this->widget('application.extensions.booster.widgets.TbMenu',array(
+				'justified'=>true,
+				'items'=> $items,
+				'type'=>'pills',
+				'htmlOptions'=>array('class'=>'topMenu'),
+			));
+			?>
+</div>
 <div class="container">
 	<div class="row main-header">
 		<div class="header-logo"></div>
-	</div>
-	<div class="row main-menu">
-				<?php
-				$this->widget('application.extensions.booster.widgets.TbMenu',array(
-                    'justified'=>true,
-					'items'=> $items,
-					'type'=>'pills',
-                    'htmlOptions'=>array('class'=>'topMenu'),
-                ));
-				?>
 	</div>
 <?php echo $content;?>
 </div>

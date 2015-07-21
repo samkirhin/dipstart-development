@@ -3,9 +3,7 @@
     font-style: normal;
     src: url('http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&subset=cyrillic');
 }
-.container {
-    min-width: 1004px !important;
-}
+
 body {
     background: #ecf0f5;
     font-family: 'Source Sans Pro', sans-serif;
