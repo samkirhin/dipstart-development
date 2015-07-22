@@ -89,7 +89,6 @@ function spam(orderid){
         },
         error: function (data,textStatus,errorThrown) {
             console.log(data);
-            alert(data);
         }
     });
     return false;

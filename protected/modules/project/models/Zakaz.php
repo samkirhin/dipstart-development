@@ -177,7 +177,7 @@ class Zakaz extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('category_id, title', 'required', 'on'=>'create'),
-			array('category_id, job_id, pages, status', 'numerical', 'integerOnly'=>true),
+			array('category_id, job_id, status', 'numerical', 'integerOnly'=>true),
 			array('user_id', 'length', 'max'=>11),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
@@ -280,7 +280,13 @@ class Zakaz extends CActiveRecord
         else
             $criteria->compare('DATE_FORMAT(date_finish, "%d.%m.%Y")', substr($this->dbdate_finishstart,0,10), true);
         $criteria->compare('executor',$this->executor);
-        $criteria->compare('status',$this->status);
+		if (!($this->status) or $this->status == 0){
+			$criteria->addNotInCondition('status', array(5));
+		} else if ($this->status == -1) {
+			// show all
+		} else {
+			$criteria->compare('status',$this->status);
+		}
         $sort = new CSort();
         $sort->defaultOrder = 't.id ASC';
         $sort->attributes = array(

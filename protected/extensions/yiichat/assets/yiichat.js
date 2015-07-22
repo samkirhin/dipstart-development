@@ -205,7 +205,7 @@ var YiiChat = function (options) {
                     var answer=$('.msg_answer');
                     if (answer.length == 0) $(msg).parent().before('<div class="col-xs-12 msg_answer">Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text() + 'у</div>');
                     else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
-                    $('#send_buttons').children().each(function(){$(this).hide()});
+                    //$('#send_buttons').children().each(function(){$(this).hide()});
                     answer=$('.msg_answer');
                     if ($(this).data('sender')=='Author') $('.button_author').show();
                     if ($(this).data('sender')=='Customer') $('.button_customer').show();

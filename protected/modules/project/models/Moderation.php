@@ -14,7 +14,7 @@
  * @property string $date
  * @property string $max_exec_date
  * @property string $date_finish
- * @property integer $pages
+ * @property steing $pages
  * @property string $add_demands
  * @property integer $status
  * @property string $executor
@@ -149,7 +149,7 @@ class Moderation extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('category_id, job_id, title, max_exec_date', 'required'),
-			array('order_id, category_id, job_id, pages, status', 'numerical', 'integerOnly'=>true),
+			array('order_id, category_id, job_id, status', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
             array('text, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),

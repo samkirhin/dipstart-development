@@ -20,6 +20,8 @@ h1, .h1 {
 .btn {opacity:0.8;border-radius:0;}
 .btn:hover {opacity:1; transition: all 0.2s ease;	cursor: pointer;}
 
+.container {margin-top: 50px;}
+
 .chatBlock {
 border: none;
 margin: 15px 0;
@@ -39,10 +41,7 @@ border: 1px solid #ddd;
 padding: 10px;
 }
 
-.notesBlockTextarea {
-border: 1px solid #ddd;
-max-width: 100%;
-}
+.notesBlockTextarea {border: 1px solid #ddd;}
 
 .hasDatepicker {
 border: 1px solid #ccc;
@@ -94,13 +93,10 @@ background-color: #FAFAFA;
 }
 
 .panel-title a {
-	color: #337AB7;
-	font-weight: bold;
-	text-transform: uppercase;
-	padding-top: 5px;
-	width: 100%;
-	display: block;
-	text-align: center;
+color: #337AB7;
+font-weight: bold;
+text-transform: uppercase;
+padding-top: 5px;
 }
 
 .panel-group .panel {
@@ -226,6 +222,7 @@ background:#fff;
 position: fixed;
 z-index: 1500;
 left: 0;
+top: 0;
 }
 
 .main-menu + h1 {
@@ -283,16 +280,53 @@ text-align: center;
 .qq-upload-list {
 	padding-bottom: 10px;
 }
-.zakaz_part_approve_file {
-	float: right;
-	padding: 2px 10px 3px;
-	margin: 5px 0 5px;
-	font-size: 13px;
-}
+
+.dropdown-menu > li > a {line-height: 3;}
+.topMenu > li {border-top: 1px dotted silver;}
+
 .panel-body textarea {
-	z-index: 10;
-	max-width: 100%;
+ z-index: 10;
+ max-width: 100%;
 }
 #new-changes-collapse textarea {
-	max-width: 100%;
+ max-width: 100%;
 }
+
+
+
+@media (max-width: 930px) {
+.nav-justified > li > a {
+padding-left: 0;
+padding-right: 0; 
+}
+}
+
+@media (max-width: 770px) { 
+.container {
+	width: calc(100% - 165px);
+	float: right;
+	margin-right: 10px;
+}
+.nav-justified > li > a {
+padding-left: 15px;
+padding-right: 15px;
+margin: 0;
+}
+.nav-justified > .dropdown .dropdown-menu {min-width: 160px;}
+table > thead > tr > th {font-size:10px;}
+table> tbody > tr {font-size:12px;} 
+}
+
+@media (max-width: 570px) {
+.container {
+width:100%;
+float:none;
+margin:0;
+}
+.main-menu {	position: static; }
+.nav-justified > .dropdown .dropdown-menu {
+min-width: 100%;
+text-align: center;
+}
+}
+
