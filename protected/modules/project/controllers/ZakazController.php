@@ -192,6 +192,14 @@ class ZakazController extends Controller
 	public function actionUpdate($id)
 	{
         if (Yii::app()->request->isAjaxRequest){
+            print_r(json_decode(Yii::app()->request->getRestParams()[0]));
+            Yii::app()->end();
+            if (isset($data)) {
+                $model=$this->loadModel($this->_request->getParam('id'));
+                echo json_encode($model->notes=$this->_request->getParam('data'));
+                echo json_encode($model->save());
+                Yii::app()->end();
+            }
             $this->renderPartial('_order_list_update');
             Yii::app()->end();
         }

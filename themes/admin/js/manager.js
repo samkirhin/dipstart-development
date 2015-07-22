@@ -96,6 +96,11 @@ function spam(orderid){
 }
 $( document ).ready( function() {
     $('#Zakaz_notes').on('keyup',function(event){
-        console.log($(this).val());
+        var data=$(this).val();
+        /*$.post('/project/zakaz/update?id='+$('#order_number').html(),
+            'data': data
+        , function (response) {
+            if (response.data)obj.remove();
+        });*/
     });
 });
