@@ -240,7 +240,7 @@ test!
                             <input type="radio" name="tos" data-val="1" checked>Writing from scratch
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="tos" data-val="50">Editing/proofreading
+                            <input type="radio" name="tos" data-val="2">Editing/proofreading
                         </label>
                     </div>
                 </div>
