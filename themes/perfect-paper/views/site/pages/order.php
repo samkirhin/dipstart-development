@@ -573,3 +573,4 @@ $this->endWidget();
         return true;
     });
 </script>
+

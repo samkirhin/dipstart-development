@@ -133,7 +133,6 @@ function calc(){
     var summ=0;
     if ($('#academ_level label .btn .active').text().trim()=='Undergraduate') summ=1;
     $('.appr_price').html($('#pages_number').val()*$('input[name="spaced"]:checked').data('val')/$('input[name="tos"]:checked').data('val'));
-    console.log($('#pages_number').val());
 }
 
 $(document).ready(function(){
