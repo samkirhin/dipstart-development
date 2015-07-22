@@ -129,13 +129,16 @@ due_date_doctoral["twoDays"] = 57;
 due_date_doctoral["oneDay"] = 63;
 due_date_doctoral["twelveHours"] = 70;
 
-function calc(par){
-    console.log(par)
+function calc(){
+    var summ=0;
+    if ($('#academ_level label .btn .active').text().trim()=='Undergraduate') summ=1;
+    $('.appr_price').html($('#pages_number').val()*$('input[name="spaced"]:checked').data('val')/$('input[name="tos"]:checked').data('val'));
 }
 
 $(document).ready(function(){
-    $('.calc_elem').each(function(item,i){
-        //console.log(i);
-	$(i).on('change',calc($(this)));
-    });
+    var calc_elem=$('.calc_elem');
+    calc_elem.on('change',function(){calc();});
+    calc_elem.on('click',function(){calc();});
+    calc();
+    //3B2mmEzVyKIf
 });

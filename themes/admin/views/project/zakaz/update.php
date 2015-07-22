@@ -17,7 +17,7 @@ $this->breadcrumbs = array(
 ?>
 
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
-    <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
+    <h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span></h1>
     <div class="row">
         <?php
         //$this->renderPartial('_order_list_update');
@@ -82,7 +82,7 @@ $this->breadcrumbs = array(
                         <?php echo $form->labelEx($model, 'author_notes'); ?>
                         <?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
-                    <?php echo CHtml::submitButton('Сохранить',''); ?>
+                    <?php //echo CHtml::submitButton('Сохранить',''); ?>
 
                     <?php $this->endWidget(); ?>
                 </div>
