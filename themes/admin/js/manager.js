@@ -91,6 +91,7 @@ function spam(orderid){
             console.log(data);
         }
     });
+    alert('Рассылка запущена');
     return false;
 }
 $( document ).ready( function() {

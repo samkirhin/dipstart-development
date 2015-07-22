@@ -487,30 +487,42 @@ class ZakazController extends Controller
 			$this->redirect(Yii::app()->request->urlReferrer);
 	}
 
-    public function actionSpam($order_id){
-		header('Content-type: application/json');
-		$zakaz = Zakaz::model()->findByPk($order_id);
+    public function actionSpam($order_id) {
+        
+        header('Content-type: application/json');
+        
+        $zakaz = Zakaz::model()->findByPk($order_id);
+        
+        if (!$zakaz) {
+            throw new CHttpException(500);
+        }
+        
         $job = $zakaz->job_id;
         $discipline = $zakaz->category_id;
+        
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('profile.discipline',$discipline);
-        $criteria->addSearchCondition('profile.job_type',$job);
+        $criteria->addSearchCondition('profile.job_type',$job, true, 'OR');
         $authors = User::model()->with('profile')->findAll($criteria);
-        if(empty($authors)) echo json_encode(array('error'=>'Нет авторов'));
-        //$mail = new YiiMailer('contact', array('message' => 'Message to send', 'name' => 'John Doe', 'description' => 'Contact form'));
-        //$mail->SMTPDebug = 2;
-        //$mail->Debugoutput = function($str, $level) {
-        //    $GLOBALS['debug'] .= "$level: $str\n";
-        //};
-        //$mail->setFrom(Yii::app()->params['adminEmail'], 'John Doe');
-        //$mail->setSubject('Mail subject');
-        //foreach ($authors as $author) {
-        //    $mail->setTo($author['email']);
-            //$mail->send();
-            //print_r($author);
-		//	echo json_encode(array('success'=>'ok'));
-        //}
-		echo 'ok =)';
+        
+        if(!empty($authors)) {
+
+            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $order_id]);
+            $mail = new YiiMailer('invite', ['link' => $link]);
+            $mail->setFrom(Yii::app()->params['adminEmail'], 'Dipstart');
+            $mail->setSubject('Приглашение в проект');
+            
+            foreach ($authors as $author) {
+                $mail->setTo($author->email);
+                $mail->send();
+            }
+            
+            echo 'ok =)';
+            
+        } else {
+             echo json_encode(array('error'=>'Нет авторов'));
+        }
+        
         Yii::app()->end();
     }
     public function actionApiApproveFile() {
