@@ -112,7 +112,8 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
                 }
 				else {
-					$obj['recipient']=$postdata['recipient'];
+                    if ($postdata['recipient']=='Customer') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user'];
+                    if ($postdata['recipient']=='Author') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['executor'];
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}
 			}
