@@ -95,12 +95,14 @@ function spam(orderid){
     return false;
 }
 $( document ).ready( function() {
-    $('#Zakaz_notes').on('keyup',function(event){
-        var data=$(this).val();
-        /*$.post('/project/zakaz/update?id='+$('#order_number').html(),
-            'data': data
-        , function (response) {
+    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
+        var data = $(this).val();
+        var elid = $(this).attr('id');
+        var id = $('#order_number').html();
+        $.post('/project/zakaz/update?id='+id,
+            {'data': data,'id':id,'elid': elid},
+        function (response) {
             if (response.data)obj.remove();
-        });*/
+        });
     });
 });

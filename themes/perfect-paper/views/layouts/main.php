@@ -25,12 +25,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
         <div class="col-xs-12 col-sm-12 col-md-4 logo"></div>
         <!-- Begin 1st column -->
         <div class="col-xs-12 col-sm-12 col-md-3">
-            <div class="col-xs-1 col-md-1 lock"></div>
-            <div class="col-xs-10 col-md-10">
-                <p>For our Users</br>
-                    <a a href="">Sign in</a> / <a>Registration</a><br>
-                    <a>Recover password</a></p>
-            </div>
+            <?php $this->renderPartial('//layouts/user_panel');?>
         </div>
         <!-- End 1st column -->
         <!-- Begin 2nd column -->
@@ -107,7 +102,6 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 
 </div>
 
-<script src="<?php echo Yii::app()->theme->baseUrl;?>/css/bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 
 </body>
 </html>
