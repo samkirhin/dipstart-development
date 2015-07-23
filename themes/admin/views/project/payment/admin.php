@@ -30,7 +30,7 @@
                 ${summ}
             </td>
             <td>
-                {{if details_ya == null}}
+                {{if (details_ya == null || details_ya == '' || details_ya == 0) }}
                     Нет данных
                 {{else}}
                     {{if approve == 0}}
@@ -41,7 +41,7 @@
                 {{/if}}
             </td>
             <td>
-                {{if details_wm == null}}
+                {{if (details_wm == null || details_wm == '')}}
                     Нет данных
                 {{else}}
                     {{if approve == 0}}
@@ -52,7 +52,7 @@
                 {{/if}}
             </td>
             <td>
-                {{if details_bank == null}}
+                {{if (details_bank == null || details_bank == '')}}
                     Нет данных
                 {{else}}
                     {{if approve == 0}}

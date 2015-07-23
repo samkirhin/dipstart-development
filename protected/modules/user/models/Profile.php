@@ -179,6 +179,7 @@ class Profile extends UActiveRecord
 		if ($this->regMode) {
 			if (!$this->_modelReg){
 				$criteria = new CDbCriteria();
+                                $criteria->order = 'position';
 				if ($this->regType == 'Author'){
 				   $criteria->addInCondition('visible',array(2,3));
 				   $this->_modelReg=ProfileField::model()->findAll($criteria);

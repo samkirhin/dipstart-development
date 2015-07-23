@@ -148,20 +148,27 @@ class PaymentController extends Controller {
             }
 			//(To Author)
             $order = Zakaz::model()->findByPk($orderId);
-			if ($paying>0){
-				$buh = new Payment;
-				$buh->approve = 0;
-				$buh->order_id = $orderId;
-				$buh->receive_date = date("Y-m-d");
-				$buh->theme = $order->title;
-				$user = User::model()->findByPk($order->executor);
-				$buh->user = $user->email;
-				$buh->summ = $paying;
-				$buh->payment_type = 1;
-				$manag = User::model()->findByPk(Yii::app()->user->id);
-				$buh->manager = $manag->email;
-				$buh->save();
-			}
+            
+            if ($paying>0) {
+                
+                $user = User::model()->findByPk($order->executor);
+                $manag = User::model()->findByPk(Yii::app()->user->id);
+                
+                $buh = new Payment;
+                $buh->approve = 0;
+                $buh->order_id = $orderId;
+                $buh->receive_date = date("Y-m-d");
+                $buh->theme = $order->title;
+                $buh->user = $user->email;
+                $buh->summ = $paying;
+                $buh->payment_type = 1;
+                $buh->manager = $manag->email;
+                $buh->details_ya = $user->profile->yandex;
+                $buh->details_wm = $user->profile->wmr;
+                $buh->details_bank = $user->profile->bank_account;
+                $buh->save();
+            }
+            
             $this->_response->setData(
                 array (
                     'project_price' => $payment->project_price,
