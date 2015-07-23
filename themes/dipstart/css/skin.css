@@ -197,13 +197,10 @@ a.button:active,
   border-radius:8px;
 }
 .success {
-  border:1px solid #399f16;
+
   color:#fff;
-  background:#399f16;
-  padding:8px 14px;
-  -webkit-border-radius:8px;
-  -moz-border-radius:8px;
-  border-radius:8px;
+
+
 }
 .success input {
   color: #333;
@@ -312,6 +309,7 @@ textarea {
 
 .row {
 margin:0;
+
 }
 
 .qq-upload-button {
