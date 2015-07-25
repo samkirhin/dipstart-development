@@ -39,8 +39,8 @@ class ChatHandler extends YiiChatDbHandlerBase {
             foreach ($res as $k=>$v) {
                 $res1[$k]=$v->attributes;
                 $res1[$k]['sender']=array();
-		$res1[$k]['sender']['fullusername']=$res[$k]->senderObject->profile->firstname.' '.$res[$k]->senderObject->profile->lastname;
-		$res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes;
+                $res1[$k]['sender']['fullusername']=$res[$k]->senderObject->profile->firstname.' '.$res[$k]->senderObject->profile->lastname;
+                $res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes;
                 $res1[$k]['sender']['rating'] = (int)$res[$k]->senderObject->profile->rating;
                 
                 switch($res1[$k]['sender']['superuser']['itemname']){
