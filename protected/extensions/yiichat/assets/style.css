@@ -563,3 +563,10 @@ display: inline;
 width: auto;
 }
 
+img.left{
+    content: url(./image/left.png);
+}
+
+img.right{
+    content: url(./image/right.png);
+}

@@ -1,4 +1,5 @@
 .idea
+nbproject/
 assets
 protected/runtime
 protected/backup
