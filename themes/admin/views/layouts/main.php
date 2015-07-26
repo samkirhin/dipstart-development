@@ -53,6 +53,7 @@ switch ($role){
         break;
 }
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');
 ?>
 <!DOCTYPE html>
 <html lang="ru">

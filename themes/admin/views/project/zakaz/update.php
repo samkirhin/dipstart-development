@@ -32,7 +32,7 @@ $this->breadcrumbs = array(
             <div class="authorPhone"><p><?= $author->profile->mob_tel ?></p></div>
         </div>
         <?php endif; ?>
-        <div class="col-xs-6">
+        <div class="col-xs-7">
             <div class="customerText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$customer->id));?>">Заказчик</a></b></div>
             <div class="customerName"><p><?= $customer->profile->firstname ?> <?= $customer->profile->lastname ?></p></div>
             <div class="customerMail"><p><?= $customer->email ?></p></div>

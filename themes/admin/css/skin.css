@@ -40,7 +40,9 @@ border: 1px solid #ddd;
 border: 1px solid #ddd;
 padding: 10px;
 }
-
+input[name="yt2"] {
+height:35px!important;
+}
 .notesBlockTextarea {border: 1px solid #ddd;}
 
 .hasDatepicker {
@@ -59,8 +61,8 @@ border-radius: 5px;
 
 #close_order {
 float: right;
-background: #D36666;
-color: #fff;
+background: #337AB7;
+color: white;
 }
 
 textarea.col-xs-12 {
@@ -103,7 +105,6 @@ padding-top: 5px;
 margin-bottom: 30px;
 margin-top: 20px;
 }
-
 .form label {
 display: inline-block;
 text-transform: uppercase;
@@ -119,12 +120,17 @@ textarea, select {border: 1px solid #ddd;}
 {
 height: 50px;
 width: 100%;
+position:relative;
+bottom:15px;
 }
 
 .chtpl0-form {
 margin-top: 20px;
 }
-
+.chtpl0-form p {
+position:relative;
+bottom:20px!important;
+}
 .confirm-the-payment {
 float:left;
 margin-top: 20px;
@@ -292,8 +298,6 @@ text-align: center;
  max-width: 100%;
 }
 
-
-
 @media (max-width: 930px) {
 .nav-justified > li > a {
 padding-left: 0;
@@ -330,3 +334,11 @@ text-align: center;
 }
 }
 
+/* By Vladimir */
+
+
+
+
+
+
+/* /By Vladimir */
