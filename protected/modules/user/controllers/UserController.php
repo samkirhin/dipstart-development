@@ -13,7 +13,9 @@ class UserController extends Controller
 	public function filters()
 	{
 		return CMap::mergeArray(parent::filters(),array(
-			'accessControl', // perform access control for CRUD operations
+                    'accessControl',
+                    'ajaxOnly +rating',
+                    'postOnly +rating'
 		));
 	}
 	/**
@@ -25,7 +27,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view', 'rating'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -98,4 +100,25 @@ class UserController extends Controller
 		}
 		return $this->_model;
 	}
+        
+        public function actionRating()
+        {
+            if (!User::model()->isManager() && !User::model()->isAdmin()) {
+                throw new CHttpException(403);
+            }
+            
+            $user_id = Yii::app()->request->getPost('user_id');
+            $action = Yii::app()->request->getPost('action');
+            
+            $user = $this->loadUser($user_id);
+            
+            if ($action == 'up') {
+                $user->profile->rating++;
+            } elseif ($action == 'down') {
+                $user->profile->rating--;
+            }
+            $user->profile->save(false);
+            
+            echo $user->profile->rating;
+        }
 }
