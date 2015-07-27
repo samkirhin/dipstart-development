@@ -570,16 +570,16 @@ width: auto;
 
 .chtpl0-avatar img.left{
     content: url(./image/left.png);
-    float:left;
+    display: inline;
     cursor: pointer;
 }
 
 .chtpl0-avatar img.right{
     content: url(./image/right.png);
-    float:right;
+    display: inline;
     cursor: pointer;
 }
 
 .rating {
-    float:left;
+    display: inline;
 }
