@@ -576,7 +576,6 @@ width: auto;
 
 .chtpl0-avatar img.right{
     content: url(./image/right.png);
-    display: inline;
     cursor: pointer;
 }
 
