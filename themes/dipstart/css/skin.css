@@ -109,15 +109,18 @@ h3, h4, h5, h6 {
   color:#000;
   text-transform: uppercase;
 }
-
+form#registration-form {
+    width: 420px;
+    margin: auto;
+}
 .form label {
   display:inline-block;
   padding:0 0 4px 0;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 14px;
   color: #727272; 
+  font-weight:bold;
 }
-
 a.button,
 .button {
   border:1px solid #d00303;
@@ -520,7 +523,7 @@ list-style-type: none;
 padding-left: 15px;
 }
 
-.btn, input[type="submit"], input[type="file"] {opacity:0.8;border-radius:0;}
+.btn, input[type="submit"], input[type="file"] {opacity:0.8;border-radius:10;  border:none; padding:10px; font-weight:bold;}
 .btn:hover, input[type="submit"]:hover, input[type="file"]:hover {opacity:1; transition: all 0.2s ease;	cursor: pointer;}
 
 .chek-image-link {margin-top: 10px;}
@@ -532,7 +535,18 @@ margin-top: 10px;
 font-size: 13px;
 float: left;
 }
-
+input[name="yt0"] {
+    height: 40px!important;
+    width: 200px!important;
+	background:#337AB7;
+	color:white;
+}
+#UserLogin_rememberMe {
+    position: absolute;
+    left: 100px;
+    bottom: 2px;
+}
+}
 .qq-upload-success .qq-upload-failed-text {display:none;}
 .qq-upload-success {margin-top:10px;}
 .qq-upload-file {float:left;margin-right:5px;color:silver;text-transform:none;font-size:12px;}

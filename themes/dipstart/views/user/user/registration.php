@@ -28,13 +28,13 @@ $this->breadcrumbs=array(
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
 	
 	<div class="row">
-	<?php echo $form->labelEx($model,'username'); ?>
-	<?php echo $form->textField($model,'username'); ?>
+	<?php echo $form->labelEx($model,'username'); ?><br/>
+	<?php echo $form->textField($model,'username'); ?><br/>
 	<?php echo $form->error($model,'username'); ?>
 	</div>
 	
 	<div class="row">
-	<?php echo $form->labelEx($model,'password'); ?>
+	<?php echo $form->labelEx($model,'password'); ?><br/>
 	<?php echo $form->passwordField($model,'password'); ?>
 	<?php echo $form->error($model,'password'); ?>
 	<p class="hint">
@@ -43,14 +43,14 @@ $this->breadcrumbs=array(
 	</div>
 	
 	<div class="row">
-	<?php echo $form->labelEx($model,'verifyPassword'); ?>
-	<?php echo $form->passwordField($model,'verifyPassword'); ?>
+	<?php echo $form->labelEx($model,'verifyPassword'); ?><br/>
+	<?php echo $form->passwordField($model,'verifyPassword'); ?><br/>
 	<?php echo $form->error($model,'verifyPassword'); ?>
 	</div>
 	
 	<div class="row">
-	<?php echo $form->labelEx($model,'email'); ?>
-	<?php echo $form->textField($model,'email'); ?>
+	<?php echo $form->labelEx($model,'email'); ?><br/>
+	<?php echo $form->textField($model,'email'); ?><br/>
 	<?php echo $form->error($model,'email'); ?>
 	</div>
 	
@@ -62,7 +62,7 @@ $this->breadcrumbs=array(
 	<div class="row">
 		<?php
 		if (($field->varname == 'mailing_list') && ($profile->regType=='Customer')) $list=array('style'=>'display:none;');
-		echo $form->labelEx($profile,$field->varname); ?>
+		echo $form->labelEx($profile,$field->varname); ?><br/>
 		<?php
 		if($field->varname == 'discipline'){
         $htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
