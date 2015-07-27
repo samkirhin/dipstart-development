@@ -133,7 +133,7 @@ var YiiChat = function (options) {
                     
                     rating = 
                             '<div><img class="left" data-ownerid="' + post.sender.superuser.userid + '" />' +
-                            '<span class="rating' + post.sender.superuser.userid + '">' + post.sender.rating + '</span>' + 
+                            '<div class="rating ' + post.sender.superuser.userid + '">' + post.sender.rating + '</div>' + 
                             '<img class="right" data-ownerid="' + post.sender.superuser.userid + '" /></div>';
                     
                     if (options.executor == post.sender.superuser.userid) {
@@ -400,7 +400,7 @@ var YiiChat = function (options) {
             '/user/user/rating',
             {user_id: user_id, action: action}, 
             function(data) {
-                $('.rating' + user_id).text(data);
+                $("div[class='rating " + user_id + "']").text(data);
             }
         );
 
