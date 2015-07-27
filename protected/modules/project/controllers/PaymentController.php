@@ -121,7 +121,7 @@ class PaymentController extends Controller {
 
     }
 
-	public function actionSavePayments() {
+    public function actionSavePayments() {
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
@@ -138,6 +138,12 @@ class PaymentController extends Controller {
         $payment->to_receive   += (int) $this->_request->getParam('to_receive');
         $payment->work_price = $this->_request->getParam('work_price');
         $paying              = (int) $this->_request->getParam('to_pay');
+        
+        if ( ($payment->work_price > 0) && ($payment->to_pay + $paying > $payment->work_price) ) {
+            echo CJson::encode(['Оплата превышает лимит']);
+            Yii::app()->end();
+        }
+        
         $payment->to_pay    += $paying;
         if ($payment->save()) {
 			//(To User)

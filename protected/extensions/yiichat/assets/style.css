@@ -325,8 +325,9 @@ padding: 10px;
 }
 
 .chtpl0-avatar {
-	float: left;
-	padding-right: 7px;
+    float: left;
+    padding-right: 7px;
+    text-align: center;
 }
 .chtpl0-msg .chtpl0-buttons {
 float: right;
@@ -567,14 +568,16 @@ display: inline;
 width: auto;
 }
 
-img.left{
+.chtpl0-avatar img.left{
     content: url(./image/left.png);
-    float:left
+    float:left;
+    cursor: pointer;
 }
 
-img.right{
+.chtpl0-avatar img.right{
     content: url(./image/right.png);
-    float:left
+    float:right;
+    cursor: pointer;
 }
 
 .rating {
