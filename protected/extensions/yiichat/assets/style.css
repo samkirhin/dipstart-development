@@ -27,7 +27,7 @@ p {font-size: 13px;}
 }
 .chtpl0-chatblock button{
 display: block;
-float: left;
+/*float: left;*/
 }
 
 .chtpl0-chatblock button.usual-cursor{
@@ -108,10 +108,10 @@ cursor: default;
 }
 
 .chtpl0-content{
-display: inline-block;
+/*display: inline-block;
 position: relative;
 left: 10px;
-width: 50%;
+width: 50%;*/
 }
 
 .chtpl0-nickname, .chtpl0-date, .chtpl0-time{
@@ -324,6 +324,10 @@ height: auto;
 padding: 10px;
 }
 
+.chtpl0-avatar {
+	float: left;
+	padding-right: 7px;
+}
 .chtpl0-msg .chtpl0-buttons {
 float: right;
 left: 0;

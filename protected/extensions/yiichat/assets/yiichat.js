@@ -151,7 +151,7 @@ var YiiChat = function (options) {
                 posts.append(
                     "<div id='post_" + post.id + "' class='post chtpl0-msg'>" + 
                     "<div class='chtpl0-buttons'></div>" +
-                    "<div><button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>" + rating + "</div>" +
+                    "<div class='chtpl0-avatar'><button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>" + rating + "</div>" +
                     "<div class='chtpl0-content'></div>" +
                     "</div>"
                     );
