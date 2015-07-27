@@ -112,11 +112,14 @@ class UserController extends Controller
             
             $user = $this->loadUser($user_id);
             
+            $rating = (int)$user->profile->rating;
+            
             if ($action == 'up') {
-                $user->profile->rating++;
+                $rating++;
             } elseif ($action == 'down') {
-                $user->profile->rating--;
+                $rating--;
             }
+            $user->profile->rating = $rating;
             $user->profile->save(false);
             
             echo $user->profile->rating;

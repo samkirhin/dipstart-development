@@ -131,11 +131,13 @@ var YiiChat = function (options) {
 
                 if (post.sender.superuser.itemname == 'Author') {
                     
+                    rating = 
+                            '<div><img class="left" data-ownerid="' + post.sender.superuser.userid + '" />' +
+                            '<span class="rating' + post.sender.superuser.userid + '">' + post.sender.rating + '</span>' + 
+                            '<img class="right" data-ownerid="' + post.sender.superuser.userid + '" /></div>';
+                    
                     if (options.executor == post.sender.superuser.userid) {
-                        
                         tmp_html = "toggleexecutor executor-unset";
-                        rating = '<div><img class="left" /><span class="rating">'+post.sender.rating+'</span><img class="right" /></div>';
-                        
                     } else {
                         tmp_html = "toggleexecutor executor-set";
                     }
@@ -147,8 +149,8 @@ var YiiChat = function (options) {
                 }
 
                 posts.append(
-                    "<div id='post_" + post.id + "' class='post chtpl0-msg'>" + rating +
-                    "<button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>" +
+                    "<div id='post_" + post.id + "' class='post chtpl0-msg'>" + 
+                    "<div><button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>" + rating + "</div>" +
                     "<div class='chtpl0-content'></div>" +
                     "<div class='chtpl0-buttons'></div>" +
                     "</div>"
@@ -392,23 +394,24 @@ var YiiChat = function (options) {
         launchTimer();
     };
     
-    var rating = function(action) {
+    var rating = function(user_id, action) {
         
         $.post(
             '/user/user/rating',
-            {user_id: options.executor, action: action}, 
+            {user_id: user_id, action: action}, 
             function(data) {
-                $('.rating').text(data);
+                $('.rating' + user_id).text(data);
             }
         );
 
     };
     
     $('#chatWindow').on('click', '.left', function(){
-        rating('down');
+        rating($(this).data('ownerid'), 'down');
     });
+    
     $('#chatWindow').on('click', '.right', function(){
-        rating('up');
+        rating($(this).data('ownerid'), 'up');
     });
         
 }; //end
