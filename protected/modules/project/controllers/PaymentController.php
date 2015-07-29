@@ -139,7 +139,7 @@ class PaymentController extends Controller {
         $payment->work_price = $this->_request->getParam('work_price');
         $paying              = (int) $this->_request->getParam('to_pay');
         
-        if ($payment->to_pay + $paying > $payment->payed) {
+        if ( ($payment->work_price > 0) && ($paying + $payment->to_pay + $payment->payed > $payment->work_price) ) {
             echo CJson::encode(['Оплата превышает лимит']);
             Yii::app()->end();
         }
