@@ -32,6 +32,9 @@
                                 jQuery.post('$url',JSON.stringify({dbdate:dateText,id:$(this).attr('id').substr(8)}));
                             }",
                         ),
+                        'htmlOptions' => [
+                            'style' => 'position: relative; z-index: 2000;',
+                        ]
                     ));
                     ?>
                 </div>
