@@ -1,2 +1,7 @@
 /* Skin2 By Vladimir */
 
+.panel-heading .hasDatepicker
+{
+    position: relative;
+    z-index: 2000;
+}
