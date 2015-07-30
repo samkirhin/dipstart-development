@@ -601,3 +601,85 @@ header .row {margin-bottom: 20px;}
 }
 
 /** /Adaptive **/
+
+
+/* chat */
+
+.chtpl0-chatblock{
+	font-family: 'Roboto';
+	background-color: #f0f0f0;
+	width: 822px;
+	height: 450px;
+}
+.chtpl0-chatblock button{
+    display: block;
+}
+
+.chtpl0-chatblock button.usual-cursor{
+cursor: default;
+}
+
+.chtpl0-chatblock button.executor-set{
+	background-image: url(../images/icon1.png);
+}
+.chtpl0-chatblock button.executor-unset{
+	background-image: url(../images/icon2.png);
+}
+.chtpl0-chatblock button.chtpl0-user-icon-3{
+	background-image: url(../images/icon3.png);
+}
+.chtpl0-chatblock button.chtpl0-user-icon-4{
+	background-image: url(../images/icon4.png);
+}
+
+
+.chtpl0-nickname, .chtpl0-date, .chtpl0-time{
+	display: inline-block;
+	margin-right: 2px;
+}
+
+.chtpl0-time{
+	font-weight: bold;
+}
+
+.chtpl0-text{
+	margin-top: 11px;
+}
+
+.chtpl0-msg button{
+	width: 37px;
+	height: 38px;
+	border: none;
+	padding: 0px;
+	background-position: 0 0px;
+	background-color: transparent;
+	cursor: default;
+}
+
+
+
+#chatWindow {
+overflow: auto;
+width: 100%;
+padding: 0;
+margin: 0;
+margin-bottom: 15px;
+border: 1px solid #ddd;
+border-radius: 0;
+min-height: 400px;
+}
+
+#chatWindow .post {
+min-height: 80px;
+height: auto;
+padding: 10px;
+}
+
+.chtpl0-avatar {
+    float: left;
+    padding-right: 7px;
+    text-align: center;
+}
+
+
+/* chat */

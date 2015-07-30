@@ -172,38 +172,43 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
             <div id="chat" class="col-xs-12 user-chat-block">
                 <?php $this->renderPartial('chat',array('orderId'=>$order->id));?>
             </div>
-                <?php
-                if (!Yii::app()->request->isAjaxRequest){
-                    echo CHtml::form(); ?>
-                    <div class="col-xs-12">
-                        <?php if (User::model()->isAuthor()): ?>
+            
+            <div class="row">
+            <?php
+            if (!Yii::app()->request->isAjaxRequest){
+                echo CHtml::form(); ?>
+                
+                <?php if (User::model()->isAuthor()): ?>
+                <div class="col-xs-12">
+                    <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
+                    <?php echo CHtml::textField('cost'); ?>
+                </div>
+                <?php endif; ?>
+                
+                <div class="col-xs-8">
+                    <?php echo CHtml::label('Сообщение','message', array('id' => 'msgLabel')); ?>
+                    <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12')); ?>
+                </div>
 
-                            <div class="price-for-work-avtor">
-                                <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
-                                <?php echo CHtml::textField('cost'); ?>
-                            </div>
-                        <?php endif; ?>
-                        <?php echo CHtml::label('Сообщение','message', array('id' => 'msgLabel')); ?>
-                        <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12')); ?>
-                    </div>
 
-
-                    <div class="row buttons col-xs-12">
-                        <?php
-                        if(User::model()->isAuthor()) {
-                            $middle_button = 'Отправить заказчику';
-                        } else if(User::model()->isCustomer()) {
-                            $middle_button = 'Отправить автору';
-                        }
-                        echo '<div  class="col-xs-6" style="padding: 0px 5px;">' . CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-chat col-xs-12')) . '</div>';
-                        echo '<div class="col-xs-6" style="padding: 0px 5px;">' . CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-chat col-xs-12')) . '</div>';
-                        ?>
-                    </div>
-                    <?php echo CHtml::hiddenField('order',$order->id);
-                    CHtml::endForm();
-                }
-                ?>
-                <!-- form -->
+                <div class="col-xs-4">
+                    <h5>Отправить сообщение</h5>
+                    <?php
+                    if(User::model()->isAuthor()) {
+                        $middle_button = 'Отправить заказчику';
+                    } else if(User::model()->isCustomer()) {
+                        $middle_button = 'Отправить автору';
+                    }
+                    echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary')) ;
+                    echo  CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-primary ')) ;
+                    ?>
+                </div>
+                <?php echo CHtml::hiddenField('order',$order->id);
+                CHtml::endForm();
+            }
+            ?>
+            <!-- form -->
+            </div>
         </div>
 
     </div>
