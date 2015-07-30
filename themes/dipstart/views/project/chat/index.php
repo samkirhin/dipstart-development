@@ -199,8 +199,8 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                     } else if(User::model()->isCustomer()) {
                         $middle_button = 'Отправить автору';
                     }
-                    echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary')) ;
-                    echo  CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-primary ')) ;
+                    echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary btn-chat')) ;
+                    echo  CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-primary btn-chat')) ;
                     ?>
                 </div>
                 <?php echo CHtml::hiddenField('order',$order->id);
