@@ -16,24 +16,24 @@ $this->breadcrumbs=array(
 
 <?php endif; ?>
 
-<p><?php echo UserModule::t("Please fill out the following form with your login credentials:"); ?></p>
+<!--<p><?php echo UserModule::t("Please fill out the following form with your login credentials:"); ?></p>-->
 
 <!-- form begin-->
 <form method="post" role="form">
 <?php echo CHtml::beginForm(); ?>
 
-	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+	<!--<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>-->
 	
 	<?php echo CHtml::errorSummary($model); ?>
 	
 	<div class="form-group">
-        <?php echo CHtml::activeLabelEx($model,'username'); ?> <br />
-		<?php echo CHtml::activeTextField($model,'username') ?>
+        <!--<?php echo CHtml::activeLabelEx($model,'username'); ?> <br />-->
+		<?php echo CHtml::activeTextField($model,'username',array('placeholder'=>'Логин или email')) ?>
 	</div>
 	
 	<div class="form-group">
-		<?php echo CHtml::activeLabelEx($model,'password'); ?> <br />
-		<?php echo CHtml::activePasswordField($model,'password') ?>
+		<!--<?php echo CHtml::activeLabelEx($model,'password'); ?> <br />-->
+		<?php echo CHtml::activePasswordField($model,'password',array('placeholder'=>'Пароль')) ?>
 	</div>
 	
 	<div>
@@ -50,7 +50,7 @@ $this->breadcrumbs=array(
 		<?php echo CHtml::activeLabelEx($model,'rememberMe'); ?>
 	</div>
 
-	<div class="nova-btn">
+	<div class="nova-btn user_submit">
 		<?php echo CHtml::submitButton(UserModule::t("Login"),array('class'=>'btn btn-primary')); ?>
 	</div>
 	

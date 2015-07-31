@@ -24,61 +24,14 @@ hr {
 .chtpl0-msg .chtpl0-buttons button.chtpl0-delete {
     background: #D36666!important;
 }
-.authorText {
-    position: relative;
-    float: left;
-    margin-top:10px;
-    padding: 0;
-    width: 70px;
+.order-contacts {
+	text-align: center;
 }
-.authorName {
-    position: relative;
-    float: left;
-    margin-top:10px;
+.order-contacts div div{
+	display: inline-block;
+    margin-top: 10px;
     padding: 0;
-    width: 170px;
-}
-.authorMail {
-    position: relative;
-    float: left;
-    margin-top:10px;
-    padding: 0;
-    width: 170px;
-}
-.authorPhone {
-    position: relative;
-    float: left;
-    margin-top:10px;
-    padding: 0;
-    width: 144px;
-}
-.customerText {
-    position: relative;
-    float: left;
-    margin-top:10px;
-    padding: 0;
-    width: 85px;
-}
-.customerName {
-    position: relative;
-    float: left;
-    margin-top:10px;
-    padding: 0;
-    width: 160px;
-}
-.customerMail {
-    position: relative;
-    float: left;
-    margin-top:10px;
-    padding: 0;
-    width: 170px;
-}
-.customerPhone {
-    position: relative;
-    float: left;
-    margin-top:10px;
-    padding: 0;
-    width: 144px;
+	padding: 0 20px 0 0;
 }
 
 .rightBorder {
