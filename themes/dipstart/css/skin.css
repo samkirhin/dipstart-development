@@ -1025,7 +1025,6 @@ font-weight: normal;
 }
 
 #new-changes-link a {
-color: #337AB7;
 padding: 10px;
 }
 
@@ -1130,16 +1129,6 @@ display: inline;
 width: auto;
 }
 
-.chtpl0-avatar img.left{
-    content: url(./image/left.png);
-    display: inline;
-    cursor: pointer;
-}
-
-.chtpl0-avatar img.right{
-    content: url(./image/right.png);
-    cursor: pointer;
-}
 
 .rating {
     display: inline;
