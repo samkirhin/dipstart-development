@@ -73,8 +73,8 @@ class RightsModule extends CWebModule
 	/**
 	* @property string the path to the layout file to use for displaying Rights.
 	*/
-	//public $layout = 'rights.views.layouts.main';
-	public $layout = 'webroot.themes.admin.views.layouts.main';
+	public $layout = 'rights.views.layouts.main';
+	//public $layout = 'webroot.themes.admin.views.layouts.main';
 	/**
 	* @property string the path to the application layout file.
 	*/

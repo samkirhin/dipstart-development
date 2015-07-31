@@ -56,19 +56,10 @@ class Controller extends RController
                     break;
             }
     }
-    public function actions()
-	{
-		return array(
-            'yiifilemanagerfilepicker'=>
-			    array('class'=>
-				    'ext.yiifilemanagerfilepicker.YiiFileManagerFilePickerAction'
-            ),
-		);
-    }
 
-   /* public function filters(){
+    public function filters(){
         return array(
             'rights'
         );
-    } */
+    }
 }
