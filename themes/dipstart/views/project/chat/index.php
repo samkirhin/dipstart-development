@@ -185,13 +185,13 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 </div>
                 <?php endif; ?>
                 
-                <div class="col-xs-8">
+                <div class="col-xs-9">
                     <?php echo CHtml::label('Сообщение','message', array('id' => 'msgLabel')); ?>
                     <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12')); ?>
                 </div>
 
 
-                <div class="col-xs-4">
+                <div class="col-xs-3 chtpl0-form">
                     <h5>Отправить сообщение</h5>
                     <?php
                     if(User::model()->isAuthor()) {
@@ -199,8 +199,8 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                     } else if(User::model()->isCustomer()) {
                         $middle_button = 'Отправить автору';
                     }
-                    echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary btn-chat')) ;
-                    echo  CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-primary btn-chat')) ;
+                    echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block')) ;
+                    echo  CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2')) ;
                     ?>
                 </div>
                 <?php echo CHtml::hiddenField('order',$order->id);
