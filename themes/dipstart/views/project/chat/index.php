@@ -7,7 +7,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
 <div class="container">
-    <div class="row">
+    <div class="row r">
         <div class="col-xs-4">
             <div class="row">
 				<?php
@@ -102,73 +102,6 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
         </div>
         <div class="col-xs-8">
             
-            <div class="col-xs-12" style="margin-bottom: 15px;">
-                <div class="panel-group" id="info-block">
-                    <div class="panel panel-default">
-                        <div class="panel-heading panel-heading-white">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
-                                    Информация о заказе
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="infoZakaz" class="panel-collapse collapse in">
-                            <div class="panel-body">
-
-                                <div class="col-xs-12 aboutZakaz">
-                                    <?php
-                                    if (User::model()->isAuthor()) {
-
-                                        $this->widget('zii.widgets.CDetailView', array(
-                                            'data' => $order,
-                                            'attributes' => array(
-                                                'id',
-                                                array(
-                                                    'name' => 'category_id',
-                                                    'type' => 'raw',
-                                                    'value' => Categories::model()->findByPk($order->category_id)->cat_name,
-                                                ),
-                                                array(
-                                                    'name' => 'job_id',
-                                                    'type' => 'raw',
-                                                    'value' => $order->job_id > 0 ? Jobs::model()->findByPk($order->job_id)->job_name : null,
-                                                ),
-                                                'title',
-                                                'text',
-                                                [
-                                                    'name' => 'author_informed',
-                                                    'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
-                                                ],
-                                                [
-                                                    'name' => 'date_finish',
-                                                    'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
-                                                ],
-                                                'pages',
-                                                'add_demands',
-                                                array(
-                                                    'name' => 'status',
-                                                    'type' => 'raw',
-                                                    'value' => $order->status > 0 ? ProjectStatus::model()->findByPk($order->status)->status : null,
-                                                ),
-                                        )));
-
-                                    } else {
-
-                                        if (!ModerationHelper::isOrderChanged($order->id)) {
-                                            $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
-                                        } else {
-                                            $this->renderPartial('/zakaz/orderInModerate');
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            
             <div id="chat" class="col-xs-12 user-chat-block">
                 <?php $this->renderPartial('chat',array('orderId'=>$order->id));?>
             </div>
@@ -210,6 +143,83 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
             <!-- form -->
             </div>
         </div>
+        
+        <div class="col-xs-12 info-block" style="margin-bottom: 15px;">
+            <div class="panel-group" id="info-block">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-white">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
+                                Информация о заказе
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="infoZakaz" class="panel-collapse collapse">
+                        <div class="panel-body">
+
+                            <div class="col-xs-12 aboutZakaz">
+                                <?php
+                                if (User::model()->isAuthor()) {
+
+                                    $this->widget('zii.widgets.CDetailView', array(
+                                        'data' => $order,
+                                        'attributes' => array(
+                                            'id',
+                                            array(
+                                                'name' => 'category_id',
+                                                'type' => 'raw',
+                                                'value' => Categories::model()->findByPk($order->category_id)->cat_name,
+                                            ),
+                                            array(
+                                                'name' => 'job_id',
+                                                'type' => 'raw',
+                                                'value' => $order->job_id > 0 ? Jobs::model()->findByPk($order->job_id)->job_name : null,
+                                            ),
+                                            'title',
+                                            'text',
+                                            [
+                                                'name' => 'author_informed',
+                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
+                                            ],
+                                            [
+                                                'name' => 'date_finish',
+                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
+                                            ],
+                                            'pages',
+                                            'add_demands',
+                                            array(
+                                                'name' => 'status',
+                                                'type' => 'raw',
+                                                'value' => $order->status > 0 ? ProjectStatus::model()->findByPk($order->status)->status : null,
+                                            ),
+                                    )));
+
+                                } else {
+
+                                    if (!ModerationHelper::isOrderChanged($order->id)) {
+                                        $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
+                                    } else {
+                                        $this->renderPartial('/zakaz/orderInModerate');
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
+
+<?php if (User::model()->isAuthor() && $order->executor == 0) : ?>
+    
+<script>
+    var e = $(".info-block");
+    e.detach().prependTo('.r');
+    e.find('.panel-title > a').click();
+</script>
+    
+    
+<?php endif; ?>
