@@ -1,5 +1,6 @@
 .idea
-assets
+nbproject/
+/assets
 protected/runtime
 protected/backup
 protected/config

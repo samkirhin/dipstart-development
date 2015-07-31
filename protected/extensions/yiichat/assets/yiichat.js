@@ -126,24 +126,35 @@ var YiiChat = function (options) {
         var add = function (post, postn) {
             var p=0;
             if (postn == 0) {
-				var tmp_html = '';
+                var tmp_html = '';
+                var rating = '';
 
-				if (post.sender.superuser.itemname == 'Author') {
-					if (options.executor == post.sender.superuser.userid)
-						tmp_html = "toggleexecutor executor-unset";
-					else
-						tmp_html = "toggleexecutor executor-set";
-				}else if (post.sender.superuser.itemname == 'Customer') {
-					tmp_html = "chtpl0-user-icon-4 usual-cursor";
-				}else{
-					tmp_html = "chtpl0-user-icon-3 usual-cursor";
-				}
+                if (post.sender.superuser.itemname == 'Author') {
+                    
+                    rating = 
+                            '<div><img class="left" data-ownerid="' + post.sender.superuser.userid + '" />' +
+                            '<div class="rating ' + post.sender.superuser.userid + '">' + post.sender.rating + '</div>' + 
+                            '<img class="right" data-ownerid="' + post.sender.superuser.userid + '" /></div>';
+                    
+                    if (options.executor == post.sender.superuser.userid) {
+                        tmp_html = "toggleexecutor executor-unset";
+                    } else {
+                        tmp_html = "toggleexecutor executor-set";
+                    }
+                    
+                }else if (post.sender.superuser.itemname == 'Customer') {
+                    tmp_html = "chtpl0-user-icon-4 usual-cursor";
+                }else{
+                    tmp_html = "chtpl0-user-icon-3 usual-cursor";
+                }
 
-                posts.append("<div id='post_" + post.id + "' class='post chtpl0-msg'>"
-				+ "<button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>"
-                + "<div class='chtpl0-content'></div>"
-				+ "<div class='chtpl0-buttons'></div>"
-                + "</div>");
+                posts.append(
+                    "<div id='post_" + post.id + "' class='post chtpl0-msg'>" + 
+                    "<div class='chtpl0-buttons'></div>" +
+                    "<div class='chtpl0-avatar'><button data-index=\"" + post.id + "\" class='" + tmp_html + "'></button>" + rating + "</div>" +
+                    "<div class='chtpl0-content'></div>" +
+                    "</div>"
+                    );
                 p = posts.find(".post[id='post_" + post.id + "']");
 
                 p.data('post', post);
@@ -382,4 +393,25 @@ var YiiChat = function (options) {
         actionInit(scroll);
         launchTimer();
     };
+    
+    var rating = function(user_id, action) {
+        
+        $.post(
+            '/user/user/rating',
+            {user_id: user_id, action: action}, 
+            function(data) {
+                $("div[class='rating " + user_id + "']").text(data);
+            }
+        );
+
+    };
+    
+    $('#chatWindow').on('click', '.left', function(){
+        rating($(this).data('ownerid'), 'down');
+    });
+    
+    $('#chatWindow').on('click', '.right', function(){
+        rating($(this).data('ownerid'), 'up');
+    });
+        
 }; //end

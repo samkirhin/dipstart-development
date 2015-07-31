@@ -18,12 +18,9 @@ var ProjectPayments = function(orderId) {
         var work_price = self.w_price.val();
         var receive = self.t_receive.val();
         var pay = self.t_pay.val();
-        if (pay>work_price){
-            alert('Сумма оплаты превышает лимит');
-            return false;
-        }
 		
-		if (proj_price!='') {$.post('/project/payment/savePayments', JSON.stringify({
+        if (proj_price!='') {
+            $.post('/project/payment/savePayments', JSON.stringify({
             'order_id': self.orderId,
             'project_price': proj_price,
             'to_receive': receive,
@@ -38,7 +35,7 @@ var ProjectPayments = function(orderId) {
                 self.w_price.val(response.data.work_price);
                 self.to_pay.text(response.data.to_pay);
             } else {
-				alert('Ошибка связи с сервером');
+                alert(response);
             }
         }, 'json');}
 		

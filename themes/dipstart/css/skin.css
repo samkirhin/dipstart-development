@@ -109,15 +109,18 @@ h3, h4, h5, h6 {
   color:#000;
   text-transform: uppercase;
 }
-
+form#registration-form {
+    width: 420px;
+    margin: auto;
+}
 .form label {
   display:inline-block;
   padding:0 0 4px 0;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 14px;
   color: #727272; 
+  font-weight:bold;
 }
-
 a.button,
 .button {
   border:1px solid #d00303;
@@ -520,8 +523,8 @@ list-style-type: none;
 padding-left: 15px;
 }
 
-.btn, input[type="submit"], input[type="file"] {opacity:0.8;border-radius:0;}
-.btn:hover, input[type="submit"]:hover, input[type="file"]:hover {opacity:1; transition: all 0.2s ease;	cursor: pointer;}
+.btn, input[type="submit"], input[type="file"] {opacity:0.8;border-radius:10;  border:none; padding:10px; font-weight:bold;}
+
 
 .chek-image-link {margin-top: 10px;}
 
@@ -532,7 +535,18 @@ margin-top: 10px;
 font-size: 13px;
 float: left;
 }
-
+input[name="yt0"] {
+    height: 40px!important;
+    width: 200px!important;
+	background:#337AB7;
+	color:white;
+}
+#UserLogin_rememberMe {
+    position: absolute;
+    left: 100px;
+    bottom: 2px;
+}
+}
 .qq-upload-success .qq-upload-failed-text {display:none;}
 .qq-upload-success {margin-top:10px;}
 .qq-upload-file {float:left;margin-right:5px;color:silver;text-transform:none;font-size:12px;}
@@ -587,3 +601,548 @@ header .row {margin-bottom: 20px;}
 }
 
 /** /Adaptive **/
+
+
+/* chat */
+
+@font-face{
+	font-family: "Roboto";
+	src: url("../fonts/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face{
+	font-family: "Roboto";
+	src: url("../fonts/Roboto-Bold.ttf");
+	font-weight: bold;
+}
+
+p {font-size: 13px;}
+
+.qq-upload-failed-text {display:none;}
+.qq-upload-fail .qq-upload-failed-text {display:inline;}
+
+.chtpl0-chatblock{
+	font-family: 'Roboto';
+	width: 822px;
+	height: 450px;
+}
+.chtpl0-chatblock button{
+display: block;
+/*float: left;*/
+}
+
+.chtpl0-chatblock button.usual-cursor{
+cursor: default;
+}
+
+.chtpl0-chatblock button.executor-set{
+	background-image: url(../images/icon1.png);
+}
+.chtpl0-chatblock button.executor-unset{
+	background-image: url(../images/icon2.png);
+}
+.chtpl0-chatblock button.chtpl0-user-icon-3{
+	background-image: url(../images/icon3.png);
+}
+.chtpl0-chatblock button.chtpl0-user-icon-4{
+	background-image: url(../images/icon4.png);
+}
+.chtpl0-panel{
+	height: 37px;
+	width: 100%;
+	background-repeat: repeat-x;
+	margin-bottom: 3px;
+}
+
+.chtpl0-chat{
+	width: calc(100% - 6px);
+	background-color: white;
+	height: 240px;
+	border-radius: 4px;
+	margin-left: 3px;
+	border: 3px solid #eaeaea;
+	box-sizing: border-box;
+}
+
+.chtpl0-msg{
+	padding: 6px 0px 12px 42px;
+	font-size: 12px;
+	height: 40px;
+}
+
+.chtpl0-msg:nth-child(odd) {
+	background-color: white;
+}
+
+.chtpl0-msg:nth-child(even) {
+	background-color: #f7f7f7;
+}
+
+.chtpl0-msg:nth-child(1) .chtpl0-nickname,
+.chtpl0-msg:nth-child(4) .chtpl0-nickname{
+	color: #7face5;
+}
+
+.chtpl0-msg:nth-child(2) .chtpl0-nickname,
+.chtpl0-msg:nth-child(3) .chtpl0-nickname{
+	color: #ba5e5e;
+}
+
+.chtpl0-content{
+/*display: inline-block;
+position: relative;
+left: 10px;
+width: 50%;*/
+}
+
+.chtpl0-nickname, .chtpl0-date, .chtpl0-time{
+	display: inline-block;
+	margin-right: 2px;
+}
+
+.chtpl0-time{
+	font-weight: bold;
+}
+
+.chtpl0-text{
+	margin-top: 11px;
+}
+
+.chtpl0-msg button{
+	width: 37px;
+	height: 38px;
+	border: none;
+	padding: 0px;
+	background-position: 0 0px;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.chtpl0-msg .chtpl0-buttons{
+	position: relative;
+	left: 280px;
+	top: -42px;
+	width: calc(100% - 370px);
+}
+
+.chtpl0-msg .chtpl0-buttons button{
+	width: 79px;
+	height: 15px;
+	font-size: 10px;
+	border: none;
+	color: white;
+	padding-bottom: 3px;
+	opacity: 0.8;
+}
+
+.chtpl0-msg .chtpl0-buttons button:hover{
+	opacity: 1;
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+.chtpl0-chatblock button:active,
+.chtpl0-chatblock button:visited,
+.chtpl0-chatblock button:focus{
+	outline: none;
+}
+
+
+
+.chtpl0-down{
+	font-size: 13px;
+	padding: 10px 10px 10px 18px;
+	width: calc(100% - 28px);
+	height: 22px;
+}
+
+.chtpl0-down p{
+	display: inline;
+	position: relative;
+	top: -2px;
+	margin-right: 20px;
+ margin-left: 5px;
+}
+
+.chtpl0-template{
+	background-image: url(./image/tmpl.png);
+	border: none;
+	width: 19px;
+	height: 19px;
+	margin-right: 5px;
+}
+
+.chtpl0-form textarea{
+	width: 564px;
+	border: 1px solid #cac7c7;
+	position: relative;
+	resize: none;
+	height: 100px;
+	border-radius: 5px;
+	margin-left: 20px;
+	margin-top: 5px;
+}
+
+.chtpl0-form button{
+	border: none;
+	width: 97px;
+	height: 23px;
+	font-weight: normal;
+	display: inline-block;
+	position: relative;
+	margin-right: 5px;
+}
+
+.chtpl0-form button:hover{
+	cursor: pointer;
+}
+
+.chtpl0-form .chtpl0-submit1{
+	background-image: url(./image/button-2.png);
+	color: white;
+}
+
+.chtpl0-form .chtpl0-submit2{
+background-image: url(./image/button-3.png);
+color: #FFFFFF;
+}
+
+.chtpl0-form  h5{
+	font-weight: normal;
+	display: inline-block;
+}
+
+.chtpl0-subm{
+	display: inline-block;
+	position: relative;
+	top: -7px;
+	left: 5px
+}
+
+.chtpl0-admin{
+	padding-top: 5px;
+}
+.chtpl0-admin .chtpl0-up{
+	display: none;
+}
+
+
+
+.chtpl0-user .chtpl0-accept,
+.chtpl0-user .chtpl0-share,
+.chtpl0-user .chtpl0-delete{
+	display: none;
+}
+.chtpl0-user .chtpl0-answer{
+ 	top: 0px;
+}
+.chtpl0-user .chtpl0-down{
+	height: 32px;
+  	padding-top: 3px;
+}
+.chtpl0-user .chtpl0-down input,
+.chtpl0-user .chtpl0-down button,
+.chtpl0-user .chtpl0-down p{
+	display: none;
+}
+
+
+
+
+.chtpl0-author .chtpl0-accept,
+.chtpl0-author .chtpl0-share,
+.chtpl0-author .chtpl0-delete{
+	display: none;
+}
+.chtpl0-author .chtpl0-answer{
+ 	top: 0px;
+}
+.chtpl0-author .chtpl0-down{
+	height: 32px;
+  	padding-top: 3px;
+}
+.chtpl0-author .chtpl0-down input,
+.chtpl0-author .chtpl0-down button,
+.chtpl0-author .chtpl0-down p{
+	display: none;
+}
+
+
+#chatWindow {
+overflow: auto;
+width: 100%;
+padding: 0;
+margin: 0;
+margin-bottom: 15px;
+border: 1px solid #ddd;
+border-radius: 0;
+min-height: 400px;
+}
+
+#chatWindow .post {
+min-height: 80px;
+height: auto;
+padding: 10px;
+}
+
+.chtpl0-avatar {
+    float: left;
+    padding-right: 7px;
+    text-align: center;
+}
+.chtpl0-msg .chtpl0-buttons {
+float: right;
+left: 0;
+top: 0;
+width: auto;
+height: auto;
+}
+
+.chtpl0-msg .chtpl0-buttons button{
+left:0;
+top:0;
+margin: 0;
+display: block;
+/* margin-bottom: 10px; */
+padding: 5px 15px;
+width: 95px;
+height: auto;
+font-size: 13px;
+}
+
+.chtpl0-msg .chtpl0-buttons button.chtpl0-answer {background: #337AB7;float: left;}
+.chtpl0-msg .chtpl0-buttons button.chtpl0-share {background: #BABABA;float: left;}
+.chtpl0-msg .chtpl0-buttons button.chtpl0-delete {background: #D36666;float: left;}
+.chtpl0-msg .chtpl0-buttons button.chtpl0-accept{background: #75B865;clear:both;margin-top: 5px;float: right;}
+
+
+
+
+.chtpl0-form textarea {
+width: 70%;
+margin:0;
+}
+
+.chtpl0-form button {
+width: 195px;
+height: auto;
+margin-left:0;
+margin-bottom:10px;
+background-image: none;
+opacity:0.8;
+border-radius: 0;
+}
+
+.chtpl0-form button:hover {
+opacity:1;
+transition: all 0.2s ease;
+}
+
+.chtpl0-form .chtpl0-submit1 {background: #5A93C4;}
+.chtpl0-form .chtpl0-submit2 {background: silver;}
+
+.chtpl0-form h5 {
+text-transform: uppercase;
+font-size: 13px;
+}
+
+.chtpl0-down {
+margin:0;
+padding:0;
+margin-left:15px;
+background-image:none;
+}
+
+.chtpl0-chatblock button.chtpl0-template {
+float:none;
+display: inline;
+}
+
+.notes {
+margin-top:15px;
+}
+
+.label {
+margin:0;
+}
+
+.qq-upload-drop-area {
+display:block!important;
+}
+
+.qq-upload-drop-area {
+    display: block!important;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #DDDDDD;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    margin-top: 20px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.qq-upload-drop-area span {
+    margin-top: 15px;
+    margin-left: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #EDEDED;
+    position: relative;
+}
+
+.qq-upload-button {
+width: 90%;
+background-color: white;
+color: #9F9F9F;
+margin: 15px auto;
+border: 1px solid #ddd; 
+}
+
+.qq-upload-button:hover {color: #868686;	border: 1px solid #ccc;transition: all 0.3s ease;	}
+
+.qq-upload-list {
+margin: 0;
+padding-top: 10px;
+}
+
+.qq-upload-list li {
+text-align: left;
+padding-left: 15px;
+padding-right: 15px;
+list-style-type: none;
+display: block;
+overflow: hidden;
+}
+
+li.gray-file a.file {
+color: silver;
+font-weight: normal;
+}
+
+#new-changes-link a {
+color: #337AB7;
+padding: 10px;
+}
+
+#new-changes-collapse {
+border: 1px solid #ddd;
+padding: 15px;
+margin-top: 15px;
+background-color: #F8F8F8;
+overflow: hidden;
+margin: 15px;
+}
+
+label {
+display: inline-block;
+text-transform: uppercase;
+font-size: 12px;
+color: #727272;
+}
+
+#up_file label {
+margin: 0;
+margin-top: 10px;
+margin-bottom: 5px;
+padding: 0;
+}
+
+#ProjectChanges_fileupload {
+border-radius: 0;
+border: none;
+}
+
+#up_file input {
+color: gray;
+font-size: 13px;
+padding: 5px 0 0 0;
+background: none;
+height: 35px;
+margin: 0;
+}
+
+#new-changes-block {
+padding-bottom: 10px;
+}
+
+#up_file .col-xs-12 {margin:0;padding: 0;}
+
+.addPart {margin-top: 20px;}
+
+.aboutZakaz {padding: 0;}
+
+.msg_answer {margin-bottom: 5px;}
+
+#project_payments {padding:0;}
+
+.terms-columns {margin-top: 10px;}
+.terms-column-1 {width: 25%;	float: left;	clear: both;}
+.terms-column-2 {	width: 50%; float: left;}
+.terms-column-3 {	width: 25%; float: left;}
+.terms-save-btn {padding: 3px 15px;}
+
+.deletePart {background: #D36666; border:none;}
+.deletePart:hover {background: #D36666; border:none;}
+
+.qq-upload-list li span{
+margin: 0;
+padding: 0;
+line-height: 15px;
+font-size: 12px;
+}
+
+.qq-upload-list li a#parts_file {
+display: block;
+float: left;
+margin: 10px 0;
+max-width: 65%;
+height: auto;
+overflow: hidden;
+word-wrap: break-word;
+}
+
+.qq-upload-list li button#approve_file {
+float: right;
+padding: 2px 10px 3px;
+margin: 5px 0 5px;
+font-size: 13px;
+}
+
+#accordion .panel-default {margin-bottom: 0;}
+
+ul.qq-upload-list li.qq-upload-success {margin-top:10px;}
+ul.qq-upload-list li.qq-upload-success span.qq-upload-file {
+margin-right: 10px;
+color: silver;
+text-transform: none;
+display: inline;
+width: auto;
+}
+ul.qq-upload-list li.qq-upload-success span.qq-upload-size {
+color:silver;
+text-transform:none;
+display: inline;
+width: auto;
+}
+
+.chtpl0-avatar img.left{
+    content: url(./image/left.png);
+    display: inline;
+    cursor: pointer;
+}
+
+.chtpl0-avatar img.right{
+    content: url(./image/right.png);
+    cursor: pointer;
+}
+
+.rating {
+    display: inline;
+}
+
+/* chat */

@@ -103,23 +103,6 @@ padding: 30px 0 1em 2%;
 .hero .form-horizontal{
 	margin: 0 172px 0 107px;
 }
-.btn-primary {
-color: #ffffff;
-text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
-background-color: #D0002b;
-background-image: -moz-linear-gradient(top,#DE0000,#B60000);
-background-image: -webkit-gradient(linear,0 0,0 100%,from(#DE0000),to(#B60000));
-background-image: -webkit-linear-gradient(top,#DE0000,#B60000);
-background-image: -o-linear-gradient(top,#DE0000,#B60000);
-background-image: linear-gradient(to bottom,#DE0000,#B60000);
-background-repeat: repeat-x;
-border-color: #DE0000 #DE0000 #B60000;
-padding-top: 19px;
-padding-bottom: 19px;
-margin-bottom: 40px;
-font-size: 23px;
-display: block;
-}
 .hero article .col_25 h5 {
 	font-weight: normal;
 font-size: 35px;
@@ -448,9 +431,7 @@ box-shadow: 0 1px 0 #ECF0F1;
 	font-size: 17px;
 font-family: 'Quicksand', sans-serif;
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
-	background-color: #B60000;
-}
+
 .myrow .col_33 {
 	width: 28%;
 	padding: 13px;
