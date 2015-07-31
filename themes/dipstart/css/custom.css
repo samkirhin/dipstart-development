@@ -718,13 +718,7 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
 }
 .btn-chat {
     font-family: 'Arial', sans-serif !important;
-    font-size: 14px;
-    line-height: 0px;//14px;
-    background-color: #337AB7;
-    background: #337AB7;
-    color: #ffffff;
     margin-bottom: 3px;
-    padding: 10px;
 }
 .btn-chat:focus, .btn-chat:hover, .btn-chat:active {
     color: #ffffff;
