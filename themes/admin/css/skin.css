@@ -100,7 +100,15 @@ font-weight: bold;
 text-transform: uppercase;
 padding-top: 5px;
 }
-
+.panel-title a[href="#infoZakaz"] {
+padding-left:150px;
+padding-right:150px;
+}
+#str {
+width:10%;
+height:10%;
+margin-top:5px;
+}
 .panel-group .panel {
 margin-bottom: 30px;
 margin-top: 20px;

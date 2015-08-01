@@ -175,7 +175,7 @@ label
 }
 .panel-title {
     position: relative;
-    text-align: left;
+    text-align: center;
     font-size: 14px;
 }
 .chatBlock {
@@ -347,11 +347,11 @@ label
     float: left;
 }
 .chtpl0-down p {
-top:-8px!important;
+//top:-8px!important;
 }
 .chtpl0-chatblock button.chtpl0-template {
     position: relative;
-    bottom: 5px;
+    bottom: -5px;
 	}
 .label {
     border-radius: 0px;

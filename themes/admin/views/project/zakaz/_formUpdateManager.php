@@ -111,7 +111,9 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
                             Информация о заказе
+		
                         </a>
+						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz"><img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" /></a>
                     </h4>
                 </div>
                 <div id="infoZakaz" class="panel-collapse collapse">
