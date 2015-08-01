@@ -1,7 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: coolfire
- * Date: 23.07.15
- * Time: 20:30
- */
+if(Zakaz::$table_prefix){
+	echo 'yes! '.Zakaz::$table_prefix;
+}

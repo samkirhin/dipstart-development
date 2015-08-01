@@ -15,7 +15,7 @@ class Controller extends RController
 	 */
 	public $menu=array();
 	public $authMenu = array();
-	public $org_id;
+	public $campaign_id;
 	/**
 	 * @var array the breadcrumbs of the current page. The value of this property will
 	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -25,8 +25,13 @@ class Controller extends RController
 	public $breadcrumbs=array();
 
     public function init(){
-		$org = Organizations::search_by_domain($_SERVER['SERVER_NAME']);
-		$this->org_id = $org->id;
+		// --- Организации
+		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+		$this->campaign_id = $campaign->id;
+		if ($this->campaign_id) {
+			Zakaz::$table_prefix = $this->campaign_id.'_';
+		}
+		// ---
         if (!Yii::app()->user->isGuest)
             switch (User::model()->getUserRole()) {
                 case ('Manager'):
@@ -43,7 +48,7 @@ class Controller extends RController
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
 					);
-                    Yii::app()->theme='dipstart';
+                    Yii::app()->theme='client';
                     break;
                 case ('Customer'):
                     $this->menu = array(
@@ -55,7 +60,7 @@ class Controller extends RController
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
 					);
-                    Yii::app()->theme='dipstart';
+                    Yii::app()->theme='client';
                     break;
             }
     }

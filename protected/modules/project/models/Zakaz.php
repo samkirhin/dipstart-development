@@ -22,8 +22,10 @@
  * @property ProjectStatus $projectStatus
  * @property string $payment_image
  */
-class Zakaz extends CActiveRecord
-{
+class Zakaz extends CActiveRecord {
+
+	public static $table_prefix;
+
     private $_job_name;
     private $_cat_name;
     private $date_finishstart;
@@ -163,9 +165,11 @@ class Zakaz extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
-		return 'Projects';
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'Projects';
+		else
+			return 'Projects';
 	}
 
 	/**
