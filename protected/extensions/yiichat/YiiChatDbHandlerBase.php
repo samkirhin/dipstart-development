@@ -112,7 +112,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
                 }
 				else {
-                    if ($postdata['recipient']=='Customer') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user'];
+                    if ($postdata['recipient']=='Customer') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user_id'];
                     if ($postdata['recipient']=='Author') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['executor'];
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}
@@ -133,7 +133,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                             mail($obj['recipient']->attributes['email'],'You receive new message in chat',$obj['message']);
                             break;
                     }
-			$obj['time']=$this->getDateFormatted->format('d.m.Y H:i:s', $obj['date']);
+			$obj['time'] = date_format(date_create($obj['date']), 'd.m.Y H:i:s');
 			$obj['owner']=substr($this->getIdentityName(),0,20);
 			return $obj;
 		}
