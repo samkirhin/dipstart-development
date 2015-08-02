@@ -293,6 +293,7 @@ class PaymentController extends Controller {
 			$dir = Yii::getPathOfAlias('webroot') . UploadPaymentImage::PAYMENT_DIR;
 			if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
 			$order->payment_image = null;
+			$order->status = 3;
 			$order->save();
 			//
             $buh = new Payment;
