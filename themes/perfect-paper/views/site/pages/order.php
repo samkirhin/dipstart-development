@@ -237,10 +237,10 @@ test!
                 <div class="col-sm-9">
                     <div id="tos" class="btn-group calc_elem" data-toggle="buttons">
                         <label class="btn btn-primary active">
-                            <input type="radio" name="tos" data-val="1" checked>Writing from scratch
+                            <input type="radio" name="tos" id="wr_from_scratch" data-val="1" checked>Writing from scratch
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="tos" data-val="2">Editing/proofreading
+                            <input type="radio" name="tos" id="edit_proof" data-val="2">Editing/proofreading
                         </label>
                     </div>
                 </div>
@@ -250,15 +250,18 @@ test!
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
                 <div class="col-sm-9">
-                    <div id="academ_level" class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option3" value="1">Undergraduate
+                    <div id="academ_level" class="btn-group calc_elem" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="Academic_Level" id="High_school" checked>High school
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option4">Bachelor
+                            <input type="radio" name="Academic_Level" id="Undergraduate">Undergraduate
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option5">Professional
+                            <input type="radio" name="Academic_Level" id="Bachelor">Bachelor
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="Academic_Level" id="Professional">Professional
                         </label>
                     </div>
                 </div>
@@ -307,47 +310,54 @@ test!
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <p class="bg-info" style="padding: 6px; text-align: center">1 page = 275 words</p></div>
+                    <p class="bg-info">1 page = 275 words</p></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">First Draft Deadline:
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
-                <div class="col-sm-3">
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option8">3
+                    <div id="hours" class="col-sm-7 btn-group calc_elem" data-toggle="buttons">
+                        <label class="btn btn-primary btn-deadline active">
+                            <input type="radio" name="hours" id="threeHours" checked>3
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option9">6
+                            <input type="radio" name="hours" id="sixHours">6
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option10">12
+                            <input type="radio" name="hours" id="twelveHours">12
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option11">24
+                            <input type="radio" name="hours" id="oneDay">24
+                        </label>
+                        <div class="col-sm-1"></div>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="twoDays">2
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="threeDays">3
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="fourDays">4
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="fiveDays">5
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="sevenDays">7
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="tenDays">10
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="twentyDays">12
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="thirtyDays">30
+                        </label>
+                        <label class="btn btn-primary btn-deadline">
+                            <input type="radio" name="hours" id="twoMonths">60
                         </label>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option12">2
-                        </label>
-                        <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option13">3
-                        </label>
-                        <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option14">6
-                        </label>
-                        <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option15">10
-                        </label>
-                        <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option16">14
-                        </label>
-                    </div>
-                </div>
                 <div class="col-sm-offset-3 col-sm-3">Hours</div>
                 <div class="col-sm-6">Days</div>
             </div>
@@ -567,7 +577,7 @@ $this->endWidget();
         return false;
     });
     $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
-        console.log(e);
+        //console.log(e);
         //e.target; // activated tab
         //e.relatedTarget.active(); // previous tab
         //e.preventDefault();
