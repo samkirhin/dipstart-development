@@ -112,7 +112,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 echo CHtml::form(); ?>
                 
                 <?php if (User::model()->isAuthor()): ?>
-                <div class="col-xs-12">
+                <div class="col-xs-12 price-for-work-avtor">
                     <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
                     <?php echo CHtml::textField('cost'); ?>
                 </div>

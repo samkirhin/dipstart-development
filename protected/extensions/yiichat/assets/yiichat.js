@@ -47,6 +47,7 @@ var YiiChat = function (options) {
                     clear();
                 },
                 error: function (e) {
+					alert(e.responseText);
                     clear();
                     options.onError('send_post_error', e.responseText, e);
                     callback(false);
@@ -220,7 +221,8 @@ var YiiChat = function (options) {
                     if ($(this).data('sender')=='Author') button=$('.button_author');
                     if ($(this).data('sender')=='Customer') button=$('.button_customer');
                     button.show();
-                    button.data('recipient',$(this).data('recipient'))
+					//alert($(this).data('sender'));
+                    button.data('recipient',$(this).data('sender'));
                 });
                 var btn_remove = p.find('button.chtpl0-delete');
                 btn_remove.click(function () {

@@ -112,7 +112,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
                 }
 				else {
-                    if ($postdata['recipient']=='Customer') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user'];
+                    if ($postdata['recipient']=='Customer') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user_id'];
                     if ($postdata['recipient']=='Author') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['executor'];
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}
@@ -133,7 +133,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                             mail($obj['recipient']->attributes['email'],'You receive new message in chat',$obj['message']);
                             break;
                     }
-			$obj['time']=$this->getDateFormatted($obj['date']);
+			$obj['time'] = date_format(date_create($obj['date']), 'd.m.Y H:i:s');
 			$obj['owner']=substr($this->getIdentityName(),0,20);
 			return $obj;
 		}
@@ -145,6 +145,9 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		$this->_identity = $identity;
 		$this->_data = $data;
 		$messages=ProjectMessages::model()->findAll('`t`.`order` = :chat_id AND `t`.`id` > :last_id',array(':chat_id'=>$chat_id,':last_id'=>$last_id));
+		foreach ($messages as $m) {
+			$m->date = date_format(date_create($m->date), 'd.m.Y H:i:s');
+		}
 		return $messages;
 	}
 

@@ -49,9 +49,17 @@ else {
         <div class="chtpl0-content">
             
             <div class="owner chtpl0-nickname" data-ownerid="<?= $message->senderObject->id ?>">
-                <a data-toggle="tooltip" title="<?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?></a>  |
-            </div>
-            <div class="chtpl0-date"><?= $message->date ?></div>
+                <!--<a data-toggle="tooltip" title="<?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?></a>  |-->
+				<?php if (User::model()->getUserRole($message->senderObject->id) == 'Author'){ 
+					echo 'Автор';
+				} elseif (User::model()->getUserRole($message->senderObject->id) == 'Customer'){
+					echo 'Заказчик';
+				} else {
+					echo 'Менеджер';
+				}
+				?> |
+			</div>
+            <div class="chtpl0-date"><?= date_format(date_create($message->date), 'd.m.Y H:i:s'); ?></div>
             
             <?php if ($message->cost): ?>
                 <div class="cost">Цена за работу: <?= $message->cost ?></div>
