@@ -32,6 +32,10 @@ class SiteController extends Controller
             $this->render('index', array(
                 'role' => 'stranger'
             ));
+		} elseif (User::model()->isAuthor()){
+			$this->redirect('/project/zakaz/ownList');
+		} elseif (User::model()->isCustomer()){
+			$this->redirect('/project/zakaz/customerOrderList');
         } else {
             $this->render('main');
         }
