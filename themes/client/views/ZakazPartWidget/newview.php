@@ -21,11 +21,11 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 							</a>
 						</h4>
 					</div>
+					<?php if (User::model()->isAuthor()) { ?>
 					<div class="title-time">Дата сдачи:<br />
-						<?php
-						if (User::model()->isAuthor()) echo $data['dbdate'];
-						?>
+						<?php echo $data['dbdate']; ?>
 					</div>
+					<?php } ?>
 				</div>
 				<div id="collapseOne<?php echo $data['id']; ?>" class="panel-collapse collapse">
 					<div class="panel-body">
