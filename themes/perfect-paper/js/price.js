@@ -142,3 +142,4 @@ $(document).ready(function(){
     calc();
     //3B2mmEzVyKIf
 });
+//for push
