@@ -541,12 +541,13 @@ input[name="yt0"] {
 	background:#337AB7;
 	color:white;
 }
+/*
 #UserLogin_rememberMe {
     position: absolute;
     left: 100px;
     bottom: 2px;
 }
-}
+*/
 .qq-upload-success .qq-upload-failed-text {display:none;}
 .qq-upload-success {margin-top:10px;}
 .qq-upload-file {float:left;margin-right:5px;color:silver;text-transform:none;font-size:12px;}
