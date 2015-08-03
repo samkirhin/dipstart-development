@@ -93,6 +93,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			if ($postdata['index']==0){
 				if ($postdata['recipient']=='Author'){
 					$obj['recipient'] = Zakaz::model()->findByPk($chat_id)->attributes['executor'];
+                    if ($obj['recipient']==0) $obj['recipient']=-1;
 				} else if ($postdata['recipient']=='Customer') {
 					$obj['recipient'] = Zakaz::model()->findByPk($chat_id)->attributes['user_id'];
 				} else $obj['recipient']=0;
@@ -120,8 +121,8 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			// now retrieve the post
             $obj['sender']=User::model()->findByPk($obj['sender']);
             $obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
-            $obj['recipient']=User::model()->findByPk($obj['recipient']);
-            $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
+            //$obj['recipient']=User::model()->findByPk($obj['recipient']);
+            //$obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
             if ($postdata['flags'])
                 foreach($postdata['flags'] as $v)
                     switch($v){

@@ -28,6 +28,7 @@ class Zakaz extends CActiveRecord {
 
     private $_job_name;
     private $_cat_name;
+    private $_status_name;
     private $date_finishstart;
     private $date_finishend;
 
@@ -157,6 +158,18 @@ class Zakaz extends CActiveRecord {
     {
         $this->_cat_name = $value;
     }
+    public function getStatusName()
+    {
+        if ($this->_status_name === null && $this->projectStatus !== null)
+        {
+            $this->_status_name = $this->projectStatus->status;
+        }
+        return $this->_status_name;
+    }
+    public function setStatusName($value)
+    {
+        $this->_status_name = $value;
+    }
 
     public function init()
     {
@@ -186,7 +199,7 @@ class Zakaz extends CActiveRecord {
 			array('title', 'length', 'max'=>255),
 			array('executor', 'length', 'max'=>10),
             array('text, date_finishend, date_finishstart, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
-            array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate', 'safe'),
+            array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, pages', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, jobName, catName, title, dateCreation, dateFinish, managerInformed', 'safe', 'on'=>'search'),
