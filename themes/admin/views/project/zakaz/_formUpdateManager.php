@@ -206,14 +206,6 @@
                                     <?php echo $form->labelEx($model, 'add_demands'); ?><br>
                                     <?php echo $form->textArea($model, 'add_demands', array('rows' => 6, 'cols' => 53)); ?>
                                     <?php echo $form->error($model, 'add_demands'); ?>
-                                    <br>
-                                    <?php echo $form->labelEx($model, 'notes'); ?><br>
-                                    <?php echo $form->textArea($model, 'notes', array('rows' => 6, 'cols' => 53)); ?>
-                                    <?php echo $form->error($model, 'notes'); ?>
-                                    <br>
-                                    <?php echo $form->labelEx($model, 'author_notes'); ?><br>
-                                    <?php echo $form->textArea($model, 'author_notes', array('rows' => 6, 'cols' => 53)); ?>
-                                    <?php echo $form->error($model, 'author_notes'); ?>
                                 </div>
                                 <div class="col-xs-12 info-buttons">
                                     <div
