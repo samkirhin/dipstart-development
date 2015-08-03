@@ -208,8 +208,7 @@
                                     <?php echo $form->error($model, 'add_demands'); ?>
                                 </div>
                                 <div class="col-xs-12 info-buttons">
-                                    <div
-                                        style="float: right;"><?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?></div>
+                                    <div><?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?></div>
                                 </div>
 
                                 <?php $this->endWidget(); ?>
