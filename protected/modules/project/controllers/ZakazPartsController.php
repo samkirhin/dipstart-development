@@ -288,6 +288,7 @@ class ZakazPartsController extends Controller
             /*$this->_response->setData($result);
             $this->_response->send();*/
 			chmod($folder.$_GET['qqfile'],0666);
-			echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+            $this->_response->setData($result);
+            $this->_response->send();
         }
 }
