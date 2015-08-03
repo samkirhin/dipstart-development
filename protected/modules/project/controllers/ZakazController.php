@@ -254,7 +254,6 @@ class ZakazController extends Controller
 					ModerationHelper::clear($model->id);
 					$this->redirect(array('update','id'=>$model->id));
 				}
-				//$this->redirect(array('view','id'=>$model->id));
 			}
 		}
 
