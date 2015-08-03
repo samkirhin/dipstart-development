@@ -15,7 +15,11 @@ $this->breadcrumbs=array(
     'afterAjaxUpdate' => 'reinstallDatePicker',
     'columns'=>array(
         'id',
-        //'status',
+        array(
+            'name'=>'status',
+            'filter'=>ProjectStatus::getAll(),
+            'value'=>'$data->statusName',
+        ),
         'title',
         array(
             'name'=>'jobName',

@@ -28,6 +28,7 @@ class Zakaz extends CActiveRecord {
 
     private $_job_name;
     private $_cat_name;
+    private $_status_name;
     private $date_finishstart;
     private $date_finishend;
 
@@ -156,6 +157,18 @@ class Zakaz extends CActiveRecord {
     public function setCatName($value)
     {
         $this->_cat_name = $value;
+    }
+    public function getStatusName()
+    {
+        if ($this->_status_name === null && $this->projectStatus !== null)
+        {
+            $this->_status_name = $this->projectStatus->status;
+        }
+        return $this->_status_name;
+    }
+    public function setStatusName($value)
+    {
+        $this->_status_name = $value;
     }
 
     public function init()

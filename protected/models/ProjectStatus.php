@@ -91,4 +91,10 @@ class ProjectStatus extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public static function getAll(){
+		foreach (self::model()->findAll() as $k=>$v)
+			$res[$v['id']]=$v['status'];
+		return $res;
+	}
 }
