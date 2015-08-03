@@ -35,11 +35,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
     <div class="col-xs-12 col-md-6">
         <div class="row" style="margin-top:5px;">
             <div class="col-xs-4 col-md-2 col-md-offset-2"><img src="<?php echo Yii::app()->theme->baseUrl;?>/img/fiveplus.png"></div>
@@ -54,30 +49,70 @@
             <div class="col-xs-8 col-md-8"><p class="atention">24/7 Support<br>Delivered on time</p></div>
         </div>
     </div>
-
 </div>
-
-
 <div id="fasr-order" class="row" style="margin-top: 2em;">
     <form>
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;">
             <select type="text" class="form-control input-lg alternative-select">
                 <option value="" selected disabled>Select type</option>
-                <option>original works</option>
-                <option>formal treaty</option>
-                <option>original works</option>
-                <option>original treaty</option>
-                <option>original works</option>
+                <optgroup label="Essays">
+                    <option value="100016">Annotated bibliography</option>
+                    <option value="100017">Argumentative essay</option>
+                    <option value="100033">Article</option>
+                    <option value="100015">Article review</option>
+                    <option value="100019">Biography</option>
+                    <option value="100005">Book review</option>
+                    <option value="100012">Business plan</option>
+                    <option value="100013">Case study</option>
+                    <option value="100008">Course work</option>
+                    <option value="100001">Creative writing</option>
+                    <option value="100018">Critical thinking</option>
+                    <option value="100002" selected="">Essay</option>
+                    <option value="100024">Literature review</option>
+                    <option value="100006">Movie review</option>
+                    <option value="100004">Presentation</option>
+                    <option value="100030">Report</option>
+                    <option value="100003">Research paper</option>
+                    <option value="100009">Research proposal</option>
+                    <option value="100007">Term paper</option>
+                    <option value="100011">Thesis</option>
+                    <option value="100028">Thesis proposal</option>
+                    <option value="101037">Thesis statement</option>
+                </optgroup>
+                <optgroup label="Dissertation">
+                    <option value="100010">Dissertation</option>
+                    <option value="100021">Dissertation abstract</option>
+                    <option value="100020">Dissertation chapter</option>
+                    <option value="100027">Dissertation conclusion</option>
+                    <option value="100023">Dissertation hypothesis</option>
+                    <option value="100022">Dissertation introduction</option>
+                    <option value="100025">Dissertation methodology</option>
+                    <option value="101034">Dissertation proposal</option>
+                    <option value="100026">Dissertation results</option>
+                </optgroup>
+                <optgroup label="Questions &amp; Problems">
+                    <option value="101038">Multiple choice questions</option>
+                    <option value="101039">Problem solving</option>
+                </optgroup>
+                <optgroup label="Admissions">
+                    <option value="100014">Admission essay</option>
+                    <option value="100029">Application letter</option>
+                    <option value="100031">Cover letter</option>
+                    <option value="100058">Curriculum vitae</option>
+                    <option value="100032">Personal statement</option>
+                    <option value="100059">Resume</option>
+                </optgroup>
+                <option value="100999">Other</option>
             </select>
         </div>
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"> <select type="text" class="form-control input-lg alternative-select">
                 <option value="" selected disabled>Select academic level</option>
-                <option></option>
-                <option></option>
-                <option></option>
-                <option></option>
-                <option></option>
-            </select></div>
+                <option>High school</option>
+                <option>Undergraduate</option>
+                <option>Bachelor</option>
+                <option>Professional</option>
+            </select>
+        </div>
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"><input type="text" class="form-control input-lg alternative" placeholder="Size"></div>
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"><input type="text" class="form-control input-lg alternative" placeholder="Phone number"></div>
 
