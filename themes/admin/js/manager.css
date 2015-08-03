@@ -1,0 +1,773 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    src: url('http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&subset=cyrillic');
+}
+
+body {
+    background: #ecf0f5;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+}
+h1 {
+    font-size: 24px;
+    margin-top: 0px;
+}
+hr {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(#ecf0f5), to(rgba(0, 0, 0, 0)));
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+}
+.order-contacts {
+    background-color: #fff;
+}
+.chtpl0-msg .chtpl0-buttons button.chtpl0-delete {
+    background: #D36666!important;
+}
+.order-contacts {
+	text-align: center;
+}
+.order-contacts div div{
+	display: inline-block;
+    margin-top: 10px;
+    padding: 0;
+	padding: 0 20px 0 0;
+}
+
+.rightBorder {
+    border-right: solid 1px #cccccc;
+}
+
+.notesBlock {
+    height: auto;
+    margin-top: 10px;
+    padding: 0;
+    background-color: #f8f6f7;
+    border: solid 1px #cccccc;
+}
+.notesBlockTitle {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+}
+.notesBlockTitle:before {
+    content: "";
+    display: block;
+    background: url(../images/table-icon.png) no-repeat;
+    width: 19px;
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 5px;
+    position: relative;
+    float: left;
+}
+.notesBlockBtn {
+    margin: 5px 0 0 0;
+}
+.notesBlockTextarea {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    min-width: 100%;
+}
+.notesBlockArea {
+    padding-left: 0;
+    padding-right: 0;
+}
+.btnNotes
+{
+    width: 48%;
+    margin: 0 1%;
+}
+.panel-group {
+    margin-bottom: 0px;
+}
+.list-view {
+    padding-top: 0px;
+}
+.panel {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+.parts {
+    padding: 0;
+    margin-top: 10px;
+}
+.partStatus {
+    width: 16px;
+    height: 16px;
+    margin: 0 10px 0 0;
+    background: url(../images/check.png) no-repeat center center;
+    float:left;
+}
+.partTitle {
+    float: left;
+}
+
+.addPart {
+  -webkit-border-radius: 0;
+          border-radius: 0;
+  margin: 10px 0 10px;
+  width: 100% !important;
+}
+
+.edits {
+    padding: 0;
+    margin-top: 10px;
+}
+.editStatus {
+    width: 16px;
+    height: 16px;
+    margin: 0 10px 0 0;
+    background: url(../images/check.png) no-repeat center center;
+    float:left;
+}
+.editTitle {
+    float: left;
+}
+
+.addPart {
+  -webkit-border-radius: 0;
+          border-radius: 0;
+  margin: 10px 0 10px;
+  width: 100% !important;
+}
+.statusBlock 
+{
+    padding: 0;
+    margin: 0px 0 20px 0;
+}
+.grey-line {
+    width: 94%;
+    height: 1px;
+    margin: 0 3%;
+    background-color: #cccccc;
+    float:left;
+}
+.addPart 
+{
+    margin: 10px 0 0 0;
+}
+
+.changes-info
+{
+    padding: 0px !important;
+    margin: 0 10px !important;
+}
+.changes-info textarea
+{
+    width: 100%;
+}
+.payTable input {
+    width: 80px;
+}
+.colTime
+{
+    width: 120px;
+}
+label
+{
+    font-weight: normal;
+}
+.aboutZakaz
+{
+
+}
+.aboutZakaz textarea{
+    width: 100%;
+    resize: none;
+}
+.panel-title {
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+}
+.chatBlock {
+    border: solid 1px #367fa9;
+    margin-top: 15px;
+    margin-right: 15px;
+    border-top: none;
+}
+.chatBlockBg {
+    background: #ffffff;
+    margin-top: 10px;
+    padding-bottom: 15px;
+}
+.yiichat .chat-header {
+    background: #367fa9;
+    height: 36px;
+    line-height: 30px;
+}
+.mt5 {
+     margin-top: 0px;
+}
+.pull-left {
+    position: relative;
+    float: left;
+    margin-right: 10px;
+}
+.yiichat .chat-header .pull-left select{
+    -webkit-appearance: menulist-button;
+    width: 90px;
+    position: absolute;
+    opacity: 0;
+    height: 25px;
+    font-size: 12px;
+    left: 10px;
+    top: 6px;
+}
+.chat-header .customSelect {
+    margin: 6px 0 0 10px;
+    background: #fff url('../images/arrow-bottom-icon.png') no-repeat 93% center;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    height: 25px;
+    line-height: 22px;
+    padding-right: 7px;
+}
+.chat-header .customSelectInner {
+    text-align: center;
+}
+
+.terms-columns {
+    border-right: dotted 1px #444444;
+}
+.terms-columns-last {
+    border-right: none;
+}
+.terms-columns label {
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+}
+.terms-columns p {
+    margin-bottom: 5px;
+}
+.terms-columns input {
+    margin-bottom: 5px;
+    width: 49%;
+}
+.panel-default {
+    border-color: #dddddd;
+}
+.post {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: dotted 1px #cccccc !important;
+}
+.posts {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted rgb(238, 238, 238);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.track {
+    width: 205px;
+    background-color: #f9f9f9 !important;
+}
+.zero-edge {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.left-column {
+    border-right: solid 10px #ecf0f5;
+    background: none repeat scroll 0% 0% #FFF;
+    margin-top: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    min-height: 976px;
+    height: auto;
+    padding: 15px;
+}
+.you {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    width: 100%;
+}
+.you textarea {
+    width: 540px;
+    margin: 0 10px 10px 10px;
+    height: 115px;
+    resize: none;
+}
+.terms-block {
+    padding-bottom: 15px;
+    padding-right: 15px !important;
+    background: none repeat scroll 0% 0% #FFF;
+    margin-top: 10px;
+}
+.buttons {
+    width: 200px;
+}
+.button_send {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width: 165px;
+}
+.button_author {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width: 165px;
+}
+.button_customer {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width: 165px;
+}
+.paytable {
+    font-size: 12px; 
+    width: 50%; 
+    position: relative;
+    float: left;
+    table-layout: fixed;
+}
+.paytable td {
+    height: 39px;
+    border-top: none !important;
+}
+.pay-save-btn {
+    float: right;
+    margin-right: 15px;
+    margin-top: 15px;
+}
+.payment-block {
+    background: #fff;
+    margin-top: 10px;
+    padding: 0 15px 15px 15px;
+}
+.info-block {
+    margin-top: 10px;
+}
+.panel-group .panel {
+    -webkit-border-radius: 0px;
+            border-radius: 0px;
+}
+.terms-save-btn {
+    margin-top: 10px;
+    margin-right: 15px;
+    float: right;
+	height:30px;
+}
+.chtpl0-msg .chtpl0-buttons button.chtpl0-delete {
+    float: left;
+}
+.chtpl0-down p {
+//top:-8px!important;
+}
+.chtpl0-chatblock button.chtpl0-template {
+    position: relative;
+    bottom: -5px;
+	}
+.label {
+    -webkit-border-radius: 0px;
+            border-radius: 0px;
+    font-size: 14px;
+}
+.panel-heading-white {
+    background-color: #fff !important;
+}
+.authorName p:before {
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/user.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.authorMail p:before {
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/mail.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.authorPhone p:before {
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/phone.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.customerName p:before{
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/user.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.customerMail p:before{
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/mail.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 5px;
+}
+.customerPhone p:before{
+    content: "";
+    display: block;
+    position: relative;
+    float: left;
+    background: url(../images/phone.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+}
+.partStatus {
+    background: url(../images/check.png) no-repeat center center;
+    width: 16px;
+    height: 16px;
+}
+
+#show-msg {
+    color: #fff;
+}
+#Zakaz_category_id {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_job_id {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_title {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_time_for_call {
+    width: 100%;
+    padding: 3px;
+}
+#Zakaz_edu_dep {
+    width: 100%;
+    padding: 3px;
+}
+.info-column label {
+    margin-top: 5px;
+    font-weight: 700;
+}
+.info-buttons {
+    margin-top: 10px;
+}
+
+.create-zakaz-block {
+    background: #ffffff;
+    padding: 15px;
+}
+.create-form-selects label {
+    position: relative;
+    float: left;
+    font-weight: 700;
+    padding-top: 5px;
+}
+.create-form-selects select {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.create-form-selects input {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.create-form-selects textarea {
+    position: relative;
+    float: left;
+    width: 100%;
+    resize: none;
+}
+.white-bg {
+    background-color: #ffffff;
+}
+.inside-block {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.block-with-border {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px 10px 15px 10px;
+    border: solid 1px #ecf0f5;
+}
+.create-terms select {
+    width: 40px;
+    margin-right: 10px;
+}
+.create-terms > table > tbody > tr > td{
+    border-top: 1px dotted #DDD;
+}
+.create-terms > table > tbody > tr > td:first-child{
+    border-right: 1px dotted #DDD;
+}
+.create-terms > table > thead > tr > th{
+    border-bottom: none;
+}
+.create-terms > table > thead > tr > th:first-child{
+    border-right: 1px dotted #DDD;
+}
+.white-block {
+    background: #ffffff;
+    padding: 15px;
+}
+.pager {
+    margin: 15px 0px 0px !important;
+}
+ul.yiiPager li {
+    margin-right: 5px;
+}
+
+ul.yiiPager .selected a {
+    background: #fff none repeat scroll 0% 0% !important;    
+    color: #0E509E !important;
+    font-weight: bold;
+}
+ul.yiiPager a:link, ul.yiiPager a:visited {
+    border: 1px solid #9AAFE5;
+    font-weight: bold;
+    color: #0E509E;
+    padding: 5px 10px !important;
+    text-decoration: none;
+}
+.pager li > a, .pager li > span {
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
+}
+.search-form {
+    padding: 15px;
+    border: solid 1px #ecf0f5;
+}
+.wide {
+    padding: 0 15px;
+}
+.wide label{
+    width: 160px;
+}
+.list-view> .items > .view:nth-child(odd){
+    background-color: #E5F1F4;
+    padding: 5px 0;
+    padding-left: 10px;
+}
+.list-view> .items > .view:nth-child(even){
+    background-color: #F8F8F8;
+    padding: 5px 0;
+    padding-left: 10px;
+}
+.mailbox-menu {
+    margin-bottom: 15px;
+}
+.mailbox-menu-newmsg {
+    margin-left: 5px;
+    float: left;
+    margin-right: 10px;  
+    border-right: dotted 1px #9AAFE5;
+    padding-right: 10px;
+}
+#mailbox-inbox {
+    float: left;
+    margin-right: 10px;
+    border-right: dotted 1px #9AAFE5;
+    padding-right: 10px;
+}
+#mailbox-sent {
+    float: left;
+    margin-right: 10px;
+    border-right: dotted 1px #9AAFE5;
+    padding-right: 10px;
+}
+#mailbox-trash {
+    float: left;
+    margin-right: 10px;
+}
+#mailbox-items {
+    margin-bottom: 15px;
+}
+.mailbox-items-tbl > tbody > tr:nth-child(odd){
+    background-color: #E5F1F4;
+    padding: 5px 0;
+}
+.mailbox-items-tbl > tbody > tr:nth-child(even){
+    background-color: #F8F8F8;
+    padding: 5px 0;
+}
+.mailbox-items-tbl > tbody > tr > td{
+    border-right: dotted 1px #DDD; 
+}
+.mailbox-items-tbl > tbody > tr > td:last-child{
+    border-right: none; 
+}
+.mailbox-input-row {
+    margin-bottom: 15px;
+}
+.mailbox-support-list {
+    margin-top: 15px;
+}
+.button-new-message {
+    position: relative;
+    float: right;
+    margin-top: 15px;
+}
+.topMenu {
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.first-page-btn {
+    margin-bottom: 15px;
+}
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #E5F1F4;
+}
+.table-striped > tbody > tr:nth-of-type(2n) {
+    background-color: #F8F8F8;
+}
+.table > tbody > tr > td {
+    border-top: none;
+}
+.table > thead > tr > th {
+    border-bottom: none;
+}
+.title-name {
+    position: relative;
+    float: left;
+}
+.title-time {
+    position: relative;
+    float: right;
+}
+.panel-heading {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+.panel-default {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+.panel-body {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+div.partStatus {
+    display: none;
+}
+
+.hasDatepicker {
+    width: 125px!important;
+    padding: 2px 5px!important;
+}
+
+.panel-title a {
+    padding-left: 8px;
+    padding-top: 0px!important;
+    line-height: 25px!important;
+}
+
+.panel-default > .panel-heading, #new-changes-collapse {
+    background-color: #FAFAFC;
+    border-color: #F6F7F9!important;
+}
+
+.main-menu {
+    z-index: 2001!important;
+}
+
+#ProjectChanges_comment {
+    min-width: 100%;
+}
+
+.order-contacts div div {
+    padding: 0px 15px 0px 0px!important;
+}
+
+img#str {
+    display: none;
+}
+
+div.info-block .panel-title a:last-child {
+    display: none;
+}
+
+
+
+#new-changes-link a:focus {
+    outline: none;
+}
+
+div.chatBlock {
+    position: relative;
+}
+
+.panel-body textarea {
+    min-width: 100%;
+}
+
+h4.chat-window-is-empty {
+    display: block;
+    position: absolute;
+    top: 37%;
+    left: 33%;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #EDEDED;
+}
+
+div#chatWindow:empty:after {
+    content: "Здесь будет ваша переписка";
+    display: block;
+    position: absolute;
+    top: 38%;
+    left: 28%;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #EDEDED;
+}
+
+#new-changes-link a {
+    margin: 0px 5px 9px !important;
+    width: 100%!important;
+    background-color: #286090!important;
+    border-color: #204D74!important;
+    padding: 7px 112px!important;
+    width: -webkit-calc(100% - 30px)!important;
+    width: -moz-calc(100% - 30px)!important;
+    width: calc(100% - 30px)!important;
+    color: rgb(255, 255, 255)!important;
+    opacity: 1!important;
+    -webkit-transition: all 0.2s ease 0s!important;
+       -moz-transition: all 0.2s ease 0s!important;
+         -o-transition: all 0.2s ease 0s!important;
+            transition: all 0.2s ease 0s!important;
+    opacity: 0.8!important;
+}
+
+#new-changes-link a:hover {
+    opacity: 1!important;
+}
