@@ -5,27 +5,11 @@
  * Date: 26.06.15
  * Time: 13:54
  */
-
-if(User::model()->isAuthor()) {
-    $criteria=new CDbCriteria;
-    $criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
-    $criteria->addCondition('`order` = :oid');
-    $criteria->params[':oid'] = (int) $orderId;
-    $messages = ProjectMessages::model()->findAll($criteria);
-}
-else if(User::model()->isCustomer()) {
-    $criteria=new CDbCriteria;
-    $criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient='.Yii::app()->user->id.' OR recipient=0)');
-    $criteria->addCondition('`order` = :oid');
-    $criteria->params[':oid'] = (int) $orderId;
-    $messages = ProjectMessages::model()->findAll($criteria);
-}
-else {
-    $criteria=new CDbCriteria;
-    $criteria->addCondition('`order` = :oid');
-    $criteria->params[':oid'] = (int) $orderId;
-    $messages = ProjectMessages::model()->findAll($criteria);
-}
+$criteria=new CDbCriteria;
+$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
+$criteria->addCondition('`order` = :oid');
+$criteria->params[':oid'] = (int) $orderId;
+$messages = ProjectMessages::model()->findAll($criteria);
 ?>
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
     <!-- Вывод чата -->

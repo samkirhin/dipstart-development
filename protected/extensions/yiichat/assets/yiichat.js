@@ -175,9 +175,9 @@ var YiiChat = function (options) {
                 }
 
                 tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/user/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
-                if (post.recipient != 0) tmp_html += " ответил "
-                + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/user/view?id='" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
-                tmp_html += "  |</div>";
+                if (post.recipient > 0) tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/user/view?id='" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
+                if (post.recipient == -1) tmp_html += " написал авторам";
+                    tmp_html += "  |</div>";
 				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>";
 				//tmp_html += "<div class='chtpl0-time'>" + post.date + "</div>"
                 if (post.cost > 0) tmp_html += "<div class='cost'>Цена:" + post.cost + "</div>";
@@ -221,7 +221,6 @@ var YiiChat = function (options) {
                     if ($(this).data('sender')=='Author') button=$('.button_author');
                     if ($(this).data('sender')=='Customer') button=$('.button_customer');
                     button.show();
-					//alert($(this).data('sender'));
                     button.data('recipient',$(this).data('sender'));
                 });
                 var btn_remove = p.find('button.chtpl0-delete');
@@ -327,8 +326,8 @@ var YiiChat = function (options) {
         you.append('<div id="send_buttons" class="buttons pull-right chtpl0-subm"></div>');
         var buttons = you.find('div.buttons');
 		buttons.append("<h5>Отправить сообщение</h5><br>");
-        //buttons.append("<button class='button_send btn-primary pull-left btn smooth im-send' data-recipient='no'>" + options.sendButtonText + "</button>");
-        buttons.append("<button class='chtpl0-submit1 button_author btn-primary pull-left btn smooth im-send' data-recipient='Author'>" + options.sendAuthorText + "</button>");
+        //buttons.append("<button class='button_send btn-primary pull-left btn smooth im-send' data-recipient='no'>" + options.executor + "</button>");
+        buttons.append("<button class='chtpl0-submit1 button_author btn-primary pull-left btn smooth im-send' data-recipient='Author'>" + ((options.executor>0) ? options.sendAuthorText : options.sendAuthorText.slice(0,-1)+'ам') + "</button>");
         buttons.append("<button class='chtpl0-submit2 button_customer btn-primary pull-left btn smooth im-send' data-recipient='Customer'>" + options.sendCustomerText + "</button>");
         posts.html("");
 
