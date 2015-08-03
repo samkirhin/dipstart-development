@@ -30,14 +30,12 @@
     <!--[if IE 7]>
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/ie/7.css" />
     <![endif]-->
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.css" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700,700italic&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Quicksand&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
     <link rel="icon" type="image/ico" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
     <link rel="icon" type="image/x-icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
-
-    <meta name='yandex-verification' content='5e35f484042ed76c'/>
 </head>
 <body>
 <!--[if lt IE 7]>
