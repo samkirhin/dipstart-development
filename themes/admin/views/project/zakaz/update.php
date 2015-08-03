@@ -48,7 +48,11 @@ $this->breadcrumbs = array(
                <div class="col-xs-12 statusBlock">
                    <?php if ($isModified) echo '<span class="label label-warning" style="font-size:16px;"><b>Заказ на модерации</b></span>';?>
                    <span class="label label-warning"><b><?= $message; ?></b></span>
-                   <button id="close_order" class="btn" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>';">Завершить заказ</button>
+                   <?php if ($model->status < 5) { ?>
+                        <button id="close_order" class="btn" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>';">Завершить заказ</button>
+                   <?php } else { ?>
+                        <button id="open_order" class="btn" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';">Открыть заказ</button>
+                   <?php } ?>
                </div>
             </div>
 
