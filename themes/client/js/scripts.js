@@ -1,4 +1,4 @@
-$(document).ready(function() {
+﻿$(document).ready(function() {
 
 	$("#fastorder").submit(function() {
         if ($("#type").val() == "") {
@@ -35,5 +35,5 @@ $(document).ready(function() {
 	// Switch buttons from "Log In | Register" to "Close Panel" on click
 	$("#toggle1 a").click(function () {
 		$("#toggle a").toggle();
-	});	
+	});
 });

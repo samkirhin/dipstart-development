@@ -16,6 +16,10 @@ h1 {
 hr {
     border: 0;
     height: 1px;
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(#ecf0f5), to(rgba(0, 0, 0, 0)));
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
 }
 .order-contacts {
@@ -68,6 +72,8 @@ hr {
     width: 100%;
     margin-top: 5px;
     margin-bottom: 10px;
+    max-width: 100%;
+    min-width: 100%;
 }
 .notesBlockArea {
     padding-left: 0;
@@ -85,7 +91,8 @@ hr {
     padding-top: 0px;
 }
 .panel {
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
 }
 .parts {
     padding: 0;
@@ -103,7 +110,8 @@ hr {
 }
 
 .addPart {
-  border-radius: 0;
+  -webkit-border-radius: 0;
+          border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -124,7 +132,8 @@ hr {
 }
 
 .addPart {
-  border-radius: 0;
+  -webkit-border-radius: 0;
+          border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -215,7 +224,8 @@ label
 .chat-header .customSelect {
     margin: 6px 0 0 10px;
     background: #fff url('../images/arrow-bottom-icon.png') no-repeat 93% center;
-    border-radius: 5px;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
     height: 25px;
     line-height: 22px;
     padding-right: 7px;
@@ -277,6 +287,10 @@ label
     padding: 15px;
 }
 .you {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
     width: 100%;
 }
@@ -335,7 +349,8 @@ label
     margin-top: 10px;
 }
 .panel-group .panel {
-    border-radius: 0px;
+    -webkit-border-radius: 0px;
+            border-radius: 0px;
 }
 .terms-save-btn {
     margin-top: 10px;
@@ -354,7 +369,8 @@ label
     bottom: -5px;
 	}
 .label {
-    border-radius: 0px;
+    -webkit-border-radius: 0px;
+            border-radius: 0px;
     font-size: 14px;
 }
 .panel-heading-white {
@@ -536,7 +552,8 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
     text-decoration: none;
 }
 .pager li > a, .pager li > span {
-    border-radius: 3px;
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
 }
 .search-form {
     padding: 15px;
@@ -654,4 +671,107 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
     position: relative;
     float: left;
     width: 100%;
+}
+
+div.partStatus {
+    display: none;
+}
+
+.hasDatepicker {
+    width: 125px!important;
+    padding: 2px 5px!important;
+}
+
+.panel-title a {
+    padding-left: 8px;
+    padding-top: 0px!important;
+    line-height: 25px!important;
+}
+
+.panel-default > .panel-heading, #new-changes-collapse {
+    background-color: #FAFAFC!important;
+    border-color: #F6F7F9!important;
+}
+
+.main-menu {
+    z-index: 2001!important;
+}
+
+#ProjectChanges_comment {
+    min-width: 100%;
+}
+
+.order-contacts div div {
+    padding: 0px 15px 0px 0px!important;
+}
+
+img#str {
+    display: none;
+}
+
+div.info-block .panel-title a:last-child {
+    display: none;
+}
+
+
+
+#new-changes-link a:focus, div.info-block div.panel-heading a:focus {
+    outline: none;
+}
+
+div.chatBlock {
+    position: relative;
+}
+
+.panel-body textarea {
+    min-width: 100%;
+}
+
+h4.chat-window-is-empty {
+    display: block;
+    position: absolute;
+    top: 37%;
+    left: 33%;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #EDEDED;
+}
+
+div#chatWindow:empty:after {
+    content: "Здесь будет ваша переписка";
+    display: block;
+    position: absolute;
+    top: 38%;
+    left: 28%;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #EDEDED;
+}
+
+#new-changes-link a {
+    margin: 0px 5px 9px !important;
+    width: 100%!important;
+    background-color: #286090!important;
+    border-color: #204D74!important;
+    padding: 7px 112px!important;
+    width: -webkit-calc(100% - 30px)!important;
+    width: -moz-calc(100% - 30px)!important;
+    width: calc(100% - 30px)!important;
+    color: rgb(255, 255, 255)!important;
+    opacity: 1!important;
+    -webkit-transition: all 0.2s ease 0s!important;
+       -moz-transition: all 0.2s ease 0s!important;
+         -o-transition: all 0.2s ease 0s!important;
+            transition: all 0.2s ease 0s!important;
+    opacity: 0.8!important;
+}
+
+#new-changes-link a:hover {
+    opacity: 1!important;
+}
+
+.fa-lg {
+    font-size: 1.8em!important;
 }

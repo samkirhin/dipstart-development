@@ -28,9 +28,7 @@ else {
 }
 ?>
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
-    <!-- Вывод чата -->
     <?php foreach ($messages as $message): ?>
-    
     <div class="post chtpl0-msg">
         
         <div class="chtpl0-avatar">
@@ -67,11 +65,6 @@ else {
                 
             <div class="text"><?= $message->message ?></div>
         </div>
-        
-    </div>
-    
-    
+</div>
     <?php endforeach; ?>
-
-    <!-- Конец вывода чата -->
 </div>

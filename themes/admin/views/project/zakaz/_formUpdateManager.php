@@ -110,7 +110,7 @@
                 <div class="panel-heading panel-heading-white">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
-                            Информация о заказе
+                            Информация о заказе <i class="fa fa-angle-down fa-lg"></i>
 		
                         </a>
 						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz"><img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" /></a>

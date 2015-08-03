@@ -54,6 +54,7 @@ switch ($role){
 }
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');
+Yii::app()->clientScript->registerCssFile('/css/font-awesome/css/font-awesome.css');
 ?>
 <!DOCTYPE html>
 <html lang="ru">

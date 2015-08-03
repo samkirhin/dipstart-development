@@ -18,6 +18,10 @@ h1 {
 hr {
     border: 0;
     height: 1px;
+    background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(#ecf0f5), to(rgba(0, 0, 0, 0)));
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
     position: relative;
     float: left;
@@ -140,7 +144,8 @@ hr {
     padding-top: 0px;
 }
 .panel {
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
 }
 .parts {
     padding: 0;
@@ -158,7 +163,8 @@ hr {
 }
 
 .addPart {
-  border-radius: 0;
+  -webkit-border-radius: 0;
+          border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -179,7 +185,8 @@ hr {
 }
 
 .addPart {
-  border-radius: 0;
+  -webkit-border-radius: 0;
+          border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -270,7 +277,8 @@ label
 .chat-header .customSelect {
     margin: 6px 0 0 10px;
     background: #fff url('../images/arrow-bottom-icon.png') no-repeat 93% center;
-    border-radius: 5px;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
     height: 25px;
     line-height: 22px;
     padding-right: 7px;
@@ -332,6 +340,10 @@ label
     padding: 15px;
 }
 .you {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
     width: 100%;
 }
@@ -388,7 +400,8 @@ label
     margin-top: 10px;
 }
 .panel-group .panel {
-    border-radius: 0px;
+    -webkit-border-radius: 0px;
+            border-radius: 0px;
 }
 .terms-save-btn {
     margin-top: 10px;
@@ -396,7 +409,8 @@ label
     float: right;
 }
 .label {
-    border-radius: 0px;
+    -webkit-border-radius: 0px;
+            border-radius: 0px;
     font-size: 14px;
 }
 .panel-heading-white {
@@ -580,7 +594,8 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
     text-decoration: none;
 }
 .pager li > a, .pager li > span {
-    border-radius: 3px;
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
 }
 .search-form {
     padding: 15px;
@@ -773,3 +788,70 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
     padding: 0px;
     list-style: outside none disc;
 }
+
+/* ======= Alex's style ============ */
+
+div.partStatus {
+    display: none;
+}
+
+.panel-title a {
+    padding-left: 8px;
+    padding-top: 0px!important;
+    line-height: 25px!important;
+}
+
+
+div#accordion .panel-title a {
+    text-align: left!important;
+}
+
+.panel-default > .panel-heading, #new-changes-collapse {
+    background-color: #FAFAFC!important;
+    border-color: #F6F7F9!important;
+}
+
+div.chat-window::after {
+    content: "Здесь будет ваша переписка";
+    display: block!important;
+    position: absolute!important;
+    top: 38%!important;
+    left: 28%!important;
+    font-size: 2rem!important;
+    font-weight: bold!important;
+    text-transform: uppercase!important;
+    color: #EDEDED!important;
+}
+
+#new-changes-link a:focus, div.info-block div.panel-heading a:focus {
+    outline: none;
+}
+
+textarea#message {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+div.col-xs-12 {
+    margin-bottom: 20px;
+}
+
+.panel-title a:focus {
+    outline: none;
+}
+
+textarea#message {
+    padding: 5px 7px;
+}
+
+/*
+.title-name  {
+    width: 100%;
+}
+
+.title-time {
+    position: relative;
+    float: left;
+    padding: 12px 7px;
+}
+/*
