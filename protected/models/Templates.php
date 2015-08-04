@@ -28,12 +28,12 @@ class Templates extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, title, text, type', 'required'),
+			array('name, title, text, type_id', 'required'),
 			array('name, title', 'length', 'max'=>255),
-			array('type', 'length', 'max'=>18),
+			array('type_id', 'length', 'max'=>18),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, title, text, type', 'safe', 'on'=>'search'),
+			array('id, name, title, text, type_id', 'safe', 'on'=>'search'),
 		);
 	}
 

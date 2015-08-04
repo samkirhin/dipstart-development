@@ -17,7 +17,7 @@ $messages = ProjectMessages::model()->findAll($criteria);
         
         <div class="chtpl0-avatar">
             
-            <?php if (User::model()->getUserRole($message->senderObject->id) == 'Author'): ?>
+            <?php if ((User::model()->getUserRole($message->senderObject->id) == 'Author') && (User::model()->isAuthor())) : ?>
                 <button class="toggleexecutor executor-unset"></button>
                 <div><?= (int)$message->senderObject->profile->rating ?></div>
             <?php elseif (User::model()->getUserRole($message->senderObject->id) == 'Customer'): ?>
@@ -30,25 +30,18 @@ $messages = ProjectMessages::model()->findAll($criteria);
         
         <div class="chtpl0-content">
             
-            <div class="owner chtpl0-nickname" data-ownerid="<?= $message->senderObject->id ?>">
-                <!--<a data-toggle="tooltip" title="<?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?></a>  |-->
-				<?php if (User::model()->getUserRole($message->senderObject->id) == 'Author'){ 
-					echo 'Автор';
-				} elseif (User::model()->getUserRole($message->senderObject->id) == 'Customer'){
-					echo 'Заказчик';
-				} else {
-					echo 'Менеджер';
-				}
-				?> |
+            <div class="owner chtpl0-nickname" data-ownerid="<?php echo $message->senderObject->id ?>">
+                <!--<a data-toggle="tooltip" title="<?php echo $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?></a>  |-->
+				<?php echo $message->senderObject->AuthAssignment->AuthItem->description; ?> |
 			</div>
             <div class="chtpl0-date"><?= date_format(date_create($message->date), 'd.m.Y H:i:s'); ?></div>
             
             <?php if ($message->cost): ?>
-                <div class="cost">Цена за работу: <?= $message->cost ?></div>
+                <div class="cost">Цена за работу: <?php echo $message->cost ?></div>
             <?php endif; ?>
                 
-            <div class="text"><?= $message->message ?></div>
+            <div class="text"><?php echo strip_tags($message->message); ?></div>
         </div>
-</div>
+    </div>
     <?php endforeach; ?>
 </div>

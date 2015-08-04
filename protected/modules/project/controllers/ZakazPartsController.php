@@ -101,7 +101,6 @@ class ZakazPartsController extends Controller
         public function actionApiApprove() {
             $this->_prepairJson();
             $data = $this->_request->getParam('data');
-			$path = 'uploads/additions/'.$data['id'].'/';
 			$list = explode('.', $data['orig_name']);
 			$extention = array_pop($list);
             $newName = $this->getGuid();
@@ -274,19 +273,18 @@ class ZakazPartsController extends Controller
         {
             $this->_prepairJson();
             Yii::import("ext.EAjaxUpload.qqFileUploader");
-            $folder='uploads/additions/temp/';
+            $folder='uploads/additions/'.((User::model()->isManager())?$_GET['id'].'/':'temp/');
             $config['allowedExtensions'] = array('jpg', 'jpeg', 'png', 'gif', 'txt', 'doc', 'docx');
             $config['disAllowedExtensions'] = array("exe");
             $sizeLimit = 10 * 1024 * 1024;
             $pi = pathinfo($_GET['qqfile']);
-            $_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
+            if (!User::model()->isManager()) $_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
             $uploader = new qqFileUploader($config, $sizeLimit);
             $result = $uploader->handleUpload($folder,true);
             if ($result['success']) {
-                EventHelper::partDone($_GET['proj_id']);
+                if (!User::model()->isManager()) EventHelper::partDone($_GET['proj_id']);
             }
-            /*$this->_response->setData($result);
-            $this->_response->send();*/
+            $result['html']='<li><a href="/' . $folder . $_GET['qqfile'] . '" id="parts_file" data-part="' . $_GET['id'] . '">' . $_GET['qqfile'] . '</a></li>';
 			chmod($folder.$_GET['qqfile'],0666);
             $this->_response->setData($result);
             $this->_response->send();

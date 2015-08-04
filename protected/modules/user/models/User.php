@@ -193,7 +193,7 @@ class User extends CActiveRecord
 		 else    return FALSE;
 	 }
 	public function isManager(){
-		 if (Yii::app()->user->id && $this->getUserRole()=='Manager')
+		 if (Yii::app()->user->id && $this->getUserRole()=='Manager' || $this->getUserRole()=='Admin')
 			return TRUE;
 		 else    return FALSE;
 	 }
