@@ -423,7 +423,7 @@ Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/
 			
 				<div id="totalPriceDoctoral" style="display: block;"></div>
 				
-				<a class="flatButton orange" href="http://www.ultius.com/component/orders/?Itemid=114">Proceed to Order</a>
+				<a class="flatButton orange" href="/site/page?view=order">Proceed to Order</a>
 				
 			</div>
 			
