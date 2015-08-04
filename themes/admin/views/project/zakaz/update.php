@@ -54,7 +54,7 @@ $this->breadcrumbs = array(
                    <?php } ?>
                </div>
             </div>
-            <?php if ($isModified) echo '<span class=""><b>Заказ на модерации</b></span>';?>
+            <?php if ($isModified) echo '<span><b>Заказ на модерации</b></span>';?>
 
             <div class="row">
                 <div class="col-xs-12">
