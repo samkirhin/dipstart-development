@@ -43,17 +43,20 @@ class ZakazPartsController extends Controller
 			Yii::app()->end();
 		}
 	}
-        
+	
+	public function folder() { 	// --- campaign
+		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+		if ($campaign->id) {
+			return '/uploads/c'.$campaign->id.'/parts/';
+		}else{
+			return '/uploads/additions/';
+		}
+	} 							// ---
+		
         /* Получение списка частей для заказа по ИД*/
         public function actionApiGetAll() {
 			// --- campaign
-			$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
-			if ($campaign->id) {
-				$folder = '/uploads/c'.$campaign->id.'/parts/';
-			}else{
-				$folder = '/uploads/additions/';
-			}
-			// ---
+			$folder = $this->folder();
             $this->_prepairJson();
             $zakazId = $this->_request->getParam('orderId');
             if (User::model()->isAdmin() || User::model()->isManager()) {
@@ -109,6 +112,7 @@ class ZakazPartsController extends Controller
             }
         }
         public function actionApiApprove() {
+			$folder = $this->folder();
             if (!isset($this->_file_data['req'])) {
                 $this->_prepairJson();
                 $this->_file_data = $this->_request->getParam('data');
@@ -141,6 +145,7 @@ class ZakazPartsController extends Controller
             }
         }
         public function actionApiEditPart() {
+			$folder = $this->folder();
             $this->_prepairJson();
             $partId = $this->_request->getParam('id');
             $model = ZakazParts::model()->findByPk($partId);
@@ -148,7 +153,7 @@ class ZakazPartsController extends Controller
                 $model->$par =$val;
             if ($this->_request->isParam('files')) {
                 $files = $this->_request->getParam('files');
-                $path = 'uploads/additions/'.$partId.'/';
+                $path = $folder.$partId.'/';
                 $this->checkDir($path);
                 foreach($files as $file) {
                     $list = explode('.', $file);
@@ -221,11 +226,12 @@ class ZakazPartsController extends Controller
         }
         
         public function actionApiDeleteFile() {
+			$folder = $this->folder();
             $this->_prepairJson();
             $fileid = $this->_request->getParam('id');
             $file = new ZakazPartsFiles;
             $this->result = $file->deleteFile($fileid);
-            unlink($_SERVER['DOCUMENT_ROOT'].'uploads/additions/'.$this->result['part'].'/'.$this->result['file']);
+            unlink($_SERVER['DOCUMENT_ROOT'].$folder.$this->result['part'].'/'.$this->result['file']);
             $this->_response->setData(array(
                 'id' => $this->result['part']
             ));
@@ -288,13 +294,16 @@ class ZakazPartsController extends Controller
             $this->_response->send();
         }
         
-        public function actionUpload()
-        {
-            $this->_prepairJson();
+        public function actionUpload() {
+			$folder = $this->folder();
+			$this->_prepairJson();
+			$folder = $_SERVER['DOCUMENT_ROOT'].$folder;
             Yii::import("ext.EAjaxUpload.qqFileUploader");
-            $folder='uploads/additions/temp/';
+			//chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
+            $folder=$folder.'temp/';
+			chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
             $config['allowedExtensions'] = array('jpg', 'jpeg', 'png', 'gif', 'txt', 'doc', 'docx');
-            $config['disAllowedExtensions'] = array("exe");
+            $config['disAllowedExtensions'] = array("exe, php");
             $sizeLimit = 10 * 1024 * 1024;
             $pi = pathinfo($_GET['qqfile']);
             $_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
@@ -304,14 +313,19 @@ class ZakazPartsController extends Controller
                 if (!User::model()->isManager()) EventHelper::partDone($_GET['proj_id']);
             }
             chmod($folder.$_GET['qqfile'],0666);
-            if (User::model()->isManager()) {
+			
+            if (User::model()->isManager()||User::model()->isAdmin()) {
+				
                 $this->_file_data['part_id']=$_GET['id'];
                 $this->_file_data['orig_name']=$pi['filename'].'.'.$pi['extension'];
                 $this->_file_data['id']=0;
                 $this->_file_data['req']=1;
                 $this->actionApiApprove();
             }
-            $this->result['html']='<li><a href="' . $this->result['file_name'] . '" id="parts_file">' . $_GET['qqfile'] . '</a></li>';
+			
+            //$this->result['html']='=)';//'<li>!!!<a href="' . $this->result['file_name'] . '" id="parts_file">' . $_GET['qqfile'] . '</a></li>';
+			
+			$this->result = array('test' => $this->result['error']);
             $this->_response->setData($this->result);
             $this->_response->send();
         }

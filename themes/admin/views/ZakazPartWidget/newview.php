@@ -51,7 +51,7 @@
                             $tmp .= '<button class="zakaz_part_approve_file right btn" ';
                             foreach ($v as $kk => $vv)
                                 $tmp .= 'data-'.$kk.'="'.$vv.'" ';
-                            $tmp .= ' onclick="approve(this)"'.($v['id']==0?'>Одобрить':'>NOTОдобрить').'</button>';
+                            $tmp .= ' onclick="approve(this)"'.($v['id']==0?'>Одобрить':'>Обобрить').'</button>';
                             $tmp .= '</li>';
                         }
 
