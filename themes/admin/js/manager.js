@@ -107,20 +107,6 @@ $( document ).ready( function() {
     });
 });
 
-
-$( document ).ready( function() {
-    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
-        var data = $(this).val();
-        var elid = $(this).attr('id');
-        var id = $('#order_number').html();
-        $.post('/project/zakaz/update?id='+id,
-            {'data': data,'id':id,'elid': elid},
-        function (response) {
-            if (response.data)obj.remove();
-        });
-    });
-});
-
 $( document ).ready( function() {
     var arrow = 'fa-angle-down fa-lg';
     $('div.info-block div.panel-heading a').on('click', function() {

@@ -257,14 +257,10 @@ class ZakazController extends Controller
 			}
 		}
 
-		if ($isModified) {
-			$message = 'Заказ на модерации';
-		} else {
-			$message = $model->projectStatus->status;
-		}
 		$this->render($view, array(
 			'model'=>$model,
-			'message'=>$message,
+			'message'=>$model->projectStatus->status,
+			'isModified'=>$isModified,
 		));
 	}
     

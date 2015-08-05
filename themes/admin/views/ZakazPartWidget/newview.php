@@ -47,9 +47,11 @@
                         <?php 
 						$tmp = '';
 						foreach ($data['files'] as $k => $v){
-                            $tmp .= '<li><a href="' . $v['file_name'] . '" id="parts_file" data-part="' . $data['id'] . '">' . $v['orig_name'] . '</a>';
-                            if ($v['id']==0)
-                                $tmp .= '<button data-id="' . $data['id'] . '" data-orig_name="' . $v['orig_name'] . '" class="zakaz_part_approve_file right btn" onclick="approve(this)">Одобрить</button>';
+                            $tmp .= '<li><a href="' . $v['file_name'] . '" id="parts_file">' . $v['orig_name'] . '</a>';
+                            $tmp .= '<button class="zakaz_part_approve_file right btn" ';
+                            foreach ($v as $kk => $vv)
+                                $tmp .= 'data-'.$kk.'="'.$vv.'" ';
+                            $tmp .= ' onclick="approve(this)"'.($v['id']==0?'>Одобрить':'>NOTОдобрить').'</button>';
                             $tmp .= '</li>';
                         }
 
@@ -62,7 +64,9 @@
                                     'disAllowedExtensions' => array('exe'),
                                     'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
                                     'minSizeLimit' => 10,// minimum file size in bytes
-                                    'onComplete' => "js:function(id, fileName, responseJSON){}"
+                                    'onComplete' => "js:function(id, fileName, responseJSON){
+                                        $('.qq-upload-list').append(responseJSON.data.html);
+                                    }"
                                 )
                             )
                         ); ?>
