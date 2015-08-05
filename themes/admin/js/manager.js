@@ -51,7 +51,7 @@ function send(url) {
             if (data.error) alert(data.error.ProjectChanges_file);
         },
         error: function (data,textStatus,errorThrown) {
-            alert(data);
+            alert('err: '+data+"\nstatus: "+textStatus+errorThrown);
         },
         processData: false,
         contentType: false,
@@ -132,8 +132,50 @@ $( document ).ready( function() {
             arrow = 'fa-angle-down fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
-    })
-});
+    });
+    
+    
+    $('p.author-mail-icon').next().hide();
+    $('p.author-phone-icon').next().hide();
+    $('p.customer-mail-icon').next().hide();
+    $('p.customer-phone-icon').next().hide();
+    
+    $('p.author-mail-icon').on('click', function() {
+        if ($('p.author-phone-icon').next().css('display') == 'inline-block') {
+            $('p.author-phone-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
+    
+    $('p.author-phone-icon').on('click', function() {
+        if ($('p.author-mail-icon').next().css('display') == 'inline-block') {
+            $('p.author-mail-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
+    
+        $('p.customer-mail-icon').on('click', function() {
+        if ($('p.customer-phone-icon').next().css('display') == 'inline-block') {
+            $('p.customer-phone-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
+    
+    $('p.customer-phone-icon').on('click', function() {
+        if ($('p.customer-mail-icon').next().css('display') == 'inline-block') {
+            $('p.customer-mail-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
+
 
 
     var arrow = 'fa-angle-up';
@@ -149,3 +191,7 @@ $( document ).ready( function() {
         }
         $('section.contact-section').slideToggle();
     });
+    
+});
+    
+    
