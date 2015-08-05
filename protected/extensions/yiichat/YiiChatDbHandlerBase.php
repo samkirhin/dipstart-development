@@ -43,7 +43,12 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 
 	// abstract optional
 	protected function getTableName(){
-		return "`ProjectMessages`";
+		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+		if ($campaign->id) {
+			return '`'.$campaign->id.'_ProjectMessages`';
+		} else {
+			return "`ProjectMessages`";
+		}
 	}
 
 	// abstract strict

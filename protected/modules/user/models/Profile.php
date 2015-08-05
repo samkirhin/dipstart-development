@@ -16,6 +16,15 @@ class Profile extends UActiveRecord
 	// первичная модель
 	private $_modelSave;
 
+	public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.Yii::app()->getModule('user')->tableProfiles;
+		else
+			return Yii::app()->getModule('user')->tableProfiles;
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
@@ -27,11 +36,10 @@ class Profile extends UActiveRecord
 
 	/**
 	 * @return string the associated database table name
-	 */
 	public function tableName()
 	{
 		return Yii::app()->getModule('user')->tableProfiles;
-	}
+	}*/
 
 	/**
 	 * @return array validation rules for model attributes.

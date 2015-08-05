@@ -528,7 +528,14 @@ class ZakazController extends Controller
     public function actionApiApproveFile() {
         $this->_prepairJson();
         $data = $this->_request->getParam('data');
-        $path=Yii::getPathOfAlias('webroot').'/uploads/'.$data['id'].'/';
+		// --- campaign
+		if(isset(Zakaz::$files_folder)){
+			$path=Yii::getPathOfAlias('webroot').Zakaz::$files_folder.$data['id'].'/';
+		} else {
+			$path=Yii::getPathOfAlias('webroot').'/uploads/'.$data['id'].'/';
+		}
+		// ---
+        //$path=Yii::getPathOfAlias('webroot').'/uploads/'.$data['id'].'/';
         if (!file_exists($path)) mkdir($path);
         if (rename($path.$data['name'], $path.str_replace('#pre#', '', $data['name']))) {
             $this->_response->setData(true);

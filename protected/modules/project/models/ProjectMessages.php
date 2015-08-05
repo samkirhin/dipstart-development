@@ -2,12 +2,19 @@
 
 class ProjectMessages extends CActiveRecord
 {
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'ProjectMessages';
+	public static $table_prefix;
+	
+	public function tableName() {
+		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+		if ($campaign->id) {
+			return $campaign->id.'_ProjectMessages';
+		} else {
+			return 'ProjectMessages';
+		}
+		/*if(isset(self::$table_prefix))
+			return self::$table_prefix.'ProjectMessages';
+		else
+			return 'ProjectMessages';*/
 	}
 
 	/**

@@ -2,9 +2,14 @@
 
 class Events extends CActiveRecord {
     
-    public function tableName() {
-        return 'ProjectsEvents';
-    }
+	public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'ProjectsEvents';
+		else
+			return 'ProjectsEvents';
+	}
     
     public function rules() {
         return array(

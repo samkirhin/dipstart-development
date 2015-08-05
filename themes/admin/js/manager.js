@@ -51,7 +51,7 @@ function send(url) {
             if (data.error) alert(data.error.ProjectChanges_file);
         },
         error: function (data,textStatus,errorThrown) {
-            alert(data);
+            alert('err: '+data+"\nstatus: "+textStatus+errorThrown);
         },
         processData: false,
         contentType: false,
@@ -118,8 +118,7 @@ $( document ).ready( function() {
             arrow = 'fa-angle-down fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
-    })
-});
+    });
 
 
     var arrow = 'fa-angle-up';
@@ -135,3 +134,5 @@ $( document ).ready( function() {
         }
         $('section.contact-section').slideToggle();
     });
+	
+});

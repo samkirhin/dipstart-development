@@ -113,7 +113,13 @@ $this->breadcrumbs = array(
             ?>
             <!-- Конец блока правок частей менеджера -->
             <?php
-			$url = '/uploads/'.$model->id.'/';
+			// --- campaign
+			if(isset(Zakaz::$files_folder)){
+				$url = Zakaz::$files_folder.$model->id.'/';
+			} else {
+				$url = '/uploads/'.$model->id.'/';
+			}
+			// ---
             $path = Yii::getPathOfAlias('webroot').$url;
 			$tmp = '';
             if (file_exists($path)) {

@@ -104,27 +104,40 @@ class ChangesController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionAdd($project) {
-
         if (!Yii::app()->request->isAjaxRequest) {
             return false;
         }
 
+		// --- кампании
+		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+		if (isset($this->campaign_id)) {
+			ProjectChanges::$table_prefix = $campaign->id.'_';
+			ProjectChanges::$file_path = 'uploads/c'.$campaign->id.'/changes_documents';
+		} else {
+			ProjectChanges::$file_path = 'uploads/changes_documents';
+		}
+		// ---
+		
         $model = new ProjectChanges();
         $model->scenario = 'add';
         $model->project_id = (int)$project;
-
+		
         if (isset($_POST['ProjectChanges'])) {
             $model->attributes = $_POST['ProjectChanges'];
             $model->fileupload = CUploadedFile::getInstance($model, 'fileupload');
+			
             if (!empty($model->fileupload)) {
                 $model->file = 'no';
-            }
+            } else {
+				echo  CJSON::encode(array('test' => array('text' => 'file-not-uploaded')));
+				Yii::app()->end();
+			}
             if (ProjectChanges::approveAllowed()) {
                 $model->moderate = 1;
             } else {
                 $model->moderate = 0;
             }
-
+			
             if (!$model->validate()) {
                 echo CJSON::encode(array('error' => CJSON::decode(CActiveForm::validate($model))));
                 Yii::app()->end();

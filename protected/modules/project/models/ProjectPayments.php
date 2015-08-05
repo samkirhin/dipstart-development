@@ -2,12 +2,13 @@
 
 class ProjectPayments extends CActiveRecord
 {
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'ProjectPayments';
+	public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'ProjectPayments';
+		else
+			return 'ProjectPayments';
 	}
 
 	/**
