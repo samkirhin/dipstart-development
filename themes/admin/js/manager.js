@@ -7,6 +7,7 @@ function reload(){
 function add_part(orderid){
     $.post('/project/zakazParts/apiCreate', JSON.stringify({
         'orderId': orderid,
+
         'name': 'Новая Часть'
     }), function (response) {
         if (response.data) {
@@ -91,9 +92,24 @@ function spam(orderid){
             console.log(data);
         }
     });
+
     alert('Рассылка запущена');
     return false;
 }
+$( document ).ready( function() {
+    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
+        var data = $(this).val();
+        var elid = $(this).attr('id');
+        var id = $('#order_number').html();
+        $.post('/project/zakaz/update?id='+id,
+            {'data': data,'id':id,'elid': elid},
+        function (response) {
+            if (response.data)obj.remove();
+        });
+    });
+});
+
+
 $( document ).ready( function() {
     $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
         var data = $(this).val();

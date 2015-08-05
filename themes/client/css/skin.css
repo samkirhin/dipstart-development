@@ -1136,3 +1136,12 @@ width: auto;
 }
 
 /* chat */
+
+
+form#registration-form {
+    margin-right: 30px;
+}
+
+form#registration-form input {
+    width: 150px!important   ;
+}
