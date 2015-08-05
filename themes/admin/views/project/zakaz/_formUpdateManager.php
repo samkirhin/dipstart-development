@@ -59,7 +59,7 @@
 			<button class="chtpl0-show">Показать сообщения</button>
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
-		<div class="chtpl0-panel chtpl0-down">
+		<div class="chtpl0-panel chtpl0-down chat-functions">
 			<input id="send_email" type="checkbox"><p>Отправить на почту</p>
 			<input id="send_sms" type="checkbox"><p>Отправить SMS</p>
 			<button class="chtpl0-template"></button><p>Шаблон</p>

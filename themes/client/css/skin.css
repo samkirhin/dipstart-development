@@ -1137,11 +1137,15 @@ width: auto;
 
 /* chat */
 
-
-form#registration-form {
-    margin-right: 30px;
+textarea#Moderation_add_demands, textarea#Moderation_text, textarea#Profile_additional {
+    min-width: 100%;
+    max-width: 100%;
 }
 
-form#registration-form input {
-    width: 150px!important   ;
+#option:select {
+    color: #000!important;
+}
+
+select {
+    color: #000!important;
 }

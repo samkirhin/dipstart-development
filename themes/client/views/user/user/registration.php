@@ -27,7 +27,7 @@ $this->breadcrumbs=array(
 	
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
 	
-	<div class="row">
+	<div class="row registration-first">
 	<?php echo $form->labelEx($model,'username'); ?><br/>
 	<?php echo $form->textField($model,'username'); ?><br/>
 	<?php echo $form->error($model,'username'); ?>

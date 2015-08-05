@@ -789,3 +789,27 @@ div.authorMail, div.authorPhone, dic.customerMail, div.customerPhone {
     vertical-align: middle;
     padding-top: 3px!important;
 }
+
+div.chat-functions {
+    padding-top: 15px;
+}
+
+div.chat-functions > button {
+    bottom: 6px!important;
+}
+
+.nav-justified > li {
+    width: auto!important;
+}
+
+.pay-save-btn {
+    margin-top: 44px!important;
+}
+
+.zakaz_part_approve_file {
+    float: right;
+}
+
+ul.qq-upload-list > li {
+    margin-bottom: 15px!important;
+}
