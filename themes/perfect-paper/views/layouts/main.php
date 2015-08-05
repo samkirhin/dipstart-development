@@ -6,9 +6,8 @@
  * Time: 17:53
  */
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/style.css');
-Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/bootstrap-3.3.4-dist/css/bootstrap.css');
-//Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/bootstrap-responsive.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery');
+Yii::app()->language='en';
 ?>
 <!DOCTYPE html>
 <html>
