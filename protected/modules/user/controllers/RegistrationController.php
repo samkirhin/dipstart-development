@@ -78,6 +78,7 @@ class RegistrationController extends Controller
 						}
 					} else $profile->validate();
 				}
+				Yii::app()->theme='client';
 			    $this->render('/user/registration',array('model'=>$model,'profile'=>$profile));
 		    }
 	}

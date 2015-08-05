@@ -46,6 +46,14 @@ class ZakazPartsController extends Controller
         
         /* Получение списка частей для заказа по ИД*/
         public function actionApiGetAll() {
+			// --- campaign
+			$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+			if ($campaign->id) {
+				$folder = '/uploads/c'.$campaign->id.'/parts/';
+			}else{
+				$folder = '/uploads/additions/';
+			}
+			// ---
             $this->_prepairJson();
             $zakazId = $this->_request->getParam('orderId');
             if (User::model()->isAdmin() || User::model()->isManager()) {
@@ -65,7 +73,7 @@ class ZakazPartsController extends Controller
                     $part['file'] = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
                         array("PART_ID"=>$model->id)
                     );
-                    $for_moderation = array_diff(scandir(YiiBase::getPathOfAlias('webroot').'/uploads/additions/temp'), array('..', '.'));
+                    $for_moderation = array_diff(scandir(YiiBase::getPathOfAlias('webroot').$folder.'temp'), array('..', '.'));
                     foreach ($for_moderation as $k=>$v)
                         if(preg_match('/_'.$model->id.'./i',$v)){
                             $for_moderation[$k]=array(
@@ -108,8 +116,8 @@ class ZakazPartsController extends Controller
 			$list = explode('.', $this->_file_data['orig_name']);
 			$extention = array_pop($list);
             $newName = $this->getGuid();
-			$filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.implode('.',$list).'_'.$this->_file_data['part_id'].'.'.$extention;
-            $newDir = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$this->_file_data['part_id'];
+			$filePath = $_SERVER['DOCUMENT_ROOT'].$folder.'temp/'.implode('.',$list).'_'.$this->_file_data['part_id'].'.'.$extention;
+            $newDir = $_SERVER['DOCUMENT_ROOT'].$folder.$this->_file_data['part_id'];
             $fileNewPath = $newDir.'/'.$newName.".".$extention;
             if (!file_exists($newDir)) {
 				mkdir($newDir,0777);
@@ -122,7 +130,7 @@ class ZakazPartsController extends Controller
                     $fileModel->file_name = $newName . "." . $extention;
                     $fileModel->comment = '';
                     $fileModel->save();
-                    $this->result=array('file_name'=>'/uploads/additions/'.$this->_file_data['part_id'].'/'.$newName.".".$extention);
+                    $this->result=array('file_name'=>$folder.$this->_file_data['part_id'].'/'.$newName.".".$extention);
                 } else $this->result=array('success'=>false);
             } elseif (rename($_SERVER['DOCUMENT_ROOT'].$this->_file_data['file_name'],$filePath)) {
                 $this->result['delete']=ZakazPartsFiles::model()->findByPk($this->_file_data['id'])->delete();
@@ -145,8 +153,8 @@ class ZakazPartsController extends Controller
                 foreach($files as $file) {
                     $list = explode('.', $file);
                     $newName = $this->getGuid();
-                    $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$file;
-                    $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$partId.'/'.$newName.".".$list['1'];
+                    $filePath = $_SERVER['DOCUMENT_ROOT'].$folder.'temp/'.$file;
+                    $fileNewPath = $_SERVER['DOCUMENT_ROOT'].$folder.$partId.'/'.$newName.".".$list['1'];
                     $probe = rename($filePath, $fileNewPath);
                     $fileModel = new ZakazPartsFiles();
                     $fileModel->part_id = $model->id;

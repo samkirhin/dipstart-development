@@ -72,12 +72,12 @@ class ChatController extends Controller {
         Yii::app()->session['project_id'] = $orderId;
 
         if (Yii::app()->request->isAjaxRequest) {
-            if (Yii::app()->request->getPost(ProjectMessages::model()->tableName())) {
+            if (Yii::app()->request->getPost('ProjectMessages')) {
                 $model = new ProjectMessages;
                 $model->sender = Yii::app()->user->id;
                 $model->moderated = 0;
                 $model->order = $orderId;
-                $model->attributes = Yii::app()->request->getPost($model->tableName());
+                $model->attributes = Yii::app()->request->getPost('ProjectMessages');
                 $model->date = date('Y-m-d H:i:s');
                 switch ($model->recipient) {
                     case 'manager':
@@ -116,7 +116,17 @@ class ChatController extends Controller {
     }
 	public function actionUpload() {
         Yii::import("ext.EAjaxUpload.qqFileUploader");
-        $folder='uploads/'.$_GET['id'].'/';// folder for uploaded files
+		// --- кампании
+		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+		if (isset($this->campaign_id)) {
+			$folder='uploads/c'.$this->campaign_id.'/'.$_GET['id'].'/';
+		} else {
+			$folder='uploads/'.$_GET['id'].'/';
+		}
+		// ---
+		if (!file_exists($folder)) {
+			mkdir($folder, 0777);
+		}
         $config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx');
         $config['disAllowedExtensions'] = array("exe");
         $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes

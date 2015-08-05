@@ -31,6 +31,15 @@ class ProfileField extends CActiveRecord
 	 * @var integer $visible
 	 */
 
+	public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.Yii::app()->getModule('user')->tableProfileFields;
+		else
+			return Yii::app()->getModule('user')->tableProfileFields;
+	}
+	 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
@@ -42,11 +51,10 @@ class ProfileField extends CActiveRecord
 
 	/**
 	 * @return string the associated database table name
-	 */
 	public function tableName()
 	{
 		return Yii::app()->getModule('user')->tableProfileFields;
-	}
+	}*/
 
 	/**
 	 * @return array validation rules for model attributes.

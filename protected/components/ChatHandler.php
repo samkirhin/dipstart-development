@@ -6,7 +6,13 @@ class ChatHandler extends YiiChatDbHandlerBase {
 	//  getData(), getIdentity(), getChatId()
 	//
 	protected function getTableName(){
-		return "ProjectMessages";
+		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+		if ($campaign->id) {
+			return $campaign->id.'_ProjectMessages';
+		} else {
+			return 'ProjectMessages';
+		}
+		//return "ProjectMessages";
 	}
 	protected function getDb(){
 		// the application database

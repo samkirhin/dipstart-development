@@ -29,7 +29,22 @@ class Controller extends RController
 		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
 		$this->campaign_id = $campaign->id;
 		if ($this->campaign_id) {
+			Payment::$table_prefix = $this->campaign_id.'_';
+			Profile::$table_prefix = $this->campaign_id.'_';
+			ProfileField::$table_prefix = $this->campaign_id.'_';
+			ProjectChanges::$table_prefix = $this->campaign_id.'_';
+			ProjectChanges:$file_path = 'uploads/c'.$this->campaign_id.'/changes_documents';
+			ProjectMessages::$table_prefix = $this->campaign_id.'_';
+			ProjectPayments::$table_prefix = $this->campaign_id.'_';
 			Zakaz::$table_prefix = $this->campaign_id.'_';
+			Zakaz::$files_folder = '/uploads/c'.$this->campaign_id.'/';
+			Events::$table_prefix = $this->campaign_id.'_';
+			ZakazParts::$table_prefix = $this->campaign_id.'_';
+			UpdateProfile::$table_prefix = $this->campaign_id.'_';
+			Moderation::$table_prefix = $this->campaign_id.'_';
+			ZakazPartsFiles::$table_prefix = $this->campaign_id.'_';
+		} else {
+			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
 		// ---
         if (!Yii::app()->user->isGuest)

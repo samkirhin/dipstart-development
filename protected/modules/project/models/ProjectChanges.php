@@ -19,17 +19,18 @@ Yii::import('application.helpers.STranslate');
 
 class ProjectChanges extends CActiveRecord {
 
-    const FILE_PATH = 'uploads/changes_documents';
+    public static $file_path;/* = 'uploads/changes_documents';*/
     public $old_file;
     public $fileupload;
 
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName() {
-
-        return 'ProjectChanges';
-    }
+    public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'ProjectChanges';
+		else
+			return 'ProjectChanges';
+	}
 
     /**
      * @return array validation rules for model attributes.
@@ -139,7 +140,6 @@ class ProjectChanges extends CActiveRecord {
     }
 
     public function beforeSave() {
-
         if ($this->fileupload instanceof CUploadedFile) {
             $mainName = $newName = STranslate::transliter($this->fileupload->getName());
             $i = 1;
@@ -156,7 +156,9 @@ class ProjectChanges extends CActiveRecord {
 
                 $i++;
             }
+			
             $this->fileupload->saveAs($this->getPathDirStoredFile() . '/' . $newName);
+			
             $this->file = $newName;
             if (!empty($this->old_file)) {
                 $delete = $this->getPathDirStoredFile() . '/' . $this->old_file;
@@ -188,7 +190,7 @@ class ProjectChanges extends CActiveRecord {
     public function getListChanges($project_id) {
 
         $result = Yii::app()->db->createCommand()
-                                ->select('CONCAT("/' . self::FILE_PATH . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
+                                ->select('CONCAT("/' . self::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
                                 ->from(self::tableName())
                                 ->where('project_id =' . (int)$project_id . (User::model()->isAuthor()?' AND moderate=1':''))
                                 ->queryAll();
@@ -199,7 +201,7 @@ class ProjectChanges extends CActiveRecord {
     public function getItem($id) {
 
         $result = Yii::app()->db->createCommand()
-                                ->select('CONCAT("/' . self::FILE_PATH . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
+                                ->select('CONCAT("/' . self::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
                                 ->from(self::tableName())
                                 ->where('id =' . (int)$id)
                                 ->queryRow();
@@ -233,7 +235,7 @@ class ProjectChanges extends CActiveRecord {
      */
     public function getFileUrl() {
 
-        return Yii::app()->basePath . '/' . self::FILE_PATH . '/' . $this->file;
+        return Yii::app()->basePath . '/' . self::$file_path . '/' . $this->file;
     }
 
     static public function approveAllowed() {
@@ -248,7 +250,7 @@ class ProjectChanges extends CActiveRecord {
      */
     public function getPathDirStoredFile() {
 
-        return Yii::getPathOfAlias('webroot') . '/' . self::FILE_PATH;
+        return Yii::getPathOfAlias('webroot') . '/' . self::$file_path;
     }
 
     /**

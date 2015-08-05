@@ -135,6 +135,7 @@ $( document ).ready( function() {
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
     });
+<<<<<<< HEAD
     
     
     $('p.author-mail-icon').next().hide();
@@ -178,8 +179,8 @@ $( document ).ready( function() {
         }
     });
 
-
-
+	
+	//------------------
     var arrow = 'fa-angle-up';
     
     contactSectionButton = $('div.contactme');
@@ -193,7 +194,6 @@ $( document ).ready( function() {
         }
         $('section.contact-section').slideToggle();
     });
+	////----------------
     
 });
-    
-    

@@ -62,7 +62,14 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 </div>
             </div>
             <?php
-			$url = '/uploads/' . $order->id . '/';
+			// --- campaign
+			if(isset(Zakaz::$files_folder)){
+				$url = Zakaz::$files_folder.$order->id.'/';
+			} else {
+				$url = '/uploads/'.$order->id.'/';
+			}
+			// ---
+			//$url = '/uploads/' . $order->id . '/';
             $path = Yii::getPathOfAlias('webroot') . $url;
 			$html_string = '';
             if (file_exists($path)){
