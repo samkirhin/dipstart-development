@@ -361,12 +361,32 @@ text-align: center;
 
 
 
-/* ========== Alex's style(registration) ========= */
+/* ========== Alex's style(таблица в вкладке "бухгалтерия") ========= */
 
-form#registration-form {
-    margin-right: 30px;
+table.payment-table {
+    margin-top: 25px!important;
 }
 
-form#registration-form input {
-    width: 150px!important   ;
+table.payment-table > tbody > tr > td {
+    padding: 1px!important;
+    text-align: center!important;
+}
+
+table.payment-table th, table.payment-table td {
+    vertical-align: middle!important;
+}
+
+table.payment-table th button {
+    display: block!important;
+    margin: 0px auto!important;
+}
+
+.approve_payment {
+    padding: 4px!important;
+    margin-right: 0px!important;
+    font-size: 10px!important;
+}
+
+table.payment-table td button {
+    width: 94%!important;
 }
