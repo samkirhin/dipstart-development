@@ -795,11 +795,11 @@ div.chat-functions {
 }
 
 div.chat-functions > button {
-    bottom: 6px!important;
+    bottom: 6px!important; /* ____*/
 }
 
 .nav-justified > li {
-    width: auto!important;
+    /* width: auto!________________important; */
 }
 
 .pay-save-btn {

@@ -113,7 +113,9 @@
                             Информация о заказе <i class="fa fa-angle-down fa-lg"></i>
 		
                         </a>
-						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz"><img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" /></a>
+						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
+						<!--<img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" />-->
+						</a>
                     </h4>
                 </div>
                 <div id="infoZakaz" class="panel-collapse collapse">
