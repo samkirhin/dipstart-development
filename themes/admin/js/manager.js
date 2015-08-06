@@ -135,7 +135,7 @@ $( document ).ready( function() {
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
     });
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
     
     
     $('p.author-mail-icon').next().hide();
