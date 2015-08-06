@@ -2,7 +2,8 @@
 
 class UploadPaymentImage extends CFormModel
 {
-    const PAYMENT_DIR = '/uploads/payments/';
+    //const PAYMENT_DIR = '/uploads/payments/';
+	public static $folder;
     
     public $file;
     public $orderId;
@@ -14,13 +15,22 @@ class UploadPaymentImage extends CFormModel
         ];
     }
     
+	public function init() {
+		$c_id = Campaign::getId();
+		if ($c_id) {
+			self::$folder='/uploads/c'.$c_id.'/payments/';
+		} else {
+			self::$folder='/uploads/payments/';
+		}
+	}
+	
     public function save()
     {
         $order = Zakaz::model()->findByPk($this->orderId);
         
         if ($order && $this->file instanceof CUploadedFile && ($order->status == 2 || $order->status == 3 || $order->status == 4)) {
 
-            $dir = Yii::getPathOfAlias('webroot') . self::PAYMENT_DIR;
+            $dir = Yii::getPathOfAlias('webroot') . self::$folder;
             if (!is_dir($dir)) {
                 mkdir($dir, 0775, true);
             }

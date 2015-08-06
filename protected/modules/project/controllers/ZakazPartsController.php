@@ -45,9 +45,9 @@ class ZakazPartsController extends Controller
 	}
 	
 	public function folder() { 	// --- campaign
-		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
-		if ($campaign->id) {
-			return '/uploads/c'.$campaign->id.'/parts/';
+		$c_id = Campaign::getId();
+		if ($c_id) {
+			return '/uploads/c'.$c_id.'/parts/';
 		}else{
 			return '/uploads/additions/';
 		}

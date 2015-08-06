@@ -108,6 +108,7 @@ class ChatController extends Controller {
                 EventHelper::editOrder($model->id);
             }
         }
+		//echo '=)';
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),

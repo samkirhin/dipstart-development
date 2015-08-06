@@ -1,3 +1,7 @@
+/* Akoch-ov */
+function changes_approve(id, value){
+	$.post('/project/changes/approve?id='+id,{moderate: value});
+}
 /**
  * Created by coolfire on 08.05.15.
  */
@@ -61,14 +65,19 @@ function send(url) {
 
     return false;
 }
-function approve(obj){
+function approve(obj){ /* Approve files in parts */
     var data=$(obj).data();
+	$(obj).hide();
     $.post('/project/zakazParts/apiApprove', JSON.stringify({
         'data': data
     }), function (response) {
         if (response.data) {
             console.log(response);
-			$(obj).remove();
+			//console.log();
+			$(obj).siblings("button").show();
+			$(obj).siblings("button").removeClass("hidden");
+			//if($(obj).hasClass('on')) $($('button[data-id="'+data['id']+']').find('.on[data-part_id="'+data['part_id']+'"]').removeClass("hidden")).show();
+			//if($(obj).hasClass('off')) $($('button[data-id="'+data['id']+']').find('.off[data-part_id="'+data['part_id']+'"]').removeClass("hidden")).show();
         }
     }, 'json');
 }

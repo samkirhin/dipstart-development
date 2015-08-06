@@ -8,9 +8,9 @@ class ZakazPartWidget extends CWidget{
 
     public function init() {
 		// --- campaign
-		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
-		if ($campaign->id) {
-			$folder = '/uploads/c'.$campaign->id.'/parts/';
+		$c_id = Campaign::getId();
+		if ($c_id) {
+			$folder = '/uploads/c'.$c_id.'/parts/';
 		}else{
 			$folder = '/uploads/additions/';
 		}
@@ -31,6 +31,7 @@ class ZakazPartWidget extends CWidget{
                 'orig_name'=>implode('_',array_slice(str_getcsv(pathinfo($v,PATHINFO_FILENAME),'_'),0,-1)).'.'.pathinfo($v,PATHINFO_EXTENSION),
                 'file_name'=>Yii::app()->baseUrl.$folder.'temp/'.$v,
                 'comment'=>0,
+				'for_approved'=>'Must approved',
             );
         $tempdata = $this->arrDataProvider->getData();
         foreach ($tempdata as $k=>$v){
@@ -47,7 +48,6 @@ class ZakazPartWidget extends CWidget{
             'itemView'=>'newview',
             'summaryText'=>'',
         ));*/
-		
 		$data = $this->arrDataProvider->getData();
 		foreach ($data as $item)
 		$this->render('newview', $item);

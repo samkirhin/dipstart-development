@@ -21,9 +21,7 @@ class ChangesWidget extends CWidget
     public $project;
     protected $userObj;
 
-    public function init()
-    {
-
+    public function init() {
         $this->userObj = User::model();
         $this->changes = new CArrayDataProvider(Yii::app()->db->createCommand()
             ->select('CONCAT("/' . ProjectChanges::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')

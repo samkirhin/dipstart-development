@@ -36,7 +36,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 						<?php $this->endWidget();
 						if ($chek_image) {
 							echo '<div class="chek-is-approving">Ваш платёж на проверке...</div>';
-							$img = UploadPaymentImage::PAYMENT_DIR . $chek_image;
+							$img = UploadPaymentImage::$folder . $chek_image;
 							echo '<div class="chek-image-link">'.CHtml::link('Ваш чек', $img, array ('target' => '_blank' )).'</div>';
 						}
 						echo '</div><hr>';

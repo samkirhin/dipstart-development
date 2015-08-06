@@ -108,15 +108,15 @@ class ChangesController extends Controller {
             return false;
         }
 
-		// --- кампании
-		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
-		if (isset($this->campaign_id)) {
-			ProjectChanges::$table_prefix = $campaign->id.'_';
-			ProjectChanges::$file_path = 'uploads/c'.$campaign->id.'/changes_documents';
+		/*/ --- кампании
+		$c_id = Campaign::getId();
+		if ($c_id) {
+			ProjectChanges::$table_prefix = $c_id.'_';
+			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
 		} else {
 			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
-		// ---
+		// --- */
 		
         $model = new ProjectChanges();
         $model->scenario = 'add';
@@ -172,7 +172,7 @@ class ChangesController extends Controller {
             Yii::app()->end();
         }
         if (isset($_REQUEST['moderate'])) {
-            $model->moderate = !$model->isModerate();
+            $model->moderate = !$model->isModerate() ? '1' : '0';
             $model->date_update = date('Y-m-d H:i:s');
             if (ProjectChanges::approveAllowed()) {
                 $model->date_moderate = date('Y-m-d H:i:s');

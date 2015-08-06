@@ -1,5 +1,6 @@
 <?php
 class Campaign extends CActiveRecord {
+	public static $orgz;
 	public function tableName() {
 		return 'campaign';
 	}
@@ -9,6 +10,10 @@ class Campaign extends CActiveRecord {
 			return $orgz[0];
 		}else
 			return false;
+	}
+	public static function getId() {
+		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		return self::$orgz->id;
 	}
 	
 	public static function model($className=__CLASS__) {

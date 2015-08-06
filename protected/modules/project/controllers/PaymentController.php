@@ -39,6 +39,11 @@ class PaymentController extends Controller {
     }
 
     public function actionApiView() {
+		$c_id = Campaign::getId();
+		$table_prefix = '';
+		if ($c_id) {
+			$table_prefix = $c_id.'_';
+		}
         $user = User::model()->findByPk(Yii::app()->user->id);
         if (!$user->superuser) {
             $this->redirect('/');
@@ -56,7 +61,7 @@ class PaymentController extends Controller {
                 $type = 'DESC';
             }
             if ($searchField == '' || $searchString == '' || $searchType == '') {
-                $sql = 'SELECT * FROM `Payment` ORDER BY `'.$sort.'` '.$type.' ; ';
+                $sql = 'SELECT * FROM `'.$table_prefix.'Payment` ORDER BY `'.$sort.'` '.$type.' ; ';
             } else {
                 switch ($searchType) {
                     case 'bigger':
@@ -69,7 +74,7 @@ class PaymentController extends Controller {
                         $searchType = '=';
                         break;
                 }
-                $sql = 'SELECT * FROM `Payment` WHERE `'.$searchField.'` '.$searchType.' '.$searchString.' ORDER BY `'.$sort.'` '.$type.' ; ';
+                $sql = 'SELECT * FROM `'.$table_prefix.'Payment` WHERE `'.$searchField.'` '.$searchType.' '.$searchString.' ORDER BY `'.$sort.'` '.$type.' ; ';
             }
             $data = Payment::model()->findAllBySql($sql);
             $report = array();
@@ -279,6 +284,8 @@ class PaymentController extends Controller {
     }*/
 
     public function actionManagersApprove() {
+		new UploadPaymentImage;
+		/////////////////////////////////////////////////////////////
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
@@ -290,7 +297,7 @@ class PaymentController extends Controller {
         if ($payment->save() && $to_res != 0) {
 			$order = Zakaz::model()->findByPk($orderId);
 			//remove chek
-			$dir = Yii::getPathOfAlias('webroot') . UploadPaymentImage::PAYMENT_DIR;
+			$dir = Yii::getPathOfAlias('webroot') . UploadPaymentImage::$folder;
 			if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
 			$order->payment_image = null;
 			if ($order->status < 3) $order->status = 3;
