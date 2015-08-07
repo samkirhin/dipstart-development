@@ -11,13 +11,14 @@ class ZakazController extends Controller
 	 * @return array action filters
 	 */
 
-	public function filters()
+	/*public function filters()
 	{
-		return array(
+		return array_merge([
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
+			'rights',]
 		);
-	}
+	}*/
 
 	/**
 	 * Specifies the access control rules.
@@ -28,11 +29,11 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'ownList','customerOrderList', 'uploadPayment','list'),
+                    'actions'=>array('view','create', 'uploadPayment','list'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('view','index','create','update', 'admin', 'preview', 'moderationAnswer','admin','delete', 'apiview','apifindauthor','spam','apiapprovefile'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -410,10 +411,6 @@ class ZakazController extends Controller
 
 	public function actionOwnList()
 	{
-		if (!User::model()->isAuthor()) {
-			throw new CHttpException(403, 'Доступ запрещен');
-		}
-
 		$model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
             $model->executor = Yii::app()->user->id;
@@ -423,16 +420,11 @@ class ZakazController extends Controller
 	}
     public function actionCustomerOrderList()
     {
-        if (!User::model()->isCustomer()) {
-            throw new CHttpException(500);
-        }
-
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', Yii::app()->user->id);
         $model = new CActiveDataProvider('Zakaz', [
             'criteria' => $criteria
         ]);
-
         $this->render('customerOrderList', [
             'dataProvider' => $model
         ]);
@@ -464,7 +456,6 @@ class ZakazController extends Controller
                 throw new CHttpException(404,'The requested page does not exist.');
             }
         }
-
 		return $model;
 	}
 

@@ -3,5 +3,5 @@
 .panel-heading .hasDatepicker
 {
     position: relative;
-    z-index: 2000;
+    /*z-index: 2000;*/
 }

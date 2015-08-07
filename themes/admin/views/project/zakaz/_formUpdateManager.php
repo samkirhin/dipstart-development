@@ -62,8 +62,41 @@
 		<div class="chtpl0-panel chtpl0-down">
 			<input id="send_email" type="checkbox"><p>Отправить на почту</p>
 			<input id="send_sms" type="checkbox"><p>Отправить SMS</p>
-			<button class="chtpl0-template"></button><p>Шаблон</p>
+			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p>Шаблон</p>
 		</div>
+        <?php
+        Yii::app()->getClientScript()->registerScriptFile('/js/tinymce/tinymce.min.js');
+        $this->beginWidget('application.extensions.booster.widgets.TbModal', array(
+            'id' => 'template',
+        )); ?>
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h4><?php echo Yii::t('project','Please select template');?></h4>
+        </div>
+        <div class="modal-body">
+            <?php
+            echo CHtml::dropDownList('templates', '', CHtml::listData(Templates::model()->findAll(), 'id', 'title'));
+            ?>
+        </div>
+        <div class="modal-footer">
+            <?php
+            $this->widget('application.extensions.booster.widgets.TbButton', array(
+                'buttonType' => 'submit',
+                'label' => 'Выбрать',
+                'id'=>'select_template',
+                'htmlOptions' => array('data-dismiss' => 'modal'),
+            ));
+            ?>
+            <?php
+/*            $this->widget('application.extensions.booster.widgets.TbButton', array(
+                'label' => 'Закрыть',
+                'htmlOptions' => array('data-dismiss' => 'modal'),
+            ));*/
+            ?>
+        </div>
+        <?php
+        $this->endWidget();
+        ?>
 		<div class="chtpl0-form">
 			<textarea></textarea>
 			<div class="chtpl0-subm">

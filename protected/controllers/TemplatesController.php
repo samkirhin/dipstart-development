@@ -14,7 +14,7 @@ class TemplatesController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+			//'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
@@ -161,5 +161,58 @@ class TemplatesController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+    protected function replaceBBCode($text_post) {
+        $str_search = array(
+            "#\\\n#is",
+            "#\[b\](.+?)\[\/b\]#is",
+            "#\[i\](.+?)\[\/i\]#is",
+            "#\[u\](.+?)\[\/u\]#is",
+            "#\[code\](.+?)\[\/code\]#is",
+            "#\[quote\](.+?)\[\/quote\]#is",
+            "#\[url=(.+?)\](.+?)\[\/url\]#is",
+            "#\[url\](.+?)\[\/url\]#is",
+            "#\[img\](.+?)\[\/img\]#is",
+            "#\[size=(.+?)\](.+?)\[\/size\]#is",
+            "#\[color=(.+?)\](.+?)\[\/color\]#is",
+            "#\[list\](.+?)\[\/list\]#is",
+            "#\[listn](.+?)\[\/listn\]#is",
+            "#\[\*\](.+?)\[\/\*\]#"
+        );
+        $str_replace = array(
+            "<br />",
+            "<b>\\1</b>",
+            "<i>\\1</i>",
+            "<span style='text-decoration:underline'>\\1</span>",
+            "<code class='code'>\\1</code>",
+            "<table width = '95%'><tr><td>Цитата</td></tr><tr><td class='quote'>\\1</td></tr></table>",
+            "<a href='\\1'>\\2</a>",
+            "<a href='\\1'>\\1</a>",
+            "<img src='\\1' alt = 'Изображение' />",
+            "<span style='font-size:\\1%'>\\2</span>",
+            "<span style='color:\\1'>\\2</span>",
+            "<ul>\\1</ul>",
+            "<ol>\\1</ol>",
+            "<li>\\1</li>"
+        );
+        return preg_replace($str_search, $str_replace, $text_post);
+    }
+
+    public function actionApiGetTemplate($id){
+		$model = $this->loadModel($id);
+		$response = new JsonHttpResponse();
+        $model->text = $this->replaceBBCode($model->text);
+        preg_match_all("/\{(.+?)\}/is",$model->text,$out);
+        foreach ($out[1] as $k=>$o) {
+            $var = explode('_', $o);
+            $model_name = ucfirst(array_shift($var));
+            $project_model = $model_name::model()->findByPk(Yii::app()->session['project_id']);
+            $field = $project_model;
+            foreach ($var as $v) $field = $field->$v;
+            $fields[$k] = $field;
+        }
+        $model->text = str_replace($out[0],$fields,$model->text);
+		$response->setData($model);
+		$response->send();
 	}
 }
