@@ -11,3 +11,6 @@
 #user-form label {
 	margin: 0;
 }
+.portlet-decoration {
+	display: none;
+}

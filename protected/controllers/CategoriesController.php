@@ -116,8 +116,7 @@ class CategoriesController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
+	public function actionIndex() {
 
         $dataProvider=new CActiveDataProvider('Categories');
 		$this->render('index',array(
