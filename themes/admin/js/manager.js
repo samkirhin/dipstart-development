@@ -1,3 +1,7 @@
+/* Akoch-ov */
+function changes_approve(id, value){
+	$.post('/project/changes/approve?id='+id,{moderate: value});
+}
 /**
  * Created by coolfire on 08.05.15.
  */
@@ -7,6 +11,7 @@ function reload(){
 function add_part(orderid){
     $.post('/project/zakazParts/apiCreate', JSON.stringify({
         'orderId': orderid,
+
         'name': 'Новая Часть'
     }), function (response) {
         if (response.data) {
@@ -51,7 +56,7 @@ function send(url) {
             if (data.error) alert(data.error.ProjectChanges_file);
         },
         error: function (data,textStatus,errorThrown) {
-            alert(data);
+            alert('err: '+data+"\nstatus: "+textStatus+errorThrown);
         },
         processData: false,
         contentType: false,
@@ -60,14 +65,19 @@ function send(url) {
 
     return false;
 }
-function approve(obj){
+function approve(obj){ /* Approve files in parts */
     var data=$(obj).data();
+	$(obj).hide();
     $.post('/project/zakazParts/apiApprove', JSON.stringify({
         'data': data
     }), function (response) {
         if (response.data) {
             console.log(response);
-			$(obj).remove();
+			//console.log();
+			$(obj).siblings("button").show();
+			$(obj).siblings("button").removeClass("hidden");
+			//if($(obj).hasClass('on')) $($('button[data-id="'+data['id']+']').find('.on[data-part_id="'+data['part_id']+'"]').removeClass("hidden")).show();
+			//if($(obj).hasClass('off')) $($('button[data-id="'+data['id']+']').find('.off[data-part_id="'+data['part_id']+'"]').removeClass("hidden")).show();
         }
     }, 'json');
 }
@@ -91,6 +101,7 @@ function spam(orderid){
             console.log(data);
         }
     });
+
     alert('Рассылка запущена');
     return false;
 }
@@ -117,6 +128,20 @@ $( document ).ready( function() {
     });
 });
 
+
+$( document ).ready( function() {
+    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
+        var data = $(this).val();
+        var elid = $(this).attr('id');
+        var id = $('#order_number').html();
+        $.post('/project/zakaz/update?id='+id,
+            {'data': data,'id':id,'elid': elid},
+        function (response) {
+            if (response.data)obj.remove();
+        });
+    });
+});
+
 $( document ).ready( function() {
     var arrow = 'fa-angle-down fa-lg';
     $('div.info-block div.panel-heading a').on('click', function() {
@@ -127,10 +152,53 @@ $( document ).ready( function() {
             arrow = 'fa-angle-down fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
-    })
-});
+    });
+/*<<<<<<< HEAD*/
+    
+    
+    $('p.author-mail-icon').next().hide();
+    $('p.author-phone-icon').next().hide();
+    $('p.customer-mail-icon').next().hide();
+    $('p.customer-phone-icon').next().hide();
+    
+    $('p.author-mail-icon').on('click', function() {
+        if ($('p.author-phone-icon').next().css('display') == 'inline-block') {
+            $('p.author-phone-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
+    
+    $('p.author-phone-icon').on('click', function() {
+        if ($('p.author-mail-icon').next().css('display') == 'inline-block') {
+            $('p.author-mail-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
+    
+        $('p.customer-mail-icon').on('click', function() {
+        if ($('p.customer-phone-icon').next().css('display') == 'inline-block') {
+            $('p.customer-phone-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
+    
+    $('p.customer-phone-icon').on('click', function() {
+        if ($('p.customer-mail-icon').next().css('display') == 'inline-block') {
+            $('p.customer-mail-icon').next().hide();
+            $(this).next().fadeToggle();
+        } else {
+            $(this).next().fadeToggle();
+        }
+    });
 
-
+	
+	//------------------
     var arrow = 'fa-angle-up';
     
     contactSectionButton = $('div.contactme');
@@ -144,3 +212,6 @@ $( document ).ready( function() {
         }
         $('section.contact-section').slideToggle();
     });
+	////----------------
+    
+});

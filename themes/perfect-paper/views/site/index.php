@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Created by PhpStorm.
  * User: coolfire
@@ -116,7 +116,7 @@
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"><input type="text" class="form-control input-lg alternative" placeholder="Size"></div>
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"><input type="text" class="form-control input-lg alternative" placeholder="Phone number"></div>
 
-        <button type="button" class="btn btn-danger btn-lg col-xs-12 col-md-4 col-md-offset-4 alternative">Show price</button>
+        <button type="button" class="btn btn-danger btn-lg col-xs-12 col-md-4 col-md-offset-4 alternative show-price-button">Show price</button>
 
     </form>
 </div>
@@ -208,12 +208,12 @@
 
 <!-- Блок Быстрый Заказ -->
 <div class="row" style="margin-top:2em;">
-    <span class="col-xs-12 col-sm-6 col-md-3 col-md-offset-1"><img src="<?php echo Yii::app()->theme->baseUrl;?>/img/fastorder.png"></span>
+    <span class="col-xs-12 col-sm-6 col-md-3 col-md-offset-1"><img class="fastorder" src="<?php echo Yii::app()->theme->baseUrl;?>/img/fastorder.png"></span>
     <div class="">
-        <button type="button" class="btn btn-danger btn-lg col-xs-12 col-sm-3 col-md-3 col-md-offset-1 alternative" style="margin-bottom:5px;">To place a new inquiry</button>
+        <button type="button" class="btn btn-danger btn-lg col-xs-12 col-sm-3 col-md-3 col-md-offset-1 alternative show-price-button" style="margin-bottom:5px;">To place a new inquiry</button>
     </div>
     <div class="">
-        <button type="button" class="btn btn-default btn-lg col-xs-12 col-sm-3 col-md-3 col-md-offset-1 alternative">To order a callback</button>
+        <button type="button" class="btn btn-default btn-lg col-xs-12 col-sm-3 col-md-3 col-md-offset-1 alternative show-price-button">To order a callback</button>
     </div>
 </div>
 

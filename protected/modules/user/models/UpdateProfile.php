@@ -5,9 +5,13 @@
  */
 class UpdateProfile extends CActiveRecord
 {
-	public function tableName()
-	{
-		return 'UpdateProfile';
+	public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'UpdateProfile';
+		else
+			return 'UpdateProfile';
 	}
 
 	public function rules()

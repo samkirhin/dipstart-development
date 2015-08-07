@@ -43,9 +43,20 @@ class ZakazPartsController extends Controller
 			Yii::app()->end();
 		}
 	}
-        
+	
+	public function folder() { 	// --- campaign
+		$c_id = Campaign::getId();
+		if ($c_id) {
+			return '/uploads/c'.$c_id.'/parts/';
+		}else{
+			return '/uploads/additions/';
+		}
+	} 							// ---
+		
         /* Получение списка частей для заказа по ИД*/
         public function actionApiGetAll() {
+			// --- campaign
+			$folder = $this->folder();
             $this->_prepairJson();
             $zakazId = $this->_request->getParam('orderId');
             if (User::model()->isAdmin() || User::model()->isManager()) {
@@ -65,7 +76,7 @@ class ZakazPartsController extends Controller
                     $part['file'] = ZakazPartsFiles::model()->findAll('part_id = :PART_ID',
                         array("PART_ID"=>$model->id)
                     );
-                    $for_moderation = array_diff(scandir(YiiBase::getPathOfAlias('webroot').'/uploads/additions/temp'), array('..', '.'));
+                    $for_moderation = array_diff(scandir(YiiBase::getPathOfAlias('webroot').$folder.'temp'), array('..', '.'));
                     foreach ($for_moderation as $k=>$v)
                         if(preg_match('/_'.$model->id.'./i',$v)){
                             $for_moderation[$k]=array(
@@ -101,6 +112,7 @@ class ZakazPartsController extends Controller
             }
         }
         public function actionApiApprove() {
+			$folder = $this->folder();
             if (!isset($this->_file_data['req'])) {
                 $this->_prepairJson();
                 $this->_file_data = $this->_request->getParam('data');
@@ -108,8 +120,8 @@ class ZakazPartsController extends Controller
 			$list = explode('.', $this->_file_data['orig_name']);
 			$extention = array_pop($list);
             $newName = $this->getGuid();
-			$filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.implode('.',$list).'_'.$this->_file_data['part_id'].'.'.$extention;
-            $newDir = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$this->_file_data['part_id'];
+			$filePath = $_SERVER['DOCUMENT_ROOT'].$folder.'temp/'.implode('.',$list).'_'.$this->_file_data['part_id'].'.'.$extention;
+            $newDir = $_SERVER['DOCUMENT_ROOT'].$folder.$this->_file_data['part_id'];
             $fileNewPath = $newDir.'/'.$newName.".".$extention;
             if (!file_exists($newDir)) {
 				mkdir($newDir,0777);
@@ -122,7 +134,7 @@ class ZakazPartsController extends Controller
                     $fileModel->file_name = $newName . "." . $extention;
                     $fileModel->comment = '';
                     $fileModel->save();
-                    $this->result=array('file_name'=>'/uploads/additions/'.$this->_file_data['part_id'].'/'.$newName.".".$extention);
+                    $this->result=array('file_name'=>$folder.$this->_file_data['part_id'].'/'.$newName.".".$extention);
                 } else $this->result=array('success'=>false);
             } elseif (rename($_SERVER['DOCUMENT_ROOT'].$this->_file_data['file_name'],$filePath)) {
                 $this->result['delete']=ZakazPartsFiles::model()->findByPk($this->_file_data['id'])->delete();
@@ -133,6 +145,7 @@ class ZakazPartsController extends Controller
             }
         }
         public function actionApiEditPart() {
+			$folder = $this->folder();
             $this->_prepairJson();
             $partId = $this->_request->getParam('id');
             $model = ZakazParts::model()->findByPk($partId);
@@ -140,13 +153,13 @@ class ZakazPartsController extends Controller
                 $model->$par =$val;
             if ($this->_request->isParam('files')) {
                 $files = $this->_request->getParam('files');
-                $path = 'uploads/additions/'.$partId.'/';
+                $path = $folder.$partId.'/';
                 $this->checkDir($path);
                 foreach($files as $file) {
                     $list = explode('.', $file);
                     $newName = $this->getGuid();
-                    $filePath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/temp/'.$file;
-                    $fileNewPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/additions/'.$partId.'/'.$newName.".".$list['1'];
+                    $filePath = $_SERVER['DOCUMENT_ROOT'].$folder.'temp/'.$file;
+                    $fileNewPath = $_SERVER['DOCUMENT_ROOT'].$folder.$partId.'/'.$newName.".".$list['1'];
                     $probe = rename($filePath, $fileNewPath);
                     $fileModel = new ZakazPartsFiles();
                     $fileModel->part_id = $model->id;
@@ -213,11 +226,12 @@ class ZakazPartsController extends Controller
         }
         
         public function actionApiDeleteFile() {
+			$folder = $this->folder();
             $this->_prepairJson();
             $fileid = $this->_request->getParam('id');
             $file = new ZakazPartsFiles;
             $this->result = $file->deleteFile($fileid);
-            unlink($_SERVER['DOCUMENT_ROOT'].'uploads/additions/'.$this->result['part'].'/'.$this->result['file']);
+            unlink($_SERVER['DOCUMENT_ROOT'].$folder.$this->result['part'].'/'.$this->result['file']);
             $this->_response->setData(array(
                 'id' => $this->result['part']
             ));
@@ -280,13 +294,16 @@ class ZakazPartsController extends Controller
             $this->_response->send();
         }
         
-        public function actionUpload()
-        {
-            $this->_prepairJson();
+        public function actionUpload() {
+			$folder = $this->folder();
+			$this->_prepairJson();
+			$folder = $_SERVER['DOCUMENT_ROOT'].$folder;
             Yii::import("ext.EAjaxUpload.qqFileUploader");
-            $folder='uploads/additions/temp/';
+			//chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
+            $folder=$folder.'temp/';
+			chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
             $config['allowedExtensions'] = array('jpg', 'jpeg', 'png', 'gif', 'txt', 'doc', 'docx');
-            $config['disAllowedExtensions'] = array("exe");
+            $config['disAllowedExtensions'] = array("exe, php");
             $sizeLimit = 10 * 1024 * 1024;
             $pi = pathinfo($_GET['qqfile']);
             $_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
@@ -296,14 +313,19 @@ class ZakazPartsController extends Controller
                 if (!User::model()->isManager()) EventHelper::partDone($_GET['proj_id']);
             }
             chmod($folder.$_GET['qqfile'],0666);
-            if (User::model()->isManager()) {
+			
+            if (User::model()->isManager()||User::model()->isAdmin()) {
+				
                 $this->_file_data['part_id']=$_GET['id'];
                 $this->_file_data['orig_name']=$pi['filename'].'.'.$pi['extension'];
                 $this->_file_data['id']=0;
                 $this->_file_data['req']=1;
                 $this->actionApiApprove();
             }
-            $this->result['html']='<li><a href="' . $this->result['file_name'] . '" id="parts_file">' . $_GET['qqfile'] . '</a></li>';
+			
+            //$this->result['html']='=)';//'<li>!!!<a href="' . $this->result['file_name'] . '" id="parts_file">' . $_GET['qqfile'] . '</a></li>';
+			
+			$this->result = array('test' => $this->result['error']);
             $this->_response->setData($this->result);
             $this->_response->send();
         }

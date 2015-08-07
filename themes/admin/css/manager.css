@@ -376,6 +376,11 @@ label
 .panel-heading-white {
     background-color: #fff !important;
 }
+
+.authorMail > p, .authorPhone > p, .customerMail > p, .customerPhone > p {
+    display: inline-block;
+}
+
 .authorName p:before {
     content: "";
     display: block;
@@ -386,25 +391,23 @@ label
     height: 20px;
     margin-right: 10px;
 }
-.authorMail p:before {
-    content: "";
-    display: block;
+.authorMail p:first-child {
     position: relative;
     float: left;
     background: url(../images/mail.png) no-repeat center center;
     width: 15px;
     height: 20px;
     margin-right: 10px;
+    cursor: pointer;
 }
-.authorPhone p:before {
-    content: "";
-    display: block;
+.authorPhone p:first-child {
     position: relative;
     float: left;
     background: url(../images/phone.png) no-repeat center center;
     width: 15px;
     height: 20px;
     margin-right: 10px;
+    cursor: pointer;
 }
 .customerName p:before{
     content: "";
@@ -416,9 +419,7 @@ label
     height: 20px;
     margin-right: 10px;
 }
-.customerMail p:before{
-    content: "";
-    display: block;
+.customerMail p:first-child {
     position: relative;
     float: left;
     background: url(../images/mail.png) no-repeat center center;
@@ -426,9 +427,7 @@ label
     height: 20px;
     margin-right: 5px;
 }
-.customerPhone p:before{
-    content: "";
-    display: block;
+.customerPhone p:first-child {
     position: relative;
     float: left;
     background: url(../images/phone.png) no-repeat center center;
@@ -702,7 +701,7 @@ div.partStatus {
 }
 
 .order-contacts div div {
-    padding: 0px 15px 0px 0px!important;
+    padding: 0px 15px 0px 0px;
 }
 
 img#str {
@@ -774,4 +773,43 @@ div#chatWindow:empty:after {
 
 .fa-lg {
     font-size: 1.8em!important;
+}
+
+div.rightBorder, div.leftBorder {
+    padding: 5px 0px;
+}
+
+div.authorMail, div.customerMail {
+    padding-right: 8px!important;
+    vertical-align: middle;
+    padding-top: 3px!important;
+}
+
+div.authorMail, div.authorPhone, dic.customerMail, div.customerPhone {
+    vertical-align: middle;
+    padding-top: 3px!important;
+}
+
+div.chat-functions {
+    padding-top: 15px;
+}
+
+div.chat-functions > button {
+    bottom: 6px!important; /* ____*/
+}
+
+.nav-justified > li {
+    /* width: auto!________________important; */
+}
+
+.pay-save-btn {
+    margin-top: 44px!important;
+}
+
+.zakaz_part_approve_file {
+    float: right;
+}
+
+ul.qq-upload-list > li {
+    margin-bottom: 15px!important;
 }

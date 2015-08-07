@@ -59,7 +59,7 @@
 			<button class="chtpl0-show">Показать сообщения</button>
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
-		<div class="chtpl0-panel chtpl0-down">
+		<div class="chtpl0-panel chtpl0-down chat-functions">
 			<input id="send_email" type="checkbox"><p>Отправить на почту</p>
 			<input id="send_sms" type="checkbox"><p>Отправить SMS</p>
 			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p>Шаблон</p>
@@ -146,7 +146,9 @@
                             Информация о заказе <i class="fa fa-angle-down fa-lg"></i>
 		
                         </a>
-						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz"><img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" /></a>
+						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
+						<!--<img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" />-->
+						</a>
                     </h4>
                 </div>
                 <div id="infoZakaz" class="panel-collapse collapse">

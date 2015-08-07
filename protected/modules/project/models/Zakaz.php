@@ -25,6 +25,7 @@
 class Zakaz extends CActiveRecord {
 
 	public static $table_prefix;
+	public static $files_folder;
 
     private $_job_name;
     private $_cat_name;
@@ -36,6 +37,16 @@ class Zakaz extends CActiveRecord {
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
     public $dateIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateOutcomeFormat = 'dd.MM.yyyy';
+	
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'Projects';
+		else
+			return 'Projects';
+	}
 
     public function getDbdate_finishstart(){
         if ($this->date_finishstart!='') {
@@ -175,15 +186,6 @@ class Zakaz extends CActiveRecord {
     {
         parent::init();
     }
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.'Projects';
-		else
-			return 'Projects';
-	}
 
 	/**
 	 * @return array validation rules for model attributes.

@@ -50,7 +50,7 @@
 						</div>
 						<?php echo CHtml::endForm(); ?>
 						<?php
-						$url = Yii::app()->createUrl("/project/changes/add",array('project'=>$model->id));
+						$url = Yii::app()->createUrl("/project/changes/add",array('project'=>$project->id));
 						echo CHtml::htmlButton(ProjectModule::t('Add changes'), array(
 							'class' => 'col-xs-12 btn btn-primary addPart',
 							'onclick' => "javascript: send('$url')",

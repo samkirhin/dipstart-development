@@ -40,18 +40,21 @@
                 <div class="panel-body">
 
                     <p>
-                        <input type="text" value="<?php echo $data['title']; ?>"
-                               onkeyup="change_title(this.value,<?php echo $data['id']; ?>);"/>
+                        <input type="text" value="<?php echo $data['title']; ?>" onkeyup="change_title(this.value,<?php echo $data['id']; ?>);"/>
                         <textarea onkeyup="change_comment(this.value,<?php echo $data['id']; ?>);" class="col-xs-12"><?php echo $data['comment']; ?></textarea>
 
                         <?php 
 						$tmp = '';
 						foreach ($data['files'] as $k => $v){
                             $tmp .= '<li><a href="' . $v['file_name'] . '" id="parts_file">' . $v['orig_name'] . '</a>';
-                            $tmp .= '<button class="zakaz_part_approve_file right btn" ';
+                            $tmp .= '<button class="zakaz_part_approve_file on right btn'.(!isset($v['for_approved'])?' hidden':'').'" ';
                             foreach ($v as $kk => $vv)
                                 $tmp .= 'data-'.$kk.'="'.$vv.'" ';
-                            $tmp .= ' onclick="approve(this)"'.($v['id']==0?'>Одобрить':'>NOTОдобрить').'</button>';
+                            $tmp .= ' onclick="approve(this)">Одобрить</button>';
+                            $tmp .= '<button class="zakaz_part_approve_file off right btn'.(isset($v['for_approved'])?' hidden':'').'" ';
+                            foreach ($v as $kk => $vv)
+                                $tmp .= 'data-'.$kk.'="'.$vv.'" ';
+                            $tmp .= ' onclick="approve(this)">Сбросить</button>';
                             $tmp .= '</li>';
                         }
 

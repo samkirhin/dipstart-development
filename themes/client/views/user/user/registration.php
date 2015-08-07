@@ -23,11 +23,11 @@ $this->breadcrumbs=array(
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 )); ?>
 
-	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+	<p class="note">(=<?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 	
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
 	
-	<div class="row">
+	<div class="row registration-first">
 	<?php echo $form->labelEx($model,'username'); ?><br/>
 	<?php echo $form->textField($model,'username'); ?><br/>
 	<?php echo $form->error($model,'username'); ?>

@@ -20,6 +20,15 @@ class ZakazParts extends CActiveRecord
 {
     public $dateTimeIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
+	
+	public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'ProjectsParts';
+		else
+			return 'ProjectsParts';
+	}
 
     public function getDbdate()
     {
@@ -30,13 +39,6 @@ class ZakazParts extends CActiveRecord
     {
         $this->date = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
     }
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'ProjectsParts';
-	}
 
 	/**
 	 * @return array validation rules for model attributes.

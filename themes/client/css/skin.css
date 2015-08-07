@@ -1136,3 +1136,16 @@ width: auto;
 }
 
 /* chat */
+
+textarea#Moderation_add_demands, textarea#Moderation_text, textarea#Profile_additional {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+#option:select {
+    color: #000!important;
+}
+
+select {
+    color: #000!important;
+}

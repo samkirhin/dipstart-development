@@ -7,25 +7,25 @@
 ));
 ?>
 
-	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+	<p class="note">=)<?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username',array('size'=>20,'maxlength'=>20)); ?>
+		<?php //echo $form->labelEx($model,'username');	?>
+		<?php echo $form->textField($model,'username',array('size'=>40,'maxlength'=>20,'placeholder'=>$model->getAttributeLabel( 'username' ).($model->isAttributeRequired('username')?' *':''))); ?>
 		<?php echo $form->error($model,'username'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php //echo $form->labelEx($model,'password'); ?>
+		<?php echo $form->passwordField($model,'password',array('size'=>40,'maxlength'=>128,'placeholder'=>$model->getAttributeLabel( 'password' ).($model->isAttributeRequired('password')?' *':''))); ?>
 		<?php echo $form->error($model,'password'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
+		<?php //echo $form->labelEx($model,'email'); ?>
+		<?php echo $form->textField($model,'email',array('size'=>40,'maxlength'=>128,'placeholder'=>$model->getAttributeLabel( 'email' ).($model->isAttributeRequired('email')?' *':''))); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
@@ -46,16 +46,16 @@
 			foreach($profileFields as $field) {
 			?>
 	<div class="row">
-		<?php echo $form->labelEx($profile,$field->varname); ?>
+		<?php //echo $form->labelEx($profile,$field->varname); ?>
 		<?php 
 		if ($widgetEdit = $field->widgetEdit($profile)) {
 			echo $widgetEdit;
 		} elseif ($field->range) {
 			echo $form->dropDownList($profile,$field->varname,Profile::range($field->range));
 		} elseif ($field->field_type=="TEXT") {
-			echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
+			echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>41.5, 'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':'')));
 		} else {
-			echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255)));
+			echo $form->textField($profile,$field->varname,array('size'=>40,'maxlength'=>(($field->field_size)?$field->field_size:255),'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':'')));
 		}
 		 ?>
 		<?php echo $form->error($profile,$field->varname); ?>

@@ -107,7 +107,6 @@ var ZakazPartsView = function(orderId) {
         test.each(function(i){
            files.push($(this).text()); 
         });
-
         $.post('index.php?r=project/zakazParts/apiEditPart', JSON.stringify({
             'id': self.partId,
             'title': title,

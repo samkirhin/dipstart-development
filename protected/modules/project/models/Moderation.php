@@ -28,6 +28,15 @@ class Moderation extends CActiveRecord
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
     public $dateIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateOutcomeFormat = 'dd.MM.yyyy';
+	
+	public static $table_prefix;
+	
+	public function tableName() {
+		if(isset(self::$table_prefix))
+			return self::$table_prefix.'ZakazModeration';
+		else
+			return 'ZakazModeration';
+	}
 
     public function getDbdate_finishstart(){
         if ($this->date_finishstart!='') {
@@ -132,13 +141,6 @@ class Moderation extends CActiveRecord
         
         $this->status = 1;
     }
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'ZakazModeration';
-	}
 
 	/**
 	 * @return array validation rules for model attributes.

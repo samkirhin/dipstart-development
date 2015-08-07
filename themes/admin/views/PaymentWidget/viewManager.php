@@ -81,7 +81,8 @@
 		<button class="btn btn-default send_managers_cancel">Отмена</button>
 		<?php 
 			if ($zakaz->payment_image) {
-				echo CHtml::link('Чек', UploadPaymentImage::PAYMENT_DIR . $zakaz->payment_image, array ('target' => '_blank' ));
+				new UploadPaymentImage;
+				echo CHtml::link('Чек', UploadPaymentImage::$folder . $zakaz->payment_image, array ('target' => '_blank' ));
 			}
 		?>
 		</div>

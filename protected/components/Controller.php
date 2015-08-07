@@ -15,7 +15,6 @@ class Controller extends RController
 	 */
 	public $menu=array();
 	public $authMenu = array();
-	public $campaign_id;
 	/**
 	 * @var array the breadcrumbs of the current page. The value of this property will
 	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -26,10 +25,25 @@ class Controller extends RController
 
     public function init(){
 		// --- Организации
-		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
-		$this->campaign_id = $campaign->id;
-		if ($this->campaign_id) {
-			Zakaz::$table_prefix = $this->campaign_id.'_';
+		/*$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);*/
+		$c_id = Campaign::getId();
+		if ($c_id) {
+			Payment::$table_prefix = $c_id.'_';
+			Profile::$table_prefix = $c_id.'_';
+			ProfileField::$table_prefix = $c_id.'_';
+			ProjectChanges::$table_prefix = $c_id.'_';
+			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
+			ProjectMessages::$table_prefix = $c_id.'_';
+			ProjectPayments::$table_prefix = $c_id.'_';
+			Zakaz::$table_prefix = $c_id.'_';
+			Zakaz::$files_folder = '/uploads/c'.$c_id.'/';
+			Events::$table_prefix = $c_id.'_';
+			ZakazParts::$table_prefix = $c_id.'_';
+			UpdateProfile::$table_prefix = $c_id.'_';
+			Moderation::$table_prefix = $c_id.'_';
+			ZakazPartsFiles::$table_prefix = $c_id.'_';
+		} else {
+			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
 		// ---
         if (!Yii::app()->user->isGuest)

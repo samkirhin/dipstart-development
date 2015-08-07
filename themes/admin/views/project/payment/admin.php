@@ -29,7 +29,7 @@
             <td>
                 ${summ}
             </td>
-            <td>
+            <td class="payment-ya">
                 {{if (details_ya == null || details_ya == '' || details_ya == 0) }}
                     Нет данных
                 {{else}}
@@ -40,7 +40,7 @@
                     {{/if}}
                 {{/if}}
             </td>
-            <td>
+            <td class="payment-wm">
                 {{if (details_wm == null || details_wm == '')}}
                     Нет данных
                 {{else}}
@@ -51,7 +51,7 @@
                     {{/if}}
                 {{/if}}
             </td>
-            <td>
+            <td class="payment-bank">
                 {{if (details_bank == null || details_bank == '')}}
                     Нет данных
                 {{else}}
@@ -69,7 +69,7 @@
                     Исходящий
                 {{/if}}
             </td>
-            <td>
+            <td class="payment-approve">
                {{if approve == 0}}
                     <button  class="btn btn-primary btn-xs approve_payment" value="${id}"  pay_method="Cash">Подтвердить</button>
                 {{else}}
@@ -132,7 +132,7 @@
 
     <button class="btn btn-sm btn-default send_search"> Поиск </button>
     <button class="btn btn-sm btn-default clear_search"> Отменить поиск </button>
-<table class="table table-striped table-bordered" style="font-size: 10px;">
+<table class="table table-striped table-bordered payment-table" style="font-size: 10px;">
     <thead>
         <th>
             <button class="searching" sort="id">ID</button>
