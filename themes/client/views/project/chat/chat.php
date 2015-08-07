@@ -40,7 +40,7 @@ $messages = ProjectMessages::model()->findAll($criteria);
                 <div class="cost">Цена за работу: <?php echo $message->cost ?></div>
             <?php endif; ?>
                 
-            <div class="text"><?php echo strip_tags($message->message); ?></div>
+            <div class="text"><?php echo $message->message; ?></div>
         </div>
     </div>
     <?php endforeach; ?>
