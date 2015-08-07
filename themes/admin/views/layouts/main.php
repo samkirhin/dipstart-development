@@ -5,7 +5,6 @@
  * Date: 16.04.15
  * Time: 11:56
  */
-// Yii::app()->bootstrap->register();
 $items = array();
 $role = User::model()->getUserRole();
 switch ($role){

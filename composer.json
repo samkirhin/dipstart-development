@@ -70,8 +70,7 @@
     "framework/yiic"
   ],
   "require": {
-    "php": ">=5.1.0",
-    "crisu83/yiistrap": "2.0.x-dev"
+    "php": ">=5.1.0"
   },
   "autoload": {
     "classmap": [

@@ -116,6 +116,16 @@ $( document ).ready( function() {
             if (response.data)obj.remove();
         });
     });
+    $('#select_template').on('click',function(event){
+        $.post('/templates/apiGetTemplate?id='+$('#templates').val(),function (response){
+            tinymce.get('chat_message').setContent(response.data.text);
+        });
+    });
+    tinymce.init({
+        selector: "#chat_message",
+        theme: "modern",
+        menubar: false
+    });
 });
 
 
@@ -135,7 +145,6 @@ $( document ).ready( function() {
 $( document ).ready( function() {
     var arrow = 'fa-angle-down fa-lg';
     $('div.info-block div.panel-heading a').on('click', function() {
-        console.log('aaaaa');
         if (arrow == 'fa-angle-down fa-lg') {
             arrow = 'fa-angle-up fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-down fa-lg').addClass(arrow);

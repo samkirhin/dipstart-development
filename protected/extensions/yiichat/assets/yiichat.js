@@ -323,7 +323,7 @@ var YiiChat = function (options) {
         //var log = chat.find('div.log');
 		var log = jQuery(".chtpl0-show");
 
-        you.html('<textarea class="pull-left im-msg-inp"></textarea><div class="exceded"></div>');
+        you.html('<textarea id="chat_message" class="pull-left im-msg-inp"></textarea><div class="exceded"></div>');
         you.append('<div id="send_buttons" class="buttons pull-right chtpl0-subm"></div>');
         var buttons = you.find('div.buttons');
 		buttons.append("<h5>Отправить сообщение</h5><br>");
@@ -336,7 +336,8 @@ var YiiChat = function (options) {
         var msg = you.find('textarea');
         msg.data('index', 0);
         send.click(function () {
-            var text = jQuery.trim(msg.val());
+            //var text = jQuery.trim(msg.val());
+            var text = tinymce.get('chat_message').getContent();
             actionPost(text, function (ok) {
                 if (ok == true) {
                     msg.val("");
@@ -394,26 +395,24 @@ var YiiChat = function (options) {
         };
         actionInit(scroll);
         launchTimer();
-    };
-    
-    var rating = function(user_id, action) {
-        
-        $.post(
-            '/user/user/rating',
-            {user_id: user_id, action: action}, 
-            function(data) {
-                $("div[class='rating " + user_id + "']").text(data);
-            }
-        );
+        var rating = function(user_id, action) {
 
+            $.post(
+                '/user/user/rating',
+                {user_id: user_id, action: action},
+                function(data) {
+                    $("div[class='rating " + user_id + "']").text(data);
+                }
+            );
+
+        };
+
+        chat.on('click', '.left', function(){
+            rating($(this).data('ownerid'), 'down');
+        });
+
+        chat.on('click', '.right', function(){
+            rating($(this).data('ownerid'), 'up');
+        });
     };
-    
-    $('#chatWindow').on('click', '.left', function(){
-        rating($(this).data('ownerid'), 'down');
-    });
-    
-    $('#chatWindow').on('click', '.right', function(){
-        rating($(this).data('ownerid'), 'up');
-    });
-        
 }; //end

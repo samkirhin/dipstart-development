@@ -376,7 +376,9 @@ border-radius: 0;
 opacity:1;
 transition: all 0.2s ease;
 }
-
+.mce-btn button {
+	width: auto;
+}
 .chtpl0-form .chtpl0-submit1 {background: #5A93C4;}
 .chtpl0-form .chtpl0-submit2 {background: silver;}
 
