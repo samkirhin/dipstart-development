@@ -10,6 +10,11 @@ $this->menu=array(
     array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin')),
 );
 
+$this->widget('zii.widgets.CMenu', array(
+	'items'=>$this->menu,
+	'htmlOptions'=>array('class'=>'operations'),
+));
+	
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
     $('.search-form').toggle();
@@ -22,6 +27,7 @@ $('.search-form form').submit(function(){
     return false;
 });
 ");
+
 
 ?>
 <h1><?php echo UserModule::t('Manage Profile Fields'); ?></h1>

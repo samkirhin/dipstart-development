@@ -27,8 +27,8 @@ $this->breadcrumbs=array(
 	<?php echo CHtml::errorSummary($model); ?>
 	
 	<div class="form-group">
-        <!--<?php echo CHtml::activeLabelEx($model,'username'); ?> <br />-->
-		<?php echo CHtml::activeTextField($model,'username',array('placeholder'=>'Логин или email')) ?>
+        <!--<?php //echo CHtml::activeLabelEx($model,'username'); ?> <br />-->
+		<?php echo CHtml::activeTextField($model,'username',array('placeholder' => $model->getAttributeLabel( 'username' ))); ?>
 	</div>
 	
 	<div class="form-group">

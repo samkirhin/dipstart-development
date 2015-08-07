@@ -5,3 +5,9 @@
 }
 
 /* Akoch-ov */
+#user-form {
+	text-align: center;
+}
+#user-form label {
+	margin: 0;
+}

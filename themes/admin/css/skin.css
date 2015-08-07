@@ -259,7 +259,7 @@ top: 0;
 .table-striped label {margin-top: 0;}
 
 .operations {
-	margin-top: 50px;
+	/*margin-top: 50px;*/
 	display: block;
 	list-style-type: none;
 	padding: 0;
@@ -282,7 +282,7 @@ background:#EBF6FF;
 }
 
 .operations li a{
-background:none;
+background:hsla(213, 100%, 87%, 0.16);
 display: block;
 padding: 5px;
 text-align: center;
