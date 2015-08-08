@@ -33,7 +33,7 @@ class Controller extends RController
 			ProfileField::$table_prefix = $c_id.'_';
 			ProjectChanges::$table_prefix = $c_id.'_';
 			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
-			ProjectMessages::$table_prefix = $c_id.'_';
+			//ProjectMessages::$table_prefix = $c_id.'_';
 			ProjectPayments::$table_prefix = $c_id.'_';
 			Zakaz::$table_prefix = $c_id.'_';
 			Zakaz::$files_folder = '/uploads/c'.$c_id.'/';

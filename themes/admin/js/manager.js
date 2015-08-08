@@ -128,20 +128,6 @@ $( document ).ready( function() {
     });
 });
 
-
-$( document ).ready( function() {
-    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
-        var data = $(this).val();
-        var elid = $(this).attr('id');
-        var id = $('#order_number').html();
-        $.post('/project/zakaz/update?id='+id,
-            {'data': data,'id':id,'elid': elid},
-        function (response) {
-            if (response.data)obj.remove();
-        });
-    });
-});
-
 $( document ).ready( function() {
     var arrow = 'fa-angle-down fa-lg';
     $('div.info-block div.panel-heading a').on('click', function() {
@@ -153,9 +139,23 @@ $( document ).ready( function() {
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
     });
-/*<<<<<<< HEAD*/
+	//------------------
+    var arrow = 'fa-angle-up';
     
+    contactSectionButton = $('div.contactme');
+    contactSectionButton.on('click', function() {
+        if (arrow == 'fa-angle-up') {
+            arrow = 'fa-angle-down';
+            $('.fa').removeClass('fa-angle-up').addClass(arrow);
+        } else {
+            arrow = 'fa-angle-up';
+            $('.fa').removeClass('fa-angle-down').addClass(arrow);
+        }
+        $('section.contact-section').slideToggle();
+    });
+	////----------------
     
+	
     $('p.author-mail-icon').next().hide();
     $('p.author-phone-icon').next().hide();
     $('p.customer-mail-icon').next().hide();
@@ -196,22 +196,5 @@ $( document ).ready( function() {
             $(this).next().fadeToggle();
         }
     });
-
-	
-	//------------------
-    var arrow = 'fa-angle-up';
-    
-    contactSectionButton = $('div.contactme');
-    contactSectionButton.on('click', function() {
-        if (arrow == 'fa-angle-up') {
-            arrow = 'fa-angle-down';
-            $('.fa').removeClass('fa-angle-up').addClass(arrow);
-        } else {
-            arrow = 'fa-angle-up';
-            $('.fa').removeClass('fa-angle-down').addClass(arrow);
-        }
-        $('section.contact-section').slideToggle();
-    });
-	////----------------
     
 });
