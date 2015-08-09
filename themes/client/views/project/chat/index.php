@@ -194,11 +194,6 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                                             ],
                                             'pages',
                                             'add_demands',
-                                            array(
-                                                'name' => 'status',
-                                                'type' => 'raw',
-                                                'value' => $order->status > 0 ? ProjectStatus::model()->findByPk($order->status)->status : null,
-                                            ),
                                     )));
 
                                 } else {
