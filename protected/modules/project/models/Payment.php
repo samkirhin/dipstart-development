@@ -97,6 +97,7 @@ class Payment extends CActiveRecord
                 
                 $payment = ProjectPayments::model()->findByAttributes(['order_id' => $this->order_id]);
                 $payment->payed += $this->summ;
+                $payment->to_pay -= $this->summ;
                 $payment->save(false);
             
                 $tran->commit();
