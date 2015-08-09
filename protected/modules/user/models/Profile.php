@@ -16,11 +16,12 @@ class Profile extends UActiveRecord
 	// первичная модель
 	private $_modelSave;
 
-	public static $table_prefix;
+	//public static $table_prefix;
 	
 	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.Yii::app()->getModule('user')->tableProfiles;
+		$c_id = Campaign::getId();
+		if ($c_id)
+			return $c_id.'_'.Yii::app()->getModule('user')->tableProfiles;
 		else
 			return Yii::app()->getModule('user')->tableProfiles;
 	}
@@ -120,6 +121,7 @@ class Profile extends UActiveRecord
 		$relations = array(
 			'user'=>array(self::HAS_ONE, 'User', 'id'),
 			'categories'=>array(self::HAS_MANY, 'Categories', array('id'=>'discipline')),
+			////////////// !!!!!!!!!!!!!!!!!! ---------------------------------------------------------
 			'AuthAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
 		);
 		if (isset(Yii::app()->getModule('user')->profileRelations))
@@ -206,10 +208,19 @@ class Profile extends UActiveRecord
 
 	public function beforeSave(){
 		if(parent::beforeSave()){
-			if ($this->discipline && is_array($this->discipline)) {
+			$model=$this->getFields();
+			foreach ($model as $field) {
+				if (isset($field->field_id)){
+					$fname = $field->varname;
+					if ($this->$fname && is_array($this->$fname)) {
+					   $this->$fname = implode(",", $this->$fname);
+					}
+				}
+			}
+			if (isset($this->discipline) && is_array($this->discipline)) {
 			   $this->discipline = implode(",", $this->discipline);
 			}
-			if ($this->job_type && is_array($this->job_type)) {
+			if (isset($this->job_type) && is_array($this->job_type)) {
 			   $this->job_type = implode(",", $this->job_type);
 			}
 			// запрашиваем модерацию перед сохранением данных профиля

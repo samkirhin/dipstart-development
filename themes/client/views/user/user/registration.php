@@ -4,7 +4,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1><?php echo UserModule::t("Hello, please fill an anket for authors".$profile->regType); ?> :)</h1>
+<h1><?php echo UserModule::t("Hello, please fill an anket for authors".$profile->regType); ?></h1>
 
 <?php if(Yii::app()->user->hasFlash('registration')): ?>
 <div class="success">
@@ -13,17 +13,27 @@ $this->breadcrumbs=array(
 <?php else: ?>
 
 <div class="form">
-<?php $form=$this->beginWidget('UActiveForm', array(
+<?php
+$disAjaxValid = array('RegistrationForm_verifyCode', 'discipline', 'job_type');
+$profileFields=$profile->getFields();
+if ($profileFields) {
+	foreach($profileFields as $field) {
+		if (isset($field->field_id)){
+			$disAjaxValid[]=$field->varname;
+		}
+	}
+}
+$form=$this->beginWidget('UActiveForm', array(
 	'id'=>'registration-form',
 	'enableAjaxValidation'=>true,
-	'disableAjaxValidationAttributes'=>array('RegistrationForm_verifyCode', 'discipline', 'job_type'),
+	'disableAjaxValidationAttributes'=>$disAjaxValid,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 )); ?>
 
-	<p class="note">(=<?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 	
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
 	
@@ -62,9 +72,14 @@ $this->breadcrumbs=array(
 	<div class="row">
 		<?php
 		if (($field->varname == 'mailing_list') && ($profile->regType=='Customer')) $list=array('style'=>'display:none;');
-		echo $form->labelEx($profile,$field->varname); ?><br/>
-		<?php
-		if($field->varname == 'discipline'){
+		echo $form->labelEx($profile,$field->varname).'<br/>';
+		// campaign! -------------
+		if (isset($field->field_id)){
+			$htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
+			$data = Catalog::model()->performCatsTree($field->field_id);
+			echo CHtml::listBox('Profile['.$field->varname.']', array(), $data, $htmlOptions);
+		// -----------------------
+		} elseif($field->varname == 'discipline'){
         $htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
         $data = Categories::model()->performCatsTree();
         echo CHtml::listBox('Profile[discipline]', array(), $data, $htmlOptions);
@@ -86,7 +101,7 @@ $this->breadcrumbs=array(
 			echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255)));
 		}
 		 ?>
-		<?php echo $form->error($profile,$field->varname); ?>
+		<?php //echo $form->error($profile,$field->varname); ?>
 	</div>
 			<?php
 			}

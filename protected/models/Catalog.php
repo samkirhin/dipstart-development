@@ -96,14 +96,13 @@ class Catalog extends CActiveRecord {
         return $parent;
     }
 
-    public function performCatsTree()
-    {
-        $cats = $this->findAll('parent_id = 0');
+    public function performCatsTree($field_id) {
+        $cats = $this->findAllByAttributes(array('field_id'=>$field_id), 'parent_id = 0');
         foreach ($cats as $item) {
             $cubats = $this->findAll('parent_id = ' . $item->id);
-            foreach ($cubats as $cat) {
-                $tree[$item->cat_name][$cat->id] = $cat->cat_name;
-            }
+			foreach ($cubats as $cat) {
+				$tree[$item->cat_name][$cat->id] = $cat->cat_name;
+			}
         }
         return $tree;
     }

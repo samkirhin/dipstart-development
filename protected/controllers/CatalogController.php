@@ -104,9 +104,13 @@ class CatalogController extends Controller {
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex() {
+	public function actionIndex($field_id = -1) {
+		if ($field_id != -1) {
+			$dataProvider = new CActiveDataProvider('Catalog', array('criteria' => array('condition'=>'field_id='.$field_id)));
+		} else {
+			$dataProvider = new CActiveDataProvider('Catalog');
+		}
 		//print_r(Yii::app()->user->checkAccess('Index'));
-        $dataProvider = new CActiveDataProvider('Catalog');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

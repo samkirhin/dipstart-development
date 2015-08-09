@@ -24,6 +24,12 @@
 		<?php echo $form->textField($model,'cat_name',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'cat_name'); ?>
 	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'field_id'); ?>
+		<?php echo $form->textField($model,'field_id',array('size'=>60,'maxlength'=>3)); ?>
+		<?php echo $form->error($model,'field_id'); ?>
+	</div>
 
 	<div class="row">
 	<?php

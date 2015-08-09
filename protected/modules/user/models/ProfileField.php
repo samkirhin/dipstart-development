@@ -34,8 +34,9 @@ class ProfileField extends CActiveRecord
 	public static $table_prefix;
 	
 	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.Yii::app()->getModule('user')->tableProfileFields;
+		$c_id = Campaign::getId();
+		if ($c_id)
+			return $c_id.'_'.Yii::app()->getModule('user')->tableProfileFields;
 		else
 			return Yii::app()->getModule('user')->tableProfileFields;
 	}

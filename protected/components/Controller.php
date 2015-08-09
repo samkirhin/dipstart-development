@@ -29,8 +29,8 @@ class Controller extends RController
 		$c_id = Campaign::getId();
 		if ($c_id) {
 			Payment::$table_prefix = $c_id.'_';
-			Profile::$table_prefix = $c_id.'_';
-			ProfileField::$table_prefix = $c_id.'_';
+			//Profile::$table_prefix = $c_id.'_';
+			//ProfileField::$table_prefix = $c_id.'_';
 			ProjectChanges::$table_prefix = $c_id.'_';
 			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
 			//ProjectMessages::$table_prefix = $c_id.'_';
