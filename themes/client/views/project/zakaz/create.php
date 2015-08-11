@@ -89,7 +89,6 @@ $this->breadcrumbs=array(
                 <?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53, 'class'=>'form-control')); ?>
                 <?php echo $form->error($model,'add_demands'); ?>
             </div>
-            <h4>Заметки</h4>
 
             <div class="form-group">
                 <?php echo $form->labelEx($model,'time_for_call'); ?>

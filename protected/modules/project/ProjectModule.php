@@ -2,6 +2,8 @@
 
 class ProjectModule extends CWebModule
 {
+	public $fields_page_size = 10;
+
 	public function init()
 	{
 		// this method is called when the module is being created
