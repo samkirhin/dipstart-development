@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 );
 $this->menu=array(
     array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('admin')),
-    array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin')),
 );
 $this->widget('zii.widgets.CMenu', array(
 	'items'=>$this->menu,
