@@ -35,11 +35,16 @@ class UploadPaymentImage extends CFormModel
                 mkdir($dir, 0775, true);
             }
 
-			if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
+            $paymentImage = new PaymentImage;
+            $paymentImage->project_id = $order->id;
+            $paymentImage->image = md5(uniqid('')) . '.' . $this->file->extensionName;
+            $paymentImage->save(false);
+            
+			//if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
 			
-            $order->payment_image = md5(uniqid('')) . '.' . $this->file->extensionName;
+            //$order->payment_image = md5(uniqid('')) . '.' . $this->file->extensionName;
             //$order->status = 3;
-            $order->save(false);
+            //$order->save(false);
             $this->file->saveAs($dir . $order->payment_image);
         }
     }

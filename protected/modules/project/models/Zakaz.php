@@ -220,7 +220,8 @@ class Zakaz extends CActiveRecord {
 			'author' => [self::BELONGS_TO, 'User', 'executor'],
 			'category'=>array(self::HAS_ONE, 'Categories', array('id'=>'category_id')),
 			'job'=>array(self::HAS_ONE, 'Jobs', array('id'=>'job_id')),
-            'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status')
+            'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
+            'images' => [self::HAS_MANY, 'PaymentImage', 'project_id']
 		);
 	}
 

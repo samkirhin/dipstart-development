@@ -80,10 +80,13 @@
 		<button class="btn btn-default send_managers_approve">Подтвердить</button>
 		<button class="btn btn-default send_managers_cancel">Отмена</button>
 		<?php 
-			if ($zakaz->payment_image) {
-				new UploadPaymentImage;
-				echo CHtml::link('Чек', UploadPaymentImage::$folder . $zakaz->payment_image, array ('target' => '_blank' ));
-			}
+            foreach ($zakaz->images as $item) {
+                echo CHtml::link('Чек', UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' ));
+            }
+//			if ($zakaz->payment_image) {
+//				new UploadPaymentImage;
+//				echo CHtml::link('Чек', UploadPaymentImage::$folder . $zakaz->payment_image, array ('target' => '_blank' ));
+//			}
 		?>
 		</div>
 	</div>

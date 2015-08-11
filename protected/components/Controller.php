@@ -42,6 +42,7 @@ class Controller extends RController
 			UpdateProfile::$table_prefix = $c_id.'_';
 			Moderation::$table_prefix = $c_id.'_';
 			ZakazPartsFiles::$table_prefix = $c_id.'_';
+            PaymentImage::$table_prefix = $c_id.'_';
 		} else {
 			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
