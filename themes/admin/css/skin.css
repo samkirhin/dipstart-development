@@ -60,12 +60,6 @@ float: left;
         border-radius: 5px;
 }
 
-#close_order {
-float: right;
-background: #337AB7;
-color: white;
-}
-
 textarea.col-xs-12 {
 border: 1px solid #ddd;
 margin: 15px 0;

@@ -99,8 +99,10 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				if ($postdata['recipient']=='Author'){
 					$obj['recipient'] = Zakaz::model()->findByPk($chat_id)->attributes['executor'];
                     if ($obj['recipient']==0) $obj['recipient']=-1;
-				} else if ($postdata['recipient']=='Customer') {
+				} elseif ($postdata['recipient']=='Customer') {
 					$obj['recipient'] = Zakaz::model()->findByPk($chat_id)->attributes['user_id'];
+				/*} elseif (isset($postdata['recipient'])){
+					$obj['recipient'] = $postdata['recipient'];*/
 				} else $obj['recipient']=0;
 				$newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 			}
@@ -120,7 +122,8 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				else {
                     if ($postdata['recipient']=='Customer') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['user_id'];
                     if ($postdata['recipient']=='Author') $obj['recipient']=Zakaz::model()->findByPk($chat_id)->attributes['executor'];
-                    $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
+                    if (is_numeric($postdata['recipient'])) $obj['recipient']=$postdata['recipient'];
+					$newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}
 			}
 			// now retrieve the post

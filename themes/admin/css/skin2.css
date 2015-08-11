@@ -14,3 +14,13 @@
 .portlet-decoration {
 	display: none;
 }
+.btn-spam {
+	float: right;
+	margin-top: -2px;
+}
+.btn-change-status {
+	background: #81B2DC;
+	margin-top: -4px;
+	margin-left: 10px;
+	color: white;
+}

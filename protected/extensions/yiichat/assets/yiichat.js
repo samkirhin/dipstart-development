@@ -188,7 +188,7 @@ var YiiChat = function (options) {
 				
 				tmp_html = '';//"<div class='buttons'>"
 				if (options.identity != post.sender.superuser.userid) {
-					tmp_html += "<button data-sender=\"" + post.sender.superuser.itemname + "\" data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
+					tmp_html += "<button data-sender=\"" + post.sender.superuser.itemname + "\" data-uid=\""+post.sender.superuser.userid+"\" data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
 					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-share\">Переслать</button>";
 				}
 				tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-delete\">Удалить</button>";
@@ -222,7 +222,9 @@ var YiiChat = function (options) {
                     if ($(this).data('sender')=='Author') button=$('.button_author');
                     if ($(this).data('sender')=='Customer') button=$('.button_customer');
                     button.show();
-                    button.data('recipient',$(this).data('sender'));
+                    /*button.data('recipient',$(this).data('sender'));*/
+					button.data('recipient',$(this).data('uid'));
+					button.data('uid',$(this).data('uid'));
                 });
                 var btn_remove = p.find('button.chtpl0-delete');
                 btn_remove.click(function () {
@@ -328,7 +330,7 @@ var YiiChat = function (options) {
         var buttons = you.find('div.buttons');
 		buttons.append("<h5>Отправить сообщение</h5><br>");
         //buttons.append("<button class='button_send btn-primary pull-left btn smooth im-send' data-recipient='no'>" + options.executor + "</button>");
-        buttons.append("<button class='chtpl0-submit1 button_author btn-primary pull-left btn smooth im-send' data-recipient='Author'>" + ((options.executor>0) ? options.sendAuthorText : options.sendAuthorText.slice(0,-1)+'ам') + "</button>");
+        buttons.append("<button class='chtpl0-submit1 button_author btn-primary pull-left btn smooth im-send' data-recipient='Author' data-uid=''>" + ((options.executor>0) ? options.sendAuthorText : options.sendAuthorText.slice(0,-1)+'ам') + "</button>");
         buttons.append("<button class='chtpl0-submit2 button_customer btn-primary pull-left btn smooth im-send' data-recipient='Customer'>" + options.sendCustomerText + "</button>");
         posts.html("");
 

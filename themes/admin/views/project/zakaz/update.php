@@ -17,7 +17,13 @@ $this->breadcrumbs = array(
 ?>
 
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
-    <h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span></h1>
+    <h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span>
+			<?php if ($model->status < 5) { ?>
+				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>';">Завершить заказ</button>
+			<?php } else { ?>
+				<button id="open_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';">Открыть заказ</button>
+			<?php } ?>
+	</h1>
     <div class="row">
         <?php
         //$this->renderPartial('_order_list_update');
@@ -47,18 +53,15 @@ $this->breadcrumbs = array(
             <div class="row zero-edge">
                <div class="col-xs-12 statusBlock">
                    <span class="label label-warning"><b><?= $message; ?></b></span>
-                   <?php if ($model->status < 5) { ?>
-                        <button id="close_order" class="btn" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>';">Завершить заказ</button>
-                   <?php } else { ?>
-                        <button id="open_order" class="btn" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';">Открыть заказ</button>
-                   <?php } ?>
+				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href="">Рассылка</button>
+					<!-- Тут была кнопка открыть или закрыть заказ -->
                </div>
             </div>
             <?php if ($isModified) echo '<span><b>Заказ на модерации</b></span>';?>
 
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-primary" onclick="spam(<?php echo $model->id; ?>);" href="">Рассылка</button>
+					<!-- Тут была кнопка рассылки -->
                 </div>
                 <div class="col-xs-12 notes">
                     <h4>Примечания (по всему заказу)</h4>
