@@ -23,7 +23,9 @@
  * @property string $payment_image
  */
 class Zakaz extends CActiveRecord {
-
+	private $_model;
+	private $_rules = array();
+	
 	public static $table_prefix;
 	public static $files_folder;
 
@@ -47,7 +49,12 @@ class Zakaz extends CActiveRecord {
 		else
 			return 'Projects';
 	}
-
+	public function getFields() {
+		if (!$this->_model)
+		  $this->_model=ProjectField::model()->forAll()->findAll();
+		return $this->_model;
+	}
+	
     public function getDbdate_finishstart(){
         if ($this->date_finishstart!='') {
             return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->date_finishstart, $this->dateTimeIncomeFormat));
@@ -190,39 +197,87 @@ class Zakaz extends CActiveRecord {
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('category_id, title', 'required', 'on'=>'create'),
-			array('category_id, job_id, status', 'numerical', 'integerOnly'=>true),
-			array('user_id', 'length', 'max'=>11),
-			array('title', 'length', 'max'=>255),
-			array('executor', 'length', 'max'=>10),
-            array('text, date_finishend, date_finishstart, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
-            array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, pages', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, jobName, catName, title, dateCreation, dateFinish, managerInformed', 'safe', 'on'=>'search'),
-		);
+	public function rules() {
+		if(Campaign::getId()){
+		if (!$this->_rules) {
+			$required = array();
+			$numerical = array();
+			$float = array();
+			$decimal = array();
+			$rules = array();
+
+			$model=$this->getFields();
+
+			foreach ($model as $field) {
+				$field_rule = array();
+				if ($field->required==ProfileField::REQUIRED_YES_NOT_SHOW_REG||$field->required==ProfileField::REQUIRED_YES_SHOW_REG)
+					array_push($required,$field->varname);
+				if ($field->field_type=='FLOAT')
+					array_push($float,$field->varname);
+				if ($field->field_type=='DECIMAL')
+					array_push($decimal,$field->varname);
+				if ($field->field_type=='INTEGER')
+					array_push($numerical,$field->varname);
+				if ($field->field_type=='VARCHAR') {//||$field->field_type=='TEXT') {
+					$field_rule = array($field->varname, 'length', 'max'=>$field->field_size, 'min' => 0);
+					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+					array_push($rules,$field_rule);
+				}
+				if ($field->field_type=='DATE') {
+					$field_rule = array($field->varname, 'type', 'type' => 'date', 'dateFormat' => 'yyyy-mm-dd', 'allowEmpty'=>true);
+					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+					array_push($rules,$field_rule);
+				}
+			}
+
+			array_push($rules,array(implode(',',$required), 'required'));
+			array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
+			array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
+			array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
+			$this->_rules = $rules;
+		}
+		return $this->_rules;
+		} else {
+			// NOTE: you should only define rules for those attributes that
+			// will receive user inputs.
+			return array(
+				array('category_id, title', 'required', 'on'=>'create'),
+				array('category_id, job_id, status', 'numerical', 'integerOnly'=>true),
+				array('user_id', 'length', 'max'=>11),
+				array('title', 'length', 'max'=>255),
+				array('executor', 'length', 'max'=>10),
+				array('text, date_finishend, date_finishstart, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
+				array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, pages', 'safe'),
+				// The following rule is used by search().
+				// @todo Please remove those attributes that should not be searched.
+				array('id, jobName, catName, title, dateCreation, dateFinish, managerInformed', 'safe', 'on'=>'search'),
+			);
+		}
 	}
 
 	/**
 	 * @return array relational rules.
 	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
-			'author' => [self::BELONGS_TO, 'User', 'executor'],
-			'category'=>array(self::HAS_ONE, 'Categories', array('id'=>'category_id')),
-			'job'=>array(self::HAS_ONE, 'Jobs', array('id'=>'job_id')),
-            'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
-            'images' => [self::HAS_MANY, 'PaymentImage', 'project_id']
-		);
+	public function relations() {
+		if(Campaign::getId()){
+			return array(
+				'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
+				'author' => [self::BELONGS_TO, 'User', 'executor'],
+				'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
+				'images' => [self::HAS_MANY, 'PaymentImage', 'project_id']
+			);
+		} else {
+			// NOTE: you may need to adjust the relation name and the related
+			// class name for the relations automatically generated below.
+			return array(
+				'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
+				'author' => [self::BELONGS_TO, 'User', 'executor'],
+				'category'=>array(self::HAS_ONE, 'Categories', array('id'=>'category_id')),
+				'job'=>array(self::HAS_ONE, 'Jobs', array('id'=>'job_id')),
+				'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
+				'images' => [self::HAS_MANY, 'PaymentImage', 'project_id']
+			);
+		}
 	}
 
 	/**
@@ -271,7 +326,9 @@ class Zakaz extends CActiveRecord {
     public function search_upd()
     {
         $criteria = new CDbCriteria;
+		if(!Campaign::getId()){
         $criteria->with = array('job', 'category');
+		}
         $criteria->offset=$this->id;
         $sort = new CSort();
         $sort->defaultOrder = 't.id ASC';
@@ -286,10 +343,14 @@ class Zakaz extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
+		if(!Campaign::getId()){
         $criteria->with = array('job', 'category');
+		}
         $criteria->compare('t.id', $this->id);
+		if(!Campaign::getId()){
         $criteria->compare('job_id', $this->jobName);
         $criteria->compare('category_id', $this->catName);
+		}
         $criteria->compare('title', $this->title, true);
         $criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
         $criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);

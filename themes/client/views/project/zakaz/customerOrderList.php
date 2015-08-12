@@ -5,10 +5,14 @@
     </div>
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'zakaz-grid',
-	'dataProvider'=>$dataProvider,
-	'columns'=>array(
+<?php 
+if (Campaign::getId()){
+	$columns = array(
+		'id',
+		'title',
+	);
+} else {
+	$columns = array(
         'id',
         [
             'name' => 'category_id',
@@ -32,7 +36,12 @@
             'type' => 'raw',
             'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
         ],
-	),
+	);
+}
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'zakaz-grid',
+	'dataProvider'=>$dataProvider,
+	'columns'=>$columns,
     'htmlOptions'=>array('class'=>'col-md-12 table table-striped'),
     'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
     'selectionChanged'=>"js:function(sel_id){

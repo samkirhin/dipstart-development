@@ -21,12 +21,20 @@ switch ($role){
             array('label'=>Yii::t('site','Profile Fields'), 'url'=>array('/user/profileField/admin')),
             array('label'=>Yii::t('site','Rights'), 'url'=>array('/rights')),
         ));
+		if (Campaign::getId()){
+        $items[] = array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'items' => array(
+            array('label'=>Yii::t('site','Categories'), 'url'=>array('/catalog/index')),
+            array('label'=>Yii::t('site','Statuses'), 'url'=>array('/projectStatus/index')),
+            array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
+        ));
+		} else {
         $items[] = array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'items' => array(
             array('label'=>Yii::t('site','Categories'), 'url'=>array('/categories/index')),
             array('label'=>Yii::t('site','Jobs'), 'url'=>array('/jobs/index')),
             array('label'=>Yii::t('site','Statuses'), 'url'=>array('/projectStatus/index')),
             array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
         ));
+		}
         $items[] = array('label'=>Yii::t('site','Events'), 'url'=>array('/project/event'));
         $user = User::model()->findByPk(Yii::app()->user->id);
         $items[] = array('label'=>'Бухгалтерия', 'url'=>array('/project/payment/view'), 'visible'=>$user->superuser);

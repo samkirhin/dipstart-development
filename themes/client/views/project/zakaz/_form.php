@@ -19,8 +19,32 @@
 
 	<p class="note"><?=ProjectModule::t('Fields with <span class="required">*</span> are required.')?></p>
 
-	<?php echo $form->errorSummary($model); ?>
-
+	<?php echo $form->errorSummary($model);
+	if(Campaign::getId()){
+		$projectFields = $model->getFields();
+		if ($projectFields) {
+			foreach($projectFields as $field) {
+				echo '<div class="form-group">';
+				echo $form->labelEx($model,$field->varname).'<br/>';
+				if (isset($field->field_id)){
+					$models = Catalog::model()->findAllByAttributes(array('field_id'=>$field->field_id));
+					$list = CHtml::listData($models, 'id', 'cat_name');
+					echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
+					echo $form->error($model,$field->varname);
+				} elseif($field->varname == 'discipline'){
+				
+				}elseif ($field->varname == 'job_type'){
+				
+				} elseif ($field->field_type=="TEXT") {
+					echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+				} else {
+					echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+				}
+				echo '</div>';
+			}
+		}
+	} else {
+	?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'category_id'); ?>
 		<?php $models = Categories::model()->findAll();
@@ -100,7 +124,7 @@
 		<?php echo $form->textField($model,'edu_dep'); ?>
 		<?php echo $form->error($model,'edu_dep'); ?>
 	</div>
-
+	<?php } ?>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>
 	</div>

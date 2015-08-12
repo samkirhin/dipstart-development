@@ -163,27 +163,28 @@
                                 ));
                                 echo $form->errorSummary($model); ?>
                                 <div class="col-xs-6 info-column">
-                                    <?php echo $form->labelEx($model, 'category_id'); ?>
-                                    <?php $models = Categories::model()->findAll();
+                                    <?php
+									if (!Campaign::getId()){
+									echo $form->labelEx($model, 'category_id');
+                                    $models = Categories::model()->findAll();
                                     $list = CHtml::listData($models, 'id', 'cat_name');
                                     echo $form->dropDownList($model, 'category_id', $list, array('empty' => ProjectModule::t('Select a category')));
-                                    ?>
-                                    <?php echo $form->error($model, 'category_id'); ?>
-                                    <br>
-                                    <?php echo $form->labelEx($model, 'job_id'); ?>
-                                    <?php $models = Jobs::model()->findAll();
+                                    echo $form->error($model, 'category_id');
+                                    echo '<br>';
+                                    echo $form->labelEx($model, 'job_id');
+                                    $models = Jobs::model()->findAll();
                                     $list = CHtml::listData($models, 'id', 'job_name');
                                     echo $form->dropDownList($model, 'job_id', $list, array('empty' => ProjectModule::t('Select a job')));
-                                    ?>
-                                    <?php echo $form->error($model, 'job_id'); ?>
-                                    <br>
-                                    <?php echo $form->labelEx($model, 'title'); ?>
-                                    <?php echo $form->textField($model, 'title', array('size' => 70, 'maxlength' => 255)); ?>
-                                    <?php echo $form->error($model, 'title'); ?>
-                                    <br>
-                                    <?php echo $form->labelEx($model, 'text'); ?>
-                                    <?php echo $form->textArea($model, 'text', array('rows' => 6, 'cols' => 70)); ?>
-                                    <?php echo $form->error($model, 'text'); ?>
+                                    echo $form->error($model, 'job_id');
+                                    echo '<br>';
+									}
+                                    echo $form->labelEx($model, 'title');
+                                    echo $form->textField($model, 'title', array('size' => 70, 'maxlength' => 255));
+                                    echo $form->error($model, 'title');
+                                    echo '<br>';
+                                    echo $form->labelEx($model, 'text');
+                                    echo $form->textArea($model, 'text', array('rows' => 6, 'cols' => 70));
+                                    echo $form->error($model, 'text'); ?>
 
                                     <h3> Сроки выполнения </h3>
 

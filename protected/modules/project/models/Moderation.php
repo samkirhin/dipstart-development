@@ -24,6 +24,8 @@
 class Moderation extends CActiveRecord
 {
 	private $_model;
+	private $_rules = array();
+	
     public $dateTimeIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
     public $dateIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
@@ -151,21 +153,61 @@ class Moderation extends CActiveRecord
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('category_id, job_id, title, max_exec_date', 'required'),
-			array('order_id, category_id, job_id, status', 'numerical', 'integerOnly'=>true),
-			array('title', 'length', 'max'=>255),
-			array('executor', 'length', 'max'=>10),
-            array('text, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
-            array('dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor, event_creator_id, timestamp', 'safe'),
-		);
+	public function rules() {
+		if(Campaign::getId()){
+		if (!$this->_rules) {
+			$required = array();
+			$numerical = array();
+			$float = array();
+			$decimal = array();
+			$rules = array();
+
+			$model=$this->getFields();
+
+			foreach ($model as $field) {
+				$field_rule = array();
+				if ($field->required==ProfileField::REQUIRED_YES_NOT_SHOW_REG||$field->required==ProfileField::REQUIRED_YES_SHOW_REG)
+					array_push($required,$field->varname);
+				if ($field->field_type=='FLOAT')
+					array_push($float,$field->varname);
+				if ($field->field_type=='DECIMAL')
+					array_push($decimal,$field->varname);
+				if ($field->field_type=='INTEGER')
+					array_push($numerical,$field->varname);
+				if ($field->field_type=='VARCHAR') {//||$field->field_type=='TEXT') {
+					$field_rule = array($field->varname, 'length', 'max'=>$field->field_size, 'min' => 0);
+					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+					array_push($rules,$field_rule);
+				}
+				if ($field->field_type=='DATE') {
+					$field_rule = array($field->varname, 'type', 'type' => 'date', 'dateFormat' => 'yyyy-mm-dd', 'allowEmpty'=>true);
+					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+					array_push($rules,$field_rule);
+				}
+			}
+
+			array_push($rules,array(implode(',',$required), 'required'));
+			array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
+			array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
+			array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
+			$this->_rules = $rules;
+		}
+		return $this->_rules;
+		} else {
+			// NOTE: you should only define rules for those attributes that
+			// will receive user inputs.
+			return array(
+				array('category_id, job_id, title, max_exec_date', 'required'),
+				array('order_id, category_id, job_id, status', 'numerical', 'integerOnly'=>true),
+				array('title', 'length', 'max'=>255),
+				array('executor', 'length', 'max'=>10),
+				array('text, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep', 'safe'),
+				array('dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate', 'safe'),
+				// The following rule is used by search().
+				// @todo Please remove those attributes that should not be searched.
+				array('id, user_id, category_id, job_id, title, text, date, max_exec_date, date_finish, author_informed, manager_informed, pages, add_demands, status, executor, event_creator_id, timestamp', 'safe'),
+			);
+		}
 	}
 
 	/**
