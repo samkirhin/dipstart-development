@@ -4,6 +4,7 @@
  * @property integer $id
  * @property integer $project_id
  * @property string $image
+ * @property integer $approved
  */
 
 class PaymentImage extends CActiveRecord
@@ -28,4 +29,33 @@ class PaymentImage extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    
+    public function defaultScope()
+    {
+        return [
+            'alias' => 'img',
+            'order' => 'img.id ASC'
+        ];
+    }
+    
+    public function approve($id)
+    {
+        $this->updateAll(['approved'=>1], 'project_id=:project_id AND approved=0', [':project_id'=>$id]);
+    }
+
+
+    public function remove($id)
+    {
+        new UploadPaymentImage;
+        $dir = Yii::getPathOfAlias('webroot') . UploadPaymentImage::$folder;
+        
+        foreach ($this->findAll('project_id=:project_id AND approved=0', [':project_id'=>$id]) as $item) {
+            
+            if (file_exists($dir.$item->image))
+                unlink($dir.$item->image);
+            
+            $item->delete();
+        }
+    }
+    
 }

@@ -34,10 +34,16 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 							<?php echo CHtml::submitButton('Загрузить'); ?>
 						</div>
 						<?php $this->endWidget();
-						if ($chek_image) {
+						if (count($images) > 0) {
 							echo '<div class="chek-is-approving">Ваш платёж на проверке...</div>';
-							$img = UploadPaymentImage::$folder . $chek_image;
-							echo '<div class="chek-image-link">'.CHtml::link('Ваш чек', $img, array ('target' => '_blank' )).'</div>';
+							//$img = UploadPaymentImage::$folder . $chek_image;
+                            $i = 1;
+                            echo '<div class="chek-image-link">';
+                            
+                            foreach ($images as $item) {
+                                echo CHtml::link('Чек ' . $i++, UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' )) . ' ';
+                            }
+                            echo '</div>';
 						}
 						echo '</div><hr>';
 					}

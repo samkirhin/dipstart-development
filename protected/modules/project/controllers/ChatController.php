@@ -111,7 +111,7 @@ class ChatController extends Controller {
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
-			'chek_image' => Zakaz::getPaymentImage($orderId),
+            'images' => $model->images(['condition'=>'approved=0'])
         ));
     }
 	public function actionUpload() {
