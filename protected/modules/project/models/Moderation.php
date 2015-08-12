@@ -23,7 +23,7 @@
  */
 class Moderation extends CActiveRecord
 {
-
+	private $_model;
     public $dateTimeIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
     public $dateIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
@@ -37,7 +37,13 @@ class Moderation extends CActiveRecord
 		else
 			return 'ZakazModeration';
 	}
-
+	
+	public function getFields() {
+		if (!$this->_model)
+		  $this->_model=ProjectField::model()->forAll()->findAll();
+		return $this->_model;
+	}
+	
     public function getDbdate_finishstart(){
         if ($this->date_finishstart!='') {
             return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->date_finishstart, $this->dateTimeIncomeFormat));

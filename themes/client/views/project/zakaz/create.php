@@ -31,7 +31,30 @@ $this->breadcrumbs=array(
 
             <p class="note"><?=ProjectModule::t('Fields with <span class="required">*</span> are required.')?></p>
 
-            <?php echo $form->errorSummary($model); ?>
+            <?php echo $form->errorSummary($model);
+			// campaign! -------------
+			$projectFields = $model->getFields();
+			if ($projectFields) {
+				foreach($projectFields as $field) {
+					echo '<div class="form-group">';
+					echo $form->labelEx($model,$field->varname).'<br/>';
+					if (isset($field->field_id)){
+						$htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
+						$data = Catalog::model()->performCatsTree($field->field_id);
+						echo CHtml::listBox('Project['.$field->varname.']', array(), $data, $htmlOptions);
+					} elseif($field->varname == 'discipline'){
+					
+					}elseif ($field->varname == 'job_type'){
+					
+					} elseif ($field->field_type=="TEXT") {
+						echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+					} else {
+						echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+					}
+					echo '</div>';
+				}
+			}
+			?>
 
             <div class="form-group">
                 <?php echo $form->labelEx($model,'category_id'); ?>

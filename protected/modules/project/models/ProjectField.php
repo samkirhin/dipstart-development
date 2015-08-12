@@ -108,7 +108,7 @@ class ProjectField extends CActiveRecord
                 'condition'=>'visible='.self::VISIBLE_ALL,
                 'order'=>'position',
             ),
-            'forCustomer'=>array(
+            /*'forCustomer'=>array(
                 'condition'=>'visible='.self::VISIBLE_CUSTOMER.' OR visible='.self::VISIBLE_ALL,
                 'order'=>'position',
             ),
@@ -123,7 +123,7 @@ class ProjectField extends CActiveRecord
             'forOwner'=>array(
                 'condition'=>'visible='.self::VISIBLE_ONLY_OWNER,
                 'order'=>'position',
-            ),
+            ),*/
             'sort'=>array(
                 'order'=>'position',
             ),

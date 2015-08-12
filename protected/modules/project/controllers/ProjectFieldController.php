@@ -325,8 +325,11 @@ class ProjectFieldController extends Controller
 		if(isset($_POST['ProjectField'])) {
 			$model->attributes=$_POST['ProjectField'];
 			if($model->validate()) {
-				$sql = 'ALTER TABLE '.Project::model()->tableName().' ADD `'.$model->varname.'` ';
-				$sql .= $this->fieldType($model->field_type);
+				// ----------- need refactoring
+				$sql0 = 'ALTER TABLE '.Project::model()->tableName().' ADD `'.$model->varname.'` ';
+				$sql1 = 'ALTER TABLE '.Moderation::model()->tableName().' ADD `'.$model->varname.'` ';
+				// -----------
+				$sql = $this->fieldType($model->field_type);
 				if (
 						$model->field_type!='TEXT'
 						&& $model->field_type!='DATE'
@@ -348,7 +351,8 @@ class ProjectFieldController extends Controller
 									||$model->field_type=='BINARY'
 								)?" DEFAULT ''":(($model->field_type=='DATE')?" DEFAULT '0000-00-00'":" DEFAULT 0"));
 				}
-				$model->dbConnection->createCommand($sql)->execute();
+				$model->dbConnection->createCommand($sql0.$sql)->execute();
+				$model->dbConnection->createCommand($sql1.$sql)->execute();
 				$model->save();
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -504,7 +508,7 @@ class ProjectFieldController extends Controller
 		return $type;
 	}
 	
-	public static function getWidgets($fieldType='') {
+	/*public static function getWidgets($fieldType='') {
 		$basePath=Yii::getPathOfAlias('application.modules.user.components');
 		$widgets = array();
 		$list = array(''=>UserModule::t('No'));
@@ -531,7 +535,7 @@ class ProjectFieldController extends Controller
 			$d->close();
 		}
 		return array($list,$widgets);		
-	}
+	}*/
 	
 
     /**

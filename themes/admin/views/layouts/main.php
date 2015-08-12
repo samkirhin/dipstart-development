@@ -14,6 +14,7 @@ switch ($role){
         $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project'), 'items' => array(
             array('label'=>Yii::t('site','Zakazs'), 'url'=>array('/project/zakaz')),
             array('label'=>Yii::t('site','Create Zakaz'), 'url'=>array('/project/zakaz/create')),
+			array('label'=>Yii::t('site','Zakaz Fields'), 'url'=>array('/project/projectField/admin')),
         ), 'itemOptions' =>   array('class' => 'dropdown-submenu'));
         $items[] = array('label'=>Yii::t('site','Users'), 'url'=>array('/user'), 'items' => array(
             array('label'=>Yii::t('site','Users'), 'url'=>array('/user')),
