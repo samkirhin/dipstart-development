@@ -177,17 +177,32 @@
                                     echo $form->dropDownList($model, 'job_id', $list, array('empty' => ProjectModule::t('Select a job')));
                                     echo $form->error($model, 'job_id');
                                     echo '<br>';
-									}
                                     echo $form->labelEx($model, 'title');
                                     echo $form->textField($model, 'title', array('size' => 70, 'maxlength' => 255));
                                     echo $form->error($model, 'title');
                                     echo '<br>';
-									if (!Campaign::getId()){
                                     echo $form->labelEx($model, 'text');
                                     echo $form->textArea($model, 'text', array('rows' => 6, 'cols' => 70));
                                     echo $form->error($model, 'text'); 
 									} else {
-										echo 'Fields! <br />';
+										$projectFields = $model->getFields();
+										if ($projectFields) {
+											foreach($projectFields as $field) {
+												echo '<div class="form-group">';
+												echo $form->labelEx($model,$field->varname).'<br/>';
+												if (isset($field->field_id)){
+													$models = Catalog::model()->findAllByAttributes(array('field_id'=>$field->field_id));
+													$list = CHtml::listData($models, 'id', 'cat_name');
+													echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
+													echo $form->error($model,$field->varname);
+												} elseif ($field->field_type=="TEXT") {
+													echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+												} else {
+													echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+												}
+												echo '</div>';
+											}
+										}
 									}
 									?>
                                     <h3> Сроки выполнения </h3>
