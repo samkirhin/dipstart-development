@@ -210,13 +210,14 @@ class ZakazController extends Controller
 		Yii::app()->session['project_id'] = $id;
 		$model=$this->loadModel($id);
 		if (Yii::app()->request->getParam('close') == 'yes'){
+            $model->old_status = $model->status;
 			$model->status = 5;
-			$model->save();
+			$model->save(false);
 			$this->redirect(array('update','id'=>$model->id));
 		}
 		if (Yii::app()->request->getParam('open') == 'yes'){
-			$model->status = 4;
-			$model->save();
+			$model->status = $model->old_status;
+			$model->save(false);
 			$this->redirect(array('update','id'=>$model->id));
 		}
 		if (ModerationHelper::isOrderChanged($id)) {

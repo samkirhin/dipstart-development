@@ -16,6 +16,7 @@
  * @property integer $pages
  * @property string $add_demands
  * @property integer $status
+ * @property integer $old_status
  * @property string $executor
  * @property User $user
  * @property User $author
