@@ -177,17 +177,10 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 										$columns = array(
 											'id',
 											'title',
-                                            'text',
                                             [
                                                 'name' => 'author_informed',
                                                 'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
                                             ],
-                                            [
-                                                'name' => 'date_finish',
-                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
-                                            ],
-                                            'pages',
-                                            'add_demands',
 										);
 									} else {
 										$columns = array(

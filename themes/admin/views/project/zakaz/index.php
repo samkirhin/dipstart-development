@@ -12,17 +12,22 @@ if (Campaign::getId()){
 		'id',
 		'title',
         array(
-            'name'=>'date_finish',
+            'name'=>'date',
             'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'model'=>$model,
-                'attribute'=>'dbdate_finishstart',
+                'attribute'=>'dbdate',
                 'language'=>'ru',
-                ), true).$this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                    'model'=>$model,
-                    'attribute'=>'dbdate_finishend',
-                    'language'=>'ru',
+                ),true),
+            'value'=>'$data->dbdate'
+        ),
+        array(
+            'name'=>'manager_informed',
+            'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                'model'=>$model,
+                'attribute'=>'dbmanager_informed',
+                'language'=>'ru',
                 ), true),
-            'value'=>'$data->dbdate_finish',
+            'value'=>'$data->dbmanager_informed',
         ),
         array(
             'class'=>'CButtonColumn',

@@ -182,10 +182,14 @@
                                     echo $form->textField($model, 'title', array('size' => 70, 'maxlength' => 255));
                                     echo $form->error($model, 'title');
                                     echo '<br>';
+									if (!Campaign::getId()){
                                     echo $form->labelEx($model, 'text');
                                     echo $form->textArea($model, 'text', array('rows' => 6, 'cols' => 70));
-                                    echo $form->error($model, 'text'); ?>
-
+                                    echo $form->error($model, 'text'); 
+									} else {
+										echo 'Fields! <br />';
+									}
+									?>
                                     <h3> Сроки выполнения </h3>
 
                                     <table class="table table-striped" style="font-size: 12px;">
@@ -205,6 +209,7 @@
                                                 ));?>
                                             </td>
                                         </tr>
+										<?php if (!Campaign::getId()){ ?>
                                         <tr>
                                             <td>
                                                 <?php echo $form->labelEx($model, 'date_finish'); ?>
@@ -227,8 +232,9 @@
 
                                             </td>
                                         </tr>
-
+										<?php } ?>
                                     </table>
+									<?php if (!Campaign::getId()){ ?>
                                     <?php echo $form->labelEx($model, 'time_for_call'); ?><br>
                                     <?php echo $form->textField($model, 'time_for_call'); ?>
                                     <?php echo $form->error($model, 'time_for_call'); ?>
@@ -236,13 +242,16 @@
                                     <?php echo $form->labelEx($model, 'edu_dep'); ?><br>
                                     <?php echo $form->textField($model, 'edu_dep'); ?>
                                     <?php echo $form->error($model, 'edu_dep'); ?>
+									<?php } ?>
                                 </div>
+								<?php if (!Campaign::getId()){ ?>
                                 <div class="col-xs-6 info-column">
 
                                     <?php echo $form->labelEx($model, 'add_demands'); ?><br>
                                     <?php echo $form->textArea($model, 'add_demands', array('rows' => 6, 'cols' => 53)); ?>
                                     <?php echo $form->error($model, 'add_demands'); ?>
                                 </div>
+								<?php } ?>
                                 <div class="col-xs-12 info-buttons">
                                     <div><?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?></div>
                                 </div>
