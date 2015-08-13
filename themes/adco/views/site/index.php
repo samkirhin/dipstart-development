@@ -1,3 +1,4 @@
+<a href="/user/login">LogIn</a><br />
 <?php
 //$this->redirect(array('user/login'));
 /*

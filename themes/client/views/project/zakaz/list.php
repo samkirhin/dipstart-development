@@ -13,11 +13,19 @@ $this->breadcrumbs=array(
 <h1><?=ProjectModule::t('Zakazs')?></h1>
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'zakaz-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
+<?php
+if (Campaign::getId()){
+	$columns = array(
+		'id',
+		'title',
+		[
+            'header' => '',
+            'type' => 'raw',
+            'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
+        ],
+	);
+} else {
+	$columns = array(
         'id',
 		'title',
 		array(
@@ -35,7 +43,13 @@ $this->breadcrumbs=array(
             'type' => 'raw',
             'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
         ],
-	),
+	);
+}
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'zakaz-grid',
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
+	'columns'=>$columns,
     'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
     'selectionChanged'=>"js:function(sel_id){
         document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();

@@ -173,10 +173,24 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                             <div class="col-xs-12 aboutZakaz">
                                 <?php
                                 if (User::model()->isAuthor()) {
-
-                                    $this->widget('zii.widgets.CDetailView', array(
-                                        'data' => $order,
-                                        'attributes' => array(
+									if (Campaign::getId()){
+										$columns = array(
+											'id',
+											'title',
+                                            'text',
+                                            [
+                                                'name' => 'author_informed',
+                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
+                                            ],
+                                            [
+                                                'name' => 'date_finish',
+                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
+                                            ],
+                                            'pages',
+                                            'add_demands',
+										);
+									} else {
+										$columns = array(
                                             'id',
                                             array(
                                                 'name' => 'category_id',
@@ -200,8 +214,11 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                                             ],
                                             'pages',
                                             'add_demands',
-                                    )));
-
+										);
+									}
+                                    $this->widget('zii.widgets.CDetailView', array(
+                                        'data' => $order,
+                                        'attributes' => $columns));
                                 } else {
 
                                     if (!ModerationHelper::isOrderChanged($order->id)) {

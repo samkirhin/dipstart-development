@@ -301,7 +301,7 @@ class ZakazPartsController extends Controller
             Yii::import("ext.EAjaxUpload.qqFileUploader");
 			//chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
             $folder=$folder.'temp/';
-			chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
+			//chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
             $config['allowedExtensions'] = array('jpg', 'jpeg', 'png', 'gif', 'txt', 'doc', 'docx');
             $config['disAllowedExtensions'] = array("exe, php");
             $sizeLimit = 10 * 1024 * 1024;

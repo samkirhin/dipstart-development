@@ -9,7 +9,7 @@
 <html><head>
 <meta charset="utf-8" />
 
-</head><body>
+</head><body style="text-align: center">
 Аддон компаний<br />
 <?php echo $content; ?>
 </body></html>
