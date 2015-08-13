@@ -85,10 +85,6 @@
             foreach ($zakaz->images as $item) {
                 echo CHtml::link('Чек ' . $i++, UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' )) . ' ';
             }
-//			if ($zakaz->payment_image) {
-//				new UploadPaymentImage;
-//				echo CHtml::link('Чек', UploadPaymentImage::$folder . $zakaz->payment_image, array ('target' => '_blank' ));
-//			}
 		?>
 		</div>
 	</div>

@@ -40,9 +40,6 @@ class UploadPaymentImage extends CFormModel
             $paymentImage->image = md5(uniqid('')) . '.' . $this->file->extensionName;
             $paymentImage->save(false);
             
-			//if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
-			
-            //$order->payment_image = md5(uniqid('')) . '.' . $this->file->extensionName;
             //$order->status = 3;
             //$order->save(false);
             $this->file->saveAs($dir . $paymentImage->image);

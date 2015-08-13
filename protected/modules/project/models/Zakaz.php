@@ -20,7 +20,6 @@
  * @property User $user
  * @property User $author
  * @property ProjectStatus $projectStatus
- * @property string $payment_image
  */
 class Zakaz extends CActiveRecord {
 	private $_model;
