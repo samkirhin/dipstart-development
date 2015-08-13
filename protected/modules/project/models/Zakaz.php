@@ -16,11 +16,11 @@
  * @property integer $pages
  * @property string $add_demands
  * @property integer $status
+ * @property integer $old_status
  * @property string $executor
  * @property User $user
  * @property User $author
  * @property ProjectStatus $projectStatus
- * @property string $payment_image
  */
 class Zakaz extends CActiveRecord {
 	private $_model;

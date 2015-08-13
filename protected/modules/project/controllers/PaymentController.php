@@ -299,11 +299,9 @@ class PaymentController extends Controller {
         $payment->to_receive = 0;
         if ($payment->save() && $to_res != 0) {
 			$order = Zakaz::model()->findByPk($orderId);
-			//remove chek
-			$dir = Yii::getPathOfAlias('webroot') . UploadPaymentImage::$folder;
-			//if ($order->payment_image && file_exists($dir.$order->payment_image)) unlink($dir.$order->payment_image);
-			//$order->payment_image = null;
+			
             PaymentImage::model()->approve($order->id);
+            
 			if ($order->status < 3) $order->status = 3;
 			$order->save();
 			//
