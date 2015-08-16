@@ -165,12 +165,25 @@ class ZakazController extends Controller
 
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
 					$model->user_id = Yii::app()->user->id;
-                    $model->dbmanager_informed = date('d.m.Y H:i');
-                    $model->dbdate = date('d.m.Y H:i');
-                    $d1=date_create();
-                    $d2=date_create($_POST['Moderation']['dbmax_exec_date']);
-                    $d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
-                    $model->dbauthor_informed = $d1->format('d.m.Y H:i');
+					if(Campaign::getId()){
+						$projectFields = $model->getFields();
+						if ($projectFields) {
+							foreach($projectFields as $field) {
+								if ($field->field_type=="TIMESTAMP") {
+									// ----------------------------------------------------
+									$tmp = $field->varname;
+									if (isset($_POST['Moderation'][$tmp]))
+										$model->$tmp = Yii::app()->dateFormatter->format('yyyy-MM-dd HH:mm:ss', CDateTimeParser::parse($_POST['Moderation'][$tmp], 'dd.MM.yyyy HH:mm'));
+								}
+							}
+						}
+					}
+					$model->dbmanager_informed = date('d.m.Y H:i');
+					$model->dbdate = date('d.m.Y H:i');
+					$d1=date_create();
+					$d2=date_create($_POST['Moderation']['dbmax_exec_date']);
+					$d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
+					$model->dbauthor_informed = $d1->format('d.m.Y H:i');
                 }
 				if($model->save()){
 					if (!(User::model()->isManager() || User::model()->isAdmin())) {
@@ -182,6 +195,7 @@ class ZakazController extends Controller
 
 			$this->render('create',array(
 					'model'=>$model,
+					'temp'=>isset($_POST['Moderation']['datehello'])?$_POST['Moderation']['datehello']:null,
 			));
 	}
 

@@ -323,6 +323,27 @@ class Moderation extends CActiveRecord
         return self::model()->findByPk($orderId)->executor;
     }
 
+    public function beforeValidate() {
+        if ($this->isNewRecord) {
+			if(Campaign::getId()){
+				$projectFields = $this->getFields();
+				if ($projectFields) {
+					foreach($projectFields as $field) {
+						if ($field->field_type=="TIMESTAMP") {
+							$tmp = $field->varname;
+							if (isset($this->$tmp) && $this->$tmp != ''){
+								$this->$tmp = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($this->$tmp, $this->dateOutcomeFormat));
+							}
+						}
+					}
+				}
+			}
+        }
+
+        return parent::beforeValidate();
+    }
+ 
+		
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

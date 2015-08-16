@@ -16,40 +16,68 @@ $this->breadcrumbs=array(
 
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
 <?php
-$attr = array(
-    'id',
-    array(
-       'name' => 'user_id',
-       'type' => 'raw',
-       'value' => User::model()->findByPk($model->user_id)->username,
-    ),
-    array(
-       'name' => 'category_id',
-       'type' => 'raw',
-       'value' => Categories::model()->findByPk($model->category_id)->cat_name,
-    ),
-    array(
-       'name' => 'job_id',
-       'type' => 'raw',
-       'value' => $model->job_id > 0 ? Jobs::model()->findByPk($model->job_id)->job_name : null,
-    ),
-    'title',
-    'text',
-    array(
-        'name'=>'date',
-        'value'=>$model->dbdate,
-    ),
-    array(
-        'name'=>'max_exec_date',
-        'value'=>$model->dbmax_exec_date,
-    ),
-    'pages',
-    'add_demands',
-);
-$this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>$attr,
-)); ?>
+if (Campaign::getId()){
+	$attr = array('id', [
+			'name' => 'author_informed',
+			'value' => Yii::app()->dateFormatter->formatDateTime($model->author_informed),
+		]);
+	$projectFields = $model->getFields();
+	if ($projectFields) {
+		foreach($projectFields as $field) {
+			if (isset($field->field_id)){
+				$tmp = $field->varname;
+				$attr[] = [
+					'name' => $field->title,
+					'type' => 'raw',
+					'value' => Catalog::model()->findByPk($model->$tmp)->cat_name,
+					];
+			} else {
+				$tmp = $field->varname;
+				$attr[] = [
+					'name' => $field->title,
+					'value' => $model->$tmp
+					];
+			}
+		}
+	}
+} else {
+	$attr = array(
+		'id',
+		array(
+		   'name' => 'user_id',
+		   'type' => 'raw',
+		   'value' => User::model()->findByPk($model->user_id)->username,
+		),
+		array(
+		   'name' => 'category_id',
+		   'type' => 'raw',
+		   'value' => Categories::model()->findByPk($model->category_id)->cat_name,
+		),
+		array(
+		   'name' => 'job_id',
+		   'type' => 'raw',
+		   'value' => $model->job_id > 0 ? Jobs::model()->findByPk($model->job_id)->job_name : null,
+		),
+		'title',
+		'text',
+		array(
+			'name'=>'date',
+			'value'=>$model->dbdate,
+		),
+		array(
+			'name'=>'max_exec_date',
+			'value'=>$model->dbmax_exec_date,
+		),
+		'pages',
+		'add_demands',
+	);
+}
+	$this->widget('zii.widgets.CDetailView', array(
+		'data'=>$model,
+		'attributes'=>$attr,
+	));
+
+?>
 <?php /*
     $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
     'projectId'=>$model->id,

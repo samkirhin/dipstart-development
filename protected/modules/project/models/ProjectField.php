@@ -141,7 +141,7 @@ class ProjectField extends CActiveRecord
 				'INTEGER' => UserModule::t('INTEGER'),
 				'VARCHAR' => UserModule::t('VARCHAR'),
 				'TEXT'=> UserModule::t('TEXT'),
-				'DATE'=> UserModule::t('DATE'),
+				'TIMESTAMP'=> UserModule::t('DATE'),
 				'FLOAT'=> UserModule::t('FLOAT'),
 				'DECIMAL'=> UserModule::t('DECIMAL'),
 				'BOOL'=> UserModule::t('BOOL'),

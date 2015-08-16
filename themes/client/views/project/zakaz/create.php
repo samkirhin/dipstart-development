@@ -37,23 +37,36 @@ $this->breadcrumbs=array(
 				$projectFields = $model->getFields();
 				if ($projectFields) {
 					foreach($projectFields as $field) {
-						echo '<div class="form-group">';
-						echo $form->labelEx($model,$field->varname).'<br/>';
 						if (isset($field->field_id)){
+							echo '<div class="form-group">';
+							echo $form->labelEx($model,$field->varname).'<br/>';
 							$models = Catalog::model()->findAllByAttributes(array('field_id'=>$field->field_id));
 							$list = CHtml::listData($models, 'id', 'cat_name');
 							echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 							echo $form->error($model,$field->varname);
-						} elseif($field->varname == 'discipline'){
-						
-						}elseif ($field->varname == 'job_type'){
-						
+							echo '</div>';
+						} elseif ($field->field_type=="TIMESTAMP") {
+							if (isset($_POST['Moderation'][$field->varname])) echo '!!!'.Yii::app()->dateFormatter->format('yyyy-MM-dd HH:mm:ss', CDateTimeParser::parse($_POST['Moderation'][$field->varname], 'dd.MM.yyyy HH:mm'));
+							?>
+							<div class="form-group" style="position: relative; float: left; width: 100%;">
+								<label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,$field->varname);?></label>
+								<?php
+								$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+									'model' => $model,
+									'attribute' => $field->varname,
+								));?>
+							</div><?php
 						} elseif ($field->field_type=="TEXT") {
+							echo '<div class="form-group">';
+							echo $form->labelEx($model,$field->varname).'<br/>';
 							echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+							echo '</div>';
 						} else {
+							echo '<div class="form-group">';
+							echo $form->labelEx($model,$field->varname).'<br/>';
 							echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+							echo '</div>';
 						}
-						echo '</div>';
 					}
 				}
 			} else {
@@ -86,15 +99,7 @@ $this->breadcrumbs=array(
                 <?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>70, 'class'=>'form-control')); ?>
                 <?php echo $form->error($model,'text'); ?>
             </div>
-
-            <div class="form-group" style="position: relative; float: left; width: 100%; ">
-                <label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,'max_exec_date'); ?></label>
-                <?php
-                $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
-                    'model' => $model,
-                    'attribute' => 'dbmax_exec_date',
-                ));?>
-            </div>
+			
             <div class="form-group" style="position: relative; float: left; width: 100%;">
                 <label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,'date_finish');?></label>
                 <?php
