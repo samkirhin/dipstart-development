@@ -174,14 +174,29 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                                 <?php
                                 if (User::model()->isAuthor()) {
 									if (Campaign::getId()){
-										$columns = array(
-											'id',
-											'title',
-                                            [
+										$columns = array('id', [
                                                 'name' => 'author_informed',
                                                 'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
-                                            ],
-										);
+                                            ]);
+										$projectFields = $order->getFields();
+										if ($projectFields) {
+											foreach($projectFields as $field) {
+												if (isset($field->field_id)){
+													$tmp = $field->varname;
+													$columns[] = [
+														'name' => $field->title,
+														'type' => 'raw',
+														'value' => Catalog::model()->findByPk($order->$tmp)->cat_name,
+														];
+												} else {
+													$tmp = $field->varname;
+													$columns[] = [
+														'name' => $field->title,
+														'value' => $order->$tmp
+														];
+												}
+											}
+										}
 									} else {
 										$columns = array(
                                             'id',

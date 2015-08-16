@@ -441,8 +441,9 @@ class ProjectFieldController extends Controller
 				}
 				
 			} else {
-				$sql = 'ALTER TABLE '.Project::model()->tableName().' DROP `'.$model->varname.'`';
-				if ($model->dbConnection->createCommand($sql)->execute()) {
+				$sql0 = 'ALTER TABLE '.Project::model()->tableName().' DROP `'.$model->varname.'`';
+				$sql1 = 'ALTER TABLE '.Moderation::model()->tableName().' DROP `'.$model->varname.'`';
+				if ($model->dbConnection->createCommand($sql0)->execute() && $model->dbConnection->createCommand($sql1)->execute()) {
 					$model->delete();
 				}
 			}

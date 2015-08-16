@@ -31,10 +31,6 @@
 					$list = CHtml::listData($models, 'id', 'cat_name');
 					echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 					echo $form->error($model,$field->varname);
-				} elseif($field->varname == 'discipline'){
-				
-				}elseif ($field->varname == 'job_type'){
-				
 				} elseif ($field->field_type=="TEXT") {
 					echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
 				} else {

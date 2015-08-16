@@ -224,9 +224,31 @@ class Moderation extends CActiveRecord
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
-		return array(
+	public function attributeLabels() {
+		if(Campaign::getId()){
+			$tmp = array(
+				'id' => 'ID',
+				'order_id' => 'Order ID',
+				'user_id' => ProjectModule::t('User'),
+				'date' => ProjectModule::t('Date'),
+				'max_exec_date' => ProjectModule::t('Max Date'),
+				'status' => ProjectModule::t('Status'),
+				'executor' => ProjectModule::t('Executor'),
+				'manager_informed' => ProjectModule::t('Manager Informed'),
+				'author_informed' => ProjectModule::t('Author Informed'),
+				'notes' => ProjectModule::t('Notes'),
+				'author_notes' => ProjectModule::t('author_notes'),
+				'event_creator_id' => ProjectModule::t('Event Creator'),
+				'timestamp' => ProjectModule::t('timestamp'),
+			);
+			$projectFields = $this->getFields();
+			if ($projectFields) {
+				foreach($projectFields as $field) {
+					$tmp[$field->varname] = $field->title;
+				}
+			}
+			return $tmp;
+		} else return array(
             'id' => 'ID',
             'order_id' => 'Order ID',
             'user_id' => ProjectModule::t('User'),

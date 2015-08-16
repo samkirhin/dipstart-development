@@ -199,43 +199,46 @@ class Zakaz extends CActiveRecord {
 	 */
 	public function rules() {
 		if(Campaign::getId()){
-		if (!$this->_rules) {
-			$required = array();
-			$numerical = array();
-			$float = array();
-			$decimal = array();
-			$rules = array();
+			if (!$this->_rules) {
+				$required = array();
+				$numerical = array();
+				$float = array();
+				$decimal = array();
+				$rules = array();
+				$fields = '';
 
-			$model=$this->getFields();
+				$model=$this->getFields();
 
-			foreach ($model as $field) {
-				$field_rule = array();
-				if ($field->required==ProfileField::REQUIRED_YES_NOT_SHOW_REG||$field->required==ProfileField::REQUIRED_YES_SHOW_REG)
-					array_push($required,$field->varname);
-				if ($field->field_type=='FLOAT')
-					array_push($float,$field->varname);
-				if ($field->field_type=='DECIMAL')
-					array_push($decimal,$field->varname);
-				if ($field->field_type=='INTEGER')
-					array_push($numerical,$field->varname);
-				if ($field->field_type=='VARCHAR') {//||$field->field_type=='TEXT') {
-					$field_rule = array($field->varname, 'length', 'max'=>$field->field_size, 'min' => 0);
-					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
-					array_push($rules,$field_rule);
+				foreach ($model as $field) {
+					$field_rule = array();
+					$fields .= ' ,'.$field->varname;
+					if ($field->required==ProfileField::REQUIRED_YES_NOT_SHOW_REG||$field->required==ProfileField::REQUIRED_YES_SHOW_REG)
+						array_push($required,$field->varname);
+					if ($field->field_type=='FLOAT')
+						array_push($float,$field->varname);
+					if ($field->field_type=='DECIMAL')
+						array_push($decimal,$field->varname);
+					if ($field->field_type=='INTEGER')
+						array_push($numerical,$field->varname);
+					if ($field->field_type=='VARCHAR' || $field->field_type=='TEXT') {
+						$field_rule = array($field->varname, 'length', 'max'=>($field->field_type=='TEXT'?65535:$field->field_size), 'min' => 0);
+						if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+						array_push($rules,$field_rule);
+					}
+					if ($field->field_type=='DATE') {
+						$field_rule = array($field->varname, 'type', 'type' => 'date', 'dateFormat' => 'yyyy-mm-dd', 'allowEmpty'=>true);
+						if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
+						array_push($rules,$field_rule);
+					}
 				}
-				if ($field->field_type=='DATE') {
-					$field_rule = array($field->varname, 'type', 'type' => 'date', 'dateFormat' => 'yyyy-mm-dd', 'allowEmpty'=>true);
-					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
-					array_push($rules,$field_rule);
-				}
+
+				array_push($rules,array(implode(',',$required), 'required'));
+				array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
+				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
+				array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
+				array_push($rules,array('id, dbdate, dbmanager_informed'.$fields, 'safe', 'on'=>'search'));
+				$this->_rules = $rules;
 			}
-
-			array_push($rules,array(implode(',',$required), 'required'));
-			array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
-			array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
-			array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
-			$this->_rules = $rules;
-		}
 		return $this->_rules;
 		} else {
 			// NOTE: you should only define rules for those attributes that
@@ -283,9 +286,28 @@ class Zakaz extends CActiveRecord {
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
-		return array(
+	public function attributeLabels() {
+		if(Campaign::getId()){
+			$tmp = array(
+				'id' => 'ID',
+				'user_id' => ProjectModule::t('User'),
+				'date' => ProjectModule::t('Date'),
+				'max_exec_date' => ProjectModule::t('Max Date'),
+				'status' => ProjectModule::t('Status'),
+				'executor' => ProjectModule::t('Executor'),
+				'manager_informed' => ProjectModule::t('Manager Informed'),
+				'author_informed' => ProjectModule::t('Author Informed'),
+				'notes' => ProjectModule::t('Notes'),
+				'author_notes' => ProjectModule::t('author_notes'),
+			);
+			$projectFields = $this->getFields();
+			if ($projectFields) {
+				foreach($projectFields as $field) {
+					$tmp[$field->varname] = $field->title;
+				}
+			}
+			return $tmp;
+		} else return array(
 			'id' => 'ID',
             'jobName'=>'Имя работы',
             'catName'=>'Наименование учебной дисциплина',
@@ -307,7 +329,6 @@ class Zakaz extends CActiveRecord {
 			'author_notes' => ProjectModule::t('author_notes'),
 			'time_for_call' => ProjectModule::t('time_for_call'),
 			'edu_dep' => ProjectModule::t('edu_dep'),
-
 		);
 	}
 
@@ -343,63 +364,98 @@ class Zakaz extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-		if(!Campaign::getId()){
-        $criteria->with = array('job', 'category');
-		}
-        $criteria->compare('t.id', $this->id);
-		if(!Campaign::getId()){
-        $criteria->compare('job_id', $this->jobName);
-        $criteria->compare('category_id', $this->catName);
-		}
-        $criteria->compare('title', $this->title, true);
-        $criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
-        $criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
-        if (isset($this->dbdate_finishend) && isset($this->dbdate_finishstart)) {
-            $criteria->addCondition('"' . $this->dbdate_finishstart . '"<=DATE_FORMAT(date_finish, "%d.%m.%Y")<="' . $this->dbdate_finishend . '"');
-            $criteria->addCondition('date_finish is not NULL');
-        }
-        else
-            $criteria->compare('DATE_FORMAT(date_finish, "%d.%m.%Y")', substr($this->dbdate_finishstart,0,10), true);
-        $criteria->compare('executor',$this->executor);
-		if (!($this->status) or $this->status == 0){
-			$criteria->addNotInCondition('status', array(5));
-		} else if ($this->status == -1) {
-			// show all
+		if(Campaign::getId()){
+			$criteria->compare('id', $this->id);
+			$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
+			$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
+			$model=$this->getFields();
+			foreach ($model as $field) {
+				$tmp = $field->varname;
+				$criteria->compare($tmp, $this->$tmp);
+			}
+			if (!($this->status) or $this->status == 0){            /// Так ли делать
+				$criteria->addNotInCondition('status', array(5));
+			} else if ($this->status == -1) {
+				// show all
+			} else {
+				$criteria->compare('status',$this->status);
+			}
+			
+			$sort = new CSort();
+			$sort->defaultOrder = 't.id ASC';
+			$sort->attributes = array(
+				'dateCreation'=> array(
+					'asc' => 't.date',
+					'desc' => 't.date desc',
+				),
+				'managerInformed'=> array(
+					'asc' => 't.manager_informed',
+					'desc' => 't.manager_informed desc',
+				),
+				'dateFinish'=> array(
+					'asc' => 't.date_finish',
+					'desc' => 't.date_finish desc',
+				),
+			);
 		} else {
-			$criteria->compare('status',$this->status);
+			if(!Campaign::getId()){
+			$criteria->with = array('job', 'category');
+			}
+			$criteria->compare('t.id', $this->id);
+			if(!Campaign::getId()){
+			$criteria->compare('job_id', $this->jobName);
+			$criteria->compare('category_id', $this->catName);
+			}
+			$criteria->compare('title', $this->title, true);
+			$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
+			$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
+			if (isset($this->dbdate_finishend) && isset($this->dbdate_finishstart)) {
+				$criteria->addCondition('"' . $this->dbdate_finishstart . '"<=DATE_FORMAT(date_finish, "%d.%m.%Y")<="' . $this->dbdate_finishend . '"');
+				$criteria->addCondition('date_finish is not NULL');
+			}
+			else
+				$criteria->compare('DATE_FORMAT(date_finish, "%d.%m.%Y")', substr($this->dbdate_finishstart,0,10), true);
+			$criteria->compare('executor',$this->executor);
+			if (!($this->status) or $this->status == 0){
+				$criteria->addNotInCondition('status', array(5));
+			} else if ($this->status == -1) {
+				// show all
+			} else {
+				$criteria->compare('status',$this->status);
+			}
+			$sort = new CSort();
+			$sort->defaultOrder = 't.id ASC';
+			$sort->attributes = array(
+				'jobName'=> array(
+					'asc' => 'job.job_name',
+					'desc' => 'job.job_name desc',
+				),
+				'catName'=> array(
+					'asc' => 'category.cat_name',
+					'desc' => 'category.cat_name desc',
+				),
+				'id'=> array(
+					'asc' => 't.id',
+					'desc' => 't.id desc',
+				),
+				'title'=> array(
+					'asc' => 't.title',
+					'desc' => 't.title desc',
+				),
+				'dateCreation'=> array(
+					'asc' => 't.date',
+					'desc' => 't.date desc',
+				),
+				'managerInformed'=> array(
+					'asc' => 't.manager_informed',
+					'desc' => 't.manager_informed desc',
+				),
+				'dateFinish'=> array(
+					'asc' => 't.date_finish',
+					'desc' => 't.date_finish desc',
+				),
+			);
 		}
-        $sort = new CSort();
-        $sort->defaultOrder = 't.id ASC';
-        $sort->attributes = array(
-            'jobName'=> array(
-                'asc' => 'job.job_name',
-                'desc' => 'job.job_name desc',
-            ),
-            'catName'=> array(
-                'asc' => 'category.cat_name',
-                'desc' => 'category.cat_name desc',
-            ),
-            'id'=> array(
-                'asc' => 't.id',
-                'desc' => 't.id desc',
-            ),
-            'title'=> array(
-                'asc' => 't.title',
-                'desc' => 't.title desc',
-            ),
-            'dateCreation'=> array(
-                'asc' => 't.date',
-                'desc' => 't.date desc',
-            ),
-            'managerInformed'=> array(
-                'asc' => 't.manager_informed',
-                'desc' => 't.manager_informed desc',
-            ),
-            'dateFinish'=> array(
-                'asc' => 't.date_finish',
-                'desc' => 't.date_finish desc',
-            ),
-        );
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
