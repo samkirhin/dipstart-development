@@ -174,8 +174,8 @@ class Moderation extends CActiveRecord
 					array_push($decimal,$field->varname);
 				if ($field->field_type=='INTEGER')
 					array_push($numerical,$field->varname);
-				if ($field->field_type=='VARCHAR') {//||$field->field_type=='TEXT') {
-					$field_rule = array($field->varname, 'length', 'max'=>$field->field_size, 'min' => 0);
+				if ($field->field_type=='VARCHAR' || $field->field_type=='TEXT') {
+					$field_rule = array($field->varname, 'length', 'max'=>($field->field_type=='TEXT'?65535:$field->field_size), 'min' => 0);
 					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
 					array_push($rules,$field_rule);
 				}
@@ -185,11 +185,12 @@ class Moderation extends CActiveRecord
 					array_push($rules,$field_rule);
 				}
 			}
-
+			$required[] = 'max_exec_date';
 			array_push($rules,array(implode(',',$required), 'required'));
 			array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 			array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
 			array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
+			array_push($rules,array('dbmax_exec_date', 'safe'));
 			$this->_rules = $rules;
 		}
 		return $this->_rules;
@@ -227,8 +228,8 @@ class Moderation extends CActiveRecord
 	public function attributeLabels() {
 		if(Campaign::getId()){
 			$tmp = array(
-				'id' => 'ID',
-				'order_id' => 'Order ID',
+				'id' => 'Временный номер',
+				'order_id' => 'Номер заказа',
 				'user_id' => ProjectModule::t('User'),
 				'date' => ProjectModule::t('Date'),
 				'max_exec_date' => ProjectModule::t('Max Date'),

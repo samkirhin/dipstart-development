@@ -162,10 +162,10 @@ class ZakazController extends Controller
 			if(isset($_POST[$modelName]))
 			{
 				$model->attributes=$_POST[$modelName];
-
+								
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
 					$model->user_id = Yii::app()->user->id;
-					if(Campaign::getId()){ // ------------------------------ Need ??
+					/*if(Campaign::getId()){ // ------------------------------ Need ??
 						$projectFields = $model->getFields();
 						if ($projectFields) {
 							foreach($projectFields as $field) {
@@ -173,13 +173,13 @@ class ZakazController extends Controller
 									// ----------------------------------------------------
 									$tmp = $field->varname;
 									if (isset($_POST['Moderation'][$tmp])) {
-										$model->$tmp = $_POST['Moderation'][$tmp];
-										$model->timestampInput($field);
+										//$model->$tmp = $_POST['Moderation'][$tmp];
+										//$model->timestampInput($field);
 									}
 								}
 							}
 						}
-					}
+					}*/
 					$model->dbmanager_informed = date('d.m.Y H:i');
 					$model->dbdate = date('d.m.Y H:i');
 					$d1=date_create();
@@ -187,6 +187,7 @@ class ZakazController extends Controller
 					$d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
 					$model->dbauthor_informed = $d1->format('d.m.Y H:i');
                 }
+				
 				if($model->save()){
 					if (!(User::model()->isManager() || User::model()->isAdmin())) {
 						EventHelper::createOrder($model->id);

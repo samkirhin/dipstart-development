@@ -236,6 +236,7 @@ class Zakaz extends CActiveRecord {
 				array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
 				array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
+				array_push($rules,array('dbmax_exec_date, dbmanager_informed, dbauthor_informed', 'safe'));
 				array_push($rules,array('id, dbdate, dbmanager_informed'.$fields, 'safe', 'on'=>'search'));
 				$this->_rules = $rules;
 			}
@@ -289,7 +290,7 @@ class Zakaz extends CActiveRecord {
 	public function attributeLabels() {
 		if(Campaign::getId()){
 			$tmp = array(
-				'id' => 'ID',
+				'id' => 'Номер заказа',
 				'user_id' => ProjectModule::t('User'),
 				'date' => ProjectModule::t('Date'),
 				'max_exec_date' => ProjectModule::t('Max Date'),

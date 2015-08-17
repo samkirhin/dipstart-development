@@ -33,7 +33,15 @@ $this->breadcrumbs=array(
 
             <?php echo $form->errorSummary($model);
 			// campaign! -------------
-			if(Campaign::getId()){
+			if(Campaign::getId()){ ?>
+			<div class="form-group" style="position: relative; float: left; width: 100%;">
+                <label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,'max_exec_date');?></label>
+                <?php
+                $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+                    'model' => $model,
+                    'attribute' => 'dbmax_exec_date',
+                ));?>
+            </div><?php
 				$projectFields = $model->getFields();
 				if ($projectFields) {
 					foreach($projectFields as $field) {
@@ -46,7 +54,6 @@ $this->breadcrumbs=array(
 							echo $form->error($model,$field->varname);
 							echo '</div>';
 						} elseif ($field->field_type=="TIMESTAMP") {
-							if (isset($_POST['Moderation'][$field->varname])) echo '!!!'.Yii::app()->dateFormatter->format('yyyy-MM-dd HH:mm:ss', CDateTimeParser::parse($_POST['Moderation'][$field->varname], 'dd.MM.yyyy HH:mm'));
 							?>
 							<div class="form-group" style="position: relative; float: left; width: 100%;">
 								<label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,$field->varname);?></label>
@@ -98,6 +105,15 @@ $this->breadcrumbs=array(
                 <?php echo $form->labelEx($model,'text'); ?>
                 <?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>70, 'class'=>'form-control')); ?>
                 <?php echo $form->error($model,'text'); ?>
+            </div>
+			
+            <div class="form-group" style="position: relative; float: left; width: 100%;">
+                <label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,'max_exec_date');?></label>
+                <?php
+                $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+                    'model' => $model,
+                    'attribute' => 'dbmax_exec_date',
+                ));?>
             </div>
 			
             <div class="form-group" style="position: relative; float: left; width: 100%;">

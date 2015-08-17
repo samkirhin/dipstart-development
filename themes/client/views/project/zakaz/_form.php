@@ -21,10 +21,17 @@
 
 	<?php echo $form->errorSummary($model);
 	if(Campaign::getId()){
+		echo '<div class="row">';
+		echo $form->labelEx($model,'max_exec_date');
+		$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+			'model' => $model,
+			'attribute' => 'dbmax_exec_date',
+		));
+		echo '</div>';
 		$projectFields = $model->getFields();
 		if ($projectFields) {
 			foreach($projectFields as $field) {
-				echo '<div class="form-group">';
+				echo '<div class="row">';
 				echo $form->labelEx($model,$field->varname).'<br/>';
 				if (isset($field->field_id)){
 					$models = Catalog::model()->findAllByAttributes(array('field_id'=>$field->field_id));
