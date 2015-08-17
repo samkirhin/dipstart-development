@@ -33,6 +33,13 @@
 					echo $form->error($model,$field->varname);
 				} elseif ($field->field_type=="TEXT") {
 					echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+				} elseif ($field->field_type=="TIMESTAMP") {
+						$varname = $field->varname;
+						$model->timestampOutput($field);
+						$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+							'model' => $model,
+							'attribute' => $varname,
+						));
 				} else {
 					echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
 				}

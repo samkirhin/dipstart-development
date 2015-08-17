@@ -165,15 +165,17 @@ class ZakazController extends Controller
 
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
 					$model->user_id = Yii::app()->user->id;
-					if(Campaign::getId()){
+					if(Campaign::getId()){ // ------------------------------ Need ??
 						$projectFields = $model->getFields();
 						if ($projectFields) {
 							foreach($projectFields as $field) {
 								if ($field->field_type=="TIMESTAMP") {
 									// ----------------------------------------------------
 									$tmp = $field->varname;
-									if (isset($_POST['Moderation'][$tmp]))
-										$model->$tmp = Yii::app()->dateFormatter->format('yyyy-MM-dd HH:mm:ss', CDateTimeParser::parse($_POST['Moderation'][$tmp], 'dd.MM.yyyy HH:mm'));
+									if (isset($_POST['Moderation'][$tmp])) {
+										$model->$tmp = $_POST['Moderation'][$tmp];
+										$model->timestampInput($field);
+									}
 								}
 							}
 						}
@@ -204,8 +206,7 @@ class ZakazController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-	{
+	public function actionUpdate($id) {
         if (Yii::app()->request->isAjaxRequest){
             $data = Yii::app()->request->getRestParams();
 			$field = str_replace('Zakaz_','',$data['elid']);
@@ -253,15 +254,29 @@ class ZakazController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-		if(isset($_POST['Zakaz']))
-		{
+		if(isset($_POST['Zakaz'])) {
 			$zakaz = $_POST['Zakaz'];
+			
 			if ($role != 'Manager' && $role != 'Admin') {
 				ModerationHelper::saveToModerate($model, $zakaz);
 			} else {
 				$model->attributes=$zakaz;
 			}
 
+			if(Campaign::getId()){
+				$projectFields = $model->getFields();
+				if ($projectFields) foreach($projectFields as $field) {
+					if ($field->field_type=="TIMESTAMP") {
+						// ----------------------------------------------------
+						$tmp = $field->varname;
+						if (isset($_POST['Zakaz'][$tmp])) {
+							$model->$tmp = $_POST['Zakaz'][$tmp];
+							$model->timestampInput($field);
+						}
+					}
+				}
+			}
+			
 			if($model->save()) {
 				if ($role != 'Manager' && $role != 'Admin') {
 					EventHelper::editOrder($model->id);

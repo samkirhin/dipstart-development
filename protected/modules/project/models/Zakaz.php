@@ -470,6 +470,33 @@ class Zakaz extends CActiveRecord {
     public static function getPaymentImage($orderId) {
         return self::model()->findByPk($orderId)->payment_image;
     }
+	public function timestampInput($field) {
+		$varname = $field->varname;
+		if (isset($this->$varname) && $this->$varname != ''){
+			$this->$varname = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($this->$varname, $this->dateTimeOutcomeFormat));
+		}
+	}
+	public function timestampOutput($field) {
+		$varname = $field->varname;
+		if (isset($this->$varname) && $this->$varname != ''){
+			$this->$varname = Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->$varname, $this->dateTimeIncomeFormat));
+		}
+	}
+    /*public function beforeValidate() {
+
+		if(Campaign::getId()){
+			$projectFields = $this->getFields();
+			if ($projectFields) {
+				foreach($projectFields as $field) {
+					if ($field->field_type=="TIMESTAMP") {
+						$this->timestampInput($field);
+					}
+				}
+			}
+		}
+
+        return parent::beforeValidate();
+    }*/
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

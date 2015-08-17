@@ -197,7 +197,7 @@
 													echo $form->error($model,$field->varname);
 												} elseif ($field->field_type=="TEXT") {
 													echo $form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
-												} else {
+												} elseif ($field->field_type!="TIMESTAMP") {
 													echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
 												}
 												echo '</div>';
@@ -246,8 +246,27 @@
                                             <td>
 
                                             </td>
-                                        </tr>
-										<?php } ?>
+                                        </tr><?php
+										} else {
+											$projectFields = $model->getFields();
+											if ($projectFields) foreach($projectFields as $field) {
+												if ($field->field_type=="TIMESTAMP") {
+												$varname = $field->varname;
+												$model->timestampOutput($field);
+                                        ?><tr>
+                                            <td>
+                                                <?php echo $form->labelEx($model, $varname); ?>
+                                            </td>
+                                            <td><?php
+													$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+														'model' => $model,
+														'attribute' => $varname,
+													));?>
+                                            </td>
+                                        </tr><?php
+												}
+											}
+										} ?>
                                     </table>
 									<?php if (!Campaign::getId()){ ?>
                                     <?php echo $form->labelEx($model, 'time_for_call'); ?><br>

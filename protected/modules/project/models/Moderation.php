@@ -179,7 +179,7 @@ class Moderation extends CActiveRecord
 					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
 					array_push($rules,$field_rule);
 				}
-				if ($field->field_type=='DATE') {
+				if ($field->field_type=='DATE') { // !!!!!!!!!!!!!!----------------------------------------------^^^^^^^^^^^^^^^^^^^^^^^
 					$field_rule = array($field->varname, 'type', 'type' => 'date', 'dateFormat' => 'yyyy-mm-dd', 'allowEmpty'=>true);
 					if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
 					array_push($rules,$field_rule);
@@ -322,7 +322,18 @@ class Moderation extends CActiveRecord
     {
         return self::model()->findByPk($orderId)->executor;
     }
-
+	public function timestampInput($field) {
+		$tmp = $field->varname;
+		if (isset($this->$tmp) && $this->$tmp != ''){
+			$this->$tmp = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($this->$tmp, $this->dateTimeOutcomeFormat));
+		}
+	}
+	public function timestampOutput($field) {
+		$tmp = $field->varname;
+		if (isset($this->$tmp) && $this->$tmp != ''){
+			$this->$tmp = Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->$tmp, $this->dateTimeIncomeFormat));
+		}
+	}
     public function beforeValidate() {
         if ($this->isNewRecord) {
 			if(Campaign::getId()){
@@ -330,10 +341,7 @@ class Moderation extends CActiveRecord
 				if ($projectFields) {
 					foreach($projectFields as $field) {
 						if ($field->field_type=="TIMESTAMP") {
-							$tmp = $field->varname;
-							if (isset($this->$tmp) && $this->$tmp != ''){
-								$this->$tmp = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($this->$tmp, $this->dateOutcomeFormat));
-							}
+							$this->timestampInput($field);
 						}
 					}
 				}
