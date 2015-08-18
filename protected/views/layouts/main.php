@@ -72,7 +72,7 @@ if (Yii::app()->user->isGuest) {
 				array('label'=>'Профиль', 'url'=>array('/user/profile/edit'))
 			));
 			$items[] = array('label'=>Yii::t('site','Projects'), 'items' => array(
-				array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list', 'status' => '2')),
+				array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list')),
 				array('label'=>ProjectModule::t('My Zakaz'), 'url'=>array('/project/zakaz/ownList')),
 			));
 			$items[] = array('label'=>Yii::t('site', 'Message'), 'url'=>array('/mailbox/message'), 'visible'=>!Yii::app()->user->isGuest, 'items' => array(

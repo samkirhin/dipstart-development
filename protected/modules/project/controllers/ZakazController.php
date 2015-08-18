@@ -461,7 +461,7 @@ class ZakazController extends Controller
         ]);
     }
 
-	public function actionList($status)
+	public function actionList($status=0)
 	{
 		$model=new Zakaz('search');
 		$model->unsetAttributes();
@@ -518,16 +518,30 @@ class ZakazController extends Controller
         if (!$zakaz) {
             throw new CHttpException(500);
         }
-        
-        $job = $zakaz->job_id;
-        $discipline = $zakaz->category_id;
-        
-        $criteria = new CDbCriteria();
-        $criteria->addSearchCondition('profile.discipline',$discipline);
-        $criteria->addSearchCondition('profile.job_type',$job, true, 'OR');
-        $authors = User::model()->with('profile')->findAll($criteria);
-        
-        if(!empty($authors)) {
+		
+		$criteria = new CDbCriteria();
+        if(Campaign::getId()) {
+			$tmp = 'Ziga Niga!';
+			$projectFields = $zakaz->getFields();
+			if ($projectFields) foreach($projectFields as $field) {
+				if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
+					$varname = $field->varname;
+					$value = $zakaz->$varname;
+					$criteria->addSearchCondition('profile.'.$varname,$value);
+				}
+			}
+			//echo json_encode(array('error'=>$tmp));
+			//Yii::app()->end();
+		} else {
+			$job = $zakaz->job_id;
+			$discipline = $zakaz->category_id;
+			
+			$criteria->addSearchCondition('profile.discipline',$discipline);
+			$criteria->addSearchCondition('profile.job_type',$job, true, 'OR');
+        }
+		$authors = User::model()->with('profile')->findAll($criteria);
+		
+		if(!empty($authors)) {
 
             $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $order_id]);
             $mail = new YiiMailer('invite', ['link' => $link]);

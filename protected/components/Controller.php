@@ -56,7 +56,7 @@ class Controller extends RController
                 case ('Author'):
                     $this->menu = array(
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
-						array('label'=>Yii::t('site','New orders'), 'url'=>array('/project/zakaz/list','status'=>'2')),
+						array('label'=>Yii::t('site','New orders'), 'url'=>array('/project/zakaz/list')),
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                         array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
                     );

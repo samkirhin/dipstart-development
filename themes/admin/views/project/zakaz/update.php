@@ -53,7 +53,7 @@ $this->breadcrumbs = array(
             <div class="row zero-edge">
                <div class="col-xs-12 statusBlock">
                    <span class="label label-warning"><b><?= $message; ?></b></span>
-				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href="">Рассылка</button>
+				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href="">Поиск исполнителя</button>
 					<!-- Тут была кнопка открыть или закрыть заказ -->
                </div>
             </div>

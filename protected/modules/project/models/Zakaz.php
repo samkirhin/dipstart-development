@@ -399,14 +399,13 @@ class Zakaz extends CActiveRecord {
 				),
 			);
 		} else {
-			if(!Campaign::getId()){
 			$criteria->with = array('job', 'category');
-			}
+
 			$criteria->compare('t.id', $this->id);
-			if(!Campaign::getId()){
+
 			$criteria->compare('job_id', $this->jobName);
 			$criteria->compare('category_id', $this->catName);
-			}
+
 			$criteria->compare('title', $this->title, true);
 			$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
 			$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
