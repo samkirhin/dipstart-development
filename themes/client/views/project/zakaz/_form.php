@@ -33,14 +33,14 @@
 			foreach($projectFields as $field) {
 				echo '<div class="row">';
 				echo $form->labelEx($model,$field->varname).'<br/>';
-				if (isset($field->field_id)){
-					$models = Catalog::model()->findAllByAttributes(array('field_id'=>$field->field_id));
+				if ($field->field_type=="LIST"){
+					$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
 					$list = CHtml::listData($models, 'id', 'cat_name');
 					echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 					echo $form->error($model,$field->varname);
 				} elseif ($field->field_type=="TEXT") {
 					echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
-				} elseif ($field->field_type=="TIMESTAMP") {
+				} elseif ($field->field_type=="TIMESTAMP" || $field->field_type=="DATE") {
 						$varname = $field->varname;
 						$model->timestampOutput($field);
 						$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(

@@ -45,7 +45,7 @@ $('.search-form form').submit(function(){
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'field_id',
+		'field_varname',
 		'cat_name',
 		 array(
             'name' => 'parent_id',

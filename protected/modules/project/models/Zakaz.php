@@ -374,6 +374,7 @@ class Zakaz extends CActiveRecord {
 				$tmp = $field->varname;
 				$criteria->compare($tmp, $this->$tmp);
 			}
+			$criteria->compare('executor',$this->executor);
 			if (!($this->status) or $this->status == 0){            /// Так ли делать
 				$criteria->addNotInCondition('status', array(5));
 			} else if ($this->status == -1) {

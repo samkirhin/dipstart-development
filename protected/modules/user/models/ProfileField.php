@@ -195,6 +195,7 @@ class ProfileField extends CActiveRecord
 				'VARCHAR' => UserModule::t('VARCHAR'),
 				'TEXT'=> UserModule::t('TEXT'),
 				'DATE'=> UserModule::t('DATE'),
+				'LIST'=> UserModule::t('LIST'),
 				'FLOAT'=> UserModule::t('FLOAT'),
 				'DECIMAL'=> UserModule::t('DECIMAL'),
 				'BOOL'=> UserModule::t('BOOL'),

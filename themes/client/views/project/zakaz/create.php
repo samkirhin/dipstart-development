@@ -45,15 +45,15 @@ $this->breadcrumbs=array(
 				$projectFields = $model->getFields();
 				if ($projectFields) {
 					foreach($projectFields as $field) {
-						if (isset($field->field_id)){
+						if ($field->field_type=="LIST"){
 							echo '<div class="form-group">';
 							echo $form->labelEx($model,$field->varname).'<br/>';
-							$models = Catalog::model()->findAllByAttributes(array('field_id'=>$field->field_id));
+							$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
 							$list = CHtml::listData($models, 'id', 'cat_name');
 							echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 							echo $form->error($model,$field->varname);
 							echo '</div>';
-						} elseif ($field->field_type=="TIMESTAMP") {
+						} elseif ($field->field_type=="TIMESTAMP" || $field->field_type=="DATE") {
 							?>
 							<div class="form-group" style="position: relative; float: left; width: 100%;">
 								<label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,$field->varname);?></label>

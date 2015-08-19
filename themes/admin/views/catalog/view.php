@@ -10,7 +10,6 @@
 $this->menu=array(
 	array('label'=>Yii::t('site','List Categories'), 'url'=>array('index')),
 	array('label'=>Yii::t('site','Create Categories'), 'url'=>array('create')),
-	array('label'=>Yii::t('site','View Categories'), 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>Yii::t('site','Manage Categories'), 'url'=>array('admin')),
 	array('label'=>Yii::t('site','Delete Categories'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>Yii::t('site','Are you sure you want to delete this item?'))),
 );
@@ -22,7 +21,7 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'field_id',
+		'field_varname',
 		'cat_name',
 	     array(
             'name' => 'parent_id',

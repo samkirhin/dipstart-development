@@ -25,11 +25,16 @@
 		<?php echo $form->error($model,'cat_name'); ?>
 	</div>
 	
-	<div class="row">
-		<?php echo $form->labelEx($model,'field_id'); ?>
-		<?php echo $form->textField($model,'field_id',array('size'=>60,'maxlength'=>3)); ?>
-		<?php echo $form->error($model,'field_id'); ?>
-	</div>
+	<div class="row"><?php
+		echo $form->labelEx($model,'field_varname');
+		//echo $form->textField($model,'field_varname',array('size'=>60,'maxlength'=>50));
+		echo $form->error($model,'field_varname');
+		$criteria = new CDbCriteria();
+		$criteria->compare('field_type','LIST');
+		$list = CHtml::listData(ProjectField::model()->findAll($criteria),'varname','title');
+		$list = array_merge($list,CHtml::listData(ProfileField::model()->findAll($criteria),'varname','title'));
+		echo $form->dropDownList($model, 'field_varname', $list, array('empty' => Yii::t('site','Select')));
+	?></div>
 
 	<div class="row">
 	<?php

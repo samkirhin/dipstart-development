@@ -16,7 +16,17 @@ $this->menu=array(
 
 <h1><?echo Yii::t('site','Catalog');?></h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php
+$criteria = new CDbCriteria();
+$criteria->compare('field_type','LIST');
+$list = CHtml::listData(ProjectField::model()->findAll($criteria),'varname','title');
+$list = array_merge($list,CHtml::listData(ProfileField::model()->findAll($criteria),'varname','title'));
+echo CHtml::link(CHtml::encode('All'), array('index')).'   ';
+foreach($list as $key => $value){
+	 echo CHtml::link(CHtml::encode($value), array('index', 'field_varname'=>$key)).'   ';
+}
+
+$this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>

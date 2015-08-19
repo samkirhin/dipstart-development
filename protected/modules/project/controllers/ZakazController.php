@@ -444,7 +444,7 @@ class ZakazController extends Controller
 	{
 		$model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
-            $model->executor = Yii::app()->user->id;
+        $model->executor = Yii::app()->user->id;
 		$this->render('list',array(
 			'model'=>$model,
 		));
@@ -521,7 +521,6 @@ class ZakazController extends Controller
 		
 		$criteria = new CDbCriteria();
         if(Campaign::getId()) {
-			$tmp = 'Ziga Niga!';
 			$projectFields = $zakaz->getFields();
 			if ($projectFields) foreach($projectFields as $field) {
 				if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {

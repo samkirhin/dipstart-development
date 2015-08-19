@@ -26,11 +26,12 @@ class Catalog extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('cat_name', 'required'),
-            array('field_id, parent_id', 'numerical', 'integerOnly' => true),
+            array('parent_id', 'numerical', 'integerOnly' => true),
             array('cat_name', 'length', 'max' => 255),
+			array('field_varname', 'length', 'max' => 50),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, field_id, cat_name, parent_id', 'safe', 'on' => 'search'),
+            array('id, field_varname, cat_name, parent_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -51,7 +52,7 @@ class Catalog extends CActiveRecord {
     {
         return array(
             'id' => 'ID',
-			'field_id' => 'field_id',
+			'field_varname' => 'varname',
             'cat_name' => Yii::t('site', 'Cat Name'),
             'parent_id' => Yii::t('site', 'Parent'),
         );
@@ -76,10 +77,9 @@ class Catalog extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-		$criteria->compare('field_id', $this->field_id);
+		$criteria->compare('field_varname', $this->field_varname);
         $criteria->compare('cat_name', $this->cat_name, true);
         $criteria->compare('parent_id', $this->parent_id);
-
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
@@ -96,8 +96,8 @@ class Catalog extends CActiveRecord {
         return $parent;
     }
 
-    public function performCatsTree($field_id) {
-        $cats = $this->findAllByAttributes(array('field_id'=>$field_id), 'parent_id = 0');
+    public function performCatsTree($field_varname) {
+        $cats = $this->findAllByAttributes(array('field_varname'=>$field_varname), 'parent_id = 0');
         foreach ($cats as $item) {
             $cubats = $this->findAll('parent_id = ' . $item->id);
 			foreach ($cubats as $cat) {

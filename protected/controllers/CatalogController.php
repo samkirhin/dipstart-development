@@ -104,9 +104,9 @@ class CatalogController extends Controller {
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex($field_id = -1) {
-		if ($field_id != -1) {
-			$dataProvider = new CActiveDataProvider('Catalog', array('criteria' => array('condition'=>'field_id='.$field_id)));
+	public function actionIndex($field_varname = -1) {
+		if ($field_varname != -1) {
+			$dataProvider = new CActiveDataProvider('Catalog', array('criteria' => array('condition'=>'field_varname="'.$field_varname.'"')));
 		} else {
 			$dataProvider = new CActiveDataProvider('Catalog');
 		}

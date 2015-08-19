@@ -117,11 +117,20 @@ class ProjectFieldController extends Controller
 					'widgetparams':''
 				}
 			},
-			'DATE':{
+			'TIMESTAMP':{
 				'hide':['field_size','field_size_min','match','range','widgetparams'],
 				'val':{
 					'field_size':0,
 					'default':'0000-00-00',
+					'range':'',
+					'widgetparams':''
+				}
+			},
+			'LIST':{
+				'hide':['field_size','range','widgetparams'],
+				'val':{
+					'field_size':0,
+					'default':'',
 					'range':'',
 					'widgetparams':''
 				}
@@ -340,7 +349,7 @@ class ProjectFieldController extends Controller
 					$sql .= '('.$model->field_size.')';
 				$sql .= ' NOT NULL ';
 				
-				if ($model->field_type!='TEXT'&&$model->field_type!='BLOB'||$scheme!='CMysqlSchema') {
+				if ($model->field_type!='TEXT'&&$model->field_type!='LIST'&&$model->field_type!='BLOB'||$scheme!='CMysqlSchema') {
 					if ($model->default)
 						$sql .= " DEFAULT '".$model->default."'";
 					else
@@ -506,6 +515,7 @@ class ProjectFieldController extends Controller
 	 */
 	public function fieldType($type) {
 		$type = str_replace('UNIX-DATE','INTEGER',$type);
+		$type = str_replace('LIST','TEXT',$type);
 		return $type;
 	}
 	

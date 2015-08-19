@@ -22,7 +22,7 @@
 
 	<div class="row field_type">
 		<?php echo CHtml::activeLabelEx($model,'field_type'); ?>
-		<?php echo (($model->id)?CHtml::activeTextField($model,'field_type',array('size'=>60,'maxlength'=>50,'readonly'=>true,'id'=>'field_type')):CHtml::activeDropDownList($model,'field_type',ProfileField::itemAlias('field_type'),array('id'=>'field_type'))); ?>
+		<?php echo (($model->id)?CHtml::activeTextField($model,'field_type',array('size'=>60,'maxlength'=>50,'readonly'=>true,'id'=>'field_type')):CHtml::activeDropDownList($model,'field_type',ProjectField::itemAlias('field_type'),array('id'=>'field_type'))); ?>
 		<?php echo CHtml::error($model,'field_type'); ?>
 		<p class="hint"><?php echo UserModule::t('Field type column in the database.'); ?></p>
 	</div>
@@ -36,7 +36,7 @@
 
 	<div class="row required">
 		<?php echo CHtml::activeLabelEx($model,'required'); ?>
-		<?php echo CHtml::activeDropDownList($model,'required',ProfileField::itemAlias('required')); ?>
+		<?php echo CHtml::activeDropDownList($model,'required',ProjectField::itemAlias('required')); ?>
 		<?php echo CHtml::error($model,'required'); ?>
 		<p class="hint"><?php echo UserModule::t('Required field (form validator).'); ?></p>
 	</div>
