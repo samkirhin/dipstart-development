@@ -50,8 +50,8 @@
         </div>
     </div>
 </div>
-<div id="fasr-order" class="row" style="margin-top: 2em;">
-    <form>
+<div id="fast-order" class="row" style="margin-top: 2em;">
+    <form id="go_price" action="/site/page" method="post">
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;">
             <select type="text" class="form-control input-lg alternative-select">
                 <option value="" selected disabled>Select type</option>
@@ -105,18 +105,20 @@
                 <option value="100999">Other</option>
             </select>
         </div>
-        <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"> <select type="text" class="form-control input-lg alternative-select">
+        <div class="col-xs-12 col-md-3"> <select type="text" class="form-control input-lg alternative-select">
                 <option value="" selected disabled>Select academic level</option>
-                <option>High school</option>
+                <option selected>High school</option>
                 <option>Undergraduate</option>
                 <option>Bachelor</option>
                 <option>Professional</option>
             </select>
         </div>
-        <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"><input type="text" class="form-control input-lg alternative" placeholder="Size"></div>
-        <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;"><input type="text" class="form-control input-lg alternative" placeholder="Phone number"></div>
+        <div class="col-xs-12 col-md-3"><input type="text" class="form-control input-lg alternative" placeholder="Size"></div>
+        <div class="col-xs-12 col-md-3"><input type="text" class="form-control input-lg alternative" placeholder="Phone number"></div>
 
-        <button type="button" class="btn btn-danger btn-lg col-xs-12 col-md-4 col-md-offset-4 alternative show-price-button">Show price</button>
+        <div class="col-xs-12">
+            <button type="button" onclick="document.getElementById('go_price').submit();" class="btn btn-danger btn-lg col-xs-12 col-md-4 col-md-offset-4 alternative show-price-button">Show price</button>
+        </div>
 
     </form>
 </div>

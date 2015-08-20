@@ -117,9 +117,9 @@ class ChatController extends Controller {
 	public function actionUpload() {
         Yii::import("ext.EAjaxUpload.qqFileUploader");
 		// --- кампании
-		$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
-		if (isset($this->campaign_id)) {
-			$folder='uploads/c'.$this->campaign_id.'/'.$_GET['id'].'/';
+		$c_id = Campaign::getId();
+		if ($c_id) {
+			$folder='uploads/c'.$c_id.'/'.$_GET['id'].'/';
 		} else {
 			$folder='uploads/'.$_GET['id'].'/';
 		}

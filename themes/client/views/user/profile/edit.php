@@ -12,9 +12,23 @@ $this->breadcrumbs=array(
 ?>
 <div class="row">
     <div class="col-md-7">
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php
+$disAjaxValid = array();
+$profileFields=$profile->getFields();
+if ($profileFields) {
+	foreach($profileFields as $field) {
+		if ($field->field_type=="LIST"){
+			$disAjaxValid[]=$field->varname;
+		}
+	}
+}
+$form=$this->beginWidget('UActiveForm', array(
 	'id'=>'profile-form',
 	'enableAjaxValidation'=>true,
+	'disableAjaxValidationAttributes'=>$disAjaxValid,
+	'clientOptions'=>array(
+		'validateOnSubmit'=>true,
+	),
 	'htmlOptions' => array('enctype'=>'multipart/form-data','class'=>'form-horizontal'),
 )); ?>
 
@@ -24,15 +38,22 @@ $this->breadcrumbs=array(
 
 <?php 
 		$profileFields=$profile->getFields();
+		//print_r($profileFields);
 		if ($profileFields) {
 			foreach($profileFields as $field) {	?>
                 <div class="form-group">
                     <?php echo $form->labelEx($profile,$field->varname,array('class'=>'col-md-4 control-label'));
-                    if ($widgetEdit = $field->widgetEdit($profile,array('htmlOptions'=>array('class'=>'form-control')))) {
+					if ($field->field_type=="LIST"){
+						$htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
+						$data = Catalog::model()->performCatsTree($field->varname);
+						$varname = $field->varname;
+						$selected = explode(',',$profile->$varname);
+						echo CHtml::listBox('Profile['.$field->varname.']', $selected, $data, $htmlOptions);
+					/*} elseif ($widgetEdit = $field->widgetEdit($profile,array('htmlOptions'=>array('class'=>'form-control')))) {
                         echo '<div class="col-md-8">'.$widgetEdit.'</div>';
                     } elseif ($field->range) {
-                        echo '<div class="col-md-8">'.$form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control')).'</div>';
-                    } elseif ($field->field_type=="TEXT") {
+                        echo '<div class="col-md-8">'.$form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control')).'</div>';*/
+					} elseif ($field->field_type=="TEXT") {
                         echo '<div class="col-md-8">'.$form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50,'class'=>'form-control')).'</div>';
                     } else {
                         echo '<div class="col-md-8">'.$form->textField($profile,$field->varname,array('class'=>'form-control','size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255))).'</div>';

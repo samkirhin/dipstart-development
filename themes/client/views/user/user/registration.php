@@ -18,7 +18,7 @@ $disAjaxValid = array('RegistrationForm_verifyCode', 'discipline', 'job_type');
 $profileFields=$profile->getFields();
 if ($profileFields) {
 	foreach($profileFields as $field) {
-		if (isset($field->field_id)){
+		if ($field->field_type=="LIST"){
 			$disAjaxValid[]=$field->varname;
 		}
 	}
@@ -74,9 +74,9 @@ $form=$this->beginWidget('UActiveForm', array(
 		if (($field->varname == 'mailing_list') && ($profile->regType=='Customer')) $list=array('style'=>'display:none;');
 		echo $form->labelEx($profile,$field->varname).'<br/>';
 		// campaign! -------------
-		if (isset($field->field_id)){
+		if ($field->field_type=="LIST"){
 			$htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
-			$data = Catalog::model()->performCatsTree($field->field_id);
+			$data = Catalog::model()->performCatsTree($field->varname);
 			echo CHtml::listBox('Profile['.$field->varname.']', array(), $data, $htmlOptions);
 		// -----------------------
 		} elseif($field->varname == 'discipline'){

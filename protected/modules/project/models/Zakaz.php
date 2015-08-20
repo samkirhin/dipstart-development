@@ -220,8 +220,8 @@ class Zakaz extends CActiveRecord {
 						array_push($decimal,$field->varname);
 					if ($field->field_type=='INTEGER')
 						array_push($numerical,$field->varname);
-					if ($field->field_type=='VARCHAR' || $field->field_type=='TEXT') {
-						$field_rule = array($field->varname, 'length', 'max'=>($field->field_type=='TEXT'?65535:$field->field_size), 'min' => 0);
+					if ($field->field_type=='VARCHAR' || $field->field_type=='TEXT' || $field->field_type=='LIST') {
+						$field_rule = array($field->varname, 'length', 'max'=>(($field->field_type=='TEXT' || $field->field_type=='LIST')?65535:$field->field_size), 'min' => 0);
 						if ($field->error_message) $field_rule['message'] = UserModule::t($field->error_message);
 						array_push($rules,$field_rule);
 					}

@@ -105,6 +105,13 @@ function spam(orderid){
     alert('Рассылка запущена');
     return false;
 }
+function setApprove (id) {
+    $.post('/project/payment/approveTransaction', JSON.stringify({
+        'id': id
+    }), function (response) {
+        $.fn.yiiGridView.update('my-grid');
+    }, 'json');
+}
 $( document ).ready( function() {
     $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
         var data = $(this).val();
@@ -121,11 +128,16 @@ $( document ).ready( function() {
             tinymce.get('chat_message').setContent(response.data.text);
         });
     });
-    tinymce.init({
-        selector: "#chat_message",
-        theme: "modern",
-        menubar: false
-    });
+    if (document.getElementById("#chat_message") != null)
+        tinymce.init({
+            selector: "#chat_message",
+            theme: "modern",
+            menubar: false
+        });
+    if (document.getElementById("#buh_transaction") != null)
+        form.find('button.approve_payment').on('click', function(){
+            self.setApprove($(this).attr('value'), $(this).attr('pay_method'));
+        });
 });
 
 

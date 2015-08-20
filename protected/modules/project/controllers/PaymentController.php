@@ -16,7 +16,7 @@ class PaymentController extends Controller {
     {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions'=>array('admin','apiview','approvefrombookkeeper','managersapprove','managerscancel','savepayments','savepaymentstoauthor','savepaymentstouser','view'),
+                'actions'=>array('admin','apiview','approvetransaction','managersapprove','managerscancel','savepayments','savepaymentstoauthor','savepaymentstouser','view'),
                 'users'=>array('admin','manager'),
             ),
             array('deny',  // deny all users
@@ -34,7 +34,9 @@ class PaymentController extends Controller {
         if (!$user->superuser) {
             $this->redirect('/');
         } else {
-            $this->render('admin');
+            $this->render('admin', array(
+                'dataProvider'=>Payment::model(),
+            ));
         }
     }
 
@@ -99,6 +101,29 @@ class PaymentController extends Controller {
 
     public function actionAdmin() {
         $this->render('admin');
+    }
+
+    public function actionApproveTransaction(){
+        $this->_prepairJson();
+        $id = $this->_request->getParam('id');
+        $method = $this->_request->getParam('method');
+        if (!$method) {
+            $method = 'Cash';
+        }
+
+        $payment = Payment::model()->findByPk($id);
+        if (!$payment) {
+            $this->_response->setData(array(
+                'result'  => false,
+                'message' => 'Not found'
+            ));
+            Yii::app()->end();
+        }
+
+        $this->_response->setData(array(
+            'result' => $payment->approveFromBookkeeper($method)
+        ));
+        $this->_response->send();
     }
 
     public function actionApproveFromBookkeeper() {
