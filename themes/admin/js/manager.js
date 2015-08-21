@@ -112,7 +112,7 @@ function setApprove (id) {
         $.fn.yiiGridView.update('my-grid');
     }, 'json');
 }
-$( document ).ready( function() {
+$( window ).load( function() {
     $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
         var data = $(this).val();
         var elid = $(this).attr('id');
@@ -128,12 +128,13 @@ $( document ).ready( function() {
             tinymce.get('chat_message').setContent(response.data.text);
         });
     });
-    if (document.getElementById("#chat_message") != null)
+    if (document.getElementById("chat_message") != null) {
         tinymce.init({
             selector: "#chat_message",
             theme: "modern",
             menubar: false
         });
+    }
     if (document.getElementById("#buh_transaction") != null)
         form.find('button.approve_payment').on('click', function(){
             self.setApprove($(this).attr('value'), $(this).attr('pay_method'));

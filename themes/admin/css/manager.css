@@ -813,3 +813,7 @@ div.chat-functions > button {
 ul.qq-upload-list > li {
     margin-bottom: 15px!important;
 }
+
+div#ui-datepicker-div {
+	z-index: 11!important;
+}

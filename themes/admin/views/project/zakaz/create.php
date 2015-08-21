@@ -96,7 +96,7 @@ $this->menu=array(
                 </div>
             </div>
         </div>
-
+		<?php } ?>
 
         <div class="row create-form-selects block-with-border" style="margin-top: 15px;">
             <div class="col-md-6" style="padding-left: 0; padding-right: 0;">
@@ -123,6 +123,7 @@ $this->menu=array(
                     <?php //echo $form->textField($model,'executor',array('size'=>53,'maxlength'=>100)); ?>
                     <?php echo $form->error($model,'executor'); ?>
                 </div>
+				<?php if(!Campaign::getId()){ ?>
                 <div class="col-md-12">
                     <?php echo $form->labelEx($model,'time_for_call'); ?>
                     <?php echo $form->textField($model,'time_for_call'); ?>
@@ -144,10 +145,11 @@ $this->menu=array(
                     <?php echo $form->textArea($model,'author_notes',array('rows'=>6, 'cols'=>53)); ?>
                     <?php echo $form->error($model,'author_notes'); ?>
                 </div>
+				<?php } ?>
             </div>
 
 
-
+		
 
             <div class="col-md-6 create-terms">
                 <h3>Сроки выполнения </h3>
@@ -156,18 +158,7 @@ $this->menu=array(
                     <th>Наименование</th>
                     <th>Дата Время</th>
                     </thead>
-                    <tr>
-                        <td>
-                            <?php echo $form->labelEx($model,'date'); ?>
-                        </td>
-                        <td>
-                            <?php
-                            $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
-                                'model' => $model,
-                                'attribute' => 'dbdate',
-                            ));?>
-                        </td>
-                    </tr>
+                    
                     <tr>
                         <td>
                             <?php echo $form->labelEx($model,'max_exec_date'); ?>
@@ -191,6 +182,7 @@ $this->menu=array(
                             ));?>
                         </td>
                     </tr>
+					<?php if(!Campaign::getId()){ ?>
                     <tr>
                         <td>
                             <?php echo $form->labelEx($model,'date_finish');?>
@@ -203,18 +195,7 @@ $this->menu=array(
                             ));?>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <?php echo $form->labelEx($model,'manager_informed'); ?>
-                        </td>
-                        <td>
-                            <?php
-                            $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
-                                'model' => $model,
-                                'attribute' => 'dbmanager_informed',
-                            ));?>
-                        </td>
-                    </tr>
+					<?php } ?>
                     <tr>
                         <td>
                             <?php echo $form->labelEx($model,'author_informed'); ?>
@@ -230,7 +211,7 @@ $this->menu=array(
                 </table>
             </div>
         </div>
-		<?php } ?>
+		
         <div class="row" style="float: right; margin: 15px 0 0 0; ">
             <?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), array ('class' => 'btn btn-primary')); ?>
         </div>
