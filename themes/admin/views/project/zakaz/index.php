@@ -104,6 +104,20 @@ if (Campaign::getId()){
     }",
 ));
 ?>
+<script>
+    $(document).ready(function()
+    {
+        $('body').on('dblclick', '#order_list tbody tr', function(event)
+        {
+            var
+                rowNum = $(this).index(),
+                keys = $('#order_list > div.keys > span'),
+                rowId = keys.eq(rowNum).text();
+
+            location.href = '/project/zakaz/update/id/' + rowId;
+        });
+    });
+</script>
 </div>
     </div>
 </div>

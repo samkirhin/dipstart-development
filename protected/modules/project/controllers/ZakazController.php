@@ -390,7 +390,7 @@ class ZakazController extends Controller
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(Yii::app()->getRequest()->getParam('ajax',false))
+		if(!Yii::app()->getRequest()->getParam('ajax',false))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
@@ -465,7 +465,19 @@ class ZakazController extends Controller
 	{
 		$model=new Zakaz('search');
 		$model->unsetAttributes();
-		if (User::model()->isAuthor()) {$model->executor = 0;$model->status=3;}
+		
+		if (User::model()->isAuthor()) {
+			$model->executor = 0;
+			$model->status=3;
+			$user = User::model()->findByPk(Yii::app()->user->id);
+			$fields=$model->getFields();
+			foreach ($fields as $field) {
+				if ($field->field_type == 'LIST') {
+					$tmp = $field->varname;
+					$model->$tmp = $user->profile->$tmp;
+				}
+			}
+		}
 
 		$this->render('list',array(
 			'model'=>$model,
