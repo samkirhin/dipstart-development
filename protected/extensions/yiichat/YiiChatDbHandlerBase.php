@@ -127,11 +127,11 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				}
 			}
 			// now retrieve the post
+            $obj['recipient']=User::model()->findByPk($obj['recipient']);
+            $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
             $obj['sender']=User::model()->findByPk($obj['sender']);
             $obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
-            UserModule::sendMail($obj['recipient']->attributes['email'],'Message','You receive new message in chat',$obj['message']);
-            //$obj['recipient']=User::model()->findByPk($obj['recipient']);
-            //$obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
+	    mail($obj['recipient']->attributes['email'],'You receive new message in chat',$obj['message'],'Content-Type: text/html; charset=utf-8;');
             if ($postdata['flags'])
                 foreach($postdata['flags'] as $v)
                     switch($v){
@@ -147,8 +147,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			$obj['owner']=substr($this->getIdentityName(),0,20);
 			return $obj;
 		}
-		else
-			return array();
+		else return array();
 	}
 	public function yiichat_list_posts($chat_id, $identity, $last_id, $data){
 		$this->_chat_id = $chat_id;
