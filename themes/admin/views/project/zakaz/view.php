@@ -23,30 +23,13 @@ $attr = array(
            'type' => 'raw',
            'value' => User::model()->findByPk($model->user_id)->username,
         ),
-		array(
-           'name' => 'category_id',
-           'type' => 'raw',
-           'value' => Categories::model()->findByPk($model->category_id)->cat_name,
-        ),
-		array(
-           'name' => 'job_id',
-           'type' => 'raw',
-           'value' => Jobs::model()->findByPk($model->job_id)->job_name,
-        ),
 		'title',
-		'text',
-		'date',
 		'max_exec_date',
-		'date_finish',
-		'pages',
-		'add_demands',
 		array(
            'name' => 'status',
            'type' => 'raw',
            'value' => $model->status > 0 ? ProjectStatus::model()->findByPk($model->status)->status : null,
         ),
-        'is_payed',
-        'informed',
         'notes',
 
     );
@@ -57,16 +40,6 @@ $attr = array(
            'name' => 'user_id',
            'type' => 'raw',
            'value' => User::model()->findByPk($model->user_id)->username,
-        ),
-		array(
-           'name' => 'category_id',
-           'type' => 'raw',
-           'value' => Categories::model()->findByPk($model->category_id)->cat_name,
-        ),
-		array(
-           'name' => 'job_id',
-           'type' => 'raw',
-           'value' => $model->job_id > 0 ? Jobs::model()->findByPk($model->job_id)->job_name : null,
         ),
 		'title',
 		'text',
@@ -90,9 +63,9 @@ $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>$attr,
 )); ?>
-<?php
+<?php /*
     $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
     'projectId'=>$model->id,
     'userType'=>'1',
     'action'=>'show'
-));?>
+));*/?>

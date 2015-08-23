@@ -15,9 +15,8 @@ class Templates extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
-		return 'Templates';
+	public function tableName() {
+		return Campaign::getId().'_Templates';
 	}
 
 	/**
