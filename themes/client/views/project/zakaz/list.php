@@ -55,3 +55,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
         document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
     }",
 )); ?>
+<script>
+    $(document).ready(function()
+    {
+        $('body').on('dblclick', '#zakaz-grid tbody tr', function(event)
+        {
+            var
+                rowNum = $(this).index(),
+                keys = $('#zakaz-grid > div.keys > span'),
+                rowId = keys.eq(rowNum).text();
+
+            location.href = '/project/chat?orderId=' + rowId;
+        });
+    });
+</script>

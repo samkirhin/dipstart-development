@@ -373,7 +373,11 @@ class Zakaz extends CActiveRecord {
 			$model=$this->getFields();
 			foreach ($model as $field) {
 				$tmp = $field->varname;
-				$criteria->compare($tmp, $this->$tmp);
+				if (isset($this->$tmp) && $field->field_type == 'LIST') {
+					$criteria->compare($tmp, explode(',',$this->$tmp));
+				} else {
+					$criteria->compare($tmp, $this->$tmp);
+				}
 			}
 			$criteria->compare('executor',$this->executor);
 			if (!($this->status) or $this->status == 0){            /// Так ли делать

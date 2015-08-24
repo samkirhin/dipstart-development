@@ -8,3 +8,4 @@ cgi-bin
 uploads
 protected/config/main.php
 madm
+webstat

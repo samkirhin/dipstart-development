@@ -222,9 +222,8 @@ var YiiChat = function (options) {
                     if ($(this).data('sender')=='Author') button=$('.button_author');
                     if ($(this).data('sender')=='Customer') button=$('.button_customer');
                     button.show();
-                    /*button.data('recipient',$(this).data('sender'));*/
-					button.data('recipient',$(this).data('uid'));
-					button.data('uid',$(this).data('uid'));
+		    button.data('recipient',$(this).data('uid'));
+		    button.data('uid',$(this).data('uid'));
                 });
                 var btn_remove = p.find('button.chtpl0-delete');
                 btn_remove.click(function () {
@@ -329,7 +328,6 @@ var YiiChat = function (options) {
         you.append('<div id="send_buttons" class="buttons pull-right chtpl0-subm"></div>');
         var buttons = you.find('div.buttons');
 		buttons.append("<h5>Отправить сообщение</h5><br>");
-        //buttons.append("<button class='button_send btn-primary pull-left btn smooth im-send' data-recipient='no'>" + options.executor + "</button>");
         buttons.append("<button class='chtpl0-submit1 button_author btn-primary pull-left btn smooth im-send' data-recipient='Author' data-uid=''>" + ((options.executor>0) ? options.sendAuthorText : options.sendAuthorText.slice(0,-1)+'ам') + "</button>");
         buttons.append("<button class='chtpl0-submit2 button_customer btn-primary pull-left btn smooth im-send' data-recipient='Customer'>" + options.sendCustomerText + "</button>");
         posts.html("");
@@ -338,11 +336,10 @@ var YiiChat = function (options) {
         var msg = you.find('textarea');
         msg.data('index', 0);
         send.click(function () {
-            //var text = jQuery.trim(msg.val());
             var text = tinymce.get('chat_message').getContent();
             actionPost(text, function (ok) {
                 if (ok == true) {
-                    msg.val("");
+                    tinymce.get('chat_message').setContent('');
                     msg.data('index', 0);
                     $(this).data('recipient', 0);
                     scroll();

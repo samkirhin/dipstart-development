@@ -25,7 +25,6 @@ class Controller extends RController
 
     public function init(){
 		// --- Организации
-		/*$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);*/
 		$c_id = Campaign::getId();
 		if ($c_id) {
 			Payment::$table_prefix = $c_id.'_';
@@ -42,6 +41,8 @@ class Controller extends RController
 			UpdateProfile::$table_prefix = $c_id.'_';
 			ZakazPartsFiles::$table_prefix = $c_id.'_';
             PaymentImage::$table_prefix = $c_id.'_';
+			
+			Yii::app()->language = Campaign::getLanguage();
 		} else {
 			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
