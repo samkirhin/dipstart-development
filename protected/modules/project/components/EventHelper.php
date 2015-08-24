@@ -15,6 +15,7 @@ class EventHelper {
     const STATUS_DONE = 1;
     
     protected static function sendEvent($event, $type, $description) {
+        
         $message = new Events;
         if (!$type) {
             $type = 'Не передан тип';
@@ -27,12 +28,9 @@ class EventHelper {
         $message->description = $description;
         $message->timestamp = time();
         $message->status = self::STATUS_ACTIVE;
+        $message->save();
 
-        if ($message->save()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $message->id;
     }
     
     protected static function eventTemplate($type, $description, $id) {
@@ -48,7 +46,7 @@ class EventHelper {
     public static function editOrder($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." отредактировал заказ";
-        self::sendEvent($id, self::TYPE_EDIT_ORDER, $description);
+        return self::sendEvent($id, self::TYPE_EDIT_ORDER, $description);
     }
     
     public static function addChanges($id) {
@@ -86,6 +84,6 @@ class EventHelper {
         $creator = Yii::app()->user->id;
         $userName = User::model()->findByPk($creator)->username;
         $text = 'Пользователь изменил данные в профиле '.$userName;
-        self::sendEvent($creator, self::TYPE_UPDATE_PROFILE, $text);
+        return self::sendEvent($creator, self::TYPE_UPDATE_PROFILE, $text);
     }
 }

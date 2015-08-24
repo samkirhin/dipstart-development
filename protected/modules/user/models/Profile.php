@@ -247,12 +247,14 @@ class Profile extends UActiveRecord
 			   $this->job_type = implode(",", $this->job_type);
 			}
 			// запрашиваем модерацию перед сохранением данных профиля
-			if((!$this->isNewRecord) && (!Yii::app()->user->checkAccess('Manager'))) {
-				$this->getChanges();
-				return !parent::beforeSave();
-			}
-		}
-		return parent::beforeSave();
+//			if((!$this->isNewRecord) && (!Yii::app()->user->checkAccess('Manager'))) {
+//				$this->getChanges();
+//				return !parent::beforeSave();
+//			}
+            return true;
+		} else {
+            return false;
+        }
 	}
 	public function afterFind() {
 		$this->_modelSave = $this->attributes;
@@ -278,4 +280,13 @@ class Profile extends UActiveRecord
 		}
 		return $res;
 	}
+    
+    public function behaviors()
+    {
+        return [
+            'ModerateBehavior' => [
+                'class' => 'ModerateBehavior'
+            ]
+        ];
+    }
 }

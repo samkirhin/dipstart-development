@@ -30,10 +30,11 @@
             <td><?php echo $event->description?></td>
             <td>
                 <?php switch ($event->type) {
+                    case EventHelper::TYPE_EDIT_ORDER:
                     case EventHelper::TYPE_UPDATE_PROFILE:
                         echo CHtml::link(
                                 'Посмотреть',
-                                Yii::app()->createUrl('user/profile/previewUpdate', ['id' => $event->event_id])    
+                                Yii::app()->createUrl('moderate/index', ['id' => $event->id])    
                             );
                     break;
                     case EventHelper::TYPE_NOTIFICATION:

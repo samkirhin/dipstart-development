@@ -65,8 +65,7 @@ class ZakazController extends Controller
 		if (!$user->superuser)
 			$this->redirect('/');
 		else {
-			if (!($model = Moderation::model()->find('`order_id` = :ID', array('ID'=>$request->getParam('id')))))
-				$model = Zakaz::model()->findByPk($request->getParam('id'));
+            $model = Zakaz::model()->findByPk($request->getParam('id'));
 			if ($request->getParam('value')=='true')
 				$model->status=2;
 			else
@@ -144,62 +143,43 @@ class ZakazController extends Controller
 	 */
 	public function actionCreate()
 	{
-            // start author Emericanec
-            if(User::model()->isAdmin()) {
-                $modelName = 'Zakaz';
-                $model = new $modelName();
+        $model = new Zakaz();
+        
+        if(User::model()->isManager() || User::model()->isAdmin()) {
+            $model->is_active = 1;
+        } else {
+            $model->status = 1;
+        }
 
-            }else{
-                $modelName = 'Moderation';
-                $model = new $modelName();
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
 
+        if(isset($_POST['Zakaz']))
+        {
+            $model->attributes=$_POST['Zakaz'];
+
+            if (!(User::model()->isManager() || User::model()->isAdmin())) {
+                $model->user_id = Yii::app()->user->id;
+                
+                $model->dbmanager_informed = date('d.m.Y H:i');
+                $model->dbdate = date('d.m.Y H:i');
+                $d1=date_create();
+                $d2=date_create($model->dbmax_exec_date);
+                $d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
+                $model->dbauthor_informed = $d1->format('d.m.Y H:i');
             }
-            // end author Emericanec
 
-			// Uncomment the following line if AJAX validation is needed
-			// $this->performAjaxValidation($model);
-
-			if(isset($_POST[$modelName]))
-			{
-				$model->attributes=$_POST[$modelName];
-								
+            if($model->save()){
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
-					$model->user_id = Yii::app()->user->id;
-					/*if(Campaign::getId()){ // ------------------------------ Need ??
-						$projectFields = $model->getFields();
-						if ($projectFields) {
-							foreach($projectFields as $field) {
-								if ($field->field_type=="TIMESTAMP") {
-									// ----------------------------------------------------
-									$tmp = $field->varname;
-									if (isset($_POST['Moderation'][$tmp])) {
-										//$model->$tmp = $_POST['Moderation'][$tmp];
-										//$model->timestampInput($field);
-									}
-								}
-							}
-						}
-					}*/
-					$model->dbmanager_informed = date('d.m.Y H:i');
-					$model->dbdate = date('d.m.Y H:i');
-					$d1=date_create();
-					$d2=date_create($_POST['Moderation']['dbmax_exec_date']);
-					$d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
-					$model->dbauthor_informed = $d1->format('d.m.Y H:i');
+                    EventHelper::createOrder($model->id);
                 }
-				
-				if($model->save()){
-					if (!(User::model()->isManager() || User::model()->isAdmin())) {
-						EventHelper::createOrder($model->id);
-					}
-					$this->redirect(array('view','id'=>$model->id));
-				}
-			}
+                $this->redirect(array('view','id'=>$model->id));
+            }
+        }
 
-			$this->render('create',array(
-					'model'=>$model,
-					'temp'=>isset($_POST['Moderation']['datehello'])?$_POST['Moderation']['datehello']:null,
-			));
+        $this->render('create',array(
+            'model'=>$model
+        ));
 	}
 
 	/**
@@ -207,8 +187,11 @@ class ZakazController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id) {
-        if (Yii::app()->request->isAjaxRequest){
+	public function actionUpdate($id)
+    {
+        
+        if (Yii::app()->request->isAjaxRequest) {
+            
             $data = Yii::app()->request->getRestParams();
 			$field = str_replace('Zakaz_','',$data['elid']);
             if (is_array($data)) {
@@ -219,50 +202,32 @@ class ZakazController extends Controller
             }
             $this->renderPartial('_order_list_update');
             Yii::app()->end();
+            
         }
+        
         $role = User::model()->getUserRole();
         $view = 'update';
         $isModified = false;
 		Yii::app()->session['project_id'] = $id;
 		$model=$this->loadModel($id);
-		if (Yii::app()->request->getParam('close') == 'yes'){
+		
+        if (Yii::app()->request->getParam('close') == 'yes'){
             $model->old_status = $model->status;
 			$model->status = 5;
 			$model->save(false);
 			$this->redirect(array('update','id'=>$model->id));
-		}
-		if (Yii::app()->request->getParam('open') == 'yes'){
+		} elseif (Yii::app()->request->getParam('open') == 'yes'){
 			$model->status = $model->old_status;
 			$model->save(false);
 			$this->redirect(array('update','id'=>$model->id));
 		}
-		if (ModerationHelper::isOrderChanged($id)) {
-			if ($role == 'Customer' ) {
-				$view = 'orderInModerate';
-			} else {
-				$isModified = true;
-				$modelRows = $model->attributes;
-				$moderateModel = Moderation::model()->find('`order_id` = :ID', array(
-					'ID'=>$id
-				));
-				unset($modelRows[$id]);
-				foreach ($modelRows as $key=>$value) {
-					$model->$key = $moderateModel->$key;
-				}
-				$model->id = $moderateModel->order_id;
-			}
-		}
+		
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 		if(isset($_POST['Zakaz'])) {
-			$zakaz = $_POST['Zakaz'];
+			$model->attributes = $_POST['Zakaz'];
 			
-			if ($role != 'Manager' && $role != 'Admin') {
-				ModerationHelper::saveToModerate($model, $zakaz);
-			} else {
-				$model->attributes=$zakaz;
-			}
 
 			if(Campaign::getId()){
 				$projectFields = $model->getFields();
@@ -283,7 +248,6 @@ class ZakazController extends Controller
 					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
 				} else {
-					ModerationHelper::clear($model->id);
 					$this->redirect(array('update','id'=>$model->id));
 				}
 			}
@@ -330,11 +294,11 @@ class ZakazController extends Controller
             $this->redirect(['/project/zakaz/update', 'id' => $rid]);
         }
 
-        $moderation = Moderation::model()->findByPk($event->event_id);
-        if ($moderation) {
-			$profile = Profile::model()->findByPk($moderation->user_id);
+        $model = Zakaz::model()->resetScope()->findByPk($event->event_id);
+        if (!$model->is_active) {
+			$profile = Profile::model()->findByPk($model->user_id);
             $this->render('preview', array(
-                'model' => $moderation,
+                'model' => $model,
 				'profile' => $profile,
                 'event' => $event
             ));
@@ -353,19 +317,17 @@ class ZakazController extends Controller
      * @author Emericanec
      */
     public function actionModerationAnswer($id, $event_id, $answer){
-        $model = Moderation::model()->findByPk($id);
+        $model = Zakaz::model()->resetScope()->findByPk($id);
         $event = Events::model()->findByPk($event_id);
-        if($model && $event) {
-            // если одобрили то создаем заказ и удаляем модерер и событие
-            if ($answer) {
-                $zakaz = new Zakaz();
-                foreach ($model->attributes as $k=>$v)
-                    $zakaz->setAttribute($k,$v);
-                if($zakaz->save()){
-                    $model->delete();
+        if(!$model->is_active && $event) {
+            
+            if ($answer == 1) {
+                $model->is_active = 1;
+                
+                if($model->save()) {
                     $event->delete();
                     $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
-                        'id' => $zakaz->id
+                        'id' => $model->id
                     )));
                 }
             } else {
@@ -480,12 +442,9 @@ class ZakazController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model = Zakaz::model()->findByPk($id);
+		$model = Zakaz::model()->resetScope()->findByPk($id);
 		if($model===null){
-            $model = Moderation::model()->findByPk($id);
-            if($model === null){
-                throw new CHttpException(404,'The requested page does not exist.');
-            }
+            throw new CHttpException(404,'The requested page does not exist.');
         }
 		return $model;
 	}

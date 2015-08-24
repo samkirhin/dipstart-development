@@ -99,14 +99,9 @@ class ChatController extends Controller {
             Yii::app()->end();
         }
         $model=Zakaz::model()->findByPk($orderId);
-        if(isset($_POST['Zakaz']))
-        {
-            $zakaz = $_POST['Zakaz'];
-            ModerationHelper::saveToModerate($model, $zakaz);
-
-            if($model->save()) {
-                EventHelper::editOrder($model->id);
-            }
+        if(isset($_POST['Zakaz'])) {
+            $model->attributes = $_POST['Zakaz'];
+            $model->save();
         }
         $this->render('index', array(
             'orderId' => $orderId,

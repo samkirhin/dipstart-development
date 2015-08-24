@@ -145,10 +145,7 @@ class ProfileController extends Controller
      * список изменений в профиле пользователя
      */
 	public function actionPreviewUpdate($id) {
-		$models = UpdateProfile::model()->findAllByAttributes(array(
-			'user'=>$id,
-			'status'=>null,
-		));
+		$models = Moderate::model()->findAllByAttributes(['event_id'=>$id]);
 
 		$user = User::model()->findbyPk($id);
 		$this->render('previewUpdate',array('models'=>$models,'user'=>$user));

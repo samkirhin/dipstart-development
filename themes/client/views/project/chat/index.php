@@ -229,7 +229,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                                         'attributes' => $columns));
                                 } else {
 
-                                    if (!ModerationHelper::isOrderChanged($order->id)) {
+                                    if ($order->is_active) {
                                         $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
                                     } else {
                                         $this->renderPartial('/zakaz/orderInModerate');

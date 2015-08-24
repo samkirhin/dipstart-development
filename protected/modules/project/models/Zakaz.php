@@ -17,6 +17,7 @@
  * @property string $add_demands
  * @property integer $status
  * @property integer $old_status
+ * @property integer $is_active
  * @property string $executor
  * @property User $user
  * @property User $author
@@ -508,4 +509,20 @@ class Zakaz extends CActiveRecord {
 	{
 		return parent::model($className);
 	}
+    
+    public function defaultScope()
+    {
+        return [
+            'condition' => 't.is_active = 1'
+        ];
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'ModerateBehavior' => [
+                'class' => 'ModerateBehavior'
+            ]
+        ];
+    }
 }
