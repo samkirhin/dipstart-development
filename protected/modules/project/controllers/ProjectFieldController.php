@@ -334,10 +334,8 @@ class ProjectFieldController extends Controller
 		if(isset($_POST['ProjectField'])) {
 			$model->attributes=$_POST['ProjectField'];
 			if($model->validate()) {
-				// ----------- need refactoring
-				$sql0 = 'ALTER TABLE '.Project::model()->tableName().' ADD `'.$model->varname.'` ';
-				// -----------
-				$sql = $this->fieldType($model->field_type);
+				$sql = 'ALTER TABLE '.Project::model()->tableName().' ADD `'.$model->varname.'` ';
+				$sql .= $this->fieldType($model->field_type);
 				if (
 						$model->field_type!='TEXT'
 						&& $model->field_type!='DATE'
@@ -359,7 +357,7 @@ class ProjectFieldController extends Controller
 									||$model->field_type=='BINARY'
 								)?" DEFAULT ''":(($model->field_type=='DATE')?" DEFAULT '0000-00-00'":" DEFAULT 0"));
 				}
-				$model->dbConnection->createCommand($sql0.$sql)->execute();
+				$model->dbConnection->createCommand($sql)->execute();
 				$model->save();
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -448,8 +446,8 @@ class ProjectFieldController extends Controller
 				}
 				
 			} else {
-				$sql0 = 'ALTER TABLE '.Project::model()->tableName().' DROP `'.$model->varname.'`';
-				if ($model->dbConnection->createCommand($sql0)->execute()) {
+				$sql = 'ALTER TABLE '.Project::model()->tableName().' DROP `'.$model->varname.'`';
+				if ($model->dbConnection->createCommand($sql)->execute()) {
 					$model->delete();
 				}
 			}
