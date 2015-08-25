@@ -19,13 +19,28 @@ class ModerateBehavior extends CActiveRecordBehavior
         $is_change = false;
         
         $role = User::model()->getUserRole();
+        
         if (!$this->owner->isNewRecord && $role != 'Manager' && $role != 'Admin') {
         
             $tmp_event_id = time();
             
             foreach ($this->old_attributes as $key => $value) {
+                
+                if ($key == 'max_exec_date') {
+                    
+                    $old_value = Yii::app()->dateFormatter->format($this->owner->dateTimeOutcomeFormat, strtotime($value));
+                    $new_value = Yii::app()->dateFormatter->format($this->owner->dateTimeOutcomeFormat, strtotime($this->owner->max_exec_date));
+                    
+                    if ($old_value === $new_value) {
+                        continue;
+                    }
+                    
+                } else {
+                    $old_value = $value;
+                    $new_value = $this->owner->$key;
+                }
 
-                if ($this->owner->$key != $value) {
+                if ($old_value != $new_value) {
                     
                     $is_change = true;
 
@@ -34,8 +49,8 @@ class ModerateBehavior extends CActiveRecordBehavior
                     $moderate->class_name = get_class($this->owner);
                     $moderate->id_record = $this->owner->primaryKey;
                     $moderate->attribute = $key;
-                    $moderate->old_value = $value;
-                    $moderate->new_value = $this->owner->$key;
+                    $moderate->old_value = $old_value;
+                    $moderate->new_value = $new_value;
                     $moderate->save(false);
 
                 }

@@ -54,7 +54,12 @@ class Moderate extends CActiveRecord
         try {
             
             $model = (new $this->class_name)->findByPk($this->id_record);
-            $model->{$this->attribute} = $this->new_value;
+            
+            if ($this->attribute == 'max_exec_date') {
+                $model->max_exec_date = Yii::app()->dateFormatter->format($model->dateTimeIncomeFormat, CDateTimeParser::parse($this->new_value, $model->dateTimeOutcomeFormat));
+            } else {
+                $model->{$this->attribute} = $this->new_value;
+            }
 
             $model->save(false);
 
