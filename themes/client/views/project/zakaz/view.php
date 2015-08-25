@@ -17,14 +17,11 @@ $this->breadcrumbs=array(
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
 <?php
 if (Campaign::getId()){
-	$attr = array('id', [
-			'name' => 'author_informed',
-			'value' => Yii::app()->dateFormatter->formatDateTime($model->author_informed),
-		]);
+	$attr = array('id');
 	$projectFields = $model->getFields();
 	if ($projectFields) {
 		foreach($projectFields as $field) {
-			if (isset($field->field_id)){
+			if ($field->field_type=="LIST"){
 				$tmp = $field->varname;
 				$attr[] = [
 					'name' => $field->title,

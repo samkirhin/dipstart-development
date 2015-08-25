@@ -118,10 +118,14 @@ class Catalog extends CActiveRecord {
         return parent::model($className);
     }
 
-    public static function getAll()
+    public static function getAll($field_varname, $only_second_level = 1)
     {
         $crit = new CDbCriteria;
-        foreach (self::model()->findAll() as $k => $v)
+		if ($only_second_level == 1)
+			$arr = self::model()->findAllByAttributes(array('field_varname'=>$field_varname), 'parent_id != 0');
+        else
+			$arr = self::model()->findAllByAttributes(array('field_varname'=>$field_varname));
+		foreach ($arr as $k => $v)
             $res[$v['id']] = $v['cat_name'];
         return $res;
     }

@@ -51,8 +51,15 @@ class Zakaz extends CActiveRecord {
 			return 'Projects';
 	}
 	public function getFields() {
-		if (!$this->_model)
-		  $this->_model=ProjectField::model()->forAll()->findAll();
+		if (!$this->_model) {
+			if (User::model()->isAdmin() || User::model()->isManager()) {
+				$this->_model=ProjectField::model()->forManager()->findAll();
+			} elseif (User::model()->isCustomer()) {
+				$this->_model=ProjectField::model()->forCustomer()->findAll();
+			} elseif (User::model()->isAuthor()) {
+				$this->_model=ProjectField::model()->forAuthor()->findAll();
+			}
+		}
 		return $this->_model;
 	}
 	
@@ -265,12 +272,22 @@ class Zakaz extends CActiveRecord {
 	 */
 	public function relations() {
 		if(Campaign::getId()){
-			return array(
+			$relations = array(
 				'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
 				'author' => [self::BELONGS_TO, 'User', 'executor'],
 				'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
-				'images' => [self::HAS_MANY, 'PaymentImage', 'project_id']
+				'images' => [self::HAS_MANY, 'PaymentImage', 'project_id'],
 			);
+			$projectFields = $this->getFields();
+			if ($projectFields) {
+				foreach($projectFields as $field) {
+					if ($field->field_type=="LIST"){
+						$varname = $field->varname;
+						$relations['catalog_'.$varname] = array(self::HAS_ONE, 'Catalog', array('id'=>$varname));
+					}
+				}
+			}
+			return $relations;
 		} else {
 			// NOTE: you may need to adjust the relation name and the related
 			// class name for the relations automatically generated below.
@@ -370,10 +387,10 @@ class Zakaz extends CActiveRecord {
 			$criteria->compare('id', $this->id);
 			$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
 			$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
-			$model=$this->getFields();
-			foreach ($model as $field) {
+			$fields=$this->getFields();
+			foreach ($fields as $field) {
 				$tmp = $field->varname;
-				if (isset($this->$tmp) && $field->field_type == 'LIST') {
+				if (isset($this->$tmp) && $field->field_type == 'LIST' && $this->$tmp != '') {
 					$criteria->compare($tmp, explode(',',$this->$tmp));
 				} else {
 					$criteria->compare($tmp, $this->$tmp);

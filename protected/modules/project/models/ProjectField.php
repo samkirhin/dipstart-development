@@ -4,9 +4,9 @@ class ProjectField extends CActiveRecord
 {
 	const VISIBLE_NO=0;
 	const VISIBLE_ALL=1;
-	/*const VISIBLE_AUTHOR=2;
-	const VISIBLE_CUSTOMER=1;
-    const VISIBLE_ONLY_OWNER=4;*/
+	const VISIBLE_ONLY_MANAGER=2;
+	const VISIBLE_AUTHOR_AND_MANAGER=3;
+	const VISIBLE_CUSTOMER_AND_MANAGER=4;
 	
 	
 	const REQUIRED_NO = 0;
@@ -29,11 +29,7 @@ class ProjectField extends CActiveRecord
 	 */
 	
 	public function tableName() {
-		$c_id = Campaign::getId();
-		if ($c_id)
-			return $c_id.'_ProjectFields';
-		else
-			return 'ProjectFields';
+		return Campaign::getId().'_ProjectFields';
 	}
 	 
 	/**
@@ -44,13 +40,6 @@ class ProjectField extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
-	/**
-	 * @return string the associated database table name
-	public function tableName()
-	{
-		return Yii::app()->getModule('user')->tableProfileFields;
-	}*/
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -108,22 +97,19 @@ class ProjectField extends CActiveRecord
                 'condition'=>'visible='.self::VISIBLE_ALL,
                 'order'=>'position',
             ),
-            /*'forCustomer'=>array(
-                'condition'=>'visible='.self::VISIBLE_CUSTOMER.' OR visible='.self::VISIBLE_ALL,
+            'forManager'=>array(
+                'condition'=>'visible='.self::VISIBLE_ALL.' OR visible='.self::VISIBLE_ONLY_MANAGER.' OR visible='.self::VISIBLE_AUTHOR_AND_MANAGER.' OR visible='.self::VISIBLE_CUSTOMER_AND_MANAGER,
+                'order'=>'position',
+            ),
+            'forCustomer'=>array(
+                'condition'=>'visible='.self::VISIBLE_CUSTOMER_AND_MANAGER.' OR visible='.self::VISIBLE_ALL,
                 'order'=>'position',
             ),
             'forAuthor'=>array(
-                'condition'=>'visible='.self::VISIBLE_AUTHOR.' OR visible='.self::VISIBLE_ALL,
+                'condition'=>'visible='.self::VISIBLE_AUTHOR_AND_MANAGER.' OR visible='.self::VISIBLE_ALL,
                 'order'=>'position',
             ),
-            'forRegistration'=>array(
-                'condition'=>'required='.self::REQUIRED_NO_SHOW_REG.' OR required='.self::REQUIRED_YES_SHOW_REG,
-                'order'=>'position',
-            ),
-            'forOwner'=>array(
-                'condition'=>'visible='.self::VISIBLE_ONLY_OWNER,
-                'order'=>'position',
-            ),*/
+
             'sort'=>array(
                 'order'=>'position',
             ),
@@ -158,6 +144,9 @@ class ProjectField extends CActiveRecord
 			'visible' => array(
 				self::VISIBLE_ALL => UserModule::t('For all'),
 				self::VISIBLE_NO => UserModule::t('Hidden'),
+				self::VISIBLE_ONLY_MANAGER => UserModule::t('Manager only'),
+				self::VISIBLE_AUTHOR_AND_MANAGER => UserModule::t('Author and manager'),
+				self::VISIBLE_CUSTOMER_AND_MANAGER => UserModule::t('Customer and manager'),
 			),
 		);
 		if (isset($code))

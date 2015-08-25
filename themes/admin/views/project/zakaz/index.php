@@ -8,32 +8,44 @@ $this->breadcrumbs=array(
 );
 
 if (Campaign::getId()){
-	$columns = array(
-		'id',
-		'title',
-        array(
+	$columns = array('id');
+	$projectFields = $model->getFields();
+	if ($projectFields) {
+		foreach($projectFields as $field) {
+			if ($field->field_type=="LIST"){
+				$varname = $field->varname;
+				$columns[] = array(
+						'name'=>$varname,
+						'filter'=>Catalog::getAll($varname),
+						'value'=>'$data->catalog_'.$varname.'->cat_name',
+					);
+			} elseif ($field->varname != 'soderjanie' && $field->varname != 'description') { // !!! Сделать настраиваемым
+				$columns[] = $field->varname;
+			}
+		}
+	}
+    /*$columns[] = array(
             'name'=>'date',
             'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'model'=>$model,
                 'attribute'=>'dbdate',
-                'language'=>'ru',
+                'language'=>Yii::app()->language,
                 ),true),
             'value'=>'$data->dbdate'
-        ),
-        array(
+        );*/
+    $columns[] = array(
             'name'=>'manager_informed',
             'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'model'=>$model,
                 'attribute'=>'dbmanager_informed',
-                'language'=>'ru',
+                'language'=>Yii::app()->language,
                 ), true),
             'value'=>'$data->dbmanager_informed',
-        ),
-        array(
+        );
+    $columns[] = array(
             'class'=>'CButtonColumn',
             'template'=>'{delete}{update}',
-        ),
-	);
+        );
 } else {
 	$columns = array(
         'id',

@@ -1,11 +1,11 @@
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
 <?php
 $this->breadcrumbs=array(
-	UserModule::t('Profile Fields')=>array('admin'),
+	UserModule::t('Project Fields')=>array('admin'),
 	UserModule::t('Manage'),
 );
 $this->menu=array(
-    array('label'=>UserModule::t('Create Profile Field'), 'url'=>array('create')),
+    array('label'=>UserModule::t('Create Project Field'), 'url'=>array('create')),
 );
 
 $this->widget('zii.widgets.CMenu', array(
@@ -19,7 +19,7 @@ $('.search-button').click(function(){
     return false;
 });
 $('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('profile-field-grid', {
+    $.fn.yiiGridView.update('Project-field-grid', {
         data: $(this).serialize()
     });
     return false;
@@ -28,7 +28,7 @@ $('.search-form form').submit(function(){
 
 
 ?>
-<h1><?php echo UserModule::t('Manage Profile Fields'); ?></h1>
+<h1><?php echo UserModule::t('Manage Project Fields'); ?></h1>
 <div class="row white-bg inside-block">
 <div class="col-md-12">
 <p><?php echo UserModule::t("You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done."); ?></p>
@@ -57,14 +57,14 @@ $('.search-form form').submit(function(){
 		array(
 			'name'=>'field_type',
 			'value'=>'$data->field_type',
-			'filter'=>ProfileField::itemAlias("field_type"),
+			'filter'=>ProjectField::itemAlias("field_type"),
 		),
 		'field_size',
 		//'field_size_min',
 		array(
 			'name'=>'required',
-			'value'=>'ProfileField::itemAlias("required",$data->required)',
-			'filter'=>ProfileField::itemAlias("required"),
+			'value'=>'ProjectField::itemAlias("required",$data->required)',
+			'filter'=>ProjectField::itemAlias("required"),
 		),
 		//'match',
 		//'range',
@@ -74,8 +74,8 @@ $('.search-form form').submit(function(){
 		'position',
 		array(
 			'name'=>'visible',
-			'value'=>'ProfileField::itemAlias("visible",$data->visible)',
-			'filter'=>ProfileField::itemAlias("visible"),
+			'value'=>'ProjectField::itemAlias("visible",$data->visible)',
+			'filter'=>ProjectField::itemAlias("visible"),
 		),
 		array(
 			'class'=>'CButtonColumn',
