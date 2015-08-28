@@ -12,7 +12,8 @@
 <?php if (Yii::app()->user->isGuest): ?>
 <?php
     echo CHtml::link('Sign in<br>',array('/user/login'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
-    echo CHtml::link('Registration<br>',array('/site/page','view'=>'registration'));
+    //echo CHtml::link('Registration<br>',array('/site/page','view'=>'registration'));
+	echo CHtml::link('Registration<br>',array('/site/page','view'=>'order'));
     echo CHtml::link('Recover password',array('/user/recovery'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
 ?>
 <!-- Login Form -->

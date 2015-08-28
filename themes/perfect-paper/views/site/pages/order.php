@@ -4,7 +4,6 @@ $form=$this->beginWidget('CActiveForm',array(
     'htmlOptions'=>array('class'=>'form-horizontal'),
 ));
 ?>
-test!
 <div class="panel panel-default panel-container-default" xmlns="http://www.w3.org/1999/html">
     <ul class="nav nav-tabs panel-heading clearfix" id="tab-panel">
         <li class="active"><a id="top_tab-1" href="#tab-1" class="col-xs-12 text-center" data-toggle="tab">1. Paper details</a></li>

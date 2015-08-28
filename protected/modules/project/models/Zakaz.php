@@ -226,7 +226,7 @@ class Zakaz extends CActiveRecord {
 						array_push($float,$field->varname);
 					if ($field->field_type=='DECIMAL')
 						array_push($decimal,$field->varname);
-					if ($field->field_type=='INTEGER')
+					if ($field->field_type=='INTEGER' || $field->field_type=='BOOL')
 						array_push($numerical,$field->varname);
 					if ($field->field_type=='VARCHAR' || $field->field_type=='TEXT' || $field->field_type=='LIST') {
 						$field_rule = array($field->varname, 'length', 'max'=>(($field->field_type=='TEXT' || $field->field_type=='LIST')?65535:$field->field_size), 'min' => 0);

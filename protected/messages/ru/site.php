@@ -101,4 +101,6 @@ return array(
     'Create order'=>'Создать заказ',
     'Order statuses'=>'Статусы заазов',
     'Events'=>'События',
+	'Link to order page' => 'Ссылка на страницу заказа',
+	'You have received a new message.' => 'Вам пришло новое сообщение.',
 );
