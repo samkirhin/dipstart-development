@@ -203,14 +203,16 @@ var YiiChat = function (options) {
 
                 var btn_edit = p.find('button.chtpl0-share');
                 btn_edit.click(function () {
-                    actionPost($(this).closest('.post').find('.text').text(), function (ok) {
+					tinymce.get('chat_message').setContent($(this).closest('.post').find('.text').text());
+                    /*actionPost($(this).closest('.post').find('.text').text(), function (ok) {
                         if (ok == true) {
                             scroll();
                             setTimeout(function () {
                                 msg.focus();
                             }, 100);
                         }
-                    }, {index: this.dataset.index, recipient: 'redir'});                });
+                    }, {index: this.dataset.index, recipient: 'redir'});*/
+				});
                 var btn_answer = p.find('button.chtpl0-answer');
                 btn_answer.click(function () {
                     msg.data('index', this.dataset.index);

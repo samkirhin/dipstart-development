@@ -19,7 +19,7 @@ if (Campaign::getId()){
 						'filter'=>Catalog::getAll($varname),
 						'value'=>'$data->catalog_'.$varname.'->cat_name',
 					);
-			} elseif ($field->varname != 'soderjanie' && $field->varname != 'description') { // !!! Сделать настраиваемым
+			} elseif ($field->varname != 'soderjanie' && $field->varname != 'description'  && $field->varname !='opisanie') { // !!! Сделать настраиваемым
 				$columns[] = $field->varname;
 			}
 		}
