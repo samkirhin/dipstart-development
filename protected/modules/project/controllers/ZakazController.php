@@ -498,6 +498,7 @@ class ZakazController extends Controller
 					$varname = $field->varname;
 					$value = $zakaz->$varname;
 					$criteria->addSearchCondition('profile.'.$varname,$value);
+					//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
 				}
 			}
 			//echo json_encode(array('error'=>$tmp));
@@ -520,7 +521,7 @@ class ZakazController extends Controller
             
             foreach ($authors as $author) {
                 $mail->setTo($author->email);
-                $mail->send();
+                if($author->getUserRole($author->id)=='Author') $mail->send();
             }
             
             echo 'ok =)';

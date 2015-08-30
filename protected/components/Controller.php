@@ -58,7 +58,7 @@ class Controller extends RController
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
 						array('label'=>Yii::t('site','New orders'), 'url'=>array('/project/zakaz/list')),
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-                        array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
+                        //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
                     );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
@@ -70,7 +70,7 @@ class Controller extends RController
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/customerOrderList')),
 						array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create')),
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-                        array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),  
+                        //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),  
                     );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),

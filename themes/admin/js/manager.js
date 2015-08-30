@@ -109,7 +109,7 @@ function setApprove (id) {
     $.post('/project/payment/approveTransaction', JSON.stringify({
         'id': id
     }), function (response) {
-        $.fn.yiiGridView.update('my-grid');
+        $.fn.yiiGridView.update('buh_transaction');
     }, 'json');
 }
 $( window ).load( function() {

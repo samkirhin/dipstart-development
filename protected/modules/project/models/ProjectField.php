@@ -139,7 +139,7 @@ class ProjectField extends CActiveRecord
 				self::REQUIRED_NO => UserModule::t('No'),
 				self::REQUIRED_NO_SHOW_REG => UserModule::t('No, but show on registration form'),
 				self::REQUIRED_YES_SHOW_REG => UserModule::t('Yes and show on registration form'),
-				self::REQUIRED_YES_REG_SPAM => UserModule::t('Yes'),
+				self::REQUIRED_YES_REG_SPAM => UserModule::t('Yes, show on registration and spam'),
 			),
 			'visible' => array(
 				self::VISIBLE_ALL => UserModule::t('For all'),
