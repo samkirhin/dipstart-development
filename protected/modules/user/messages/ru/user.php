@@ -52,7 +52,7 @@ return array(
 	'Thank you for your registration. Please check your email or login.' => 'Регистрация завершена. Пожалуйста проверьте свой электронный ящик или выполните вход.',
 	'Thank you for your registration. Please check your email.' => 'Спасибо за регистрацию.',//'Регистрация завершена. Пожалуйста проверьте свой электронный ящик.',
 	'Please check your email. An instructions was sent to your email address.' => 'На Ваш адрес электронной почты было отправлено письмо с инструкциями.',
-	'Thank you for your registration. Please {{login}}.' => 'Регистрация завершена. {{login}}.',
+	'Thank you for your registration. Please {{login}}.' => 'Спасибо за регистрацию. <br>Пароль был отправлен Вам на почту. <br>Вы можете авторизоваться перейдя по ссылке {{login}}',
 	'Thank you for your registration. Contact Admin to activate your account.' => 'Регистрация завершена. Пожалуйста свяжитесь с администрацией сайта для активации аккаунта.',
 	'Restore' => 'Восстановить',
 	'Please enter your login or email addres.' => 'Пожалуйста, введите Ваш логин или адрес электронной почты.',

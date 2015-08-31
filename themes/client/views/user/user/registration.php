@@ -8,10 +8,7 @@ $this->breadcrumbs=array(
 
 <?php if(Yii::app()->user->hasFlash('registration')): ?>
 <div class="">
-<?php //echo Yii::app()->user->getFlash('registration'); ?>
-    <p>Спасибо за регистрацию</p>
-    <p>Пароль был отправлен Вам на почту</p>
-    <p>Вы можете авторизоваться перейдя по <?= CHtml::link('ссылке', ['/user/login']) ?></p>
+<?php echo Yii::app()->user->getFlash('registration'); ?>
 </div>
 <?php else: ?>
 
