@@ -33,6 +33,7 @@ return array(
         'application.modules.project.*',
         'application.modules.project.models.*',
         'application.modules.project.controllers.*',
+		'application.behaviors.*',
         'application.extensions.yiifilemanager.*',
         'application.extensions.yiifilemanagerfilepicker.*',
         'application.extensions.helpers.EDownloadHelper',
