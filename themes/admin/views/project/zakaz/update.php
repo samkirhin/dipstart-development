@@ -45,10 +45,10 @@ $this->breadcrumbs = array(
             <div class="customerPhone"><p class="customer-phone-icon"></p><p><?= $customer->profile->mob_tel ?></p></div>
         </div>
     </div>
-    
+
     <div class="row">
        <!-- Left column -->
-       
+
         <div class="col-xs-4 left-column">
             <div class="row zero-edge">
                <div class="col-xs-12 statusBlock">
@@ -85,10 +85,7 @@ $this->breadcrumbs = array(
                         <?php echo $form->labelEx($model, 'notes'); ?>
                         <?php echo $form->textArea($model, 'notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
-                    <div class="col-xs-12 notesBlockArea">
-                        <?php echo $form->labelEx($model, 'author_notes'); ?>
-                        <?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
-                    </div>
+
                     <?php //echo CHtml::submitButton('Сохранить',''); ?>
 
                     <?php $this->endWidget(); ?>
@@ -115,51 +112,15 @@ $this->breadcrumbs = array(
             ))
             ?>
             <!-- Конец блока правок частей менеджера -->
-            <?php
-			// --- campaign
-			if(isset(Zakaz::$files_folder)){
-				$url = Zakaz::$files_folder.$model->id.'/';
-			} else {
-				$url = '/uploads/'.$model->id.'/';
-			}
-			// ---
-            $path = Yii::getPathOfAlias('webroot').$url;
-			$tmp = '';
-            if (file_exists($path)) {
-                foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
-                    $tmp .= '<li><a class="link-to-material" href="' . $url . $v . '">' . str_replace('#pre#', '', $v) . '</a>';
-                    if (strstr($v, '#pre#'))
-                        $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">Одобрить</button>';
-					$tmp .= '</li>';
-                }
-            }
-			
-            $this->widget('ext.EAjaxUpload.EAjaxUpload',
-                array(
-                    'id' => 'justFileUpload',
-                    'postParams' => array(
-                        'id' => $model->id,
-                    ),
-                    'config' => array(
-                        'action' => $this->createUrl('/project/chat/upload',array('id'=>$model->id)),
-                        'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить материал</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
-                        'disAllowedExtensions'=>array('exe'),
-                        'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
-                        'minSizeLimit' => 10,// minimum file size in bytes
-                        'onComplete' => "js:function(id, fileName, responseJSON){}"
-                    )
-                )
-            );
-            ?>
+
         </div>
-    
+
          <!-- Right column -->
         <div class="col-xs-8">
            <div class="row">
                 <?php
                     $this->renderPartial('_formUpdateManager', array('model' => $model, 'times' => $times));
                 ?>
-				
+
             </div>
         </div>
-      
