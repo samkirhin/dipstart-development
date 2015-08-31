@@ -40,7 +40,7 @@ class RegistrationController extends Controller
 					//print_r($profile->attributes);
 					//if($profile->validate()) echo 'yes!';
 					if($model->validate()&&$profile->validate()) {
-						echo 'yes!';
+                        
 						$soucePassword = $model->password;
 						$model->activkey=UserModule::encrypting(microtime().$model->password);
 						$model->password=UserModule::encrypting($model->password);
