@@ -22,7 +22,7 @@ return array(
     'Zakaz' => 'Заказ',
     'Create Zakaz' => 'Создать заказ',
     'Manage Zakaz' => 'Управлять заказами',
-    'Max Date' => 'Срок выполнения',
+    'Max Date' => 'Дата и время исполнения заказа',
     'Advanced Search' => 'Расширенный поиск',
     'List Zakaz' => 'Список заказов',
     'Create' => 'Создать',
