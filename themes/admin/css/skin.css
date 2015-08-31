@@ -384,3 +384,59 @@ table.payment-table th button {
 table.payment-table td button {
     width: 94%!important;
 }
+
+label[for="Templates_name"] {
+    width: 200px;
+    margin-bottom: 18px;
+}
+
+label[for="Templates_title"] {
+    width: 200px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+label[for="Templates_text"] {
+    width: 200px;
+    margin-top: 5px;
+}
+
+textarea#Templates_text {
+    width: 388px;
+    border-color: #9D9D9D;
+    max-width: 390px;
+    min-width: 390px;
+}
+
+label[for="Templates_type_id"] {
+    width: 204px;
+    margin-top: 12px;
+}
+
+select#Templates_type_id, input#Templates_name, input#Templates_title {
+    border: 1px solid #9D9D9D;
+}
+
+form#templates-form input[type="submit"] {
+    margin: 30px 203px 50px;
+    color: #FFF;
+    background-color: #337AB7;
+    border-color: #2E6DA4;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    transition: all 0.15s ease-out;
+}
+
+form#templates-form input[type="submit"]:hover {
+    background-color: #286090;
+    border-color: #204D74;
+}

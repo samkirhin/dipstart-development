@@ -62,7 +62,7 @@
 		<div class="chtpl0-panel chtpl0-down chat-functions">
 			<input id="send_email" type="checkbox"><p>Отправить на почту</p>
 			<input id="send_sms" type="checkbox"><p>Отправить SMS</p>
-			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p>Шаблон</p>
+			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p>Вставить шаблон</p>
 		</div>
         <?php
         Yii::app()->getClientScript()->registerScriptFile('/js/tinymce/tinymce.min.js');

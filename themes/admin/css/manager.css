@@ -307,7 +307,7 @@ label
     margin-top: 10px;
 }
 .buttons {
-    width: 200px;
+    width: 405px;
 }
 .button_send {
     margin-bottom: 5px;
@@ -365,8 +365,7 @@ label
 //top:-8px!important;
 }
 .chtpl0-chatblock button.chtpl0-template {
-    position: relative;
-    bottom: -5px;
+    margin-top: 0px;
 	}
 .label {
     -webkit-border-radius: 0px;
@@ -795,7 +794,7 @@ div.chat-functions {
 }
 
 div.chat-functions > button {
-    bottom: 6px!important; /* ____*/
+    margin-bottom: 5px;
 }
 
 .nav-justified > li {
@@ -816,4 +815,10 @@ ul.qq-upload-list > li {
 
 div#ui-datepicker-div {
 	z-index: 11!important;
+}
+
+div#send_buttons h5 {
+    width: 100%!important;
+    text-align: right!important;
+    padding: 10px 15px 2px!important;
 }

@@ -716,7 +716,7 @@ width: 50%;*/
 	padding: 0px;
 	background-position: 0 0px;
 	background-color: transparent;
-	cursor: pointer;
+	cursor: default;
 }
 
 .chtpl0-msg .chtpl0-buttons{
