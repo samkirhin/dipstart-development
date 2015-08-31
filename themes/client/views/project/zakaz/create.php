@@ -34,8 +34,8 @@ $this->breadcrumbs=array(
             <?php echo $form->errorSummary($model);
 			// campaign! -------------
 			if(Campaign::getId()){ ?>
-			<div class="form-group" style="position: relative; float: left; width: 100%;">
-                <label style="position: relative; float: left; width: 100px;"><?php echo $form->labelEx($model,'max_exec_date');?></label>
+			<div class="form-group">
+                <?php echo $form->labelEx($model,'max_exec_date');?>
                 <?php
                 $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
                     'model' => $model,

@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 <h1><?php echo UserModule::t("Hello, please fill an anket for authors".$profile->regType); ?></h1>
 
 <?php if(Yii::app()->user->hasFlash('registration')): ?>
-<div class="success">
+<div class="">
 <?php echo Yii::app()->user->getFlash('registration'); ?>
 </div>
 <?php else: ?>
