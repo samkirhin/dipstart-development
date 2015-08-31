@@ -15,8 +15,7 @@ $this->breadcrumbs=array(
 ?>
 
 <div>
-    <p>Спасибо за заказ, Ваш проект принят.</p>
-    <p>Наш менеджер свяжется с Вами в течение 10 минут.</p>
+    <?= ProjectModule::t('Thank you for order.') ?>
 </div>
 
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
