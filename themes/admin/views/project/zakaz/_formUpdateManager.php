@@ -163,7 +163,7 @@
                                 ));
                                 echo $form->errorSummary($model); ?>
                                 <div class="col-xs-6 info-column">
-                                    <div class="col-xs-12 notesBlockArea">
+                                    <div class="notesBlockArea">
                                         <?php echo $form->labelEx($model, 'author_notes'); ?>
                                         <?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                                     </div>
