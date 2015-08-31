@@ -163,6 +163,48 @@
                                 ));
                                 echo $form->errorSummary($model); ?>
                                 <div class="col-xs-6 info-column">
+                                    <div class="notesBlockArea">
+                                        <?php echo $form->labelEx($model, 'author_notes'); ?>
+                                        <?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
+                                    </div>
+
+                                    <?php
+                                    // --- campaign
+                                    if(isset(Zakaz::$files_folder)){
+                                        $url = Zakaz::$files_folder.$model->id.'/';
+                                    } else {
+                                        $url = '/uploads/'.$model->id.'/';
+                                    }
+                                    // ---
+                                    $path = Yii::getPathOfAlias('webroot').$url;
+                                    $tmp = '';
+                                    if (file_exists($path)) {
+                                        foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
+                                            $tmp .= '<li><a class="link-to-material" href="' . $url . $v . '">' . str_replace('#pre#', '', $v) . '</a>';
+                                            if (strstr($v, '#pre#'))
+                                                $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">Одобрить</button>';
+                                            $tmp .= '</li>';
+                                        }
+                                    }
+
+                                    $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                                        array(
+                                            'id' => 'justFileUpload',
+                                            'postParams' => array(
+                                                'id' => $model->id,
+                                            ),
+                                            'config' => array(
+                                                'action' => $this->createUrl('/project/chat/upload',array('id'=>$model->id)),
+                                                'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить материал</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
+                                                'disAllowedExtensions'=>array('exe'),
+                                                'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+                                                'minSizeLimit' => 10,// minimum file size in bytes
+                                                'onComplete' => "js:function(id, fileName, responseJSON){}"
+                                            )
+                                        )
+                                    );
+                                    ?>
+
                                     <?php
 									if (!Campaign::getId()){
 									echo $form->labelEx($model, 'category_id');

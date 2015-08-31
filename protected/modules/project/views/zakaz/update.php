@@ -17,7 +17,7 @@ $this->breadcrumbs = array(
 ?>
 
     <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
-    
+
     <span class="label label-warning" style="font-size:16px;"><b><?= $message; ?></b></span>
 
     <?php if ($author): ?>
