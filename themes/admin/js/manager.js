@@ -153,6 +153,9 @@ $( document ).ready( function() {
             if (response.data)obj.remove();
         });
     });
+    
+    var posts = $('div#chatWindow');
+    console.log(posts);
 });
 
 $( document ).ready( function() {
@@ -182,4 +185,6 @@ $( document ).ready( function() {
     });
 	////----------------
     
+    
+
 });

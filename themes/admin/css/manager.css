@@ -822,3 +822,9 @@ div#send_buttons h5 {
     text-align: right!important;
     padding: 10px 15px 2px!important;
 }
+
+div#send_buttons > br[style*="none"] ~ button[data-recipient="Author"] {
+    margin-top: 25px;
+    margin-bottom: 0px!important;
+    float: right !important;
+}
