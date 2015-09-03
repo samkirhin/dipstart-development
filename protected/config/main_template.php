@@ -81,7 +81,7 @@ return array(
         'user'=>array(
             'class' => 'RWebUser',
             'loginUrl'=>array('user/login'),
-            'allowAutoLogin'=>false,
+            'allowAutoLogin'=>true,
         ),
         'authManager'=>array(
             'class'=>'RDbAuthManager',
