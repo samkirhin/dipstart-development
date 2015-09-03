@@ -26,7 +26,7 @@ class LoginController extends Controller
 				}
 			}
 			// display the login form
-            Yii::app()->theme='admin';
+            Yii::app()->theme='client';
 			$this->render('/user/login',array('model'=>$model));
 		} else
 			$this->redirect(Yii::app()->controller->module->returnUrl);

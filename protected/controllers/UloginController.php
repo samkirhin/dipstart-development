@@ -3,15 +3,13 @@
 class UloginController extends Controller
 {
 
-    public function actionLogin() {
-
+    public function actionLogin($role = 'Customer') {
         if (isset($_POST['token'])) {
             $ulogin = new UloginModel();
             $ulogin->setAttributes($_POST);
             $ulogin->getAuthData();
-            if ($ulogin->validate() && $ulogin->login()) {
-                //$this->redirect(Yii::app()->user->returnUrl);
-				echo 'Hello from social networks!';
+            if ($ulogin->validate() && $ulogin->login($role)) {
+                $this->redirect(Yii::app()->user->returnUrl);
             }
             else {
 

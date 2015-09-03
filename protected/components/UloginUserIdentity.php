@@ -12,7 +12,7 @@ class UloginUserIdentity implements IUserIdentity
     {
     }
 
-    public function authenticate($uloginModel = null)
+    public function authenticate($uloginModel = null, $role = 'Customer')
     {
 
         $criteria = new CDbCriteria;
@@ -23,21 +23,32 @@ class UloginUserIdentity implements IUserIdentity
         );
         $user = User::model()->find($criteria);
 
-        if (null !== $user) {
-            $this->id = $user->id;
-            $this->name = $user->full_name;
-        }
-        else {
-            $user = new User();
+        if (null == $user) {
+			$criteria = new CDbCriteria;
+			$criteria->condition = 'email=:email';
+			$criteria->params = array(
+				':email' => $uloginModel->email
+			);
+			$user = User::model()->find($criteria);
+			
+            if (null == $user) $user = new User();
+			$user->scenario = 'social_network';
             $user->identity = $uloginModel->identity;
             $user->network = $uloginModel->network;
             $user->email = $uloginModel->email;
             $user->full_name = $uloginModel->full_name;
+			$user->status = 1;
+			
             $user->save();
-
-            $this->id = $user->id;
-            $this->name = $user->full_name;
-        }
+			
+			$AuthAssignment = new AuthAssignment;
+			$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$user->id);
+			$AuthAssignment->save();
+		}
+		
+		$this->id = $user->id;
+		$this->name = $user->full_name;
+        
         $this->isAuthenticated = true;
         return true;
     }
