@@ -19,7 +19,7 @@ $form=$this->beginWidget('UActiveForm', array(
 
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 	
-	<?php echo $form->errorSummary(array($model,$profile)); ?>
+	<?php echo $form->errorSummary(array($model)); ?>
 	
 	<div class="row">
 	<?php echo $form->labelEx($model,'email'); ?><br/>
@@ -40,9 +40,10 @@ $form=$this->beginWidget('UActiveForm', array(
 </div><!-- form -->
 
 
-<?php  $this->widget('application.components.UloginWidget', array(
+<?php  
+$this->widget('application.components.UloginWidget', array(
     'params'=>array(
-        'redirect'=>'http://'.$_SERVER['HTTP_HOST'].'/ulogin/login' //Адрес, на который ulogin будет редиректить браузер клиента. Он должен соответствовать контроллеру ulogin и действию login
+        'redirect'=>'http://'.$_SERVER['HTTP_HOST'].'/ulogin/login?role='.$role //Адрес, на который ulogin будет редиректить браузер клиента. Он должен соответствовать контроллеру ulogin и действию login
     )
 )); ?>
 

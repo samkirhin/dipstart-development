@@ -60,12 +60,13 @@ class User extends CActiveRecord
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('username, email', 'required'),
+			array('username, email', 'required','except'=>'social_network'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('email', 'email'),
-			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
-			array('username', 'match', 'pattern' => '/^[-A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
+			array('username', 'unique', 'message' => UserModule::t("This user's name already exists."),'except'=>'social_network'),
+			array('username', 'match', 'pattern' => '/^[-A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9)."),'except'=>'social_network'),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
+			array('id, identity, network, email, full_name, state', 'safe', 'on'=>'search')
 		):array()));
 	}
 
@@ -160,9 +161,14 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('identity',$this->identity,true);
+		$criteria->compare('network',$this->network,true);
+		$criteria->compare('email',$this->email,true);
+		$criteria->compare('full_name',$this->full_name,true);
+		$criteria->compare('state',$this->state);
+		
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password);
-		$criteria->compare('email',$this->email,true);
 		$criteria->compare('activkey',$this->activkey);
 		$criteria->compare('create_at',$this->create_at);
 		$criteria->compare('lastvisit_at',$this->lastvisit_at);

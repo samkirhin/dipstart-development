@@ -39,9 +39,9 @@ class UloginModel extends CModel {
         $this->full_name = $authData['first_name'].' '.$authData['last_name'];
     }
 
-    public function login() {
+    public function login($role = 'Customer') {
         $identity = new UloginUserIdentity();
-        if ($identity->authenticate($this)) {
+        if ($identity->authenticate($this, $role)) {
             $duration = 3600*24*30;
             Yii::app()->user->login($identity,$duration);
             return true;
