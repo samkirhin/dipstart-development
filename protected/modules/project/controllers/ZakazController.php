@@ -415,7 +415,7 @@ class ZakazController extends Controller
     {
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', Yii::app()->user->id);
-        $model = new CActiveDataProvider('Zakaz', [
+        $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
             'criteria' => $criteria
         ]);
         $this->render('customerOrderList', [

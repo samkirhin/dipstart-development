@@ -46,7 +46,7 @@ class ChatHandler extends YiiChatDbHandlerBase {
             foreach ($res as $k=>$v) {
                 $res1[$k]=$v->attributes;
                 $res1[$k]['sender']=array();
-                $res1[$k]['sender']['fullusername']=$res[$k]->senderObject->profile->firstname.' '.$res[$k]->senderObject->profile->lastname;
+                $res1[$k]['sender']['fullusername']=$res[$k]->senderObject->email;
                 $res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes;
                 $res1[$k]['sender']['rating'] = (int)$res[$k]->senderObject->profile->rating;
                 
@@ -68,7 +68,7 @@ class ChatHandler extends YiiChatDbHandlerBase {
                 $res1[$k]['sender']['username']=$res1[$k]['sender']['fullusername'];
 			if ($res[$k]->recipient > 0) {
                 $res1[$k]['recipient'] = array();
-                $res1[$k]['recipient']['fullusername']=$res[$k]->recipientObject->profile->firstname.' '.$res[$k]->recipientObject->profile->lastname;
+                $res1[$k]['recipient']['fullusername']=$res[$k]->recipientObject->email;
                 $res1[$k]['recipient']['superuser']=$res[$k]->recipientObject->getRelated('AuthAssignment')->attributes;
                 switch ($res1[$k]['recipient']['superuser']['itemname']){
                     case 'Admin':
@@ -84,7 +84,7 @@ class ChatHandler extends YiiChatDbHandlerBase {
                         $res1[$k]['recipient']['username']='заказчику';
                         break;
                 }
-                $res1[$k]['recipient']['username']=$res1[$k]['recipient']['fullusername'];
+                //$res1[$k]['recipient']['username']=$res1[$k]['recipient']['fullusername'];
             }
 		}
 		return $res1;
