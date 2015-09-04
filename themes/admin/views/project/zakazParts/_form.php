@@ -10,7 +10,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note"><?=ProjectModule::t('Fields with <span class="required">*</span> are required.')?></p>
 
 	<?php echo $form->errorSummary($model); ?>
         
@@ -38,7 +38,7 @@
                        'id'=>'EAjaxUpload',
                        'config'=>array(
                                        'action'=>$this->createUrl('zakazParts/upload/'.$model->id),
-                                       'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Drop files here to upload</span></div><div class="qq-upload-button">Upload a file</div><ul class="qq-upload-list"></ul></div>',
+                                       'template'=>'<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'.ProjectModule::t('Drop files here to upload').'</span></div><div class="qq-upload-button">'. ProjectModule::t('Upload a file') .'</div><ul class="qq-upload-list"></ul></div>',
                                        'debug'=>false,
                                        'allowedExtensions'=>array('jpg, '),
                                        'sizeLimit'=>10*1024*1024,// maximum file size in bytes

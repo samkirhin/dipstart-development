@@ -19,10 +19,10 @@ if(UserModule::isAdmin()) {
 <table>
 	<tr>
 		<td>
-			<?php echo CHtml::link('Авторы',array('','s'=>'Author'),array('class'=>'btn btn-default btn-block'));?>
+			<?php echo CHtml::link(Yii::t('site', 'Authors'),array('','s'=>'Author'),array('class'=>'btn btn-default btn-block'));?>
 		</td>
 		<td>
-			<?php echo CHtml::link('Заказчики',array('','s'=>'Customer'),array('class'=>'btn btn-default btn-block'));?>
+			<?php echo CHtml::link(Yii::t('site', 'Customers'),array('','s'=>'Customer'),array('class'=>'btn btn-default btn-block'));?>
 		</td>
 	</tr>
 </table>
@@ -37,15 +37,35 @@ switch ($_GET['s']) {
 			'columns'=>array(
 				'id',
 				array(
-					'name' => 'username',
+					'name' => UserModule::t("username"),
 					'type'=>'raw',
 					'value' => 'CHtml::link(CHtml::encode($data["username"]),array("admin/update","id"=>$data["id"]))',
 				),
-				'firstname',
-				'lastname',
-				'email',
-				'mob_tel',
-				'cat_name',
+				array(
+					'type'=>'raw',
+					'name'=>UserModule::t("First Name"),
+					'value'=>'$data["firstname"]',
+				),
+				array(
+					'type'=>'raw',
+					'name'=>UserModule::t("Last Name"),
+					'value'=>'$data["lastname"]',
+				),
+				array(
+					'type'=>'raw',
+					'name'=>UserModule::t("E-mail"),
+					'value'=>'$data["email"]',
+				),
+				array(
+					'type'=>'raw',
+					'name'=>UserModule::t("Phone"),
+					'value'=>'$data["mob_tel"]',
+				),
+				array(
+					'type'=>'raw',
+					'name'=>UserModule::t("Cat name"),
+					'value'=>'$data["cat_name"]',
+				),
 			),
 		));
 		break;
@@ -56,23 +76,23 @@ switch ($_GET['s']) {
 			'columns'=>array(
 				array(
 					'type'=>'raw',
-					'name'=>'Имя',
+					'name'=>UserModule::t("First Name"),
 					'value'=>'$data["profile"]->firstname',
 				),
 				array(
 					'type'=>'raw',
-					'name'=>'Фамилия',
+					'name'=>UserModule::t("Last Name"),
 					'value'=>'$data["profile"]->lastname',
 				),
 				array(
-					'name' => 'username',
+					'name' => UserModule::t("username"),
 					'type'=>'raw',
 					'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/update","id"=>$data->id))',
 				),
 				'email',
 				array(
 					'type'=>'raw',
-					'name'=>'Телефон',
+					'name'=>UserModule::t("Phone"),
 					'value'=>'$data["profile"]->mob_tel	',
 				),
 			),

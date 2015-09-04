@@ -50,23 +50,23 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		'id',
 		array(
-			'name'=>'varname',
+			'name'=> UserModule::t('varname'),
 			'type'=>'raw',
 			'value'=>'UHtml::markSearch($data,"varname")',
 		),
 		array(
-			'name'=>'title',
+			'name'=> UserModule::t('title'),
 			'value'=>'UserModule::t($data->title)',
 		),
 		array(
-			'name'=>'field_type',
+			'name'=> UserModule::t('field_type'),
 			'value'=>'$data->field_type',
 			'filter'=>ProfileField::itemAlias("field_type"),
 		),
 		'field_size',
 		//'field_size_min',
 		array(
-			'name'=>'required',
+			'name'=>UserModule::t('required'),
 			'value'=>'ProfileField::itemAlias("required",$data->required)',
 			'filter'=>ProfileField::itemAlias("required"),
 		),
@@ -77,7 +77,7 @@ $('.search-form form').submit(function(){
 		//'default',
 		'position',
 		array(
-			'name'=>'visible',
+			'name'=>UserModule::t('visible'),
 			'value'=>'ProfileField::itemAlias("visible",$data->visible)',
 			'filter'=>ProfileField::itemAlias("visible"),
 		),

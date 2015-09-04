@@ -26,7 +26,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('site' ,'Create') : Yii::t('site', 'Save')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

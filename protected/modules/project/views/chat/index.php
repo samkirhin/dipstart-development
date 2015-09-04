@@ -48,9 +48,9 @@
         </div>
     </div>
     <hr/>
-    <button id='select_file' class='ok_button'>Select File(s)</button>
-    <button id='delete_file' class='delete_button'>Delete Selected File(s)</button>
-    <button id='close_window' class='cancel_button'>Close Window</button>
+    <button id='select_file' class='ok_button'><?php echo Yii::t('site','Select File(s)');?></button>
+    <button id='delete_file' class='delete_button'><?php echo Yii::t('site','Delete Selected File(s)');?></button>
+    <button id='close_window' class='cancel_button'><?php echo Yii::t('site','Close Window');?></button>
 </div>
 <!-- required div layout ends -->
 
@@ -94,7 +94,7 @@ $this->widget('application.components.MyYiiFileManViewer'
 			}",
     ));
 ?>
-<?php if (User::model()->isAuthor()) echo 'Заметки для автора: '.$order->getAttribute('author_notes'); ?>
+<?php if (User::model()->isAuthor()) echo Yii::t('site','Notes to the author').': '.$order->getAttribute('author_notes'); ?>
 <table>
     <tr>
         <?php
@@ -142,24 +142,24 @@ $this->widget('application.components.MyYiiFileManViewer'
         Цена за работу: <?php echo $message->cost; ?>
         <?php endif; ?>
         <?php if($message->sender != Yii::app()->user->id): ?>
-        	(<a href="" class="request" user="<?php echo $message->senderObject->id; ?>" username="<?php echo $message->senderObject->username; ?>">Ответить</a>)
+        	(<a href="" class="request" user="<?php echo $message->senderObject->id; ?>" username="<?php echo $message->senderObject->username; ?>"><?=Yii::t('site', 'Reply')?></a>)
         <?php endif; ?>
         <br/>
         <?php if (User::model()->isAdmin() || User::model()->isManager()): ?>
-            (<a href="<?php echo Yii::app()->createUrl("project/chat/edit",array("messageId"=>$message->id)); ?>" class="edit">Редактировать</a> |
-            <a href="<?php echo Yii::app()->createUrl("project/chat/remove",array("messageId"=>$message->id)); ?>" class="del">Удалить</a>
+            (<a href="<?php echo Yii::app()->createUrl("project/chat/edit",array("messageId"=>$message->id)); ?>" class="edit"><?=Yii::t('site', 'Edit')?></a> |
+            <a href="<?php echo Yii::app()->createUrl("project/chat/remove",array("messageId"=>$message->id)); ?>" class="del"><?=Yii::t('site', 'Delete')?></a>
             <?php if($message->moderated == 0): ?>
-                | <a href="<?php echo Yii::app()->createUrl("project/chat/approve",array("messageId"=>$message->id)); ?>" class="approve">Одобрить</a>
+                | <a href="<?php echo Yii::app()->createUrl("project/chat/approve",array("messageId"=>$message->id)); ?>" class="approve"><?=Yii::t('site', 'Approve')?></a>
             <?php endif; ?>
             <?php if (User::model()->getUserRole($message->sender) == 'Author'): ?>
             <?php if($executor != $message->sender): ?>
-                | <a href="<?php echo Yii::app()->createUrl("project/chat/setexecutor",array("orderId"=>$orderId, 'executorId' => $message->sender)); ?>" class="setexecutor">Назначить исполнителем</a>
+                | <a href="<?php echo Yii::app()->createUrl("project/chat/setexecutor",array("orderId"=>$orderId, 'executorId' => $message->sender)); ?>" class="setexecutor"><?=Yii::t('site', 'Assign performer')?></a>
             <?php else: ?>
-            	   | <a href="<?php echo Yii::app()->createUrl("project/chat/delexecutor",array("orderId"=>$orderId)); ?>" class="delexecutor">Снять с проекта</a>
+            	   | <a href="<?php echo Yii::app()->createUrl("project/chat/delexecutor",array("orderId"=>$orderId)); ?>" class="delexecutor"><?=Yii::t('site', 'Remove from project')?></a>
             	<?php endif; ?>
             <?php  endif; ?>
             	<?php if(User::model()->getUserRole($message->recipient) == 'Manager'): ?>
-                | <a href="<?php echo Yii::app()->createUrl("project/chat/readdress",array("messageId"=>$message->id, 'ordererId' => $ordererId)); ?>" class="readdress">Переадресовать заказчику</a>
+                | <a href="<?php echo Yii::app()->createUrl("project/chat/readdress",array("messageId"=>$message->id, 'ordererId' => $ordererId)); ?>" class="readdress"><?=Yii::t('site', 'Forward customer')?></a>
             <?php endif; ?>
             )<br/>
         <?php endif; ?>
@@ -189,13 +189,13 @@ $this->widget('application.components.MyYiiFileManViewer'
     	</div>
     <?php endif; ?>
     <div class="row buttons">
-        <p>Дополнительно отправить:</p>
-        <p><input type="checkbox"> SMS</p>
-        <p><input type="checkbox"> Email</p>
+        <p><?=Yii::t('site', 'Additionally send:')?></p>
+        <p><input type="checkbox"> <?=Yii::t('site', 'SMS')?></p>
+        <p><input type="checkbox"> <?=Yii::t('site', 'Email')?></p>
         <?php
-        echo CHtml::submitButton('Отправить');
+        echo CHtml::submitButton(Yii::t('site', 'Send'));
         echo CHtml::submitButton($middle_button, array('name'=>'customer'));
-        echo CHtml::submitButton('Отправить менеджеру', array('name'=>'manager'));
+        echo CHtml::submitButton(Yii::t('site', 'Send the manager'), array('name'=>'manager'));
         ?>
     </div>
 

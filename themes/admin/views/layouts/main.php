@@ -37,7 +37,7 @@ switch ($role){
 		}
         $items[] = array('label'=>Yii::t('site','Events'), 'url'=>array('/project/event'));
         $user = User::model()->findByPk(Yii::app()->user->id);
-        $items[] = array('label'=>'Бухгалтерия', 'url'=>array('/project/payment/view'), 'visible'=>$user->superuser);
+        $items[] = array('label'=>Yii::t('site','Accounts department'), 'url'=>array('/project/payment/view'), 'visible'=>$user->superuser);
         $items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
 
         break;

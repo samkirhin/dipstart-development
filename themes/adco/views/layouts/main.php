@@ -10,6 +10,7 @@
 <meta charset="utf-8" />
 
 </head><body style="text-align: center">
-Аддон компаний<br />
+<?=Yii::t('site', 'Аддон компаний')?>
+<br />
 <?php echo $content; ?>
 </body></html>

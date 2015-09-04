@@ -308,7 +308,7 @@ class Zakaz extends CActiveRecord {
 	public function attributeLabels() {
 		if(Campaign::getId()){
 			$tmp = array(
-				'id' => 'Номер заказа',
+				'id' => ProjectModule::t('Order number'),
 				'user_id' => ProjectModule::t('User'),
 				'date' => ProjectModule::t('Date'),
 				'max_exec_date' => ProjectModule::t('Max Date'),
@@ -327,9 +327,9 @@ class Zakaz extends CActiveRecord {
 			}
 			return $tmp;
 		} else return array(
-			'id' => 'ID',
-            'jobName'=>'Имя работы',
-            'catName'=>'Наименование учебной дисциплина',
+			'id' => ProjectModule::t('ID'),
+            'jobName'=> ProjectModule::t('Job name'),
+            'catName'=>ProjectModule::t('Name of educational discipline'),
 			'user_id' => ProjectModule::t('User'),
 			'category_id' => ProjectModule::t('Category'),
 			'job_id' => ProjectModule::t('Job'),

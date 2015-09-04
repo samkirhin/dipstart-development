@@ -15,7 +15,7 @@
         echo $form->errorSummary($model); ?>
     </div>
     <div class="row">
-        <div class="col-xs-6"><h4>Сроки выполнения</h4></div>
+        <div class="col-xs-6"><h4><?=ProjectModule::t('Deadlines')?></h4></div>
         <div class="col-xs-6" style="float:right;">
             <?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary terms-save-btn')); ?>
         </div>
@@ -56,13 +56,13 @@
 <div class="col-xs-12 chatBlockBg">
     <div class="chatBlock chtpl0-chatblock chtpl0-admin">
 		<div class="chtpl0-panel chtpl0-up">
-			<button class="chtpl0-show">Показать сообщения</button>
+			<button class="chtpl0-show"><?=ProjectModule::t('Show messages')?></button>
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
 		<div class="chtpl0-panel chtpl0-down chat-functions">
-			<input id="send_email" type="checkbox"><p>Отправить на почту</p>
-			<input id="send_sms" type="checkbox"><p>Отправить SMS</p>
-			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p>Вставить шаблон</p>
+			<input id="send_email" type="checkbox"><p><?=ProjectModule::t('Send to e-mail')?></p>
+			<input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
+			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p><?=ProjectModule::t('Use template')?></p>
 		</div>
         <?php
         Yii::app()->getClientScript()->registerScriptFile('/js/tinymce/tinymce.min.js');
@@ -100,10 +100,10 @@
 		<div class="chtpl0-form">
 			<textarea></textarea>
 			<div class="chtpl0-subm">
-				<h5>Отправить сообщение</h5>
+				<h5><?=ProjectModule::t('Send message')?></h5>
 				<br>
-				<button class="chtpl0-submit1">Автору</button>
-				<button class="chtpl0-submit2">Заказчику</button>
+				<button class="chtpl0-submit1"><?=ProjectModule::t('to author')?></button>
+				<button class="chtpl0-submit2">Заказчику</button><?=ProjectModule::t('to сustomer')?>
 			</div>
 		</div>
         <?php
@@ -143,7 +143,7 @@
                 <div class="panel-heading panel-heading-white">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
-                            Информация о заказе <i class="fa fa-angle-down fa-lg"></i>
+                            <?=ProjectModule::t('Order information')?> <i class="fa fa-angle-down fa-lg"></i>
 		
                         </a>
 						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
@@ -182,7 +182,7 @@
                                         foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
                                             $tmp .= '<li><a class="link-to-material" href="' . $url . $v . '">' . str_replace('#pre#', '', $v) . '</a>';
                                             if (strstr($v, '#pre#'))
-                                                $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">Одобрить</button>';
+                                                $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">'. ProjectModule::t('Approve') .'</button>';
                                             $tmp .= '</li>';
                                         }
                                     }
@@ -195,7 +195,7 @@
                                             ),
                                             'config' => array(
                                                 'action' => $this->createUrl('/project/chat/upload',array('id'=>$model->id)),
-                                                'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить материал</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
+                                                'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Upload material') .'</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
                                                 'disAllowedExtensions'=>array('exe'),
                                                 'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
                                                 'minSizeLimit' => 10,// minimum file size in bytes
@@ -247,12 +247,12 @@
 										}
 									}
 									?>
-                                    <h3> Сроки выполнения </h3>
+                                    <h3> <?=ProjectModule::t('Deadlines')?> </h3>
 
                                     <table class="table table-striped" style="font-size: 12px;">
                                         <thead>
-                                        <th>Наименование</th>
-                                        <th>Дата/Время</th>
+                                        <th><?=ProjectModule::t('Product name')?></th>
+                                        <th><?=ProjectModule::t('Date/Time')?></th>
                                         </thead>
                                         <tr>
                                             <td>

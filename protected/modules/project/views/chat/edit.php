@@ -21,15 +21,15 @@
     <?php echo $form->hiddenField($model,'sender'); ?>
     <?php echo $form->hiddenField($model,'recipient'); ?>
     <div class="row">
-         <p>Цена за работу:</p>
+         <p><?=ProjectModule::t("Price for a job:")?></p>
         <?php echo $form->textField($model, 'cost'); ?>
         <?php echo $form->error($model,'cost'); ?>
     </div>
     <div class="row buttons">
-        <p>Дополнительно отправить:</p>
-        <p><input type="checkbox"> SMS</p>
-        <p><input type="checkbox"> Email</p>
-        <?php echo CHtml::submitButton('Отправить'); ?>
+        <p><?=ProjectModule::t("Additionally send:")?></p>
+        <p><input type="checkbox"> <?=ProjectModule::t("SMS")?></p>
+        <p><input type="checkbox"><?=ProjectModule::t("Email")?> </p>
+        <?php echo CHtml::submitButton( ProjectModule::t("Send")); ?>
     </div>
 
 <?php $this->endWidget(); ?>

@@ -33,8 +33,8 @@
                     case EventHelper::TYPE_EDIT_ORDER:
                     case EventHelper::TYPE_UPDATE_PROFILE:
                         echo CHtml::link(
-                                'Посмотреть',
-                                Yii::app()->createUrl('moderate/index', ['id' => $event->id])    
+                                Yii::t('site','Show'),
+                                Yii::app()->createUrl('moderate/index', ['id' => $event->id])
                             );
                     break;
                     case EventHelper::TYPE_NOTIFICATION:
@@ -43,7 +43,7 @@
                     case EventHelper::TYPE_MESSAGE:
                         echo CHtml::button(Yii::t('project','Delete'),array('onclick'=>'$.post("'.Yii::app()->createUrl('project/event/index',array('id'=>$event->id)).'",function(xhr,data,msg){alert(xhr.msg);},"json");'));
                     default:
-                        echo CHtml::link('Посмотреть', ['/project/zakaz/preview', 'id' => $event->id]); 
+                        echo CHtml::link(Yii::t('site', 'Show'), ['/project/zakaz/preview', 'id' => $event->id]);
                     break;
                 }?>
             </td>
