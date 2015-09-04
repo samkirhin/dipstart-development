@@ -63,6 +63,48 @@ return array(
     'author_notes' => 'Заметки для автора',
     'edu_dep' => 'Учебное заведение',
     'time_for_call' => 'Удобное время для связи',
-    'Thank you for order.' => 'Спасибо за заказ, Ваш проект принят.<br>Наш менеджер свяжется с Вами в течение 10 минут.'
-    
+    'Thank you for order.' => 'Спасибо за заказ, Ваш проект принят.<br>Наш менеджер свяжется с Вами в течение 10 минут.',
+    'Order number' => 'Номер заказа',
+    'Job name' => 'Имя работы',
+    'Name of educational discipline' => 'Наименование учебной дисциплина',
+    ///project/zakaz/update/id/x
+    'Author' => 'Автор',
+    'Customer' => 'Заказчик',
+    'Complete the order' => 'Завершить заказ',
+    'Open order' => 'Открыть заказ',
+    'Search author' => 'Поиск исполнителя',
+    'Order moderation' => 'Заказ на модерации',
+    'Notes (on all orders)' => 'Примечания (по всему заказу)',
+    'Add part' => 'Добавить часть',
+    'Deadlines' => 'Сроки выполнения',
+    'Show messages' => 'Показать сообщения',
+    'Send to e-mail' => 'Отправить на почту',
+    'Send SMS' => 'Отправить SMS',
+    'Use template' => 'Вставить шаблон',
+    'Send message' => 'Отправить сообщение',
+    'to author' => 'Автору',
+    'to сustomer' => 'Заказчику',
+    'Order information' => 'Информация о заказе',
+    'Approve' => 'Одобрить',
+    'Drag and drop files here' => 'Перетащите файлы сюда',
+    'Upload material' => 'Загрузить материал',
+    'Product name' => 'Наименование',
+    'Date/Time' => 'Дата/Время',
+    'Your order for moderation. Please wait for the processing of your order manager' => 'Ваш заказ на модерации. Пожалуйста дождитесь окончания обработки Вашего заказа менеджером',
+    'User' => 'Пользователь',
+    'placed an order' => 'разместил заказ:',
+    'Drop files here to upload' => 'Перетащите файлы сюда, чтобы загрузить',
+    'Upload a file' => 'Загрузить файл',
+
+    'List ZakazParts' => 'List ZakazParts',
+    'Manage Zakaz Parts' => 'Manage Zakaz Parts',
+    'Additionally send:' => 'Дополнительно отправить:',
+
+
+
+
+
+
+
+
 );

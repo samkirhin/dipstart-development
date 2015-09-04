@@ -1,12 +1,14 @@
-<h1>Пользователь <?=$user->username?> запросил изменения.</h1>
+<h1>
+<?=UserModule::t('Пользователь {user} запросил изменения.', array('{user}' => $user->username))?>
+</h1>
 
 <table class="table table-bordered">
 	<tr>
-		<th>Параметр для замены</th>
-		<th>Старое значение</th>
-		<th>Новое значение</th>
-		<th>Дата изменения</th>
-		<th>Сменить статус</th>
+		<th><?=UserModule::t('Option to replace')?></th>
+		<th><?=UserModule::t('Old value')?></th>
+		<th><?=UserModule::t('The new value')?></th>
+		<th><?=UserModule::t('Date of change')?></th>
+		<th><?=UserModule::t('Сhange status')?></th>
 		
 	</tr>
 

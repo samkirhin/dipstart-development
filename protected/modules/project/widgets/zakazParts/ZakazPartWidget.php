@@ -19,7 +19,7 @@ class ZakazPartWidget extends CWidget{
             ZakazParts::model()->with('files')->findAllByAttributes(['proj_id'=>$this->projectId])
         );
 		if (!file_exists(Yii::getPathOfAlias('webroot').$folder)){
-			mkdir(Yii::getPathOfAlias('webroot').$folder, 0777);
+			mkdir(Yii::getPathOfAlias('webroot').$folder, 0777, true);
 		}
 		if (!file_exists(Yii::getPathOfAlias('webroot').$folder.'temp/')){
 			mkdir(Yii::getPathOfAlias('webroot').$folder.'temp/', 0777);

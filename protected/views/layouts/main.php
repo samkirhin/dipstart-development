@@ -38,7 +38,7 @@ if (Yii::app()->user->isGuest) {
 				array('label'=>Yii::t('site','Trash'), 'url'=>array('/mailbox/message/trash')),
 			));
 			$user = User::model()->findByPk(Yii::app()->user->id);
-			$items[] = array('label'=>'Бухгалтерия', 'url'=>array('/project/payment/view'), 'visible'=>$user->superuser);
+			$items[] = array('label'=> Yii::t('site','Bookkeeping'), 'url'=>array('/project/payment/view'), 'visible'=>$user->superuser);
 			$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
 
 			break;
@@ -67,9 +67,9 @@ if (Yii::app()->user->isGuest) {
 
 			$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
 			$items[] = array('label'=>'Личные данные', 'items'=>array(
-				array('label'=>'Личный кабинет', 'url'=>array('#')),
-				array('label'=>'Личный счет', 'url'=>array('/user/profile/account')),
-				array('label'=>'Профиль', 'url'=>array('/user/profile/edit'))
+				array('label'=> Yii::t('site','My account'), 'url'=>array('#')),
+				array('label'=>Yii::t('site','Личный счет'), 'url'=>array('/user/profile/account')),
+				array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit'))
 			));
 			$items[] = array('label'=>Yii::t('site','Projects'), 'items' => array(
 				array('label'=>ProjectModule::t('Last Zakaz'), 'url'=>array('/project/zakaz/list')),
@@ -90,7 +90,7 @@ if (Yii::app()->user->isGuest) {
 			$items[] = array('label'=>'Личные данные', 'items'=>array(
 				array('label'=>'Личный кабинет', 'url'=>array('#')),
 				array('label'=>'Личный счет', 'url'=>array('/user/profile/account')),
-				array('label'=>'Профиль', 'url'=>array('/user/profile/edit')),
+				array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
 			));
 			$items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('#'), 'items' => array(
 				array('label'=>ProjectModule::t('Create Zakaz'), 'url'=>array('/project/zakaz/create')),

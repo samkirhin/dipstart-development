@@ -54,7 +54,7 @@
                             $tmp .= '<button class="zakaz_part_approve_file off right btn'.(isset($v['for_approved'])?' hidden':'').'" ';
                             foreach ($v as $kk => $vv)
                                 $tmp .= 'data-'.$kk.'="'.$vv.'" ';
-                            $tmp .= ' onclick="approve(this)">Сбросить</button>';
+                            $tmp .= ' onclick="approve(this)">'. Yii::t('site', 'Reset') .'</button>';
                             $tmp .= '</li>';
                         }
 
@@ -63,7 +63,7 @@
                                 'id' => 'EAjaxUpload'.$data['id'],
                                 'config' => array(
                                     'action' => Yii::app()->createUrl('/project/zakazParts/upload?id='.$data['id']),
-                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><ul class="qq-upload-list">'.$tmp.'</ul><span>Перетащите файлы сюда</span><div class="qq-upload-button">Загрузить файл</div></div></div>',
+                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><ul class="qq-upload-list">'.$tmp.'</ul><span>'. Yii::t('site', 'Drag and drop files here') .'</span><div class="qq-upload-button">'. Yii::t('site', 'Upload file'). '</div></div></div>',
                                     'disAllowedExtensions' => array('exe'),
                                     'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
                                     'minSizeLimit' => 10,// minimum file size in bytes
@@ -74,7 +74,7 @@
                             )
                         ); ?>
                         <div class="col-xs-12 btn btn-primary deletePart"
-                             onclick="delete_part(<?php echo $data['id']; ?>);">Удалить часть
+                             onclick="delete_part(<?php echo $data['id']; ?>);"> <?=Yii::t('site', 'Remove part')?>
                         </div>
                     </p>
                 </div>
