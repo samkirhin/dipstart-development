@@ -19,9 +19,9 @@ $this->breadcrumbs = array(
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
     <h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span>
 			<?php if ($model->status < 5) { ?>
-				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>';">Завершить заказ</button>
+				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>';"><?=ProjectModule::t('Complete the order')?></button>
 			<?php } else { ?>
-				<button id="open_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';">Открыть заказ</button>
+				<button id="open_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';"><?=ProjectModule::t('Open order')?></button>
 			<?php } ?>
 	</h1>
     <div class="row">
@@ -32,14 +32,14 @@ $this->breadcrumbs = array(
     <div class="row order-contacts">
         <?php if ($author): ?>
         <div class="col-lg-6 col-xs-6 rightBorder">
-            <div class="authorText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$author->id));?>">Автор</a></b></div>
+            <div class="authorText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$author->id));?>"><?=ProjectModule::t('Author')?></a></b></div>
             <div class="authorName"><p><?= $author->profile->firstname ?> <?= $author->profile->lastname ?></p></div>
             <div class="authorMail"><p class="author-mail-icon"></p><p><?= $author->email ?></p></div>
             <div class="authorPhone"><p class="author-phone-icon"></p><p><?= $author->profile->mob_tel ?></p></div>
         </div>
         <?php endif; ?>
         <div class="col-lg-6 col-xs-7 leftBorder">
-            <div class="customerText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$customer->id));?>">Заказчик</a></b></div>
+            <div class="customerText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$customer->id));?>"><?=ProjectModule::t('Customer')?></a></b></div>
             <div class="customerName"><p><?= $customer->profile->firstname ?> <?= $customer->profile->lastname ?></p></div>
             <div class="customerMail"><p class="customer-mail-icon"></p><p><?= $customer->email ?></p></div>
             <div class="customerPhone"><p class="customer-phone-icon"></p><p><?= $customer->profile->mob_tel ?></p></div>
@@ -53,18 +53,18 @@ $this->breadcrumbs = array(
             <div class="row zero-edge">
                <div class="col-xs-12 statusBlock">
                    <span class="label label-warning"><b><?= $message; ?></b></span>
-				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href="">Поиск исполнителя</button>
+				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>
 					<!-- Тут была кнопка открыть или закрыть заказ -->
                </div>
             </div>
-            <?php if ($isModified) echo '<span><b>Заказ на модерации</b></span>';?>
+            <?php if ($isModified) echo '<span><b>'. ProjectModule::t('Order moderation') .'</b></span>';?>
 
             <div class="row">
                 <div class="col-xs-12">
 					<!-- Тут была кнопка рассылки -->
                 </div>
                 <div class="col-xs-12 notes">
-                    <h4>Примечания (по всему заказу)</h4>
+                    <h4><?=ProjectModule::t('Notes (on all orders)')?></h4
 
                     <?php $form = $this->beginWidget('CActiveForm', array(
                         'id' => 'zakaz-form',
@@ -102,7 +102,7 @@ $this->breadcrumbs = array(
             ));
             ?>
             <div class="row zero-edge">
-                <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>);">Добавить часть</div>
+                <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>);"><?=ProjectModule::t('Add part')?></div>
             </div>
             <!-- Конец блока добавления частей менеджера -->
             <!-- Начало блока правок частей менеджера -->

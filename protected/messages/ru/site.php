@@ -103,4 +103,13 @@ return array(
     'Events'=>'События',
 	'Link to order page' => 'Ссылка на страницу заказа',
 	'You have received a new message.' => 'Вам пришло новое сообщение.',
+    //
+    'Bookkeeping' => 'Бухгалтерия',
+    'My account' => 'Личный кабинет',
+    'Profile' => 'Профиль',
+    'Authors' => 'Авторы',
+    'Customers' => 'Заказчики',
+
+
+
 );

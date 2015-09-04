@@ -8,7 +8,7 @@
 $attributes = $model->attributeLabels();
 ?>
 <br><br>
-<?php echo 'Пользователь '.$profile->lastname.' '.$profile->firstname.' ('.$profile->user->email.', '.$profile->mob_tel.') разместил заказ:'; ?><br>
+<?php echo ProjectModule::t('User').' '.$profile->lastname.' '.$profile->firstname.' ('.$profile->user->email.', '.$profile->mob_tel.') '. ProjectModule::t('placed an order') ?><br>
 <?php if(Campaign::getId()){ 
 	$columns = array('id', [
 			'name' => 'author_informed',

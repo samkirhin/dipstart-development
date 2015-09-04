@@ -16,9 +16,9 @@ $this->pageTitle = Yii::t('UserModule.user', 'Account');
             <tr>
                 <?php if (User::model()->isCustomer()): ?>
 
-                    <th>Общая стоимость за работу</th>
-                    <th>Сумма к оплате</th>
-                    <th>Оплаченная сумма</th>
+                    <th> <?= Yii::t('UserModule.user', 'The total cost for the work') ?> </th>
+                    <th><?= Yii::t('UserModule.user', 'Payment amount') ?></th>
+                    <th><?= Yii::t('UserModule.user', 'the amount paid') ?></th>
                 </tr><tr>
                     <td><?= $project_price ?></td>
                     <td><?= $to_receive ?></td>
@@ -26,8 +26,8 @@ $this->pageTitle = Yii::t('UserModule.user', 'Account');
 
                 <?php elseif (User::model()->isAuthor()): ?>
 
-                    <th>Сумма бюджетов за заказы</th>
-                    <th>Сумма к оплате</th>
+                    <th><?= Yii::t('UserModule.user', 'The sum of the budgets for orders') ?></th>
+                    <th><?= Yii::t('UserModule.user', 'Payment amount') ?></th>
                 </tr><tr>
                     <td><?= $work_price ?></td>
                     <td><?= $to_pay ?></td>

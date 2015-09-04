@@ -60,6 +60,7 @@ return array(
 	'Already exists.' => 'Уже существует.',
 	'First Name' => 'Имя',
 	'Last Name' => 'Фамилия',
+	'Phone' => 'Телефон',
 	'No' => 'Нет',
 	'Yes' => 'Да',
 	'Yes and show on registration form' => 'Да и показать при регистрации',

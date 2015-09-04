@@ -3,13 +3,13 @@
 /* @var $model ContactForm */
 /* @var $form CActiveForm */
 
-$this->pageTitle=Yii::app()->name . ' - Связаться';
+$this->pageTitle=Yii::app()->name . ' - '. Yii::t('site', 'Связаться');
 $this->breadcrumbs=array(
-	'Контакт',
+	Yii::t('site', 'Контакт'),
 );
 ?>
 
-<h1>Связаться с нами</h1>
+<h1><?=Yii::t('site', 'Contact us')?></h1>
 
 <?php if(Yii::app()->user->hasFlash('contact')): ?>
 
@@ -19,8 +19,8 @@ $this->breadcrumbs=array(
 
 <?php else: ?>
 
-<p>
-Если у Вас есть предложения или вопросы, пожалуйста, заполните форму ниже. Спасибо.
+<p> <?=Yii::t('site', 'If you have any questions or comments, please fill out the form below. Thank you.')?>
+
 </p>
 
 <div class="form">
@@ -33,7 +33,7 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<p class="note">Поля с <span class="required">*</span> обязательны.</p>
+	<p class="note"><?=Yii::t('site', 'Fields with <span class="required">*</span> are required.')?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 

@@ -30,14 +30,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'template'=> '{approved} {for_approve} ',
             'buttons' => array(
                 'for_approve' => array(
-                    'label' => 'Подтвердить',
+                    'label' => Yii::t('site','Confirm'),
                     'options' => array("class"=>"btn btn-primary btn-xs approve_payment"),
                     'visible' => '$data->approve == 0',
                     'click' => 'function(){setApprove($(this).attr("href"));return false;}',
                     'url'=>'$data->id',
                 ),
                 'approved' => array(
-                    'label' => 'Подтвержден',
+                    'label' => Yii::t('site','Confirmed'),
                     'visible' => '$data->approve == 1',
                 ),
             ),
