@@ -35,14 +35,14 @@ $this->breadcrumbs = array(
             <div class="authorText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$author->id));?>"><?=ProjectModule::t('Author')?></a></b></div>
             <div class="authorName"><p><?= $author->profile->firstname ?> <?= $author->profile->lastname ?></p></div>
             <div class="authorMail"><p class="author-mail-icon"></p><p><?= $author->email ?></p></div>
-            <div class="authorPhone"><p class="author-phone-icon"></p><p><?= $author->profile->mob_tel ?></p></div>
+            <div class="authorPhone"><p class="author-phone-icon"></p><p><?= $author->phone_number ?></p></div>
         </div>
         <?php endif; ?>
         <div class="col-lg-6 col-xs-7 leftBorder">
             <div class="customerText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$customer->id));?>"><?=ProjectModule::t('Customer')?></a></b></div>
             <div class="customerName"><p><?= $customer->profile->firstname ?> <?= $customer->profile->lastname ?></p></div>
             <div class="customerMail"><p class="customer-mail-icon"></p><p><?= $customer->email ?></p></div>
-            <div class="customerPhone"><p class="customer-phone-icon"></p><p><?= $customer->profile->mob_tel ?></p></div>
+            <div class="customerPhone"><p class="customer-phone-icon"></p><p><?= $customer->phone_number ?></p></div>
         </div>
     </div>
 

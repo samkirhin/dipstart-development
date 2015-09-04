@@ -26,8 +26,12 @@ class ProfileController extends Controller
 	public function actionEdit()
 	{
 		$model = $this->loadUser();
-		$profile=$model->profile;
 		
+		if($model->profile == null) {
+			$model->profile = new Profile;
+			$model->profile->user_id = $model->id;
+		}
+		$profile=$model->profile;
 		// ajax validator
 		if(isset($_POST['ajax']) && $_POST['ajax']==='profile-form')
 		{
