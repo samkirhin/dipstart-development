@@ -56,11 +56,11 @@ switch ($_GET['s']) {
 					'name'=>UserModule::t("E-mail"),
 					'value'=>'$data["email"]',
 				),
-				array(
+				/*array(
 					'type'=>'raw',
 					'name'=>UserModule::t("Phone"),
 					'value'=>'$data["mob_tel"]',
-				),
+				),*/
 				array(
 					'type'=>'raw',
 					'name'=>UserModule::t("Cat name"),
@@ -90,11 +90,11 @@ switch ($_GET['s']) {
 					'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/update","id"=>$data->id))',
 				),
 				'email',
-				array(
+				/*array(
 					'type'=>'raw',
 					'name'=>UserModule::t("Phone"),
 					'value'=>'$data["profile"]->mob_tel	',
-				),
+				),*/
 			),
 		));
 		break;

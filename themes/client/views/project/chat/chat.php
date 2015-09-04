@@ -31,7 +31,7 @@ $messages = ProjectMessages::model()->findAll($criteria);
         <div class="chtpl0-content">
             
             <div class="owner chtpl0-nickname" data-ownerid="<?php echo $message->senderObject->id ?>">
-                <!--<a data-toggle="tooltip" title="<?php echo $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->profile->firstname . ' ' . $message->senderObject->profile->lastname ?></a>  |-->
+                <!--<a data-toggle="tooltip" title="<?php echo $message->senderObject->full_name ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->full_name ?></a>  |-->
 				<?php echo $message->senderObject->AuthAssignment->AuthItem->description; ?> |
 			</div>
             <div class="chtpl0-date"><?= date_format(date_create($message->date), 'd.m.Y H:i:s'); ?></div>
