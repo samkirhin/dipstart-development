@@ -51,7 +51,7 @@ class Categories extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
+            'id' => Yii::t('site', 'ID'),
             'cat_name' => Yii::t('site', 'Cat Name'),
             'parent_id' => Yii::t('site', 'Parent'),
         );

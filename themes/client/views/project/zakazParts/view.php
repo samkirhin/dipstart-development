@@ -8,11 +8,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List ZakazParts', 'url'=>array('index')),
-	array('label'=>'Create ZakazParts', 'url'=>array('create')),
-	array('label'=>'Update ZakazParts', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete ZakazParts', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage ZakazParts', 'url'=>array('admin')),
+	array('label'=>ProjectModule::t('List ZakazParts'), 'url'=>array('index')),
+	array('label'=>ProjectModule::t('Create ZakazParts'), 'url'=>array('create')),
+	array('label'=>ProjectModule::t('Update ZakazParts'), 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>ProjectModule::t('Delete ZakazParts'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>ProjectModule::t('Are you sure you want to delete this item?'))),
+	array('label'=>ProjectModule::t('Manage ZakazParts'), 'url'=>array('admin')),
 );
 ?>
 

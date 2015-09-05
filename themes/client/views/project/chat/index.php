@@ -25,17 +25,17 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 							)
 						)); ?>
 						<div class="to-pay">
-							<span class="text-to-pay">К оплате<span> <span class="value-to-pay"><? echo $to_recive; ?></span> <span class="rub">&#8381;</span>
+							<span class="text-to-pay"><?=ProjectModule::t('To pay')?><span> <span class="value-to-pay"><? echo $to_recive; ?></span> <span class="rub">&#8381;</span>
 						</div>
 						<div class="row chek">
-							<span class="text_scan">Скан чека</span> <?php echo $form->fileField($upload, 'file'); ?>
+							<span class="text_scan"><?=ProjectModule::t('Scan check')?></span> <?php echo $form->fileField($upload, 'file'); ?>
 						</div>
 						<div class="row buttons check-button-upload">
-							<?php echo CHtml::submitButton('Загрузить'); ?>
+							<?php echo CHtml::submitButton(ProjectModule::t('Upload')); ?>
 						</div>
 						<?php $this->endWidget();
 						if (count($images) > 0) {
-							echo '<div class="chek-is-approving">Ваш платёж на проверке...</div>';
+							echo '<div class="chek-is-approving">'.ProjectModule::t('Your payment at checkout ...').'</div>';
 							//$img = UploadPaymentImage::$folder . $chek_image;
                             $i = 1;
                             echo '<div class="chek-image-link">';
