@@ -43,29 +43,24 @@ switch ($_GET['s']) {
 				),
 				array(
 					'type'=>'raw',
-					'name'=>UserModule::t("First Name"),
-					'value'=>'$data["firstname"]',
-				),
-				array(
-					'type'=>'raw',
-					'name'=>UserModule::t("Last Name"),
-					'value'=>'$data["lastname"]',
+					'name'=>UserModule::t("Full name"),
+					'value'=>'$data["full_name"]',
 				),
 				array(
 					'type'=>'raw',
 					'name'=>UserModule::t("E-mail"),
 					'value'=>'$data["email"]',
 				),
-				/*array(
+				array(
 					'type'=>'raw',
 					'name'=>UserModule::t("Phone"),
-					'value'=>'$data["mob_tel"]',
-				),*/
-				array(
+					'value'=>'$data["phone_number"]',
+				),
+				/*array(
 					'type'=>'raw',
 					'name'=>UserModule::t("Cat name"),
 					'value'=>'$data["cat_name"]',
-				),
+				),*/
 			),
 		));
 		break;
@@ -76,13 +71,8 @@ switch ($_GET['s']) {
 			'columns'=>array(
 				array(
 					'type'=>'raw',
-					'name'=>UserModule::t("First Name"),
-					'value'=>'$data["profile"]->firstname',
-				),
-				array(
-					'type'=>'raw',
-					'name'=>UserModule::t("Last Name"),
-					'value'=>'$data["profile"]->lastname',
+					'name'=>UserModule::t("Full name"),
+					'value'=>'$data->full_name',
 				),
 				array(
 					'name' => UserModule::t("username"),
@@ -90,11 +80,11 @@ switch ($_GET['s']) {
 					'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/update","id"=>$data->id))',
 				),
 				'email',
-				/*array(
+				array(
 					'type'=>'raw',
 					'name'=>UserModule::t("Phone"),
-					'value'=>'$data["profile"]->mob_tel	',
-				),*/
+					'value'=>'$data->phone_number',
+				),
 			),
 		));
 		break;

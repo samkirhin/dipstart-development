@@ -55,7 +55,7 @@ class ChatController extends Controller {
             return true;
         }
         else{
-            $zakaz = Zakaz::model()->findByPk($_GET["orderId"]);
+            $zakaz = Zakaz::model()->resetScope()->findByPk($_GET["orderId"]);
             if(User::model()->isCustomer())
                 return ($zakaz->user->id === Yii::app()->user->id);
             if(User::model()->isAuthor())
@@ -85,7 +85,7 @@ class ChatController extends Controller {
                         break;
                     case 'customer':
                         if (User::model()->isCustomer())
-                            $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['executor'];
+                            $model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
                         if (User::model()->isAuthor())
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                         break;
@@ -98,7 +98,7 @@ class ChatController extends Controller {
             ));
             Yii::app()->end();
         }
-        $model=Zakaz::model()->findByPk($orderId);
+        $model=Zakaz::model()->resetScope()->findByPk($orderId);
         if(isset($_POST['Zakaz'])) {
             $model->attributes = $_POST['Zakaz'];
             $model->save();
@@ -106,7 +106,7 @@ class ChatController extends Controller {
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
-            'images' => $model->images(['condition'=>'approved=0'])
+            //'images' => $model->images(['condition'=>'approved=0'])
         ));
     }
 	public function actionUpload() {
