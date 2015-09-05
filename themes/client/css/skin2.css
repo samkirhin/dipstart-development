@@ -12,11 +12,16 @@
 	height: 33px;
 	position: relative;
 	width: 100%;
-	background-color: #ade661;
-	border: 0;
-	color: #555;
-	font-weight: bold;
-	color: #777;
+    background-color: #8bc34a;
+    border: 0px none;
+    font-weight: bold;
+    color: #fff;
+    -webkit-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+    font-size: 13px;
+}
+.user_submit input:hover {
+    background-color: #9ccc65;
 }
 .rememberMe input{
 	width: 50%;
@@ -32,10 +37,12 @@
 	width: 50%;
 	line-height: 33px;
 	margin: auto;
-	background-color: #e5e47f;/*#e6e461;*/
-	border-radius: 0 0 0 10px;
-	color: #999;
-	
+	background-color: #d4e157;/*#e6e461;*/
+	color: #fff;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 13px;
+        
 }
 .rememberMe {
 	display: table-cell;
@@ -45,7 +52,6 @@
 	max-height: 33px;
 	overflow: hidden;
 	border-top: 1px solid #ddd;
-	border-radius: 0 0 0 10px;
 }
 .rememberMe:hover {
 	background-color: #fefef0;
@@ -88,8 +94,16 @@
 }
 .login-form-bg .hint, .login-form-bg a {
 	text-align: center;
-	font-size: 11px;
+	font-size: 13px;
 	color: gray;
+}
+
+.hint a {
+    text-decoration: underline;
+}
+
+.hint a[href="/user/recovery/recovery"] {
+    text-decoration: none;
 }
 
 
@@ -111,19 +125,44 @@ body {
 }
 
 .form-group input {
-    border: 1px solid #e0e0e0!important;
+    border: 0px!important;
+    border-radius: 2px;
+    background-color: rgba(216, 221, 227, 0.28) !important;
 }
 
 .form-group input:focus {
-    border: 1px solid #bdbdbd!important;
+    background-color: rgba(216, 221, 227, 0.38) !important;
 }
 
 div.rememberMe {
     position: relative;
+    display: none;/* !! */
 }
 
 .rememberMe label {
     top: 0px;
     width: 100%;
     border-radius: 0px;
+}
+
+/* !!! */
+
+.user_submit {
+    margin-top: 20px;
+    display: block;
+    width: 270px;
+}
+
+.user_submit input {
+    border-radius: 2px;
+    height: 38px;
+    font-size: 15px;
+}
+
+div#uLogin > div:first-child {
+    left: 10px!important;
+}
+
+div#uLogin > img[src="https://ulogin.ru/img/blank.gif"]{
+    margin-left: 10px!important;
 }

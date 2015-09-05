@@ -133,7 +133,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 
                 <div class="col-xs-9">
                     <?php echo CHtml::label('Сообщение','message', array('id' => 'msgLabel')); ?>
-                    <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12')); ?>
+                    <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12', 'placeholder' => 'Введите сообщение...')); ?>
                 </div>
 
 
