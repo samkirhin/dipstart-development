@@ -91,3 +91,39 @@
 	font-size: 11px;
 	color: gray;
 }
+
+
+        /* ========== */
+/* ===== Alex's styles ===== */
+        /* ========== */
+
+body {
+    background-color: rgba(216, 221, 227, 0.75);
+}
+
+.login-form-bg {
+    background-color: #fff;
+    border-radius: 2px;
+    margin: 10px auto;
+    padding: 25px 15px !important;
+    border: none !important;
+    float: none !important;
+}
+
+.form-group input {
+    border: 1px solid #e0e0e0!important;
+}
+
+.form-group input:focus {
+    border: 1px solid #bdbdbd!important;
+}
+
+div.rememberMe {
+    position: relative;
+}
+
+.rememberMe label {
+    top: 0px;
+    width: 100%;
+    border-radius: 0px;
+}

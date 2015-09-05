@@ -2,7 +2,7 @@
 /* @var $this ProjectMessagesController */
 /* @var $model ProjectMessages */
 /* @var $form CActiveForm */
-$order = Zakaz::model()->findByPk($orderId);
+$order = Zakaz::model()->resetScope()->findByPk($orderId);
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
