@@ -1,15 +1,15 @@
 <div id="project_payments">
-    <h3>Оплаты</h3>
+    <h3><?=ProjectModule::t('Payments')?></h3>
     <table class="table table-striped" style="font-size: 12px">
         <tr>
             <td>
-                Стоимость заказа:
+                <?=ProjectModule::t('The cost of the order:')?>
             </td>
             <td>
-                Сумма на получение:
+                <?=ProjectModule::t('The amount to:')?>
             </td>
             <td>
-                Получено:
+                <?=ProjectModule::t('Received:')?>
             </td>
         </tr>
         <tr>

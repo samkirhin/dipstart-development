@@ -53,7 +53,7 @@ class Templates extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id' => Yii::t('site','ID'),
 			'name' => Yii::t('site','Name'),
 			'title' => Yii::t('site','Title'),
 			'text' => Yii::t('site','Text'),

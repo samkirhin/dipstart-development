@@ -6,22 +6,22 @@
 ?>
 <div class="events">
     
-    <h2>События</h2>
+    <h2><?=ProjectModule::t('Events')?></h2>
    <div class="row white-block">
        <div class="col-xs-12">
     <table class="table table-striped" style="text-align: justify; width: 100%;">
         <thead>
             <th>
-                id
+                <?=ProjectModule::t('id')?>
             </th>
             <th>
-                Описание
+                <?=ProjectModule::t('Description')?>
             </th>
             <th>
-                Ссылка
+                <?=ProjectModule::t('Link')?>
             </th>
             <th>
-                Дата и время
+                <?=ProjectModule::t('Date and time')?>
             </th>
         </thead>
         <?php foreach ($events as $event) {?>

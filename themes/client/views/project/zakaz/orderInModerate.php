@@ -1,1 +1,1 @@
-<h2> Ваш заказ на модерации. Пожалуйста дождитесь окончания обработки Вашего заказа менеджером </h2>
+<h2> <?=ProjectModule::t('Your order for moderation. Please wait for the processing of your order manager')?> </h2>
