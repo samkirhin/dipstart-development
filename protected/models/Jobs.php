@@ -57,7 +57,7 @@ class Jobs extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id' => Yii::t('site','ID'),
 			'job_name' => Yii::t('site','Job Name'),
 		);
 	}

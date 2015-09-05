@@ -37,7 +37,7 @@ $messages = ProjectMessages::model()->findAll($criteria);
             <div class="chtpl0-date"><?= date_format(date_create($message->date), 'd.m.Y H:i:s'); ?></div>
             
             <?php if ($message->cost): ?>
-                <div class="cost">Цена за работу: <?php echo $message->cost ?></div>
+                <div class="cost"><?=ProjectModule::t('Price for a job:')?> <?php echo $message->cost ?></div>
             <?php endif; ?>
                 
             <div class="text"><?php echo $message->message; ?></div>

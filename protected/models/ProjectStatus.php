@@ -50,7 +50,7 @@ class ProjectStatus extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id' => Yii::t('site','ID'),
 			'status' => Yii::t('site','Status'),
 		);
 	}
