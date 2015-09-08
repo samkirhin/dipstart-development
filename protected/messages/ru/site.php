@@ -103,12 +103,20 @@ return array(
     'Events'=>'События',
 	'Link to order page' => 'Ссылка на страницу заказа',
 	'You have received a new message.' => 'Вам пришло новое сообщение.',
+    'Confirm' => 'Подтвердить',
+    'Confirmed' => 'Подтвержден',
+    'Delete' => 'Удалить',
+    'Show' => 'Показать',
+
     //
     'Bookkeeping' => 'Бухгалтерия',
     'My account' => 'Личный кабинет',
     'Profile' => 'Профиль',
     'Authors' => 'Авторы',
     'Customers' => 'Заказчики',
+    // admin menu
+    'Accounts department' => 'Бухгалтерия',
+
 
 
 

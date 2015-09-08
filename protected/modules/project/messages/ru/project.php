@@ -95,11 +95,29 @@ return array(
     'placed an order' => 'разместил заказ:',
     'Drop files here to upload' => 'Перетащите файлы сюда, чтобы загрузить',
     'Upload a file' => 'Загрузить файл',
+    'Description' => 'Описание',
+    'Link' => 'Ссылка',
+    'Date and time' => 'Дата и время',
+
+    //Блок оплаты
+    'Payments' => 'Оплаты',
+    'Project cost:' => 'Стоимость проекта:',
+    'Obtained from the client:' => 'Получено от клиента:',
+    'To draw up the account:' => 'Выписать счет:',
+    'It is worth to pay:' => 'Стоит на оплате:',
+    'The cost for the author:' => 'Стоимость для автора:',
+    'Paid work:' => 'Оплачено работы:',
+    'Send payment to:' => 'Отправить на оплату:',
+    'Total to pay:' => 'Суммарно на оплату:',
+    'Confirm' => 'Подтвердить',
+    'Cancel' => 'Отмена',
+    'Save' => 'Сохранить',
+    'Confirm payment:' => 'Подтвердить платеж:',
 
     'List ZakazParts' => 'List ZakazParts',
     'Manage Zakaz Parts' => 'Manage Zakaz Parts',
     'Additionally send:' => 'Дополнительно отправить:',
-
+    
 
 
 
