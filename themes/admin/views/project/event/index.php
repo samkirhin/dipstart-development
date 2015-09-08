@@ -41,7 +41,7 @@
                         echo '<td> Ссылка отсутствует</td>';
                     break;
                     case EventHelper::TYPE_MESSAGE:
-                        echo CHtml::button(Yii::t('project','Delete'),array('onclick'=>'$.post("'.Yii::app()->createUrl('project/event/index',array('id'=>$event->id)).'",function(xhr,data,msg){alert(xhr.msg);},"json");'));
+                        echo CHtml::button(Yii::t('site','Delete'),array('onclick'=>'$.post("'.Yii::app()->createUrl('project/event/index',array('id'=>$event->id)).'",function(xhr,data,msg){alert(xhr.msg);},"json");'));
                     default:
                         echo CHtml::link(Yii::t('site', 'Show'), ['/project/zakaz/preview', 'id' => $event->id]);
                     break;
