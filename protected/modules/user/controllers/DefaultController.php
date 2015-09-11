@@ -33,7 +33,7 @@ class DefaultController extends Controller
                 foreach($cat as $key=>$val) $rescat[$val->getAttributes()['id']]=$val->getAttributes()['cat_name'];
                 foreach ($prof as $key=>$val) {
                     $res=$val->getAttributes();
-                    $res1=$val->AuthAssignment->getAttributes();
+                    $res1=$val->AuthAssignment->getAttributes();   //---<<
                     $resuser=$val->user->getAttributes();
                     if ($res['discipline']!='') {
                         $res['cat_name']=implode(',',array_intersect_key($rescat,array_flip(explode(',',$res['discipline']))));
@@ -65,7 +65,7 @@ class DefaultController extends Controller
                 ));
                 break;
         }
-
+		
 		$this->render('/user/index',array(
 			'dataProvider'=>$dataProvider
 		));

@@ -50,6 +50,15 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 				}
 				?>
                 <?php if (User::model()->isAuthor()) : ?>
+				<div class="col-xs-12"><?php
+					if($order->executor != 0) { // Если назначен исполнитель
+						echo 'Rating: '.Profile::model()->findByPk($order->executor)->rating.'<br />';
+						$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
+						echo $payment->work_price; //Стоимость проекта для автора
+						echo ' to_pay:'.$payment->to_pay;
+						echo ' payed:'.$payment->payed;
+					}
+				?></div>
                 <div class="col-xs-12">
                     <div class="notes-author">
                         Заметки для автора:<br /> <?php echo $order->getAttribute('author_notes'); ?>
@@ -124,12 +133,14 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
             if (!Yii::app()->request->isAjaxRequest){
                 echo CHtml::form(); ?>
                 
+                <!--
                 <?php if (User::model()->isAuthor()): ?>
                 <div class="col-xs-12 price-for-work-avtor">
                     <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
                     <?php echo CHtml::textField('cost'); ?>
                 </div>
-                <?php endif; ?>
+                <?php endif; ?> 
+                -->
                 
                 <div class="col-xs-9">
                     <?php echo CHtml::label('Сообщение','message', array('id' => 'msgLabel')); ?>
@@ -148,6 +159,12 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                     echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block')) ;
                     echo  CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2')) ;
                     ?>
+                    
+                <?php if (User::model()->isAuthor()): ?>
+                    <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
+                    <?php echo CHtml::textField('cost'); ?>
+                <?php endif; ?>
+                    
                 </div>
                 <?php echo CHtml::hiddenField('order',$order->id);
                 CHtml::endForm();

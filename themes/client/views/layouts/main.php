@@ -66,9 +66,7 @@
    <!-- FOOTER -->
    
 
-<footer class="footer clearfix">
-<?php //$this->renderPartial('//layouts/footer');?>
-</footer>
+
 
 <div class="modal hide" id="restorePass" style="z-index:99999999">
     <form id="FormRestorePass" method="post">

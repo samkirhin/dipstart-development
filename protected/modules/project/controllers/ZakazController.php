@@ -516,7 +516,7 @@ class ZakazController extends Controller
 
             $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $order_id]);
             $mail = new YiiMailer('invite', ['link' => $link]);
-            $mail->setFrom(Yii::app()->params['adminEmail'], 'Dipstart');
+            $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
             $mail->setSubject('Приглашение в проект');
             
             foreach ($authors as $author) {

@@ -143,5 +143,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'info@dipstart.ru',
+		'supportEmail'=>'ekomixds@mail.ru',
 	),
 );

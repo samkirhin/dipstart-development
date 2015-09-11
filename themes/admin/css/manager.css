@@ -18,8 +18,6 @@ hr {
     height: 1px;
     background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(#ecf0f5), to(rgba(0, 0, 0, 0)));
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
-    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
-    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
 }
 .order-contacts {
@@ -91,8 +89,7 @@ hr {
     padding-top: 0px;
 }
 .panel {
-    -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
 }
 .parts {
     padding: 0;
@@ -110,8 +107,7 @@ hr {
 }
 
 .addPart {
-  -webkit-border-radius: 0;
-          border-radius: 0;
+  border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -132,8 +128,7 @@ hr {
 }
 
 .addPart {
-  -webkit-border-radius: 0;
-          border-radius: 0;
+  border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -224,8 +219,7 @@ label
 .chat-header .customSelect {
     margin: 6px 0 0 10px;
     background: #fff url('../images/arrow-bottom-icon.png') no-repeat 93% center;
-    -webkit-border-radius: 5px;
-            border-radius: 5px;
+    border-radius: 5px;
     height: 25px;
     line-height: 22px;
     padding-right: 7px;
@@ -289,7 +283,6 @@ label
 .you {
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
-    display: -moz-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
     width: 100%;
@@ -349,8 +342,7 @@ label
     margin-top: 10px;
 }
 .panel-group .panel {
-    -webkit-border-radius: 0px;
-            border-radius: 0px;
+    border-radius: 0px;
 }
 .terms-save-btn {
     margin-top: 10px;
@@ -368,8 +360,7 @@ label
     margin-top: 0px;
 	}
 .label {
-    -webkit-border-radius: 0px;
-            border-radius: 0px;
+    border-radius: 0px;
     font-size: 14px;
 }
 .panel-heading-white {
@@ -550,8 +541,7 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
     text-decoration: none;
 }
 .pager li > a, .pager li > span {
-    -webkit-border-radius: 3px;
-            border-radius: 3px;
+    border-radius: 3px;
 }
 .search-form {
     padding: 15px;
@@ -754,14 +744,10 @@ div#chatWindow:empty:after {
     background-color: #286090!important;
     border-color: #204D74!important;
     padding: 7px 112px!important;
-    width: -webkit-calc(100% - 30px)!important;
-    width: -moz-calc(100% - 30px)!important;
     width: calc(100% - 30px)!important;
     color: rgb(255, 255, 255)!important;
     opacity: 1!important;
     -webkit-transition: all 0.2s ease 0s!important;
-       -moz-transition: all 0.2s ease 0s!important;
-         -o-transition: all 0.2s ease 0s!important;
             transition: all 0.2s ease 0s!important;
     opacity: 0.8!important;
 }
@@ -821,9 +807,11 @@ div#send_buttons h5 {
     width: 100%!important;
     text-align: right!important;
     padding: 10px 15px 2px!important;
+    visibility: hidden;
+
 }
 
-div#send_buttons > br[style*="none"] ~ button[data-recipient="Author"] {
+div#send_buttons > br[style*="none"] ~ button[data-recipient="Author"], div#send_buttons > button[style*="none"] ~ button[data-recipient="Customer"] {
     margin-top: 25px;
     margin-bottom: 0px!important;
     float: right !important;

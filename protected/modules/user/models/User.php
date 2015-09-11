@@ -56,11 +56,12 @@ class User extends CActiveRecord
 			array('superuser', 'in', 'range'=>array(0,1)),
 			array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
 			array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
-			array('username, email, superuser, status', 'required'),
+			array('phone_number, username, email, superuser, status', 'required'),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('username, email', 'required','except'=>'social_network'),
+			array('phone_number, username, email', 'required','except'=>'social_network'),
+			array('phone_number', 'match', 'pattern' => '/^[-+()0-9]+$/u','message' => UserModule::t("Incorrect symbols (0-9,+,-,(,)).")),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('email', 'email'),
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists."),'except'=>'social_network'),
@@ -99,6 +100,7 @@ class User extends CActiveRecord
 			'lastvisit_at' => UserModule::t("Last visit"),
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
+			'phone_number' => UserModule::t("Phone number"),
 		);
 	}
 
@@ -127,7 +129,7 @@ class User extends CActiveRecord
 	{
 		return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
 			'alias'=>'user',
-			'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status',
+			'select' => 'user.id, user.phone_number, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status',
 		));
 	}
 
@@ -165,11 +167,12 @@ class User extends CActiveRecord
 		$criteria->compare('network',$this->network,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('full_name',$this->full_name,true);
+		$criteria->compare('phone_number',$this->phone_number,true);
 		$criteria->compare('state',$this->state);
 		
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password);
-		$criteria->compare('activkey',$this->activkey);
+		//$criteria->compare('activkey',$this->activkey);
 		$criteria->compare('create_at',$this->create_at);
 		$criteria->compare('lastvisit_at',$this->lastvisit_at);
 		$criteria->compare('superuser',$this->superuser);

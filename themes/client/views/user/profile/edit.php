@@ -35,8 +35,15 @@ $form=$this->beginWidget('UActiveForm', array(
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
+	    <div class="form-group">
+            <?php echo $form->labelEx($model,'phone_number',array('class'=>'col-md-4 control-label')); ?>
+            <div class="col-md-8">
+                <?php echo $form->textField($model,'phone_number',array('size'=>20,'maxlength'=>20,'class'=>'form-control')); ?>
+            </div>
+            <?php echo $form->error($model,'phone_number'); ?>
+        </div>
 
-<?php 
+		<?php 
 		$profileFields=$profile->getFields();
 		//print_r($profileFields);
 		if ($profileFields) {
