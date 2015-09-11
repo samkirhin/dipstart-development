@@ -9,7 +9,7 @@ date_default_timezone_set('Europe/Moscow');
 
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'New Dipstart',
+	'name'=>'Admintrix',
     //'defaultController' => 'user/default',
     'language' => 'ru',
 	// preloading 'log' component
