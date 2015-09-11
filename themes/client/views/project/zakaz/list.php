@@ -11,7 +11,7 @@ $this->breadcrumbs=array(
 ?>
 
 <h1><?=ProjectModule::t('Zakazs')?></h1>
-
+<h1 class="projects-title">Выберите интересующий Вас заказ</h1>
 
 <?php
 if (Campaign::getId()){

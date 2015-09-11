@@ -45,6 +45,9 @@
                    .'&nbsp;'. CHtml::link(UserModule::t("Author"), array("/user/registration","role" => "Author")) . ')<br />'; ?>
                    <?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>
 		</p>
+        <p>
+			<?php echo CHtml::activeCheckBox($model,'rememberMe'); ?> <label for="UserLogin_rememberMe">Запомнить меня</label>
+        </p>
 	</div>
 	
 	<div class="rememberMe">
