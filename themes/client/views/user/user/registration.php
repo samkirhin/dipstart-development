@@ -1,13 +1,20 @@
-<?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Registration"); ?>
+<?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Registration"); 
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');
+?>
 
 <?php if(Yii::app()->user->hasFlash('registration')): ?>
 <div class="">
 <?php echo Yii::app()->user->getFlash('registration'); ?>
 </div>
 <?php else: ?>
-
-<div class="form">
+<div class="col-xs-offset-3 col-xs-6 login-form-bg">
 <?php
+$this->widget('application.components.UloginWidget', array(
+    'params'=>array(
+        'redirect'=>'http://'.$_SERVER['HTTP_HOST'].'/ulogin/login?role='.$role //Адрес, на который ulogin будет редиректить браузер клиента. Он должен соответствовать контроллеру ulogin и действию login
+    )
+)); 
+
 $form=$this->beginWidget('UActiveForm', array(
 	'id'=>'simple-registration-form',
 	'enableAjaxValidation'=>true,
@@ -17,8 +24,16 @@ $form=$this->beginWidget('UActiveForm', array(
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 )); ?>
 
-	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 	
+	<div class="form-group">
+        <!--<?php //echo CHtml::activeLabelEx($model,'username'); ?> <br />-->
+		<?php echo CHtml::activeTextField($model,'email',array('placeholder' => 'E-mail')); ?>
+	</div>
+	
+	<div class="form-group">
+		<?php echo CHtml::activeTextField($model,'phone_number',array('placeholder'=>'Номер телефона')) ?>
+	</div>
+	<!--
 	<?php echo $form->errorSummary(array($model)); ?>
 	
 	<div class="row">
@@ -31,8 +46,8 @@ $form=$this->beginWidget('UActiveForm', array(
 	<?php echo $form->textField($model,'phone_number'); ?><br/>
 	<?php echo $form->error($model,'phone_number'); ?>
 	</div>	
-	
-	<div class="row submit">
+	-->
+	<div class="row user_submit">
 		<?php echo CHtml::submitButton(UserModule::t("Register")); ?>
 	</div>
 
@@ -40,11 +55,5 @@ $form=$this->beginWidget('UActiveForm', array(
 </div><!-- form -->
 
 
-<?php  
-$this->widget('application.components.UloginWidget', array(
-    'params'=>array(
-        'redirect'=>'http://'.$_SERVER['HTTP_HOST'].'/ulogin/login?role='.$role //Адрес, на который ulogin будет редиректить браузер клиента. Он должен соответствовать контроллеру ulogin и действию login
-    )
-)); ?>
 
 <?php endif; ?>
