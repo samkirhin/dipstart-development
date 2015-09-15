@@ -34,7 +34,7 @@ class RegistrationController extends Controller
 			echo UActiveForm::validate($model);
 			Yii::app()->end();
 		}
-		if (Yii::app()->user->id && !Yii::app()->user->hasFlash('registration')) {
+		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {
 			$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
 			if(isset($_POST['RegistrationForm'])) {
@@ -59,11 +59,11 @@ class RegistrationController extends Controller
 						Yii::app()->user->login($identity,0);
 						//$this->redirect(Yii::app()->controller->module->returnUrl);
 
-						Yii::app()->user->setFlash('registration',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{login}}) before start.", ['{{login}}'=>$model->email]));
+						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{login}}) before start.", ['{{login}}'=>$model->email]));
 
 						$this->refresh();
 					} else {
-						Yii::app()->user->setFlash('registration',UserModule::t("Sorry, something wrong... :("));
+						Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
 						$this->refresh();
 					}
 				}
