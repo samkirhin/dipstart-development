@@ -2,9 +2,29 @@
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');
 ?>
 
-<?php if(Yii::app()->user->hasFlash('registration')): ?>
+<?php if(Yii::app()->user->hasFlash('reg_success')): ?>
 <div class="">
-<?php echo Yii::app()->user->getFlash('registration'); ?>
+<?php echo Yii::app()->user->getFlash('reg_success'); ?>
+</div>
+
+	<?php 
+		$redirect = Yii::app()->createUrl("/user/profile/edit");
+		
+		if(Yii::app()->user->checkAccess('Customer')){
+			$redirect = Yii::app()->createUrl("/project/zakaz/create");
+		} 
+	?>
+	
+	<script language="JavaScript" type="text/javascript">
+		function toTarget(){ 
+		 location='<?php echo $redirect;?>'; 
+		} 
+		setTimeout( 'toTarget()', 3000 ); 
+	</script>
+	
+<?php elseif (Yii::app()->user->hasFlash('reg_failed')):?>
+<div class="">
+<?php echo Yii::app()->user->getFlash('reg_failed'); ?>
 </div>
 <?php else: ?>
 <div class="col-xs-offset-3 col-xs-6 login-form-bg">
