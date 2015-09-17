@@ -42,6 +42,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'zakaz-grid',
 	'dataProvider'=>$dataProvider,
 	'columns'=>$columns,
+    //'enablePagination' => false,
     'htmlOptions'=>array('class'=>'col-md-12 table table-striped'),
     'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
     'selectionChanged'=>"js:function(sel_id){

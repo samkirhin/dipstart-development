@@ -180,11 +180,11 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                     <div class="panel-heading panel-heading-white">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
-                                Информация о заказе 
+                                Информация о заказе
                             </a>
                         </h4>
                     </div>
-                    <div id="infoZakaz" class="panel-collapse collapse">
+                    <div id="infoZakaz" class="panel-collapse collapse in">
                         <div class="panel-body">
 
                             <div class="col-xs-12 aboutZakaz">

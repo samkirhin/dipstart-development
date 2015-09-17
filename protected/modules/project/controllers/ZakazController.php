@@ -189,7 +189,7 @@ class ZakazController extends Controller
 	 */
 	public function actionUpdate($id)
     {
-        
+
         if (Yii::app()->request->isAjaxRequest) {
             
             $data = Yii::app()->request->getRestParams();
@@ -227,7 +227,10 @@ class ZakazController extends Controller
 		// $this->performAjaxValidation($model);
 		if(isset($_POST['Zakaz'])) {
 			$model->attributes = $_POST['Zakaz'];
-			
+
+			if(isset($_POST['Zakaz']['dbdate']))
+				$model->dbdate = $_POST['Zakaz']['dbdate'];
+
 
 			if(Campaign::getId()){
 				$projectFields = $model->getFields();
@@ -242,7 +245,7 @@ class ZakazController extends Controller
 					}
 				}
 			}
-			
+
 			if($model->save()) {
 				if ($role != 'Manager' && $role != 'Admin') {
 					EventHelper::editOrder($model->id);
@@ -407,6 +410,7 @@ class ZakazController extends Controller
 		$model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
         $model->executor = Yii::app()->user->id;
+
 		$this->render('list',array(
 			'model'=>$model,
 		));
@@ -416,7 +420,8 @@ class ZakazController extends Controller
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', Yii::app()->user->id);
         $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
-            'criteria' => $criteria
+            'criteria' => $criteria,
+			'pagination' => false
         ]);
         $this->render('customerOrderList', [
             'dataProvider' => $model
