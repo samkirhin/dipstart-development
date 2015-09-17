@@ -27,10 +27,10 @@ $(document).ready(function(){
     $('input.btn-chat').on('click', chatEmpty);
     
     
-    $('div.info-block h4.panel-title a').html('Информация о заказе <i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
-    var arrow = 'fa-angle-down fa-lg';
+    $('div.info-block h4.panel-title a').html('Информация о заказе <i style="font-size: 1.8em!important;" class="fa fa-angle-up fa-lg">');
+    var arrow = 'fa-angle-up fa-lg';
     $('div.info-block h4.panel-title a').on('click', function() {
-        console.log('aaaaa');
+
         if (arrow == 'fa-angle-down fa-lg') {
             arrow = 'fa-angle-up fa-lg';
             $('div.info-block h4.panel-title a i').removeClass('fa-angle-down fa-lg').addClass(arrow);
