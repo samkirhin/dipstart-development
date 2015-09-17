@@ -266,7 +266,7 @@ class ZakazController extends Controller
             $upload = new UploadPaymentImage;
             $upload->orderId = $id;
             $upload->file = CUploadedFile::getInstance($upload, 'file');
-            if ($upload->validate()) {
+            if ($upload->file && $upload->validate()) {
                 $upload->save();
 				EventHelper::chekUploaded($id);
             }

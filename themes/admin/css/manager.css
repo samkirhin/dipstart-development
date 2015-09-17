@@ -795,10 +795,6 @@ div.chat-functions > button {
     float: right;
 }
 
-ul.qq-upload-list > li {
-    margin-bottom: 15px!important;
-}
-
 div#ui-datepicker-div {
 	z-index: 11!important;
 }
@@ -815,4 +811,10 @@ div#send_buttons > br[style*="none"] ~ button[data-recipient="Author"], div#send
     margin-top: 25px;
     margin-bottom: 0px!important;
     float: right !important;
+}
+.qq-upload-drop-area {
+	position: relative;
+}
+ul.qq-upload-list > li {
+    margin-bottom: 15px;
 }

@@ -59,9 +59,9 @@ class EventHelper {
         $description = "Пользователь ".$userName." загрузил чек";
         self::sendEvent($id, self::TYPE_CHEK_UPLOADED, $description);
     }
-    public static function partDone($id) {
+    public static function partDone($id, $title) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." загрузил часть работы";
+        $description = "Пользователь ".$userName." загрузил часть работы '$title'";
         self::sendEvent($id, self::TYPE_PART_DONE, $description);
     }
     public static function materialsAdded($id) {

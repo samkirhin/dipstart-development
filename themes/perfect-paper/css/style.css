@@ -35,6 +35,10 @@ article {
   display: block;
   padding-top: 2em;
 }
+
+#header address {
+    width: 250px;
+}
 .logo {
   background: url(../img/logo.png) no-repeat scroll 50% 0%;
   width: 273px;

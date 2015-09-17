@@ -7,10 +7,10 @@ $filelist = Yii::app()->fileman->list_files($model->id);
       $files .= CHtml::link($fd['filename'], array('zakaz/download', 'path' => $real_path)).'&nbsp;&nbsp;';
       //echo EDownloadHelper::download($real_path);
 }
-$this->breadcrumbs=array(
+/*$this->breadcrumbs=array(
 	ProjectModule::t('Zakazs')=>array('index'),
 	$model->title,
-);
+);*/
 
 ?>
 

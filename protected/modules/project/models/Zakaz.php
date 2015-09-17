@@ -196,6 +196,14 @@ class Zakaz extends CActiveRecord {
     {
         $this->_status_name = $value;
     }
+	public function getClosestDate(){
+		$date = $this->author_informed;
+		$parts = ZakazParts::model()->findAllByAttributes( array('proj_id'=>$this->id) );
+		foreach ($parts as $part){
+			if($part->date < $date) $date = $part->date;
+		}
+		return $date;
+	}
 
     public function init()
     {
@@ -318,6 +326,7 @@ class Zakaz extends CActiveRecord {
 				'author_informed' => ProjectModule::t('Author Informed'),
 				'notes' => ProjectModule::t('Notes'),
 				'author_notes' => ProjectModule::t('author_notes'),
+				'closestDate' => ProjectModule::t('closestDate'),
 			);
 			$projectFields = $this->getFields();
 			if ($projectFields) {
