@@ -22,7 +22,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 						</h4>
 					</div>
 					<?php if (User::model()->isAuthor()) { ?>
-					<div class="title-time">Дата сдачи:<br />
+					<div class="title-time"><?=ProjectModule::t('Date')?>:<br />
 						<?php echo $data['dbdate']; ?>
 					</div>
 					<?php } ?>

@@ -318,7 +318,7 @@ class Zakaz extends CActiveRecord {
 			$tmp = array(
 				'id' => ProjectModule::t('Order number'),
 				'user_id' => ProjectModule::t('User'),
-				'date' => ProjectModule::t('Date'),
+				'date' => ProjectModule::t('Order date'),
 				'max_exec_date' => ProjectModule::t('Max Date'),
 				'status' => ProjectModule::t('Status'),
 				'executor' => ProjectModule::t('Executor'),
