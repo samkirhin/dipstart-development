@@ -310,7 +310,8 @@ class ZakazPartsController extends Controller
             $uploader = new qqFileUploader($config, $sizeLimit);
             $this->result = $uploader->handleUpload($folder,true);
             if ($this->result['success']) {
-                if (!User::model()->isManager()) EventHelper::partDone($_GET['proj_id']);
+				$part = ZakazParts::model()->findByPk($_GET['id']);
+                if (!User::model()->isManager()) EventHelper::partDone($_GET['proj_id'], $part->title);
             }
             chmod($folder.$_GET['qqfile'],0666);
 			

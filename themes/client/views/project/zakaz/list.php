@@ -18,11 +18,12 @@ if (Campaign::getId()){
 	$columns = array(
 		'id',
 		'title',
-		[
+		/*[
             'header' => '',
             'type' => 'raw',
             'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
-        ],
+        ],*/
+		'closestDate',
 	);
 } else {
 	$columns = array(

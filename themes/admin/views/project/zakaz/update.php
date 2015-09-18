@@ -105,13 +105,13 @@ $this->breadcrumbs = array(
                 <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>);"><?=ProjectModule::t('Add part')?></div>
             </div>
             <!-- Конец блока добавления частей менеджера -->
-            <!-- Начало блока правок частей менеджера -->
+            <!-- Начало блока правок (доработок) менеджера -->
             <?php
             $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
                 'project' => $model,
             ))
             ?>
-            <!-- Конец блока правок частей менеджера -->
+            <!-- Конец блока правок (доработок) менеджера -->
 
         </div>
 

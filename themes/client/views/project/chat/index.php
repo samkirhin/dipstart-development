@@ -52,18 +52,13 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 <?php if (User::model()->isAuthor()) : ?>
 				<div class="col-xs-12"><?php
 					if($order->executor != 0) { // Если назначен исполнитель
-						echo 'Rating: '.Profile::model()->findByPk($order->executor)->rating.'<br />';
+						echo '<div class="my-rating">'.ProjectModule::t('My rating:').' <span class="value">'.Profile::model()->findByPk($order->executor)->rating.'</span></div>';
 						$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
-						echo $payment->work_price; //Стоимость проекта для автора
-						echo ' to_pay:'.$payment->to_pay;
-						echo ' payed:'.$payment->payed;
+						echo '<div class="my-rating">'.ProjectModule::t('Work price:').' <span class="value">'.$payment->work_price.'</span></div>'; //Стоимость проекта для автора
+						echo '<div class="my-rating">'.ProjectModule::t('To pay:').' <span class="value">'.$payment->to_pay.'</span></div>';
+						echo '<div class="my-rating">'.ProjectModule::t('Payed:').' <span class="value">'.$payment->payed.'</span></div>';
 					}
 				?></div>
-                <div class="col-xs-12">
-                    <div class="notes-author">
-                        Заметки для автора:<br /> <?php echo $order->getAttribute('author_notes'); ?>
-                    </div>
-                </div>
                 <?php endif;?>
 				<?php
 				$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
@@ -117,9 +112,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                         )
                     )
                 );
-            } else {
-				echo '<div class="materials"><h5>Прикреплённые материалы</h5><ul class="materials-files">'.$html_string.'</ul></div>';
-			}
+            }
             ?>
         </div>
         <div class="col-xs-8">
@@ -180,11 +173,11 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                     <div class="panel-heading panel-heading-white">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
-                                Информация о заказе 
+                                Информация о заказе
                             </a>
                         </h4>
                     </div>
-                    <div id="infoZakaz" class="panel-collapse collapse">
+                    <div id="infoZakaz" class="panel-collapse collapse in">
                         <div class="panel-body">
 
                             <div class="col-xs-12 aboutZakaz">
@@ -198,7 +191,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 										$projectFields = $order->getFields();
 										if ($projectFields) {
 											foreach($projectFields as $field) {
-												if (isset($field->field_id)){
+												if ($field->field_type == 'LIST'){
 													$tmp = $field->varname;
 													$columns[] = [
 														'name' => $field->title,
@@ -244,6 +237,10 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                                     $this->widget('zii.widgets.CDetailView', array(
                                         'data' => $order,
                                         'attributes' => $columns));
+									echo '<div class="notes-author">';
+									echo 'Заметки для автора:<br /> '.$order->getAttribute('author_notes');
+									echo '</div>';
+									echo '<div class="materials"><h5>Прикреплённые материалы</h5><ul class="materials-files">'.$html_string.'</ul></div>';
                                 } else {
 
                                     if ($order->is_active) {

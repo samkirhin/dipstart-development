@@ -143,12 +143,12 @@
                 <div class="panel-heading panel-heading-white">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
-                            <?=ProjectModule::t('Order information')?> <i class="fa fa-angle-down fa-lg"></i>
+                            <?=ProjectModule::t('Order information').' '.$model->id.': "'.$model->title.'"'?> <i class="fa fa-angle-down fa-lg"></i>
 		
                         </a>
-						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
+						<br/><!--<a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">-->
 						<!--<img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" />-->
-						</a>
+						<!--</a>-->
                     </h4>
                 </div>
                 <div id="infoZakaz" class="panel-collapse collapse">
