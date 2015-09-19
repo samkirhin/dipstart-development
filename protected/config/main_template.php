@@ -137,7 +137,7 @@ return array(
             ),
         ),
 	),
-
+    'timeZone' => 'Europe/Moscow',
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
