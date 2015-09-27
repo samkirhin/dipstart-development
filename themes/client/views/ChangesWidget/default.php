@@ -30,25 +30,25 @@
                     <?php
                     if ($user->isCustomer()) { ?>
                         <div class="form" id="new-changes-block">
-							<div id="new-changes-link"><a data-toggle="collapse" data-parent="#new-changes-block" href="#new-changes-collapse">Новая доработка</a></div>
+							<div id="new-changes-link"><a data-toggle="collapse" data-parent="#new-changes-block" href="#new-changes-collapse"><?=ProjectModule::t('The new revision')?></a></div>
 							<div id="new-changes-collapse" class="collapse">
 								<div id="errors-block"></div>
 								<?php
 								echo CHtml::form(Yii::app()->createUrl('/project/changes/add?ctr=' . $project->id), 'post', array('id' => 'up_file', 'enctype' => 'multipart/form-data'));
 								?>
 								<div class="row">
-									<?php echo CHtml::label('Прикрепить файл', 'fileupload'); ?>
+									<?php echo CHtml::label(ProjectModule::t('Attach file'), 'fileupload'); ?>
 									<?php echo CHtml::fileField('ProjectChanges[fileupload]', $fileupload, array('class' => 'col-xs-12 btn btn-user')); ?>
 								</div>
 
 								<div class="row">
-									<?php echo CHtml::label('Комментарий', 'comment'); ?>
+									<?php echo CHtml::label(ProjectModule::t('Comment'), 'comment'); ?>
 									<?php echo CHtml::textArea('ProjectChanges[comment]', $comment, array('class' => 'col-xs-12')); ?>
 								</div>
 
 								<?php if (ProjectChanges::approveAllowed()) { ?>
 									<div class="row">
-										<label for="ProjectChanges_moderate">Модерация</label>
+										<label for="ProjectChanges_moderate"><?=ProjectModule::t('Moderation')?></label>
 										<?php echo CHtml::dropDownList($changes,
 											'moderate',
 											array('1' => ProjectModule::t('Approved'), '0' => ProjectModule::t('Not approved')),

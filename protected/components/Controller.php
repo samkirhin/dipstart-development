@@ -80,9 +80,9 @@ class Controller extends RController
                     Yii::app()->theme='client';
                     break;
             }
+
 //		var_dump(Yii::app()->controller->module->id ,Yii::app()->controller->id, Yii::app()->controller->action->id);
 //		die();
-		
     }
 
     public function filters(){
