@@ -68,7 +68,6 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
-
         Yii::app()->session['project_id'] = $orderId;
 
         if (Yii::app()->request->isAjaxRequest) {

@@ -55,6 +55,7 @@ return array(
     'List' => 'Список',
     'Changes' => 'Заявка на доработку / коррекцию',
     'Comment' => 'Комментарий',
+    'Comment' => 'Модерация',
     'Add changes' => 'Добавить доработку',
     'Edit changes' => 'Изменить доработку',
     'Attach file' => 'Прикрепить файл',
@@ -68,6 +69,7 @@ return array(
     'Order number' => 'Номер заказа',
     'Job name' => 'Имя работы',
     'Name of educational discipline' => 'Наименование учебной дисциплина',
+    'The new revision' => 'Новая доработка',
     ///project/zakaz/update/id/x
     'Author' => 'Автор',
     'Customer' => 'Заказчик',
@@ -83,11 +85,17 @@ return array(
     'Send SMS' => 'Отправить SMS',
     'Use template' => 'Вставить шаблон',
     'Send message' => 'Отправить сообщение',
+    'Send the customer' => 'Отправить заказчику',
+    'Send the author' => 'Отправить автору',
+    'Send manager' => 'Отправить менеджеру',
+    'Message' => 'Сообщение',
+    'Enter your message...' => 'Введите сообщение...',
     'to author' => 'Автору',
     'to сustomer' => 'Заказчику',
     'Order information' => 'Информация о заказе',
     'Approve' => 'Одобрить',
     'Drag and drop files here' => 'Перетащите файлы сюда',
+    'Attach materials to the order'  => 'Прикрепить материалы к заказу',
     'Upload material' => 'Загрузить материал',
     'Product name' => 'Наименование',
     'Date/Time' => 'Дата/Время',
@@ -123,7 +131,7 @@ return array(
     'List ZakazParts' => 'List ZakazParts',
     'Manage Zakaz Parts' => 'Manage Zakaz Parts',
     'Additionally send:' => 'Дополнительно отправить:',
-    
+    'Ordering Information' => 'Информация о заказе'
 
 
 
