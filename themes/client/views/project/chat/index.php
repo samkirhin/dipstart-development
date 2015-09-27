@@ -39,7 +39,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 							//$img = UploadPaymentImage::$folder . $chek_image;
                             $i = 1;
                             echo '<div class="chek-image-link">';
-                            
+
                             foreach ($images as $item) {
                                 echo CHtml::link('Чек ' . $i++, UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' )) . ' ';
                             }
@@ -104,7 +104,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                         ),
                         'config' => array(
                             'action' => $this->createUrl('/project/chat/upload', array('id' => $order->id)),
-                            'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Перетащите файлы сюда</span><div class="qq-upload-button">Прикрепить материалы к заказу</div><ul class="qq-upload-list">'.$html_string.'</ul></div></div>',
+                            'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Attach materials to the order') .'</div><ul class="qq-upload-list">'.$html_string.'</ul></div></div>',
                             'disAllowedExtensions' => array('exe'),
                             'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
                             'minSizeLimit' => 10,// minimum file size in bytes
@@ -129,32 +129,32 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                 <!--
                 <?php if (User::model()->isAuthor()): ?>
                 <div class="col-xs-12 price-for-work-avtor">
-                    <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
+                    <?php echo CHtml::label(ProjectModule::t('Цена за работу:'),'cost',array('class' => 'control-label')); ?>
                     <?php echo CHtml::textField('cost'); ?>
                 </div>
                 <?php endif; ?> 
                 -->
                 
                 <div class="col-xs-9">
-                    <?php echo CHtml::label('Сообщение','message', array('id' => 'msgLabel')); ?>
-                    <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12', 'placeholder' => 'Введите сообщение...')); ?>
+                    <?php echo CHtml::label(ProjectModule::t('Message'),'message', array('id' => 'msgLabel')); ?>
+                    <?php echo CHtml::textArea('message','', array('rows' => 6, 'class' => 'col-xs-12', 'placeholder' => ProjectModule::t('Enter your message...'))); ?>
                 </div>
 
 
                 <div class="col-xs-3 chtpl0-form">
-                    <h5>Отправить сообщение</h5>
+                    <h5><?=ProjectModule::t('Send message')?></h5>
                     <?php
                     if(User::model()->isAuthor()) {
-                        $middle_button = 'Отправить заказчику';
+                        $middle_button = ProjectModule::t('Send the customer');
                     } else if(User::model()->isCustomer()) {
-                        $middle_button = 'Отправить автору';
+                        $middle_button = ProjectModule::t('Send the author');
                     }
                     echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block')) ;
-                    echo  CHtml::submitButton('Отправить менеджеру', array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2')) ;
+                    echo  CHtml::submitButton(ProjectModule::t('Send manager'), array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2')) ;
                     ?>
                     
                 <?php if (User::model()->isAuthor()): ?>
-                    <?php echo CHtml::label('Цена за работу:','cost',array('class' => 'control-label')); ?>
+                    <?php echo CHtml::label(ProjectModule::t('Цена за работу:'),'cost',array('class' => 'control-label')); ?>
                     <?php echo CHtml::textField('cost'); ?>
                 <?php endif; ?>
                     
@@ -173,7 +173,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                     <div class="panel-heading panel-heading-white">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
-                                Информация о заказе
+                                <?=ProjectModule::t('Ordering Information')?>
                             </a>
                         </h4>
                     </div>

@@ -27,7 +27,8 @@ $(document).ready(function(){
     $('input.btn-chat').on('click', chatEmpty);
     
     
-    $('div.info-block h4.panel-title a').html('Информация о заказе <i style="font-size: 1.8em!important;" class="fa fa-angle-up fa-lg">');
+    $('div.info-block h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-up fa-lg">');
+
     var arrow = 'fa-angle-up fa-lg';
     $('div.info-block h4.panel-title a').on('click', function() {
 

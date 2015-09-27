@@ -464,6 +464,7 @@ margin-bottom: 15px;
 background-color: #F8F8F8;
 }
 
+
 .btn {border-radius:0;}
 
 #UploadPaymentImage_file {
@@ -497,8 +498,10 @@ margin-top: 20px;
 
 .materials {
     border: 1px solid #ddd;
-    margin: 15px;
-    margin-bottom: -16px;
+
+    /*margin: 15px;
+    margin-bottom: -16px;*/
+
 }
 
 .materials h5 {
@@ -1150,3 +1153,4 @@ div.chtpl0-form {
 div.chtpl0-form > h5 {
     display: none;
 }
+

@@ -223,9 +223,7 @@ label
 {
     font-weight: normal;
 }
-.aboutZakaz
-{
-
+.aboutZakaz {
 }
 .aboutZakaz textarea{
     width: 100%;
@@ -477,7 +475,7 @@ label
 #show-msg {
     color: #fff;
 }
-#Zakaz_category_id {
+/*#Zakaz_category_id {
     width: 100%;
     padding: 3px;
 }
@@ -496,7 +494,7 @@ label
 #Zakaz_edu_dep {
     width: 100%;
     padding: 3px;
-}
+}*/
 .info-column label {
     margin-top: 5px;
     font-weight: 700;
