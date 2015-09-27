@@ -127,10 +127,12 @@ a.button,
   text-align:center; 
   text-decoration:none;
   border-radius:4px;
-  box-shadow:#000 0px 0px 1px;
+  -webkit-box-shadow:#000 0px 0px 1px;
+          box-shadow:#000 0px 0px 1px;
   background:#ea0000;
   background:-webkit-gradient(linear, 0 0, 0 bottom, from(#ea0000), to(#d00303));
   background:-webkit-linear-gradient(#ea0000, #d00303);
+  background:-webkit-gradient(linear, left top, left bottom, from(#ea0000), to(#d00303));
   background:linear-gradient(#ea0000, #d00303);
   color:#fff;
   padding:12px 20px;
@@ -143,13 +145,15 @@ a.button:hover,
   color:#fff;  
   background:-webkit-gradient(linear, 0 0, 0 bottom, from(#d00303), to(#ea0000));
   background:-webkit-linear-gradient(#d00303, #ea0000);
+  background:-webkit-gradient(linear, left top, left bottom, from(#d00303), to(#ea0000));
   background:linear-gradient(#d00303, #ea0000);
 }
 a.button:active,
 .button:active {
   color:#8c1515;
   text-shadow:1px 1px 1px #ffaeae;
-  box-shadow:#a10000 0px -3px 3px inset;
+  -webkit-box-shadow:#a10000 0px -3px 3px inset;
+          box-shadow:#a10000 0px -3px 3px inset;
 }
 
 .table {
@@ -163,6 +167,7 @@ a.button:active,
   background:#ffffff;
   background:-webkit-gradient(linear, 0 0, 0 bottom, from(#ffffff), to(#F7F7F7));
   background:-webkit-linear-gradient(#ffffff, #F7F7F7);
+  background:-webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#F7F7F7));
   background:linear-gradient(#ffffff, #F7F7F7);
 }
 .table td {
@@ -417,7 +422,7 @@ position: relative;
 }
 .qq-upload-button {width: 90%; background-color: green;margin: 15px auto;}
 .qq-upload-list {margin:0;}
-.info-block {margin-top: 30px;} 
+.info-block {margin-top: 0px;} 
 .panel-title a{
 	color: #337AB7;
 	width: 100%;
@@ -459,6 +464,7 @@ margin-bottom: 15px;
 background-color: #F8F8F8;
 }
 
+
 .btn {border-radius:0;}
 
 #UploadPaymentImage_file {
@@ -491,8 +497,7 @@ margin-top: 20px;
 .price-for-work-avtor + #msgLabel {margin-top: 15px;}
 
 .materials {
-border: 1px solid #ddd;
-margin: 15px;
+    border: 1px solid #ddd;
 }
 
 .materials h5 {
@@ -637,13 +642,15 @@ cursor: default;
 }
 
 .chtpl0-chat{
+	width: -webkit-calc(100% - 6px);
 	width: calc(100% - 6px);
 	background-color: white;
 	height: 240px;
 	border-radius: 4px;
 	margin-left: 3px;
 	border: 3px solid #eaeaea;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 }
 
 .chtpl0-msg{
@@ -704,6 +711,7 @@ width: 50%;*/
 	position: relative;
 	left: 280px;
 	top: -42px;
+	width: -webkit-calc(100% - 370px);
 	width: calc(100% - 370px);
 }
 
@@ -735,6 +743,7 @@ width: 50%;*/
 .chtpl0-down{
 	font-size: 13px;
 	padding: 10px 10px 10px 18px;
+	width: -webkit-calc(100% - 28px);
 	width: calc(100% - 28px);
 	height: 22px;
 }
@@ -1140,3 +1149,4 @@ div.chtpl0-form {
 div.chtpl0-form > h5 {
     display: none;
 }
+
