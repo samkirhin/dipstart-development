@@ -185,7 +185,8 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                                 if (User::model()->isAuthor()) {
 									if (Campaign::getId()){
 										$columns = array('id', [
-                                                'name' => 'author_informed',
+                                                //'name' => 'author_informed',
+												'name' => 'deadline',
                                                 'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
                                             ]);
 										$projectFields = $order->getFields();

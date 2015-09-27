@@ -38,5 +38,11 @@ $(document).ready(function(){
             arrow = 'fa-angle-down fa-lg';
             $('div.info-block h4.panel-title a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
-    })
+    });
+    
+    var activeLi = $('li').has('a[href="/project/zakaz/ownList"]');
+    if (activeLi.hasClass('active')) {
+        console.log('aaaaa');
+        $('h1.projects-title').css('visibility', 'hidden');
+    }
 });

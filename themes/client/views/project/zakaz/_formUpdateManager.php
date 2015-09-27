@@ -5,6 +5,8 @@
 ?>
 
 
+
+
 <div class="col-xs-12 terms-block" style="padding-right: 0px;">
     <div class="form">
 
@@ -102,7 +104,6 @@
 
 </div>
 </div>
-
 <div class="row">
     <div class="col-xs-12 info-block">
         <div class="panel-group" id="accordion">
@@ -230,3 +231,4 @@
         </div>
     </div>
 </div>
+

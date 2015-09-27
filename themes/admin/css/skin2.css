@@ -1,5 +1,5 @@
-.panel-heading .hasDatepicker /* Vladimir */
-{
+.panel-heading .hasDatepicker
+/* Vladimir */ {
     position: relative;
     /*z-index: 2000;*/
 }
@@ -27,3 +27,30 @@
 /*.aboutZakaz #justFileUpload {
 	height: 100px;
 }*/
+
+
+div.terms-column-1 {
+    width: 34%;
+}
+
+div.terms-column-2 {
+    width: 36%;
+}
+
+div.terms-column-1, div.terms-column-2, div.terms-column-3 {
+    margin-top: 20px;
+} 
+
+.chtpl0-msg .chtpl0-buttons button {
+    padding: 4px 2px;
+    width: 77px;
+}
+
+.chtpl0-chat {
+    height: 360px;
+    min-height: 360px !important;
+}
+
+.chtpl0-chatblock {
+    height: 412px !important;
+}

@@ -142,7 +142,8 @@ hr {
     padding-top: 0px;
 }
 .panel {
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
 }
 .parts {
     padding: 0;
@@ -854,4 +855,12 @@ h1.projects-title {
 
 div.content-clearfix {
     min-height: 450px !important;
+}
+
+.title-name::after {
+    height: 40px;
+    width: 40px;
+    display: block;
+    background-size: cover;
+    background-image: url(images/arrow-down.png);
 }

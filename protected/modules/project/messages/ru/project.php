@@ -41,6 +41,7 @@ return array(
     'Payed' => 'Оплачено автору',
     'Manager Informed' => 'Дата информирования (менеджер)',
     'Author Informed' => 'Срок для Автора',
+	'Deadline' => 'Срок сдачи',
     'Update Zakaz' => 'Редактировать заказ',
     'Update' => 'Редактировать',
     'Add Zakaz Part' => 'Добавить подзаказ',
