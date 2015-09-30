@@ -554,4 +554,22 @@ class ZakazController extends Controller
         } else $this->_response->setData(false);
         $this->_response->send();
     }
+    
+    /*
+     * Remove attachment file
+     */
+    public function actionApiRemoveFile() {
+        $this->_prepairJson();
+        $data = $this->_request->getParam('data');
+		if(isset(Zakaz::$files_folder)){
+			$path=Yii::getPathOfAlias('webroot').Zakaz::$files_folder.$data['id'].'/';
+		} else {
+			$path=Yii::getPathOfAlias('webroot').'/uploads/'.$data['id'].'/';
+		}
+        if (!file_exists($path)) mkdir($path);
+        if (unlink($path.$data['name'])) {
+            $this->_response->setData(true);
+        } else $this->_response->setData(false);
+        $this->_response->send();
+    }
 }
