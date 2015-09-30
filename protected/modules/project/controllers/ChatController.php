@@ -21,7 +21,7 @@ class ChatController extends Controller {
 	{
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
+            'postOnly + delete, ApiRenameFile', // we only allow deletion via POST request
         );
 	}
 
@@ -34,7 +34,7 @@ class ChatController extends Controller {
 	{
 		return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('index'),
+                'actions' => array('index', 'ApiRenameFile'),
                 'expression' => array('ChatController', 'allowOnlyOwner'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -134,5 +134,20 @@ class ChatController extends Controller {
         $result['fileName']=$result['filename'];//GETTING FILE NAME
 		chmod($folder.$result['fileName'],0666);
         echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+    }
+    
+    /*
+     * Rename attachment file
+     */
+    public function actionApiRenameFile() {
+        $this->_prepairJson();
+        $data = $this->_request->getParam('data');
+	$path=Yii::getPathOfAlias('webroot').$data['dir'];
+        if (!file_exists($path)) mkdir($path);
+        if (rename($path.$data['name'], $path.'#trash#'.$data['name'])) {
+            EventHelper::materialsDeleted($_GET['orderId']);
+            $this->_response->setData(true);
+        } else $this->_response->setData(false);
+        $this->_response->send();
     }
 }
