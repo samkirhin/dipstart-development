@@ -89,6 +89,15 @@ function approveFile(obj){
         if (response.data)obj.remove();
     }, 'json');
 }
+/*Remove attachment file*/
+function removeFile(obj){
+    var data=$(obj).data();
+    $.post('/project/zakaz/apiRemoveFile', JSON.stringify({
+        'data': data
+    }), function (response) {
+        if (response.data)obj.remove();
+    }, 'json');
+}/*END Remove attachment file*/
 function spam(orderid){
     $.ajax({
         url: '/project/zakaz/spam?order_id='+orderid,

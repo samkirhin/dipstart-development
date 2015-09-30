@@ -84,7 +84,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 			$html_string = '';
             if (file_exists($path)){
                 foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
-                    if (!strstr($v, '#pre#') || User::model()->isCustomer()) {
+                    if ((!strstr($v, '#pre#') || User::model()->isCustomer()) && !strstr($v, '#trash#')) {
 						$tmp = '';
 						if(strstr($v, '#pre#')) {
 							$tmp = ' class="gray-file"';
@@ -92,7 +92,8 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 						} else {
 							$v0 = $v;
 						}
-						$html_string .= '<li'.$tmp.'><a target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a></li><br />'."\n";
+						$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>'
+                                                        . ' <a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a></li><br />'."\n"; #remove file btn
 					}
 			} else mkdir($path);
             if (User::model()->isCustomer()) {
@@ -270,3 +271,18 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
     
     
 <?php endif; ?>
+<script>
+    /*Remove attachment file*/
+    function removeFile(obj){
+        if (confirm("<?php echo Yii::t('site', 'Are you sure you want to delete this item?');?>")) {
+            var data=$(obj).data();
+            $.post('/project/chat/apiRenameFile?orderId=<?php echo $order->id; ?>', JSON.stringify({
+                'data': data
+            }), function (response) {
+                if (response.data){
+                    obj.remove();
+                    $('#'+data.link).remove();
+                }
+            }, 'json');
+    }}/*END Remove attachment file*/
+</script>

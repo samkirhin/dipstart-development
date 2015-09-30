@@ -11,6 +11,7 @@ class EventHelper {
 	const TYPE_CHEK_UPLOADED = 7;   // Пользователь %..% загрузил чек
 	const TYPE_PART_DONE = 8;       // Пользователь %..% загрузил часть работы
 	const TYPE_MATERIALS_ADDED = 5; // Пользователь %..% прикрепил файлы в заказ
+	const TYPE_MATERIALS_DELETED = 6; // Пользователь %..% удалил файл из заказа
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
     
@@ -67,6 +68,11 @@ class EventHelper {
     public static function materialsAdded($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
         $description = "Пользователь ".$userName." прикрепил файлы в заказ";
+        self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
+    }
+    public static function materialsDeleted($id) {
+        $userName = User::model()->findByPk(Yii::app()->user->id)->username;
+        $description = "Пользователь ".$userName." удалил файл из заказа";
         self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
     }
     
