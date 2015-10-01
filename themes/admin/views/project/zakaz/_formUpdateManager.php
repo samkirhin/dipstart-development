@@ -181,6 +181,7 @@
                                     if (file_exists($path)) {
                                         foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
                                             $tmp .= '<li><a class="link-to-material" href="' . $url . $v . '">' . str_replace('#pre#', '', $v) . '</a>';
+                                            $tmp .= '<a href="#" data-id="' . $model->id . '" data-name="' . $v . '" onclick="removeFile(this); return false;"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>'; #remove file btn
                                             if (strstr($v, '#pre#'))
                                                 $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">'. ProjectModule::t('Approve') .'</button>';
                                             $tmp .= '</li>';
