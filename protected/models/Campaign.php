@@ -19,6 +19,14 @@ class Campaign extends CActiveRecord {
 		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
 		return self::$orgz->language;
 	}
+	public static function getPaymentCash() {
+		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		return self::$orgz->PaymentCash;
+	}
+	public static function getPayment2Chekout() {
+		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		return self::$orgz->Payment2Chekout;
+	}
 	
 	public static function model($className=__CLASS__) {
 		return parent::model($className);

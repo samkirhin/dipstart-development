@@ -9,19 +9,23 @@ class PaymentController extends Controller {
     {
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
+            'postOnly + delete, affiliatePayment', // we only allow deletion via POST request
         );
     }
     public function accessRules()
     {
         return array(
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+            /*array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions'=>array('admin','apiview','approvetransaction','managersapprove','managerscancel','savepayments','savepaymentstoauthor','savepaymentstouser','view'),
                 'users'=>array('admin','manager'),
             ),
+			array('allow',
+				'actions'=>array('affiliatePayment'),
+				'roles'=>array('customer'),
+			),
             array('deny',  // deny all users
                 'users'=>array('*'),
-            ),
+            ),*/
         );
     }
     protected function _prepairJson() {
@@ -310,7 +314,53 @@ class PaymentController extends Controller {
         $this->_response->send();
 
     }*/
-
+	public function actionAffiliatePayment(){
+		//print_r($_POST);
+		$hashSecretWord = 'MjQ5YjU2ZWEtNGNiNy00YjZlLWEyNjItMWI5Njc1OGE0Njc5'; //2Checkout Secret Word
+		$hashSid = 901291608; //2Checkout account number
+		$hashTotal = $_REQUEST['total']; //Sale total to validate against
+		$hashOrder = 1;//$_REQUEST['order_number']; //2Checkout Order Number
+		$StringToHash = strtoupper(md5($hashSecretWord . $hashSid . $hashOrder . $hashTotal));
+		
+		if ($StringToHash != $_REQUEST['key']) {
+			$result = 'Fail - Hash Mismatch'; 
+		} else { 
+			$result = 'Success - Hash Matched';
+			$orderId = $_REQUEST['li_0_product_id'];
+			$payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+				'ORDER_ID'=>$orderId
+			));
+			$payment->received = $payment->received + $hashTotal;
+			$payment->to_receive -= $hashTotal;
+			if ($payment->save() && $hashTotal != 0) {
+				$order = Zakaz::model()->findByPk($orderId);
+				if ($order->status < 3) $order->status = 3;
+				$order->save();
+				
+				$buh = new Payment;
+				$buh->order_id = $orderId;
+				$buh->receive_date = date('Y-m-d');
+				$buh->theme = $order->title;
+				$user = User::model()->findByPk($order->user_id);
+				$buh->user = $user->email;
+				$buh->summ = (float) $hashTotal;
+				$buh->payment_type = 0;
+				$buh->manager = 'robot@2checkout.com';
+				$buh->approve = 1;
+				$buh->method = 'Bank';
+				if($buh->save()){
+					echo 'ok';
+					//Yii::app()->user->setFlash('tipDay','Данные сохранены');
+					$this->redirect(array('/project/chat', 'orderId'=>$orderId));
+				} else {
+					echo 'Error! Can\'t save buh-payment';
+				}
+			} else {
+				echo 'Error! Can\'t save order-payment';
+			}
+		}
+		//echo $result;
+	}
     public function actionManagersApprove() {
 		new UploadPaymentImage;
 		/////////////////////////////////////////////////////////////
