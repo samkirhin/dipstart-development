@@ -96,7 +96,7 @@ return array(
     'Personal account'=>'Личный счет',
     'Profile'=>'Профиль',
     'Orders'=>'Заказы',
-    'New orders'=>'Новые заказы',
+    'New projects'=>'Новые проекты',
     'My orders'=>'Мои заказы',
     'Create order'=>'Создать заказ',
     'Order statuses'=>'Статусы заазов',
