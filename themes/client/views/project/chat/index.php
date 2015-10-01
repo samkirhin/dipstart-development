@@ -11,43 +11,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
         <div class="col-xs-4">
             <div class="row">
 				<?php
-				if (User::model()->isCustomer()) {
-					$to_recive = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id))->to_receive;
-					if ($to_recive>0) {
-						echo '<div class="col-xs-12 block-for-upload-chek">';
-						$upload = new UploadPaymentImage;
-						$form = $this->beginWidget('CActiveForm', array(
-							'id' => 'check-form',
-							'action' => ['zakaz/uploadPayment', 'id' => $order->id],
-							'enableAjaxValidation' => false,
-							'htmlOptions' => array(
-								'enctype' => 'multipart/form-data',
-							)
-						)); ?>
-						<div class="to-pay">
-							<span class="text-to-pay"><?=ProjectModule::t('To pay')?><span> <span class="value-to-pay"><? echo $to_recive; ?></span> <span class="rub">&#8381;</span>
-						</div>
-						<div class="row chek">
-							<span class="text_scan"><?=ProjectModule::t('Scan check')?></span> <?php echo $form->fileField($upload, 'file'); ?>
-						</div>
-						<div class="row buttons check-button-upload">
-							<?php echo CHtml::submitButton(ProjectModule::t('Upload')); ?>
-						</div>
-						<?php $this->endWidget();
-						if (count($images) > 0) {
-							echo '<div class="chek-is-approving">'.ProjectModule::t('Your payment at checkout ...').'</div>';
-							//$img = UploadPaymentImage::$folder . $chek_image;
-                            $i = 1;
-                            echo '<div class="chek-image-link">';
-
-                            foreach ($images as $item) {
-                                echo CHtml::link('Чек ' . $i++, UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' )) . ' ';
-                            }
-                            echo '</div>';
-						}
-						echo '</div><hr>';
-					}
-				}
+				$this->renderPartial('payment',array('order'=>$order));
 				?>
                 <?php if (User::model()->isAuthor()) : ?>
 				<div class="col-xs-12"><?php

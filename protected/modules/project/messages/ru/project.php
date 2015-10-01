@@ -131,8 +131,8 @@ return array(
     'List ZakazParts' => 'List ZakazParts',
     'Manage Zakaz Parts' => 'Manage Zakaz Parts',
     'Additionally send:' => 'Дополнительно отправить:',
-    'Ordering Information' => 'Информация о заказе'
-
+    'Ordering Information' => 'Информация о заказе',
+	'Pay online' => 'Оплатить онлайн'
 
 
 
