@@ -117,6 +117,17 @@ return array(
     // admin menu
     'Accounts department' => 'Бухгалтерия',
 
+	// работа с этапами 
+
+    'StepStatuses' => 'Статусы этапов',
+    'Part Statuses' =>  'Состояние этапов',
+    'List PartStatus' =>  'Список состояний этапов',
+	'Create PartStatus' =>  'Создать статус',
+	'Manage PartStatus' =>  'Управление состоянием этапов',
+	
+	'Update PartStatus' => 'Сохранить',
+	'Delete PartStatus' => 'Удалить',
+	'View PartStatus' => 'Показать списком',
 
 
 

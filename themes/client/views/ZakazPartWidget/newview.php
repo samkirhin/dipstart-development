@@ -6,13 +6,19 @@
  * Time: 15:55
  */
 if (count($data['files']) > 0 || !User::model()->isCustomer()) {
+//	echo '<br>data=';print_r($data);
+//	echo '<br>this=';print_r($this);
 ?>
 <div class="col-xs-12">
 	<div class="row zero-edge">
 		<div class="panel-group" id="accordion">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<div class="partStatus"></div>
+					<div class="partStatus">
+						<div class="partStatus-header">Статус:</div>
+						<div class="partStatus-status" id="partStatus-status-<?= $this->record_id ?>"><?= $this->status ?></div>
+					</div>	
+					<div class="partStatus-bottom"></div>
 					<div class="title-name">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" data-parent="#accordion"
@@ -22,11 +28,17 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 						</h4>
 					</div>
 					<?php if (User::model()->isAuthor()) { ?>
-					<div class="title-time"><?=ProjectModule::t('Date')?>:<br />
+					<div class="title-time">Дата сдачи:<br />
 						<?php echo $data['dbdate']; ?>
 					</div>
 					<?php } ?>
 				</div>
+
+				<?php if ((int)$this->status_id != 6) : ?>
+				<input id="zakaz-done-<?= $this->record_id ?>" name="zakaz-done-<?= $this->record_id ?>" class="btn btn-primary btn-block" value="Этап готов" type="button" onclick="zakaz_done(<?= $this->record_id ?>); return false;">
+				<input id="zakaz-done-hidden-<?= $this->record_id ?>" name="zakaz-done-hidden-<?= $this->record_id ?>" class="btn btn-primary btn-block" type="hidden" value="<?= (int)$this->status_id ?>">
+				<?php endif ?>
+				
 				<div id="collapseOne<?php echo $data['id']; ?>" class="panel-collapse collapse">
 					<div class="panel-body">
 						<?php
