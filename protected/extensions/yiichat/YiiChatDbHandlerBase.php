@@ -97,7 +97,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				"message"=>$message_filtered,
 			);
 			$order = Zakaz::model()->findByPk($chat_id);
-			if ($postdata['index']==0){
+			if (isset($postdata['index']) && ($postdata['index']==0)){
 				if ($postdata['recipient']=='Author'){
 					$obj['recipient'] = $order->attributes['executor'];
                     if ($obj['recipient']==0) $obj['recipient']=-1;
@@ -120,7 +120,8 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                     if ($sender=='Customer') $obj['recipient']=$order->attributes['executor'];
                     if ($sender=='Author') $obj['recipient']=$order->attributes['user'];
                     $newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
-                }
+
+					}
 				else {
                     if ($postdata['recipient']=='Customer') $obj['recipient']=$order->attributes['user_id'];
                     if ($postdata['recipient']=='Author') $obj['recipient']=$order->attributes['executor'];
@@ -131,6 +132,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			// now retrieve the post
             $obj['recipient']=User::model()->findByPk($obj['recipient']);
             $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
+
             $obj['sender']=User::model()->findByPk($obj['sender']);
             $obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
 			
@@ -140,13 +142,19 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				'Reply-To: no-reply@'.$_SERVER['SERVER_NAME'] . "\r\n" .
 				'Content-Type: text/html; charset=utf-8;' .
 				'X-Mailer: PHP/' . phpversion();
-	    mail($obj['recipient']->attributes['email'],$title,$message,$headers);
+			mail($obj['recipient']->attributes['email'],$title,$message,$headers);
             if ($postdata['flags'])
                 foreach($postdata['flags'] as $v)
                     switch($v){
                         case 'send_sms':
                             include_once "smsc_api.php";
-                            list($sms_id, $sms_cnt, $cost, $balance) = send_sms(str_replace(['+','-'],'',$obj['recipient']->profile->attributes['mob_tel']), $obj['message']);
+//echo '<br>$obj=';
+//print_r($obj);
+echo '<br>profile->attributes='.$obj['recipient']->profile->attributes['phone_number'];
+echo '<br>phone='.$obj['recipient']->attributes['phone_number'];
+echo '<br>attributes='; print_r($obj['recipient']->attributes);
+                            list($sms_id, $sms_cnt, $cost, $balance) = send_sms(str_replace(['+','-'],'',$obj['recipient']->attributes['phone_number']), $obj['message']);
+//                            list($sms_id, $sms_cnt, $cost, $balance) = send_sms(str_replace(['+','-'],'',$obj['recipient']->profile->attributes['mob_tel']), $obj['message']);
                             break;
                         case 'send_email':
                             mail($obj['recipient']->attributes['email'],'You receive new message in chat',$obj['message']);
