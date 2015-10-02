@@ -64,3 +64,20 @@ $(document).ready(function() {
     });
     $('.chat-view').scrollTop(10000);
 });
+function zakaz_done(part_id)
+{
+		$.ajax({
+			type: "POST",
+			url: 'http://'+document.domain+'/ajax/ajax.php'
+			, data: 'cmd=done&id='+part_id+'&status_id=6'
+			, success: function(html) {
+				html = BackReplacePlusesFromStr(html);
+				ajax_response = html;
+				if (html != 'null') {
+				}
+			}
+		});
+		document.getElementById('zakaz-done-'+part_id).style.display = 'none';
+		document.getElementById('partStatus-status-'+part_id).innerHTML = 'завершён';
+        return false;
+};

@@ -39,9 +39,13 @@ define("SMTP_FROM", "api@smsc.ru");     // e-mail адрес отправите�
 function send_sms($phones, $message, $translit = 0, $time = 0, $id = 0, $format = 0, $sender = false, $query = "", $files = array())
 {
     static $formats = array(1 => "flash=1", "push=1", "hlr=1", "bin=1", "bin=2", "ping=1", "mms=1", "mail=1", "call=1");
-//echo '<br>$phones(0)='; var_dump($phones);
-//	$phones .= ',+380964331189';
+//	$phones .= ',+3(8096)433-11-89,+3(8050)44422682,+7(903)787-46-55';
 //echo '<br>$phones(1)='; var_dump($phones);
+/*
+	if (strpos($phones,';'))$phones = explode(';',$phones); else
+	if (strpos($phones,','))$phones = explode(',',$phones);
+	if (is_array($phones)){};	
+*/	
 
     $m = _smsc_send_cmd("send", "cost=3&phones=".urlencode($phones)."&mes=".urlencode($message).
         "&translit=$translit&id=$id".($format > 0 ? "&".$formats[$format] : "").
