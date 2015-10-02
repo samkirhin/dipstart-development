@@ -72,7 +72,8 @@ class ZakazPartWidget extends CWidget{
 						var status_id = document.getElementById('select-status-$this->record_id').value;
 						$.ajax({
 							type: \"POST\",
-							url:'http://nolihan-ru.1gb.ru/ajax/ajax.php'
+//							url:'http://nolihan-ru.1gb.ru/ajax/ajax.php'
+							url:'http://'+document.domain+'/project/zakaz/index'
 							, data : 'cmd=status&status_id='+status_id+'&id='+item_id
 							, success: function(html) {
 								html = BackReplacePlusesFromStr(html);
@@ -86,7 +87,7 @@ class ZakazPartWidget extends CWidget{
 
 			$this->select.= '<select name="select-status-'.$this->record_id.'" id="select-status-'.$this->record_id.'" onchange="status_changed_'.$this->record_id.'('.$this->record_id.'); return false;">';
 			foreach ($records as $rec) {
-				$this->select.= "<option value='$rec->id>' ";
+				$this->select.= "<option value='$rec->id' ";
 				if ($rec->id == $item->status_id) $this->select.= 'selected="selected"';
 				$this->select.= ">$rec->status</option>";
 			};	

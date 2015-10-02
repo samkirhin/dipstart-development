@@ -33,7 +33,7 @@ class ZakazController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','status'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -572,4 +572,16 @@ class ZakazController extends Controller
         } else $this->_response->setData(false);
         $this->_response->send();
     }
+
+    public function actionStatus() {
+		$row	= array(
+			'status_id' => Yii::app()->request->getPost('status_id'),
+		);
+		$id		= Yii::app()->request->getPost('id');
+		$condition 	= array();
+		$params		= array();
+		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
+        Yii::app()->end();
+    }
+	
 }
