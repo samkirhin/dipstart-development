@@ -148,11 +148,6 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
                     switch($v){
                         case 'send_sms':
                             include_once "smsc_api.php";
-//echo '<br>$obj=';
-//print_r($obj);
-echo '<br>profile->attributes='.$obj['recipient']->profile->attributes['phone_number'];
-echo '<br>phone='.$obj['recipient']->attributes['phone_number'];
-echo '<br>attributes='; print_r($obj['recipient']->attributes);
                             list($sms_id, $sms_cnt, $cost, $balance) = send_sms(str_replace(['+','-'],'',$obj['recipient']->attributes['phone_number']), $obj['message']);
 //                            list($sms_id, $sms_cnt, $cost, $balance) = send_sms(str_replace(['+','-'],'',$obj['recipient']->profile->attributes['mob_tel']), $obj['message']);
                             break;
