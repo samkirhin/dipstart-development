@@ -97,6 +97,7 @@ return array(
     'Profile'=>'Профиль',
     'Orders'=>'Заказы',
     'New projects'=>'Новые проекты',
+    'NEW ORDERS'=>'Новые заказы',
     'My orders'=>'Мои заказы',
     'Create order'=>'Создать заказ',
     'Order statuses'=>'Статусы заазов',
@@ -124,12 +125,11 @@ return array(
     'List PartStatus' =>  'Список состояний этапов',
 	'Create PartStatus' =>  'Создать статус',
 	'Manage PartStatus' =>  'Управление состоянием этапов',
-	
 	'Update PartStatus' => 'Сохранить',
 	'Delete PartStatus' => 'Удалить',
 	'View PartStatus' => 'Показать списком',
-
-
+	'AfterModerate'  => 'Ваши изменения приняты, вступят в силу после модерации',
+	'YouAreExecutor'  => 'Вы назначены исполнителем данного заказа',
 
 
 );

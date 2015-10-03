@@ -7,9 +7,10 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
 
-<?php if (User::model()->isCustomer()) 
-	echo '<div class="zakaz-info-header-customer" ><font color="green">Ваши изменения приняты, вступят в силу после модерации.</font></div>';
-	echo '<div class="zakaz-info-header-customer-empty" >&nbsp;</div>';
+<?php if (User::model()->isCustomer()) {
+		echo '<div class="zakaz-info-header-customer" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
+		echo '<div class="zakaz-info-header-customer-empty" >&nbsp;</div>';
+	}
 ?>
 <div class="container">
     <div class="row r">
@@ -142,7 +143,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 
 		<?php 
 			if($order->executor != 0){ // Если назначен исполнитель
-				echo '<div class="zakaz-info-header"><font color="green">Вы назначены исполнителем данного заказа</font></div>';
+				echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
 				echo '<div class="zakaz-info-header-customer-empty">&nbsp;</div>';
 			};	
 		?>		
