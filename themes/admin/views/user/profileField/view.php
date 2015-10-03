@@ -32,5 +32,6 @@ $this->menu=array(
 		'default',
 		'position',
 		'visible',
+		'editable',
 	),
 )); ?>

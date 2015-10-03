@@ -174,9 +174,15 @@ $( document ).ready( function() {
     $('div.zero-edge').not('.change-row').find('div.panel-heading h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
     
     $('div.info-block div.panel-heading a').on('click', function() {
+		
+		$('#Zakaz_dbdate').attr('disabled', 'true' );
+		document.getElementById('Zakaz_dbdate').style.color = '#000000';
+		document.getElementById('Zakaz_dbdate').style.background = '#FFFFFF';
+		
         if (arrow == 'fa-angle-down fa-lg') {
             arrow = 'fa-angle-up fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-down fa-lg').addClass(arrow);
+			
         } else {
             arrow = 'fa-angle-down fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);

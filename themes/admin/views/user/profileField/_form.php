@@ -113,6 +113,12 @@
 		<?php echo CHtml::error($model,'visible'); ?>
 	</div>
 
+	<div class="row editable">
+		<?php echo CHtml::activeLabelEx($model,'editable'); ?>
+		<?php echo CHtml::activeDropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
+		<?php echo CHtml::error($model,'editable'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
 	</div>
