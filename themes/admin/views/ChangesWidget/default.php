@@ -5,7 +5,7 @@
 ?>
 
 
-<div class="row zero-edge">
+<div class="row zero-edge change-row">
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">

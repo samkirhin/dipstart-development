@@ -20,8 +20,6 @@ hr {
     height: 1px;
     background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(#ecf0f5), to(rgba(0, 0, 0, 0)));
     background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
-    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
-    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ecf0f5, rgba(0, 0, 0, 0));
     position: relative;
     float: left;
@@ -184,8 +182,7 @@ hr {
 }
 
 .addPart {
-  -webkit-border-radius: 0;
-          border-radius: 0;
+  border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -206,8 +203,7 @@ hr {
 }
 
 .addPart {
-  -webkit-border-radius: 0;
-          border-radius: 0;
+  border-radius: 0;
   margin: 10px 0 10px;
   width: 100% !important;
 }
@@ -298,8 +294,7 @@ label
 .chat-header .customSelect {
     margin: 6px 0 0 10px;
     background: #fff url('../images/arrow-bottom-icon.png') no-repeat 93% center;
-    -webkit-border-radius: 5px;
-            border-radius: 5px;
+    border-radius: 5px;
     height: 25px;
     line-height: 22px;
     padding-right: 7px;
@@ -363,7 +358,6 @@ label
 .you {
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
-    display: -moz-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
     width: 100%;
@@ -421,8 +415,7 @@ label
     margin-top: 10px;
 }
 .panel-group .panel {
-    -webkit-border-radius: 0px;
-            border-radius: 0px;
+    border-radius: 0px;
 }
 .terms-save-btn {
     margin-top: 10px;
@@ -430,8 +423,7 @@ label
     float: right;
 }
 .label {
-    -webkit-border-radius: 0px;
-            border-radius: 0px;
+    border-radius: 0px;
     font-size: 14px;
 }
 .panel-heading-white {
@@ -609,8 +601,7 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
     text-decoration: none;
 }
 .pager li > a, .pager li > span {
-    -webkit-border-radius: 3px;
-            border-radius: 3px;
+    border-radius: 3px;
 }
 .search-form {
     padding: 15px;
@@ -819,7 +810,7 @@ div.partStatus {
 
 
 div#accordion .panel-title a {
-    text-align: left!important;
+    text-align: left;
 }
 
 .panel-default > .panel-heading, #new-changes-collapse {
@@ -897,4 +888,50 @@ textarea#message {
     float: left;
     padding: 12px 7px;
 }
-/*
+*/
+
+div.rating-line {
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-top: 12px;
+    margin-bottom: 32px;
+}
+
+div.rating-line div.my-rating {
+    display: inline-block;
+    width: 20%;
+}
+
+div.rating-line div.author-raiting {
+    width: 12%;
+}
+
+div.rating-line div.my-rating span.value {
+    font-weight: bold;
+}
+
+table.detail-view {
+    display: inline-block;
+    width: 70% !important;
+}
+
+div.materials {
+    display: inline-block;
+    width: -webkit-calc(30% - 15px);
+    width: calc(30% - 15px);
+    margin-left: 15px;
+    vertical-align: top;
+    
+}
+
+div.project-changes div.panel-heading {
+    background-color: #f1f8e9 !important;
+}
+
+div.project-changes div.panel-heading h4.panel-title a {
+    text-align: center !important;
+}
+
+div.project-changes div.panel-heading h4.panel-title a i {
+    padding-left: 4px;
+}
