@@ -2,12 +2,14 @@
 /* @var $this ProjectMessagesController */
 /* @var $model ProjectMessages */
 /* @var $form CActiveForm */
-$order = Zakaz::model()->resetScope()->findByPk($orderId);
+//print_r($changes); die();
+$order		= Zakaz::model()->resetScope()->findByPk($orderId);
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
+
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
 
-<?php if (User::model()->isCustomer()) {
+<?php if (User::model()->isCustomer() && !$order->is_active) {
 		echo '<div class="zakaz-info-header-customer" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
 		echo '<div class="zakaz-info-header-customer-empty" >&nbsp;</div>';
 	}
@@ -142,7 +144,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
         </div>
 
 		<?php 
-			if($order->executor != 0){ // Если назначен исполнитель
+			if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
 				echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
 				echo '<div class="zakaz-info-header-customer-empty">&nbsp;</div>';
 			};	
