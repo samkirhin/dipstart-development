@@ -3,8 +3,15 @@
 class ZakazPartWidget extends CWidget{
     
     public $projectId;
+	public $status;
+	public $item_id;
+	public $record_id;
+	public $status_id;
+	public $_status;
+	public $select;
     public $arrDataProvider;
 	public static $folder;
+
 
     public function init() {
 		// --- campaign
@@ -49,7 +56,46 @@ class ZakazPartWidget extends CWidget{
             'summaryText'=>'',
         ));*/
 		$data = $this->arrDataProvider->getData();
-		foreach ($data as $item)
-		$this->render('newview', $item);
+		
+		$records = PartStatus::model()->findAll();
+
+		foreach ($data as $this->item_id => $item) {
+			$this->status = PartStatus::model()->findByPk($item->status_id);
+
+			$this->record_id = $item->id;
+			$this->status_id = $item->status_id;
+			$this->status = $this->status->status;
+			
+			$this->select = "
+				<script type=\"text/javascript\">
+					function status_changed_$this->record_id( item_id ){
+						var status_id = document.getElementById('select-status-$this->record_id').value;
+						$.ajax({
+							type: \"POST\",
+//							url:'http://nolihan-ru.1gb.ru/ajax/ajax.php'
+							url:'http://'+document.domain+'/project/zakaz/index'
+							, data : 'cmd=status&status_id='+status_id+'&id='+item_id
+							, success: function(html) {
+								html = BackReplacePlusesFromStr(html);
+								ajax_response = html;
+								if (html != 'null') {
+								}
+							}
+						});
+					}
+				</script>";
+
+			$this->select.= '<select name="select-status-'.$this->record_id.'" id="select-status-'.$this->record_id.'" onchange="status_changed_'.$this->record_id.'('.$this->record_id.'); return false;">';
+			foreach ($records as $rec) {
+				$this->select.= "<option value='$rec->id' ";
+				if ($rec->id == $item->status_id) $this->select.= 'selected="selected"';
+				$this->select.= ">$rec->status</option>";
+			};	
+			$this->select.= '</select>';
+			$this->render('newview', $item);
+//			echo '<pre>$item=';
+//			var_dump($item );
+//			echo '</pre>';
+		}
     }
 }

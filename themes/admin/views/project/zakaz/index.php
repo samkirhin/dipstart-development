@@ -134,8 +134,10 @@ if (Campaign::getId()){
     </div>
 </div>
 <?php
+/*
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {
     $('[id ^= Zakaz_db]').datepicker(jQuery.extend(jQuery.datepicker.regional['ru']));
 }
 ");
+*/

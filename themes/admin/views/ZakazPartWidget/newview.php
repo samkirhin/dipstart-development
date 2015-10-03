@@ -6,12 +6,15 @@
  * Time: 15:55
  */
 ?>
-
 <div class="row zero-edge">
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="partStatus"></div>
+                <div class="partStatus">
+					<div class="partStatus-header">Статус:</div>
+					<div class="partStatus-status"><?= $this->select; ?></div>
+				</div>	
+				<div class="partStatus-bottom"></div>
                 <div class="title-name">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion"

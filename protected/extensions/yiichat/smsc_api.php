@@ -39,7 +39,16 @@ define("SMTP_FROM", "api@smsc.ru");     // e-mail адрес отправите�
 function send_sms($phones, $message, $translit = 0, $time = 0, $id = 0, $format = 0, $sender = false, $query = "", $files = array())
 {
     static $formats = array(1 => "flash=1", "push=1", "hlr=1", "bin=1", "bin=2", "ping=1", "mms=1", "mail=1", "call=1");
+//	$phones .= ',79037874655,+3(8096)433-11-89';
+//	$phones  = '79037874655,+3(8096)433-11-89,79037874655';
+//echo '<br>$phones(1)='; var_dump($phones);
+/*
+	if (strpos($phones,';'))$phones = explode(';',$phones); else
+	if (strpos($phones,','))$phones = explode(',',$phones);
+	if (is_array($phones)){};	
+*/	
 
+	$message = strip_tags($message);
     $m = _smsc_send_cmd("send", "cost=3&phones=".urlencode($phones)."&mes=".urlencode($message).
         "&translit=$translit&id=$id".($format > 0 ? "&".$formats[$format] : "").
         ($sender === false ? "" : "&sender=".urlencode($sender)).
@@ -182,7 +191,7 @@ function get_balance()
 function _smsc_send_cmd($cmd, $arg = "", $files = array())
 {
     $url = (SMSC_HTTPS ? "https" : "http")."://smsc.ru/sys/$cmd.php?login=".urlencode(SMSC_LOGIN)."&psw=".urlencode(SMSC_PASSWORD)."&fmt=1&charset=".SMSC_CHARSET."&".$arg;
-
+echo '<br>url='.$url;
     $i = 0;
     do {
         if ($i) {
