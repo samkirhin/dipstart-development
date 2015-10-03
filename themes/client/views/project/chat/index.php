@@ -6,6 +6,11 @@ $order = Zakaz::model()->resetScope()->findByPk($orderId);
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
+
+<?php if (User::model()->isCustomer()) 
+	echo '<div class="zakaz-info-header-customer" ><font color="green">Ваши изменения приняты, вступят в силу после модерации.</font></div>';
+	echo '<div class="zakaz-info-header-customer-empty" >&nbsp;</div>';
+?>
 <div class="container">
     <div class="row r">
         <div class="col-xs-4">
@@ -14,6 +19,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 				$this->renderPartial('payment',array('order'=>$order));
 				?>
                 <?php if (User::model()->isAuthor()) : ?>
+
 				<div class="col-xs-12"><?php
 					if($order->executor != 0) { // Если назначен исполнитель
 						echo '<div class="my-rating">'.ProjectModule::t('My rating:').' <span class="value">'.Profile::model()->findByPk($order->executor)->rating.'</span></div>';
@@ -24,6 +30,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 					}
 				?></div>
                 <?php endif;?>
+				
 				<?php
 				$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
 					'projectId' => $order->id,
@@ -61,6 +68,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 					}
 			} else mkdir($path);
             if (User::model()->isCustomer()) {
+				
                 $this->widget('ext.EAjaxUpload.EAjaxUpload',
                     array(
                         'id' => 'justFileUpload',
@@ -131,6 +139,13 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
             <!-- form -->
             </div>
         </div>
+
+		<?php 
+			if($order->executor != 0){ // Если назначен исполнитель
+				echo '<div class="zakaz-info-header"><font color="green">Вы назначены исполнителем данного заказа</font></div>';
+				echo '<div class="zakaz-info-header-customer-empty">&nbsp;</div>';
+			};	
+		?>		
         
         <div class="col-xs-12 info-block" style="margin-bottom: 15px;">
             <div class="panel-group" id="info-block">
@@ -138,7 +153,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
                     <div class="panel-heading panel-heading-white">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
-                                <?=ProjectModule::t('Ordering Information')?>
+                                <?=ProjectModule::t('Ordering Information').' №'.$order->id ?>
                             </a>
                         </h4>
                     </div>
