@@ -169,6 +169,10 @@ $( document ).ready( function() {
 
 $( document ).ready( function() {
     var arrow = 'fa-angle-down fa-lg';
+    
+    $('div.change-row div.panel-heading h4.panel-title a').append('<i style="font-size: 1.8em!important; padding-left: 4px" class="fa fa-angle-up fa-lg">');
+    $('div.zero-edge').not('.change-row').find('div.panel-heading h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
+    
     $('div.info-block div.panel-heading a').on('click', function() {
         if (arrow == 'fa-angle-down fa-lg') {
             arrow = 'fa-angle-up fa-lg';
@@ -178,6 +182,15 @@ $( document ).ready( function() {
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);
         }
     });
+    
+    $('div.zero-edge div.panel-heading h4.panel-title a').on('click', function() {
+        if ($(this).children('i').hasClass('fa-angle-down fa-lg')) {
+            $(this).children('i').removeClass('fa-angle-down fa-lg').addClass('fa-angle-up fa-lg');
+        } else {
+            $(this).children('i').removeClass('fa-angle-up fa-lg').addClass('fa-angle-down fa-lg');
+        }
+    });
+    
 /*<<<<<<< HEAD*/
     var arrow = 'fa-angle-up';
     

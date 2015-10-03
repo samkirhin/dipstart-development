@@ -1,5 +1,5 @@
-.panel-heading .hasDatepicker
-/* Vladimir */ {
+.panel-heading .hasDatepicker /* Vladimir */
+{
     position: relative;
     /*z-index: 2000;*/
 }
@@ -53,4 +53,9 @@ div.terms-column-1, div.terms-column-2, div.terms-column-3 {
 
 .chtpl0-chatblock {
     height: 412px !important;
+}
+
+div.info-block {
+    padding-left: 0px;
+    padding-right: 0px;
 }

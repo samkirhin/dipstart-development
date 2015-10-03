@@ -136,7 +136,7 @@
 </div>
 </div>
 
-<div class="row">
+<div class="row" style="display: none">
     <div class="col-xs-12 info-block">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">

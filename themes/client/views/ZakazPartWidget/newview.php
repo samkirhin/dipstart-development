@@ -28,7 +28,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 						</h4>
 					</div>
 					<?php if (User::model()->isAuthor()) { ?>
-					<div class="title-time">Дата сдачи:<br />
+					<div class="title-time">Срок сдачи:<br />
 						<?php echo $data['dbdate']; ?>
 					</div>
 					<?php } ?>
@@ -44,7 +44,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 						<?php
 						if (User::model()->isAuthor()) {
 							?>
-							<textarea class="col-xs-12" disabled><?php echo $data['comment']; ?></textarea>
+							<p><?php echo $data['comment']; ?></p>
 						<?php } ?>
 
 						<div class="part_files">
