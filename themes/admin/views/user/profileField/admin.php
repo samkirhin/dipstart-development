@@ -76,6 +76,11 @@ $('.search-form form').submit(function(){
 		//'other_validator',
 		//'default',
 		'position',
+        array(
+			'name'=>'editable',
+			'type'=>'html',
+			'value'=> '$data->editable',
+                ),            
 		array(
 			'name'=>UserModule::t('visible'),
 			'value'=>'ProfileField::itemAlias("visible",$data->visible)',

@@ -57,6 +57,9 @@
 	<?php echo CHtml::encode($data->visible); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('editable')); ?>:</b>
+	<?php echo CHtml::encode($data->editable); ?>
+	<br />
 	*/ ?>
 
 </div>

@@ -474,10 +474,10 @@ class ProfileFieldController extends Controller
         $model->unsetAttributes();  // clear any default values
         if(isset($_GET['ProfileField']))
             $model->attributes=$_GET['ProfileField'];
-
         $this->render('admin',array(
             'model'=>$model,
         ));
+		
 		/*
 		$dataProvider=new CActiveDataProvider('ProfileField', array(
 			'pagination'=>array(
