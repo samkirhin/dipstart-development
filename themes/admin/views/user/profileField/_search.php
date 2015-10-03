@@ -4,6 +4,9 @@
     'action'=>Yii::app()->createUrl($this->route),
     'method'=>'get',
 )); ?>
+<pre>
+<?php echo '$model='; var_dump($model); die(); ?>
+</pre>
 
     <div class="row">
         <?php echo $form->label($model,'id'); ?>
@@ -84,7 +87,12 @@
         <?php echo $form->label($model,'visible'); ?>
         <?php echo $form->dropDownList($model,'visible',ProfileField::itemAlias('visible')); ?>
     </div>
-
+<!--
+    <div class="row">
+        <?php echo $form->label($model,'editable'); ?>
+        <?php echo $form->dropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
+    </div>
+-->
     <div class="row buttons">
         <?php echo CHtml::submitButton(UserModule::t('Search')); ?>
     </div>

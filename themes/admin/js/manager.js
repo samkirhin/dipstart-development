@@ -170,9 +170,15 @@ $( document ).ready( function() {
 $( document ).ready( function() {
     var arrow = 'fa-angle-down fa-lg';
     $('div.info-block div.panel-heading a').on('click', function() {
+		
+		$('#Zakaz_dbdate').attr('disabled', 'true' );
+		document.getElementById('Zakaz_dbdate').style.color = '#000000';
+		document.getElementById('Zakaz_dbdate').style.background = '#FFFFFF';
+		
         if (arrow == 'fa-angle-down fa-lg') {
             arrow = 'fa-angle-up fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-down fa-lg').addClass(arrow);
+			
         } else {
             arrow = 'fa-angle-down fa-lg';
             $('div.info-block div.panel-heading a i').removeClass('fa-angle-up fa-lg').addClass(arrow);

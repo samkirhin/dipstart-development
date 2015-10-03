@@ -28,35 +28,4 @@
 	<?php echo CHtml::encode($data->required); ?>
 	<br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('match')); ?>:</b>
-	<?php echo CHtml::encode($data->match); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('range')); ?>:</b>
-	<?php echo CHtml::encode($data->range); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('error_message')); ?>:</b>
-	<?php echo CHtml::encode($data->error_message); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('other_validator')); ?>:</b>
-	<?php echo CHtml::encode($data->other_validator); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('default')); ?>:</b>
-	<?php echo CHtml::encode($data->default); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('position')); ?>:</b>
-	<?php echo CHtml::encode($data->position); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('visible')); ?>:</b>
-	<?php echo CHtml::encode($data->visible); ?>
-	<br />
-
-	*/ ?>
-
 </div>
