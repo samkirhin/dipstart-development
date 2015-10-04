@@ -74,7 +74,7 @@ class ProfileField extends CActiveRecord
 			array('field_size', 'match', 'pattern' => '/^\s*[-+]?[0-9]*\,*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'),
 			array('title, match, error_message, other_validator, default, widget', 'length', 'max'=>255),
 			array('range, widgetparams', 'length', 'max'=>5000),
-			array('id, varname, title, field_type, field_size, field_size_min, required, match, range, error_message, other_validator, default, widget, widgetparams, position, visible', 'editable', 'safe', 'on'=>'search'),
+			array('id, varname, title, field_type, field_size, field_size_min, required, match, range, error_message, other_validator, default, widget, widgetparams, position, visible, editable', 'safe', 'on'=>'search'),
 		);
 	}
 
