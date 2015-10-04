@@ -25,6 +25,7 @@ switch ($role){
         $items[] = array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'items' => array(
             array('label'=>Yii::t('site','Categories'), 'url'=>array('/catalog/index')),
             array('label'=>Yii::t('site','Statuses'), 'url'=>array('/projectStatus/index')),
+			array('label'=>Yii::t('site','Parts statuses'), 'url'=>array('/partStatus/index')),
             array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
         ));
 		} else {

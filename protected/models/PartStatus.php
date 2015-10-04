@@ -14,7 +14,7 @@ class PartStatus extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'PartStatus';
+		return Campaign::getId().'_PartStatus';
 	}
 
 	/**
