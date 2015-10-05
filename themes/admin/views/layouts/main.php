@@ -53,6 +53,7 @@ switch ($role){
             array('label'=>Yii::t('site','Categories'), 'url'=>array('/categories/index')),
             array('label'=>Yii::t('site','Jobs'), 'url'=>array('/jobs/index')),
             array('label'=>Yii::t('site','Statuses'), 'url'=>array('/projectStatus/index')),
+            array('label'=>Yii::t('site','StepStatuses'), 'url'=>array('/partStatus/index')),
             array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
         ));
         $items[] = array('label'=>Yii::t('site','Events'), 'url'=>array('/project/event'));

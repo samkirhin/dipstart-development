@@ -137,6 +137,7 @@ hr {
 }
 .panel-group {
     margin-bottom: 0px;
+    margin-top: 10px;
 }
 .list-view {
     padding-top: 0px;
@@ -150,12 +151,32 @@ hr {
     margin-top: 10px;
 }
 .partStatus {
-    width: 16px;
+    width: 100%;
     height: 16px;
     margin: 0 10px 0 0;
-    background: url(../images/check.png) no-repeat center center;
+/*    background: url(../images/check.png) no-repeat center center;*/
     float:left;
+    display: block;
 }
+.partStatus-header {
+	position: relative;
+	float:	 left;
+	color: #337AB7;
+	font-weight: bold;
+	width: 52%;
+	padding-left: 8px;
+}
+.partStatus-status {
+	position: relative;
+	float:	 left;
+	width: 46%;
+}
+.partStatus-bottom {
+    width: 100%;
+    height: 16px;
+    float:  left;
+};
+
 .partTitle {
     float: left;
 }
@@ -223,7 +244,9 @@ label
 {
     font-weight: normal;
 }
-.aboutZakaz {
+.aboutZakaz
+{
+
 }
 .aboutZakaz textarea{
     width: 100%;
@@ -466,16 +489,10 @@ label
     height: 20px;
     margin-right: 10px;
 }
-.partStatus {
-    background: url(../images/check.png) no-repeat center center;
-    width: 16px;
-    height: 16px;
-}
-
 #show-msg {
     color: #fff;
 }
-/*#Zakaz_category_id {
+#Zakaz_category_id {
     width: 100%;
     padding: 3px;
 }
@@ -494,7 +511,7 @@ label
 #Zakaz_edu_dep {
     width: 100%;
     padding: 3px;
-}*/
+}
 .info-column label {
     margin-top: 5px;
     font-weight: 700;
@@ -781,7 +798,8 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
 /* ======= Alex's style ============ */
 
 div.partStatus {
-    display: none;
+/*    display: none;*/
+    display: block;
 }
 
 .panel-title a {
@@ -792,7 +810,7 @@ div.partStatus {
 
 
 div#accordion .panel-title a {
-    text-align: left!important;
+    text-align: left;
 }
 
 .panel-default > .panel-heading, #new-changes-collapse {
@@ -833,6 +851,33 @@ textarea#message {
     padding: 5px 7px;
 }
 
+.zakaz-info-header {
+	float:		top; 
+	width:		100%;
+/*	color:		#337AB7;*/
+	font-weight:bold;
+	height:		24px;
+	text-align:	center;
+}
+.zakaz-info-header-customer {
+	float:		left; 
+	width:		95%;
+	font-weight:bold;
+	height:		20px;
+	text-align:	center;
+	border: 1px solid #DDD;
+	margin-left: 30px;
+	padding-bottom: 22px;
+	position:	relative;
+}
+.zakaz-info-header-customer-empty {
+	float:		left; 
+	width:		100%;
+	height:		10px;
+	position:	relative;
+}
+
+
 /*
 .title-name  {
     width: 100%;
@@ -845,12 +890,48 @@ textarea#message {
 }
 */
 
-h1.projects-title {
-    text-align: center;
-    display: block !important;
-    color: #337AB7;
+div.rating-line {
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-top: 12px;
+    margin-bottom: 32px;
 }
 
-div.content-clearfix {
-    min-height: 450px !important;
+div.rating-line div.my-rating {
+    display: inline-block;
+    width: 20%;
+}
+
+div.rating-line div.author-raiting {
+    width: 12%;
+}
+
+div.rating-line div.my-rating span.value {
+    font-weight: bold;
+}
+
+table.detail-view {
+    display: inline-block;
+    width: 70% !important;
+}
+
+div.materials {
+    display: inline-block;
+    width: -webkit-calc(30% - 15px);
+    width: calc(30% - 15px);
+    margin-left: 15px;
+    vertical-align: top;
+    
+}
+
+div.project-changes div.panel-heading {
+    background-color: #f1f8e9 !important;
+}
+
+div.project-changes div.panel-heading h4.panel-title a {
+    text-align: center !important;
+}
+
+div.project-changes div.panel-heading h4.panel-title a i {
+    padding-left: 4px;
 }

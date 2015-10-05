@@ -1,6 +1,6 @@
 <div class="form">
     
-    <b><?= $model->message ?></b>
+    <b><?= strip_tags($model->message) ?></b>
     
     <?php $form = $this->beginWidget('CActiveForm') ?>
     

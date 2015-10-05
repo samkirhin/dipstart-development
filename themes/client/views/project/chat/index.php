@@ -2,101 +2,154 @@
 /* @var $this ProjectMessagesController */
 /* @var $model ProjectMessages */
 /* @var $form CActiveForm */
-$order = Zakaz::model()->resetScope()->findByPk($orderId);
+//print_r($changes); die();
+$order		= Zakaz::model()->resetScope()->findByPk($orderId);
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
+
+// --- campaign      генерируем список загруженных материалов
+if(isset(Zakaz::$files_folder)){
+	$url = Zakaz::$files_folder.$order->id.'/';
+} else {
+	$url = '/uploads/'.$order->id.'/';
+}
+// ---
+//$url = '/uploads/' . $order->id . '/';
+$path = Yii::getPathOfAlias('webroot') . $url;
+$html_string = '';
+if (file_exists($path)){
+	foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
+		if ((!strstr($v, '#pre#') || User::model()->isCustomer()) && !strstr($v, '#trash#')) {
+			$tmp = '';
+			if(strstr($v, '#pre#')) {
+				$tmp = ' class="gray-file"';
+				$v0 = substr($v,5);
+			} else {
+				$v0 = $v;
+			}
+			$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>'
+											. ' <a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a></li><br />'."\n"; #remove file btn
+		}
+} else mkdir($path);
+
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
+
+<?php if (User::model()->isCustomer() && !$order->is_active) {
+		echo '<div class="zakaz-info-header-customer" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
+		echo '<div class="zakaz-info-header-customer-empty" >&nbsp;</div>';
+	}
+?>
 <div class="container">
     <div class="row r">
+		<?php 
+			if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
+				echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
+				echo '<div class="zakaz-info-header-customer-empty">&nbsp;</div>';
+			};	
+		?>
+        <div class="col-xs-12 info-block" style="margin-bottom: 15px;">
+            <div class="panel-group" id="info-block">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-white">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
+                                <?=ProjectModule::t('Ordering Information').' №'.$order->id ?>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="infoZakaz" class="panel-collapse collapse">
+                        <div class="panel-body">
+
+                            <div class="col-xs-12 aboutZakaz">
+                            <!--<div class="row">-->
+                                <?php
+                                if (User::model()->isAuthor()) {
+									if (Campaign::getId()){
+										$columns = array('id', [
+                                                //'name' => 'author_informed',
+												'name' => 'deadline',
+                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
+                                            ]);
+										$projectFields = $order->getFields();
+										if ($projectFields) {
+											foreach($projectFields as $field) {
+												if ($field->field_type == 'LIST'){
+													$tmp = $field->varname;
+													$columns[] = [
+														'name' => $field->title,
+														'type' => 'raw',
+														'value' => Catalog::model()->findByPk($order->$tmp)->cat_name,
+														];
+												} else {
+													$tmp = $field->varname;
+													$columns[] = [
+														'name' => $field->title,
+														'value' => $order->$tmp
+														];
+												}
+											}
+										}
+									}
+                                    $this->widget('zii.widgets.CDetailView', array(
+                                        'data' => $order,
+                                        'attributes' => $columns));
+									echo '<div class="materials"><h5>Прикреплённые материалы</h5><ul class="materials-files">'.$html_string.'</ul></div>';
+ 									echo '<div class="notes-author">';
+									echo 'Заметки для автора:<br /> '.$order->getAttribute('author_notes');
+									echo '</div>';
+                                } else {
+
+                                    if ($order->is_active) {
+                                        $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
+                                    } else {
+                                        $this->renderPartial('/zakaz/orderInModerate');
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+		<?php if (User::model()->isAuthor()) : ?>
+
+		<div class="col-xs-12 rating-line"><?php
+
+			if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
+				echo '<div class="my-rating author-raiting">'.ProjectModule::t('My rating:').' <span class="value">'.Profile::model()->findByPk($order->executor)->rating.'</span></div>';
+				$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
+				echo '<div class="my-rating">'.ProjectModule::t('Work price:').' <span class="value">'.$payment->work_price.'</span></div>'; //Стоимость проекта для автора
+				echo '<div class="my-rating">'.ProjectModule::t('To pay:').' <span class="value">'.$payment->to_pay.'</span></div>';
+				echo '<div class="my-rating">'.ProjectModule::t('Payed:').' <span class="value">'.$payment->payed.'</span></div>';
+			}
+
+		?>
+		   <div class="my-rating">Срок сдачи: <span class="value"><?=Yii::app()->dateFormatter->formatDateTime($order->author_informed);?></span></div>
+		</div>
+		<?php endif;?>
+		
         <div class="col-xs-4">
             <div class="row">
 				<?php
-				if (User::model()->isCustomer()) {
-					$to_recive = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id))->to_receive;
-					if ($to_recive>0) {
-						echo '<div class="col-xs-12 block-for-upload-chek">';
-						$upload = new UploadPaymentImage;
-						$form = $this->beginWidget('CActiveForm', array(
-							'id' => 'check-form',
-							'action' => ['zakaz/uploadPayment', 'id' => $order->id],
-							'enableAjaxValidation' => false,
-							'htmlOptions' => array(
-								'enctype' => 'multipart/form-data',
-							)
-						)); ?>
-						<div class="to-pay">
-							<span class="text-to-pay"><?=ProjectModule::t('To pay')?><span> <span class="value-to-pay"><? echo $to_recive; ?></span> <span class="rub">&#8381;</span>
-						</div>
-						<div class="row chek">
-							<span class="text_scan"><?=ProjectModule::t('Scan check')?></span> <?php echo $form->fileField($upload, 'file'); ?>
-						</div>
-						<div class="row buttons check-button-upload">
-							<?php echo CHtml::submitButton(ProjectModule::t('Upload')); ?>
-						</div>
-						<?php $this->endWidget();
-						if (count($images) > 0) {
-							echo '<div class="chek-is-approving">'.ProjectModule::t('Your payment at checkout ...').'</div>';
-							//$img = UploadPaymentImage::$folder . $chek_image;
-                            $i = 1;
-                            echo '<div class="chek-image-link">';
-
-                            foreach ($images as $item) {
-                                echo CHtml::link('Чек ' . $i++, UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' )) . ' ';
-                            }
-                            echo '</div>';
-						}
-						echo '</div><hr>';
-					}
-				}
+				$this->renderPartial('payment',array('order'=>$order));
 				?>
-                <?php if (User::model()->isAuthor()) : ?>
-				<div class="col-xs-12"><?php
-					if($order->executor != 0) { // Если назначен исполнитель
-						echo '<div class="my-rating">'.ProjectModule::t('My rating:').' <span class="value">'.Profile::model()->findByPk($order->executor)->rating.'</span></div>';
-						$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
-						echo '<div class="my-rating">'.ProjectModule::t('Work price:').' <span class="value">'.$payment->work_price.'</span></div>'; //Стоимость проекта для автора
-						echo '<div class="my-rating">'.ProjectModule::t('To pay:').' <span class="value">'.$payment->to_pay.'</span></div>';
-						echo '<div class="my-rating">'.ProjectModule::t('Payed:').' <span class="value">'.$payment->payed.'</span></div>';
-					}
-				?></div>
-                <?php endif;?>
+				
 				<?php
 				$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
 					'projectId' => $order->id,
 				));
 				?>
-                <div class="col-xs-12">
+                <div class="col-xs-12 project-changes">
                     <?php $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
                         'project' => $order,
                     )); ?>
                 </div>
             </div>
             <?php
-			// --- campaign
-			if(isset(Zakaz::$files_folder)){
-				$url = Zakaz::$files_folder.$order->id.'/';
-			} else {
-				$url = '/uploads/'.$order->id.'/';
-			}
-			// ---
-			//$url = '/uploads/' . $order->id . '/';
-            $path = Yii::getPathOfAlias('webroot') . $url;
-			$html_string = '';
-            if (file_exists($path)){
-                foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
-                    if ((!strstr($v, '#pre#') || User::model()->isCustomer()) && !strstr($v, '#trash#')) {
-						$tmp = '';
-						if(strstr($v, '#pre#')) {
-							$tmp = ' class="gray-file"';
-							$v0 = substr($v,5);
-						} else {
-							$v0 = $v;
-						}
-						$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>'
-                                                        . ' <a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a></li><br />'."\n"; #remove file btn
-					}
-			} else mkdir($path);
             if (User::model()->isCustomer()) {
+				
                 $this->widget('ext.EAjaxUpload.EAjaxUpload',
                     array(
                         'id' => 'justFileUpload',
@@ -167,96 +220,7 @@ Yii::app()->clientScript->registerScriptFile('/js/chat.js');
             <!-- form -->
             </div>
         </div>
-        
-        <div class="col-xs-12 info-block" style="margin-bottom: 15px;">
-            <div class="panel-group" id="info-block">
-                <div class="panel panel-default">
-                    <div class="panel-heading panel-heading-white">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
-                                <?=ProjectModule::t('Ordering Information')?>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="infoZakaz" class="panel-collapse collapse in">
-                        <div class="panel-body">
 
-                            <div class="col-xs-12 aboutZakaz">
-                                <?php
-                                if (User::model()->isAuthor()) {
-									if (Campaign::getId()){
-										$columns = array('id', [
-                                                'name' => 'author_informed',
-                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
-                                            ]);
-										$projectFields = $order->getFields();
-										if ($projectFields) {
-											foreach($projectFields as $field) {
-												if ($field->field_type == 'LIST'){
-													$tmp = $field->varname;
-													$columns[] = [
-														'name' => $field->title,
-														'type' => 'raw',
-														'value' => Catalog::model()->findByPk($order->$tmp)->cat_name,
-														];
-												} else {
-													$tmp = $field->varname;
-													$columns[] = [
-														'name' => $field->title,
-														'value' => $order->$tmp
-														];
-												}
-											}
-										}
-									} else {
-										$columns = array(
-                                            'id',
-                                            array(
-                                                'name' => 'category_id',
-                                                'type' => 'raw',
-                                                'value' => Categories::model()->findByPk($order->category_id)->cat_name,
-                                            ),
-                                            array(
-                                                'name' => 'job_id',
-                                                'type' => 'raw',
-                                                'value' => $order->job_id > 0 ? Jobs::model()->findByPk($order->job_id)->job_name : null,
-                                            ),
-                                            'title',
-                                            'text',
-                                            [
-                                                'name' => 'author_informed',
-                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
-                                            ],
-                                            [
-                                                'name' => 'date_finish',
-                                                'value' => Yii::app()->dateFormatter->formatDateTime($order->date_finish),
-                                            ],
-                                            'pages',
-                                            'add_demands',
-										);
-									}
-                                    $this->widget('zii.widgets.CDetailView', array(
-                                        'data' => $order,
-                                        'attributes' => $columns));
-									echo '<div class="notes-author">';
-									echo 'Заметки для автора:<br /> '.$order->getAttribute('author_notes');
-									echo '</div>';
-									echo '<div class="materials"><h5>Прикреплённые материалы</h5><ul class="materials-files">'.$html_string.'</ul></div>';
-                                } else {
-
-                                    if ($order->is_active) {
-                                        $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
-                                    } else {
-                                        $this->renderPartial('/zakaz/orderInModerate');
-                                    }
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
 </div>

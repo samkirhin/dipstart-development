@@ -125,7 +125,7 @@ if (Campaign::getId()){
                 rowNum = $(this).index(),
                 keys = $('#order_list > div.keys > span'),
                 rowId = keys.eq(rowNum).text();
-
+   if (rowId.length>0)
             location.href = '/project/zakaz/update/id/' + rowId;
         });
     });
@@ -134,8 +134,10 @@ if (Campaign::getId()){
     </div>
 </div>
 <?php
+/*
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {
     $('[id ^= Zakaz_db]').datepicker(jQuery.extend(jQuery.datepicker.regional['ru']));
 }
 ");
+*/

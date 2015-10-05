@@ -96,7 +96,8 @@ return array(
     'Personal account'=>'Личный счет',
     'Profile'=>'Профиль',
     'Orders'=>'Заказы',
-    'New orders'=>'Новые заказы',
+    'New projects'=>'Новые проекты',
+    'NEW ORDERS'=>'Новые заказы',
     'My orders'=>'Мои заказы',
     'Create order'=>'Создать заказ',
     'Order statuses'=>'Статусы заазов',
@@ -117,8 +118,18 @@ return array(
     // admin menu
     'Accounts department' => 'Бухгалтерия',
 
+	// работа с этапами 
 
-
+    'StepStatuses' => 'Статусы этапов',
+    'Part Statuses' =>  'Состояние этапов',
+    'List PartStatus' =>  'Список состояний этапов',
+	'Create PartStatus' =>  'Создать статус',
+	'Manage PartStatus' =>  'Управление состоянием этапов',
+	'Update PartStatus' => 'Сохранить',
+	'Delete PartStatus' => 'Удалить',
+	'View PartStatus' => 'Показать списком',
+	'AfterModerate'  => 'Ваши изменения приняты, вступят в силу после модерации',
+	'YouAreExecutor'  => 'Вы назначены исполнителем данного заказа',
 
 
 );

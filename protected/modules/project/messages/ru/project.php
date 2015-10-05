@@ -41,6 +41,7 @@ return array(
     'Payed' => 'Оплачено автору',
     'Manager Informed' => 'Дата информирования (менеджер)',
     'Author Informed' => 'Срок для Автора',
+	'Deadline' => 'Срок сдачи',
     'Update Zakaz' => 'Редактировать заказ',
     'Update' => 'Редактировать',
     'Add Zakaz Part' => 'Добавить подзаказ',
@@ -53,7 +54,7 @@ return array(
     'Last Zakaz' => 'Последние заказы',
     'My Zakaz' => 'Мои заказы',
     'List' => 'Список',
-    'Changes' => 'Заявка на доработку / коррекцию',
+    'Changes' => 'Исправить / Доработать',
     'Comment' => 'Комментарий',
     'Moderation' => 'Модерация',
     'Add changes' => 'Добавить доработку',
@@ -131,8 +132,8 @@ return array(
     'List ZakazParts' => 'List ZakazParts',
     'Manage Zakaz Parts' => 'Manage Zakaz Parts',
     'Additionally send:' => 'Дополнительно отправить:',
-    'Ordering Information' => 'Информация о заказе'
-
+    'Ordering Information' => 'Информация о заказе',
+	'Pay online' => 'Оплатить онлайн'
 
 
 

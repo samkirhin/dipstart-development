@@ -42,7 +42,7 @@ class Payment extends CActiveRecord
 			array('summ', 'numerical'),
 			array('theme, details_ya, details_wm', 'length', 'max'=>255),
 			array('manager, user, method', 'length', 'max'=>100),
-                        array('manager, user', 'email'),
+                        array('user', 'email'),
 			array('receive_date, pay_date, details_bank', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

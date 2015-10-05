@@ -89,19 +89,40 @@ hr {
     padding-top: 0px;
 }
 .panel {
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
 }
 .parts {
     padding: 0;
     margin-top: 10px;
 }
 .partStatus {
-    width: 16px;
+    width: 100%;
     height: 16px;
     margin: 0 10px 0 0;
-    background: url(../images/check.png) no-repeat center center;
+/*    background: url(../images/check.png) no-repeat center center;*/
     float:left;
 }
+.partStatus-header {
+	position: relative;
+	float:	 left;
+	color: #337AB7;
+	font-weight: bold;
+	width: 36%;
+	padding-left: 8px;
+}
+.partStatus-status {
+	position: relative;
+	float:	 left;
+	width: 64%;
+}
+.partStatus-bottom {
+    width: 100%;
+    height: 16px;
+    float:  left;
+};
+
+
 .partTitle {
     float: left;
 }
@@ -336,6 +357,7 @@ label
 .payment-block {
     background: #fff;
     margin-top: 10px;
+    margin-bottom: 50px;
     padding: 0 15px 15px 15px;
 }
 .info-block {
@@ -424,11 +446,6 @@ label
     width: 15px;
     height: 20px;
     margin-right: 10px;
-}
-.partStatus {
-    background: url(../images/check.png) no-repeat center center;
-    width: 16px;
-    height: 16px;
 }
 
 #show-msg {
@@ -662,7 +679,8 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
 }
 
 div.partStatus {
-    display: none;
+/*    display: none;*/
+    display: block;
 }
 
 .hasDatepicker {
@@ -677,7 +695,7 @@ div.partStatus {
 }
 
 .panel-default > .panel-heading, #new-changes-collapse {
-    background-color: #FAFAFC!important;
+    background-color: #FAFAFC;
     border-color: #F6F7F9!important;
 }
 
@@ -744,6 +762,7 @@ div#chatWindow:empty:after {
     background-color: #286090!important;
     border-color: #204D74!important;
     padding: 7px 112px!important;
+    width: -webkit-calc(100% - 30px)!important;
     width: calc(100% - 30px)!important;
     color: rgb(255, 255, 255)!important;
     opacity: 1!important;
@@ -795,6 +814,10 @@ div.chat-functions > button {
     float: right;
 }
 
+ul.qq-upload-list > li {
+    margin-bottom: 15px!important;
+}
+
 div#ui-datepicker-div {
 	z-index: 11!important;
 }
@@ -803,18 +826,18 @@ div#send_buttons h5 {
     width: 100%!important;
     text-align: right!important;
     padding: 10px 15px 2px!important;
-    visibility: hidden;
-
 }
 
-div#send_buttons > br[style*="none"] ~ button[data-recipient="Author"], div#send_buttons > button[style*="none"] ~ button[data-recipient="Customer"] {
+div#send_buttons > br[style*="none"] ~ button[data-recipient="Author"] {
     margin-top: 25px;
     margin-bottom: 0px!important;
     float: right !important;
 }
-.qq-upload-drop-area {
-	position: relative;
+
+div.info-block > div#accordion > div.panel-default {
+    margin-top: 0px;
 }
-ul.qq-upload-list > li {
-    margin-bottom: 15px;
+
+div.change-row div.panel-heading {
+    background-color: #f1f8e9;
 }
