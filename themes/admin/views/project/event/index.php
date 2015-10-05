@@ -27,7 +27,7 @@
         <?php foreach ($events as $event) {?>
          <tr>
             <td><?php echo $event->id?></td>
-            <td><?php echo $event->description?></td>
+            <td><?php echo $event->description.' '?><a href="http://<?= $_SERVER['SERVER_NAME'] ?>/project/zakaz/update/id/<?= $event->event_id ?>"><?= $event->event_id ?></a></td>
             <td>
                 <?php switch ($event->type) {
                     case EventHelper::TYPE_EDIT_ORDER:
