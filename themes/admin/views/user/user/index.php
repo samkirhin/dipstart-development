@@ -71,18 +71,21 @@ switch ($_GET['s']) {
 			'columns'=>array(
 				array(
 					'type'=>'raw',
-					'name'=>UserModule::t("Full name"),
+					'header'=>UserModule::t("Full name"),
+					'name'=>'full_name',
 					'value'=>'$data->full_name',
 				),
 				array(
-					'name' => UserModule::t("username"),
+					'header' => UserModule::t("username"),
+					'name' => 'username',
 					'type'=>'raw',
 					'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/update","id"=>$data->id))',
 				),
 				'email',
 				array(
 					'type'=>'raw',
-					'name'=>UserModule::t("Phone"),
+					'header'=>UserModule::t("Phone"),
+					'name'=>'phone_number',
 					'value'=>'$data->phone_number',
 				),
 			),

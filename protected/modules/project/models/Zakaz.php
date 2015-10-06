@@ -430,6 +430,7 @@ class Zakaz extends CActiveRecord {
 					'asc' => 't.date_finish',
 					'desc' => 't.date_finish desc',
 				),
+				'*'
 			);
 		} else {
 			$criteria->with = array('job', 'category');
@@ -487,6 +488,7 @@ class Zakaz extends CActiveRecord {
 					'asc' => 't.date_finish',
 					'desc' => 't.date_finish desc',
 				),
+				'*'
 			);
 		}
 
