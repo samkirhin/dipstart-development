@@ -45,6 +45,7 @@ return array(
     'Type' => 'Тип',
     'Status' => 'Статус',
     'Project Statuses' => 'Статусы проектов',
+	'Parts statuses' => 'Статусы этапов',
     'List ProjectStatus' => 'Список статусов',
     'Create ProjectStatus' => 'Добавить статус',
     'Manage ProjectStatus' => 'Управлять списком',
