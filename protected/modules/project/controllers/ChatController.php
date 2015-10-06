@@ -102,9 +102,19 @@ class ChatController extends Controller {
             $model->attributes = $_POST['Zakaz'];
             $model->save();
         }
+		
+        $events = Events::model()->findAll(array(
+            'condition' => "`event_id`='$orderId'",
+            'order' => 'timestamp DESC'
+			),
+			array(':event_id'=> $orderId) 			
+		);
+		$moderated = count($events) == 0;
+		
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
+			'moderated' => $moderated,
             //'images' => $model->images(['condition'=>'approved=0'])
         ));
     }
