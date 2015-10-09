@@ -172,7 +172,9 @@ return array(
 	'left a message' =>  'оставил сообщение',
 	'The user changed data in the profile' =>  'Пользователь изменил данные в профиле',
 	
-	
+	// customerOrderList.php
+	'CurrentProjects' => 'Текущие проекты',
+	'DoneProjects' => 'Завершённые проекты',
 
 );
 

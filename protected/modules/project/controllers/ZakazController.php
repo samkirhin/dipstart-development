@@ -304,10 +304,7 @@ class ZakazController extends Controller
             $event->delete();
             $this->redirect(['/project/zakaz/update', 'id' => $rid]);
         }
-            
-        
     }
-
     /**
      * Одобрение или нет заказа
      * @param $answer
@@ -414,12 +411,23 @@ class ZakazController extends Controller
     {
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', Yii::app()->user->id);
+		$criteria->addInCondition('status',array(1,2,3,4,6));
         $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
             'criteria' => $criteria,
 			'pagination' => false
         ]);
+
+        $criteria_done = new CDbCriteria();
+        $criteria_done->compare('user_id', Yii::app()->user->id);
+		$criteria_done->addInCondition('status',array(5));
+        $model_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria_done,
+			'pagination' => false
+        ]);
+		
         $this->render('customerOrderList', [
-            'dataProvider' => $model
+            'dataProvider' => $model,
+            'dataProvider_done' => $model_done
         ]);
     }
 
