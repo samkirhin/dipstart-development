@@ -22,7 +22,7 @@ class ZakazController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index'/*,'ownlist','ownList','OwnList'*/),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -238,9 +238,10 @@ class ZakazController extends Controller
 			}
 			
 			if($model->save()) {
-				echo '1234567       '; die();
 				if ($role != 'Manager' && $role != 'Admin') {
-					EventHelper::editOrder($model->id);
+// где-то есть дублрующий вызов записи события, поэтому этот комментируем
+// oldbadger 09.10.2015					
+//					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
 				} else {
 					$this->redirect(array('update','id'=>$model->id));
@@ -303,10 +304,7 @@ class ZakazController extends Controller
             $event->delete();
             $this->redirect(['/project/zakaz/update', 'id' => $rid]);
         }
-            
-        
     }
-
     /**
      * Одобрение или нет заказа
      * @param $answer
@@ -413,12 +411,23 @@ class ZakazController extends Controller
     {
         $criteria = new CDbCriteria();
         $criteria->compare('user_id', Yii::app()->user->id);
+		$criteria->addInCondition('status',array(1,2,3,4,6));
         $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
             'criteria' => $criteria,
 			'pagination' => false
         ]);
+
+        $criteria_done = new CDbCriteria();
+        $criteria_done->compare('user_id', Yii::app()->user->id);
+		$criteria_done->addInCondition('status',array(5));
+        $model_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria_done,
+			'pagination' => false
+        ]);
+		
         $this->render('customerOrderList', [
-            'dataProvider' => $model
+            'dataProvider' => $model,
+            'dataProvider_done' => $model_done
         ]);
     }
 
