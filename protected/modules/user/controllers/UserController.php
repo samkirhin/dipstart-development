@@ -78,7 +78,7 @@ class UserController extends Controller
 			if(isset($_GET['id']))
 				$this->_model=User::model()->findbyPk($_GET['id']);
 			if($this->_model===null)
-				throw new CHttpException(404,'The requested page does not exist.');
+				throw new CHttpException(404,Yii::t('site','The requested page does not exist.'));
 		}
 		return $this->_model;
 	}
