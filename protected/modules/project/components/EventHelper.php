@@ -87,7 +87,6 @@ class EventHelper {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
 //        $description = "Пользователь ".$userName." оставил сообщение: \"".$message."\"";
         $description = UserModule::t('User').' '.$userName.' '.UserModule::t('left a message').": \"$message.\"";
-echo 	$description;
         self::sendEvent($id, self::TYPE_MESSAGE, $description);
     }
     
