@@ -238,7 +238,7 @@ class ZakazController extends Controller
 			}
 			
 			if($model->save()) {
-				echo '1234567       '; die();
+//				echo '1234567       '; die();
 				if ($role != 'Manager' && $role != 'Admin') {
 					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
