@@ -158,6 +158,21 @@ return array(
 	'username' => 'логин',
 	'login' => 'логин',
 	
+	//EventHelper.php
+	'Not transferred' =>  'Не передан тип',
+	'No description' =>  'Отсутствует описание',
+	'User' =>  'Пользователь',		
+	'created order' =>  'создал заказ',
+	'edited order'  =>  'отредактировал',
+	'attached comments' =>  'прикрепил замечания',
+	'uploaded check' =>  'загрузил чек',
+	'have uploaded part of the job' =>  'загрузил часть работы',
+	'attached files in order' =>  'прикрепил файлы в заказ',
+	'deleted the file out of order' =>  'удалил файл из заказа',
+	'left a message' =>  'оставил сообщение',
+	'The user changed data in the profile' =>  'Пользователь изменил данные в профиле',
+	
+	
 
 );
 

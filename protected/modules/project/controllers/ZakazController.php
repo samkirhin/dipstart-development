@@ -1,12 +1,8 @@
 <?php
+<?php
 
 class ZakazController extends Controller
 {
-
-    protected function beforeAction($action)
-    {
-        return true;
-    }
 	public function filters()
     {
         return array(
@@ -64,7 +60,7 @@ class ZakazController extends Controller
 				$model->status=2;
 			else
 				$model->status=1;
-//			$model->save();
+			$model->save();
 		}
 	}
 	public function actionApiView() {
@@ -162,14 +158,15 @@ class ZakazController extends Controller
                 $d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
                 $model->dbauthor_informed = $d1->format('d.m.Y H:i');
             }
-/*
+
+			
             if($model->save()){
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
                     EventHelper::createOrder($model->id);
                 }
                 $this->redirect(array('view','id'=>$model->id));
             }
-*/			
+			
         }
 
         $this->render('create',array(
@@ -209,11 +206,11 @@ class ZakazController extends Controller
         if (Yii::app()->request->getParam('close') == 'yes'){
             $model->old_status = $model->status;
 			$model->status = 5;
-//	$model->save(false);
+			$model->save(false);
 			$this->redirect(array('update','id'=>$model->id));
 		} elseif (Yii::app()->request->getParam('open') == 'yes'){
 			$model->status = $model->old_status;
-//			$model->save(false);
+			$model->save(false);
 			$this->redirect(array('update','id'=>$model->id));
 		}
 		
@@ -240,14 +237,17 @@ class ZakazController extends Controller
 					}
 				}
 			}
-//			if($model->save()) { //сохранение модели осуществляется в ChatController
+			
+			if($model->save()) {
+				echo '1234567       '; die();
 				if ($role != 'Manager' && $role != 'Admin') {
 					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
 				} else {
 					$this->redirect(array('update','id'=>$model->id));
 				}
-//			}
+			}
+			
 		}
 
 		$this->render($view, array(
@@ -320,14 +320,14 @@ class ZakazController extends Controller
             
             if ($answer == 1) {
                 $model->is_active = 1;
-  /*              
+                
                 if($model->save()) {
                     $event->delete();
                     $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
                         'id' => $model->id
                     )));
                 }
-*/					
+					
             } else {
                 // если нет то просто удаляем
                 $model->delete();
