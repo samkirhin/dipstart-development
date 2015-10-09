@@ -423,8 +423,10 @@ class YiiBase
 						}
 					}
 				}
-				else
-					include($className.'.php');
+				else {
+					if ($className != 'editable') include($className.'.php');
+				}
+
 			}
 			else  // class name with namespace in PHP 5.3
 			{

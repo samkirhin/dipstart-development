@@ -88,7 +88,7 @@
 		<?php 
 		list($widgetsList) = ProfileFieldController::getWidgets($model->field_type);
 		echo CHtml::activeDropDownList($model,'widget',$widgetsList,array('id'=>'widgetlist'));
-		//echo CHtml::activeTextField($model,'widget',array('size'=>60,'maxlength'=>255)); ?>
+		echo CHtml::activeTextField($model,'widget',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo CHtml::error($model,'widget'); ?>
 		<p class="hint"><?php echo UserModule::t('Widget name.'); ?></p>
 	</div>
@@ -115,7 +115,8 @@
 
 	<div class="row editable">
 		<?php echo CHtml::activeLabelEx($model,'editable'); ?>
-		<?php echo CHtml::activeDropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
+		<?php //echo CHtml::activeDropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
+		<?php echo CHtml::activeTextField($model,'editable'); ?>
 		<?php echo CHtml::error($model,'editable'); ?>
 	</div>
 

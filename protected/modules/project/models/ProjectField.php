@@ -87,6 +87,7 @@ class ProjectField extends CActiveRecord
 			'default' => UserModule::t('Default'),
 			'position' => UserModule::t('Position'),
 			'visible' => UserModule::t('Visible'),
+			'editable' => UserModule::t('Editable'),
 		);
 	}
 	

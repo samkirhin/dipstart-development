@@ -472,13 +472,7 @@ class ProfileFieldController extends Controller
 	{
 		$model=new ProfileField('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['ProfileField']))
-            $model->attributes=$_GET['ProfileField'];
-        $this->render('admin',array(
-            'model'=>$model,
-        ));
 		
-		/*
 		$dataProvider=new CActiveDataProvider('ProfileField', array(
 			'pagination'=>array(
 				'pageSize'=>Yii::app()->controller->module->fields_page_size,
@@ -487,10 +481,10 @@ class ProfileFieldController extends Controller
 				'defaultOrder'=>'position',
 			),
 		));
-
 		$this->render('admin',array(
-			'dataProvider'=>$dataProvider,
-		));//*/
+			'model'			=> $model,
+			'dataProvider'	=> $dataProvider,
+		));
 	}
 
 	/**

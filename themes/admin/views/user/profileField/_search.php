@@ -4,9 +4,6 @@
     'action'=>Yii::app()->createUrl($this->route),
     'method'=>'get',
 )); ?>
-<pre>
-<?php //echo '$model='; var_dump($model); die(); ?>
-</pre>
 
     <div class="row">
         <?php echo $form->label($model,'id'); ?>

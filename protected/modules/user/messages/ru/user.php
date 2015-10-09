@@ -144,6 +144,20 @@ return array(
     '' => '',
     '' => '',
     '' => '',
+	'Editable'  => 'Редактируемое',
+	'editable'  => 'Редактируемое',
+	'Update Profile Field' => 'Редактирование поля профиля',
+	'UPDATE PROFILE FIELD' => 'Редактирование поля профиля',
+	
+    'Authors' => 'Авторы',
+    'Customers' => 'Заказчики',
+	'Name' => 'Имя',
+	'Second Name'=> 'Отчество',
+	'Surname' => 'Фамилия',
+	'Phone' => 'Телефон',
+	'username' => 'логин',
+	'login' => 'логин',
+	
 
 );
 

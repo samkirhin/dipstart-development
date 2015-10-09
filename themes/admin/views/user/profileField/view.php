@@ -11,7 +11,7 @@ $this->menu=array(
     array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin')),
 );
 ?>
-<h1><?php echo UserModule::t('View Profile Field #').$model->varname; ?></h1>
+<h1><?php echo UserModule::t('View Profile Field').' #'.$model->varname; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
