@@ -1,5 +1,4 @@
 <?php
-<?php
 
 class ZakazController extends Controller
 {
@@ -19,11 +18,11 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList'),
+                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
