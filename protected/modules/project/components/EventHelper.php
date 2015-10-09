@@ -80,7 +80,7 @@ class EventHelper {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
 //        $description = "Пользователь ".$userName." удалил файл из заказа";
 		$description = 'Пользователь '.$userName.' '.UserModule::t('deleted the file out of order');
-        self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
+        self::sendEvent($id, self::TYPE_MATERIALS_DELETED, $description);
     }
 
     public static function addMessage($id,$message='') {
