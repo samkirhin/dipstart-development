@@ -40,45 +40,54 @@ class EventHelper {
 
     public static function createOrder($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." создал заказ";
+//        $description = "Пользователь ".$userName." создал заказ";
+		$description = "Пользователь ".$userName." ".UserModule::t('created order');
         self::sendEvent($id, self::TYPE_CREATE_ORDER, $description);
     }
-    
+
     public static function editOrder($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." отредактировал заказ";
+//        $description = "Пользователь ".$userName." отредактировал заказ";
+		$description = "Пользователь ".$userName." ".UserModule::t('edited order');
         return self::sendEvent($id, self::TYPE_EDIT_ORDER, $description);
     }
     
     public static function addChanges($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." прикрепил замечания";
+//        $description = "Пользователь ".$userName." прикрепил замечания";
+		$description = "Пользователь ".$userName." ".UserModule::t('attached comments');
         self::sendEvent($id, self::TYPE_ADD_CHANGES, $description);
     }
     public static function chekUploaded($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." загрузил чек";
+//        $description = "Пользователь ".$userName." загрузил чек";
+		$description = "Пользователь ".$userName." ".UserModule::t('uploaded check');
         self::sendEvent($id, self::TYPE_CHEK_UPLOADED, $description);
     }
     public static function partDone($id, $title) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." загрузил часть работы '$title'";
+//        $description = "Пользователь ".$userName." загрузил часть работы '$title'";
+		$description = "Пользователь ".$userName." ".UserModule::t('have uploaded part of the job')." $title";
         self::sendEvent($id, self::TYPE_PART_DONE, $description);
     }
     public static function materialsAdded($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." прикрепил файлы в заказ";
+//        $description = "Пользователь ".$userName." прикрепил файлы в заказ";
+		$description = "Пользователь ".$userName." ".UserModule::t('attached files in order');
         self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
     }
     public static function materialsDeleted($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." удалил файл из заказа";
+//        $description = "Пользователь ".$userName." удалил файл из заказа";
+		$description = 'Пользователь '.$userName.' '.UserModule::t('deleted the file out of order');
         self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
     }
-    
+
     public static function addMessage($id,$message='') {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-        $description = "Пользователь ".$userName." оставил сообщение: \"".$message."\"";
+//        $description = "Пользователь ".$userName." оставил сообщение: \"".$message."\"";
+        $description = UserModule::t('User').' '.$userName.' '.UserModule::t('left a message').": \"$message.\"";
+echo 	$description;
         self::sendEvent($id, self::TYPE_MESSAGE, $description);
     }
     
@@ -89,7 +98,8 @@ class EventHelper {
     public static function updateProfile() {
         $creator = Yii::app()->user->id;
         $userName = User::model()->findByPk($creator)->username;
-        $text = 'Пользователь изменил данные в профиле '.$userName;
+//        $text = 'Пользователь изменил данные в профиле '.$userName;
+		$text = UserModule::t('The user changed data in the profile')." $userName"; 
         return self::sendEvent($creator, self::TYPE_UPDATE_PROFILE, $text);
     }
 }

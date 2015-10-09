@@ -1,25 +1,15 @@
 <?php
+<?php
 
 class ZakazController extends Controller
 {
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	//public $layout='//layouts/column2';
-	/**
-	 * @return array action filters
-	 */
-
-	/*public function filters()
-	{
-		return array_merge([
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-			'rights',]
-		);
-	}*/
-
+	public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -29,11 +19,11 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'uploadPayment','list'),
+                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','status'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -169,12 +159,14 @@ class ZakazController extends Controller
                 $model->dbauthor_informed = $d1->format('d.m.Y H:i');
             }
 
+			
             if($model->save()){
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
                     EventHelper::createOrder($model->id);
                 }
                 $this->redirect(array('view','id'=>$model->id));
             }
+			
         }
 
         $this->render('create',array(
@@ -245,8 +237,9 @@ class ZakazController extends Controller
 					}
 				}
 			}
-
+			
 			if($model->save()) {
+				echo '1234567       '; die();
 				if ($role != 'Manager' && $role != 'Admin') {
 					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
@@ -254,6 +247,7 @@ class ZakazController extends Controller
 					$this->redirect(array('update','id'=>$model->id));
 				}
 			}
+			
 		}
 
 		$this->render($view, array(
@@ -333,6 +327,7 @@ class ZakazController extends Controller
                         'id' => $model->id
                     )));
                 }
+					
             } else {
                 // если нет то просто удаляем
                 $model->delete();
@@ -583,5 +578,4 @@ class ZakazController extends Controller
 		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
         Yii::app()->end();
     }
-	
 }

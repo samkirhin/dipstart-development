@@ -250,7 +250,7 @@ class ProfileField extends CActiveRecord
         $criteria->compare('widgetparams',$this->widgetparams,true);
         $criteria->compare('position',$this->position);
         $criteria->compare('visible',$this->visible);
-//        $criteria->compare('editable',$this->editable);
+        $criteria->compare('editable',$this->editable);
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,

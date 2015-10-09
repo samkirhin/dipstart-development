@@ -33,8 +33,7 @@ if (file_exists($path)){
 
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
-
-<?php if (User::model()->isCustomer() && !$order->is_active) {
+<?php if (User::model()->isCustomer() && (!$order->is_active || !$moderated)) {
 		echo '<div class="zakaz-info-header-customer" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
 		echo '<div class="zakaz-info-header-customer-empty" >&nbsp;</div>';
 	}

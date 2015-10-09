@@ -27,6 +27,7 @@ if(UserModule::isAdmin()) {
 	</tr>
 </table>
 <?php
+
 echo '<h1>'.UserModule::t("List User").'</h1>';
 switch ($_GET['s']) {
 	case 'Author':

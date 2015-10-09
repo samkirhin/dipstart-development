@@ -15,10 +15,10 @@ if(UserModule::isAdmin()) {
 <table>
 	<tr>
 		<td>
-			<?php echo CHtml::link('Авторы',array('','s'=>'Author'),array('class'=>'btn btn-default btn-block'));?>
+			<?php echo CHtml::link(UserModule::t('Authors'),array('','s'=>'Author'),array('class'=>'btn btn-default btn-block'));?>
 		</td>
 		<td>
-			<?php echo CHtml::link('Заказчики',array('','s'=>'Customer'),array('class'=>'btn btn-default btn-block'));?>
+			<?php echo CHtml::link(UserModule::t('Customers'),array('','s'=>'Customer'),array('class'=>'btn btn-default btn-block'));?>
 		</td>
 	</tr>
 </table>
@@ -52,23 +52,27 @@ switch ($_GET['s']) {
 			'columns'=>array(
 				array(
 					'type'=>'raw',
-					'name'=>'Имя',
+					'name'=> UserModule::t('Name'),
 					'value'=>'$data["profile"]->firstname',
 				),
 				array(
 					'type'=>'raw',
-					'name'=>'Фамилия',
+					'name'=> UserModule::t('Surname'),
 					'value'=>'$data["profile"]->lastname',
 				),
 				array(
-					'name' => 'username',
+					'name' => UserModule::t('username'),
 					'type'=>'raw',
 					'value' => 'CHtml::link(CHtml::encode($data->username),array("/user/admin/update","id"=>$data->id))',
 				),
-				'email',
 				array(
 					'type'=>'raw',
-					'name'=>'Телефон',
+					'name'=> UserModule::t('email'),
+					'value'=>'$data["profile"]->email',
+				),
+				array(
+					'type'=>'raw',
+					'name'=> UserModule::t('Phone'),
 					'value'=>'$data["profile"]->mob_tel	',
 				),
 			),

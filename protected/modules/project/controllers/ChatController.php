@@ -69,7 +69,6 @@ class ChatController extends Controller {
     public function actionIndex($orderId)
     {
         Yii::app()->session['project_id'] = $orderId;
-
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
                 $model = new ProjectMessages;
@@ -89,6 +88,7 @@ class ChatController extends Controller {
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                         break;
                 }
+echo 'actionIndex!!!!!!!!';
                 $model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
@@ -97,14 +97,19 @@ class ChatController extends Controller {
             ));
             Yii::app()->end();
         }
-        $model=Zakaz::model()->resetScope()->findByPk($orderId);
-        if(isset($_POST['Zakaz'])) {
-            $model->attributes = $_POST['Zakaz'];
-            $model->save();
-        }
+		
+        $events = Events::model()->findAll(array(
+            'condition' => "`event_id`='$orderId'",
+            'order' => 'timestamp DESC'
+			),
+			array(':event_id'=> $orderId) 			
+		);
+		$moderated = count($events) == 0;
+		
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
+			'moderated' => $moderated,
             //'images' => $model->images(['condition'=>'approved=0'])
         ));
     }
