@@ -18,11 +18,11 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index'),
+                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index','ownlist','ownList','OwnList'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index','ownlist','ownList','OwnList'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -238,9 +238,10 @@ class ZakazController extends Controller
 			}
 			
 			if($model->save()) {
-//				echo '1234567       '; die();
 				if ($role != 'Manager' && $role != 'Admin') {
-					EventHelper::editOrder($model->id);
+// где-то есть дублрующий вызов записи события, поэтому этот комментируем
+// oldbadger 09.10.2015					
+//					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
 				} else {
 					$this->redirect(array('update','id'=>$model->id));
