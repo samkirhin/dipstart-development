@@ -68,6 +68,7 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
+		
         Yii::app()->session['project_id'] = $orderId;
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
@@ -88,7 +89,6 @@ class ChatController extends Controller {
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                         break;
                 }
-echo 'actionIndex!!!!!!!!';
                 $model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
@@ -147,7 +147,7 @@ echo 'actionIndex!!!!!!!!';
     public function actionApiRenameFile() {
         $this->_prepairJson();
         $data = $this->_request->getParam('data');
-	$path=Yii::getPathOfAlias('webroot').$data['dir'];
+		$path=Yii::getPathOfAlias('webroot').$data['dir'];
         if (!file_exists($path)) mkdir($path);
         if (rename($path.$data['name'], $path.'#trash#'.$data['name'])) {
             EventHelper::materialsDeleted($_GET['orderId']);
