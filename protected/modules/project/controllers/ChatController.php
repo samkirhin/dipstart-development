@@ -88,7 +88,7 @@ class ChatController extends Controller {
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                         break;
                 }
-echo 'actionIndex!!!!!!!!';
+
                 $model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
