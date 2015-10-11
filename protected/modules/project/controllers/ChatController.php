@@ -99,7 +99,10 @@ class ChatController extends Controller {
         }
 		
         $events = Events::model()->findAll(array(
-            'condition' => "`event_id`='$orderId'",
+            'condition' => array(
+				"`event_id`='$orderId'",
+				"`type` in ($moderate_types_string)",
+			),	
             'order' => 'timestamp DESC'
 			),
 			array(':event_id'=> $orderId) 			

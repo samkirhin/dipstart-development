@@ -14,6 +14,27 @@ class EventHelper {
 	const TYPE_MATERIALS_DELETED = 6; // Пользователь %..% удалил файл из заказа
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
+
+	public $moderate_types = array(
+		TYPE_CREATE_ORDER,
+		TYPE_EDIT_ORDER,
+		TYPE_ADD_CHANGES,
+		TYPE_UPDATE_PROFILE,
+		TYPE_CHEK_UPLOADED,
+		TYPE_MATERIALS_ADDED,
+		TYPE_MATERIALS_DELETED,
+	);
+	
+	public $moderate_types_string = "
+		TYPE_CREATE_ORDER,
+		TYPE_EDIT_ORDER,
+		TYPE_ADD_CHANGES,
+		TYPE_UPDATE_PROFILE,
+		TYPE_CHEK_UPLOADED,
+		TYPE_MATERIALS_ADDED,
+		TYPE_MATERIALS_DELETED,
+	";
+	
     
     protected static function sendEvent($event, $type, $description) {
         

@@ -139,4 +139,5 @@ return array(
 	'editable'  => 'Редактируемое',
 	'Update Profile Field' => 'Редактирование поля профиля',
 	'UPDATE PROFILE FIELD' => 'Редактирование поля профиля',
+	'PaymentProps'=>'Платёжный реквизит',
 );

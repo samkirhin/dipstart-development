@@ -172,5 +172,7 @@ return array(
 	// customerOrderList.php
 	'CurrentProjects' => 'Current Projects',
 	'DoneProjects' => 'Done Projects',
+
+	'PaymentProps'=>'Payment Props',
 );
 

@@ -114,9 +114,9 @@
 	</div>
 
 	<div class="row editable">
-		<?php echo CHtml::activeLabelEx($model,'editable'); ?>
+		<?php echo CHtml::activeLabelEx($model,'PaymentProps'); ?>
 		<?php //echo CHtml::activeDropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
-		<?php echo CHtml::activeTextField($model,'editable'); ?>
+		<?php echo CHtml::activeCheckBox($model,'editable'); ?>
 		<?php echo CHtml::error($model,'editable'); ?>
 	</div>
 
