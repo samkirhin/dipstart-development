@@ -1,5 +1,12 @@
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
 <?php
+echo '<br>$dataProvider=';
+print_r($dataProvider);
+echo '<br>$dataProvider_done=';
+print_r($dataProvider_done);
+die();
+
+
 /*<script src="/js/bookkeeper.js"></script>
 <script src="/js/jquery.tmpl.min.js"></script>
 <div id="bookkeeperView">
