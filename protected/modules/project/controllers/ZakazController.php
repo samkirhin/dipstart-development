@@ -236,14 +236,15 @@ class ZakazController extends Controller
 					}
 				}
 			}
-			
 			if($model->save()) {
 				if ($role != 'Manager' && $role != 'Admin') {
 // где-то есть дублрующий вызов записи события, поэтому этот комментируем
 // oldbadger 09.10.2015					
 //					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
+					$this->redirect(array("../project/chat?orderId=$id"));
 				} else {
+//					$this->redirect(array('project/chat','orderId'=>$model->id));
 					$this->redirect(array('update','id'=>$model->id));
 				}
 			}
