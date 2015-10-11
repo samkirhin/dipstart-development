@@ -68,6 +68,7 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
+		
         Yii::app()->session['project_id'] = $orderId;
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
@@ -97,15 +98,14 @@ class ChatController extends Controller {
             ));
             Yii::app()->end();
         }
-		
+		$moderate_types = EventHelper::get_moderate_types_string();
         $events = Events::model()->findAll(array(
-            'condition' => "`event_id`='$orderId'",
+            'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
             'order' => 'timestamp DESC'
 			),
 			array(':event_id'=> $orderId) 			
 		);
 		$moderated = count($events) == 0;
-		
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
@@ -147,7 +147,7 @@ class ChatController extends Controller {
     public function actionApiRenameFile() {
         $this->_prepairJson();
         $data = $this->_request->getParam('data');
-	$path=Yii::getPathOfAlias('webroot').$data['dir'];
+		$path=Yii::getPathOfAlias('webroot').$data['dir'];
         if (!file_exists($path)) mkdir($path);
         if (rename($path.$data['name'], $path.'#trash#'.$data['name'])) {
             EventHelper::materialsDeleted($_GET['orderId']);

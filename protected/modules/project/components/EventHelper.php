@@ -10,10 +10,32 @@ class EventHelper {
     const TYPE_UPDATE_PROFILE = 6;  // Пользователь %..% изменил информацию профиля
 	const TYPE_CHEK_UPLOADED = 7;   // Пользователь %..% загрузил чек
 	const TYPE_PART_DONE = 8;       // Пользователь %..% загрузил часть работы
-	const TYPE_MATERIALS_ADDED = 5; // Пользователь %..% прикрепил файлы в заказ
-	const TYPE_MATERIALS_DELETED = 6; // Пользователь %..% удалил файл из заказа
+	const TYPE_MATERIALS_ADDED = 9; // Пользователь %..% прикрепил файлы в заказ
+	const TYPE_MATERIALS_DELETED = 10; // Пользователь %..% удалил файл из заказа
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
+
+	protected static $moderate_types = array(
+		TYPE_CREATE_ORDER,
+		TYPE_EDIT_ORDER,
+		TYPE_ADD_CHANGES,
+		TYPE_UPDATE_PROFILE,
+		TYPE_CHEK_UPLOADED,
+		TYPE_MATERIALS_ADDED,
+		TYPE_MATERIALS_DELETED,
+	);
+	
+    public static function get_moderate_types_string() {
+		$moderate_types_string = 
+			self::TYPE_CREATE_ORDER.','.
+			self::TYPE_EDIT_ORDER.','.
+			self::TYPE_ADD_CHANGES.','.
+			self::TYPE_UPDATE_PROFILE.','.
+			self::TYPE_CHEK_UPLOADED.','.
+			self::TYPE_MATERIALS_ADDED.','.
+			self::TYPE_MATERIALS_DELETED;
+		return	$moderate_types_string;
+	}	
     
     protected static function sendEvent($event, $type, $description) {
         
@@ -80,7 +102,7 @@ class EventHelper {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
 //        $description = "Пользователь ".$userName." удалил файл из заказа";
 		$description = 'Пользователь '.$userName.' '.UserModule::t('deleted the file out of order');
-        self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
+        self::sendEvent($id, self::TYPE_MATERIALS_DELETED, $description);
     }
 
     public static function addMessage($id,$message='') {
