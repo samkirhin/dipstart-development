@@ -30,6 +30,7 @@ class ProfileField extends CActiveRecord
 	 * @var integer $position
 	 * @var integer $visible
 	 * @var integer $editable
+	 * @var integer $paymentProps
 	 */
 
 	public static $table_prefix;

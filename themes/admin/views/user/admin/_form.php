@@ -9,7 +9,8 @@
 	$ProfileFields = ProfileField::model()->findAll();
 	$fields	= array();
 	foreach($ProfileFields as $field){
-		$fields[$field['varname']] =  $field['editable'];
+//		$fields[$field['varname']] =  $field['editable'];
+		$fields[$field['varname']] =  $field['paymentProps'];
 	};	
 	unset($ProfileFields);
 ?>

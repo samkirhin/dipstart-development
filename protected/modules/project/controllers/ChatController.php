@@ -97,18 +97,14 @@ class ChatController extends Controller {
             ));
             Yii::app()->end();
         }
-		
+		$moderate_types = EventHelper::get_moderate_types_string();
         $events = Events::model()->findAll(array(
-            'condition' => array(
-				"`event_id`='$orderId'",
-				"`type` in ($moderate_types_string)",
-			),	
+            'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
             'order' => 'timestamp DESC'
 			),
 			array(':event_id'=> $orderId) 			
 		);
 		$moderated = count($events) == 0;
-		
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
