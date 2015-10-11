@@ -114,14 +114,14 @@
 	</div>
 <!--
 	<div class="row editable">
-		<?php echo CHtml::activeLabelEx($model,'editable'); ?>
-		<?php echo CHtml::activeDropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
-		<?php echo CHtml::error($model,'editable'); ?>
+		<?php //echo CHtml::activeLabelEx($model,'editable'); ?>
+		<?php //echo CHtml::activeDropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
+		<?php //echo CHtml::error($model,'editable'); ?>
 	</div>
 -->
 	<div class="row paymentProps">
-		<?php echo CHtml::activeLabelEx($model,'PaymentProps'); ?>
-		<?php echo CHtml::activeCheckBox($model,'paymentProps',ProfileField::itemAlias('paymentProps')); ?>
+		<?php echo CHtml::activeLabelEx($model,UserModule::t('PaymentProps')); ?>
+		<?php echo CHtml::activeCheckBox($model,'paymentProps'); //,ProfileField::itemAlias('paymentProps')); ?>
 		<?php echo CHtml::error($model,'paymentProps'); ?>
 	</div>
 

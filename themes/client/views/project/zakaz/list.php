@@ -11,18 +11,11 @@ $this->breadcrumbs=array(
 ?>
 <h1><?=ProjectModule::t('Zakazs')?></h1>
 <h1 class='projects-title'>Выбрать заказ</h1>
-
-
 <?php
 if (Campaign::getId()){
 	$columns = array(
 		'id',
 		'title',
-		/*[
-            'header' => '',
-            'type' => 'raw',
-            'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
-        ],*/
 		'closestDate',
 	);
 } else {
