@@ -45,6 +45,10 @@ class ChatController extends Controller {
 				'actions'=>array('admin', 'approve', 'remove', 'edit', 'setexecutor', 'delexecutor', 'readdress','status'),
 				'users'=>array('admin', 'manager'),
 			),
+			array('allow',  // deny all users
+				'actions' => array('index'),
+				'users'=>array('*'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -68,7 +72,10 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
-		
+		if(Yii::app()->user->isGuest){
+			echo 'Guest...';
+			die();
+		}
         Yii::app()->session['project_id'] = $orderId;
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
