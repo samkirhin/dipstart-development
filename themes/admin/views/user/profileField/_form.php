@@ -112,13 +112,7 @@
 		<?php echo CHtml::activeDropDownList($model,'visible',ProfileField::itemAlias('visible')); ?>
 		<?php echo CHtml::error($model,'visible'); ?>
 	</div>
-<!--
-	<div class="row editable">
-		<?php echo CHtml::activeLabelEx($model,'editable'); ?>
-		<?php echo CHtml::activeDropDownList($model,'editable',ProfileField::itemAlias('editable')); ?>
-		<?php echo CHtml::error($model,'editable'); ?>
-	</div>
--->
+
 	<div class="row paymentProps">
 		<?php echo CHtml::activeLabelEx($model,'PaymentProps'); ?>
 		<?php echo CHtml::activeCheckBox($model,'paymentProps',ProfileField::itemAlias('paymentProps')); ?>
