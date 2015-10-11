@@ -18,11 +18,11 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index','ownlist','ownList','OwnList'),
+                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index','ownList'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index','ownlist','ownList','OwnList'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index'/*,'ownlist','ownList','OwnList'*/),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -491,7 +491,7 @@ class ZakazController extends Controller
 	{
 		$model = Zakaz::model()->resetScope()->findByPk($id);
 		if($model===null){
-            throw new CHttpException(404,'The requested page does not exist.');
+            throw new CHttpException(404,Yii::t('site','The requested page does not exist.'));
         }
 		return $model;
 	}
