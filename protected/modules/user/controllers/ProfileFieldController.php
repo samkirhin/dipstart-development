@@ -384,8 +384,9 @@ class ProfileFieldController extends Controller
 		if(isset($_POST['ProfileField']))
 		{
 			$model->attributes=$_POST['ProfileField'];
-			if($model->save())
+			if($model->save()){
 				$this->redirect(array('view','id'=>$model->id));
+			};	
 		}
 		$this->registerScript();
 

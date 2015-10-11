@@ -381,25 +381,39 @@ class ZakazController extends Controller
             ));
 		}
 	}
-	
-    public function getProviders()
+/*	
+	Статусы проекта:
+	1=Новый заказ,
+	2=Ждем решен. клиента,
+	3=Поиск Автора,
+	4=Автор работает,
+	5=Завершен,	
+*/	
+    public function getProviders($new=false)
     {
+		if ($new) { $arr = array(1); $sarr= '1'; } else	{
+					$arr = array(1,2,3,4); $sarr= '1,2,3,4';
+		};
+		$uid	= Yii::app()->user->id;
         $criteria = new CDbCriteria();
-        $criteria->compare('user_id', Yii::app()->user->id);
-		$criteria->addInCondition('status',array(1,2,3,4,6));
+        if (!$new) $criteria->compare('user_id', $uid);
+		$criteria->addInCondition('status',$arr);
+		
         $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
             'criteria' => $criteria,
 			'pagination' => false
         ]);
 		$result = array('model'=>$model, 'model_done'=> null);
         $criteria_done = new CDbCriteria();
-        $criteria_done->compare('user_id', Yii::app()->user->id);
+        if (!$new) $criteria_done->compare('user_id', $uid);
 		$criteria_done->addInCondition('status',array(5));
         $model_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
             'criteria' => $criteria_done,
 			'pagination' => false
         ]);
 		$result['model_done'] = $model_done;
+//echo '$new='.$new;
+//die(print_r($result));
 		return	$result;
     }
 	
@@ -422,16 +436,11 @@ class ZakazController extends Controller
 	public function actionOwnList()
 	{
 		$models = $this->getProviders();
-//		print_r($models);
-//echo '---------------------------------';
-		
         $this->render('list', [
             'dataProvider' => $models['model'],
             'dataProvider_done' => $models['model_done'],
         ]);
 	}
-	
-	
 	
     public function actionCustomerOrderList()
     {
@@ -445,14 +454,15 @@ class ZakazController extends Controller
 
 	public function actionList($status=0)
 	{
-		$models = $this->getProviders();
-
-		$model=new Zakaz('search');
+		$new	= 0;
+		$new 	= User::model()->isAuthor();
+		$models = $this->getProviders(true);
+		$model	=new Zakaz('search');
 		$model->unsetAttributes();
 		
-		if (User::model()->isAuthor()) {
+		if ($new) {
 			$model->executor = 0;
-			$model->status=3;
+			$model->status=1; // =3; oldbadger 11.10.2015 глюк с новыми заказами
 			$user = User::model()->findByPk(Yii::app()->user->id);
 			$fields=$model->getFields();
 			foreach ($fields as $field) {
@@ -463,12 +473,11 @@ class ZakazController extends Controller
 			}
 		}
 
-
 		$this->render('list',array(
 			'model'=>$model,
             'dataProvider' => $models['model'],
             'dataProvider_done' => $models['model_done'],
-			'only_new'		=> 1,
+			'only_new'		=> $new,
 		));
 	}
 	/**
