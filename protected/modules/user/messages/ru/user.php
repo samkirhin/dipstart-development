@@ -176,5 +176,7 @@ return array(
 	'CurrentProjects' => 'Текущие проекты',
 	'DoneProjects' => 'Завершённые проекты',
 
+	'PaymentProps'=>'Платёжный реквизит',
+
 );
 

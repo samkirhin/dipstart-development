@@ -381,6 +381,28 @@ class ZakazController extends Controller
             ));
 		}
 	}
+	
+    public function getProviders()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('user_id', Yii::app()->user->id);
+		$criteria->addInCondition('status',array(1,2,3,4,6));
+        $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria,
+			'pagination' => false
+        ]);
+		$result = array('model'=>$model, 'model_done'=> null);
+        $criteria_done = new CDbCriteria();
+        $criteria_done->compare('user_id', Yii::app()->user->id);
+		$criteria_done->addInCondition('status',array(5));
+        $model_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria_done,
+			'pagination' => false
+        ]);
+		$result['model_done'] = $model_done;
+		return	$result;
+    }
+	
 
 	/**
 	 * Manages all models.
@@ -399,40 +421,32 @@ class ZakazController extends Controller
 
 	public function actionOwnList()
 	{
-		$model=new Zakaz('search');
-		$model->unsetAttributes();  // clear any default values
-        $model->executor = Yii::app()->user->id;
-
-		$this->render('list',array(
-			'model'=>$model,
-		));
+		$models = $this->getProviders();
+//		print_r($models);
+//echo '---------------------------------';
+		
+        $this->render('list', [
+            'dataProvider' => $models['model'],
+            'dataProvider_done' => $models['model_done'],
+        ]);
 	}
+	
+	
+	
     public function actionCustomerOrderList()
     {
-        $criteria = new CDbCriteria();
-        $criteria->compare('user_id', Yii::app()->user->id);
-		$criteria->addInCondition('status',array(1,2,3,4,6));
-        $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
-            'criteria' => $criteria,
-			'pagination' => false
-        ]);
-
-        $criteria_done = new CDbCriteria();
-        $criteria_done->compare('user_id', Yii::app()->user->id);
-		$criteria_done->addInCondition('status',array(5));
-        $model_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
-            'criteria' => $criteria_done,
-			'pagination' => false
-        ]);
+		$models = $this->getProviders();
 		
         $this->render('customerOrderList', [
-            'dataProvider' => $model,
-            'dataProvider_done' => $model_done
+            'dataProvider' => $models['model'],
+            'dataProvider_done' => $models['model_done'],
         ]);
     }
 
 	public function actionList($status=0)
 	{
+		$models = $this->getProviders();
+
 		$model=new Zakaz('search');
 		$model->unsetAttributes();
 		
@@ -449,8 +463,12 @@ class ZakazController extends Controller
 			}
 		}
 
+
 		$this->render('list',array(
 			'model'=>$model,
+            'dataProvider' => $models['model'],
+            'dataProvider_done' => $models['model_done'],
+			'only_new'		=> 1,
 		));
 	}
 	/**

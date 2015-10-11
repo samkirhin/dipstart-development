@@ -1,4 +1,5 @@
-<?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
+<?php 
+	Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
     <div class="col-md-12">
         <h3><?=ProjectModule::t('Zakazs')?></h3>
     </div>
@@ -122,11 +123,23 @@ if (Campaign::getId()){
 <script>
     $(document).ready(function()
     {
-        $('body').on('dblclick', '#zakaz-grid tbody tr', function(event)
+        $('body').on('dblclick', '#zakaz-grid-current tbody tr', function(event)
         {
             var
                 rowNum = $(this).index(),
-                keys = $('#zakaz-grid > div.keys > span'),
+                keys = $('#zakaz-grid-current > div.keys > span'),
+                rowId = keys.eq(rowNum).text();
+
+            location.href = '/project/chat?orderId=' + rowId;
+        });
+    });
+    $(document).ready(function()
+    {
+        $('body').on('dblclick', '#zakaz-grid-done tbody tr', function(event)
+        {
+            var
+                rowNum = $(this).index(),
+                keys = $('#zakaz-grid-done > div.keys > span'),
                 rowId = keys.eq(rowNum).text();
 
             location.href = '/project/chat?orderId=' + rowId;

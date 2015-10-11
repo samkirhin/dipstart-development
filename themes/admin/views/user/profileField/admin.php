@@ -89,7 +89,10 @@ $('.search-form form').submit(function(){
 			'name'=>'editable',
 			'value'=> '$data->editable',
 		),            
-			
+        array(
+			'name'=>'paymentProps',
+			'value'=> '$data->paymentProps',
+		),            
 		//*/
 		array(
 			'class'=>'CButtonColumn',
