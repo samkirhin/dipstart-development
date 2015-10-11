@@ -104,12 +104,10 @@ label[for="UserLogin_rememberMe"] {
 	color: gray;
 }
 
-.hint a {
-    text-decoration: underline;
-}
 
 .hint a[href="/user/recovery/recovery"] {
     text-decoration: none;
+	margin-left: 7px;
 }
 
 
@@ -118,12 +116,18 @@ label[for="UserLogin_rememberMe"] {
         /* ========== */
 
 body {
-    background-color: rgba(216, 221, 227, 0.75);
+    background-image: url('../images/autorisation-background.jpg');
+	height: 100vh;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-position: center;
+
 }
 
 .login-form-bg {
     background-color: #fff;
-    border-radius: 2px;
+    border-radius: 6px;
     margin: 10px auto;
     padding: 25px 15px !important;
     border: none !important;
@@ -169,6 +173,20 @@ div#uLogin > div:first-child {
     left: 10px!important;
 }
 
+div.content-clearfix {
+    margin-bottom: 64px !important;
+	min-height: 0px !important;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
 div#uLogin > img[src="https://ulogin.ru/img/blank.gif"]{
     margin-left: 10px!important;
 }
+
+div.container {
+	width: 100% !important;
+}
+
