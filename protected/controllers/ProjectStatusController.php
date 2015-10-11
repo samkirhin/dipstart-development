@@ -154,7 +154,7 @@ class ProjectStatusController extends Controller
 	{
 		$model=ProjectStatus::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+			throw new CHttpException(404,Yii::t('site','The requested page does not exist.'));
 		return $model;
 	}
 
