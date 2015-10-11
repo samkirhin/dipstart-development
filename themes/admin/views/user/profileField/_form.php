@@ -114,8 +114,8 @@
 	</div>
 
 	<div class="row paymentProps">
-		<?php echo CHtml::activeLabelEx($model,'PaymentProps'); ?>
-		<?php echo CHtml::activeCheckBox($model,'paymentProps',ProfileField::itemAlias('paymentProps')); ?>
+		<?php echo CHtml::activeLabelEx($model,UserModule::t('PaymentProps')); ?>
+		<?php echo CHtml::activeCheckBox($model,'paymentProps'); //,ProfileField::itemAlias('paymentProps')); ?>
 		<?php echo CHtml::error($model,'paymentProps'); ?>
 	</div>
 

@@ -33,5 +33,6 @@ $this->menu=array(
 		'position',
 		'visible',
 		'editable',
+		'paymentProps',
 	),
 )); ?>
