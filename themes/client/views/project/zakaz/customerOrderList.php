@@ -41,8 +41,10 @@ if (Campaign::getId()){
 <?php
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'zakaz-grid-current',
-		'dataProvider'=>$model->search(),
-		'filter'=>$model,
+//		'dataProvider'=>$model->search(),
+//		'filter'=>$model,
+		'dataProvider'=>$dataProvider,
+//		'filter'=>$model,
 		'columns'=>$columns,
 		//'enablePagination' => false,
 		'htmlOptions'=>array('class'=>'col-md-12 table table-striped'),

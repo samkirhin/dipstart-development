@@ -110,9 +110,9 @@ if (!isset($only_new)) {
 
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'zakaz-grid',
-		'dataProvider'=>$model->search(),
-		'filter'=>$model,
-
+//		'dataProvider'=>$model->search(),
+//		'filter'=>$model,
+		'dataProvider'=>$dataProvider,
 		'columns'=>$columns,
 		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
 		'selectionChanged'=>"js:function(sel_id){
@@ -126,8 +126,9 @@ if (!isset($only_new)) {
 <?php
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'zakaz-grid-done',
-		'dataProvider'=>$model_done->search(),
-		'filter'=>$model_done,
+//		'dataProvider'=>$model_done->search(),
+//		'filter'=>$model_done,
+		'dataProvider'=>$dataProvider_done,
 		'columns'=>$columns,
 		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
 		'selectionChanged'=>"js:function(sel_id){

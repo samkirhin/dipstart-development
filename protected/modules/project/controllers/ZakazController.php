@@ -390,7 +390,7 @@ class ZakazController extends Controller
 	4=Автор работает,
 	5=Завершен,	
 */	
-    public function getProviders($new=false)
+    public function __getProviders($new=false)
     {
 		$uid		= Yii::app()->user->id;
 
@@ -424,7 +424,7 @@ class ZakazController extends Controller
 		$result['model_done'] = $model_done;
 		return	$result;
     }
-    public function __getProviders($new=false)
+    public function getProviders($new=false)
     {
 		if ($new) { $arr = array(1); $sarr= '1'; } else	{
 					$arr = array(1,2,3,4); $sarr= '1,2,3,4';
@@ -437,73 +437,33 @@ class ZakazController extends Controller
 		};					
 		$criteria->addInCondition('status',$arr);
 		
-        $model = new Zakaz('search');
-        $model->unsetAttributes();
-        if (!$new) $model->executor = $uid;
-		$params = Yii::app()->user->getState('ZakazFilterState');
-		if ( isset($params) ) {
-			$model->setAttributes($params);
-		}
-		$result = array('model'=>$model, 'model_done'=> null);
-		$result['model'] =$model;
-        
-		$criteria_done = new CDbCriteria();
-		$criteria_done->addInCondition('status',array(5));
-print_r($criteria_done);
-        $model_done = new Zakaz('search');
-        $model_done->unsetAttributes();
-		$params = Yii::app()->user->getState('ZakazFilterState');
-		if ( isset($params) ) {
-			$model_done->setAttributes($params);
-		}
-		$result['model_done'] = $model_done;
-		return	$result;
-    }
-	
-    public function _getProviders($new=false)
-    {
-		if ($new) { $arr = array(1); $sarr= '1'; } else	{
-					$arr = array(1,2,3,4); $sarr= '1,2,3,4';
-		};
-		$uid		= Yii::app()->user->id;
-
-        $criteria = new CDbCriteria();
-        if (!$new) {
-			$criteria->compare('executor', $uid);
-		};					
+        if ($new) {
+			$criteria->compare('executor', 0);
+		} else {	
+			if (User::model()->isAuthor())	$criteria->compare('executor', $uid);
+			if (User::model()->isCustomer())$criteria->compare('user_id',  $uid);
+		};	
 		$criteria->addInCondition('status',$arr);
-		
-//      $model = Zakaz::model()->findAll($criteria);
-        $model = new Zakaz('search');
-        $model->unsetAttributes();
-		$model->executor = $uid;
-		$params = Yii::app()->user->getState('ZakazFilterState');
-		if ( isset($params) ) {
-			$model->setAttributes($params);
-		}
 
-		$result = array('_model'=>$model, 'model'=>null, 'model_done'=> null);
-print_r($criteria);
-//        $dataProvider = new CActiveDataProvider(Zakaz::model()->resetScope(), [
-        $dataProvider = new CActiveDataProvider('Zakaz', [
+        $dataProvider = new CActiveDataProvider(Zakaz::model()->resetScope(), [
             'criteria' => $criteria,
 			'pagination' => false
         ]);
-		$result['model'] =$dataProvider;
+		$result = array('model'=>$dataProvider, 'model_done'=> null);
+		$criteria->addInCondition('status',$arr);
         
 		$criteria_done = new CDbCriteria();
-		if ($executor)	$criteria->compare('executor', $uid); else 
-						$criteria->compare('user_id', $uid);
+		if (User::model()->isAuthor())	$criteria_done->compare('executor', $uid);
+		if (User::model()->isCustomer())$criteria_done->compare('user_id',  $uid);
 		$criteria_done->addInCondition('status',array(5));
-//        $model_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
-        $dataProvider_done = new CActiveDataProvider('Zakaz', [
+
+        $dataProvider_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
             'criteria' => $criteria_done,
 			'pagination' => false
         ]);
 		$result['model_done'] = $dataProvider_done;
 		return	$result;
     }
-	
 
 	/**
 	 * Manages all models.
@@ -547,14 +507,9 @@ print_r($criteria);
 	{
 		$new 	= User::model()->isAuthor();
 		$models = $this->getProviders(true);
-//		$model	=new Zakaz('search');
 		$model	=  $models['model'];
-		$model->unsetAttributes();
-		
-		
+/*		
 		if ($new) {
-			$model->executor = 0;
-			$model->status=1; // =3; oldbadger 11.10.2015 глюк с новыми заказами
 			$user = User::model()->findByPk(Yii::app()->user->id);
 			$fields=$model->getFields();
 			foreach ($fields as $field) {
@@ -564,10 +519,9 @@ print_r($criteria);
 				}
 			}
 		}
-
+*/
 		$this->render('list',array(
 			'model'=>$models['model'],
-//			'model'=>$model,
             'model_done' => $models['model_done'],
             'dataProvider' => $models['model'],
             'dataProvider_done' => $models['model_done'],
