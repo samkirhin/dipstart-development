@@ -6,7 +6,6 @@ $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs')=>array('index'),
 	ProjectModule::t('List'),
 );
-
 ?>
 
 <h1><?=ProjectModule::t('Zakazs')?></h1>
@@ -14,7 +13,8 @@ $this->breadcrumbs=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'zakaz-grid',
-	'dataProvider'=>$model->search(),
+//	'dataProvider'=>$model->search(),
+	'dataProvider'=> $dataProvider,
 	//'filter'=>$model,
 	'columns'=>array(
         'id',
