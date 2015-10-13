@@ -48,6 +48,8 @@ $(document).ready(function() {
 	});
     $('.btn-chat').click(function(){
         var order=$('#order').val();
+//		$('#message').val('testtesttesttesttest');
+//        alert('message='+document.getElementById('message').innerHTML+' message='+$('#message').val()+' order='+order);
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
                 message:$('#message').val(),
@@ -62,6 +64,7 @@ $(document).ready(function() {
         });
         return false;
     });
+/*	
     $('.chat-edit').click(function(){
 		alert('!!!!!!!!!!'); return;
         var order=$('#order').val();
@@ -79,7 +82,7 @@ $(document).ready(function() {
         });
         return false;
     });
-	
+*/	
     $('.chat-view').scrollTop(10000);
 });
 function zakaz_done(part_id)

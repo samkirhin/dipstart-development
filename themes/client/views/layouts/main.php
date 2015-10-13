@@ -103,6 +103,8 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
+        var e = document.getElementById('slider1');
+		if ((e!=null) && ((e!=undefined)))
         $('#slider1').tinycarousel();
     });
 </script>

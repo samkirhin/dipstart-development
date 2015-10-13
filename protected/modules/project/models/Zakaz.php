@@ -445,7 +445,7 @@ class Zakaz extends CActiveRecord {
 			$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
 			if (isset($this->dbdate_finishend) && isset($this->dbdate_finishstart)) {
 				$criteria->addCondition('"' . $this->dbdate_finishstart . '"<=DATE_FORMAT(date_finish, "%d.%m.%Y")<="' . $this->dbdate_finishend . '"');
-x				$criteria->addCondition('date_finish is not NULL');
+				$criteria->addCondition('date_finish is not NULL');
 			}
 			else
 				$criteria->compare('DATE_FORMAT(date_finish, "%d.%m.%Y")', substr($this->dbdate_finishstart,0,10), true);
