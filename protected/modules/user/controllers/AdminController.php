@@ -115,7 +115,7 @@ class AdminController extends Controller
 
 		$manager = !User::model()->isAuthor();
 		$admin	 = User::model()->isAdmin();
-	
+
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
@@ -133,11 +133,13 @@ class AdminController extends Controller
 			} else $profile->validate();
 		}
 
+		$fields = ProfileField::model()->findAll();
 		$this->render('update',array(
 			'model'		=> $model,
 			'profile'	=> $profile,
 			'manager'	=> $manager,
 			'admin'		=> $admin,
+			'fields'	=> $fields,
 		));	
 	}
 
