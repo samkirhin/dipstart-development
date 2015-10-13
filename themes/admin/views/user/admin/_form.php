@@ -5,8 +5,6 @@
 	'enableAjaxValidation'=>true,
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 ));
-	// это неправильно, но из контроллера передать не удаётся
-	$fields = ProfileField::model()->findAll();
 ?>
 	<p class="note">=)<?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
@@ -26,6 +24,12 @@
 	width:	50%;
 }
 </style>
+<pre>
+<?
+echo '$admin='.$admin;
+echo '$manager='.$manager;
+?>
+</pre>
 
 	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'username');	?>
@@ -83,10 +87,12 @@
 <?php 
 			if ($widgetEdit = $field->widgetEdit($profile)) {
 				echo $widgetEdit;
-			} elseif ($field->range) {
+			} elseif (($field->range) || ($field->field_type=="LIST")) {
 				$attributes = Profile::range($field->range);
 				if (!$admin && $manager && $field[paymentProps]) $disabled['disabled'] = 'disabled';
-				echo $form->dropDownList($profile,$field->varname,$attributes,$disabled);
+//				echo $form->dropDownList($profile,$field->varname,$attributes,$disabled);
+				echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),$disabled);
+				
 			} elseif ($field->field_type=="TEXT") {
 				$attributes = array('rows'=>6, 'cols'=>38, 'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':''));
 				if (!$admin && $manager && $field[paymentProps]) $attributes['disabled'] = true;

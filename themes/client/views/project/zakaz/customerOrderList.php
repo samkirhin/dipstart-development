@@ -74,11 +74,11 @@ if (Campaign::getId()){
 	};	
 	$(document).ready(function()
 	{
-		$('body').on('dblclick', '#zakaz-grid tbody tr', function(event)
+		$('body').on('dblclick', '#zakaz-grid-current tbody tr', function(event)
 		{
 			var
 				rowNum = $(this).index(),
-				keys = $('#zakaz-grid > div.keys > span'),
+				keys = $('#zakaz-grid-current > div.keys > span'),
 				rowId = keys.eq(rowNum).text();
 
 			location.href = '/project/chat?orderId=' + rowId;
