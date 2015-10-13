@@ -1,5 +1,6 @@
-<?php 
-	Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
+<?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
+<?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/js/orders.js');?>
+	
     <div class="col-md-12">
         <h3><?=ProjectModule::t('Zakazs')?></h3>
     </div>
@@ -41,10 +42,7 @@ if (Campaign::getId()){
 <?php
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'zakaz-grid-current',
-//		'dataProvider'=>$model->search(),
-//		'filter'=>$model,
 		'dataProvider'=>$dataProvider,
-//		'filter'=>$model,
 		'columns'=>$columns,
 		//'enablePagination' => false,
 		'htmlOptions'=>array('class'=>'col-md-12 table table-striped'),
@@ -55,17 +53,35 @@ if (Campaign::getId()){
 	)); 
 ?>
 <script>
-    $(document).ready(function()
-    {
-        $('body').on('dblclick', '#zakaz-grid-current tbody tr', function(event)
-        {
-            var
-                rowNum = $(this).index(),
-                keys = $('#zakaz-grid-current > div.keys > span'),
-                rowId = keys.eq(rowNum).text();
+	function clickOnTab(num){
+		if (num == 0){
+			document.getElementById('first-tab').style.display = 'block';
+			document.getElementById('second-tab').style.display = 'none';
 
-            location.href = '/project/chat?orderId=' + rowId;
-        });
-    });
-	
+			document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
+			document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
+			$('#first-tab-li').addClass('active');
+			$('#second-tab-li').removeClass('active');
+		} else {
+			document.getElementById('first-tab').style.display = 'none';
+			document.getElementById('second-tab').style.display = 'block';
+
+			document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
+			document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
+			$('#first-tab-li').removeClass('active');
+			$('#second-tab-li').addClass('active');
+		};	
+	};	
+	$(document).ready(function()
+	{
+		$('body').on('dblclick', '#zakaz-grid tbody tr', function(event)
+		{
+			var
+				rowNum = $(this).index(),
+				keys = $('#zakaz-grid > div.keys > span'),
+				rowId = keys.eq(rowNum).text();
+
+			location.href = '/project/chat?orderId=' + rowId;
+		});
+	});
 </script>

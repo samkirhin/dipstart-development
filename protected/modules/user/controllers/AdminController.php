@@ -64,9 +64,9 @@ class AdminController extends Controller
 	 */
 	public function actionView()
 	{
-		$model = $this->loadModel();
+		$model	= $this->loadModel();
 		$this->render('view',array(
-			'model'=>$model,
+			'model'		=> $model,
 		));
 	}
 
@@ -109,12 +109,18 @@ class AdminController extends Controller
 	{
 		$model=$this->loadModel();
 		$profile=$model->profile;
+
 		$this->performAjaxValidation(array($model,$profile));
+
+		$manager = !User::model()->isAuthor();
+		$admin	 = User::model()->isAdmin();
+	
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			$profile->attributes=$_POST['Profile'];
-			
+		
+			$profile->setAttributes($_POST['Profile'], false);
+			print_r($profile->attributes); echo '<br>';
 			if($model->validate()&&$profile->validate()) {
 				$old_password = User::model()->notsafe()->findByPk($model->id);
 				if ($old_password->password!=$model->password) {
@@ -128,9 +134,11 @@ class AdminController extends Controller
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
-			'profile'=>$profile,
-		));
+			'model'		=> $model,
+			'profile'	=> $profile,
+			'manager'	=> $manager,
+			'admin'		=> $admin,
+		));	
 	}
 
 

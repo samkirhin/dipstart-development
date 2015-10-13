@@ -935,3 +935,14 @@ div.project-changes div.panel-heading h4.panel-title a {
 div.project-changes div.panel-heading h4.panel-title a i {
     padding-left: 4px;
 }
+
+
+div.first-tab{
+	float:	left;
+	width:	100%;
+}
+div.second-tab{
+	float:	left;
+	width:	100%;
+	display:	none;
+}

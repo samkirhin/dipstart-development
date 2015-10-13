@@ -1,4 +1,6 @@
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
+<?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/js/orders.js');?>
+
 <?php
 /* @var $this ZakazController */
 /* @var $model Zakaz */
@@ -7,20 +9,9 @@ $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs')=>array('index'),
 	ProjectModule::t('List'),
 );
-//echo '<br>$model=';print_r($model);
-/*
-echo '<br>$dataProvider->data=';
-print_r($dataProvider->data);
-echo '<br>$dataProvider=';
-print_r($dataProvider);
-echo '<br>$dataProvider_done=';
-print_r($dataProvider_done);
-die();
-*/
-//echo '<br>$only_new='.$only_new;
 ?>
 <h1><?=ProjectModule::t('Zakazs')?></h1>
-<h1 class='projects-title'>Выбрать заказ</h1>
+<h1 class='projects-title'><?=ProjectModule::t('SelectProject')?></h1>
 <?php
 if (Campaign::getId()){
 	$columns = array(
@@ -45,7 +36,7 @@ if (Campaign::getId()){
 		[
             'header' => '',
             'type' => 'raw',
-            'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
+            'value' => 'CHtml::link(ProjectModule::t("chat"), ["/project/chat", "orderId"=>$data->id])'
         ],
 	);
 }
@@ -64,6 +55,40 @@ if (!isset($only_new)) {
 		</ul>
 	</div>
 </section>
+
+<div class="twin-tab">
+<div class="first-tab" id="first-tab">
+<?php
+	}; //if (!isset($only_new)) {
+
+
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'zakaz-grid',
+		'dataProvider'=>$dataProvider,
+		'columns'=>$columns,
+		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
+		'selectionChanged'=>"js:function(sel_id){
+			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+		}",
+	)); 
+if (!isset($only_new)) {
+?>
+</div>
+<div class="second-tab" id="second-tab">
+<?php
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'zakaz-grid-done',
+		'dataProvider'=>$dataProvider_done,
+		'columns'=>$columns,
+		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
+		'selectionChanged'=>"js:function(sel_id){
+			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+		}",
+	)); 
+
+	echo '</div>';
+	}; //if (!isset($only_new)) 
+?>
 <script>
 	function clickOnTab(num){
 		if (num == 0){
@@ -84,85 +109,30 @@ if (!isset($only_new)) {
 			$('#second-tab-li').addClass('active');
 		};	
 	};	
+	$(document).ready(function()
+	{
+		$('body').on('dblclick', '#zakaz-grid tbody tr', function(event)
+		{
+			var
+				rowNum = $(this).index(),
+				keys = $('#zakaz-grid > div.keys > span'),
+				rowId = keys.eq(rowNum).text();
+
+			location.href = '/project/chat?orderId=' + rowId;
+		});
+	});
+	$(document).ready(function()
+	{
+		$('body').on('dblclick', '#zakaz-grid-done tbody tr', function(event)
+		{
+			var
+				rowNum = $(this).index(),
+				keys = $('#zakaz-grid-done > div.keys > span'),
+				rowId = keys.eq(rowNum).text();
+
+			location.href = '/project/chat?orderId=' + rowId;
+		});
+	});
+
 </script>
-
-
-<style>
-.first-tab{
-	float:	left;
-	width:	100%;
-}
-.second-tab{
-	float:	left;
-	width:	100%;
-	display:	none;
-}
-</style>
-
-<div class="twin-tab">
-<div class="first-tab" id="first-tab">
-
-
-
-<?php
-	}; //if (!isset($only_new)) {
-
-
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'zakaz-grid',
-//		'dataProvider'=>$model->search(),
-//		'filter'=>$model,
-		'dataProvider'=>$dataProvider,
-		'columns'=>$columns,
-		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
-		'selectionChanged'=>"js:function(sel_id){
-			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
-		}",
-	)); 
-if (!isset($only_new)) {
-?>
-</div>
-<div class="second-tab" id="second-tab">
-<?php
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'zakaz-grid-done',
-//		'dataProvider'=>$model_done->search(),
-//		'filter'=>$model_done,
-		'dataProvider'=>$dataProvider_done,
-		'columns'=>$columns,
-		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
-		'selectionChanged'=>"js:function(sel_id){
-			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
-		}",
-	)); 
-
-	echo '</div>';
-	}; //if (!isset($only_new)) 
-?>
-<script>
-    $(document).ready(function()
-    {
-        $('body').on('dblclick', '#zakaz-grid tbody tr', function(event)
-        {
-            var
-                rowNum = $(this).index(),
-                keys = $('#zakaz-grid > div.keys > span'),
-                rowId = keys.eq(rowNum).text();
-
-            location.href = '/project/chat?orderId=' + rowId;
-        });
-    });
-    $(document).ready(function()
-    {
-        $('body').on('dblclick', '#zakaz-grid-done tbody tr', function(event)
-        {
-            var
-                rowNum = $(this).index(),
-                keys = $('#zakaz-grid-done > div.keys > span'),
-                rowId = keys.eq(rowNum).text();
-
-            location.href = '/project/chat?orderId=' + rowId;
-        });
-    });
 	
-</script>

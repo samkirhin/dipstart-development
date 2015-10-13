@@ -22,10 +22,10 @@ $this->menu=array(
 		'id',
 		'username',
 	);
-	
-	$profileFields=ProfileField::model()->forOwner()->sort()->findAll();
-	if ($profileFields) {
-		foreach($profileFields as $field) {
+
+	$profile= ProfileField::model()->findAll();
+	if ($profile) {
+		foreach($profile as $field) {
 			array_push($attributes,array(
 					'label' => UserModule::t($field->title),
 					'name' => $field->varname,

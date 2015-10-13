@@ -24,9 +24,11 @@
 
 <h3 ><?php echo ProjectModule::t('Changes'); ?></h3>
 
-<?php $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
-        'project' => $order,
-    )); ?>
+<?php 
+//	$this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
+//        	'project' => $order,
+//	)); 
+?>
 <div><a href='#' id='file-picker'><?php echo Yii::t('site','File manager');?></a>
 </div>
 
@@ -59,6 +61,7 @@
 <?php
 // the widget
 //
+/*
 $this->widget('application.components.MyYiiFileManViewer'
     ,array(
         // layout selectors:
@@ -93,6 +96,7 @@ $this->widget('application.components.MyYiiFileManViewer'
 				'progress: '+status+' '+progress+'%<br/>');
 			}",
     ));
+*/	
 ?>
 <?php if (User::model()->isAuthor()) echo Yii::t('site','Notes to the author').': '.$order->getAttribute('author_notes'); ?>
 <table>
@@ -104,13 +108,15 @@ $this->widget('application.components.MyYiiFileManViewer'
         ?>
     </tr>
     <?php
+/*	
         $this->widget('zii.widgets.CListView', array(
             'dataProvider'=>$parts,
             'itemView'=>'_part',
         ));
+*/		
     ?>
 </table>
-<?php foreach($messages as $message): ?>
+<?php if (count($messages)) foreach($messages as $message): ?>
         <?php echo $message->date; ?> -
         <?php
             $this->beginWidget('ProfileLinkWidget',array(

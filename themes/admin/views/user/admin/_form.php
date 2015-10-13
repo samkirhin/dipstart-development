@@ -5,44 +5,49 @@
 	'enableAjaxValidation'=>true,
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 ));
-    $manager = !User::model()->isAuthor();
-    $admin	 = User::model()->isAdmin();
-	$ProfileFields = ProfileField::model()->findAll();
-	$fields	= array();
-	foreach($ProfileFields as $field){
-//		$fields[$field['varname']] =  $field['editable'];
-		$fields[$field['varname']] =  $field['paymentProps'];
-	};	
-	unset($ProfileFields);
+	// это неправильно, но из контроллера передать не удаётся
+	$fields = ProfileField::model()->findAll();
 ?>
-
 	<p class="note">=)<?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
+<style>
+.center-div-admin-form{
+	float:	left;
+	width:	70%;
+    margin: auto;	
+}
+.left-div-admin-form{
+	float:	left;
+	width:	50%;
+}
+.right-div-admin-form{
+	float:	right;
+	width:	50%;
+}
+</style>
 
-	<div class="row">
+	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'username');	?>
+		</div><div class="right-div-admin-form">
 		<?php $attributes = array('size'=>40,'maxlength'=>20,'placeholder'=>$model->getAttributeLabel( 'username' ).($model->isAttributeRequired('username')?' *':''));	?>
 		<?php if (!$admin && $manager) $attributes['disabled'] = true;	?>
 		<?php echo $form->textField($model,'username',$attributes); ?>
 		<?php echo $form->error($model,'username'); ?>
+		</div>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php $attributes = array('size'=>40,'maxlength'=>128,'placeholder'=>$model->getAttributeLabel( 'password' ).($model->isAttributeRequired('password')?' *':''));?>
-		<?php if (!$admin && $manager) $attributes['disabled'] = true;	?>
-		<?php echo $form->passwordField($model,'password',$attributes); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
-
-	<div class="row">
+	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'email'); ?>
+		</div><div class="right-div-admin-form">
 		<?php $attributes = array('size'=>40,'maxlength'=>128,'placeholder'=>$model->getAttributeLabel( 'email' ).($model->isAttributeRequired('email')?' *':''));?>
 		<?php if (!$admin && $manager && $fields['email']) $attributes['disabled'] = true;	?>
 		<?php echo $form->textField($model,'email', $attributes); ?>
 		<?php echo $form->error($model,'email'); ?>
+		</div>
 	</div>
+<?php 
+		if ($admin) { ?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'superuser'); ?>
@@ -59,39 +64,43 @@
 		<?php echo $form->dropDownList($model,'status',$attributes, $disabled); ?>
 		<?php echo $form->error($model,'status'); ?>
 	</div>
+	
 <?php 
-		$profileFields=$profile->getFields();
-		if ($profileFields) {
-			foreach($profileFields as $field) {
-				$name = strtolower($field->varname);
-			?>
-	<div class="row">
+		};
+		foreach($fields as $field) {
+			$name = strtolower($field->varname);
+?>
+	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($profile,$field->varname); ?>
-		<?php 
-		if ($widgetEdit = $field->widgetEdit($profile)) {
-			echo $widgetEdit;
-		} elseif ($field->range) {
-			$attributes = Profile::range($field->range);
-			if (!$admin && $manager && $fields[$name]) $disabled['disabled'] = 'disabled';
-			echo $form->dropDownList($profile,$field->varname,$attributes,$disabled);
-		} elseif ($field->field_type=="TEXT") {
-			$attributes = array('rows'=>6, 'cols'=>41.5, 'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':''));
-			if (!$admin && $manager && $fields[$name]) $attributes['disabled'] = true;
-			echo CHtml::activeTextArea($profile,$field->varname, $attributes);
-		} else {
-			$attributes = array('size'=>40,'maxlength'=>(($field->field_size)?$field->field_size:255),'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':''));
-			if (!$admin && $manager && $fields[$name]) $attributes['disabled'] = true;
-			echo $form->textField($profile,$field->varname, $attributes);
-		}
+		</div><div class="right-div-admin-form">
+<?php 
+			if ($widgetEdit = $field->widgetEdit($profile)) {
+				echo $widgetEdit;
+			} elseif ($field->range) {
+				$attributes = Profile::range($field->range);
+				if (!$admin && $manager && $field[paymentProps]) $disabled['disabled'] = 'disabled';
+				echo $form->dropDownList($profile,$field->varname,$attributes,$disabled);
+			} elseif ($field->field_type=="TEXT") {
+				$attributes = array('rows'=>6, 'cols'=>38, 'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':''));
+				if (!$admin && $manager && $field[paymentProps]) $attributes['disabled'] = true;
+				echo CHtml::activeTextArea($profile,$field->varname, $attributes);
+			} else {
+				$attributes = array('size'=>40,'maxlength'=>(($field->field_size)?$field->field_size:255),'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':''));
+				if (!$admin && $manager && $field[paymentProps]) $attributes['disabled'] = true;
+				echo $form->textField($profile,$field->varname, $attributes);
+			}
 		 ?>
 		<?php echo $form->error($profile,$field->varname); ?>
+		</div>
 	</div>
 			<?php
-			}
 		}
 ?>
-	<div class="row buttons">
+	<div class="row buttons"><div class="left-div-admin-form">&nbsp;
+		</div><div class="right-div-admin-form">
 		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
+		</div>
+	</div>
 	</div>
 
 <?php $this->endWidget(); ?>
