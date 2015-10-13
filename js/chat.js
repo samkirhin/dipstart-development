@@ -48,7 +48,7 @@ $(document).ready(function() {
 	});
     $('.btn-chat').click(function(){
         var order=$('#order').val();
-		$('#message').val('testtesttesttesttest');
+//		$('#message').val('testtesttesttesttest');
 //        alert('message='+document.getElementById('message').innerHTML+' message='+$('#message').val()+' order='+order);
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
