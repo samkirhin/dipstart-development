@@ -67,8 +67,14 @@
 	
 <?php 
 		};
+		$mailing_list = 0;
 		foreach($fields as $field) {
 			$name = strtolower($field->varname);
+			if ($name == 'mailing_list') {
+				$mailing_list = $model->profile->getAttribute($name);
+				$mailing_list = array('isq','sms','email')[$mailing_list];
+			};
+			
 ?>
 	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($profile,$field->varname); ?>
@@ -106,3 +112,11 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<input type="hidden" id="mailing_list" value="<?= $mailing_list ?>">
+
+<script>
+	$(document).ready(function()
+	{
+		$('#Profile_mailing_list').val($('#mailing_list').val());
+	});
+</script>
