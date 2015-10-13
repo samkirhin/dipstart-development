@@ -390,40 +390,6 @@ class ZakazController extends Controller
 	4=Автор работает,
 	5=Завершен,	
 */	
-    public function __getProviders($new=false)
-    {
-		$uid		= Yii::app()->user->id;
-
-        $model = new Zakaz('search');
-        $model->unsetAttributes();
-        if ($new) {
-			$model->executor= 0;
-			$model->status	= 1;
-		} else {	
-			if (User::model()->isAuthor())	$model->executor= $uid;
-			if (User::model()->isCustomer())$model->user_id= $uid;
-			$model->status	= array(1,2,3,4);
-		};	
-		$params = Yii::app()->user->getState('ZakazFilterState');
-		if ( isset($params) ) {
-			$model->setAttributes($params);
-		}
-		$result = array('model'=>$model, 'model_done'=> null);
-		$result['model'] =$model;
-		
-        
-        $model_done = new Zakaz('search');
-        $model_done->unsetAttributes();
-		if (User::model()->isAuthor())	$model_done->executor= $uid;
-		if (User::model()->isCustomer())$model_done->user_id= $uid;
-		$model_done->status	= 5;
-		$params = Yii::app()->user->getState('ZakazFilterState');
-		if ( isset($params) ) {
-			$model_done->setAttributes($params);
-		}
-		$result['model_done'] = $model_done;
-		return	$result;
-    }
     public function getProviders($new=false)
     {
 		if ($new) { $arr = array(1); $sarr= '1'; } else	{
@@ -432,9 +398,6 @@ class ZakazController extends Controller
 		$uid		= Yii::app()->user->id;
 
         $criteria = new CDbCriteria();
-        if (!$new) {
-//			$criteria->compare('executor', $uid);
-		};					
 		$criteria->addInCondition('status',$arr);
 		
         if ($new) {
@@ -508,18 +471,7 @@ class ZakazController extends Controller
 		$new 	= User::model()->isAuthor();
 		$models = $this->getProviders(true);
 		$model	=  $models['model'];
-/*		
-		if ($new) {
-			$user = User::model()->findByPk(Yii::app()->user->id);
-			$fields=$model->getFields();
-			foreach ($fields as $field) {
-				if ($field->field_type == 'LIST') {
-					$tmp = $field->varname;
-					$model->$tmp = $user->profile->$tmp;
-				}
-			}
-		}
-*/
+
 		$this->render('list',array(
 			'model'=>$models['model'],
             'model_done' => $models['model_done'],
