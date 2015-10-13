@@ -62,6 +62,24 @@ $(document).ready(function() {
         });
         return false;
     });
+    $('.chat-edit').click(function(){
+		alert('!!!!!!!!!!'); return;
+        var order=$('#order').val();
+        $.post('/project/chat?orderId='+order,{
+            ProjectMessages:{
+                message:$('#message').val(),
+                recipient:this.name,
+				order: order,
+				cost: $('.price-for-work-avtor input').val()
+            }
+        },function(data){
+            $('#chat').html(data);
+            $('.chat-view').scrollTop(10000);
+            $('#message').val('');
+        });
+        return false;
+    });
+	
     $('.chat-view').scrollTop(10000);
 });
 function zakaz_done(part_id)

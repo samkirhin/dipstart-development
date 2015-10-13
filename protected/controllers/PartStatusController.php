@@ -164,7 +164,6 @@ class PartStatusController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-echo '22222222222222!!'; die();		
 		if(isset($_POST['ajax']) && $_POST['ajax']==='part-status-form')
 		{
 			echo CActiveForm::validate($model);
