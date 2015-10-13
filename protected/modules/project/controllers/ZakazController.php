@@ -22,7 +22,7 @@ class ZakazController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index'/*,'ownlist','ownList','OwnList'*/),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index','delete'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
