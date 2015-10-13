@@ -144,5 +144,5 @@ return array(
 	'SelectProject' => 'Выбрать заказ',
 	'chat' => 'чат',
 	'Chat' => 'чат',
-	
+	'Edit Last Message' => 'Реактировать последнее сообщение',	
 );

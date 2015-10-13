@@ -143,5 +143,6 @@ return array(
 	'SelectProject' => 'Select a Project',
 	'chat' => 'chat',
 	'Chat' => 'Chat',
+	'Edit Last Message' => 'Edit Last Message',	
 	
 );
