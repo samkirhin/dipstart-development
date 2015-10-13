@@ -24,12 +24,6 @@
 	width:	50%;
 }
 </style>
-<pre>
-<?
-echo '$admin='.$admin;
-echo '$manager='.$manager;
-?>
-</pre>
 
 	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'username');	?>
@@ -53,16 +47,18 @@ echo '$manager='.$manager;
 <?php 
 		if ($admin) { ?>
 
-	<div class="row">
+	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'superuser'); ?>
+		</div><div class="right-div-admin-form">
 		<?php $attributes = array(); $attributes['options'] = User::itemAlias('AdminStatus');?>
 		<?php $disabled = array(); if (!$admin && $manager && $fields['superuser']) $disabled = array('disabled'=>true);?>
 		<?php echo $form->dropDownList($model,'superuser',$attributes, $disabled); ?>
 		<?php echo $form->error($model,'superuser'); ?>
 	</div>
 
-	<div class="row">
+	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'status'); ?>
+		</div><div class="right-div-admin-form">
 		<?php $attributes = array(); $attributes['options'] = User::itemAlias('AdminStatus');?>
 		<?php $disabled = array(); if (!$admin && $manager && $fields['status']) $disabled = array('disabled'=>true); ?>
 		<?php echo $form->dropDownList($model,'status',$attributes, $disabled); ?>
