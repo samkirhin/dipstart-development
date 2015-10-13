@@ -25,7 +25,8 @@ $(document).ready(function(){
     chatEmpty();
     
     $('input.btn-chat').on('click', chatEmpty);
-    
+   
+    $('div#new-changes-block button.addPart').append('<i style="font-size: 1.4em!important; margin-left: 4px; color: rgb(197, 225, 165);" class="fa fa-check fa-lg">');
     
     $('div.info-block h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
     

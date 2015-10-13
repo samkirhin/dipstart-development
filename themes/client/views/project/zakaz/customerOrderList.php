@@ -1,10 +1,8 @@
-<?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
-
+<?php 
+	Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
     <div class="col-md-12">
         <h3><?=ProjectModule::t('Zakazs')?></h3>
     </div>
-
-
 <?php 
 if (Campaign::getId()){
 	$columns = array(
@@ -38,28 +36,36 @@ if (Campaign::getId()){
         ],
 	);
 }
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'zakaz-grid',
-	'dataProvider'=>$dataProvider,
-	'columns'=>$columns,
-    //'enablePagination' => false,
-    'htmlOptions'=>array('class'=>'col-md-12 table table-striped'),
-    'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
-    'selectionChanged'=>"js:function(sel_id){
-        document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
-    }",
-)); ?>
+?>
+
+<?php
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'zakaz-grid-current',
+//		'dataProvider'=>$model->search(),
+//		'filter'=>$model,
+		'dataProvider'=>$dataProvider,
+//		'filter'=>$model,
+		'columns'=>$columns,
+		//'enablePagination' => false,
+		'htmlOptions'=>array('class'=>'col-md-12 table table-striped'),
+		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
+		'selectionChanged'=>"js:function(sel_id){
+			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+		}",
+	)); 
+?>
 <script>
     $(document).ready(function()
     {
-        $('body').on('dblclick', '#zakaz-grid tbody tr', function(event)
+        $('body').on('dblclick', '#zakaz-grid-current tbody tr', function(event)
         {
             var
                 rowNum = $(this).index(),
-                keys = $('#zakaz-grid > div.keys > span'),
+                keys = $('#zakaz-grid-current > div.keys > span'),
                 rowId = keys.eq(rowNum).text();
 
             location.href = '/project/chat?orderId=' + rowId;
         });
     });
+	
 </script>

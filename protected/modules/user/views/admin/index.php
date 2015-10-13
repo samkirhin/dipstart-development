@@ -3,7 +3,6 @@ $this->breadcrumbs=array(
 	UserModule::t('Users')=>array('/user'),
 	UserModule::t('Manage'),
 );
-
 $this->menu=array(
     array('label'=>UserModule::t('Create User'), 'url'=>array('create')),
     array('label'=>UserModule::t('Manage Users'), 'url'=>array('admin')),
@@ -39,7 +38,7 @@ $('.search-form form').submit(function(){
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'user-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$dataProvider,
 	'filter'=>$model,
 	'columns'=>array(
 		array(

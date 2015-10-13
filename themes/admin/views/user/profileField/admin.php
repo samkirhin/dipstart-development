@@ -38,15 +38,18 @@ $('.search-form form').submit(function(){
 <div class="col-md-12">
 <?php echo CHtml::link(UserModule::t('Advanced Search'),'#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-    'model'=>$model,
-)); ?>
+<?php 
+//	$this->renderPartial('_search',array(
+//		'model'=>$model,
+//	)); 
+?>
 </div><!-- search-form -->
 </div>
 <div class="col-md-12">
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
+//	'dataProvider'=>$model->search(),
+	'dataProvider'=>$dataProvider,
+//	'filter'=>$model,
 	'columns'=>array(
 		'id',
 		array(
@@ -76,16 +79,20 @@ $('.search-form form').submit(function(){
 		//'other_validator',
 		//'default',
 		'position',
-        array(
-			'name'=>'editable',
-			'type'=>'html',
-			'value'=> '$data->editable',
-                ),            
+
 		array(
 			'name'=>UserModule::t('visible'),
 			'value'=>'ProfileField::itemAlias("visible",$data->visible)',
 			'filter'=>ProfileField::itemAlias("visible"),
 		),
+        array(
+			'name'=>'editable',
+			'value'=> '$data->editable',
+		),            
+        array(
+			'name'=>'paymentProps',
+			'value'=> '$data->paymentProps',
+		),            
 		//*/
 		array(
 			'class'=>'CButtonColumn',

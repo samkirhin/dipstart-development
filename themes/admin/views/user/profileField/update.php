@@ -12,5 +12,5 @@ $this->menu=array(
 );
 ?>
 
-<h1><?php echo UserModule::t('Update Profile Field ').$model->id; ?></h1>
+<h1><?php echo UserModule::t('Update Profile Field').' '.$model->id; ?></h1>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

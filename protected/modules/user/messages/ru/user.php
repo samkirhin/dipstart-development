@@ -144,6 +144,39 @@ return array(
     '' => '',
     '' => '',
     '' => '',
+	'Editable'  => 'Редактируемое',
+	'editable'  => 'Редактируемое',
+	'Update Profile Field' => 'Редактирование поля профиля',
+	'UPDATE PROFILE FIELD' => 'Редактирование поля профиля',
+	
+    'Authors' => 'Авторы',
+    'Customers' => 'Заказчики',
+	'Name' => 'Имя',
+	'Second Name'=> 'Отчество',
+	'Surname' => 'Фамилия',
+	'Phone' => 'Телефон',
+	'username' => 'логин',
+	'login' => 'логин',
+	
+	//EventHelper.php
+	'Not transferred' =>  'Не передан тип',
+	'No description' =>  'Отсутствует описание',
+	'User' =>  'Пользователь',		
+	'created order' =>  'создал заказ',
+	'edited order'  =>  'отредактировал',
+	'attached comments' =>  'прикрепил замечания',
+	'uploaded check' =>  'загрузил чек',
+	'have uploaded part of the job' =>  'загрузил часть работы',
+	'attached files in order' =>  'прикрепил файлы в заказ',
+	'deleted the file out of order' =>  'удалил файл из заказа',
+	'left a message' =>  'оставил сообщение',
+	'The user changed data in the profile' =>  'Пользователь изменил данные в профиле',
+	
+	// customerOrderList.php
+	'CurrentProjects' => 'Текущие проекты',
+	'DoneProjects' => 'Завершённые проекты',
+
+	'PaymentProps'=>'Платёжный реквизит',
 
 );
 

@@ -45,6 +45,10 @@ class ChatController extends Controller {
 				'actions'=>array('admin', 'approve', 'remove', 'edit', 'setexecutor', 'delexecutor', 'readdress','status'),
 				'users'=>array('admin', 'manager'),
 			),
+			array('allow',  // deny all users
+				'actions' => array('index'),
+				'users'=>array('*'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -68,8 +72,11 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
+		if(Yii::app()->user->isGuest){
+			echo 'Guest...';
+			die();
+		}
         Yii::app()->session['project_id'] = $orderId;
-
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
                 $model = new ProjectMessages;
@@ -89,6 +96,7 @@ class ChatController extends Controller {
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                         break;
                 }
+
                 $model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
@@ -97,14 +105,18 @@ class ChatController extends Controller {
             ));
             Yii::app()->end();
         }
-        $model=Zakaz::model()->resetScope()->findByPk($orderId);
-        if(isset($_POST['Zakaz'])) {
-            $model->attributes = $_POST['Zakaz'];
-            $model->save();
-        }
+		$moderate_types = EventHelper::get_moderate_types_string();
+        $events = Events::model()->findAll(array(
+            'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
+            'order' => 'timestamp DESC'
+			),
+			array(':event_id'=> $orderId) 			
+		);
+		$moderated = count($events) == 0;
         $this->render('index', array(
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
+			'moderated' => $moderated,
             //'images' => $model->images(['condition'=>'approved=0'])
         ));
     }
@@ -142,7 +154,7 @@ class ChatController extends Controller {
     public function actionApiRenameFile() {
         $this->_prepairJson();
         $data = $this->_request->getParam('data');
-	$path=Yii::getPathOfAlias('webroot').$data['dir'];
+		$path=Yii::getPathOfAlias('webroot').$data['dir'];
         if (!file_exists($path)) mkdir($path);
         if (rename($path.$data['name'], $path.'#trash#'.$data['name'])) {
             EventHelper::materialsDeleted($_GET['orderId']);

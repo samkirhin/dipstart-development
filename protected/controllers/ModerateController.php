@@ -5,12 +5,29 @@ class ModerateController extends Controller
     
     public function filters()
     {
-        return CMap::mergeArray(
-            parent::filters(), 
-            [
-                'postOnly + approve'
-            ]);
-    }
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete + approve, ApiRenameFile', // we only allow deletion via POST request
+        );
+	}
+		
+	public function accessRules()
+	{
+			return array(
+                array('allow', // 
+                    'actions'=>array('view','index'),
+                    'users'=>array('@'),
+                ),
+                array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                    'actions'=>array('approve', 'delete','index'),
+                    'users'=>array('admin','manager'),
+                ),
+				array('deny',  // deny all users
+					'users'=>array('*'),
+				),
+			);
+	}
+	
 
     public function actionIndex($id)
     {
@@ -30,12 +47,18 @@ class ModerateController extends Controller
     {
         $model = $this->loadModel($id);
         $model->approve();
+		echo 'approve';
+        $model = $this->loadModel($id);
+		print_r($model);
     }
     
     public function actionDelete($id)
     {
         $model = $this->loadModel($id);
         $model->delete();
+		echo 'delete';
+        $model = $this->loadModel($id);
+		print_r($model);
     }
     
     public function loadModel($id)

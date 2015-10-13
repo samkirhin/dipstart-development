@@ -2,24 +2,13 @@
 
 class ZakazController extends Controller
 {
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	//public $layout='//layouts/column2';
-	/**
-	 * @return array action filters
-	 */
-
-	/*public function filters()
-	{
-		return array_merge([
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-			'rights',]
-		);
-	}*/
-
+	public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -29,11 +18,11 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'uploadPayment','list'),
+                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index','ownList','apiRemoveFile'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','status'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index'/*,'ownlist','ownList','OwnList'*/),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -169,12 +158,14 @@ class ZakazController extends Controller
                 $model->dbauthor_informed = $d1->format('d.m.Y H:i');
             }
 
+			
             if($model->save()){
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
                     EventHelper::createOrder($model->id);
                 }
                 $this->redirect(array('view','id'=>$model->id));
             }
+			
         }
 
         $this->render('create',array(
@@ -245,15 +236,19 @@ class ZakazController extends Controller
 					}
 				}
 			}
-
 			if($model->save()) {
 				if ($role != 'Manager' && $role != 'Admin') {
-					EventHelper::editOrder($model->id);
+// где-то есть дублрующий вызов записи события, поэтому этот комментируем
+// oldbadger 09.10.2015					
+//					EventHelper::editOrder($model->id);
 					$view = 'orderInModerate';
+					$this->redirect(array("../project/chat?orderId=$id"));
 				} else {
+//					$this->redirect(array('project/chat','orderId'=>$model->id));
 					$this->redirect(array('update','id'=>$model->id));
 				}
 			}
+			
 		}
 
 		$this->render($view, array(
@@ -310,10 +305,7 @@ class ZakazController extends Controller
             $event->delete();
             $this->redirect(['/project/zakaz/update', 'id' => $rid]);
         }
-            
-        
     }
-
     /**
      * Одобрение или нет заказа
      * @param $answer
@@ -333,6 +325,7 @@ class ZakazController extends Controller
                         'id' => $model->id
                     )));
                 }
+					
             } else {
                 // если нет то просто удаляем
                 $model->delete();
@@ -389,6 +382,88 @@ class ZakazController extends Controller
             ));
 		}
 	}
+/*	
+	Статусы проекта:
+	1=Новый заказ,
+	2=Ждем решен. клиента,
+	3=Поиск Автора,
+	4=Автор работает,
+	5=Завершен,	
+*/	
+    public function __getProviders($new=false)
+    {
+		$uid		= Yii::app()->user->id;
+
+        $model = new Zakaz('search');
+        $model->unsetAttributes();
+        if ($new) {
+			$model->executor= 0;
+			$model->status	= 1;
+		} else {	
+			if (User::model()->isAuthor())	$model->executor= $uid;
+			if (User::model()->isCustomer())$model->user_id= $uid;
+			$model->status	= array(1,2,3,4);
+		};	
+		$params = Yii::app()->user->getState('ZakazFilterState');
+		if ( isset($params) ) {
+			$model->setAttributes($params);
+		}
+		$result = array('model'=>$model, 'model_done'=> null);
+		$result['model'] =$model;
+		
+        
+        $model_done = new Zakaz('search');
+        $model_done->unsetAttributes();
+		if (User::model()->isAuthor())	$model_done->executor= $uid;
+		if (User::model()->isCustomer())$model_done->user_id= $uid;
+		$model_done->status	= 5;
+		$params = Yii::app()->user->getState('ZakazFilterState');
+		if ( isset($params) ) {
+			$model_done->setAttributes($params);
+		}
+		$result['model_done'] = $model_done;
+		return	$result;
+    }
+    public function getProviders($new=false)
+    {
+		if ($new) { $arr = array(1); $sarr= '1'; } else	{
+					$arr = array(1,2,3,4); $sarr= '1,2,3,4';
+		};
+		$uid		= Yii::app()->user->id;
+
+        $criteria = new CDbCriteria();
+        if (!$new) {
+//			$criteria->compare('executor', $uid);
+		};					
+		$criteria->addInCondition('status',$arr);
+		
+        if ($new) {
+			$criteria->compare('executor', 0);
+		} else {	
+			if (User::model()->isAuthor())	$criteria->compare('executor', $uid);
+			if (User::model()->isCustomer())$criteria->compare('user_id',  $uid);
+		};	
+		$criteria->addInCondition('status',$arr);
+
+        $dataProvider = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria,
+			'pagination' => false
+        ]);
+		$result = array('model'=>$dataProvider, 'model_done'=> null);
+		$criteria->addInCondition('status',$arr);
+        
+		$criteria_done = new CDbCriteria();
+		if (User::model()->isAuthor())	$criteria_done->compare('executor', $uid);
+		if (User::model()->isCustomer())$criteria_done->compare('user_id',  $uid);
+		$criteria_done->addInCondition('status',array(5));
+
+        $dataProvider_done = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria_done,
+			'pagination' => false
+        ]);
+		$result['model_done'] = $dataProvider_done;
+		return	$result;
+    }
 
 	/**
 	 * Manages all models.
@@ -407,35 +482,34 @@ class ZakazController extends Controller
 
 	public function actionOwnList()
 	{
-		$model=new Zakaz('search');
-		$model->unsetAttributes();  // clear any default values
-        $model->executor = Yii::app()->user->id;
-
-		$this->render('list',array(
-			'model'=>$model,
-		));
+		$models = $this->getProviders(0);
+        $this->render('list', [
+            'model' => $models['model'],
+            'model_done' => $models['model_done'],
+            'dataProvider' => $models['model'],
+            'dataProvider_done' => $models['model_done'],
+        ]);
 	}
+	
     public function actionCustomerOrderList()
     {
-        $criteria = new CDbCriteria();
-        $criteria->compare('user_id', Yii::app()->user->id);
-        $model = new CActiveDataProvider(Zakaz::model()->resetScope(), [
-            'criteria' => $criteria,
-			'pagination' => false
-        ]);
+		$models = $this->getProviders();
+		
         $this->render('customerOrderList', [
-            'dataProvider' => $model
+            'model' => $models['model'],
+            'model_done' => $models['model_done'],
+            'dataProvider' => $models['model'],
+            'dataProvider_done' => $models['model_done'],
         ]);
     }
 
 	public function actionList($status=0)
 	{
-		$model=new Zakaz('search');
-		$model->unsetAttributes();
-		
-		if (User::model()->isAuthor()) {
-			$model->executor = 0;
-			$model->status=3;
+		$new 	= User::model()->isAuthor();
+		$models = $this->getProviders(true);
+		$model	=  $models['model'];
+/*		
+		if ($new) {
 			$user = User::model()->findByPk(Yii::app()->user->id);
 			$fields=$model->getFields();
 			foreach ($fields as $field) {
@@ -445,9 +519,13 @@ class ZakazController extends Controller
 				}
 			}
 		}
-
+*/
 		$this->render('list',array(
-			'model'=>$model,
+			'model'=>$models['model'],
+            'model_done' => $models['model_done'],
+            'dataProvider' => $models['model'],
+            'dataProvider_done' => $models['model_done'],
+			'only_new'		=> $new,
 		));
 	}
 	/**
@@ -583,5 +661,4 @@ class ZakazController extends Controller
 		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
         Yii::app()->end();
     }
-	
 }

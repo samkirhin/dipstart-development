@@ -34,12 +34,17 @@ class DefaultController extends Controller
                 foreach ($prof as $key=>$val) {
                     $res=$val->getAttributes();
                     $res1=$val->AuthAssignment->getAttributes();   //---<<
-                    $resuser=$val->user->getAttributes();
                     if ($res['discipline']!='') {
                         $res['cat_name']=implode(',',array_intersect_key($rescat,array_flip(explode(',',$res['discipline']))));
                     }
                     if ($res1['itemname']=='Author') {
+						$resuser=array();
+//						$user   = User::model()->findAll(['id'=>$uid]);
+//die('$user='.var_dump($user));
+//						$resuser= $user->getAttributes();
+						$resuser=$val->user->getAttributes(); 
                         $itog[$key]=array_merge($res,$resuser);
+					
                     }
                 }
                 $dataProvider=new CArrayDataProvider($itog, array(

@@ -21,6 +21,11 @@ class User extends CActiveRecord
 	 * @var timestamp $lastvisit_at
 	 */
 
+	public function getAttributes($name=true)
+	{
+		return parent::getAttributes($name);
+	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class

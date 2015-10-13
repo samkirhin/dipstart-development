@@ -133,11 +133,11 @@ return array(
     'Manage Zakaz Parts' => 'Manage Zakaz Parts',
     'Additionally send:' => 'Дополнительно отправить:',
     'Ordering Information' => 'Информация о заказе',
-	'Pay online' => 'Оплатить онлайн'
+	'Pay online' => 'Оплатить онлайн',
 
-
-
-
-
-
+	'Editable'  => 'Редактируемое',
+	'editable'  => 'Редактируемое',
+	'Update Profile Field' => 'Редактирование поля профиля',
+	'UPDATE PROFILE FIELD' => 'Редактирование поля профиля',
+	'PaymentProps'=>'Платёжный реквизит',
 );
