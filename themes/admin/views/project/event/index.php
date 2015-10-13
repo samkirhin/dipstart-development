@@ -29,7 +29,9 @@
             <td><?php echo $event->id?></td>
             <td><?php echo $event->description.' '?><a href="http://<?= $_SERVER['SERVER_NAME'] ?>/project/zakaz/update/id/<?= $event->event_id ?>"><?= '#'.$event->event_id ?></a></td>
             <td>
-                <?php switch ($event->type) {
+				<?php 
+				echo CHtml::button(Yii::t('site','Delete'),array('onclick'=>'this.parentNode.parentNode.style.display=\'none\';$.post("'.Yii::app()->createUrl('project/event/delete',array('id'=>$event->id)).'",function(xhr,data,msg){ /*alert(xhr.msg);*/},"json");'));
+                switch ($event->type) {
                     case EventHelper::TYPE_EDIT_ORDER:
                     case EventHelper::TYPE_UPDATE_PROFILE:
                         echo CHtml::link(
@@ -41,7 +43,6 @@
                         echo '<td> Ссылка отсутствует</td>';
                     break;
                     case EventHelper::TYPE_MESSAGE:
-                        echo CHtml::button(Yii::t('site','Delete'),array('onclick'=>'$.post("'.Yii::app()->createUrl('project/event/index',array('id'=>$event->id)).'",function(xhr,data,msg){alert(xhr.msg);},"json");'));
                     default:
                         echo CHtml::link(Yii::t('site', 'Show'), ['/project/zakaz/preview', 'id' => $event->id]);
                     break;
@@ -53,4 +54,5 @@
     </table>
     </div>
    </div>
-</div>
+</div>  
+

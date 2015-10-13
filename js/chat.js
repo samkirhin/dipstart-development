@@ -48,8 +48,6 @@ $(document).ready(function() {
 	});
     $('.btn-chat').click(function(){
         var order=$('#order').val();
-//		$('#message').val('testtesttesttesttest');
-//        alert('message='+document.getElementById('message').innerHTML+' message='+$('#message').val()+' order='+order);
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
                 message:$('#message').val(),
@@ -64,13 +62,11 @@ $(document).ready(function() {
         });
         return false;
     });
-/*	
     $('.chat-edit').click(function(){
-		alert('!!!!!!!!!!'); return;
         var order=$('#order').val();
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
-                message:$('#message').val(),
+                message:$('#corrected-message').val(),
                 recipient:this.name,
 				order: order,
 				cost: $('.price-for-work-avtor input').val()
@@ -78,7 +74,8 @@ $(document).ready(function() {
         },function(data){
             $('#chat').html(data);
             $('.chat-view').scrollTop(10000);
-            $('#message').val('');
+            $('#corrected-message').val('');
+            $('#corrected-message').css('display: none');
         });
         return false;
     });
