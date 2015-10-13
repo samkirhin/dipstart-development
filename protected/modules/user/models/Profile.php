@@ -265,6 +265,7 @@ class Profile extends UActiveRecord
 	 */
 	protected function getChanges() {
 		$res = false;
+	
 		if (!empty($this->_modelSave)) {
 			foreach ($this->_modelSave as $key => $value) {
 				if ($this->$key != $value) {

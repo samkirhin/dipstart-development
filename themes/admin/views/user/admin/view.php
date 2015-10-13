@@ -22,16 +22,21 @@ $this->menu=array(
 		'id',
 		'username',
 	);
-	
-	$profileFields=ProfileField::model()->forOwner()->sort()->findAll();
-	if ($profileFields) {
-		foreach($profileFields as $field) {
-			array_push($attributes,array(
+	$mailing_list = 0;
+	$profile= ProfileField::model()->findAll();
+	if ($profile) {
+		foreach($profile as $field) {
+			$arr = array(
 					'label' => UserModule::t($field->title),
 					'name' => $field->varname,
 					'type'=>'raw',
 					'value' => (($field->widgetView($model->profile))?$field->widgetView($model->profile):(($field->range)?Profile::range($field->range,$model->profile->getAttribute($field->varname)):$model->profile->getAttribute($field->varname))),
-				));
+				);
+			if ($field->varname == 'mailing_list') 
+					$arr['value'] = array('icq','sms','email')[$model->profile->getAttribute($field->varname)];
+//					$arr['value'] = array('icq','sms','email')[$arr['value']];
+				
+			array_push($attributes,$arr);
 		}
 	}
 	
@@ -55,6 +60,6 @@ $this->menu=array(
 		'data'=>$model,
 		'attributes'=>$attributes,
 	));
-	
 
 ?>
+

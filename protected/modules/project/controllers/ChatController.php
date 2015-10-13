@@ -33,7 +33,7 @@ class ChatController extends Controller {
 	public function accessRules()
 	{
 		return array(
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+            array('allow', 
                 'actions' => array('index', 'ApiRenameFile'),
                 'expression' => array('ChatController', 'allowOnlyOwner'),
             ),
@@ -45,8 +45,8 @@ class ChatController extends Controller {
 				'actions'=>array('admin', 'approve', 'remove', 'edit', 'setexecutor', 'delexecutor', 'readdress','status'),
 				'users'=>array('admin', 'manager'),
 			),
-			array('allow',  // deny all users
-				'actions' => array('index'),
+			array('allow',  // allow all users
+				'actions'=>array('index'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -72,11 +72,32 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
-		if(Yii::app()->user->isGuest){
-			echo 'Guest...';
-			die();
-		}
-        Yii::app()->session['project_id'] = $orderId;
+		if (Yii::app()->user->isGuest) {
+			$moderate_types = EventHelper::get_moderate_types_string();
+			$events = Events::model()->findAll(array(
+				'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
+				'order' => 'timestamp DESC'
+				),
+				array(':event_id'=> $orderId) 			
+			);
+			$moderated = count($events) == 0;
+			$this->render('index', array(
+				'orderId' => $orderId,
+				'executor' => Zakaz::getExecutor($orderId),
+				'moderated' => $moderated,
+			));
+            Yii::app()->end();
+/*			
+			$this->render('index', array(
+				'orderId' => $orderId,
+                'guest' => 1,
+            ));
+            Yii::app()->end();
+*/			
+		};
+
+		Yii::app()->session['project_id'] = $orderId;
+		
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
                 $model = new ProjectMessages;
@@ -117,9 +138,9 @@ class ChatController extends Controller {
             'orderId' => $orderId,
             'executor' => Zakaz::getExecutor($orderId),
 			'moderated' => $moderated,
-            //'images' => $model->images(['condition'=>'approved=0'])
         ));
     }
+	
 	public function actionUpload() {
         Yii::import("ext.EAjaxUpload.qqFileUploader");
 		// --- кампании

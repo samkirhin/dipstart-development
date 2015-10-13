@@ -140,4 +140,9 @@ return array(
 	'Update Profile Field' => 'Редактирование поля профиля',
 	'UPDATE PROFILE FIELD' => 'Редактирование поля профиля',
 	'PaymentProps'=>'Платёжный реквизит',
+	
+	'SelectProject' => 'Выбрать заказ',
+	'chat' => 'чат',
+	'Chat' => 'чат',
+	
 );
