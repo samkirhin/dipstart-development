@@ -95,6 +95,7 @@ return array(
     'to author' => 'Автору',
     'to сustomer' => 'Заказчику',
     'Order information' => 'Информация о заказе',
+    'Reject' => 'Отклонить',
     'Approve' => 'Одобрить',
     'Drag and drop files here' => 'Перетащите файлы сюда',
     'Attach materials to the order'  => 'Прикрепить материалы к заказу',
@@ -106,6 +107,7 @@ return array(
     'placed an order' => 'разместил заказ:',
     'Drop files here to upload' => 'Перетащите файлы сюда, чтобы загрузить',
     'Upload a file' => 'Загрузить файл',
+    'Upload' => 'Загрузить',
     'Description' => 'Описание',
     'Link' => 'Ссылка',
     'Date and time' => 'Дата и время',
@@ -146,4 +148,6 @@ return array(
 	'chat' => 'чат',
 	'Chat' => 'чат',
 	'Edit Last Message' => 'Реактировать последнее сообщение',	
+
+	'Error' => 'Ошибка',
 );

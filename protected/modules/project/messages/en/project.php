@@ -148,4 +148,5 @@ return array(
 	'Chat' => 'Chat',
 	'Edit Last Message' => 'Edit Last Message',	
 	
+	'Error' => 'Error',
 );
