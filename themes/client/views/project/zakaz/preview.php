@@ -20,10 +20,10 @@ $attributes = $model->attributeLabels();
 <form method="post"
       action="<?php echo Yii::app()->createUrl('project/zakaz/moderationAnswer', array('id' => $model->id, 'event_id' => $event->id, 'answer' => 1));?>"
       style="display: inline-block">
-    <input type="submit" value="Одобрить">
+    <input type="submit" value="<?=ProjectModule::t('Approve')?>">
 </form>
 <form method="post"
       action="<?php echo Yii::app()->createUrl('project/zakaz/moderationAnswer', array('id' => $model->id, 'event_id' => $event->id, 'answer' => 0));?>"
       style="display: inline-block">
-    <input type="submit" value="Отклонить">
+    <input type="submit" value="<?=ProjectModule::t('Reject')?>">
 </form>

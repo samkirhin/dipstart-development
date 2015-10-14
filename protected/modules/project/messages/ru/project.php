@@ -60,6 +60,7 @@ return array(
     'Add changes' => 'Добавить доработку',
     'Edit changes' => 'Изменить доработку',
     'Attach file' => 'Прикрепить файл',
+    'Attached materials' => 'Прикреплённые материалы',
     'Approved' => 'Одобрено',
     'Not approved' => 'Не одобрено',
     'You are not allowed to edit!' => 'У Вас недостаточно прав для редактирования!',
@@ -94,6 +95,7 @@ return array(
     'to author' => 'Автору',
     'to сustomer' => 'Заказчику',
     'Order information' => 'Информация о заказе',
+    'Reject' => 'Отклонить',
     'Approve' => 'Одобрить',
     'Drag and drop files here' => 'Перетащите файлы сюда',
     'Attach materials to the order'  => 'Прикрепить материалы к заказу',
@@ -105,6 +107,7 @@ return array(
     'placed an order' => 'разместил заказ:',
     'Drop files here to upload' => 'Перетащите файлы сюда, чтобы загрузить',
     'Upload a file' => 'Загрузить файл',
+    'Upload' => 'Загрузить',
     'Description' => 'Описание',
     'Link' => 'Ссылка',
     'Date and time' => 'Дата и время',
@@ -145,4 +148,7 @@ return array(
 	'chat' => 'чат',
 	'Chat' => 'чат',
 	'Edit Last Message' => 'Реактировать последнее сообщение',	
+
+	'Error' => 'Ошибка',
+	'Authority Error' => 'Ошибка авторизации',
 );

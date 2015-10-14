@@ -82,7 +82,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Save'); ?>
+		<?php echo CHtml::submitButton(ProjectModule::t('Save')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

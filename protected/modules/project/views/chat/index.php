@@ -25,6 +25,7 @@
 <h3 ><?php echo ProjectModule::t('Changes'); ?></h3>
 
 <?php 
+	if (!is_null($order))
 	$this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
         	'project' => $order,
 	)); 

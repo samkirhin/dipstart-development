@@ -3,7 +3,7 @@
 /* @var $model ZakazParts */
 
 $this->breadcrumbs=array(
-	'Zakaz Parts'=>array('index'),
+	ProjectModule::t('Zakaz Parts')=>array('index'),
 	$model->title,
 );
 
@@ -16,7 +16,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View ZakazParts #<?php echo $model->id; ?></h1>
+<h1><?= ProjectModule::t('View ZakazParts').' #'.$model->id; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

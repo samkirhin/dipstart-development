@@ -60,6 +60,7 @@ return array(
     'Add changes' => 'Add changes',
     'Edit changes' => 'Edit changes',
     'Attach file' => 'Attach file',
+    'Attached materials' => 'Attached materials',
     'Approved' => 'Approved',
     'Not approved' => 'Not Approved',
     'You are not allowed to edit!' => 'You are not allowed to edit!',
@@ -94,6 +95,7 @@ return array(
     'to author' => 'to Author',
     'to сustomer' => 'to Customer',
     'Order information' => 'Order information',
+    'Reject' => 'Reject',
     'Approve' => 'Approve',
     'Drag and drop files here' => 'Drag and drop files here',
     'Attach materials to the order'  => 'Attach materials to the order',
@@ -104,6 +106,7 @@ return array(
     'placed an order' => 'placed an order',
     'Drop files here to upload' => 'Drop files here to upload',
     'Upload a file' => 'Upload a file',
+    'Upload' => 'Upload',
     'Description' => 'Description',
     'Link' => 'Link',
     'Date and time' => 'Date and time',
@@ -145,4 +148,5 @@ return array(
 	'Chat' => 'Chat',
 	'Edit Last Message' => 'Edit Last Message',	
 	
+	'Error' => 'Error',
 );

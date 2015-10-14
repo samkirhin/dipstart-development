@@ -17,7 +17,7 @@
         echo $form->errorSummary($model); ?>
     </div>
     <div class="row">
-        <div class="col-xs-6"><h4>Сроки выполнения</h4></div>
+        <div class="col-xs-6"><h4><?=ProjectModule::t('Deadlines')?></h4></div>
         <div class="col-xs-6" style="float:right;">
             <?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary terms-save-btn')); ?>
         </div>
@@ -46,10 +46,6 @@
                 'attribute' => 'dbauthor_informed',
             ));?>
         </div>
-
-
-
-
         <?php $this->endWidget(); ?>
     </div>
     <!-- form -->
@@ -58,21 +54,21 @@
 <div class="col-xs-12 chatBlockBg">
     <div class="chatBlock chtpl0-chatblock chtpl0-admin">
 		<div class="chtpl0-panel chtpl0-up">
-			<button class="chtpl0-show">Показать сообщения</button>
+			<button class="chtpl0-show"><?=ProjectModule::t('Show messages')?></button>
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
 		<div class="chtpl0-panel chtpl0-down">
-			<input id="send_email" type="checkbox"><p>Отправить на почту</p>
-			<input id="send_sms" type="checkbox"><p>Отправить SMS</p>
-			<button class="chtpl0-template"></button><p>Шаблон</p>
+			<input id="send_email" type="checkbox"><p><?=ProjectModule::t('Send to e-mail')?></p>
+			<input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
+			<button class="chtpl0-template"></button><p><?=ProjectModule::t('Use template')?></p>
 		</div>
 		<div class="chtpl0-form">
 			<textarea></textarea>
 			<div class="chtpl0-subm">
-				<h5>Отправить сообщение</h5>
+				<h5><?=ProjectModule::t('Send message')?></h5>
 				<br>
-				<button class="chtpl0-submit1">Автору</button>
-				<button class="chtpl0-submit2">Заказчику</button>
+				<button class="chtpl0-submit1"><?=ProjectModule::t('Send the author')?></button>
+				<button class="chtpl0-submit2"><?=ProjectModule::t('Send the customer')?></button>
 			</div>
 		</div>
         <?php
@@ -111,7 +107,7 @@
                 <div class="panel-heading panel-heading-white">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
-                            Информация о заказе <i class="fa fa-angle-down fa-2x"></i>
+                            <?=ProjectModule::t('Send the customer')?>Информация о заказе <i class="fa fa-angle-down fa-2x"></i>
 		
                         </a>
 						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz"><img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" /></a>
@@ -151,12 +147,12 @@
                                     <?php echo $form->textArea($model, 'text', array('rows' => 6, 'cols' => 70)); ?>
                                     <?php echo $form->error($model, 'text'); ?>
 
-                                    <h3> Сроки выполнения </h3>
+                                    <h3>"<?=ProjectModule::t('Deadlines')?></h3>
 
                                     <table class="table table-striped" style="font-size: 12px;">
                                         <thead>
-                                        <th>Наименование</th>
-                                        <th>Дата/Время</th>
+                                        <th><?=ProjectModule::t('Product name')?></th>
+                                        <th><?=ProjectModule::t('Date/Time')?></th>
                                         </thead>
                                         <tr>
                                             <td>
