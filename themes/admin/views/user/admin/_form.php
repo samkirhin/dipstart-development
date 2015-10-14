@@ -23,6 +23,9 @@
 	float:	right;
 	width:	50%;
 }
+.select-specilization{
+	width:	280px;
+}
 </style>
 
 	<div class="row"><div class="left-div-admin-form">

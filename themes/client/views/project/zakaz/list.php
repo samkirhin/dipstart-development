@@ -60,8 +60,6 @@ if (!isset($only_new)) {
 <div class="first-tab" id="first-tab">
 <?php
 	}; //if (!isset($only_new)) {
-
-
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'zakaz-grid',
 		'dataProvider'=>$dataProvider,
