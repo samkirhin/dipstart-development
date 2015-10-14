@@ -149,7 +149,7 @@
 		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53)); ?>
 		<?php echo $form->error($model,'add_demands'); ?>
 	</div>
-    <h3>Заметки</h3>
+    <h3><?=ProjectModule::t('Notes')?></h3>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>

@@ -63,23 +63,32 @@ $(document).ready(function() {
         return false;
     });
     $('.chat-edit').click(function(){
-        var order=$('#order').val();
-        $.post('/project/chat?orderId='+order,{
-            ProjectMessages:{
-                message:$('#corrected-message').val(),
-                recipient:this.name,
-				order: order,
-				cost: $('.price-for-work-avtor input').val()
-            }
-        },function(data){
-            $('#chat').html(data);
-            $('.chat-view').scrollTop(10000);
-            $('#corrected-message').val('');
-            $('#corrected-message').css('display: none');
-        });
+		var step = $('#chat-edit').attr('step');
+		step++;	step &= 1;
+		$('#chat-edit').attr( 'step', step);
+		if (step)	{ 
+            $('#edit-message').val($('#message').val());
+            $('#div-edit-message').css('display', 'block');
+			$('#chat-edit').val('Сохранить'); 
+		} else { 
+			$('#chat-edit').val('Редактирование последнего сообщения'); 
+            $('#div-edit-message').css('display', 'none');
+			var order=$('#order').val();
+			$.post('/project/chat?orderId='+order,{
+				ProjectMessages:{
+					message:$('#message').val(),
+					recipient:this.name,
+					order: order,
+					cost: $('.price-for-work-avtor input').val()
+				}
+			},function(data){
+				$('#chat').html(data);
+				$('.chat-view').scrollTop(10000);
+			});
+		};
         return false;
     });
-*/	
+	
     $('.chat-view').scrollTop(10000);
 });
 function zakaz_done(part_id)

@@ -3,13 +3,13 @@
 /* @var $model ZakazParts */
 
 $this->breadcrumbs=array(
-	'Zakaz Parts'=>array('index'),
-	'Create',
+	ProjectModule::t('Zakaz Parts')=>array('index'),
+	ProjectModule::t('Create'),
 );
 
 $this->menu=array(
-	array('label'=>'List ZakazParts', 'url'=>array('index')),
-	array('label'=>'Manage ZakazParts', 'url'=>array('admin')),
+	array('label'=>ProjectModule::t('List ZakazParts'), 'url'=>array('index')),
+	array('label'=>ProjectModule::t('Manage ZakazParts'), 'url'=>array('admin')),
 );
 ?>
 

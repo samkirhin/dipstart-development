@@ -3,16 +3,16 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Zakaz Parts',
+	ProjectModule::t('Zakaz Parts'),
 );
 
 $this->menu=array(
-	array('label'=>'Create ZakazParts', 'url'=>array('create')),
-	array('label'=>'Manage ZakazParts', 'url'=>array('admin')),
+	array('label'=>ProjectModule::t('Create ZakazParts'), 'url'=>array('create')),
+	array('label'=>ProjectModule::t('Manage ZakazParts'), 'url'=>array('admin')),
 );
 ?>
 
-<h1>Zakaz Parts</h1>
+<h1><?=ProjectModule::t('Zakaz Parts')?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

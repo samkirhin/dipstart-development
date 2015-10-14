@@ -3,19 +3,19 @@
 /* @var $model ZakazParts */
 
 $this->breadcrumbs=array(
-	'Zakaz Parts'=>array('index'),
-	$model->title=>array('view','id'=>$model->id),
-	'Update',
+	ProjectModule::t('Zakaz Parts')=>array('index'),
+	ProjectModule::t($model->title)=>array('view','id'=>$model->id),
+	ProjectModule::t('Update'),
 );
 
 $this->menu=array(
-	array('label'=>'List ZakazParts', 'url'=>array('index')),
-	array('label'=>'Create ZakazParts', 'url'=>array('create')),
-	array('label'=>'View ZakazParts', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage ZakazParts', 'url'=>array('admin')),
+	array('label'=>ProjectModule::t('List ZakazParts'), 'url'=>array('index')),
+	array('label'=>ProjectModule::t('Create ZakazParts'), 'url'=>array('create')),
+	array('label'=>ProjectModule::t('View ZakazParts'), 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>ProjectModule::t('Manage ZakazParts'), 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update ZakazParts <?php echo $model->id; ?></h1>
+<h1><?= ProjectModule::t('Update ZakazParts').' '.$model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

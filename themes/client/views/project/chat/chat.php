@@ -45,11 +45,8 @@ $messages = ProjectMessages::model()->findAll($criteria);
         </div>
     </div>
     <?php endforeach; ?>
-	<div class="col-xs-20" style="display: none;">
-		<?php echo CHtml::textArea('corrected-message','', array('rows' => 6, 'class' => 'col-xs-12', 'placeholder' => ProjectModule::t('Enter your message...'))); ?>
+	<div class="col-xs-20" id="div-edit-message" style="display: none;">
+		<?php echo CHtml::textArea('edit-message','', array('rows' => 6, 'class' => 'col-xs-12', 'placeholder' => ProjectModule::t('Enter your message...'), 'id' => 'edit-message')); ?>
 	</div>
-	
-	<?php $middle_button = ProjectModule::t('Edit Last Message');  ?>
-	<?=   CHtml::submitButton($middle_button, array('name' => 'edit-message', 'class' => 'btn btn-primary btn-chat btn-block chat-edit')); ?>
-	
+
 </div>

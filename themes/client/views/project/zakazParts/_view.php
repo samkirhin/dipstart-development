@@ -33,23 +33,4 @@
 	<?php echo CHtml::encode($data->max_exec_date); ?>
 	<br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('date_finish')); ?>:</b>
-	<?php echo CHtml::encode($data->date_finish); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('pages')); ?>:</b>
-	<?php echo CHtml::encode($data->pages); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('budget')); ?>:</b>
-	<?php echo CHtml::encode($data->budget); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('add_demands')); ?>:</b>
-	<?php echo CHtml::encode($data->add_demands); ?>
-	<br />
-
-	*/ ?>
-
 </div>

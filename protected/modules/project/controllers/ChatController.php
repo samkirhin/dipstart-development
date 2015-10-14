@@ -87,13 +87,6 @@ class ChatController extends Controller {
 				'moderated' => $moderated,
 			));
             Yii::app()->end();
-/*			
-			$this->render('index', array(
-				'orderId' => $orderId,
-                'guest' => 1,
-            ));
-            Yii::app()->end();
-*/			
 		};
 
 		Yii::app()->session['project_id'] = $orderId;
@@ -118,7 +111,7 @@ class ChatController extends Controller {
                         break;
                 }
 
-                echo('$flag='.$model->save());
+                $model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(

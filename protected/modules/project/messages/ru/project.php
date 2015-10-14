@@ -60,6 +60,7 @@ return array(
     'Add changes' => 'Добавить доработку',
     'Edit changes' => 'Изменить доработку',
     'Attach file' => 'Прикрепить файл',
+    'Attached materials' => 'Прикреплённые материалы',
     'Approved' => 'Одобрено',
     'Not approved' => 'Не одобрено',
     'You are not allowed to edit!' => 'У Вас недостаточно прав для редактирования!',
