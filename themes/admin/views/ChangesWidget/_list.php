@@ -7,7 +7,7 @@
     </div>
 <?php if (ProjectChanges::approveAllowed()) { ?>
     <div class="list-changes-moderate">
-        Модерация
+        <?= Yii::t('project','Moderation') ?>
         <?php
 		echo CHtml::dropDownList(
             'moderate',

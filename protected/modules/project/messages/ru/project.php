@@ -150,4 +150,5 @@ return array(
 	'Edit Last Message' => 'Реактировать последнее сообщение',	
 
 	'Error' => 'Ошибка',
+	'Authority Error' => 'Ошибка авторизации',
 );

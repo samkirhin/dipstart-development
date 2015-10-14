@@ -83,7 +83,9 @@ class AdminController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
-			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],array('icq','sms','email'));
+			
+			$_temp = array('','icq','sms','email');
+			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],$_temp);
 			$profile->attributes=$_POST['Profile'];
 			$profile->user_id=0;
 			if($model->validate()&&$profile->validate()) {
@@ -119,7 +121,7 @@ class AdminController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],array('icq','sms','email'));
+			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],array('','icq','sms','email'));
 			$profile->setAttributes($_POST['Profile'], false);
 			if($model->validate()&&$profile->validate()) {
 				$old_password = User::model()->notsafe()->findByPk($model->id);
@@ -142,8 +144,6 @@ class AdminController extends Controller
 			'fields'	=> $fields,
 		));	
 	}
-
-
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
