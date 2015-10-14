@@ -48,8 +48,6 @@ $(document).ready(function() {
 	});
     $('.btn-chat').click(function(){
         var order=$('#order').val();
-//		$('#message').val('testtesttesttesttest');
-//        alert('message='+document.getElementById('message').innerHTML+' message='+$('#message').val()+' order='+order);
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
                 message:$('#message').val(),
@@ -64,25 +62,33 @@ $(document).ready(function() {
         });
         return false;
     });
-/*	
     $('.chat-edit').click(function(){
-		alert('!!!!!!!!!!'); return;
-        var order=$('#order').val();
-        $.post('/project/chat?orderId='+order,{
-            ProjectMessages:{
-                message:$('#message').val(),
-                recipient:this.name,
-				order: order,
-				cost: $('.price-for-work-avtor input').val()
-            }
-        },function(data){
-            $('#chat').html(data);
-            $('.chat-view').scrollTop(10000);
-            $('#message').val('');
-        });
+		var step = $('#chat-edit').attr('step');
+		step++;	step &= 1;
+		$('#chat-edit').attr( 'step', step);
+		if (step)	{ 
+            $('#edit-message').val($('#message').val());
+            $('#div-edit-message').css('display', 'block');
+			$('#chat-edit').val('Сохранить'); 
+		} else { 
+			$('#chat-edit').val('Редактирование последнего сообщения'); 
+            $('#div-edit-message').css('display', 'none');
+			var order=$('#order').val();
+			$.post('/project/chat?orderId='+order,{
+				ProjectMessages:{
+					message:$('#message').val(),
+					recipient:this.name,
+					order: order,
+					cost: $('.price-for-work-avtor input').val()
+				}
+			},function(data){
+				$('#chat').html(data);
+				$('.chat-view').scrollTop(10000);
+			});
+		};
         return false;
     });
-*/	
+	
     $('.chat-view').scrollTop(10000);
 });
 function zakaz_done(part_id)

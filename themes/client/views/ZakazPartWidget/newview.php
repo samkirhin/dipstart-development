@@ -15,7 +15,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="partStatus">
-						<div class="partStatus-header">Статус:</div>
+						<div class="partStatus-header"><?= ProjectModule::t("Status").':' ?></div>
 						<div class="partStatus-status" id="partStatus-status-<?= $this->record_id ?>"><?= $this->status ?></div>
 					</div>	
 					<div class="partStatus-bottom"></div>
@@ -28,7 +28,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 						</h4>
 					</div>
 					<?php if (User::model()->isAuthor()) { ?>
-					<div class="title-time">Срок сдачи:<br />
+					<div class="title-time"><?= ProjectModule::t("Date Finish").':' ?><br />
 						<?php echo $data['dbdate']; ?>
 					</div>
 					<?php } ?>
@@ -62,7 +62,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 								'id' => 'EAjaxUpload' . $data['id'],
 								'config' => array(
 									'action' => Yii::app()->createUrl('/project/zakazParts/upload', array('proj_id' => $data['proj_id'], 'id' => $data['id'])),
-									'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>Перетащите файлы сюда</span></div><div class="qq-upload-button">Загрузить материал</div><ul class="qq-upload-list"></ul></div>',
+									'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'.ProjectModule::t("Drag and drop files here'").'</span></div><div class="qq-upload-button">'.ProjectModule::t("Upload material'").':</div><ul class="qq-upload-list"></ul></div>',
 									'disAllowedExtensions' => array('exe'),
 									'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
 									'minSizeLimit' => 10,// minimum file size in bytes

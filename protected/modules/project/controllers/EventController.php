@@ -6,7 +6,7 @@ class EventController extends Controller {
     {
         return array(
             array('allow',
-                'actions'=>array('index'),
+                'actions'=>array('index','delete'),
                 'users'=>array('admin','manager'),
             ),
             array('deny',  // deny all users
@@ -34,7 +34,31 @@ class EventController extends Controller {
         $this->render('index', array(
             'events' => $events
         ));
-        
     }
+	
+    public function actionDelete() {
+		
+		$id  = Yii::app()->request->getParam('id');
+        if (Yii::app()->request->isAjaxRequest){
+			
+            header('Content-Type: application/json');
+			
+			if (Events::model()->deleteByPk($id))
+				echo CJSON::encode(array('success'=>true));
+			else
+				echo CJSON::encode(array('error'=>true));
+			
+            Yii::app()->end();
+			
+        }
+        $events = Events::model()->findAll(array(
+            'condition' => '',
+            'order' => 'timestamp DESC',
+        ));
+        $this->render('index', array(
+            'events' => $events,
+        ));
+    }
+	
     
 }

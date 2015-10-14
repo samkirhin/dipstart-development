@@ -1,1 +1,1 @@
-<?=ProjectModule::t('Ошибка авторизации')?>
+<?=ProjectModule::t('Authority Error')?>

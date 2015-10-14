@@ -15,10 +15,10 @@ if(UserModule::isAdmin()) {
 <table>
 	<tr>
 		<td>
-			<?php echo CHtml::link('Авторы',array('','s'=>'Author'),array('class'=>'btn btn-default btn-block'));?>
+			<?php echo CHtml::link(UserModule::t('Authors'),array('','s'=>'Author'),array('class'=>'btn btn-default btn-block'));?>
 		</td>
 		<td>
-			<?php echo CHtml::link('Заказчики',array('','s'=>'Customer'),array('class'=>'btn btn-default btn-block'));?>
+			<?php echo CHtml::link(UserModule::t('Customers'),array('','s'=>'Customer'),array('class'=>'btn btn-default btn-block'));?>
 		</td>
 	</tr>
 </table>

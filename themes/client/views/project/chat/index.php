@@ -1,8 +1,4 @@
 <?php
-/* @var $this ProjectMessagesController */
-/* @var $model ProjectMessages */
-/* @var $form CActiveForm */
-//print_r($changes); die();
 $order		= Zakaz::model()->resetScope()->findByPk($orderId);
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 
@@ -13,7 +9,6 @@ if(isset(Zakaz::$files_folder)){
 	$url = '/uploads/'.$order->id.'/';
 }
 // ---
-//$url = '/uploads/' . $order->id . '/';
 $path = Yii::getPathOfAlias('webroot') . $url;
 $html_string = '';
 if (file_exists($path)){
@@ -92,9 +87,9 @@ if (file_exists($path)){
                                     $this->widget('zii.widgets.CDetailView', array(
                                         'data' => $order,
                                         'attributes' => $columns));
-									echo '<div class="materials"><h5>Прикреплённые материалы</h5><ul class="materials-files">'.$html_string.'</ul></div>';
+									echo '<div class="materials"><h5>'.ProjectModule::t('Attached materials').'</h5><ul class="materials-files">'.$html_string.'</ul></div>';
  									echo '<div class="notes-author">';
-									echo 'Заметки для автора:<br /> '.$order->getAttribute('author_notes');
+									echo ProjectModule::t('author_notes').':<br /> '.$order->getAttribute('author_notes');
 									echo '</div>';
                                 } else {
 
@@ -125,7 +120,7 @@ if (file_exists($path)){
 			}
 
 		?>
-		   <div class="my-rating">Срок сдачи: <span class="value"><?=Yii::app()->dateFormatter->formatDateTime($order->author_informed);?></span></div>
+		   <div class="my-rating"><?= ProjectModule::t('Deadline').':' ?> <span class="value"><?=Yii::app()->dateFormatter->formatDateTime($order->author_informed);?></span></div>
 		</div>
 		<?php endif;?>
 		
@@ -172,6 +167,11 @@ if (file_exists($path)){
             
             <div id="chat" class="col-xs-12 user-chat-block">
                 <?php $this->renderPartial('chat',array('orderId'=>$order->id));?>
+				<? 	// кнопку выносим из блока, который передаётся 
+					// ajax'а, чтобы избежать манипуляций с 
+					// обработчиками событий
+				?>
+                <?php $this->renderPartial('chatbtn');?>
             </div>
             
             <div class="row">
