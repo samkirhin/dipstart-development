@@ -97,7 +97,14 @@ class ChatController extends Controller {
                 $model->sender = Yii::app()->user->id;
                 $model->moderated = 0;
                 $model->order = $orderId;
+				
+				$post	= $_POST['ProjectMessages']['message'];
+				$post	= str_replace("\x0D\x0A",'<br>',$post);
+				$post	= str_replace("\x0A",'<br>',$post);
+				$_POST['ProjectMessages']['message'] = $post;
+				
                 $model->attributes = Yii::app()->request->getPost('ProjectMessages');
+					
                 $model->date = date('Y-m-d H:i:s');
                 switch ($model->recipient) {
                     case 'manager':
