@@ -77,17 +77,21 @@
 			
 ?>
 	<div class="row"><div class="left-div-admin-form">
-		<?php echo $form->labelEx($profile,$field->varname); ?>
+		<?php echo $form->labelEx($profile, $field->varname); ?>
+		<?php //echo $form->labelEx($profile,YII::t( 'project', $field->varname)); ?>
 		</div><div class="right-div-admin-form">
 <?php 
 			if ($widgetEdit = $field->widgetEdit($profile)) {
 				echo $widgetEdit;
 			} elseif (($field->range) || ($field->field_type=="LIST")) {
-				$attributes = Profile::range($field->range);
-				if (!$admin && $manager && $field[paymentProps]) $disabled['disabled'] = 'disabled';
-//				echo $form->dropDownList($profile,$field->varname,$attributes,$disabled);
-				echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),$disabled);
+				if ($field->varname == 'specials' ) {
+					echo $specials;
+				} else {	
 				
+					$attributes = Profile::range($field->range);
+					if (!$admin && $manager && $field[paymentProps]) $disabled['disabled'] = 'disabled';
+					echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),$disabled);
+				};	
 			} elseif ($field->field_type=="TEXT") {
 				$attributes = array('rows'=>6, 'cols'=>38, 'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':''));
 				if (!$admin && $manager && $field[paymentProps]) $attributes['disabled'] = true;

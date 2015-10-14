@@ -174,5 +174,33 @@ return array(
 	'DoneProjects' => 'Done Projects',
 
 	'PaymentProps'=>'Payment Props',
+	// специализации
+	
+	'UseCtrlForMultiselect' => 'Use Ctrl For Multiselect',
+	'All' => 'All',
+	'WebDesign' => 'Web Design',
+	'Layout/WebDesign' => 'Layout/Web Design',
+	'Copyrighting' => 'Copyrighting',
+	'Rerighting' => 'Rerighting',
+	'OptimizationSEO' => 'Optimization (SEO)',
+	'Video' => 'Video',
+	'Programming' => 'Programming',
+	'Posting' => 'Posting',
+	'Presentations' => 'Presentations',
+	'Dictor' => 'Dictor',
+	'Translating Ru->En' => 'Translating Ru->En',
+	'Others' => 'Others',
+	'TurnkeyBusines' => 'Turnkey Busines',
+	'TurnkeyProject' => 'Turnkey Project',
+	'TurnkeySite' => 'Turnkey Site',
+	'TurnkeyLanding' => 'Turnkey Landing',
+	'Testing' => 'Testing',
+	
+	'Work Experience' => 'Work Experience',
+	'Fl Acc' => 'Freelance accounts',
+	'Mailing List' => 'Mailing List',
+	'Bank Account' => 'Bank Account',
+	'Specials' => 'Specializations',
+	
 );
 
