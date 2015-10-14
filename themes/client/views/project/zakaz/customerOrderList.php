@@ -37,9 +37,25 @@ if (Campaign::getId()){
         ],
 	);
 }
+if (!isset($only_new)) {
 ?>
+<section>
+	<div id="control-menu">
+		<ul class="userMenu nav nav-tabs" id="yw0">
+			<li class="active" id="first-tab-li">
+				<a href="#" onclick="clickOnTab(0); return false;"><?= UserModule::t('CurrentProjects') ?></a>
+			</li>
+			<li id="second-tab-li">
+				<a href="#" onclick="clickOnTab(1); return false;"><?= UserModule::t('DoneProjects') ?></a>
+			</li>
+		</ul>
+	</div>
+</section>
 
+<div class="twin-tab">
+<div class="first-tab" id="first-tab">
 <?php
+	}; //if (!isset($only_new)) {
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'zakaz-grid-current',
 		'dataProvider'=>$dataProvider,
@@ -51,6 +67,23 @@ if (Campaign::getId()){
 			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
 		}",
 	)); 
+if (!isset($only_new)) {
+?>
+</div>
+<div class="second-tab" id="second-tab">
+<?php
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'zakaz-grid-done',
+		'dataProvider'=>$dataProvider_done,
+		'columns'=>$columns,
+		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
+		'selectionChanged'=>"js:function(sel_id){
+			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+		}",
+	)); 
+
+	echo '</div>';
+	}; //if (!isset($only_new)) 
 ?>
 <script>
 	function clickOnTab(num){
@@ -74,11 +107,11 @@ if (Campaign::getId()){
 	};	
 	$(document).ready(function()
 	{
-		$('body').on('dblclick', '#zakaz-grid-current tbody tr', function(event)
+		$('body').on('dblclick', '#zakaz-grid-done tbody tr', function(event)
 		{
 			var
 				rowNum = $(this).index(),
-				keys = $('#zakaz-grid-current > div.keys > span'),
+				keys = $('#zakaz-grid-done > div.keys > span'),
 				rowId = keys.eq(rowNum).text();
 
 			location.href = '/project/chat?orderId=' + rowId;
