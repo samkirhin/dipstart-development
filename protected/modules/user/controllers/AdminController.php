@@ -33,13 +33,15 @@ class AdminController extends Controller
 	public function get_specials($specials=''){
 		
 		$arr	= explode( ',', $specials);
+		$sizenumber = count($this->specialization);
 		$select	= '
-			<select name="Profile[specials]" id="Profile[specials]" multiselect="multiselect">
+			<select clss="select-specilization" name="Profile[specials]" id="Profile[specials]" multiple size="'.$sizenumber.'">
 			<option value="">'.Yii::t('project','UseCtrlForMultiselect').'</option>
-			<optgroup label="'.Yii::t('project','All').'</option>
+			<optgroup label="'.Yii::t('project','All').'">'.Yii::t('project','All').'</optgroup>
 		';
 		foreach($this->specialization as $key => $opt){
-			
+echo '<pre>';			
+echo '</pre>';			
 			$select	.= '<option value="'.$key.'"';
 			if (in_array( $key, $arr))
 				$select	.= ' selected="selected"';
@@ -48,29 +50,6 @@ class AdminController extends Controller
 		$select	.= '</select>';
 		return $select;
 	}
-/*	
-<select name="Profile[specials]" id="Profile[specials]">
-<option value="">'.Yii::t('project','UseCtrlForMultiselect').'</option>
-<optgroup label="'.Yii::t('project','All').'</option>
-<option value="6">'.Yii::t('project','WebDesign').'</option>
-<option value="7">'.Yii::t('project','Layout/WebDesign').'</option>
-<option value="8">'.Yii::t('project','Copyrighting').'</option>
-<option value="9">'.Yii::t('project','Rerighting').'</option>
-<option value="10">'.Yii::t('project','OptimizationSEO').'</option>
-<option value="11">'.Yii::t('project','Video').'</option>
-<option value="12">'.Yii::t('project','Programming').'</option>
-<option value="13">'.Yii::t('project','Posting').'</option>
-<option value="14">'.Yii::t('project','Presentations').'</option>
-<option value="15">'.Yii::t('project','Dictor').'</option>
-<option value="16">'.Yii::t('project','Translating Ru->En').'</option>
-<option value="17">'.Yii::t('project','Others').'</option>
-<option value="18">'.Yii::t('project','TurnkeyBusines').'</option>
-<option value="19">'.Yii::t('project','TurnkeyProject').'</option>
-<option value="20">'.Yii::t('project','TurnkeySite').'</option>
-<option value="21">'.Yii::t('project','TurnkeyLanding').'</option>
-<option value="23">'.Yii::t('project','Testing').'</option>
-</select>';
-*/
 
 	/**
 	 * @return array action filters
@@ -198,10 +177,7 @@ class AdminController extends Controller
 		};
 
 		$specials = $this->get_specials();
-echo '<pre>';		
-echo '$specials=';		
-print_r($specials);		
-echo '</pre>';		
+
 		$fields = ProfileField::model()->findAll();
 		$this->render('update',array(
 			'model'		=> $model,
