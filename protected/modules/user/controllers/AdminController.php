@@ -40,8 +40,8 @@ class AdminController extends Controller
 			<optgroup label="'.Yii::t('project','All').'">'.Yii::t('project','All').'</optgroup>
 		';
 		foreach($this->specialization as $key => $opt){
-echo '<pre>';			
-echo '</pre>';			
+//echo '<pre>';			
+//echo '</pre>';			
 			$select	.= '<option value="'.$key.'"';
 			if (in_array( $key, $arr))
 				$select	.= ' selected="selected"';
