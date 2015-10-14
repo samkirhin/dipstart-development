@@ -32,9 +32,7 @@ $this->menu=array(
 				'type'=>'raw',
 				'value' => (($field->widgetView($model->profile))?$field->widgetView($model->profile):(($field->range)?Profile::range($field->range,$model->profile->getAttribute($field->varname)):$model->profile->getAttribute($field->varname))),
 			);
-//echo "<pre>$field->varname</pre>";				
 			if ($field->varname == 'mailing_list') {
-//echo "<pre>$field->varname</pre>";				
 				$index = $model->profile->getAttribute($field->varname);
 				if ($index > 3) $index = 0;
 				$_temp = array('','icq','sms','email');

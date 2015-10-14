@@ -22,6 +22,7 @@ $this->menu=array(
 			'manager'	=> $manager,
 			'admin'		=> $admin,
 			'fields'	=> $fields,
-			)
+			'specials' => $specials,
+		)
 		);
 ?>
