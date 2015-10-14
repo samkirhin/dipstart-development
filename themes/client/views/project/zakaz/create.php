@@ -72,7 +72,7 @@
 				}
 			} ?>
 		    </div>
-			<?php echo CHtml::submitButton(<?=ProjectModule::t('Upload'), array('class' => 'create-order-button') ); ?>
+			<?php echo CHtml::submitButton(ProjectModule::t('Upload'), array('class' => 'create-order-button') ); ?>
 		
 		<?php $this->endWidget(); ?>
     

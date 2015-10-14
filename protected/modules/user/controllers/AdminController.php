@@ -7,6 +7,71 @@ class AdminController extends Controller
 	
 	private $_model;
 
+	private $specialization = array(
+		'0'	=>	'UseCtrlForMultiselect',
+		'1'	=>	'All',
+		'6'	=>	'WebDesign',
+		'7'	=>	'Layout/WebDesign',
+		'8'	=>	'Copyrighting',
+		'9'	=>	'Rerighting',
+		'10'=>	'OptimizationSEO',
+		'11'=>	'Video',
+		'12'=>	'Programming',
+		'13'=>	'Posting',
+		'14'=>	'Presentations',
+		'15'=>	'Dictor',
+		'16'=>	'Translating Ru->En',
+		'17'=>	'Others',
+		'18'=>	'TurnkeyBusines',
+		'19'=>	'TurnkeyProject',
+		'20'=>	'TurnkeySite',
+		'21'=>	'TurnkeyLanding',
+		'23'=>	'Testing',
+	);
+
+	
+	public function get_specials($specials=''){
+		
+		$arr	= explode( ',', $specials);
+		$select	= '
+			<select name="Profile[specials]" id="Profile[specials]" multiselect="multiselect">
+			<option value="">'.Yii::t('project','UseCtrlForMultiselect').'</option>
+			<optgroup label="'.Yii::t('project','All').'</option>
+		';
+		foreach($this->specialization as $key => $opt){
+			
+			$select	.= '<option value="'.$key.'"';
+			if (in_array( $key, $arr))
+				$select	.= ' selected="selected"';
+			$select	.= '>'.Yii::t('project', $opt).'</option>';
+		}
+		$select	.= '</select>';
+		return $select;
+	}
+/*	
+<select name="Profile[specials]" id="Profile[specials]">
+<option value="">'.Yii::t('project','UseCtrlForMultiselect').'</option>
+<optgroup label="'.Yii::t('project','All').'</option>
+<option value="6">'.Yii::t('project','WebDesign').'</option>
+<option value="7">'.Yii::t('project','Layout/WebDesign').'</option>
+<option value="8">'.Yii::t('project','Copyrighting').'</option>
+<option value="9">'.Yii::t('project','Rerighting').'</option>
+<option value="10">'.Yii::t('project','OptimizationSEO').'</option>
+<option value="11">'.Yii::t('project','Video').'</option>
+<option value="12">'.Yii::t('project','Programming').'</option>
+<option value="13">'.Yii::t('project','Posting').'</option>
+<option value="14">'.Yii::t('project','Presentations').'</option>
+<option value="15">'.Yii::t('project','Dictor').'</option>
+<option value="16">'.Yii::t('project','Translating Ru->En').'</option>
+<option value="17">'.Yii::t('project','Others').'</option>
+<option value="18">'.Yii::t('project','TurnkeyBusines').'</option>
+<option value="19">'.Yii::t('project','TurnkeyProject').'</option>
+<option value="20">'.Yii::t('project','TurnkeySite').'</option>
+<option value="21">'.Yii::t('project','TurnkeyLanding').'</option>
+<option value="23">'.Yii::t('project','Testing').'</option>
+</select>';
+*/
+
 	/**
 	 * @return array action filters
 	 */
@@ -47,17 +112,7 @@ class AdminController extends Controller
 		$this->render('index',array(
 			'model'=>$model,
 		));
-		/*$dataProvider=new CActiveDataProvider('User', array(
-			'pagination'=>array(
-				'pageSize'=>Yii::app()->controller->module->user_page_size,
-			),
-		));
-
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));//*/
 	}
-
 
 	/**
 	 * Displays a particular model.
@@ -65,8 +120,10 @@ class AdminController extends Controller
 	public function actionView()
 	{
 		$model	= $this->loadModel();
+		$specials = $this->get_specials();
 		$this->render('view',array(
 			'model'		=> $model,
+			'specials'	=> $specials,
 		));
 	}
 
@@ -76,8 +133,10 @@ class AdminController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new User;
-		$profile=new Profile;
+		$model		= new User;
+		$profile	= new Profile;
+		$specials	= $this->get_specials($model->profile->specials);
+		
 		$this->performAjaxValidation(array($model,$profile));
 		if(isset($_POST['User']))
 		{
@@ -98,9 +157,11 @@ class AdminController extends Controller
 			} else $profile->validate();
 		}
 
+		$specials = $this->get_specials();
 		$this->render('create',array(
-			'model'=>$model,
-			'profile'=>$profile,
+			'model'		=> $model,
+			'profile'	=> $profile,
+			'specials'	=> $specials,
 		));
 	}
 
@@ -110,8 +171,9 @@ class AdminController extends Controller
 	 */
 	public function actionUpdate()
 	{
-		$model=$this->loadModel();
-		$profile=$model->profile;
+		$model			= $this->loadModel();
+		$profile		= $model->profile;
+		$specials	= $this->get_specials($model->profile->specials);
 
 		$this->performAjaxValidation(array($model,$profile));
 
@@ -133,8 +195,13 @@ class AdminController extends Controller
 				$profile->save();
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
-		}
+		};
 
+		$specials = $this->get_specials();
+echo '<pre>';		
+echo '$specials=';		
+print_r($specials);		
+echo '</pre>';		
 		$fields = ProfileField::model()->findAll();
 		$this->render('update',array(
 			'model'		=> $model,
@@ -142,6 +209,7 @@ class AdminController extends Controller
 			'manager'	=> $manager,
 			'admin'		=> $admin,
 			'fields'	=> $fields,
+			'specials'	=> $specials,
 		));	
 	}
 	/**

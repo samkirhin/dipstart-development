@@ -177,6 +177,34 @@ return array(
 	'DoneProjects' => 'Завершённые проекты',
 
 	'PaymentProps'=>'Платёжный реквизит',
+	
+	// специализации
+	
+	'UseCtrlForMultiselect' => 'Используйте Ctrl для мульти выбора',
+	'All' => 'Все',
+	'WebDesign' => 'Дизайн сайта',
+	'Layout/WebDesign' => 'Верстка сайта',
+	'Copyrighting' => 'Копирайтинг',
+	'Rerighting' => 'Рерайтинг',
+	'OptimizationSEO' => 'Оптимизация (SEO)',
+	'Video' => 'Видео',
+	'Programming' => 'Программирование',
+	'Posting' => 'Постинг',
+	'Presentations' => 'Презентации',
+	'Dictor' => 'Диктор',
+	'Translating Ru->En' => 'Перевод с Рус на Eng',
+	'Others' => 'Другое',
+	'TurnkeyBusines' => 'Бизнес под ключ',
+	'TurnkeyProject' => 'Проект под ключ',
+	'TurnkeySite' => 'Сайт под ключ',
+	'TurnkeyLanding' => 'Лендинг под ключ',
+	'Testing' => 'Тестирование',
+	
+	'Work Experience' => 'Опыт работы',
+	'Fl Acc' => 'Аккаунт на FL.RU',
+	'Mailing List' => 'Способ оповещения',
+	'Bank Account' => 'Банковский счёт, номер карты',
+	'Specials' => 'Специализации',	
 
 );
 
