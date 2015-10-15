@@ -8,10 +8,10 @@ $this->breadcrumbs=array(
 <h1><?php echo $this->uniqueId . '/' . $this->action->id; ?></h1>
 
 <p>
-This is the view content for action "<?php echo $this->action->id; ?>".
-The action belongs to the controller "<?php echo get_class($this); ?>"
-in the "<?php echo $this->module->id; ?>" module.
+<?= YII::t( 'project', 'This is the view content for action').' "'.$this->action->id.'"'?>
+<?= YII::t( 'project', 'The action belongs to the controller').' "'.get_class($this).'"'?>
+<?= YII::t( 'project', 'in the').' "'.$this->module->id.' '.YII::t( 'project', 'module').'.'?>
 </p>
 <p>
-You may customize this page by editing <tt><?php echo __FILE__; ?></tt>
+<?= YII::t( 'project', 'You may customize this page by editing').' <tt>'.__FILE__.'</tt>'?>
 </p>

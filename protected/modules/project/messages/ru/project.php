@@ -107,6 +107,8 @@ return array(
     'placed an order' => 'разместил заказ:',
     'Drop files here to upload' => 'Перетащите файлы сюда, чтобы загрузить',
     'Upload a file' => 'Загрузить файл',
+	'Uploading your file(s), please wait...' => 'Ваши файлы загружаются. Пожалуйста, подождите.',
+    'UploadFiles' => 'Загрузить файлы',
     'Upload' => 'Загрузить',
     'Description' => 'Описание',
     'Link' => 'Ссылка',
@@ -180,4 +182,11 @@ return array(
 	'Bank Account' => 'Банковский счёт, номер карты',
 	'Specials' => 'Специализации',
 	
+	'Logger' => 'Логгер',
+	'wrote' => 'написал',
+	'This is the view content for action' => 'Это - представление для действия',
+	'The action belongs to the controller' => 'Результат действия направляется контроллеру',
+	'in the' => 'в',
+	'You may customize this page by editing' => 'Вы можете адаптировать эту страницу под свои нужды',
+	'module' => '',
 );
