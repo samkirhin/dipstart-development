@@ -6,6 +6,35 @@
 /* @var $this ZakazController */
 /* @var $model Zakaz */
 /* @var $form CActiveForm */
+
+// --- campaign      генерируем список загруженных материалов
+$c_id = Campaign::getId();
+
+if ($c_id) {
+    $url = '/uploads/c'.$c_id.'/temp/'.$model->unixtime.'/';
+} else {
+    $url = '/uploads/temp/'.$model->unixtime.'/';
+}
+
+// ---
+$path = Yii::getPathOfAlias('webroot') . $url;
+
+$html_string = '';
+if (file_exists($path)){
+    foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
+        if ((!strstr($v, '#pre#') || User::model()->isCustomer()) && !strstr($v, '#trash#')) {
+            $tmp = '';
+            if(strstr($v, '#pre#')) {
+                $tmp = ' class="gray-file"';
+                $v0 = substr($v,5);
+            } else {
+                $v0 = $v;
+            }
+            $html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>'
+                                            . ' <a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a></li><br />'."\n"; #remove file btn
+        }
+} ;
+
 ?>
     <div class="container form-container">
 		<?php $form = $this->beginWidget('CActiveForm', array(
@@ -35,7 +64,9 @@
                     'model' => $model,
                     'attribute' => 'dbmax_exec_date',
                 ));?>
-				</div><?php
+				</div>
+                <?php echo  $form->hiddenField($model,'unixtime');?>
+                <?php
 				$projectFields = $model->getFields();
 				if ($projectFields) {
 					foreach($projectFields as $field) {
@@ -71,6 +102,29 @@
 					}
 				}
 			} ?>
+            <div class="form-item">
+              <?php
+                if (User::model()->isCustomer()) {
+                    
+                    $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                        array(
+                            'id' => 'justFileUpload',
+                            'postParams' => array(
+                                'unixtime' => $model->unixtime,
+                            ),
+                            'config' => array(
+                                'action' => $this->createUrl('/project/zakaz/upload', array('unixtime' => $model->unixtime)),
+                                'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Attach materials to the order') .'</div><ul class="qq-upload-list">'.$html_string.'</ul></div></div>',
+                                'disAllowedExtensions' => array('exe'),
+                                'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+                                'minSizeLimit' => 10,// minimum file size in bytes
+                                'onComplete' => "js:function(id, fileName, responseJSON){}"
+                            )
+                        )
+                    );
+                }                
+                ?>
+            </div>
 		    </div>
 			<?php echo CHtml::submitButton(ProjectModule::t('Upload'), array('class' => 'create-order-button') ); ?>
 		
@@ -84,3 +138,18 @@
     Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/masonry.min.js', CClientScript::POS_END);
     Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/common-masonry.js', CClientScript::POS_END);
 ?>
+<script>
+    /*Remove attachment file*/
+    function removeFile(obj){
+        if (confirm("<?php echo Yii::t('site', 'Are you sure you want to delete this item?');?>")) {
+            var data=$(obj).data();
+            $.post('/project/zakaz/apiRenameFile?unixtime=<?php echo $model->unixtime; ?>', JSON.stringify({
+                'data': data
+            }), function (response) {
+                if (response.data){
+                    obj.remove();
+                    $('#'+data.link).remove();
+                }
+            }, 'json');
+    }}/*END Remove attachment file*/
+</script>
