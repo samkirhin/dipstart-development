@@ -15,12 +15,14 @@ class Catalog extends CActiveRecord {
      */
     public function tableName() {
 		$id  = Campaign::getId();
+/*
 		echo 'id='.$id;
 		if (strpos(Yii::app()->user->guestName,'Guest')!==false){
 			$this->getCampaignNumber();
 			$id  = Campaign::getId();
 			echo ' id(1)='.$id;
 		};
+*/
         return $id.'_Сatalog';
 	}
 	// здесь определяем, из какой компании проект нужно показывать гостю
