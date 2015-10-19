@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 ?>
 
 <?php if(0):?>
-<h2><?=ProjectModule::t('Error').' '.?><?php echo $code; ?></h2>
+<h2><?=ProjectModule::t('Error').' '?><?php echo $code; ?></h2>
 <?php endif; ?>
 
 <div class="error">
