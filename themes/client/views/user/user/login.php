@@ -40,9 +40,8 @@
 	
 	<div>
 		<p class="hint">
-		<?php echo UserModule::t("Register")
-                   .'&nbsp;('. CHtml::link(UserModule::t("Customer"), array('/user/registration'))
-                   .'&nbsp;'. CHtml::link(UserModule::t("Author"), array("/user/registration","role" => "Author")) . ')<br />'; ?>
+		<a href="/user/registration">Зарегистрироваться</a>
+
                    <?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>
 		</p>
         <p>
