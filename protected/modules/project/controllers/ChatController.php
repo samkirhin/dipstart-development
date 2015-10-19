@@ -75,7 +75,7 @@ class ChatController extends Controller {
 
 		$isGuest = Yii::app()->user->guestName;
 		if ($isGuest) {
-			
+			Yii::app()->theme='client';
 			$order	= Zakaz::model()->resetScope()->findByPk($orderId);
 			// если гость прошёл по ссылке на неcуществующий
 			// проект, отправляем его на регистрацию
