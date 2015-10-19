@@ -15,12 +15,18 @@
     } else {
 
         if ($order->is_active) {
-//            $this->renderPartial('/zakaz/_form', array(
-            $this->render('/zakaz/_form', array(
-				'model' => $order, 
-				'times' => $times, 				
-				'isGuest'	=> $isGuest,
-			));
+			if ($isGuest)
+				$this->render('/zakaz/_form', array(
+					'model' => $order, 
+					'times' => $times, 				
+					'isGuest'	=> $isGuest,
+				));
+			else
+				$this->renderPartial('/zakaz/_form', array(
+					'model' => $order, 
+					'times' => $times, 				
+					'isGuest'	=> $isGuest,
+				));
         } else {
             $this->renderPartial('/zakaz/orderInModerate', array(
 				'isGuest'	=> $isGuest,
@@ -68,7 +74,7 @@
 
 <?php
 // the widget
- if (!$isGuest)
+if (!$isGuest)
 $this->widget('application.components.FileManViewer'
     ,array(
         // layout selectors:
@@ -126,6 +132,8 @@ $this->widget('application.components.FileManViewer'
 <?php if (count($messages)) foreach($messages as $message): ?>
         <?php echo $message->date; ?> -
         <?php
+echo $message->senderObject->id.' '.$message->senderObject->username;
+		
             $this->beginWidget('ProfileLinkWidget',array(
                 	'params'=>array(
                      	'userId' => $message->senderObject->id,

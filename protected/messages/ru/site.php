@@ -31,7 +31,6 @@ return array(
     'Search' => 'Искать',
     'Save' => 'Сохранить',
     'Fields with <span class="required">*</span> are required.' => 'Поля с <span class="required">*</span> обязательны.',
-    'Подсказка: Вы можете войти и так <kbd>demo</kbd>/<kbd>demo</kbd>, и так <kbd>admin</kbd>/<kbd>admin</kbd>.' => 'Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.',
     'Cat' => 'Категория',
     'Job Name' => 'Вид работ',
     'Create Jobs' => 'Добавить работу',
