@@ -72,7 +72,16 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
-		if (Yii::app()->user->isGuest) {
+
+		$isGuest = Yii::app()->user->guestName;
+		if ($isGuest) {
+			Yii::app()->theme='client';
+			$order	= Zakaz::model()->resetScope()->findByPk($orderId);
+			// если гость прошёл по ссылке на неcуществующий
+			// проект, отправляем его на регистрацию
+			$url = 'http://'.$_SERVER['SERVER_NAME'].'/';
+			if (!$order) $this->redirect($url);
+
 			$moderate_types = EventHelper::get_moderate_types_string();
 			$events = Events::model()->findAll(array(
 				'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
@@ -81,10 +90,21 @@ class ChatController extends Controller {
 				array(':event_id'=> $orderId) 			
 			);
 			$moderated = count($events) == 0;
+			// если гость прошёл по ссылке на непромодерированный
+			// проект, отправляем его на регистрацию
+			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
+
+//			Catalog::model()->tableName();
+			
 			$this->render('index', array(
-				'orderId' => $orderId,
-				'executor' => Zakaz::getExecutor($orderId),
-				'moderated' => $moderated,
+				'orderId'	=> $orderId,
+				'order'		=> $order,
+				'executor'	=> Zakaz::getExecutor($orderId),
+				'moderated'	=> $moderated,
+				'isGuest'	=> $isGuest,
+				'parts'		=> ZakazParts::model()->findAll(array(
+					'condition' => "`proj_id`='$orderId'",
+				)),
 			));
             Yii::app()->end();
 		};
@@ -123,6 +143,7 @@ class ChatController extends Controller {
             }
             $this->renderPartial('chat', array(
                 'orderId' => $orderId,
+				'isGuest'	=> $isGuest,
             ));
             Yii::app()->end();
         }
@@ -135,9 +156,11 @@ class ChatController extends Controller {
 		);
 		$moderated = count($events) == 0;
         $this->render('index', array(
-            'orderId' => $orderId,
-            'executor' => Zakaz::getExecutor($orderId),
-			'moderated' => $moderated,
+            'orderId'	=> $orderId,
+			'order'		=> $order,
+            'executor'	=> Zakaz::getExecutor($orderId),
+			'moderated'	=> $moderated,
+			'isGuest'	=> $isGuest,
         ));
     }
 	

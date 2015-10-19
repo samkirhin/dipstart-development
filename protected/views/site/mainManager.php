@@ -1,16 +1,16 @@
 <table>
     <tr>
         <td>
-            <a class="btn btn-default btn-block" href="<?php echo Yii::app()->createUrl('project/zakaz'); ?>">Заказы</a>
+            <a class="btn btn-default btn-block" href="<?php echo Yii::app()->createUrl('project/zakaz'); ?>"><?= Yii::t('site','Zakazs Заказы') ?></a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="<?php echo Yii::app()->createUrl('project/event'); ?>">События</a>
+            <a class="btn btn-default btn-block" href="<?php echo Yii::app()->createUrl('project/event'); ?>"><?= Yii::t('site','Events') ?></a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="#">Пользователи</a>
+            <a class="btn btn-default btn-block" href="#"><?= Yii::t('site','Users') ?></a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="#">Новости</a>
+            <a class="btn btn-default btn-block" href="#"><?= Yii::t('site','News') ?></a>
         </td>
     </tr>
     <tr>

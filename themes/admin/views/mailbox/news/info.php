@@ -31,7 +31,7 @@ foreach($conv->messages as $msg):
 	<div class="mailbox-message-header">
 		<div class="message-sender">
 <?php	echo 'Author: ' . ucfirst($sender); ?></div>
-		<div class="message-date">Last Updated: <?php echo date("Y-m-d H:i a",$msg->created); ?></div>
+		<div class="message-date"><?=Yii::t('site', 'Last Updated').': '.date("Y-m-d H:i a",$msg->created); ?></div>
 		<br />
 	</div>
 	

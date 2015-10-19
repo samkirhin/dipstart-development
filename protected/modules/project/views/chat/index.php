@@ -15,9 +15,22 @@
     } else {
 
         if ($order->is_active) {
-            $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
+			if ($isGuest)
+				$this->render('/zakaz/_form', array(
+					'model' => $order, 
+					'times' => $times, 				
+					'isGuest'	=> $isGuest,
+				));
+			else
+				$this->renderPartial('/zakaz/_form', array(
+					'model' => $order, 
+					'times' => $times, 				
+					'isGuest'	=> $isGuest,
+				));
         } else {
-            $this->renderPartial('/zakaz/orderInModerate');
+            $this->renderPartial('/zakaz/orderInModerate', array(
+				'isGuest'	=> $isGuest,
+			));
         }
     }
 ?>
@@ -25,7 +38,7 @@
 <h3 ><?php echo ProjectModule::t('Changes'); ?></h3>
 
 <?php 
-	if (!is_null($order))
+	if (!is_null($order) && !$isGuest)
 	$this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
         	'project' => $order,
 	)); 
@@ -38,12 +51,12 @@
     <div class='body'></div>
     <hr/>
     <div id='myuploader'>
-        <label rel='pin'><b>Upload Files
+        <label rel='pin'><b><?= YII::t( 'project', 'UploadFiles') ?>
                 <img src='images/pin.png'></b></label>
         <br/>
         <div class='files'></div>
         <div class='progressbar'>
-            <div>Uploading your file(s), please wait...</div>
+            <div><?= YII::t( 'project', 'Uploading your file(s), please wait...') ?></div>
             <img src='images/progressbar.gif' />
             <div class='progress'>
             </div>
@@ -57,12 +70,12 @@
 </div>
 <!-- required div layout ends -->
 
-<hr/>Logger:<br/><div id='logger'></div>
+<hr/><?php echo Yii::t('project','Logger'),':' ;?><br/><div id='logger'></div>
 
 <?php
 // the widget
-
-$this->widget('application.components.MyYiiFileManViewer'
+if (!$isGuest)
+$this->widget('application.components.FileManViewer'
     ,array(
         // layout selectors:
         'launch_selector'=>'#file-picker',
@@ -119,6 +132,8 @@ $this->widget('application.components.MyYiiFileManViewer'
 <?php if (count($messages)) foreach($messages as $message): ?>
         <?php echo $message->date; ?> -
         <?php
+echo $message->senderObject->id.' '.$message->senderObject->username;
+		
             $this->beginWidget('ProfileLinkWidget',array(
                 	'params'=>array(
                      	'userId' => $message->senderObject->id,
@@ -128,7 +143,7 @@ $this->widget('application.components.MyYiiFileManViewer'
                 	))
             );
             $this->endWidget();
-        ?> написал
+        ?><?= YII::t( 'project', 'wrote') ?>
         <?php if($message->recipient): ?>
         	<?php
 	    $this->beginWidget('ProfileLinkWidget',array(
@@ -145,7 +160,7 @@ $this->widget('application.components.MyYiiFileManViewer'
             :
         <?php echo $message->message; ?>
         <?php if($message->cost): ?>
-        Цена за работу: <?php echo $message->cost; ?>
+		<?= YII::t( 'project', 'Work price:') ?><?php echo $message->cost; ?>
         <?php endif; ?>
         <?php if($message->sender != Yii::app()->user->id): ?>
         	(<a href="" class="request" user="<?php echo $message->senderObject->id; ?>" username="<?php echo $message->senderObject->username; ?>"><?=Yii::t('site', 'Reply')?></a>)
@@ -189,7 +204,7 @@ $this->widget('application.components.MyYiiFileManViewer'
     <?php echo $form->hiddenField($model,'recipient', array('id' => 'recipient')); ?>
     <?php if(User::model()->isAuthor()): ?>
     	<div class="row">
-    	     <p>Цена за работу:</p>
+    	     <p><?= YII::t( 'project', 'Work price:') ?></p>
     	    <?php echo $form->textField($model, 'cost'); ?>
     	    <?php echo $form->error($model,'cost'); ?>
     	</div>

@@ -16,6 +16,7 @@
 	 * 2. Check if "check all" need to be checked/unchecked
 	 * @return object the jQuery object
 	 */
+
 	selectCheckedRows = function (gridId) {
 		var settings = gridSettings[gridId],
 			table = $('#' + gridId).find('.' + settings.tableClass);

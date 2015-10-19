@@ -16,7 +16,7 @@ $this->widget('zii.widgets.CMenu', array(
 ?>
 <h1><?php
 //echo UserModule::t('View Project Field #').$model->varname;
-echo 'Поле заказа "'.$model->varname.'"';
+echo UserModule::t('FieldOfOrders').' "'.$model->varname.'"';
 ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(

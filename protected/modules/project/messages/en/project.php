@@ -106,6 +106,8 @@ return array(
     'placed an order' => 'placed an order',
     'Drop files here to upload' => 'Drop files here to upload',
     'Upload a file' => 'Upload a file',
+	'Uploading your file(s), please wait...' => 'Uploading your file(s), please wait...',
+    'UploadFiles' => 'Upload Files',
     'Upload' => 'Upload',
     'Description' => 'Description',
     'Link' => 'Link',
@@ -152,24 +154,6 @@ return array(
 	// специализации
 	
 	'UseCtrlForMultiselect' => 'Use Ctrl For Multiselect',
-	'All' => 'All',
-	'WebDesign' => 'Web Design',
-	'Layout/WebDesign' => 'Layout/Web Design',
-	'Copyrighting' => 'Copyrighting',
-	'Rerighting' => 'Rerighting',
-	'OptimizationSEO' => 'Optimization (SEO)',
-	'Video' => 'Video',
-	'Programming' => 'Programming',
-	'Posting' => 'Posting',
-	'Presentations' => 'Presentations',
-	'Dictor' => 'Dictor',
-	'Translating Ru->En' => 'Translating Ru->En',
-	'Others' => 'Others',
-	'TurnkeyBusines' => 'Turnkey Busines',
-	'TurnkeyProject' => 'Turnkey Project',
-	'TurnkeySite' => 'Turnkey Site',
-	'TurnkeyLanding' => 'Turnkey Landing',
-	'Testing' => 'Testing',
 	
 	'Work Experience' => 'Work Experience',
 	'Fl Acc' => 'Freelance accounts',
@@ -177,5 +161,19 @@ return array(
 	'Bank Account' => 'Bank Account',
 	'Specials' => 'Specializations',
 	
+	'Logger' => 'Logger',
+	'wrote' => 'wrote',
+
+	'This is the view content for action' => 'This is the view content for action',
+	'The action belongs to the controller' => 'The action belongs to the controller',
+	'in the' => 'in the',
+	'You may customize this page by editing' => 'You may customize this page by editing',
+	'module' => 'module',
+	'Zakaz Parts' => 'Project Parts',
+	'Update ZakazParts' => 'Update Project Parts',
+	'View ZakazParts' => 'View Project arts',
+	'Please fill out the following form with your login credentials:'=>'Пожалуйста, заполните форму',
+	'Login' => 'Login',
+	'Update Templates' => 'Update Templates',
 	
 );

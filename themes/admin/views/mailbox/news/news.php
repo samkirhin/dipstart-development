@@ -21,14 +21,14 @@ $this->renderpartial('../message/_flash');
 
 if($dataProvider->getItemCount() > 0) {
 ?>
-<h1>Site News</h1>
+<h1><?=Yii::t('site', 'Site News') ?></h1>
 <form id="message-list-form" action="<?php echo $this->createUrl($this->getId().'/'.$this->getAction()->getId()); ?>" method="post">
 	<div class="mailbox-clistview-container ui-helper-clearfix">
 	<?php
 	if($this->module->isAdmin() && $dataProvider->getItemCount() > 1) : ?>
 		<div class="btn-group mailbox-checkall-buttons">
-			<button class="checkall" />Check All</button>
-			<button class="uncheckall" />Uncheck All</button>
+			<button class="checkall" /><?=Yii::t('site', 'Check All')  ?></button>
+			<button class="uncheckall" /><?=Yii::t('site', 'Uncheck All')  ?></button>
 		</div>
 	<?php
 	endif;

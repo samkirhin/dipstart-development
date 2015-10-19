@@ -16,6 +16,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update Jobs <?php echo $model->id; ?></h1>
+<h1><?= Yii::t('site','Update Jobs').' '.$model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
