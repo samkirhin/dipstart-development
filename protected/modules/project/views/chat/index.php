@@ -15,9 +15,16 @@
     } else {
 
         if ($order->is_active) {
-            $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
+//            $this->renderPartial('/zakaz/_form', array(
+            $this->render('/zakaz/_form', array(
+				'model' => $order, 
+				'times' => $times, 				
+				'isGuest'	=> $isGuest,
+			));
         } else {
-            $this->renderPartial('/zakaz/orderInModerate');
+            $this->renderPartial('/zakaz/orderInModerate', array(
+				'isGuest'	=> $isGuest,
+			));
         }
     }
 ?>
@@ -25,7 +32,7 @@
 <h3 ><?php echo ProjectModule::t('Changes'); ?></h3>
 
 <?php 
-	if (!is_null($order))
+	if (!is_null($order) && !$isGuest)
 	$this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
         	'project' => $order,
 	)); 
@@ -61,8 +68,8 @@
 
 <?php
 // the widget
-
-$this->widget('application.components.MyYiiFileManViewer'
+ if (!$isGuest)
+$this->widget('application.components.FileManViewer'
     ,array(
         // layout selectors:
         'launch_selector'=>'#file-picker',

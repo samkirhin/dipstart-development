@@ -22,7 +22,7 @@ $this->breadcrumbs = array(
 
     <?php if ($author): ?>
     <div>
-        Автор <br>
+        <?= ProjectModule::t('Author') ?><br>
         <?= $author->profile->firstname ?> <?= $author->profile->lastname ?> <br>
         <?= $author->email ?> <br>
         <?= $author->profile->mob_tel ?>
@@ -30,7 +30,7 @@ $this->breadcrumbs = array(
     <?php endif; ?>
 
     <div>
-        Заказчик<br>
+        <?= ProjectModule::t('Customer') ?><br><br>
         <?= $customer->profile->firstname ?> <?= $customer->profile->lastname ?> <br>
         <?= $customer->email ?> <br>
         <?= $customer->profile->mob_tel ?>

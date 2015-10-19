@@ -34,6 +34,7 @@ class SiteController extends Controller
 	{
         if (Yii::app()->user->isGuest) {
             $this->render('index', array(
+//          $this->render('main', array(
                 'role' => 'stranger'
             ));
 		} elseif (User::model()->isAuthor()){

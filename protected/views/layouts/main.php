@@ -63,10 +63,10 @@ if (Yii::app()->user->isGuest) {
 			$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
 
 			break;
+		case 'Guest':
 		case 'Author':
-
 			$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
-			$items[] = array('label'=>'Личные данные', 'items'=>array(
+			$items[] = array('label'=>Yii::t('site','Personal area'), 'items'=>array(
 				array('label'=> Yii::t('site','My account'), 'url'=>array('#')),
 				array('label'=>Yii::t('site','Личный счет'), 'url'=>array('/user/profile/account')),
 				array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit'))

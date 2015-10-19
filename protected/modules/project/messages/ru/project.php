@@ -36,6 +36,7 @@ return array(
     'Fields with <span class="required">*</span> are required.' => 'Поля с <span class="required">*</span> обязательны.',
     'Manage' => 'Управлять',
     'Notes' => 'Заметки',
+    'Check scan' => 'Скан чека',
     'Customer Price' => 'Выставлено заказчику',
     'Autor Price' => 'Выставлено автору',
     'Payed' => 'Оплачено автору',

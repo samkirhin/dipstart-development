@@ -593,7 +593,7 @@ CREATE TABLE IF NOT EXISTS `1_ProfilesFields` (
 --
 
 INSERT INTO `1_ProfilesFields` (`id`, `varname`, `title`, `field_type`, `field_size`, `field_size_min`, `required`, `match`, `range`, `error_message`, `other_validator`, `default`, `widget`, `widgetparams`, `position`, `visible`, `editable`) VALUES
-(1, 'lastname', 'Фамилия', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
+(1, 'lastname', 'Фамилия', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1);
 (2, 'firstname', 'Имя', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (3, 'mob_tel', 'Моб. телефон', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (4, 'icq', 'ICQ', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
@@ -604,7 +604,7 @@ INSERT INTO `1_ProfilesFields` (`id`, `varname`, `title`, `field_type`, `field_s
 (9, 'job_type', '', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (10, 'work_experience', 'Опыт работы в данной сфере', 'VARCHAR', '20', '1', 2, '', '', '', '', '', '', '', 8, 2, 1),
 (11, 'urgent_job', 'urgent_job', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
-(12, 'wmz', 'Webmoney Z', 'VARCHAR', '13', '12', 0, '', '', '', '', '', '', '', 13, 2, 10,
+(12, 'wmz', 'Webmoney Z', 'VARCHAR', '13', '12', 0, '', '', '', '', '', '', '', 13, 2, 10),
 (13, 'rating', '', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (14, 'fl_acc', 'Аккаунты на фрилансе', 'mediumtext', '65535', '0', 0, '', '', '', '', '', '', '', 11, 2, 1),
 (15, 'mailing_list', 'Рассылать сообщения', 'VARCHAR', '10', '0', 0, '', 'icq;sms;email', '', '', '0', '', '', 12, 0, 1),

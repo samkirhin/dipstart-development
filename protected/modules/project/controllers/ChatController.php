@@ -73,9 +73,6 @@ class ChatController extends Controller {
     public function actionIndex($orderId)
     {
 
-//		echo '<br>'; print_r(Yii::app()->user->guestName);
-//		echo '<br>++++++++++++name='.Yii::app()->user->guestName;
-//		die('000000000000<br>');
 		$isGuest = Yii::app()->user->guestName;
 		if ($isGuest) {
 			
@@ -97,13 +94,17 @@ class ChatController extends Controller {
 			// проект, отправляем его на регистрацию
 			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
 
-			Catalog::model()->tableName();
+//			Catalog::model()->tableName();
 			
 			$this->render('index', array(
 				'orderId'	=> $orderId,
 				'order'		=> $order,
 				'executor'	=> Zakaz::getExecutor($orderId),
 				'moderated'	=> $moderated,
+				'isGuest'	=> $isGuest,
+				'parts'		=> ZakazParts::model()->findAll(array(
+					'condition' => "`proj_id`='$orderId'",
+				)),
 			));
             Yii::app()->end();
 		};
@@ -142,6 +143,7 @@ class ChatController extends Controller {
             }
             $this->renderPartial('chat', array(
                 'orderId' => $orderId,
+				'isGuest'	=> $isGuest,
             ));
             Yii::app()->end();
         }
@@ -158,6 +160,7 @@ class ChatController extends Controller {
 			'order'		=> $order,
             'executor'	=> Zakaz::getExecutor($orderId),
 			'moderated'	=> $moderated,
+			'isGuest'	=> $isGuest,
         ));
     }
 	
