@@ -1,7 +1,5 @@
 <?php
-$order		= Zakaz::model()->resetScope()->findByPk($orderId);
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
-
 // --- campaign      генерируем список загруженных материалов
 if(isset(Zakaz::$files_folder)){
 	$url = Zakaz::$files_folder.$order->id.'/';

@@ -205,6 +205,24 @@ return array(
 	'Mailing List' => 'Способ оповещения',
 	'Bank Account' => 'Банковский счёт, номер карты',
 	'Specials' => 'Специализации',	
-
+	'FieldOfOrders' => 'Поле заказа',
+    'Deadlines' => 'Сроки выполнения',
+	'requested changes.' => 'запросил изменения.',
+	'Value' => 'Значение',
+	
+	'Email' => 'Почта',
+	'Skype' => 'Скайп',
+	'request' => 'заказать',
+	'callback' => 'обратный звонок',
+	'Request a callback' => 'Запросить обратный звонок',
+	'Please, input a phone number in the international format' => 'пожалуйста, вводите телефон в международном формате',
+	'Phone' => 'Телефон',
+	'Send' => 'Отправить',
+	'Restore a password' => 'Востановление пароля',
+	'Send new password' => 'Отправить новый пароль',
+	'For our users' => 'Для наших пользователей',
+	'Restore a password' => 'Восстановить пароль',
+	'Hi' => 'Привет',
+	'Menu' => 'Меню',
 );
 

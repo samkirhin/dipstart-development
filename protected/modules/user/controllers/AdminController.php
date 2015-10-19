@@ -7,41 +7,19 @@ class AdminController extends Controller
 	
 	private $_model;
 
-	private $specialization = array(
-		'0'	=>	'UseCtrlForMultiselect',
-		'1'	=>	'All',
-		'6'	=>	'WebDesign',
-		'7'	=>	'Layout/WebDesign',
-		'8'	=>	'Copyrighting',
-		'9'	=>	'Rerighting',
-		'10'=>	'OptimizationSEO',
-		'11'=>	'Video',
-		'12'=>	'Programming',
-		'13'=>	'Posting',
-		'14'=>	'Presentations',
-		'15'=>	'Dictor',
-		'16'=>	'Translating Ru->En',
-		'17'=>	'Others',
-		'18'=>	'TurnkeyBusines',
-		'19'=>	'TurnkeyProject',
-		'20'=>	'TurnkeySite',
-		'21'=>	'TurnkeyLanding',
-		'23'=>	'Testing',
-	);
-
-	
 	public function get_specials($specials=''){
 		
+		$model	= Catalog::model()->findAllByAttributes(array('field_varname'=>'specials'));
+        $list	= CHtml::listData($model, 'id', 'cat_name');
+
 		$arr	= explode( ',', $specials);
-		$sizenumber = count($this->specialization);
+		$sizenumber = count($list);
 		$select	= '
-			<select clss="select-specilization" name="Profile[specials]" id="Profile[specials]" multiple size="'.$sizenumber.'">
-			<option value="">'.Yii::t('project','UseCtrlForMultiselect').'</option>
-			<optgroup label="'.Yii::t('project','All').'">'.Yii::t('project','All').'</optgroup>
+			<select class="select-specilization" name="Profile[specials]" id="Profile[specials]" multiple size="'.$sizenumber.'">
+			<option value="" disabled>'.ProjectModule::t('UseCtrlForMultiselect').'</option>
+			<optgroup label="'.ProjectModule::t('All').'">'.ProjectModule::t('All').'</optgroup>
 		';
-		foreach($this->specialization as $key => $opt){
-//echo '<pre>';			
-//echo '</pre>';			
+		foreach($list as $key => $opt){
 			$select	.= '<option value="'.$key.'"';
 			if (in_array( $key, $arr))
 				$select	.= ' selected="selected"';

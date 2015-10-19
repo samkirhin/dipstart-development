@@ -2,6 +2,10 @@
 /* @var $this ZakazController */
 /* @var $model Zakaz */
 /* @var $form CActiveForm */
+
+	$isGuest = Yii::app()->user->guestName;
+	$disabled='';
+//	if ($isGuest)$disabled  = " disabled='disabled'";
 ?>
 <div class="form">
 
@@ -23,10 +27,9 @@
 
 	<!--<div class="row">
 		<?php echo $form->labelEx($model,'user_id'); ?>
-		<?php echo $form->textField($model,'user_id',array('size'=>70,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'user_id',array('size'=>70,'maxlength'=>255,$disabled)); ?>
 		<?php echo $form->error($model,'user_id'); ?>
 	</div>-->
-
 
 
 	<div class="row">
@@ -47,13 +50,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title',array('size'=>70,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'title',array('size'=>70,'maxlength'=>255, $disabled)); ?>
 		<?php echo $form->error($model,'title'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'text'); ?>
-		<?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>70)); ?>
+		<?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>70, $disabled)); ?>
 		<?php echo $form->error($model,'text'); ?>
 	</div>
 
@@ -118,7 +121,7 @@
 						'showAnim'=>'fold',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
 						),
 					'htmlOptions'=>array(
-						'style'=>'height:20px;background-white:blue;color:black;',
+						'style'=>'height:t:20px;background-white:blue;color:black;',
 					),
 				));
 			?>
@@ -152,31 +155,35 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'pages'); ?>
-		<?php echo $form->textField($model,'pages'); ?>
+		<?php echo $form->textField($model,'pages',array($disabled)); ?>
 		<?php echo $form->error($model,'pages'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'add_demands'); ?>
-		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53)); ?>
+		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53, $disabled)); ?>
 		<?php echo $form->error($model,'add_demands'); ?>
 	</div>
-	<h3>Заметки</h3>
+	<h3><?= ProjectModule::t('Notes') ?></h3>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'time_for_call'); ?>
-		<?php echo $form->textField($model,'time_for_call'); ?>
+		<?php echo $form->textField($model,'time_for_call',array($disabled)); ?>
 		<?php echo $form->error($model,'time_for_call'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'edu_dep'); ?>
-		<?php echo $form->textField($model,'edu_dep'); ?>
+		<?php echo $form->textField($model,'edu_dep',array($disabled)); ?>
 		<?php echo $form->error($model,'edu_dep'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>
+		
+		<?php 
+			if ($isGuest) echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'),array('disable'=>'disable')); 
+			else echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); 
+		?>
 	</div>
 
 <?php $this->endWidget();
@@ -202,12 +209,15 @@
 )); ?>
     
     <div class="row">
-		Скан чека
-		<?php echo $form->fileField($upload,'file'); ?>
+		<?= ProjectModule::t('Check scan') ?>
+		<?php echo $form->fileField($upload,'file',array($disabled)); ?>
 	</div>
     
     <div class="row buttons">
-		<?php echo CHtml::submitButton('Загрузить'); ?>
+		<?php
+			if ($isGuest) echo CHtml::submitButton(ProjectModule::t('Upload'),array('disable'=>'disable')); 
+			else	echo CHtml::submitButton(ProjectModule::t('Upload')); 
+		?>
 	</div>
     
 <?php $this->endWidget(); ?>

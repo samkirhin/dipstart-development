@@ -2,9 +2,17 @@
 $this->breadcrumbs=array(ProjectModule::t('Zakazs'));
 ?>
 <div id="grid">
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php 
+
+	$sort = new CSort();
+	$sort->attributes = array(
+		'asc' => 'date',
+		'desc' => 'date DESC',
+	);
+	$this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$model->search(),
     'filter'=>$model,
+    'filterModel'=>$model,
     'columns'=>array(
         'id',
         'title',
@@ -16,6 +24,7 @@ $this->breadcrumbs=array(ProjectModule::t('Zakazs'));
     ),
     'ajaxType'=>'POST',
     'ajaxUpdate'=>'grid',
+    'ajaxUrl'=>'project/zakaz',
 ));
 ?>
 </div>

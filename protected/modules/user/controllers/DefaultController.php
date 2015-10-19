@@ -26,11 +26,18 @@ class DefaultController extends Controller
 	 */
 	public function actionIndex()
 	{
+		
         switch ($_GET['s']) {
             case 'Author':
                 $prof=Profile::model()->with('user','AuthAssignment')->findAll();
+//                $prof=Profile::model()->findAll();
+//echo '$prof(0)=';
+//var_dump($prof);			
+//die('$prof(0)='.var_dump($prof));
+//echo '$count(prof)='.count($prof);
                 $cat=Categories::model()->findAll();
                 foreach($cat as $key=>$val) $rescat[$val->getAttributes()['id']]=$val->getAttributes()['cat_name'];
+				$itog	= array();
                 foreach ($prof as $key=>$val) {
                     $res=$val->getAttributes();
                     $res1=$val->AuthAssignment->getAttributes();   //---<<
@@ -39,12 +46,11 @@ class DefaultController extends Controller
                     }
                     if ($res1['itemname']=='Author') {
 						$resuser=array();
-//						$user   = User::model()->findAll(['id'=>$uid]);
-//die('$user='.var_dump($user));
-//						$resuser= $user->getAttributes();
+						$user   = User::model()->findByPk($val->user_id);
+				
+						$resuser= $user->getAttributes();
 						$resuser=$val->user->getAttributes(); 
-                        $itog[$key]=array_merge($res,$resuser);
-					
+                        $itog[$user->id]=array_merge($res,$resuser);
                     }
                 }
                 $dataProvider=new CArrayDataProvider($itog, array(

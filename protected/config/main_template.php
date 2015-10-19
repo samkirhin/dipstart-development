@@ -34,8 +34,8 @@ return array(
         'application.modules.project.models.*',
         'application.modules.project.controllers.*',
 		'application.behaviors.*',
-        'application.extensions.yiifilemanager.*',
-        'application.extensions.yiifilemanagerfilepicker.*',
+//        'application.extensions.yiifilemanager.*',
+//        'application.extensions.yiifilemanagerfilepicker.*',
         'application.extensions.helpers.EDownloadHelper',
         'application.extensions.yiichat.*',
         'ext.YiiMailer.YiiMailer',
@@ -95,10 +95,12 @@ return array(
             'class' => 'application.extensions.booster.components.Booster',
             'minify' => false,
         ),
+/*		
         'fileman' => array(
                         'class'=>'application.extensions.yiifilemanager.YiiDiskFileManager',
                         'storage_path' => 'uploads',
         ),
+*/		
         'jsonRequest' => array(
             'class' => 'JsonHttpRequest'
         ),

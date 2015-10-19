@@ -23,24 +23,4 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('required')); ?>:</b>
 	<?php echo CHtml::encode($data->required); ?>
 	<br />
-
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('error_message')); ?>:</b>
-	<?php echo CHtml::encode($data->error_message); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('default')); ?>:</b>
-	<?php echo CHtml::encode($data->default); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('position')); ?>:</b>
-	<?php echo CHtml::encode($data->position); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('visible')); ?>:</b>
-	<?php echo CHtml::encode($data->visible); ?>
-	<br />
-
-	*/ ?>
-
 </div>

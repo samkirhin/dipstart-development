@@ -152,7 +152,7 @@ $this->menu=array(
 		
 
             <div class="col-md-6 create-terms">
-                <h3>Сроки выполнения </h3>
+                <h3>Сроки выполнения</h3>
                 <table class="table" style="font-size: 12px">
                     <thead>
                     <th>Наименование</th>
