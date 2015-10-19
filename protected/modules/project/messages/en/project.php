@@ -154,24 +154,6 @@ return array(
 	// специализации
 	
 	'UseCtrlForMultiselect' => 'Use Ctrl For Multiselect',
-	'All' => 'All',
-	'WebDesign' => 'Web Design',
-	'Layout/WebDesign' => 'Layout/Web Design',
-	'Copyrighting' => 'Copyrighting',
-	'Rerighting' => 'Rerighting',
-	'OptimizationSEO' => 'Optimization (SEO)',
-	'Video' => 'Video',
-	'Programming' => 'Programming',
-	'Posting' => 'Posting',
-	'Presentations' => 'Presentations',
-	'Dictor' => 'Dictor',
-	'Translating Ru->En' => 'Translating Ru->En',
-	'Others' => 'Others',
-	'TurnkeyBusines' => 'Turnkey Busines',
-	'TurnkeyProject' => 'Turnkey Project',
-	'TurnkeySite' => 'Turnkey Site',
-	'TurnkeyLanding' => 'Turnkey Landing',
-	'Testing' => 'Testing',
 	
 	'Work Experience' => 'Work Experience',
 	'Fl Acc' => 'Freelance accounts',
@@ -187,5 +169,11 @@ return array(
 	'in the' => 'in the',
 	'You may customize this page by editing' => 'You may customize this page by editing',
 	'module' => 'module',
+	'Zakaz Parts' => 'Project Parts',
+	'Update ZakazParts' => 'Update Project Parts',
+	'View ZakazParts' => 'View Project arts',
+	'Please fill out the following form with your login credentials:'=>'Пожалуйста, заполните форму',
+	'Login' => 'Login',
+	'Update Templates' => 'Update Templates',
 	
 );

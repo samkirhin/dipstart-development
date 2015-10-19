@@ -1,4 +1,5 @@
 <?php
+
 /* @var $this ZakazPartsController */
 /* @var $model ZakazParts */
 
@@ -16,7 +17,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View ZakazParts #<?php echo $model->id; ?></h1>
+<h1><?= ProjectModule::t('View ZakazParts').' '.$model->id ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

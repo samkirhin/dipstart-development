@@ -12,7 +12,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Zakaz Parts</h1>
+<h1><?= ProjectModule::t('Zakaz Parts') ?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

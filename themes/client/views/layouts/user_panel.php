@@ -6,12 +6,12 @@
  * Time: 0:49
  */
 ?>
-<p style="margin: 10px 0 0 0">Для наших пользователей</p>
+<p style="margin: 10px 0 0 0"><?= UserModule::t('For our users') ?></p>
 <?php if (Yii::app()->user->isGuest): ?>
 <?php
-    echo CHtml::link('Регистрация<br>',array('/site/page','view'=>'registration'));
-    echo CHtml::link('Вход<br>',array('/user/login'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
-    echo CHtml::link('Восстановить пароль',array('/user/recovery'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
+    echo CHtml::link(UserModule::t('Registration').'<br>',array('/site/page','view'=>'registration'));
+    echo CHtml::link(UserModule::t('Login').'<br>',array('/user/login'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
+    echo CHtml::link(UserModule::t('Restore a password'),array('/user/recovery'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
 ?>
 <!-- Login Form -->
 <?php
@@ -34,7 +34,7 @@ $form = $this->beginWidget('application.extensions.booster.widgets.TbActiveForm'
 ?>
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h4>Вход на сайт</h4>
+        <h4><?= UserModule::t('Login') ?></h4>
     </div>
     <div class="modal-body">
         <?php
@@ -62,8 +62,7 @@ $form = $this->beginWidget('application.extensions.booster.widgets.TbActiveForm'
 $this->endWidget();
 $this->endWidget();
 ?>
-<?php else: ?>
-Привет, <?php echo User::model()->findByPk(Yii::app()->user->id)->username; ?>!</p>
+<?php else: ?><?=UserModule::t('Hi').', '.User::model()->findByPk(Yii::app()->user->id)->username; ?>!</p>
 <?php $this->widget('application.extensions.booster.widgets.TbMenu',array(
     'items'=> $this->authMenu,
     'type'=>'list',

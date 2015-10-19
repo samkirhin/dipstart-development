@@ -134,8 +134,8 @@ return array(
     'Save' => 'Сохранить',
     'Confirm payment:' => 'Подтвердить платеж:',
 
-    'List ZakazParts' => 'List ZakazParts',
-    'Manage Zakaz Parts' => 'Manage Zakaz Parts',
+    'List ZakazParts' => 'Список этапов проекта',
+    'Manage Zakaz Parts' => 'Работа с этапами проекта',
     'Additionally send:' => 'Дополнительно отправить:',
     'Ordering Information' => 'Информация о заказе',
 	'Pay online' => 'Оплатить онлайн',
@@ -157,24 +157,6 @@ return array(
 	// специализации
 	
 	'UseCtrlForMultiselect' => 'Используйте Ctrl для мульти выбора',
-	'All' => 'Все',
-	'WebDesign' => 'Дизайн сайта',
-	'Layout/WebDesign' => 'Верстка сайта',
-	'Copyrighting' => 'Копирайтинг',
-	'Rerighting' => 'Рерайтинг',
-	'OptimizationSEO' => 'Оптимизация (SEO)',
-	'Video' => 'Видео',
-	'Programming' => 'Программирование',
-	'Posting' => 'Постинг',
-	'Presentations' => 'Презентации',
-	'Dictor' => 'Диктор',
-	'Translating Ru->En' => 'Перевод с Рус на Eng',
-	'Others' => 'Другое',
-	'TurnkeyBusines' => 'Бизнес под ключ',
-	'TurnkeyProject' => 'Проект под ключ',
-	'TurnkeySite' => 'Сайт под ключ',
-	'TurnkeyLanding' => 'Лендинг под ключ',
-	'Testing' => 'Тестирование',
 	
 	'Work Experience' => 'Опыт работы',
 	'Fl Acc' => 'Аккаунт на FL.RU',
@@ -188,5 +170,11 @@ return array(
 	'The action belongs to the controller' => 'Результат действия направляется контроллеру',
 	'in the' => 'в',
 	'You may customize this page by editing' => 'Вы можете адаптировать эту страницу под свои нужды',
-	'module' => '',
+	'module' => 'Модуль',
+	'Zakaz Parts' => 'Этапы проекта',
+	'Update ZakazParts' => 'Обновить этапы проекта',
+	'View ZakazParts' => 'Просмотр  этапов проекта',
+	'Login' => 'Авторизация',
+	'Update Templates' => 'Редактировать шаблоны',
+		
 );

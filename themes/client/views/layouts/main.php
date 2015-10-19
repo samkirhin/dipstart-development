@@ -64,16 +64,12 @@
 </div>
    
    <!-- FOOTER -->
-   
-
-
-
 <div class="modal hide" id="restorePass" style="z-index:99999999">
     <form id="FormRestorePass" method="post">
         <div class="modal-header">
             <button type="button" class="pull-right modal-close close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 style=" margin:20px 0 10px 0; ">Востановление пароля</h4>
-            <span>Пожалуйста, введите e-mail, указанный при регистрации и нажмите кнопку “Отправить новый пароль”</span>
+            <h4 style=" margin:20px 0 10px 0; "><?=UserModule::t('Restore a password') ?></h4>
+            <span><?=UserModule::t('Please enter your e-mail, specified during registration and click “Send new password”') ?></span>
         </div>
         <div class="modal-body">
             <label class="grey" for="email">E-mail:</label>
@@ -82,7 +78,7 @@
         </div>
         <div class="modal-footer">
             <label id="error_add_rega"></label>
-            <input class="pull-right" type="submit" name="submit" id="do_restore_password" value="Отправить новый пароль" class="btn" />
+            <input class="pull-right" type="submit" name="submit" id="do_restore_password" value="<?=UserModule::t('Send new password') ?>" class="btn" />
         </div>
     </form>
 </div>

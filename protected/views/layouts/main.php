@@ -114,7 +114,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Новые заказы</title>
+	<title><?= Yii::t('site','NEW ORDERS') ?></title>
 	<!-- Bootstrap -->
 	<link href="<?php echo Yii::app()->theme->baseUrl; ?>/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="<?php echo Yii::app()->theme->baseUrl; ?>/css/frontend/layout2/styles.css" rel="stylesheet">

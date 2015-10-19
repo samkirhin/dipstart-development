@@ -1,19 +1,19 @@
 <table>
     <tr>
         <td>
-            <a class="btn btn-default btn-block" href="#">Личный кабинет</a>
+            <a class="btn btn-default btn-block" href="#"><?= Yii::t('site','Personal area') ?></a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/user/profile/account') ?>">Личный счет</a>
+            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/user/profile/account') ?><?= Yii::t('site','Personal account') ?></a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/user/profile/edit') ?>">Профиль</a>
+            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/user/profile/edit') ?>"><?= Yii::t('site','Profile') ?></a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="/index.php?r=project/zakaz/create">Создать заказ</a>
+            <a class="btn btn-default btn-block" href="/index.php?r=project/zakaz/create"><?= Yii::t('site','Create Zakaz') ?></a>
         </td>
         <td>
-            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/project/zakaz/customerOrderList') ?>">Мои заказы</a>
+            <a class="btn btn-default btn-block" href="<?= $this->createUrl('/project/zakaz/customerOrderList') ?>"><?= Yii::t('site','My orders') ?></a>
         </td>
     </tr>
     <tr>

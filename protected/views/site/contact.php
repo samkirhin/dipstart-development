@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Связаться с нами</h1>
+<h1><?=Yii::t('site','Contact with us') ?></h1>
 
 <?php if(Yii::app()->user->hasFlash('contact')): ?>
 
@@ -19,8 +19,7 @@ $this->breadcrumbs=array(
 
 <?php else: ?>
 
-<p>
-Если у Вас есть предложения или вопросы, пожалуйста, заполните форму ниже. Спасибо.
+<p><?=Yii::t('site','If You have suggestions or questions, please fill out the form below. Thank you') ?>
 </p>
 
 <div class="form">
@@ -33,8 +32,8 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<p class="note">Поля с <span class="required">*</span> обязательны.</p>
-
+	<p class="note">
+	<?= Yii::t('site','Fields with <span class="required">*</span> are required.') ?>
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">

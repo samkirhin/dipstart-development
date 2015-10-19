@@ -138,6 +138,26 @@ return array(
 
 	'Editable'  => 'Редактируемое',
 	'editable'  => 'Редактируемое',
-
-
+	
+	'Message from' => 'Сообщение от',
+	'You may change the content of this page by modifying the following two files:'=>'Вы можете изменить содержимое этой страницы посредством изменения следующих файлов:',
+	'View file' => 'Файл представления',
+	'Layout file' => 'Файл шаблона',
+	
+	'Good day' => 'Добрый день',
+	'We invite You to project' => 'Приглашаем в проект',
+	
+	'Contact with us' => 'Связаться с нами',
+	'If You have suggestions or questions, please fill out the form below. Thank you' => 'Если у Вас есть предложения или вопросы, пожалуйста, заполните форму ниже. Спасибо.',
+	'Error' => 'Ошибка',
+	'Projects statuses' => 'Статусы заказов',
+	'Send SMS' => 'Отправить смс',
+	'News' => 'Новости',
+	'With selected' => 'С выбранными',
+	'Last Updated'=> 'Дата последнего изменения',
+	'Site News' => 'Новости сайта', 
+	'Check All' => 'Выбрать все',
+	'UnCheck All' => 'Сбросить все',
+	
+	
 );

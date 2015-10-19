@@ -62,9 +62,6 @@ if (file_exists($path)){
 												'name' => 'deadline',
                                                 'value' => Yii::app()->dateFormatter->formatDateTime($order->author_informed),
                                             ]);
-echo '<pre>$orderId='.$orderId;	
-echo '<br>$order=';print_r($order);	
-die('</pre>');
 										$projectFields = $order->getFields();
 										if ($projectFields) {
 											foreach($projectFields as $field) {

@@ -55,7 +55,7 @@ $this->widget('zii.widgets.CListView', array(
 ));
 ?>
 	<?php if($this->getAction()->getId()!='sent') : ?>
-<div style="clear:left"> <span class="mailbox-buttons-label">With selected:</span> 
+<div style="clear:left"> <span class="mailbox-buttons-label"><?=Yii::t('site', 'With selected').':' ?></span> 
 		<?php if($this->getAction()->getId()=='trash') : ?>
 	<input type="submit" id="mailbox-action-restore" class="btn mailbox-button" name="button[restore]" value="restore" /> 
 	<input type="submit" class="btn" name="button[delete]" value="delete forever" />

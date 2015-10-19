@@ -325,12 +325,21 @@ INSERT INTO `1_PaymentImage` (`id`, `project_id`, `image`, `approved`) VALUES
 
 CREATE TABLE IF NOT EXISTS `1_Profiles` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID пользовтеля',
+  `lastname` varchar(50) NOT NULL DEFAULT '' COMMENT 'Фамилия',
+  `firstname` varchar(50) NOT NULL DEFAULT '' COMMENT 'Имя',
+  `mob_tel` varchar(15) NOT NULL DEFAULT '+7-000-0000000',
+  `icq` varchar(10) NOT NULL DEFAULT '',
   `skype` varchar(50) NOT NULL DEFAULT '',
   `city` varchar(100) DEFAULT '',
+  `education` text NOT NULL,
   `work_experience` varchar(20) NOT NULL DEFAULT '',
+  `discipline` text NOT NULL,
+  `job_type` text NOT NULL,
   `fl_acc` mediumtext NOT NULL,
+  `urgent_job` varchar(255) NOT NULL DEFAULT '',
   `mailing_list` int(10) NOT NULL DEFAULT '0',
   `wmr` varchar(13) NOT NULL DEFAULT '',
+  `wmz` varchar(13) NOT NULL DEFAULT '',
   `yandex` int(20) NOT NULL DEFAULT '0',
   `how_hear` varchar(255) NOT NULL DEFAULT '',
   `additional` varchar(255) NOT NULL DEFAULT '',
@@ -584,9 +593,19 @@ CREATE TABLE IF NOT EXISTS `1_ProfilesFields` (
 --
 
 INSERT INTO `1_ProfilesFields` (`id`, `varname`, `title`, `field_type`, `field_size`, `field_size_min`, `required`, `match`, `range`, `error_message`, `other_validator`, `default`, `widget`, `widgetparams`, `position`, `visible`, `editable`) VALUES
+(1, 'lastname', 'Фамилия', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
+(2, 'firstname', 'Имя', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
+(3, 'mob_tel', 'Моб. телефон', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
+(4, 'icq', 'ICQ', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
+(5, 'education', 'Образование', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
+(6, 'discipline', 'Дисциплина', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (7, 'skype', 'Skype', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (8, 'city', 'Город', 'VARCHAR', '50', '2', 0, '', '', '', '', '', '', '', 6, 3, 1),
+(9, 'job_type', '', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (10, 'work_experience', 'Опыт работы в данной сфере', 'VARCHAR', '20', '1', 2, '', '', '', '', '', '', '', 8, 2, 1),
+(11, 'urgent_job', 'urgent_job', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
+(12, 'wmz', 'Webmoney Z', 'VARCHAR', '13', '12', 0, '', '', '', '', '', '', '', 13, 2, 10,
+(13, 'rating', '', 'VARCHAR', '50', '3', 0, '', '', '', '', '', '', '', 5, 3, 1),
 (14, 'fl_acc', 'Аккаунты на фрилансе', 'mediumtext', '65535', '0', 0, '', '', '', '', '', '', '', 11, 2, 1),
 (15, 'mailing_list', 'Рассылать сообщения', 'VARCHAR', '10', '0', 0, '', 'icq;sms;email', '', '', '0', '', '', 12, 0, 1),
 (16, 'wmr', 'Webmoney R', 'VARCHAR', '13', '12', 0, '', '', '', '', '', '', '', 13, 2, 0),
@@ -595,7 +614,6 @@ INSERT INTO `1_ProfilesFields` (`id`, `varname`, `title`, `field_type`, `field_s
 (21, 'additional', 'Дополнительно', 'TEXT', '255', '0', 0, '', '', '', '', '', '', '', 16, 3, 1),
 (22, 'bank_account', 'Банковский счет', 'VARCHAR', '255', '0', 0, '', '', '', '', '', '', '', 14, 2, 1),
 (24, 'specials', 'Направление', 'LIST', '0', '0', 1, '', '', 'Укажите специальность', '', '', '', '', 0, 2, 1);
-
 -- --------------------------------------------------------
 
 --

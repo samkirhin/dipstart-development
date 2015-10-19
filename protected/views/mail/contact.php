@@ -6,10 +6,10 @@
  * Time: 15:01
  */
 ?>
-<p>Message from <?php echo $name . ': ' . $message ?></p>
+<p><?= Yii::t('site','Message from').' '.$name . ': ' . $message ?></p>
 
-<p>You may change the content of this page by modifying the following two files:</p>
+<p><?= Yii::t('site','You may change the content of this page by modifying the following two files:') ?></p>
 <ul>
-    <li>View file: <tt><?php echo __FILE__; ?></tt></li>
-    <li>Layout file: <tt><?php echo $this->getLayoutFile('mail'); ?></tt></li>
+    <li><?= Yii::t('site','View file').': <tt>'.__FILE__ ?></tt></li>
+    <li><?= Yii::t('site','Layout file').': <tt>'.$this->getLayoutFile('mail')?></tt></li>
 </ul>
