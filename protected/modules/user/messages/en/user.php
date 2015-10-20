@@ -165,7 +165,7 @@ return array(
 	'uploaded check' =>  'uploaded check',
 	'have uploaded part of the job' =>  'have uploaded part of the job',
 	'attached files in order' =>  'attached files in order',
-	'deleted the file out of order' =>  ,
+	'deleted the file out of order' =>  'deleted the file out of order',
 	'left a message' =>  'left a message',
 	'The user changed data in the profile' =>  'The user changed data in the profile',
 
