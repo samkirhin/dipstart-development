@@ -44,8 +44,12 @@
 		<?php 
 		if ($widgetEdit = $field->widgetEdit($profile)) {
 			echo $widgetEdit;
-		} elseif ($field->range) {
-			echo $form->dropDownList($profile,$field->varname,Profile::range($field->range));
+		} elseif ($field->field_type=="LIST"){
+			$htmlOptions = array('size' => '10', 'multiple' => 'true','style'=>'width:400px;','size'=>'10', 'empty'=>UserModule::t('Use Ctrl for multiply'));
+			$data = Catalog::model()->performCatsTree($field->varname);
+			$varname = $field->varname;
+			$selected = explode(',',$profile->$varname);
+			echo CHtml::listBox('Profile['.$field->varname.']', $selected, $data, $htmlOptions);
 		} elseif ($field->field_type=="TEXT") {
 			echo CHtml::activeTextArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
 		} else {
