@@ -8,14 +8,13 @@ class AdminController extends Controller
 	private $_model;
 
 	public function get_specials($specials=''){
-		
 		$model	= Catalog::model()->findAllByAttributes(array('field_varname'=>'specials'));
         $list	= CHtml::listData($model, 'id', 'cat_name');
 
 		$arr	= explode( ',', $specials);
 		$sizenumber = count($list);
 		$select	= '
-			<select class="select-specilization" name="Profile[specials]" id="Profile[specials]" multiple size="'.$sizenumber.'">
+			<select class="select-specilization" name="Profile[specials][]" id="Profile[specials][]" multiple size="'.$sizenumber.'">
 			<option value="" disabled>'.ProjectModule::t('UseCtrlForMultiselect').'</option>
 			<optgroup label="'.ProjectModule::t('All').'">'.ProjectModule::t('All').'</optgroup>
 		';
@@ -77,7 +76,9 @@ class AdminController extends Controller
 	public function actionView()
 	{
 		$model	= $this->loadModel();
-		$specials = $this->get_specials();
+		$profile	= $model->profile;
+		$specials	= $this->get_specials($model->profile->specials);
+		
 		$this->render('view',array(
 			'model'		=> $model,
 			'specials'	=> $specials,
@@ -102,8 +103,8 @@ class AdminController extends Controller
 			
 			$_temp = array('','icq','sms','email');
 			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],$_temp);
-			$profile->attributes=$_POST['Profile'];
-			$profile->user_id=0;
+			$_POST['Profile']['specials'] = implode(',',$_POST['Profile']['specials']);
+			$profile->attributes = $_POST['Profile'];
 			if($model->validate()&&$profile->validate()) {
 				$model->password=Yii::app()->controller->module->encrypting($model->password);
 				if($model->save()) {
@@ -112,9 +113,9 @@ class AdminController extends Controller
 				}
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
+			$specials	= $this->get_specials($model->profile->specials);
 		}
 
-		$specials = $this->get_specials();
 		$this->render('create',array(
 			'model'		=> $model,
 			'profile'	=> $profile,
@@ -128,8 +129,8 @@ class AdminController extends Controller
 	 */
 	public function actionUpdate()
 	{
-		$model			= $this->loadModel();
-		$profile		= $model->profile;
+		$model		= $this->loadModel();
+		$profile	= $model->profile;
 		$specials	= $this->get_specials($model->profile->specials);
 
 		$this->performAjaxValidation(array($model,$profile));
@@ -141,6 +142,7 @@ class AdminController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],array('','icq','sms','email'));
+			$_POST['Profile']['specials'] = implode(',',$_POST['Profile']['specials']);
 			$profile->setAttributes($_POST['Profile'], false);
 			if($model->validate()&&$profile->validate()) {
 				$old_password = User::model()->notsafe()->findByPk($model->id);
@@ -152,9 +154,8 @@ class AdminController extends Controller
 				$profile->save();
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
+			$specials	= $this->get_specials($model->profile->specials);
 		};
-
-		$specials = $this->get_specials();
 
 		$fields = ProfileField::model()->findAll();
 		$this->render('update',array(
@@ -218,5 +219,5 @@ class AdminController extends Controller
 		}
 		return $this->_model;
 	}
-	
+
 }
