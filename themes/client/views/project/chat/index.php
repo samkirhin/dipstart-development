@@ -218,12 +218,20 @@ if (file_exists($path)){
                 </div>
                 <?php echo CHtml::hiddenField('order',$order->id);
                 CHtml::endForm();
+				
             }
             ?>
             <!-- form -->
             </div>
+		<?php
+				if ($isGuest) {
+					
+					$href = 'http://'.$_SERVER['SERVER_NAME'].'/user/registration?role=Author';
+					$attr = array('onclick'=>"document.location.href = '$href'", 'class'=>"btn btn-primary btn-chat btn-block");
+                    echo  CHtml::submitButton(ProjectModule::t('Get It!'), $attr) ;
+				};	
+		?>
         </div>
-
 
     </div>
 </div>
