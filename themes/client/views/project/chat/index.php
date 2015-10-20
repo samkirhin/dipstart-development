@@ -92,7 +92,7 @@ if (file_exists($path)){
                                 } else {
 
                                     if ($order->is_active) {
-                                        $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
+                                        $this->renderPartial('/zakaz/_form', array('model' => $order/*, 'times' => $times*/));
                                     } else {
                                         $this->renderPartial('/zakaz/orderInModerate');
                                     }

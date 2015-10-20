@@ -19,10 +19,10 @@ class SiteController extends Controller
 				'class'=>'CViewAction',
 			),
             'yiichat'=>array('class'=>'YiiChatAction'),
-			'yiifilemanagerfilepicker'=>array(
+			/*'yiifilemanagerfilepicker'=>array(
 				'class'=>
 					'ext.yiifilemanagerfilepicker.YiiFileManagerFilePickerAction'
-			),			
+			),*/
 		);
 	}
 

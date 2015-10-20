@@ -20,6 +20,7 @@
 	<p class="note"><?=ProjectModule::t('Fields with <span class="required">*</span> are required.')?></p>
 
 	<?php echo $form->errorSummary($model);
+	
 	if(Campaign::getId()){
 		echo '<div class="row">';
 		echo $form->labelEx($model,'max_exec_date');
@@ -36,7 +37,7 @@
 				if ($field->field_type=="LIST"){
 					$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
 					$list = CHtml::listData($models, 'id', 'cat_name');
-					echo $form->dropDownList($models, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
+					echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 					echo $form->error($model,$field->varname);
 				} elseif ($field->field_type=="TEXT") {
 					echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
