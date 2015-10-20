@@ -115,7 +115,6 @@ class ChatController extends Controller {
         }
 		
 		$order = Zakaz::model()->resetScope()->findByPk($orderId);
-		
 		if ($isGuest) {
 			Yii::app()->theme='client';
 			

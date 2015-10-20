@@ -201,8 +201,9 @@ return array(
 	'Mailing List' => 'Mailing List',
 	'Bank Account' => 'Bank Account',
 	'Specials' => 'Specializations',
-	'FieldOfOrders' = 'Field Of Orders',
+	'FieldOfOrders' => 'Field Of Orders',
     'Deadlines' => 'Deadlines',
+	'Get It!' => 'Get It!',
 
 );
 

@@ -8,6 +8,7 @@
             </td>
             <td>
                 ${order_id}
+
             </td>
             <td>
                 ${receive_date}
