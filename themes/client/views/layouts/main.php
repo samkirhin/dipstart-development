@@ -5,14 +5,16 @@
  * Date: 05.04.15
  * Time: 23:56
  */
-	$items = array();
 	if (Yii::app()->user->isGuest) {
-		$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
-		$items[] = array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest);
-		$items[] = array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest);
-		$items[] = array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest);
-		$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('user/logout'), 'visible'=>!Yii::app()->user->isGuest);
-		$this->menu = $items;
+		$items = array();
+		if (strpos($_SERVER['HTTP_X_FORWARDED_URI'],'project/chat?orderId=')){
+			$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
+			$items[] = array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest);
+			$items[] = array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest);
+			$items[] = array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest);
+			$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('user/logout'), 'visible'=>!Yii::app()->user->isGuest);
+			$this->menu = $items;
+		};	
 	};
 ?>
 <!DOCTYPE html>
