@@ -68,19 +68,19 @@ class Payment extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'order_id' => 'Номер заказа',
-			'receive_date' => 'Дата получения',
-			'pay_date' => 'Дата оплаты',
-			'theme' => 'Тема',
-			'manager' => 'Менеджер',
-			'user' => 'Пользователь',
-			'summ' => 'Сумма',
-			'details_ya' => 'Яндекс.Деньги',
-			'details_wm' => 'WebMoney',
-			'details_bank' => 'Реквизиты банка',
-			'payment_type' => 'Тип платежа',
-			'approve' => 'Подтверждение',
-			'method' => 'Способ оплаты',
+			'order_id' => ProjectModule::t('Order Num'),
+			'receive_date' => ProjectModule::t('Receive Date'),
+			'pay_date' => ProjectModule::t('Pay Date'),
+			'theme' => ProjectModule::t('Topic'),
+			'manager' => ProjectModule::t('Manager'),
+			'user' => ProjectModule::t('_User'),
+			'summ' => ProjectModule::t('Summa'),
+			'details_ya' => ProjectModule::t('Yandeх.Money'),
+			'details_wm' => ProjectModule::t('WebMoney'),
+			'details_bank' => ProjectModule::t('Bank'),
+			'payment_type' => ProjectModule::t('Payment Type'),
+			'approve' => ProjectModule::t('Approved'),
+			'method' => ProjectModule::t('Method of payment'),
 		);
 	}
 
