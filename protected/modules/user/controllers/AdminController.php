@@ -16,7 +16,6 @@ class AdminController extends Controller
 		$select	= '
 			<select class="select-specilization" name="Profile[specials][]" id="Profile[specials][]" multiple size="'.$sizenumber.'">
 			<option value="" disabled>'.ProjectModule::t('UseCtrlForMultiselect').'</option>
-			<optgroup label="'.ProjectModule::t('All').'">'.ProjectModule::t('All').'</optgroup>
 		';
 		foreach($list as $key => $opt){
 			$select	.= '<option value="'.$key.'"';
