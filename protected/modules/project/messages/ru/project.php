@@ -179,10 +179,31 @@ return array(
 	'Update Templates' => 'Редактировать шаблоны',
 	
 	// payment
+	
+			'id' => 'ID',
+			'order_id' => 'Номер заказа',
+			'receive_date' => 'Дата получения',
+			'pay_date' => 'Дата оплаты',
+			'theme' => 'Тема',
+			'manager' => 'Менеджер',
+			'user' => 'Пользователь',
+			'summ' => 'Сумма',
+			'details_ya' => 'Яндекс.Деньги',
+			'details_wm' => 'WebMoney',
+			'details_bank' => 'Реквизиты банка',
+			'payment_type' => 'Тип платежа',
+			'approve' => 'Подтверждение',
+			'method' => 'Способ оплаты',
+	
+	
+	
+	
     'Bookkeeping' => 'Бухгалтерия',
     'Accounts department' => 'Бухгалтерия',
 	'Records found' => 'Найдено записей',
 	'Confirmed' => 'Подтверждено',
+	'Approved' => 'Подтверждено',
+	
 	'No data' => 'Нет данных',
 	'Incomming' => 'Входящие',
 	'Outgouing' => 'Исходящие',
@@ -191,7 +212,9 @@ return array(
 	'Order Num' => '№ заказа',
 	'Created' => 'Создан',
 	'Payed' => 'Оплачен',
-	'Sum' => 'Сумма',
+	'Pay Date' => 'Дата оплаты',
+	'Receive Date' => 'Дата получения',
+	'Summa' => 'Сумма',
 	'Payment Type' => 'Тип платежа',
 	'Search' => 'Поиск',
 	'Cancel search' => 'Отменить поиск',
