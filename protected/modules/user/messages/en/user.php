@@ -203,6 +203,7 @@ return array(
 	'Specials' => 'Specializations',
 	'FieldOfOrders' => 'Field Of Orders',
     'Deadlines' => 'Deadlines',
+	'Get It!' => 'Get It!',
 
 );
 

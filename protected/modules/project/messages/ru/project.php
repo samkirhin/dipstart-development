@@ -177,5 +177,35 @@ return array(
 	'View ZakazParts' => 'Просмотр  этапов проекта',
 	'Login' => 'Авторизация',
 	'Update Templates' => 'Редактировать шаблоны',
-		
+	
+	// payment
+    'Bookkeeping' => 'Бухгалтерия',
+    'Accounts department' => 'Бухгалтерия',
+	'Records found' => 'Найдено записей',
+	'Confirmed' => 'Подтверждено',
+	'No data' => 'Нет данных',
+	'Incomming' => 'Входящие',
+	'Outgouing' => 'Исходящие',
+	'Filter' => 'Фильтр',
+	'Field For Search' => 'Поле для поиска',
+	'Order Num' => '№ заказа',
+	'Created' => 'Создан',
+	'Payed' => 'Оплачен',
+	'Sum' => 'Сумма',
+	'Payment Type' => 'Тип платежа',
+	'Search' => 'Поиск',
+	'Cancel search' => 'Отменить поиск',
+	'Topic'=>'Тема',
+	'Manager'=>'Менеджер',
+    '_User' => 'Пользователь',
+    'Order' => 'Заказ',
+	'Yandeх.Money' => 'Я.Деньги',
+	'Bank' => 'Банк',
+	'Method of payment' => 'Метод оплаты',
+	'Value' => 'Значение',
+	'The amount of payments' => 'Сумма платежей',
+	
+	'Events' => 'События',
+	'EVENTS' => 'События',
+	
 );
