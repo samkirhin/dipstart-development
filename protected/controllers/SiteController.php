@@ -35,7 +35,7 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
         if (Yii::app()->user->isGuest) {
-			Yii::app()->theme='client';
+//			Yii::app()->theme='client';
             $this->render('index', array(
 //          $this->render('main', array(
                 'role' => 'stranger'
