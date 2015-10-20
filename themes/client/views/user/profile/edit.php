@@ -45,9 +45,10 @@ $form=$this->beginWidget('UActiveForm', array(
 
 		<?php 
 		$profileFields=$profile->getFields();
-		//print_r($profileFields);
 		if ($profileFields) {
-			foreach($profileFields as $field) {	?>
+			$attributes = $profile->getAttributes();
+			foreach($profileFields as $field) {	
+		?>
                 <div class="form-group">
                     <?php echo $form->labelEx($profile,$field->varname,array('class'=>'col-md-4 control-label'));
 					if ($field->field_type=="LIST"){
@@ -61,8 +62,10 @@ $form=$this->beginWidget('UActiveForm', array(
                     } elseif ($field->range) {
                         echo '<div class="col-md-8">'.$form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control')).'</div>';*/
 					} elseif ($field->field_type=="TEXT") {
+//                        echo '<div class="col-md-8"><textarea name="Profile['.$field->varname.']" rows="6" cols="50" class="form-control">'.$attributes[$field->varname].'</textarea></div>';
                         echo '<div class="col-md-8">'.$form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50,'class'=>'form-control')).'</div>';
                     } else {
+//                        echo '<div class="col-md-8"><input type="text" name="Profile['.$field->varname.']" class="form-control" size="60" maxlength="'.(($field->field_size)?$field->field_size:255).'" value="'.$attributes[$field->varname].'"></div>';
                         echo '<div class="col-md-8">'.$form->textField($profile,$field->varname,array('class'=>'form-control','size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255))).'</div>';
                     }
                     echo $form->error($profile,$field->varname);

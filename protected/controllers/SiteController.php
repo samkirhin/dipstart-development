@@ -19,6 +19,10 @@ class SiteController extends Controller
 				'class'=>'CViewAction',
 			),
             'yiichat'=>array('class'=>'YiiChatAction'),
+			/*'yiifilemanagerfilepicker'=>array(
+				'class'=>
+					'ext.yiifilemanagerfilepicker.YiiFileManagerFilePickerAction'
+			),*/
 		);
 	}
 
@@ -29,7 +33,9 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
         if (Yii::app()->user->isGuest) {
+//			Yii::app()->theme='client';
             $this->render('index', array(
+//          $this->render('main', array(
                 'role' => 'stranger'
             ));
 		} elseif (User::model()->isAuthor()){

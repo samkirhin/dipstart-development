@@ -72,22 +72,8 @@ class ChatController extends Controller {
 	 */
     public function actionIndex($orderId)
     {
-		if (Yii::app()->user->isGuest) {
-			$moderate_types = EventHelper::get_moderate_types_string();
-			$events = Events::model()->findAll(array(
-				'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
-				'order' => 'timestamp DESC'
-				),
-				array(':event_id'=> $orderId) 			
-			);
-			$moderated = count($events) == 0;
-			$this->render('index', array(
-				'orderId' => $orderId,
-				'executor' => Zakaz::getExecutor($orderId),
-				'moderated' => $moderated,
-			));
-            Yii::app()->end();
-		};
+
+		$isGuest = Yii::app()->user->isGuest;
 
 		Yii::app()->session['project_id'] = $orderId;
 		
@@ -123,9 +109,48 @@ class ChatController extends Controller {
             }
             $this->renderPartial('chat', array(
                 'orderId' => $orderId,
+				'isGuest'	=> $isGuest,
             ));
             Yii::app()->end();
         }
+		
+		$order = Zakaz::model()->resetScope()->findByPk($orderId);
+		
+		if ($isGuest) {
+			Yii::app()->theme='client';
+			
+			// если гость прошёл по ссылке на неcуществующий
+			// проект, отправляем его на регистрацию
+			$url = 'http://'.$_SERVER['SERVER_NAME'].'/';
+			if (!$order) $this->redirect($url);
+
+			$moderate_types = EventHelper::get_moderate_types_string();
+			$events = Events::model()->findAll(array(
+				'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
+				'order' => 'timestamp DESC'
+				),
+				array(':event_id'=> $orderId) 			
+			);
+			$moderated = count($events) == 0;
+			// если гость прошёл по ссылке на непромодерированный
+			// проект, отправляем его на регистрацию
+			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
+
+//			Catalog::model()->tableName();
+			
+			$this->render('index', array(
+				'orderId'	=> $orderId,
+				'order'		=> $order,
+				'executor'	=> Zakaz::getExecutor($orderId),
+				'moderated'	=> $moderated,
+				'isGuest'	=> $isGuest,
+				'parts'		=> ZakazParts::model()->findAll(array(
+					'condition' => "`proj_id`='$orderId'",
+				)),
+			));
+            Yii::app()->end();
+		}
+		
 		$moderate_types = EventHelper::get_moderate_types_string();
         $events = Events::model()->findAll(array(
             'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
@@ -135,9 +160,11 @@ class ChatController extends Controller {
 		);
 		$moderated = count($events) == 0;
         $this->render('index', array(
-            'orderId' => $orderId,
-            'executor' => Zakaz::getExecutor($orderId),
-			'moderated' => $moderated,
+            'orderId'	=> $orderId,
+			'order'		=> $order,
+            'executor'	=> Zakaz::getExecutor($orderId),
+			'moderated'	=> $moderated,
+			'isGuest'	=> $isGuest,
         ));
     }
 	

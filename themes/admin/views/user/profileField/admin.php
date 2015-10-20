@@ -86,10 +86,6 @@ $('.search-form form').submit(function(){
 			'filter'=>ProfileField::itemAlias("visible"),
 		),
         array(
-			'name'=>'editable',
-			'value'=> '$data->editable',
-		),            
-        array(
 			'name'=>'paymentProps',
 			'value'=> '$data->paymentProps',
 		),            

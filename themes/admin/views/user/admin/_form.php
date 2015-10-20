@@ -69,19 +69,19 @@
 	</div>
 	
 <?php 
-		};
+		}
 		$mailing_list = 0;
+		$_arr = array('','icq','sms','email');
 		foreach($fields as $field) {
 			$name = strtolower($field->varname);
 			if ($name == 'mailing_list') {
 				$mailing_list = $model->profile->getAttribute($name);
-				$mailing_list = array('isq','sms','email')[$mailing_list];
-			};
+				$mailing_list = $_arr[$mailing_list];
+			}
 			
 ?>
 	<div class="row"><div class="left-div-admin-form">
-		<?php echo $form->labelEx($profile, $field->varname); ?>
-		<?php //echo $form->labelEx($profile,YII::t( 'project', $field->varname)); ?>
+		<?= $form->labelEx($profile, $field->title); ?>
 		</div><div class="right-div-admin-form">
 <?php 
 			if ($widgetEdit = $field->widgetEdit($profile)) {
@@ -90,10 +90,11 @@
 				if ($field->varname == 'specials' ) {
 					echo $specials;
 				} else {	
-				
 					$attributes = Profile::range($field->range);
-					if (!$admin && $manager && $field[paymentProps]) $disabled['disabled'] = 'disabled';
-					echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),$disabled);
+					$arr = array();
+					if ($field->varname == 'mailing_list' ) $arr['class'] = 'select-mailing-list';
+					if (!$admin && $manager && $field[paymentProps]) $arr['disabled'] = 'disabled';
+					echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),$arr);
 				};	
 			} elseif ($field->field_type=="TEXT") {
 				$attributes = array('rows'=>6, 'cols'=>38, 'placeholder'=>$profile->getAttributeLabel( $field->varname ).($profile->isAttributeRequired($field->varname)?' *':''));
@@ -113,7 +114,9 @@
 ?>
 	<div class="row buttons"><div class="left-div-admin-form">&nbsp;
 		</div><div class="right-div-admin-form">
-		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
+		<?php $attr = array(); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), $attr); ?>
 		</div>
 	</div>
 	</div>

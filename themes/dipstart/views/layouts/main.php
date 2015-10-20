@@ -57,13 +57,13 @@
         </div>
         <!-- 2nd column-->
         <div class="col-xs-12 col-sm-12 col-md-3 header-contacts">
-            <p>Почта: <span class="telenumb">dipstartru@mail.ru</span></br>
-                <span>Скайп: </span><span class="telenumb">dipstart2010</span></br>
-                <span class="telenumb">Тел: +7 (495) 504 37 19</span></br>
-                заказать
+            <p><?=UserModule::t('Email').': ' ?><span class="telenumb">dipstartru@mail.ru</span></br>
+                <span><?=UserModule::t('Skype').': ' ?></span><span class="telenumb">dipstart2010</span></br>
+                <span class="telenumb"><?= UserModule::t('Phone') ?>: +7 (495) 504 37 19</span></br>
+                <?= UserModule::t('request') ?>
                 <a href="#callRequest" data-keyboard="true" data-backdrop="true" data-controls-modal="callRequest" class="callback">
                     <span class="callback-phone"></span>
-                    обратный звонок
+                    <?= UserModule::t('callback') ?>
                 </a>
             </p>
         </div>
@@ -76,11 +76,11 @@
             <form action="/registration/zakaz_mini" id="FormPanelAddRega" method="post">
                 <div class="modal-header">
                     <button type="button" class="pull-right modal-close close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 style=" margin:20px 0 10px 0; ">Запросить обратный звонок</h4>
-                    <span>пожалуйста, вводите телефон в международном формате</span>
+                    <h4 style=" margin:20px 0 10px 0; "><?= UserModule::t('Request a callback') ?></h4>
+                    <span><?= UserModule::t('Please, input a phone number in the international format') ?></span>
                 </div>
                 <div class="modal-body">
-                    <label class="grey" for="phone">Телефон:</label>
+                    <label class="grey" for="phone"><?= UserModule::t('Phone').':' ?></label>
                     <input type="hidden" name="zakaz_mini" />
                     <input class="span4" type="text" name="zakaz_mini_phone" id="add_rega_mobila" value="" />
                 </div>

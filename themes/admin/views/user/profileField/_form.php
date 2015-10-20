@@ -120,7 +120,9 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
+		<?php $attr = array(); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), $attr); ?>
 	</div>
 
 <?php echo CHtml::endForm(); ?>
@@ -129,9 +131,9 @@
 <div id="dialog-form" title="<?php echo UserModule::t('Widget parametrs'); ?>">
 	<form>
 	<fieldset>
-		<label for="name">Name</label>
+		<label for="name"><?= UserModule::t('Name') ?></label>
 		<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-		<label for="value">Value</label>
+		<label for="value"><?= UserModule::t('Value') ?></label>
 		<input type="text" name="value" id="value" value="" class="text ui-widget-content ui-corner-all" />
 	</fieldset>
 	</form>

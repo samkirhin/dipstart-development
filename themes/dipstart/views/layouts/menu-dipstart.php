@@ -1,5 +1,5 @@
     <div class="row">
-       <a id="touch-menu" class="mobile-menu" href="#"><i class="icon-reorder"></i>Меню</a>
+       <a id="touch-menu" class="mobile-menu" href="#"><i class="icon-reorder"></i><?= UserModule::t('Menu') ?></a>
         <nav class="navbar-default">
    <?php
             if (    Yii::app()->user->isGuest) $this->widget('application.extensions.booster.widgets.TbMenu',array(

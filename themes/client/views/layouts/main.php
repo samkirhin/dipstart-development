@@ -5,6 +5,17 @@
  * Date: 05.04.15
  * Time: 23:56
  */
+	if (Yii::app()->user->isGuest) {
+		$items = array();
+		if (strpos($_SERVER['HTTP_X_FORWARDED_URI'],'project/chat?orderId=')){
+			$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
+			$items[] = array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest);
+			$items[] = array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest);
+			$items[] = array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest);
+			$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('user/logout'), 'visible'=>!Yii::app()->user->isGuest);
+			$this->menu = $items;
+		};	
+	};
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -64,16 +75,12 @@
 </div>
    
    <!-- FOOTER -->
-   
-
-
-
 <div class="modal hide" id="restorePass" style="z-index:99999999">
     <form id="FormRestorePass" method="post">
         <div class="modal-header">
             <button type="button" class="pull-right modal-close close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 style=" margin:20px 0 10px 0; ">Востановление пароля</h4>
-            <span>Пожалуйста, введите e-mail, указанный при регистрации и нажмите кнопку “Отправить новый пароль”</span>
+            <h4 style=" margin:20px 0 10px 0; "><?=UserModule::t('Restore a password') ?></h4>
+            <span><?=UserModule::t('Please enter your e-mail, specified during registration and click “Send new password”') ?></span>
         </div>
         <div class="modal-body">
             <label class="grey" for="email">E-mail:</label>
@@ -82,7 +89,7 @@
         </div>
         <div class="modal-footer">
             <label id="error_add_rega"></label>
-            <input class="pull-right" type="submit" name="submit" id="do_restore_password" value="Отправить новый пароль" class="btn" />
+            <input class="pull-right" type="submit" name="submit" id="do_restore_password" value="<?=UserModule::t('Send new password') ?>" class="btn" />
         </div>
     </form>
 </div>

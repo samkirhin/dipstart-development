@@ -35,7 +35,8 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 				</div>
 
 				<?php if ((int)$this->status_id != 6) : ?>
-				<input id="zakaz-done-<?= $this->record_id ?>" name="zakaz-done-<?= $this->record_id ?>" class="btn btn-primary btn-block" value="Этап готов" type="button" onclick="zakaz_done(<?= $this->record_id ?>); return false;">
+				<?php $disabled = ''; if(Yii::app()->user->isGuest) $disabled = ' disabled'; ?>
+				<input id="zakaz-done-<?= $this->record_id ?>" name="zakaz-done-<?= $this->record_id ?>" class="btn btn-primary btn-block" value="Этап готов" type="button" onclick="zakaz_done(<?= $this->record_id ?>); return false;"<?= $disabled; ?>>
 				<input id="zakaz-done-hidden-<?= $this->record_id ?>" name="zakaz-done-hidden-<?= $this->record_id ?>" class="btn btn-primary btn-block" type="hidden" value="<?= (int)$this->status_id ?>">
 				<?php endif ?>
 				

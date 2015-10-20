@@ -5,13 +5,15 @@
  * Date: 16.04.15
  * Time: 11:56
  */
-$items = array();
+ $items = array();
 if (Yii::app()->user->isGuest) {
 	$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
 	$items[] = array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest);
 	$items[] = array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest);
 	$items[] = array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest);
 	$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('user/logout'), 'visible'=>!Yii::app()->user->isGuest);
+	
+	$this->menu = $items;
 } else {
 	$role = User::model()->getUserRole();
 	switch ($role){
@@ -63,10 +65,10 @@ if (Yii::app()->user->isGuest) {
 			$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
 
 			break;
+		case 'Guest':
 		case 'Author':
-
 			$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
-			$items[] = array('label'=>'Личные данные', 'items'=>array(
+			$items[] = array('label'=>Yii::t('site','Personal area'), 'items'=>array(
 				array('label'=> Yii::t('site','My account'), 'url'=>array('#')),
 				array('label'=>Yii::t('site','Личный счет'), 'url'=>array('/user/profile/account')),
 				array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit'))
@@ -114,7 +116,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Новые заказы</title>
+	<title><?= Yii::t('site','NEW ORDERS') ?></title>
 	<!-- Bootstrap -->
 	<link href="<?php echo Yii::app()->theme->baseUrl; ?>/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="<?php echo Yii::app()->theme->baseUrl; ?>/css/frontend/layout2/styles.css" rel="stylesheet">

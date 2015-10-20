@@ -1,5 +1,5 @@
 <h1>
-<?=UserModule::t('Пользователь {user} запросил изменения.', array('{user}' => $user->username))?>
+<?=UserModule::t('User').' '.UserModule::t('{user} ', array('{user}' => $user->username)).UserModule::t('requested changes.') ?>
 </h1>
 
 <table class="table table-bordered">

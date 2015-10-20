@@ -92,7 +92,10 @@
 		</div>
 	</div>
 	<? //} ?>
-    <button class="btn btn-primary pay-save-btn send_user_payments"><?=ProjectModule::t('Save')?></button>
+	<?php $disable = ''; ?>
+	<?php if(Yii::app()->user->isGuest) $disabled = ' disabled;' ?>
+	
+    <button class="btn btn-primary pay-save-btn send_user_payments"<?= $diabled ?>><?=ProjectModule::t('Save')?></button>
     </div>
 
 <script type="text/javascript">
