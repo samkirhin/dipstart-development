@@ -1,7 +1,8 @@
 /* Skin "adaptive_dipstart" by Artem */
 body {
-  font-family:arial, sans-serif;
-  color:#333;
+    font-family:arial, sans-serif;
+    color:#333;
+    background-color: #DEE3E9;
 }
 /*
 a { color:#004dd9; }
@@ -11,6 +12,21 @@ a:visited { color:#551a8b; }
 ul li, ol li {
   padding:0 0 0.4em 0;
 }*/
+
+.btn, div.qq-upload-button {
+    background-color: #737C8D !important;
+    -webkit-transition: background-color 0.2s ease-out;
+    transition: background-color 0.2s ease-out;
+}
+
+div.qq-upload-button, div.qq-upload-button:hover {
+    color: #fff;
+    border: none;
+}
+
+.btn:hover, div.qq-upload-button:hover {
+    background-color: #5e6676 !important;
+}
 
 
 /*
@@ -630,10 +646,10 @@ cursor: default;
 	background-image: url(../images/icon1.png);
 }
 .chtpl0-chatblock button.executor-unset{
-	background-image: url(../images/icon2.png);
+	background-image: url(../images/icon2_1.png);
 }
 .chtpl0-chatblock button.chtpl0-user-icon-3{
-	background-image: url(../images/icon3.png);
+	background-image: url(../images/icon3_1.png);
 }
 .chtpl0-chatblock button.chtpl0-user-icon-4{
 	background-image: url(../images/icon4.png);
@@ -702,13 +718,14 @@ width: 50%;*/
 }
 
 .chtpl0-msg button{
-	width: 37px;
-	height: 38px;
+	width: 40px;
+	height: 40px;
 	border: none;
 	padding: 0px;
 	background-position: 0 0px;
 	background-color: transparent;
 	cursor: default;
+    background-size: cover;
 }
 
 .chtpl0-msg .chtpl0-buttons{
@@ -865,14 +882,15 @@ color: #FFFFFF;
 
 
 #chatWindow {
-overflow: auto;
-width: 100%;
-padding: 0;
-margin: 0;
-margin-bottom: 15px;
-border: 1px solid #ddd;
-border-radius: 0;
-min-height: 400px;
+    overflow: auto;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    min-height: 400px;
+    background-color: #fff;
 }
 
 
@@ -884,8 +902,9 @@ padding: 10px;
 
 .chtpl0-avatar {
     float: left;
-    padding-right: 7px;
+    padding-right: 10px;
     text-align: center;
+    margin-top: 2px;
 }
 .chtpl0-msg .chtpl0-buttons {
 float: right;

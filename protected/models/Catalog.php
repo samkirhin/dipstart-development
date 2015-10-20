@@ -27,7 +27,7 @@ class Catalog extends CActiveRecord {
 	}
 	// здесь определяем, из какой компании проект нужно показывать гостю
     
-	public function getCampaignNumber() 
+	/*public function getCampaignNumber() 
 	{
 		$name = Yii::app()->user->guestName;
 		if (strpos($name,'uest')==0) return false;
@@ -55,7 +55,7 @@ class Catalog extends CActiveRecord {
 			$_SERVER['SERVER_NAME'] = $domain;
 			if ($this->getCampaignNumber())	return	true;
 		}	
-	}
+	}*/
 	
 
     /**

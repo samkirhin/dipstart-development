@@ -92,7 +92,6 @@ if (file_exists($path)){
 									echo ProjectModule::t('author_notes').':<br /> '.$order->getAttribute('author_notes');
 									echo '</div>';
                                 } else {
-
 									if ($isGuest) Yii::app()->theme='client';
 									if ($order->is_active) {
 										$this->renderPartial('/zakaz/_form', array('model' => $order, 'isGuest' => $isGuest));

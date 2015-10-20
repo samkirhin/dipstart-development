@@ -69,15 +69,15 @@
 	</div>
 	
 <?php 
-		};
+		}
 		$mailing_list = 0;
+		$_arr = array('','icq','sms','email');
 		foreach($fields as $field) {
 			$name = strtolower($field->varname);
 			if ($name == 'mailing_list') {
 				$mailing_list = $model->profile->getAttribute($name);
-				$arr = array('','isq','sms','email');
-				$mailing_list = $arr[$mailing_list];
-			};
+				$mailing_list = $_arr[$mailing_list];
+			}
 			
 ?>
 	<div class="row"><div class="left-div-admin-form">

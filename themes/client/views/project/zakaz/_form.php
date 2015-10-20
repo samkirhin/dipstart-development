@@ -20,6 +20,7 @@
 	<p class="note"><?=ProjectModule::t('Fields with <span class="required">*</span> are required.')?></p>
 
 	<?php echo $form->errorSummary($model);
+	
 	if(Campaign::getId()){
 		echo '<div class="row">';
 		echo $form->labelEx($model,'max_exec_date');
