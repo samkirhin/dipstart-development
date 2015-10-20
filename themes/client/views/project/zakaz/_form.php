@@ -36,7 +36,7 @@
 				if ($field->field_type=="LIST"){
 					$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
 					$list = CHtml::listData($models, 'id', 'cat_name');
-					echo $form->dropDownList($models, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
+					echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 					echo $form->error($model,$field->varname);
 				} elseif ($field->field_type=="TEXT") {
 					echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
@@ -121,7 +121,7 @@
 		<?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53)); ?>
 		<?php echo $form->error($model,'add_demands'); ?>
 	</div>
-	<h3>Заметки</h3>
+	<h3><?= ProjectModule::t('Notices') ?></h3>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'time_for_call'); ?>
@@ -136,7 +136,9 @@
 	</div>
 	<?php } ?>
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>
+		<?php $attr = array('class' => 'btn btn-primary'); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), $attr); ?>
 	</div>
 
 <?php $this->endWidget();

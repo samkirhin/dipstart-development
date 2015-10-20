@@ -27,11 +27,13 @@ if (file_exists($path)){
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css'); ?>
 <?php if (User::model()->isCustomer() && (!$order->is_active || !$moderated)) {
+		// для гостя немодерированный заказ НЕ показываем, редиректим на главную
+		if ($isGuest) $this->redirect('http://'.$_SERVER['SERVER_NAME'].'/');
 		echo '<div class="zakaz-info-header-customer" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
 		echo '<div class="zakaz-info-header-customer-empty" >&nbsp;</div>';
 	}
 ?>
-<div class="container">
+	<div class="container">
     <div class="row r">
 		<?php 
 			if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
@@ -91,10 +93,11 @@ if (file_exists($path)){
 									echo '</div>';
                                 } else {
 
-                                    if ($order->is_active) {
-                                        $this->renderPartial('/zakaz/_form', array('model' => $order, 'times' => $times));
-                                    } else {
-                                        $this->renderPartial('/zakaz/orderInModerate');
+									if ($isGuest) Yii::app()->theme='client';
+									if ($order->is_active) {
+										$this->renderPartial('/zakaz/_form', array('model' => $order, 'isGuest' => $isGuest));
+									} else {
+										$this->renderPartial('/zakaz/orderInModerate', array('model' => $order, 'isGuest' => $isGuest));
                                     }
                                 }
                                 ?>
@@ -200,8 +203,12 @@ if (file_exists($path)){
                     } else if(User::model()->isCustomer()) {
                         $middle_button = ProjectModule::t('Send the author');
                     }
-                    echo  CHtml::submitButton($middle_button, array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block')) ;
-                    echo  CHtml::submitButton(ProjectModule::t('Send manager'), array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2')) ;
+                    $attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block');
+					if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled';
+					echo  CHtml::submitButton($middle_button, $attr) ;
+                    $attr = array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2');
+					if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled';
+                    echo  CHtml::submitButton(ProjectModule::t('Send manager'), $attr) ;
                     ?>
                     
                 <?php if (User::model()->isAuthor()): ?>

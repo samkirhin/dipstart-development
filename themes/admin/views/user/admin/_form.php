@@ -114,7 +114,9 @@
 ?>
 	<div class="row buttons"><div class="left-div-admin-form">&nbsp;
 		</div><div class="right-div-admin-form">
-		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
+		<?php $attr = array(); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), $attr); ?>
 		</div>
 	</div>
 	</div>

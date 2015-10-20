@@ -17,6 +17,8 @@
     <div class="row">
         <div class="col-xs-6"><h4><?=ProjectModule::t('Deadlines')?></h4></div>
         <div class="col-xs-6" style="float:right;">
+     		<?php $attr = array ('class' => 'btn btn-primary terms-save-btn'); ?>
+			<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
             <?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary terms-save-btn')); ?>
         </div>
         <div class="col-xs-4 terms-columns terms-column-1">
@@ -330,7 +332,9 @@
                                 </div>
 								<?php } ?>
                                 <div class="col-xs-12 info-buttons">
-                                    <div><?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?></div>
+									<?php $attr = array('class' => 'btn btn-primary'); ?>
+									<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+                                    <div><?php echo CHtml::submitButton(ProjectModule::t('Save'), $attr); ?></div>
                                 </div>
 
                                 <?php $this->endWidget(); ?>

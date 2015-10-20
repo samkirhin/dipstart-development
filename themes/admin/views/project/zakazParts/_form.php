@@ -82,7 +82,9 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Save'); ?>
+		<?php $attr = array(); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton('Save', $attr); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
