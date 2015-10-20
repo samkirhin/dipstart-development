@@ -5,13 +5,15 @@
  * Date: 16.04.15
  * Time: 11:56
  */
-$items = array();
+ $items = array();
 if (Yii::app()->user->isGuest) {
 	$items[] = array('label'=>Yii::t('site','Home'), 'url'=>array('/site/index'));
 	$items[] = array('label'=>Yii::t('site','About'), 'url'=>array('/site/page', 'view'=>'about'), 'visible'=>Yii::app()->user->isGuest);
 	$items[] = array('label'=>Yii::t('site','Contact'), 'url'=>array('/site/contact'), 'visible'=>Yii::app()->user->isGuest);
 	$items[] = array('label'=>Yii::t('site','Login'), 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest);
 	$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('user/logout'), 'visible'=>!Yii::app()->user->isGuest);
+	
+	$this->menu = $items;
 } else {
 	$role = User::model()->getUserRole();
 	switch ($role){

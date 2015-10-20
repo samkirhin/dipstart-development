@@ -73,7 +73,7 @@ class ChatController extends Controller {
     public function actionIndex($orderId)
     {
 
-		$isGuest = Yii::app()->user->guestName;
+		$isGuest = Yii::app()->user->isGuest;
 		if ($isGuest) {
 			Yii::app()->theme='client';
 			$order	= Zakaz::model()->resetScope()->findByPk($orderId);

@@ -224,7 +224,11 @@ $this->breadcrumbs = array(
                                     </div>
                                     <?php } ?>
                                     <div class="col-xs-12 info-buttons">
-                                        <div><?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?></div>
+									<?php $attr = array('class' => 'btn btn-primary'); ?>
+									<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+                                        <div>
+										<?php echo CHtml::submitButton(ProjectModule::t('Save'), $attr); ?>
+										</div>
                                     </div>
 
                                     <?php $this->endWidget(); ?>
