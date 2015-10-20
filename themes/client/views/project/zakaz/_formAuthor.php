@@ -152,7 +152,9 @@
     <h3><?=ProjectModule::t('Notes')?></h3>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save')); ?>
+		<?php $attr = array(); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), $attr); ?>
 	</div>
 
 <?php $this->endWidget();

@@ -69,7 +69,9 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
+   		<?php $attr = array (); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'), $attr); ?>
 	</div>
 
 <?php echo CHtml::endForm(); ?>

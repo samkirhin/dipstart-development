@@ -36,7 +36,9 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('site','Create') : Yii::t('site','Save')); ?>
+		<?php $attr = array(); ?>
+		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('site','Create') : Yii::t('site','Save'), $attr); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

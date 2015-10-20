@@ -213,7 +213,9 @@ $this->menu=array(
         </div>
 		
         <div class="row" style="float: right; margin: 15px 0 0 0; ">
-            <?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), array ('class' => 'btn btn-primary')); ?>
+     		<?php $attr = array ('class' => 'btn btn-primary'); ?>
+			<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
+			<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), $attr); ?>
         </div>
 
         <?php $this->endWidget(); ?>
