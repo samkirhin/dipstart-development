@@ -205,6 +205,7 @@ return array(
 	'Mailing List' => 'Способ оповещения',
 	'Bank Account' => 'Банковский счёт, номер карты',
 	'Specials' => 'Специализации',	
+	
 	'FieldOfOrders' => 'Поле заказа',
     'Deadlines' => 'Сроки выполнения',
 	'requested changes.' => 'запросил изменения.',
