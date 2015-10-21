@@ -169,12 +169,14 @@ return array(
     'Message is prohibited (by text or by the name of the sender)' => 'Message is prohibited (by text or by the name of the sender)',
     'Invalid number phone' => 'Invalid number phone',
     'Message to the specified number can not be delivered' => 'Message to the specified number can not be delivered',
-    'Sending more than one of the same request to send SMS-messages within minutes' => 'Sending more than one of the same request to send SMS-messages within minutes'
+    'Sending more than one of the same request to send SMS-messages within minutes' => 'Sending more than one of the same request to send SMS-messages within minutes',
 	
 	'From' => 'Sender',
 	'To' => 'Recipient',
 	'Body' => 'Body',
 	'Type' => 'Type',
 	'Date' => 'Date',
+
+	'Notification' => 'notification',
 	
 );
