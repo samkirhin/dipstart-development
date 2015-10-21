@@ -56,7 +56,7 @@ $form=$this->beginWidget('UActiveForm', array(
 						$data = Catalog::model()->performCatsTree($field->varname);
 						$varname = $field->varname;
 						$selected = explode(',',$profile->$varname);
-						echo CHtml::listBox('Profile['.$field->varname.']', $selected, $data, $htmlOptions);
+						echo '<div class="col-md-8">'.CHtml::listBox('Profile['.$field->varname.']', $selected, $data, $htmlOptions).'</div>';
 					/*} elseif ($widgetEdit = $field->widgetEdit($profile,array('htmlOptions'=>array('class'=>'form-control')))) {
                         echo '<div class="col-md-8">'.$widgetEdit.'</div>';
                     } elseif ($field->range) {
