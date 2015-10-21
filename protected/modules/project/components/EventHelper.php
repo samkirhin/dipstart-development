@@ -63,7 +63,7 @@ class EventHelper {
     public static function createOrder($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
 //        $description = YIii::t('site','User').' '.$userName." создал заказ";
-		$description = YIii::t('site','User').' '.$userName." ".UserModule::t('created order');
+		$description = Yii::t('site','User').' '.$userName." ".UserModule::t('created order');
         self::sendEvent($id, self::TYPE_CREATE_ORDER, $description);
     }
 
