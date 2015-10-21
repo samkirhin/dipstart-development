@@ -23,11 +23,11 @@ class EmailsController extends Controller
     
     public function actionSend($back)
     {
-        $model = new Emails
+        $model = new Emails;
 		
 		if(isset($_POST['Email']))
 		{
-			
+			$back = $_POST['back'];
 			$model->attributes=$_POST['Email'];
 			$user = User::model()->findByPk($model->to);
 			if($model->validate())
@@ -45,7 +45,7 @@ class EmailsController extends Controller
 				$model->save();
 			}
 		}
-		
+		if (!isset($back)) $back = 'index';
         $this->render($back, [
             'model'=>$model
         ]);

@@ -176,5 +176,7 @@ return array(
 	'Body' => 'Body',
 	'Type' => 'Type',
 	'Date' => 'Date',
+
+	'Notification' => 'notification',
 	
 );
