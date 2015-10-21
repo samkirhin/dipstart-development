@@ -176,4 +176,6 @@ return array(
 	'Body' => 'Тело',
 	'Type' => 'Тип',
 	'Date' => 'Дата',
+	// Emails
+	'Notification' => 'Уведомление',
 );

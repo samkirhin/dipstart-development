@@ -2,6 +2,7 @@
 
 class EmailsController extends Controller
 {
+	private	$subject = 'Notification';
     public function filters()
 	{
 		return array(
@@ -26,19 +27,22 @@ class EmailsController extends Controller
 		
 		if(isset($_POST['Email']))
 		{
+			
 			$model->attributes=$_POST['Email'];
+			$user = User::model()->findByPk($model->to);
 			if($model->validate())
-			{
-				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-				$headers="From: $name <{$model->email}>\r\n".
-					"Reply-To: {$model->email}\r\n".
+			{	
+				$from	= Yii::app()->params['adminEmail'];
+				$name	='=?UTF-8?B?'.base64_encode($from).'?=';
+				$subject='=?UTF-8?B?'.base64_encode(Yii:t('site','Notification')).'?=';
+				$headers="From: $from<{$from}>\r\n".
+					"Reply-To: {$user->email}\r\n".
 					"MIME-Version: 1.0\r\n".
 					"Content-Type: text/plain; charset=UTF-8";
 
-				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+				mail($from,$subject,$model->body,$headers);
 				$this->refresh();
+				$model->save();
 			}
 		}
 		
