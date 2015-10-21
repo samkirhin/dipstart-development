@@ -62,52 +62,52 @@ class EventHelper {
 
     public static function createOrder($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." создал заказ";
+//        $description = Yii::t('site','User').' '.$userName." создал заказ";
 		$description = Yii::t('site','User').' '.$userName." ".UserModule::t('created order');
         self::sendEvent($id, self::TYPE_CREATE_ORDER, $description);
     }
 
     public static function editOrder($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." отредактировал заказ";
-		$description = YIii::t('site','User').' '.$userName." ".UserModule::t('edited order');
+//        $description = Yii::t('site','User').' '.$userName." отредактировал заказ";
+		$description = Yii::t('site','User').' '.$userName." ".UserModule::t('edited order');
         return self::sendEvent($id, self::TYPE_EDIT_ORDER, $description);
     }
     
     public static function addChanges($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." прикрепил замечания";
-		$description = YIii::t('site','User').' '.$userName." ".UserModule::t('attached comments');
+//        $description = Yii::t('site','User').' '.$userName." прикрепил замечания";
+		$description = Yii::t('site','User').' '.$userName." ".UserModule::t('attached comments');
         self::sendEvent($id, self::TYPE_ADD_CHANGES, $description);
     }
     public static function chekUploaded($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." загрузил чек";
-		$description = YIii::t('site','User').' '.$userName." ".UserModule::t('uploaded check');
+//        $description = Yii::t('site','User').' '.$userName." загрузил чек";
+		$description = Yii::t('site','User').' '.$userName." ".UserModule::t('uploaded check');
         self::sendEvent($id, self::TYPE_CHEK_UPLOADED, $description);
     }
     public static function partDone($id, $title) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." загрузил часть работы '$title'";
-		$description = YIii::t('site','User').' '.$userName." ".UserModule::t('have uploaded part of the job')." $title";
+//        $description = Yii::t('site','User').' '.$userName." загрузил часть работы '$title'";
+		$description = Yii::t('site','User').' '.$userName." ".UserModule::t('have uploaded part of the job')." $title";
         self::sendEvent($id, self::TYPE_PART_DONE, $description);
     }
     public static function materialsAdded($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." прикрепил файлы в заказ";
-		$description = YIii::t('site','User').' '.$userName." ".UserModule::t('attached files in order');
+//        $description = Yii::t('site','User').' '.$userName." прикрепил файлы в заказ";
+		$description = Yii::t('site','User').' '.$userName." ".UserModule::t('attached files in order');
         self::sendEvent($id, self::TYPE_MATERIALS_ADDED, $description);
     }
     public static function materialsDeleted($id) {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." удалил файл из заказа";
+//        $description = Yii::t('site','User').' '.$userName." удалил файл из заказа";
 		$description = 'Пользователь '.$userName.' '.UserModule::t('deleted the file out of order');
         self::sendEvent($id, self::TYPE_MATERIALS_DELETED, $description);
     }
 
     public static function addMessage($id,$message='') {
         $userName = User::model()->findByPk(Yii::app()->user->id)->username;
-//        $description = YIii::t('site','User').' '.$userName." оставил сообщение: \"".$message."\"";
+//        $description = Yii::t('site','User').' '.$userName." оставил сообщение: \"".$message."\"";
         $description = UserModule::t('User').' '.$userName.' '.UserModule::t('left a message').": \"$message.\"";
         self::sendEvent($id, self::TYPE_MESSAGE, $description);
     }
