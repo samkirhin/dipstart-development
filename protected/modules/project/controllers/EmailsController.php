@@ -27,7 +27,7 @@ class EmailsController extends Controller
 		
 		if(isset($_POST['Email']))
 		{
-			$back = $_POST['back']
+			$back = $_POST['back'];
 			$model->attributes=$_POST['Email'];
 			$user = User::model()->findByPk($model->to);
 			if($model->validate())
