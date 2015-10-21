@@ -15,17 +15,16 @@ class Sms extends CFormModel
     public function init()
     {
         parent::init();
-        
         $this->errors = [
-            1 => 'Ошибка в параметрах',
-            2 => 'Неверный логин или пароль',
-            3 => 'Недостаточно средств на счету Клиента',
-            4 => 'IP-адрес временно заблокирован из-за частых ошибок в запросах',
-            5 => 'Неверный формат даты',
-            6 => 'Сообщение запрещено (по тексту или по имени отправителя)',
-            7 => 'Неверный формат номера телефона',
-            8 => 'Сообщение на указанный номер не может быть доставлено',
-            9 => 'Отправка более одного одинакового запроса на передачу SMS-сообщения в течение минуты'
+            1 => Yii::t('site','Invalid parameters'),
+            2 => Yii::t('site','Invalid login or password'),
+            3 => Yii::t('site','Insufficient funds in the account'),
+            4 => Yii::t('site','IP-address temporarily blocked due to frequent errors in querie'),
+            5 => Yii::t('site','Invalid date'),
+            6 => Yii::t('site','Message is prohibited (by text or by the name of the sender)'),
+            7 => Yii::t('site','Invalid phone number format'),
+            8 => Yii::t('site','Message to the specified number can not be delivered'),
+            9 => Yii::t('site','Sending more than one of the same request to send SMS-messages within minutes'),
         ];
     }
     
