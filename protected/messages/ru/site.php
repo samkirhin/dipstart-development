@@ -166,8 +166,14 @@ return array(
     'Insufficient funds in the account' => 'Недостаточно средств на счету Клиента',
     'IP-address temporarily blocked due to frequent errors in querie' => 'IP-адрес временно заблокирован из-за частых ошибок в запросах',
     'Invalid date' => 'Неверный формат даты',
-    'Message is prohibited (by text or by the name of the sender)' => 'Message is prohibited (by text or by the name of the sender)',
-    'Invalid number phone' => 'Invalid number phone',
-    'Message to the specified number can not be delivered' => 'Message to the specified number can not be delivered',
-    'Sending more than one of the same request to send SMS-messages within minutes' => 'Sending more than one of the same request to send SMS-messages within minutes'
+    'Message is prohibited (by text or by the name of the sender)' => '',
+    'Invalid number phone' => 'Неверный формат номера телефона',
+    'Message to the specified number can not be delivered' => 'Сообщение на указанный номер не может быть доставлено',
+    'Sending more than one of the same request to send SMS-messages within minutes' => 'Отправка более одного одинакового запроса на передачу SMS-сообщения в течение минуты'
+
+	'From' => 'От',
+	'To' => 'Кому',
+	'Body' => 'Тело',
+	'Type' => 'Тип',
+	'Date' => 'Дата',
 );

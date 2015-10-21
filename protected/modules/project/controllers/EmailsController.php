@@ -8,12 +8,6 @@ class EmailsController extends Controller
 			'accessControl'
 		);
 	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
 	public function accessRules()
 	{
         return array(
@@ -26,18 +20,29 @@ class EmailsController extends Controller
         );
 	}
     
-    public function actionSend()
+    public function actionSend($back)
     {
-        $model = new Sms;
-        
-        if (isset($_POST['Sms'])) {
-            $model->attributes = $_POST['Sms'];
-            if ($model->validate() && $model->send()) {
-                $this->refresh();
-            }
-        }
-        
-        $this->render('/sms/send', [
+        $model = new Emails
+		
+		if(isset($_POST['Email']))
+		{
+			$model->attributes=$_POST['Email'];
+			if($model->validate())
+			{
+				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
+				$headers="From: $name <{$model->email}>\r\n".
+					"Reply-To: {$model->email}\r\n".
+					"MIME-Version: 1.0\r\n".
+					"Content-Type: text/plain; charset=UTF-8";
+
+				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
+				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+				$this->refresh();
+			}
+		}
+		
+        $this->render($back, [
             'model'=>$model
         ]);
     }
