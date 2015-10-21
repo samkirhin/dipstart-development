@@ -27,7 +27,7 @@
         <?php foreach ($events as $event) {?>
          <tr>
             <td><?php echo $event->id?></td>
-            <td><?php echo $event->description.' '?><a href="http://<?= $_SERVER['SERVER_NAME'] ?>/project/zakaz/update/id/<?= $event->event_id ?>"><?= '#'.$event->event_id ?></a></td>
+            <td><?php echo ProjectModule::t($event->description).' '?><a href="http://<?= $_SERVER['SERVER_NAME'] ?>/project/zakaz/update/id/<?= $event->event_id ?>"><?= '#'.$event->event_id ?></a></td>
             <td>
 				<?php 
 				echo CHtml::button(Yii::t('site','Delete'),array('onclick'=>'this.parentNode.parentNode.style.display=\'none\';$.post("'.Yii::app()->createUrl('project/event/delete',array('id'=>$event->id)).'",function(xhr,data,msg){ /*alert(xhr.msg);*/},"json");'));
@@ -40,7 +40,7 @@
                             );
                     break;
                     case EventHelper::TYPE_NOTIFICATION:
-                        echo '<td> Ссылка отсутствует</td>';
+                        echo '<td>'.Yii::t('site','Link is absent').'</td>';
                     break;
                     case EventHelper::TYPE_MESSAGE:
                     default:
