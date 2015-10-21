@@ -169,7 +169,7 @@ return array(
     'Message is prohibited (by text or by the name of the sender)' => '',
     'Invalid number phone' => 'Неверный формат номера телефона',
     'Message to the specified number can not be delivered' => 'Сообщение на указанный номер не может быть доставлено',
-    'Sending more than one of the same request to send SMS-messages within minutes' => 'Отправка более одного одинакового запроса на передачу SMS-сообщения в течение минуты'
+    'Sending more than one of the same request to send SMS-messages within minutes' => 'Отправка более одного одинакового запроса на передачу SMS-сообщения в течение минуты',
 
 	'From' => 'От',
 	'To' => 'Кому',
