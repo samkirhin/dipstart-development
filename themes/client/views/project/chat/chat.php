@@ -13,6 +13,13 @@ $criteria->params[':oid'] = (int) $orderId;
 $messages = ProjectMessages::model()->findAll($criteria);
 ?>
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
+<?php Yii::app()->clientScript->registerCss('cs1','
+div.chat-window::before {
+     content: "Напишите что готовы взять этот заказ или задайте вопрос";
+}
+div.chat-window::after {
+    content: "Здесь будет ваша переписка";
+}'); ?>
     <?php foreach ($messages as $message): ?>
     <div class="post chtpl0-msg">
         
