@@ -11,8 +11,20 @@ if(!Yii::app()->user->isGuest)
 $criteria->addCondition('`order` = :oid');
 $criteria->params[':oid'] = (int) $orderId;
 $messages = ProjectMessages::model()->findAll($criteria);
+$EmptyChat = UserModule::t('EmptyChat');
 ?>
+	<script>
+		var content="<?= $EmptyChat ?>";
+		$('div#chatWindow').css('content',content);
+		$('div#chatWindow').attr('placeholder',content);
+		
+		$('div#chatWindow').attr('content','Напишите что готовы взять этот заказ или задайте вопрос');
+		alert($('div#chatWindow').css('content'));
+	</script>
+	<input id="empty-chat-message" type="hidden" value="<?= $EmptyChat ?>">
+
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
+	<?php //if(!(int)count($messages)) echo $EmptyChat; ?> 
     <?php foreach ($messages as $message): ?>
     <div class="post chtpl0-msg">
         

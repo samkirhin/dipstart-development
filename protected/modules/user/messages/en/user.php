@@ -204,6 +204,7 @@ return array(
 	'FieldOfOrders' => 'Field Of Orders',
     'Deadlines' => 'Deadlines',
 	'Get It!' => 'Get It!',
-
+	'EmptyChat'=>'Write what is ready to take this order or ask a question',
 );
+
 

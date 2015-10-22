@@ -14,6 +14,7 @@ $this->breadcrumbs = array(
     $model->title => array('view', 'id' => $model->id),
     ProjectModule::t('Update'),
 );
+	die('11111111111');
 ?>
 
     <h1><?= ProjectModule::t('Update Zakaz') ?> <?php echo $model->id; ?></h1>
