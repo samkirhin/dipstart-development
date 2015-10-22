@@ -231,4 +231,7 @@ return array(
 	'Events' => 'События',
 	'EVENTS' => 'События',
 	
+	'Please, write that you are ready to take this order or ask a question.' => 'Напишите что готовы взять этот заказ или задайте вопрос.',
+	'Here is your correspondence' => 'Здесь будет ваша переписка',
+	
 );
