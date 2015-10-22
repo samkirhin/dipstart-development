@@ -15,10 +15,10 @@ $messages = ProjectMessages::model()->findAll($criteria);
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
 <?php Yii::app()->clientScript->registerCss('cs1','
 div.chat-window::before {
-     content: "Напишите что готовы взять этот заказ или задайте вопрос";
+     content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
 }
 div.chat-window::after {
-    content: "Здесь будет ваша переписка";
+    content: "'.ProjectModule::t('Here is your correspondence').'";
 }'); ?>
     <?php foreach ($messages as $message): ?>
     <div class="post chtpl0-msg">
