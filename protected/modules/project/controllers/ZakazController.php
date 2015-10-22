@@ -18,7 +18,7 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index','ownList','apiRemoveFile'),
+                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index','ownList','apiRemoveFile','Upload','ApiRenameFile'),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -134,6 +134,11 @@ class ZakazController extends Controller
 	{
         $model = new Zakaz();
         
+        if ($model->unixtime == '') {
+            $model->unixtime = time();
+        } 
+                
+        
         if(User::model()->isManager() || User::model()->isAdmin()) {
             $model->is_active = 1;
         } else {
@@ -148,8 +153,7 @@ class ZakazController extends Controller
             $model->attributes=$_POST['Zakaz'];
 
             if (!(User::model()->isManager() || User::model()->isAdmin())) {
-                $model->user_id = Yii::app()->user->id;
-                
+                $model->user_id = Yii::app()->user->id;                
                 $model->dbmanager_informed = date('d.m.Y H:i');
                 $model->dbdate = date('d.m.Y H:i');
                 $d1=date_create();
@@ -163,6 +167,7 @@ class ZakazController extends Controller
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
                     EventHelper::createOrder($model->id);
                 }
+                $this->moveFiles($model->unixtime,$model->id);
                 $this->redirect(array('view','id'=>$model->id));
             }
 			
@@ -172,7 +177,47 @@ class ZakazController extends Controller
             'model'=>$model
         ));
 	}
-
+    
+    protected function moveFiles($unixtime,$id) 
+    {
+        
+        $c_id = Campaign::getId();
+        $root = Yii::getPathOfAlias('webroot');
+        if ($c_id) {
+            $from = $root.'/uploads/c'.$c_id.'/temp/'.$unixtime.'/';
+        } else {
+            $from = $root.'/uploads/temp/'.$unixtime.'/';
+        }
+        if (file_exists($from)) {
+            $dir_handle = opendir($from);
+            if ($c_id) {
+                $to = $root.'/uploads/c'.$c_id.'/'.$id.'/';
+            } else {
+                $to = $root.'/uploads/'.$id.'/';
+            }
+            if (!file_exists($to)) {
+                mkdir($to, 0777);
+            }                    
+            while ($file = readdir($dir_handle)) {
+               if ($file === '.' || $file === '..' || is_dir($file)) continue;
+               rename($from.$file, $to.$file);   
+            }
+            rmdir($from);                    
+            
+        }
+    }
+    
+    public function actionApiRenameFile() {
+        $this->_prepairJson();
+        $data = $this->_request->getParam('data');
+        $path=Yii::getPathOfAlias('webroot').$data['dir'];
+        if (!file_exists($path)) mkdir($path);
+        if (rename($path.$data['name'], $path.'#trash#'.$data['name'])) {
+            EventHelper::materialsDeleted($_GET['orderId']);
+            $this->_response->setData(true);
+        } else $this->_response->setData(false);
+        $this->_response->send();
+    }
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -612,5 +657,35 @@ class ZakazController extends Controller
 		$params		= array();
 		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
         Yii::app()->end();
+    }
+    
+    
+    public function actionUpload() {
+        Yii::import("ext.EAjaxUpload.qqFileUploader");
+        // --- кампании
+        $c_id = Campaign::getId();
+        if ($c_id) {
+            $folder='uploads/c'.$c_id.'/temp/';
+        } else {
+            $folder='uploads/temp/';
+        }
+        // ---
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777);
+        }
+        $folder = $folder.$_GET['unixtime'].'/';
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777);
+        }
+        $config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx');
+        $config['disAllowedExtensions'] = array("exe");
+        $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
+        $uploader = new qqFileUploader($config, $sizeLimit);
+        if(!(User::model()->isAdmin())) $_GET['qqfile']='#pre#'.$_GET['qqfile'];
+        $result = $uploader->handleUpload($folder,true);
+        $result['fileSize']=filesize($folder.$result['filename']);//GETTING FILE SIZE
+        $result['fileName']=$result['filename'];//GETTING FILE NAME
+        chmod($folder.$result['fileName'],0666);
+        echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }
 }
