@@ -14,11 +14,12 @@ $messages = ProjectMessages::model()->findAll($criteria);
 ?>
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
 <?php Yii::app()->clientScript->registerCss('cs1','
-div.chat-window::before {
-     content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
-}
 div.chat-window::after {
     content: "'.ProjectModule::t('Here is your correspondence').'";
+}');
+if(User::model()->isAuthor() && !$order->executor && $order->status<=2) Yii::app()->clientScript->registerCss('cs2','
+div.chat-window::before {
+     content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
 }'); ?>
     <?php foreach ($messages as $message): ?>
     <div class="post chtpl0-msg">
