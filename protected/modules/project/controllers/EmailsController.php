@@ -35,7 +35,6 @@ class EmailsController extends Controller
 			if($model->validate())
 			{	
 				$name	='=?UTF-8?B?'.base64_encode($from).'?=';
-print_r($model);
 				$model->sendTo( $user->email, $model->body);
 				
 				$this->refresh();

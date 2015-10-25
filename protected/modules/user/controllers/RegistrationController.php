@@ -64,7 +64,6 @@ class RegistrationController extends Controller
 						$criteria->limit = 1;
 						$user = User::model()->findAll($criteria);
 						$user = $user[0];
-echo '$user='; print_r($user);
 
 						$email->from_id = 1;
 						$email->to_id   = $user->id;
