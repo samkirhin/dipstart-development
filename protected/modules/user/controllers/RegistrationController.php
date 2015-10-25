@@ -75,6 +75,8 @@ class RegistrationController extends Controller
 						$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
 						$email->campaign = $campaign->name;
 						$email->name = $profle->firstname;
+						// временно так
+						$email->name = $model->username;;
 						$email->login= $model->username;
 						$email->password= $soucePassword;
 						
