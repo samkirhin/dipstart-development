@@ -54,6 +54,34 @@ class RegistrationController extends Controller
 						$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
 						UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
 						
+						// новая служба системных сообщений
+
+						$type_id = Emails::TYPE_11;
+						$email = new Emails;
+						
+						$criteria = new CDbCriteria();
+						$criteria->order = 'id DESC';
+						$criteria->limit = 1;
+						$user = User::model()->findAll($criteria);
+						$user = $user[0];
+echo '$user='; print_r($user);
+
+						$email->from_id = 1;
+						$email->to_id   = $user->id;
+						
+						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+						$title = $rec[0]->title;
+						$body  = $rec[0]->text;
+						
+						$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+						$email->campaign = $campaign->name;
+						$email->name = $profle->firstname;
+						$email->login= $model->username;
+						$email->password= $soucePassword;
+						
+						$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
+						$email->sendTo( $user->email, $body, $type_id);
+						
 						$identity=new UserIdentity($model->username,$soucePassword);
 						$identity->authenticate();
 						Yii::app()->user->login($identity,0);

@@ -95,8 +95,7 @@ function zakaz_done(part_id)
 {
 		$.ajax({
 			type: "POST",
-//			url: 'http://'+document.domain+'/ajax/ajax.php'
-			url: 'chat/status?id=143'
+			url: 'chat/status'
 			, data: 'cmd=done&id='+part_id+'&status_id=6'
 			, success: function(html) {
 				html = BackReplacePlusesFromStr(html);
