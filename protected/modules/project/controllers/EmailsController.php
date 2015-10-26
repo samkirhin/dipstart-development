@@ -68,7 +68,7 @@ echo '<br>$this->_request='; print_r($this->_request);
 echo '$order->executor='.$order->executor.' $order->user_id='.$order->user_id;
 
 echo '<br>$user=';print_r($user);
-		$model->to_id = $user-id;
+		$model->to_id = $user->id;
 		$profile = Profile::model()->findAll("`user_id`='$user->id'");
 //print_r($profile);
 		
@@ -85,6 +85,7 @@ echo '<br>$user=';print_r($user);
 		$model->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 		$model->message = $rec[0]->text;
 		$model->price_order = $cost;
+		$this->sum_order  = $cost;
 	echo '<br>$user->email='.$user->email;
 		$model->sendTo( $user->email, $rec[0]->text, $typeId);
 				
