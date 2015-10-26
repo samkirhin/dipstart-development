@@ -168,8 +168,9 @@ hr {
 }
 .partStatus-status {
 	position: relative;
-	float:	 left;
+	float: left;
 	width: 46%;
+    text-indent: 38px;
 }
 .partStatus-bottom {
     width: 100%;
@@ -819,8 +820,7 @@ div#accordion .panel-title a {
 }
 
 div.chat-window::before {
-/*    content: "Напишите что готовы взять этот заказ или задайте вопрос";*/
-    content: "<?= $EmptyChat ?>";
+	/*content: "Напишите что готовы взять этот заказ или задайте вопрос";*/
     display: block!important;
     position: absolute!important;
     top: 46%!important;
@@ -831,7 +831,7 @@ div.chat-window::before {
     color: #D2D2D2 !important;
 }
 div.chat-window::after {
-    content: "Здесь будет ваша переписка";
+    /*content: "Здесь будет ваша переписка";*/
     display: block!important;
     position: absolute!important;
     top: 38%!important;
@@ -953,6 +953,7 @@ div.project-changes div.panel-heading h4.panel-title a i {
 div.first-tab{
 	float:	left;
 	width:	100%;
+    background-color: #fff;
 }
 div.second-tab{
 	float:	left;

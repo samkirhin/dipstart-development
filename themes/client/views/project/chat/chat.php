@@ -11,22 +11,25 @@ if(!Yii::app()->user->isGuest)
 $criteria->addCondition('`order` = :oid');
 $criteria->params[':oid'] = (int) $orderId;
 $messages = ProjectMessages::model()->findAll($criteria);
-$EmptyChat = UserModule::t('EmptyChat');
 ?>
-	<script>
-		var content="<?= $EmptyChat ?>";
-		$('div#chatWindow').css('content',content);
-		$('div#chatWindow').attr('placeholder',content);
-		
-		$('div#chatWindow').attr('content','Напишите что готовы взять этот заказ или задайте вопрос');
-		alert($('div#chatWindow').css('content'));
-	</script>
-	<input id="empty-chat-message" type="hidden" value="<?= $EmptyChat ?>">
 
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
-	<?php //if(!(int)count($messages)) echo $EmptyChat; ?> 
-    <?php foreach ($messages as $message): ?>
-    <div class="post chtpl0-msg">
+<?php Yii::app()->clientScript->registerCss('cs1','
+div.chat-window::after {
+    content: "'.ProjectModule::t('Here is your correspondence').'";
+}');
+if(User::model()->isAuthor() && !$order->executor && $order->status<=2) Yii::app()->clientScript->registerCss('cs2','
+div.chat-window::before {
+     content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
+}'); ?>
+    <?php foreach ($messages as $message): 
+		$msg_role = 'manager-message';
+		$isAuthor = (User::model()->getUserRole($message->senderObject->id) == 'Author');
+		$isCustomer = (User::model()->getUserRole($message->senderObject->id) == 'Customer');
+		if($isAuthor) $msg_role = 'author-message';
+		if($isCustomer) $msg_role = 'customer-message';
+	?>
+    <div class="post chtpl0-msg <?=$msg_role ?>">
         
         <div class="chtpl0-avatar">
             

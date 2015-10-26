@@ -166,7 +166,7 @@ if (file_exists($path)){
         <div class="col-xs-8">
             
             <div id="chat" class="col-xs-12 user-chat-block">
-                <?php $this->renderPartial('chat',array('orderId'=>$order->id));?>
+                <?php $this->renderPartial('chat',array('order'=>$order, 'orderId'=>$order->id));?>
 				<? 	// кнопку выносим из блока, который передаётся 
 					// ajax'а, чтобы избежать манипуляций с 
 					// обработчиками событий
@@ -237,7 +237,7 @@ if (file_exists($path)){
     </div>
 </div>
 
-<?php if (User::model()->isAuthor() && $order->executor == 0) : ?>
+<?php if ((User::model()->isAuthor() && $order->executor == 0) or $isGuest) : ?>
     
 <script>
     var e = $(".info-block");

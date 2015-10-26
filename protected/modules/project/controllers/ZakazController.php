@@ -461,7 +461,7 @@ class ZakazController extends Controller
 */	
     public function getProviders($new=false)
     {
-		if ($new) { $arr = array(1); $sarr= '1'; } else	{
+		if ($new) { $arr = array(3); $sarr= '3'; } else	{
 					$arr = array(1,2,3,4); $sarr= '1,2,3,4';
 		};
 		$uid		= Yii::app()->user->id;
