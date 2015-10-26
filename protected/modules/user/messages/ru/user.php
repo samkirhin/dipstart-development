@@ -226,6 +226,7 @@ return array(
 	'Hi' => 'Привет',
 	'Menu' => 'Меню',
 	
-	'Get It!' => 'Хочу взять заказ!',
+	'Get It!' => 'Хочу взять заказ! (Зарегистрироваться)',
+	'Changes are saved, and will be accepted after moderation.' => 'Изменения сохранены и будут приняты после модерации.',
 );
 

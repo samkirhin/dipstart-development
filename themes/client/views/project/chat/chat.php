@@ -21,8 +21,14 @@ if(User::model()->isAuthor() && !$order->executor && $order->status<=2) Yii::app
 div.chat-window::before {
      content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
 }'); ?>
-    <?php foreach ($messages as $message): ?>
-    <div class="post chtpl0-msg">
+    <?php foreach ($messages as $message): 
+		$msg_role = 'manager-message';
+		$isAuthor = (User::model()->getUserRole($message->senderObject->id) == 'Author');
+		$isCustomer = (User::model()->getUserRole($message->senderObject->id) == 'Customer');
+		if($isAuthor) $msg_role = 'author-message';
+		if($isCustomer) $msg_role = 'customer-message';
+	?>
+    <div class="post chtpl0-msg <?=$msg_role ?>">
         
         <div class="chtpl0-avatar">
             

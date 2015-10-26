@@ -14,7 +14,7 @@ $filelist = Yii::app()->fileman->list_files($model->id);
 
 ?>
 
-<div>
+<div class="thanks-for-order-message">
     <?= ProjectModule::t('Thank you for order.') ?>
 </div>
 

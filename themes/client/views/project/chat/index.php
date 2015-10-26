@@ -237,7 +237,7 @@ if (file_exists($path)){
     </div>
 </div>
 
-<?php if (User::model()->isAuthor() && $order->executor == 0) : ?>
+<?php if ((User::model()->isAuthor() && $order->executor == 0) or $isGuest) : ?>
     
 <script>
     var e = $(".info-block");

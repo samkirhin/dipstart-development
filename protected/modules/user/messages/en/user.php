@@ -203,7 +203,9 @@ return array(
 	'Specials' => 'Specializations',
 	'FieldOfOrders' => 'Field Of Orders',
     'Deadlines' => 'Deadlines',
-	'Get It!' => 'Get It!',
+	'Get It!' => 'Get It! (Registration)',
+	
+	'Changes are saved, and will be accepted after moderation.' => 'Changes are saved, and will be accepted after moderation.',
 
 );
 

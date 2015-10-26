@@ -168,8 +168,9 @@ hr {
 }
 .partStatus-status {
 	position: relative;
-	float:	 left;
+	float: left;
 	width: 46%;
+    text-indent: 38px;
 }
 .partStatus-bottom {
     width: 100%;
@@ -952,6 +953,7 @@ div.project-changes div.panel-heading h4.panel-title a i {
 div.first-tab{
 	float:	left;
 	width:	100%;
+    background-color: #fff;
 }
 div.second-tab{
 	float:	left;
