@@ -273,7 +273,7 @@ var YiiChat = function (options) {
                     owner = tmp_post.find('.chtpl0-content').find('.owner').data('ownerid');
                     if (oldaction == 'executor-unset') action = 'set'; else action = 'unset';
                     if (oldaction == 'executor-unset')
-						send_message(21,'Снятие с заказа');
+						send_message(21,'Снятие с заказа',0);
                     jQuery.ajax({
                         cache: false, type: 'post',
                         url: options.action + '&action=dtoggle&data=' + action,
@@ -297,7 +297,7 @@ var YiiChat = function (options) {
 								
 								var orderId = $('span#order_number').text();
 								if (cost > 0) {
-									send_message(19,'Назначение исполнителя (определение цены)');
+									send_message(19,'Назначение исполнителя (определение цены)', cost);
 								};
 							}
                             clear();
@@ -313,22 +313,6 @@ var YiiChat = function (options) {
             p.find('.text').html(post.message);
         };
 		
-		function send_message(typeId, name) {
-			var orderId = $('span#order_number').text();
-			// уведомление об назначении исполнителем - 19
-			// уведомление осъёме с заказа - 21
-			// oldbadger 25.10.2015
-			$.post('/project/emails/send', JSON.stringify({
-				'orderId': orderId,
-				'typeId': typeId,
-				'name': name
-			}), function (response) {
-				if (response.data) {
-//				reload();
-				}
-			}, 'json');
-		};
-
         var scroll = function () {
             //window.location = '#'+posts.find('.post:last').attr('id');
             var h = 0;
@@ -440,3 +424,22 @@ var YiiChat = function (options) {
         });
     };
 }; //end
+
+		function send_message(typeId, name, cost=0) {
+			var orderId = $('span#order_number').text();
+			// уведомление о закрытии заказа - 17
+			// уведомление об назначении исполнителем - 19
+			// уведомление осъёме с заказа - 21
+			// oldbadger 25.10.2015
+			$.post('/project/emails/send', JSON.stringify({
+				'orderId': orderId,
+				'typeId': typeId,
+				'cost': cost,
+				'name': name
+			}), function (response) {
+				if (response.data) {
+//				reload();
+				}
+			}, 'json');
+		};
+

@@ -45,6 +45,7 @@ echo '<br>$this->_request='; print_r($this->_request);
 		$orderId = $this->_request->getParam('orderId');
 		$typeId = $this->_request->getParam('typeId');
 		$back = $this->_request->getParam('back');
+		$cost = $this->_request->getParam('cost');
 	echo '<br>$type_id='.$typeId.' $orderId='.$orderId;
 
 		$order	 = Zakaz::model()->findByPk($orderId);
@@ -83,6 +84,7 @@ echo '<br>$user=';print_r($user);
 		$model->num_order = $orderId;
 		$model->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 		$model->message = $rec[0]->text;
+		$model->price_order = $cost;
 	echo '<br>$user->email='.$user->email;
 		$model->sendTo( $user->email, $rec[0]->text, $typeId);
 				
