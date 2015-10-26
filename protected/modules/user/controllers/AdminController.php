@@ -113,10 +113,14 @@ class AdminController extends Controller
 
 		if(isset($_POST['User']))
 		{
+			
 			$model->attributes=$_POST['User'];
+print_r($_POST['User']);
+print_r($model);
 			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],array('','icq','sms','email'));
 			$profile->setAttributes($_POST['Profile'], false);
 			if($model->validate()&&$profile->validate()) {
+echo 'validate!!!!!!!!!!!!!!!!';
 				$old_password = User::model()->notsafe()->findByPk($model->id);
 				if ($old_password->password!=$model->password) {
 					$model->password=Yii::app()->controller->module->encrypting($model->password);

@@ -37,6 +37,17 @@
 		<?php echo $form->error($model,'username'); ?>
 		</div>
 	</div>
+	
+	<div class="row"><div class="left-div-admin-form">
+		<?php echo $form->labelEx($model,'full_name');	?>
+		</div><div class="right-div-admin-form">
+		<?php $attributes = array('size'=>40,'maxlength'=>128,'placeholder'=>$model->getAttributeLabel( 'full_name' ).($model->isAttributeRequired('full_name')?' *':''));	?>
+		<?php if (!$admin && $manager) $attributes['disabled'] = true;	?>
+		<?php echo $form->textField($model,'full_name',$attributes); ?>
+		<?php echo $form->error($model,'full_name'); ?>
+		</div>
+	</div>
+	
 
 	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'email'); ?>
