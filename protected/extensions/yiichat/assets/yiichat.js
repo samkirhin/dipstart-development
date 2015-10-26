@@ -425,12 +425,13 @@ var YiiChat = function (options) {
     };
 }; //end
 
-		function send_message(typeId, name, cost=0) {
+		function send_message(typeId, name, cost) {
 			var orderId = $('span#order_number').text();
 			// уведомление о закрытии заказа - 17
 			// уведомление об назначении исполнителем - 19
 			// уведомление осъёме с заказа - 21
 			// oldbadger 25.10.2015
+			if (cost==undefined) cost = 0;
 			$.post('/project/emails/send', JSON.stringify({
 				'orderId': orderId,
 				'typeId': typeId,
