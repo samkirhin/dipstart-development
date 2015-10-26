@@ -203,9 +203,10 @@ return array(
 	'Specials' => 'Specializations',
 	'FieldOfOrders' => 'Field Of Orders',
     'Deadlines' => 'Deadlines',
+	//'EmptyChat'=>'Write what is ready to take this order or ask a question',
 	'Get It!' => 'Get It! (Registration)',
-	
 	'Changes are saved, and will be accepted after moderation.' => 'Changes are saved, and will be accepted after moderation.',
 
 );
+
 

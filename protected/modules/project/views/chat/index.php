@@ -3,6 +3,13 @@
 /* @var $model ProjectMessages */
 /* @var $form CActiveForm */
 ?>
+	<script>
+		var content="<? UserModule::t('Write what is ready to take this order or ask a question') ?>";
+		alert(content);
+		$('div#chatWindow').css('content',content);
+	</script>
+	<input id="empty-chat-message" type="hidden" value="">
+
 
 <?php 
     if (User::model()->isAuthor()) {
@@ -132,8 +139,6 @@ $this->widget('application.components.FileManViewer'
 <?php if (count($messages)) foreach($messages as $message): ?>
         <?php echo $message->date; ?> -
         <?php
-echo $message->senderObject->id.' '.$message->senderObject->username;
-		
             $this->beginWidget('ProfileLinkWidget',array(
                 	'params'=>array(
                      	'userId' => $message->senderObject->id,

@@ -820,7 +820,7 @@ div#accordion .panel-title a {
 }
 
 div.chat-window::before {
-    /*content: "Напишите что готовы взять этот заказ или задайте вопрос";*/
+	/*content: "Напишите что готовы взять этот заказ или задайте вопрос";*/
     display: block!important;
     position: absolute!important;
     top: 46%!important;

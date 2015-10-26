@@ -12,6 +12,7 @@ $criteria->addCondition('`order` = :oid');
 $criteria->params[':oid'] = (int) $orderId;
 $messages = ProjectMessages::model()->findAll($criteria);
 ?>
+
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
 <?php Yii::app()->clientScript->registerCss('cs1','
 div.chat-window::after {

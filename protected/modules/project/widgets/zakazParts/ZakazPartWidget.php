@@ -72,8 +72,7 @@ class ZakazPartWidget extends CWidget{
 						var status_id = document.getElementById('select-status-$this->record_id').value;
 						$.ajax({
 							type: \"POST\",
-//							url:'http://nolihan-ru.1gb.ru/ajax/ajax.php'
-							url:'http://'+document.domain+'/project/zakaz/index'
+							url:'http://'+document.domain+'/project/zakaz/status'
 							, data : 'cmd=status&status_id='+status_id+'&id='+item_id
 							, success: function(html) {
 								html = BackReplacePlusesFromStr(html);
@@ -93,9 +92,6 @@ class ZakazPartWidget extends CWidget{
 			};	
 			$this->select.= '</select>';
 			$this->render('newview', $item);
-//			echo '<pre>$item=';
-//			var_dump($item );
-//			echo '</pre>';
 		}
     }
 }

@@ -97,10 +97,26 @@ class ChatController extends Controller {
                         $model->recipient = 1;
                         break;
                     case 'customer':
-                        if (User::model()->isCustomer())
+						if (User::model()->isCustomer()) {
                             $model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
-                        if (User::model()->isAuthor())
+							$type_id = Emails::TYPE_20;
+                        } else if (User::model()->isAuthor()) {
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
+							$type_id = Emails::TYPE_16;
+						};
+						$user = User::model()->findByPk($model->recipient);
+						$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
+						
+						$email = new Emails;
+						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+						$title = $rec[0]->title;
+						$body  = $rec[0]->text;
+						$email->name = $profile->firstname;
+						if (strlen($email->name) < 2) $email->name = $user->username;
+						$email->num_order = $orderId;
+						$email->message = $post;
+						$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+						$email->sendTo( $user->email, $body, $type_id);
                         break;
                 }
 
@@ -136,15 +152,16 @@ class ChatController extends Controller {
 			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
 
 //			Catalog::model()->tableName();
-			
+			$EmptyChat = UserModule::t('EmptyChat');
 			$this->render('index', array(
-				'orderId'	=> $orderId,
-				'order'		=> $order,
-				'executor'	=> Zakaz::getExecutor($orderId),
-				'moderated'	=> $moderated,
-				'isGuest'	=> $isGuest,
-				'parts'		=> ZakazParts::model()->findAll(array(
+					'orderId'	=> $orderId,
+					'order'		=> $order,
+					'executor'	=> Zakaz::getExecutor($orderId),
+					'moderated'	=> $moderated,
+					'isGuest'	=> $isGuest,
+					'parts'		=> ZakazParts::model()->findAll(array(
 					'condition' => "`proj_id`='$orderId'",
+					'EmptyChat'	=> $EmptyChat,
 				)),
 			));
             Yii::app()->end();

@@ -203,10 +203,10 @@ if (file_exists($path)){
                     } else if(User::model()->isCustomer()) {
                         $middle_button = ProjectModule::t('Send the author');
                     }
-                    $attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block');
+                    $attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit1','id'=>'chat-to-customer');
 					if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled';
 					echo  CHtml::submitButton($middle_button, $attr) ;
-                    $attr = array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2');
+                    $attr = array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2','id'=>'chat-to-manager');
 					if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled';
                     echo  CHtml::submitButton(ProjectModule::t('Send manager'), $attr) ;
                     ?>

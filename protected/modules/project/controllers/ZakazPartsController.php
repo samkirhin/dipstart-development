@@ -252,6 +252,8 @@ class ZakazPartsController extends Controller
                     'result'=>$model->id
                 ));
                 $this->_response->send();
+				
+				
             } else {
                 $this->_response->setData(array(
                     'result'=>false
