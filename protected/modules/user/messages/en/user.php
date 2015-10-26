@@ -205,7 +205,7 @@ return array(
     'Deadlines' => 'Deadlines',
 	'Get It!' => 'Get It!',
 	'EmptyChat'=>'Write what is ready to take this order or ask a question',
-	'full_name' => 'Full Name',
+	'fullname' => 'Full Name',
 );
 
 
