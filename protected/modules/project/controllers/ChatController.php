@@ -152,16 +152,15 @@ class ChatController extends Controller {
 			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
 
 //			Catalog::model()->tableName();
-			$EmptyChat = UserModule::t('EmptyChat');
+			//$EmptyChat = UserModule::t('EmptyChat');
 			$this->render('index', array(
-					'orderId'	=> $orderId,
-					'order'		=> $order,
-					'executor'	=> Zakaz::getExecutor($orderId),
-					'moderated'	=> $moderated,
-					'isGuest'	=> $isGuest,
-					'parts'		=> ZakazParts::model()->findAll(array(
+				'orderId'	=> $orderId,
+				'order'		=> $order,
+				'executor'	=> Zakaz::getExecutor($orderId),
+				'moderated'	=> $moderated,
+				'isGuest'	=> $isGuest,
+				'parts'		=> ZakazParts::model()->findAll(array(
 					'condition' => "`proj_id`='$orderId'",
-					'EmptyChat'	=> $EmptyChat,
 				)),
 			));
             Yii::app()->end();

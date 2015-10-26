@@ -425,7 +425,7 @@ var YiiChat = function (options) {
     };
 }; //end
 
-		function send_message(typeId, name, cost=0) {
+		function send_message(typeId, name, cost) {
 			var orderId = $('span#order_number').text();
 			// уведомление о закрытии заказа - 17
 			// уведомление об назначении исполнителем - 19
