@@ -262,7 +262,7 @@ h3, .h3 {
 }
 
 .nav-tabs > li > a {
-margin-right: 2px;
+    margin-right: 2px;
     line-height: 1.42857143;
     border: 1px solid rgb(198, 217, 241);
     border-radius: 2px 2px 0 0;
@@ -271,10 +271,7 @@ margin-right: 2px;
     text-transform: uppercase;
     font-size: 12px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-}
-
-.nav-tabs {
-    border-bottom: 1px solid #C6D9F1;
+    padding: 10px 25px;
 }
 
 .nav:last-child {
@@ -707,6 +704,8 @@ width: 50%;*/
 .chtpl0-nickname, .chtpl0-date, .chtpl0-time{
 	display: inline-block;
 	margin-right: 2px;
+    color: #00796b !important;
+    font-size: 12.5px;
 }
 
 .chtpl0-time{
@@ -898,6 +897,7 @@ color: #FFFFFF;
 min-height: 80px;
 height: auto;
 padding: 10px;
+    border-bottom: 1px solid #eee !important;
 }
 
 .chtpl0-avatar {
@@ -1176,26 +1176,149 @@ div.chtpl0-form > h5 {
     display: none;
 }
 
+.thanks-for-order-message {
+    background-color: #b5e979;
+    color: #aaa;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+}
 
-div.chat-window::before {
-    content: "Напишите что готовы взять этот заказ или задайте вопрос";
-    display: block!important;
-    position: absolute!important;
-    top: 46%!important;
-    left: 16%!important;
-    font-size: 1.5rem!important;
-    font-weight: bold!important;
-    text-transform: uppercase!important;
-    color: #D2D2D2 !important;
+div#chat div.text {
+    margin: 10px;
+    font-size: 12.5px;
 }
-div.chat-window::after {
-    content: "«десь будет ваша переписка";
-    display: block!important;
-    position: absolute!important;
-    top: 38%!important;
-    left: 28%!important;
-    font-size: 2rem!important;
-    font-weight: bold!important;
-    text-transform: uppercase!important;
-    color: #EDEDED!important;
+
+div.chtpl0-avatar > div {
+    font-weight: bold;
+    margin-top: 2px;
 }
+
+div.author-message {
+    background-color: #fff !important;
+}
+
+div.manager-message {
+    background-color: #F4F4F4 !important;
+}
+
+div.customer-message {
+    background-color: #f6f6f6 !important;
+}
+
+div#zakaz-grid-current {
+    background-color: #fff;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+div.summary {
+    text-align: right;
+    font-weight: bold;
+    padding: 10px 15px 0px 0px;
+    color: #333;
+}
+
+table.items thead tr th {
+    border-bottom: 1px solid rgb(238, 238, 238);
+
+}
+
+table, th, td {
+  border: none; }
+
+table {
+  width: 100%;
+  display: table; }
+  table.bordered > thead > tr, table.bordered > tbody > tr {
+    border-bottom: 1px solid #d0d0d0; }
+  table.striped > tbody > tr:nth-child(odd) {
+    background-color: #f2f2f2; }
+  table.striped > tbody > tr > td {
+    border-radius: 0px; }
+  table.hoverable > tbody > tr {
+    -webkit-transition: background-color .25s ease;
+    transition: background-color .25s ease; }
+    table.hoverable > tbody > tr:hover {
+      background-color: #f2f2f2; }
+  table.centered thead tr th, table.centered tbody tr td {
+    text-align: center; }
+
+thead {
+  border-bottom: 1px solid #d0d0d0; }
+
+td, th {
+  padding: 15px 5px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+  border-radius: 2px; }
+
+.grid-view table.items td {
+    padding: 0.5em !important;
+}
+
+header div#control-menu li a:active, header div#control-menu li a:focus {
+    outline: none;
+}
+
+header div#control-menu li {
+    margin: 0px 5px;
+}
+
+header div#control-menu li a {
+    border: none;
+    border-radius: 2px;
+    background-color: #8F96A4;
+    color: #fff;
+    -webkit-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+}
+
+header div#control-menu li a:hover {
+    background-color: #6a7488;
+}
+
+header div#control-menu li:last-child {
+    float: right;
+    width: 100px;
+}
+
+header div#control-menu li:last-child a {
+    border: none;
+    border-radius: 2px;
+    background-color: #D9534F;
+    color: #fff;
+    -webkit-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+}
+
+header div#control-menu li:last-child a:hover {
+    background-color: #D43F3A;
+}
+section li a {
+    border-bottom: 0px !important;
+}
+
+div.list-changes-filename > a {
+    display: block;
+    overflow: hidden;
+}
+
+li#first-tab-li a {
+    border-radius: 15px 0px 0px 0px;
+}
+
+li#first-tab-li a:focus, li#first-tab-li a:active, li#second-tab-li a:focus, li#second-tab-li a:active {
+    outline: none;
+}
+
+div#first-tab, div#second-tab {
+    margin-left: 21px;
+    margin-right: 21px;
+}
+

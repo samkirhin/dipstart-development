@@ -136,11 +136,19 @@
 		<?php echo $form->error($model,'edu_dep'); ?>
 	</div>
 	<?php } ?>
+	<?php if(!$isGuest) { ?>
 	<div class="row buttons">
 		<?php $attr = array('class' => 'btn btn-primary'); ?>
 		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
 		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), $attr); ?>
 	</div>
+	<?php } else { ?>
+		<div class="row buttons"> <?php
+			$href = 'http://'.$_SERVER['SERVER_NAME'].'/user/registration?role=Author';
+			$attr = array('onclick'=>"document.location.href = '$href'", 'class'=>"btn btn-primary btn-chat btn-block btn-green btn-30");
+			echo  CHtml::submitButton(UserModule::t('Get It!'), $attr) ;
+		?></div>
+	<?php } ?>
 
 <?php $this->endWidget();
 ?>

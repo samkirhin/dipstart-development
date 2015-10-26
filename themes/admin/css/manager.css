@@ -853,3 +853,17 @@ div.info-block > div#accordion > div.panel-default {
 div.change-row div.panel-heading {
     background-color: #f1f8e9;
 }
+
+div.partStatus-status > select {
+    float: right;
+}
+
+.rating {
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+div.list-changes-filename > a {
+    display: block;
+    overflow: hidden;
+}
