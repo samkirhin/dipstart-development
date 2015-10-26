@@ -38,7 +38,7 @@ var ProjectPayments = function(orderId) {
                 alert(response);
             }
         }, 'json');}
-		alert('pay='+pay);
+		//alert('pay='+pay);
 		if (pay>0)	send_message(24,'Исполнителю об оплате заказа',pay);
 		
         /*if (receive!='') {$.post('/project/payment/savePaymentsToUser', JSON.stringify({
