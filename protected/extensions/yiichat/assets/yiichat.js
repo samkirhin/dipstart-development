@@ -272,6 +272,8 @@ var YiiChat = function (options) {
                     oldaction = tmp_post.find('button.toggleexecutor').attr('class').split(' ')[1];
                     owner = tmp_post.find('.chtpl0-content').find('.owner').data('ownerid');
                     if (oldaction == 'executor-unset') action = 'set'; else action = 'unset';
+                    if (oldaction == 'executor-unset')
+						send_message(21,'Снятие с заказа');
                     jQuery.ajax({
                         cache: false, type: 'post',
                         url: options.action + '&action=dtoggle&data=' + action,
@@ -292,6 +294,11 @@ var YiiChat = function (options) {
 								//cost = 
 								cost = prompt("Введите стоимость для автора", cost);
 								$('.work_price_input').val(cost);
+								
+								var orderId = $('span#order_number').text();
+								if (cost > 0) {
+									send_message(19,'Назначение исполнителя (определение цены)');
+								};
 							}
                             clear();
                         },
@@ -305,6 +312,22 @@ var YiiChat = function (options) {
                 p = posts.find(".post[id='post_" + postn + "']");
             p.find('.text').html(post.message);
         };
+		
+		function send_message(typeId, name) {
+			var orderId = $('span#order_number').text();
+			// уведомление об назначении исполнителем - 19
+			// уведомление осъёме с заказа - 21
+			// oldbadger 25.10.2015
+			$.post('/project/emails/send', JSON.stringify({
+				'orderId': orderId,
+				'typeId': typeId,
+				'name': name
+			}), function (response) {
+				if (response.data) {
+//				reload();
+				}
+			}, 'json');
+		};
 
         var scroll = function () {
             //window.location = '#'+posts.find('.post:last').attr('id');

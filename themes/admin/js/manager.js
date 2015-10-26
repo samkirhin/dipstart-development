@@ -62,6 +62,21 @@ function send(url) {
         contentType: false,
         cache: false
     });
+	
+	if (url.indexOf('/project/changes/add') >= 0) {
+		// уведомление об добавлении изменений
+		var arr = url.split('/');
+		$.post('/project/emails/send', JSON.stringify({
+			'url': url,
+			'orderId': arr[arr.length-1],
+			'typeId': 23,
+			'name': 'Новое изменение'
+		}), function (response) {
+			if (response.data) {
+//				reload();
+			}
+		}, 'json');
+	};
 
     return false;
 }

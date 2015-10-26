@@ -105,13 +105,14 @@ class ChatController extends Controller {
 							$type_id = Emails::TYPE_16;
 						};
 						$user = User::model()->findByPk($model->recipient);
-						$profle = Profiles::model()->findAll("`user_id`='$model->recipient'");
+						$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
 						
 						$email = new Emails;
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
 						$title = $rec[0]->title;
 						$body  = $rec[0]->text;
-						$email->name = $profle->firstname;
+						$email->name = $profile->firstname;
+						if (strlen($email->name) < 2) $email->name = $user->username;
 						$email->num_order = $orderId;
 						$email->message = $post;
 						$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
