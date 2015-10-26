@@ -9,6 +9,10 @@ class EventController extends Controller {
                 'actions'=>array('index','delete'),
                 'users'=>array('admin','manager'),
             ),
+            array('allow',
+                'actions'=>array('index','delete','back'),
+                'users'=>array('customer'),
+            ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
@@ -58,6 +62,9 @@ class EventController extends Controller {
         $this->render('index', array(
             'events' => $events,
         ));
+    }
+    public function actionBack() {
+		die('back back back back back back back ');
     }
 	
     
