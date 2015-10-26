@@ -31,7 +31,6 @@ class PaymentController extends Controller {
     protected function _prepairJson() {
         $this->_request = Yii::app()->jsonRequest;
         $this->_response = new JsonHttpResponse();
-		echo '$this->_response='; print_r($this->_response);
     }
 
     public function actionView() {
