@@ -116,6 +116,7 @@ config          =   @array, configuration parameters of fancy box plugin. Defaul
     <?php //echo $this->renderPartial('/project/event/back'); ?>
   </div>
 </div>
+
 -->
 </div>
 </body>
