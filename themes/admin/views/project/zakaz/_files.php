@@ -45,7 +45,7 @@ $this->widget('application.components.MyYiiFileManViewer'
         'onClientSideUploaderError'=>
         	"function(messages){
         		$(messages).each(function(i,m){
-        			alert(m);
+        			alert('error '+m);
         		});
         	}
         ",
