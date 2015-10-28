@@ -26,6 +26,7 @@ return array(
 	'Incorrect password (minimal length 4 symbols).' => 'Incorrect password (minimal length 4 symbols).',
 	'Incorrect username (length between 3 and 20 characters).' => 'Incorrect username (length between 3 and 20 characters).',
 	"Incorrect symbols (A-z0-9)." => 'Incorrect symbols (A-z0-9).',
+	"Incorrect symbols (A-z)." => 'Incorrect symbols (A-z).',
 	'Variable name may consist of a-z, 0-9, underscores, begin with a letter.'=>'Variable name may consist of a-z, 0-9, underscores, begin with a letter.',
 	"Length of ' + n + ' must be between '+min+' and '+max+'."=>"Length of ' + n + ' must be between '+min+' and '+max+'.",
 	'Please enter the letters as they are shown in the image above.' => 'Please enter the letters as they are shown in the image above.',

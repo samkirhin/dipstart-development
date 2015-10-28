@@ -315,7 +315,6 @@ class PaymentController extends Controller {
 
     }*/
 	public function actionAffiliatePayment(){
-		//print_r($_POST);
 		$hashSecretWord = 'MjQ5YjU2ZWEtNGNiNy00YjZlLWEyNjItMWI5Njc1OGE0Njc5'; //2Checkout Secret Word
 		$hashSid = 901291608; //2Checkout account number
 		$hashTotal = $_REQUEST['total']; //Sale total to validate against

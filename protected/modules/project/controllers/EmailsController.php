@@ -29,7 +29,6 @@ class EmailsController extends Controller
     protected function _prepairJson() {
         $this->_request = Yii::app()->jsonRequest;
         $this->_response = new JsonHttpResponse();
-echo '<br>$this->_request='; print_r($this->_request);
     }
 	
 	public function actionIndex()
@@ -46,10 +45,8 @@ echo '<br>$this->_request='; print_r($this->_request);
 		$typeId = $this->_request->getParam('typeId');
 		$back = $this->_request->getParam('back');
 		$cost = $this->_request->getParam('cost');
-	echo '<br>$type_id='.$typeId.' $orderId='.$orderId;
 
 		$order	 = Zakaz::model()->findByPk($orderId);
-//print_r($order);
 		
 		$arr_type = array(
 				Emails::TYPE_18,
@@ -65,15 +62,11 @@ echo '<br>$this->_request='; print_r($this->_request);
 		} else {
 			$user = User::model()->findByPk($order->user_id);
 		};
-echo '$order->executor='.$order->executor.' $order->user_id='.$order->user_id;
 
-echo '<br>$user=';print_r($user);
 		$model->to_id = $user->id;
 		$profile = Profile::model()->findAll("`user_id`='$user->id'");
-//print_r($profile);
 		
 		$rec   = Templates::model()->findAll("`type_id`='$typeId'");
-		echo '<br>$rec=';print_r($rec);
 		
 		$title = $rec[0]->title;
 
@@ -86,7 +79,6 @@ echo '<br>$user=';print_r($user);
 		$model->message = $rec[0]->text;
 		$model->price_order = $cost;
 		$this->sum_order  = $cost;
-	echo '<br>$user->email='.$user->email;
 		$model->sendTo( $user->email, $rec[0]->text, $typeId);
 				
 		$model->save();

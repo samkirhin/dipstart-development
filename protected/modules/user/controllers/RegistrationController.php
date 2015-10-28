@@ -31,7 +31,6 @@ class RegistrationController extends Controller
 			$role = 'Customer';
 		}
 		if(isset($_POST['ajax']) && $_POST['ajax']==='simple-registration-form') {
-			echo UActiveForm::validate($model);
 			Yii::app()->end();
 		}
 		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {
@@ -52,7 +51,7 @@ class RegistrationController extends Controller
 						$AuthAssignment->save();
 
 						$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
-						UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
+//						UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
 						
 						// новая служба системных сообщений
 

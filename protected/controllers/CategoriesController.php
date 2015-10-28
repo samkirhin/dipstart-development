@@ -122,8 +122,6 @@ class CategoriesController extends Controller
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
-        print_r(Yii::app()->user->checkAccess('Create'));
-
     }
 
 	/**

@@ -597,14 +597,15 @@ class ZakazController extends Controller
 		$criteria = new CDbCriteria();
         if(Campaign::getId()) {
 			$projectFields = $zakaz->getFields();
-			if ($projectFields) foreach($projectFields as $field) {
-				if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
-					$varname = $field->varname;
-					$value = $zakaz->$varname;
-					$criteria->addSearchCondition('profile.'.$varname,$value);
-					//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+			if ($projectFields) 
+				foreach($projectFields as $field) {
+					if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
+						$varname = $field->varname;
+						$value = $zakaz->$varname;
+						$criteria->addSearchCondition('profile.'.$varname,$value);
+						//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+					}
 				}
-			}
 			//echo json_encode(array('error'=>$tmp));
 			//Yii::app()->end();
 		}/* else {
@@ -632,7 +633,7 @@ class ZakazController extends Controller
             
             echo 'ok =)';
 
-			/*$email = new Emails;
+			$email = new Emails;
 
 			// новая рассылка
 			
@@ -656,7 +657,7 @@ class ZakazController extends Controller
 			$email->num_order = $orderId;
 			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 			$email->message = $rec[0]->text;
-			$email->sendTo( $user->email, $rec[0]->text, $typeId);*/
+			$email->sendTo( $user->email, $rec[0]->text, $typeId);
             
         } else {
              echo json_encode(array('error'=>'Нет авторов'));

@@ -20,7 +20,7 @@ class Emails extends CActiveRecord {
 	const TYPE_15=15; // +Заказчику когда готова вся работа.
 	const TYPE_16=16; // +Заказчику о сообщении в чате
 	const TYPE_17=17; // +Заказчику о завершении заказа
-	const TYPE_18=18; // Исполнителю сообщение рассылки
+	const TYPE_18=18; // +Исполнителю сообщение рассылки
 	const TYPE_19=19; // +Исполнителю о назначении
 	const TYPE_20=20; // +Исполнителю о сообщении в чате
 	const TYPE_21=21; // +Исполнителю о съеме с заказа
@@ -138,17 +138,11 @@ class Emails extends CActiveRecord {
 	{
 		
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site','Notification')).'?=';
-		$from	= Yii::app()->params['adminEmail'];
+		$from	= Yii::app()->params['supportEmail''];
 		$headers="From: $from<$from>\r\n".
 			"To: $to\r\n".
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8";
-echo '<br>$from='.$from;
-echo '<br>$to='.$to;
-echo '<br>$subject='.$subject;
-echo '<br>$body='.$body;
-echo '<br>$headers='.$headers;
-
 		$dictionary = array(
 			'%сайт%',
 			'%ссылка на страницу изменения пароля%',
@@ -204,17 +198,13 @@ echo '<br>$headers='.$headers;
 			$this->specialization,
 			$this->name_part,
 		);
-		echo '<br>$this=';print_r($this);
 	
 		// собственно, замены
 		foreach($dictionary as $key=>$fraze) {
-			echo '<br>'.$fraze;
 			if (strpos( $body, $fraze)) {
-				echo ' key'.$key.' $subst['.$key.']='.$subst[$key];
 				$body = str_replace( $fraze, $subst[$key], $body);
 			};	
 		}	
-echo '$body='.$body;
 		mail($from,$subject,$body,$headers);
 
 		$this->from		= $this->from_id;;
@@ -222,9 +212,6 @@ echo '$body='.$body;
 		$this->body		= $body;		
 		$this->type		= $type_id;
 		$this->dt		= time();
-		echo '<br>$this='; print_r($this);
-		echo 'save='.$this->save();
-		
 	}			
 	
 }

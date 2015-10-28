@@ -171,8 +171,8 @@ if (file_exists($path)){
 					// ajax'а, чтобы избежать манипуляций с 
 					// обработчиками событий
 				?>
-                <?php $this->renderPartial('chatbtn');?>
             </div>
+            <?php $this->renderPartial('chatbtn');?>
             
             <div class="row">
             <?php
