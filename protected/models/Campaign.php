@@ -15,6 +15,10 @@ class Campaign extends CActiveRecord {
 		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
 		return self::$orgz->id;
 	}
+	public static function getName() {
+		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		return self::$orgz->name;
+	}
 	public static function getLanguage() {
 		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
 		return self::$orgz->language;

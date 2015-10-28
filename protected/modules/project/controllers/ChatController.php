@@ -116,7 +116,7 @@ class ChatController extends Controller {
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
 						$title = $rec[0]->title;
 						$body  = $rec[0]->text;
-						$email->name = $profile->firstname;
+						$email->name = $user->full_name;
 						if (strlen($email->name) < 2) $email->name = $user->username;
 						$email->num_order = $orderId;
 						$email->message = $post;
@@ -161,7 +161,7 @@ class ChatController extends Controller {
 			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
 
 //			Catalog::model()->tableName();
-			$EmptyChat = UserModule::t('EmptyChat');
+			//$EmptyChat = UserModule::t('EmptyChat');
 			$this->render('index', array(
 				'orderId'	=> $orderId,
 				'order'		=> $order,
