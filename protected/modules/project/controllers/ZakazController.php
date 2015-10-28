@@ -597,14 +597,15 @@ class ZakazController extends Controller
 		$criteria = new CDbCriteria();
         if(Campaign::getId()) {
 			$projectFields = $zakaz->getFields();
-			if ($projectFields) foreach($projectFields as $field) {
-				if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
-					$varname = $field->varname;
-					$value = $zakaz->$varname;
-					$criteria->addSearchCondition('profile.'.$varname,$value);
-					//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+			if ($projectFields) 
+				foreach($projectFields as $field) {
+					if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
+						$varname = $field->varname;
+						$value = $zakaz->$varname;
+						$criteria->addSearchCondition('profile.'.$varname,$value);
+						//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+					}
 				}
-			}
 			//echo json_encode(array('error'=>$tmp));
 			//Yii::app()->end();
 		} else {

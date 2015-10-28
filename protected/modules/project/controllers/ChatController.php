@@ -136,6 +136,10 @@ class ChatController extends Controller {
         }
 		
 		$order = Zakaz::model()->resetScope()->findByPk($orderId);
+		
+		$parts = ZakazParts::model()->findAll(array(
+					'condition' => "`proj_id`='$orderId'",
+				));
 		if ($isGuest) {
 			Yii::app()->theme='client';
 			
@@ -159,15 +163,12 @@ class ChatController extends Controller {
 //			Catalog::model()->tableName();
 			$EmptyChat = UserModule::t('EmptyChat');
 			$this->render('index', array(
-					'orderId'	=> $orderId,
-					'order'		=> $order,
-					'executor'	=> Zakaz::getExecutor($orderId),
-					'moderated'	=> $moderated,
-					'isGuest'	=> $isGuest,
-					'parts'		=> ZakazParts::model()->findAll(array(
-					'condition' => "`proj_id`='$orderId'",
-					'EmptyChat'	=> $EmptyChat,
-				)),
+				'orderId'	=> $orderId,
+				'order'		=> $order,
+				'executor'	=> Zakaz::getExecutor($orderId),
+				'moderated'	=> $moderated,
+				'isGuest'	=> $isGuest,
+				'parts'		=> $parts,
 			));
             Yii::app()->end();
 		}
@@ -186,6 +187,7 @@ class ChatController extends Controller {
             'executor'	=> Zakaz::getExecutor($orderId),
 			'moderated'	=> $moderated,
 			'isGuest'	=> $isGuest,
+			'parts'		=> $parts,
         ));
     }
 	
