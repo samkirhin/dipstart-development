@@ -79,10 +79,16 @@ class ChatController extends Controller {
 		
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
-                $model = new ProjectMessages;
-                $model->sender = Yii::app()->user->id;
-                $model->moderated = 0;
-                $model->order = $orderId;
+
+				$id = (int)$_POST['ProjectMessages']['id'];
+				if ($id>0)	{
+					$model = ProjectMessages::model()->findByPk($id);
+				} else {		
+					$model = new ProjectMessages;
+					$model->sender = Yii::app()->user->id;
+					$model->moderated = 0;
+					$model->order = $orderId;
+				};
 				
 				$post	= $_POST['ProjectMessages']['message'];
 				$post	= str_replace("\x0D\x0A",'<br>',$post);
@@ -90,7 +96,6 @@ class ChatController extends Controller {
 				$_POST['ProjectMessages']['message'] = $post;
 				
                 $model->attributes = Yii::app()->request->getPost('ProjectMessages');
-					
                 $model->date = date('Y-m-d H:i:s');
                 switch ($model->recipient) {
                     case 'manager':
@@ -119,8 +124,8 @@ class ChatController extends Controller {
 						$email->sendTo( $user->email, $body, $type_id);
                         break;
                 }
-
-                $model->save();
+//print_r($model);
+//echo '<br>$model->save()='.$model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(

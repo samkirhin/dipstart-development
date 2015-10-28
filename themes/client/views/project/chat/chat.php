@@ -47,7 +47,6 @@ div.chat-window::before {
         <div class="chtpl0-content">
             
             <div class="owner chtpl0-nickname" data-ownerid="<?php echo $message->senderObject->id ?>">
-                <!--<a data-toggle="tooltip" title="<?php echo $message->senderObject->full_name ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->full_name ?></a>  |-->
 				<?php echo $message->senderObject->AuthAssignment->AuthItem->description; ?> |
 			</div>
             <div class="chtpl0-date"><?= date_format(date_create($message->date), 'd.m.Y H:i:s'); ?></div>
@@ -56,7 +55,7 @@ div.chat-window::before {
                 <div class="cost"><?=ProjectModule::t('Price for a job:')?> <?php echo $message->cost ?></div>
             <?php endif; ?>
                 
-            <div class="text"><?php echo $message->message; ?></div>
+            <div class="text" id="<?php echo $message->id ?>"><?php echo $message->message; ?></div>7
 			
         </div>
     </div>

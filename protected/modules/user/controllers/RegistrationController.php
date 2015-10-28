@@ -31,7 +31,6 @@ class RegistrationController extends Controller
 			$role = 'Customer';
 		}
 		if(isset($_POST['ajax']) && $_POST['ajax']==='simple-registration-form') {
-			echo UActiveForm::validate($model);
 			Yii::app()->end();
 		}
 		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {

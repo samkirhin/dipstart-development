@@ -121,7 +121,6 @@ class Profile extends UActiveRecord
 		$relations = array(
 			'user'=>array(self::HAS_ONE, 'User', 'id'),
 			'categories'=>array(self::HAS_MANY, 'Categories', array('id'=>'discipline')),
-			////////////// !!!!!!!!!!!!!!!!!! ---------------------------------------------------------
 			'AuthAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
 		);
 		if (isset(Yii::app()->getModule('user')->profileRelations))
