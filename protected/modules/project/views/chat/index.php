@@ -129,6 +129,8 @@ $this->widget('application.components.FileManViewer'
         ?>
     </tr>
     <?php
+ die('!!!!!!!!!!!!!!!!!!!!!!');
+	
 		if (is_object($parts))
         $this->widget('zii.widgets.CListView', array(
             'dataProvider'=>$parts,
