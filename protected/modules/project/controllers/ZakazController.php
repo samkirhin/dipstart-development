@@ -607,22 +607,24 @@ class ZakazController extends Controller
 			}
 			//echo json_encode(array('error'=>$tmp));
 			//Yii::app()->end();
-		} else {
+		}/* else {
 			$job = $zakaz->job_id;
 			$discipline = $zakaz->category_id;
 			
 			$criteria->addSearchCondition('profile.discipline',$discipline);
 			$criteria->addSearchCondition('profile.job_type',$job, true, 'OR');
-        }
+        }*/
 		$authors = User::model()->with('profile')->findAll($criteria);
 		
 		if(!empty($authors)) {
 
             $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $order_id]);
-            $mail = new YiiMailer('invite', ['link' => $link]);
+            $mail = new YiiMailer(/*'invite', ['link' => $link]*/);
+			$mail->clearLayout();
             $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
             $mail->setSubject('Приглашение в проект');
-            
+			$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$order_id;
+            $mail->setBody('<a href="'.$link.'">'.$link.'</a>');
             foreach ($authors as $author) {
                 $mail->setTo($author->email);
                 if($author->getUserRole($author->id)=='Author') $mail->send();
@@ -630,7 +632,7 @@ class ZakazController extends Controller
             
             echo 'ok =)';
 
-			$email = new Emails;
+			/*$email = new Emails;
 
 			// новая рассылка
 			
@@ -654,7 +656,7 @@ class ZakazController extends Controller
 			$email->num_order = $orderId;
 			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 			$email->message = $rec[0]->text;
-			$email->sendTo( $user->email, $rec[0]->text, $typeId);
+			$email->sendTo( $user->email, $rec[0]->text, $typeId);*/
             
         } else {
              echo json_encode(array('error'=>'Нет авторов'));
