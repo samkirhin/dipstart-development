@@ -143,12 +143,6 @@ class Emails extends CActiveRecord {
 			"To: $to\r\n".
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8";
-echo '<br>$from='.$from;
-echo '<br>$to='.$to;
-echo '<br>$subject='.$subject;
-echo '<br>$body='.$body;
-echo '<br>$headers='.$headers;
-
 		$dictionary = array(
 			'%сайт%',
 			'%ссылка на страницу изменения пароля%',
@@ -204,17 +198,13 @@ echo '<br>$headers='.$headers;
 			$this->specialization,
 			$this->name_part,
 		);
-		echo '<br>$this=';print_r($this);
 	
 		// собственно, замены
 		foreach($dictionary as $key=>$fraze) {
-			echo '<br>'.$fraze;
 			if (strpos( $body, $fraze)) {
-				echo ' key'.$key.' $subst['.$key.']='.$subst[$key];
 				$body = str_replace( $fraze, $subst[$key], $body);
 			};	
 		}	
-echo '$body='.$body;
 		mail($from,$subject,$body,$headers);
 
 		$this->from		= $this->from_id;;
@@ -222,9 +212,6 @@ echo '$body='.$body;
 		$this->body		= $body;		
 		$this->type		= $type_id;
 		$this->dt		= time();
-		echo '<br>$this='; print_r($this);
-		echo 'save='.$this->save();
-		
 	}			
 	
 }
