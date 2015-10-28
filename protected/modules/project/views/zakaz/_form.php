@@ -9,7 +9,6 @@
 ?>
 	<script>
 		var content="<? UserModule::t('Write what is ready to take this order or ask a question') ?>";
-		alert(content);
 		$('div#chatWindow').css('content',content);
 	</script>
 	<input id="empty-chat-message" type="hidden" value="">

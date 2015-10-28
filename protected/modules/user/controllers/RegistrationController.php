@@ -16,6 +16,27 @@ class RegistrationController extends Controller
 			),
 		);
 	}*/
+/*
+	public function filters()
+	{
+		return CMap::mergeArray(parent::filters(),array(
+			'accessControl', // perform access control for CRUD operations
+		));
+	}
+	
+	public function accessRules()
+	{
+		return array(
+			array('allow',
+				'actions'=>array('index','registration'),
+				'users'=>array('*'),
+			),
+		);
+	}
+	
+	public function actionIndex() {
+	}
+*/
 	/**
 	 * Registration user
 	 */
@@ -30,9 +51,6 @@ class RegistrationController extends Controller
 		} else {
 			$role = 'Customer';
 		}
-		if(isset($_POST['ajax']) && $_POST['ajax']==='simple-registration-form') {
-			Yii::app()->end();
-		}
 		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {
 			$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
@@ -45,7 +63,6 @@ class RegistrationController extends Controller
 					$model->superuser=0;
 					$model->status=1;
 					$model->username = $model->email;
-					
 					if ($model->save()) {
 						$AuthAssignment = new AuthAssignment;
 						$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$model->id);
@@ -71,7 +88,7 @@ class RegistrationController extends Controller
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
 						$title = $rec[0]->title;
 						$body  = $rec[0]->text;
-						
+						$id = Campaign::getId();
 						$email->campaign = Campaign::getName();
 						$email->name = $model->full_name;
 						$email->login= $model->username;

@@ -14,6 +14,7 @@
     	<img style='float: left;' class='canceljob' src='images/delete.png' title="<?=Yii::t('site','cancel the upload')?>"/>
     </div>
     </div>
+<?php die();?>
     <hr/>
     <button id='select_file' class='ok_button'><?=Yii::t('site','Select File(s)')?></button>
     <button id='delete_file' class='delete_button'><?=Yii::t('site','Delete Selected File(s)')?></button>
@@ -21,6 +22,7 @@
 </div>
 <?php
         $filelist = Yii::app()->fileman->list_files(Yii::app()->session['project_id']);
+		if (count($filelist))
         foreach ($filelist as $fd) {
           $real_path = Yii::app()->fileman->get_file_path($fd['id'], $fd['file_id']);
           echo CHtml::link($fd['filename'],  array('zakaz/download','path' => $real_path)).'&nbsp;&nbsp;';
@@ -45,7 +47,7 @@ $this->widget('application.components.MyYiiFileManViewer'
         'onClientSideUploaderError'=>
         	"function(messages){
         		$(messages).each(function(i,m){
-        			alert(m);
+        			alert('error '+m);
         		});
         	}
         ",
