@@ -51,7 +51,7 @@ class RegistrationController extends Controller
 						$AuthAssignment->save();
 
 						$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
-						UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
+//						UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
 						
 						// новая служба системных сообщений
 
