@@ -1,5 +1,6 @@
 <tr>
     <?php
+	die();
     foreach ($data as $k=>$v) {
         if ($k=='file') {
             echo '<td>';

@@ -124,11 +124,13 @@ $this->widget('application.components.FileManViewer'
     <tr>
         <?php
         foreach (ZakazParts::model()->attributeLabels() as $k=>$v) {
-            if (User::model()->isAuthor() || $k=='file')echo '<th>'.CHtml::encode($v).'</th>';
+//            if (User::model()->isAuthor() || $k=='file')echo '<th>'.CHtml::encode($v).'</th>';
         }
         ?>
     </tr>
     <?php
+ die('!!!!!!!!!!!!!!!!!!!!!!');
+	
 		if (is_object($parts))
         $this->widget('zii.widgets.CListView', array(
             'dataProvider'=>$parts,
