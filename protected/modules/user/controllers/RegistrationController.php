@@ -37,6 +37,7 @@ class RegistrationController extends Controller
 			$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
 			if(isset($_POST['RegistrationForm'])) {
+				echo 'hello!';
 				$model->attributes=$_POST['RegistrationForm'];
 				if($model->validate()) {
 					$soucePassword = $this->generate_password(8);
