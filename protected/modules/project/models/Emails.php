@@ -138,7 +138,7 @@ class Emails extends CActiveRecord {
 	{
 		
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site','Notification')).'?=';
-		$from	= Yii::app()->params['adminEmail'];
+		$from	= Yii::app()->params['supportEmail''];
 		$headers="From: $from<$from>\r\n".
 			"To: $to\r\n".
 			"MIME-Version: 1.0\r\n".
