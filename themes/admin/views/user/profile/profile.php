@@ -16,6 +16,10 @@ $this->renderPartial('_menu',array());
 		<th class="label"><?php echo CHtml::encode($model->getAttributeLabel('username')); ?></th>
 	    <td><?php echo CHtml::encode($model->username); ?></td>
 	</tr>
+	<tr>
+		<th class="label"><?php echo CHtml::encode($model->getAttributeLabel('full_name')); ?></th>
+	    <td><?php echo CHtml::encode($model->full_name); ?></td>
+	</tr>
 	<?php 
 		$profileFields=ProfileField::model()->forOwner()->sort()->findAll();
 		if ($profileFields) {
