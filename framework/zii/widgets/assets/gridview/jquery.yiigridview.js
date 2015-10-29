@@ -143,6 +143,7 @@
 				if (settings.selectableRows > 0) {
 					selectCheckedRows(this.id);
 					$(document).on('click.yiiGridView', '#' + id + ' .' + settings.tableClass + ' > tbody > tr', function (e) {
+						
 						var $currentGrid, $row, isRowSelected, $checks,
 							$target = $(e.target);
 
@@ -161,11 +162,11 @@
 						}
 						$('input.select-on-check', $row).prop('checked', isRowSelected);
 						$("input.select-on-check-all", $currentGrid).prop('checked', $checks.length === $checks.filter(':checked').length);
-
 						if (settings.selectionChanged !== undefined) {
 							settings.selectionChanged(id);
 						}
 					});
+					
 					if (settings.selectableRows > 1) {
 						$(document).on('click.yiiGridView', '#' + id + ' .select-on-check-all', function () {
 							var $currentGrid = $('#' + id),
@@ -189,7 +190,8 @@
 				} else {
 					$(document).on('click.yiiGridView', '#' + id + ' .select-on-check', false);
 				}
-			});
+			});	
+
 		},
 
 		/**
@@ -248,7 +250,6 @@
 					$grid = $(this),
 					id = $grid.attr('id'),
 					settings = gridSettings[id];
-
 				options = $.extend({
 					type: settings.ajaxType,
 					url: $grid.yiiGridView('getUrl'),
