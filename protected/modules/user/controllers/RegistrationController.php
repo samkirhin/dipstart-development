@@ -100,11 +100,12 @@ class RegistrationController extends Controller
 						$identity=new UserIdentity($model->username,$soucePassword);
 						$identity->authenticate();
 						Yii::app()->user->login($identity,0);
+
+						//Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{login}}) before start.", ['{{login}}'=>$model->email]));
+
 						//$this->redirect(Yii::app()->controller->module->returnUrl);
-
-						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{login}}) before start.", ['{{login}}'=>$model->email]));
-
-						$this->refresh();
+						$this->redirect('http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit');
+						//$this->refresh();
 					} else {
 						Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
 						$this->refresh();

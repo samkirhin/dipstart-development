@@ -67,6 +67,7 @@ $(document).ready(function() {
 	
     $('.btn-chat').click(function(){
         view_chat($('#message').val(), 0);
+		return false;
     });
     $('.chat-edit').click(function(){
 		var step = $('#chat-edit').attr('step');

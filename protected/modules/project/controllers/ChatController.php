@@ -125,7 +125,8 @@ class ChatController extends Controller {
                         break;
                 }
 //print_r($model);
-//echo '<br>$model->save()='.$model->save();
+//echo '<br>$model->save()='.
+				$model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(
