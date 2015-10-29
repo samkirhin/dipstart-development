@@ -64,7 +64,9 @@ if (!isset($only_new)) {
 		'htmlOptions'=>array('class'=>'col-md-12 table table-striped'),
 		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
 		'selectionChanged'=>"js:function(sel_id){
-			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+			var orderId = $('#'+sel_id).find('.selected').children().first().text();
+			var url = '".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+orderId;
+			if (orderId*1 > 0) document.location.href=url;
 		}",
 	)); 
 if (!isset($only_new)) {
