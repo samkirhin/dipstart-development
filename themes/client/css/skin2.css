@@ -110,7 +110,7 @@ label[for="UserLogin_rememberMe"] {
 }
 
 
-.hint a[href="/user/recovery/recovery"] {
+.hint a[href="/user/recovery"] {
     text-decoration: none;
 	margin-left: 7px;
 }
