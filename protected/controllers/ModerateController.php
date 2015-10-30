@@ -47,18 +47,14 @@ class ModerateController extends Controller
     {
         $model = $this->loadModel($id);
         $model->approve();
-		echo 'approve';
         $model = $this->loadModel($id);
-		print_r($model);
     }
     
     public function actionDelete($id)
     {
         $model = $this->loadModel($id);
         $model->delete();
-		echo 'delete';
         $model = $this->loadModel($id);
-		print_r($model);
     }
     
     public function loadModel($id)

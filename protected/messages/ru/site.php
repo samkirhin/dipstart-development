@@ -103,7 +103,7 @@ return array(
     'NEW ORDERS'=>'Новые заказы',
     'My orders'=>'Мои заказы',
     'Create order'=>'Создать заказ',
-    'Order statuses'=>'Статусы заазов',
+    'Order statuses'=>'Статусы заказов',
     'Events'=>'События',
 	'Link to order page' => 'Ссылка на страницу заказа',
 	'You have received a new message.' => 'Вам пришло новое сообщение.',
@@ -158,5 +158,24 @@ return array(
 	'Check All' => 'Выбрать все',
 	'UnCheck All' => 'Сбросить все',
 	
+	'Link is absent' => 'Ссылка отсутствует',
 	
+	//sms
+    'Invalid parameters' => 'Ошибка в параметрах',
+    'Invalid login or password' => 'Неверный логин или пароль',
+    'Insufficient funds in the account' => 'Недостаточно средств на счету Клиента',
+    'IP-address temporarily blocked due to frequent errors in querie' => 'IP-адрес временно заблокирован из-за частых ошибок в запросах',
+    'Invalid date' => 'Неверный формат даты',
+    'Message is prohibited (by text or by the name of the sender)' => '',
+    'Invalid number phone' => 'Неверный формат номера телефона',
+    'Message to the specified number can not be delivered' => 'Сообщение на указанный номер не может быть доставлено',
+    'Sending more than one of the same request to send SMS-messages within minutes' => 'Отправка более одного одинакового запроса на передачу SMS-сообщения в течение минуты',
+
+	'From' => 'От',
+	'To' => 'Кому',
+	'Body' => 'Тело',
+	'Type' => 'Тип',
+	'Date' => 'Дата',
+	// Emails
+	'Notification' => 'Уведомление',
 );

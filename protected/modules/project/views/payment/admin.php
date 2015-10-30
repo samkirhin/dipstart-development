@@ -8,6 +8,7 @@
             </td>
             <td>
                 ${order_id}
+
             </td>
             <td>
                 ${receive_date}
@@ -29,7 +30,7 @@
             </td>
             <td>
                 {{if details_ya == null}}
-                    Нет данных
+                    ProjectModule::t('No data')
                 {{else}}
                     {{if approve == 0}}
                         <button class="btn btn-xs btn-default approve_payment" value="${id}"  pay_method="Ya.money">${details_ya}</button>
@@ -40,7 +41,7 @@
             </td>
             <td>
                 {{if details_wm == null}}
-                    Нет данных
+                    ProjectModule::t('No data')
                 {{else}}
                     {{if approve == 0}}
                         <button class="btn btn-xs btn-default approve_payment" value="${id}"  pay_method="WebMoney">${details_wm}</button>
@@ -51,7 +52,7 @@
             </td>
             <td>
                 {{if details_bank == null}}
-                    Нет данных
+                    ProjectModule::t('No data')
                 {{else}}
                     {{if approve == 0}}
                         <button class="btn btn-xs btn-default approve_payment" value="${id}"  pay_method="Bank">${details_bank}</button>
@@ -62,27 +63,30 @@
             </td>
             <td>
                 {{if payment_type == 0}}
-                    Входящий
+                    ProjectModule::t('Incomming')
                 {{else}}
-                    Исходящий
+                    ProjectModule::t('Outgouing')
                 {{/if}}
             </td>
             <td>
                {{if approve == 0}}
-                    <button  class="btn btn-primary btn-xs approve_payment" value="${id}"  pay_method="Cash">Подтвердить</button>
+                    <button  class="btn btn-primary btn-xs approve_payment" value="${id}"  pay_method="Cash"><?= ProjectModule::t('Confirm') ?></button>
                 {{else}}
-                    Подтвержден
+                    ProjectModule::t('Confirmed')
                 {{/if}}
             </td>
             <td>
-                ${method}
+			{{
+                s = ${method}
+				ProjectModule::t(s)
+			}}
             </td>
         </tr>
     </script>
     <script class="bookkeeperSummTemplate" type="text/x-jquery-tmpl">
         <tr>
             <td colspan='4'>
-                Найдено записей: ${ids_count}
+                ProjectModule::t('Records found'): ${ids_count}
             </td>
             
             <td>
@@ -92,7 +96,7 @@
                 
             </td>
             <td>
-                Сумма платежей:
+                <?= ProjectModule::t('The amount of payments') ?>:
             </td>
             <td>
                 ${summary}
@@ -104,75 +108,75 @@
         </tr>
     </script>
 <h1>
-    Бухгалтерия
+    <?= ProjectModule::t('Accounts department') ?>
 </h1>
-<span> <b>Фильтр</b> </span></br>
+<span> <b><?= ProjectModule::t('Filter') ?></b> </span></br>
     
     <select class="search_field_select" >
-        <option>Поле для поиска:</option>
-        <option value="order_id">№ заказа</option>
-        <option value="receive_date">Создан</option>
-        <option value="pay_date">Оплачен</option>
-        <option value="summ">Сумма</option>
-        <option value="payment_type">Тип платежа</option>
-        <option value="approve">Подтвержден</option>
-        <option value="method">Создан</option>
+        <option><?= ProjectModule::t('Field For Search').':' ?></option>
+        <option value="order_id"><?= ProjectModule::t('Order Num') ?></option>
+        <option value="receive_date"><?= ProjectModule::t('Created') ?></option>
+        <option value="pay_date"><?= ProjectModule::t('Payed') ?><?= ProjectModule::t('Payed') ?></option>
+        <option value="summ">"<?= ProjectModule::t('Sum') ?></option>
+        <option value="payment_type"><?= ProjectModule::t('Payment Type') ?></option>
+        <option value="approve"><?= ProjectModule::t('Confirmed') ?></option>
+        <option value="method"><?= ProjectModule::t('Created') ?></option>
     </select>
     
     <select class="search_type_select" >
-        <option>Тип соответствия:</option>
+	    <option><?= ProjectModule::t('Match Type').':' ?></option>
         <option value="bigger">'<'</option>
         <option value="smaller">'>'</option>
         <option value="equal">'='</option>
     </select>
 
-    <input type='text' class='search_string' placeholder="Значение" />
+    <input type='text' class='search_string' placeholder="<?= ProjectModule::t('Value') ?>" />
 
-    <button class="btn btn-sm btn-default send_search"> Поиск </button>
-    <button class="btn btn-sm btn-default clear_search"> Отменить поиск </button>
+    <button class="btn btn-sm btn-default send_search"> <?= ProjectModule::t('Search'> ?> </button>
+    <button class="btn btn-sm btn-default clear_search"> <?= ProjectModule::t('Cancel search') ?> </button>
 <table class="table table-striped table-bordered" style="font-size: 10px;">
     <thead>
         <th>
             <button class="searching" sort="id">ID</button>
         </th>
         <th>
-            <button class="searching" sort="order_id">Заказ</button>
+            <button class="searching" sort="order_id"><?= ProjectModule::t('Order') ?></button>
         </th>
         <th>
-            <button class="searching" sort="receive_date">Создан</button>
+            <button class="searching" sort="receive_date"><?= ProjectModule::t('Created') ?></button>
         </th>
         <th>
-            <button class="searching" sort="pay_date">Оплачен</button>
+            <button class="searching" sort="pay_date"><?= ProjectModule::t('Payed') ?></button>
         </th>
         <th>
-            <button class="searching" sort="theme">Тема</button>
+            <button class="searching" sort="theme"><?= ProjectModule::t('Topic') ?></button>
         </th>
         <th>
-            <button class="searching" sort="manager">Менеджер</button>
+            <button class="searching" sort="manager"><?= ProjectModule::t('Manager') ?></button>
         </th>
         <th>
-            <button class="searching" sort="user">Пользователь</button>
+            <button class="searching" sort="user"><?= ProjectModule::t('_User') ?></button>
         </th>
         <th>
-            <button class="searching" sort="summ">Сумма</button>
+            <button class="searching" sort="summ"><?= ProjectModule::t('Sum') ?></button>
         </th>
         <th>
-            <button class="searching" sort="details_ya">Я.Деньги</button>
+            <button class="searching" sort="details_ya"><?= ProjectModule::t('Yandeх.Money') ?></button>
         </th>
         <th>
-            <button class="searching" sort="details_wm">WebMoney</button>
+            <button class="searching" sort="details_wm"><?= ProjectModule::t('WebMoney') ?></button>
         </th>
         <th>
-            <button class="searching" sort="details_bank">Банк</button>
+            <button class="searching" sort="details_bank"><?= ProjectModule::t('Bank') ?></button>
         </th>
         <th>
-            <button class="searching" sort="payment_type">Тип</button>
+            <button class="searching" sort="payment_type"><?= ProjectModule::t('Type') ?></button>
         </th>
         <th>
-            <button class="searching" sort="approve">Подтвержден</button>
+            <button class="searching" sort="approve"><?= ProjectModule::t('Confirmed') ?></button>
         </th>
         <th>
-            <button class="searching" sort="method">Метод оплаты</button>
+            <button class="searching" sort="method"><?= ProjectModule::t('Method of payment') ?></button>
         </th>
     </thead>
     <tbody class="bookkeeperTable">

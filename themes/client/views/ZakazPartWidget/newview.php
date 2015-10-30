@@ -6,8 +6,6 @@
  * Time: 15:55
  */
 if (count($data['files']) > 0 || !User::model()->isCustomer()) {
-//	echo '<br>data=';print_r($data);
-//	echo '<br>this=';print_r($this);
 ?>
 <div class="col-xs-12">
 	<div class="row zero-edge">

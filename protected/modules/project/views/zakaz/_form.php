@@ -7,6 +7,12 @@
 	$disabled='';
 //	if ($isGuest)$disabled  = " disabled='disabled'";
 ?>
+	<script>
+		var content="<? UserModule::t('Write what is ready to take this order or ask a question') ?>";
+		$('div#chatWindow').css('content',content);
+	</script>
+	<input id="empty-chat-message" type="hidden" value="">
+
 <div class="form">
 
 <?php $form = $this->beginWidget('CActiveForm', array(

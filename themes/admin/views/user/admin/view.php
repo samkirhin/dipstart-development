@@ -21,6 +21,7 @@ $this->menu=array(
 	$attributes = array(
 		'id',
 		'username',
+		'full_name',
 	);
 	$mailing_list = 0;
 	$profile= ProfileField::model()->findAll();

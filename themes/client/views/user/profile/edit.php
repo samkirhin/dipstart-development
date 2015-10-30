@@ -56,7 +56,7 @@ $form=$this->beginWidget('UActiveForm', array(
 						$data = Catalog::model()->performCatsTree($field->varname);
 						$varname = $field->varname;
 						$selected = explode(',',$profile->$varname);
-						echo CHtml::listBox('Profile['.$field->varname.']', $selected, $data, $htmlOptions);
+						echo '<div class="col-md-8">'.CHtml::listBox('Profile['.$field->varname.']', $selected, $data, $htmlOptions).'</div>';
 					/*} elseif ($widgetEdit = $field->widgetEdit($profile,array('htmlOptions'=>array('class'=>'form-control')))) {
                         echo '<div class="col-md-8">'.$widgetEdit.'</div>';
                     } elseif ($field->range) {
@@ -81,6 +81,14 @@ $form=$this->beginWidget('UActiveForm', array(
             <?php echo $form->error($model,'username'); ?>
         </div>
 
+        <div class="form-group">
+            <?php echo $form->labelEx($model,'full_name',array('class'=>'col-md-4 control-label')); ?>
+            <div class="col-md-8">
+                <?php echo $form->textField($model,'full_name',array('size'=>20,'maxlength'=>128,'class'=>'form-control')); ?>
+            </div>
+            <?php echo $form->error($model,'full_name'); ?>
+        </div>
+		
         <div class="form-group">
             <?php echo $form->labelEx($model,'email',array('class'=>'col-md-4 control-label')); ?>
             <div class="col-md-8">

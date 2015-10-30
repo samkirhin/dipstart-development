@@ -8,7 +8,7 @@
     )
 )); ?>
 
-<h1><?php echo UserModule::t("Login"); ?></h1>
+<h1><?=UserModule::t("Login") ?></h1>
 
 <?php if(Yii::app()->user->hasFlash('loginMessage')): ?>
 
@@ -40,12 +40,12 @@
 	
 	<div>
 		<p class="hint">
-		<a href="/user/registration">Зарегистрироваться</a>
+		<a href="/user/registration"><?=UserModule::t("Register") ?></a>
 
                    <?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>
 		</p>
         <p>
-			<?php echo CHtml::activeCheckBox($model,'rememberMe'); ?> <label for="UserLogin_rememberMe">Запомнить меня</label>
+			<?php echo CHtml::activeCheckBox($model,'rememberMe'); ?> <label for="UserLogin_rememberMe"><?=UserModule::t("Remember me next time") ?></label>
         </p>
 	</div>
 	

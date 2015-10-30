@@ -7,14 +7,33 @@
  */
 $criteria=new CDbCriteria;
 if(!Yii::app()->user->isGuest)
- $criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
+$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
+//$criteria->addCondition('(moderated=1 OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
 $criteria->addCondition('`order` = :oid');
 $criteria->params[':oid'] = (int) $orderId;
 $messages = ProjectMessages::model()->findAll($criteria);
 ?>
+
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
-    <?php foreach ($messages as $message): ?>
-    <div class="post chtpl0-msg">
+<?php
+if (empty($messages)) {
+	Yii::app()->clientScript->registerCss('cs1','
+	div#chatWindow::after {
+		content: "'.ProjectModule::t('Here is your correspondence').'";
+	}');
+	if(User::model()->isAuthor() && !$order->executor && $order->status<=2) Yii::app()->clientScript->registerCss('cs2','
+	div#chatWindow::before {
+		 content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
+	}');
+} ?>
+    <?php foreach ($messages as $message): 
+		$msg_role = 'manager-message';
+		$isAuthor = (User::model()->getUserRole($message->senderObject->id) == 'Author');
+		$isCustomer = (User::model()->getUserRole($message->senderObject->id) == 'Customer');
+		if($isAuthor) $msg_role = 'author-message';
+		if($isCustomer) $msg_role = 'customer-message';
+	?>
+    <div class="post chtpl0-msg <?=$msg_role ?>">
         
         <div class="chtpl0-avatar">
             
@@ -32,7 +51,6 @@ $messages = ProjectMessages::model()->findAll($criteria);
         <div class="chtpl0-content">
             
             <div class="owner chtpl0-nickname" data-ownerid="<?php echo $message->senderObject->id ?>">
-                <!--<a data-toggle="tooltip" title="<?php echo $message->senderObject->full_name ?>" class="ownerref" href="/user/user/view?id=<?= $message->senderObject->id ?>"><?= $message->senderObject->full_name ?></a>  |-->
 				<?php echo $message->senderObject->AuthAssignment->AuthItem->description; ?> |
 			</div>
             <div class="chtpl0-date"><?= date_format(date_create($message->date), 'd.m.Y H:i:s'); ?></div>
@@ -41,7 +59,7 @@ $messages = ProjectMessages::model()->findAll($criteria);
                 <div class="cost"><?=ProjectModule::t('Price for a job:')?> <?php echo $message->cost ?></div>
             <?php endif; ?>
                 
-            <div class="text"><?php echo $message->message; ?></div>
+            <div class="text" id="<?php echo $message->id ?>"><?php echo $message->message; ?></div>
 			
         </div>
     </div>

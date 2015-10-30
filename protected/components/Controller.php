@@ -41,6 +41,7 @@ class Controller extends RController
 			UpdateProfile::$table_prefix = $c_id.'_';
 			ZakazPartsFiles::$table_prefix = $c_id.'_';
             PaymentImage::$table_prefix = $c_id.'_';
+			Emails::$table_prefix = $c_id.'_';
 			
 			Yii::app()->language = Campaign::getLanguage();
 		} else {

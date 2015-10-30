@@ -177,5 +177,61 @@ return array(
 	'View ZakazParts' => 'Просмотр  этапов проекта',
 	'Login' => 'Авторизация',
 	'Update Templates' => 'Редактировать шаблоны',
-		
+	
+	// payment
+	
+			'id' => 'ID',
+			'order_id' => 'Номер заказа',
+			'receive_date' => 'Дата получения',
+			'pay_date' => 'Дата оплаты',
+			'theme' => 'Тема',
+			'manager' => 'Менеджер',
+			'user' => 'Пользователь',
+			'summ' => 'Сумма',
+			'details_ya' => 'Яндекс.Деньги',
+			'details_wm' => 'WebMoney',
+			'details_bank' => 'Реквизиты банка',
+			'payment_type' => 'Тип платежа',
+			'approve' => 'Подтверждение',
+			'method' => 'Способ оплаты',
+	
+	
+	
+	
+    'Bookkeeping' => 'Бухгалтерия',
+    'Accounts department' => 'Бухгалтерия',
+	'Records found' => 'Найдено записей',
+	'Confirmed' => 'Подтверждено',
+	'Approved' => 'Подтверждено',
+	
+	'No data' => 'Нет данных',
+	'Incomming' => 'Входящие',
+	'Outgouing' => 'Исходящие',
+	'Filter' => 'Фильтр',
+	'Field For Search' => 'Поле для поиска',
+	'Order Num' => '№ заказа',
+	'Created' => 'Создан',
+	'Payed' => 'Оплачен',
+	'Pay Date' => 'Дата оплаты',
+	'Receive Date' => 'Дата получения',
+	'Summa' => 'Сумма',
+	'Payment Type' => 'Тип платежа',
+	'Search' => 'Поиск',
+	'Cancel search' => 'Отменить поиск',
+	'Topic'=>'Тема',
+	'Manager'=>'Менеджер',
+    '_User' => 'Пользователь',
+    'Order' => 'Заказ',
+	'Yandeх.Money' => 'Я.Деньги',
+	'Bank' => 'Банк',
+	'Method of payment' => 'Метод оплаты',
+	'Value' => 'Значение',
+	'The amount of payments' => 'Сумма платежей',
+	
+	'Events' => 'События',
+	'EVENTS' => 'События',
+	
+	'Please, write that you are ready to take this order or ask a question.' => 'Напишите что готовы взять этот заказ или задайте вопрос.',
+	'Here is your correspondence' => 'Здесь будет ваша переписка',
+	
 );

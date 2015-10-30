@@ -133,11 +133,10 @@ class ZakazController extends Controller
 	public function actionCreate()
 	{
         $model = new Zakaz();
-        
-        if ($model->unixtime == '') {
+
+        if (!isset($model->unixtime)) {
             $model->unixtime = time();
         } 
-                
         
         if(User::model()->isManager() || User::model()->isAdmin()) {
             $model->is_active = 1;
@@ -366,6 +365,31 @@ class ZakazController extends Controller
                 
                 if($model->save()) {
                     $event->delete();
+					
+					// Заказчику проект принят					
+					$type_id = Emails::TYPE_12;
+					$email = new Emails;
+						
+					$order= Zakaz::model()->findByPk($id);
+					$user = User::model()->findAll("`id`='$order->user_id'");
+					$user = $user[0];
+
+					$email->from_id = 1;
+					$email->to_id   = $user->id;
+						
+					$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+					$title = $rec[0]->title;
+					$body  = $rec[0]->text;
+						
+					$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
+					$email->campaign = $campaign->name;
+					$email->name = $profle->firstname;
+					// временно так
+					$email->name = $user->username;;
+					$email->login= $user->username;
+					$email->password= $soucePassword;
+					$email->sendTo( $user->email, $body, $type_id);
+					
                     $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
                         'id' => $model->id
                     )));
@@ -437,7 +461,7 @@ class ZakazController extends Controller
 */	
     public function getProviders($new=false)
     {
-		if ($new) { $arr = array(1); $sarr= '1'; } else	{
+		if ($new) { $arr = array(3); $sarr= '3'; } else	{
 					$arr = array(1,2,3,4); $sarr= '1,2,3,4';
 		};
 		$uid		= Yii::app()->user->id;
@@ -573,38 +597,67 @@ class ZakazController extends Controller
 		$criteria = new CDbCriteria();
         if(Campaign::getId()) {
 			$projectFields = $zakaz->getFields();
-			if ($projectFields) foreach($projectFields as $field) {
-				if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
-					$varname = $field->varname;
-					$value = $zakaz->$varname;
-					$criteria->addSearchCondition('profile.'.$varname,$value);
-					//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+			if ($projectFields) 
+				foreach($projectFields as $field) {
+					if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
+						$varname = $field->varname;
+						$value = $zakaz->$varname;
+						$criteria->addSearchCondition('profile.'.$varname,$value);
+						//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+					}
 				}
-			}
 			//echo json_encode(array('error'=>$tmp));
 			//Yii::app()->end();
-		} else {
+		}/* else {
 			$job = $zakaz->job_id;
 			$discipline = $zakaz->category_id;
 			
 			$criteria->addSearchCondition('profile.discipline',$discipline);
 			$criteria->addSearchCondition('profile.job_type',$job, true, 'OR');
-        }
+        }*/
 		$authors = User::model()->with('profile')->findAll($criteria);
 		
 		if(!empty($authors)) {
 
             $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $order_id]);
-            $mail = new YiiMailer('invite', ['link' => $link]);
+            $mail = new YiiMailer(/*'invite', ['link' => $link]*/);
+			$mail->clearLayout();
             $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
             $mail->setSubject('Приглашение в проект');
-            
+			$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$order_id;
+            $mail->setBody('<a href="'.$link.'">'.$link.'</a>');
             foreach ($authors as $author) {
                 $mail->setTo($author->email);
                 if($author->getUserRole($author->id)=='Author') $mail->send();
             }
             
             echo 'ok =)';
+
+			$email = new Emails;
+
+			// новая рассылка
+			
+			$orderId = $order_id;
+			$typeId = Emails::TYPE_14;
+			$order	 = Zakaz::model()->findByPk($orderId);
+			$user = User::model()->findByPk($order->user_id);
+
+			$type_id = Emails::TYPE_18;
+			
+			$email->to_id = $user->id;
+
+			$profile = Profile::model()->findAll("`user_id`='$user->id'");
+			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
+			$title = $rec[0]->title;
+
+			$email->name = $profle->firstname;
+			if (strlen($email->name) < 2) $email->name = $user->username;
+			$email->login= $user->username;
+		
+			$email->num_order = $orderId;
+			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+			$email->message = $rec[0]->text;
+			$email->sendTo( $user->email, $rec[0]->text, $typeId);
             
         } else {
              echo json_encode(array('error'=>'Нет авторов'));
@@ -656,6 +709,33 @@ class ZakazController extends Controller
 		$condition 	= array();
 		$params		= array();
 		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
+		if ($row['status_id'] == 3) {
+
+			$email = new Emails;
+
+			$orderId = Yii::app()->request->getPost('id');
+			$typeId = Emails::TYPE_14;
+			$order	 = Zakaz::model()->findByPk($orderId);
+		
+			$user = User::model()->findByPk($order->user_id);
+			
+			$email->to_id = $user->id;
+
+			$profile = Profile::model()->findAll("`user_id`='$user->id'");
+			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
+			$title = $rec[0]->title;
+
+			$email->name = $profle->firstname;
+			if (strlen($email->name) < 2) $email->name = $user->username;
+			$email->login= $user->username;
+		
+			$email->num_order = $orderId;
+			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+			$email->message = $rec[0]->text;
+	echo '<br>$user->email='.$user->email;
+			$email->sendTo( $user->email, $rec[0]->text, $typeId);
+		};	
+		
         Yii::app()->end();
     }
     

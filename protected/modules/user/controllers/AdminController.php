@@ -7,26 +7,6 @@ class AdminController extends Controller
 	
 	private $_model;
 
-	public function get_specials($specials=''){
-		$model	= Catalog::model()->findAllByAttributes(array('field_varname'=>'specials'));
-        $list	= CHtml::listData($model, 'id', 'cat_name');
-
-		$arr	= explode( ',', $specials);
-		$sizenumber = count($list);
-		$select	= '
-			<select class="select-specilization" name="Profile[specials][]" id="Profile[specials][]" multiple size="'.$sizenumber.'">
-			<option value="" disabled>'.ProjectModule::t('UseCtrlForMultiselect').'</option>
-		';
-		foreach($list as $key => $opt){
-			$select	.= '<option value="'.$key.'"';
-			if (in_array( $key, $arr))
-				$select	.= ' selected="selected"';
-			$select	.= '>'.Yii::t('project', $opt).'</option>';
-		}
-		$select	.= '</select>';
-		return $select;
-	}
-
 	/**
 	 * @return array action filters
 	 */
@@ -76,11 +56,10 @@ class AdminController extends Controller
 	{
 		$model	= $this->loadModel();
 		$profile	= $model->profile;
-		$specials	= $this->get_specials($model->profile->specials);
-		
+	
 		$this->render('view',array(
 			'model'		=> $model,
-			'specials'	=> $specials,
+			'profile'	=> $profile,
 		));
 	}
 
@@ -92,7 +71,6 @@ class AdminController extends Controller
 	{
 		$model		= new User;
 		$profile	= new Profile;
-		$specials	= $this->get_specials($model->profile->specials);
 		
 		$this->performAjaxValidation(array($model,$profile));
 		if(isset($_POST['User']))
@@ -102,7 +80,6 @@ class AdminController extends Controller
 			
 			$_temp = array('','icq','sms','email');
 			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],$_temp);
-			$_POST['Profile']['specials'] = implode(',',$_POST['Profile']['specials']);
 			$profile->attributes = $_POST['Profile'];
 			if($model->validate()&&$profile->validate()) {
 				$model->password=Yii::app()->controller->module->encrypting($model->password);
@@ -112,13 +89,11 @@ class AdminController extends Controller
 				}
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
-			$specials	= $this->get_specials($model->profile->specials);
 		}
 
 		$this->render('create',array(
 			'model'		=> $model,
 			'profile'	=> $profile,
-			'specials'	=> $specials,
 		));
 	}
 
@@ -130,7 +105,6 @@ class AdminController extends Controller
 	{
 		$model		= $this->loadModel();
 		$profile	= $model->profile;
-		$specials	= $this->get_specials($model->profile->specials);
 
 		$this->performAjaxValidation(array($model,$profile));
 
@@ -139,9 +113,9 @@ class AdminController extends Controller
 
 		if(isset($_POST['User']))
 		{
+			
 			$model->attributes=$_POST['User'];
 			$_POST['Profile']['mailing_list'] = array_search($_POST['Profile']['mailing_list'],array('','icq','sms','email'));
-			$_POST['Profile']['specials'] = implode(',',$_POST['Profile']['specials']);
 			$profile->setAttributes($_POST['Profile'], false);
 			if($model->validate()&&$profile->validate()) {
 				$old_password = User::model()->notsafe()->findByPk($model->id);
@@ -153,7 +127,6 @@ class AdminController extends Controller
 				$profile->save();
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
-			$specials	= $this->get_specials($model->profile->specials);
 		};
 
 		$fields = ProfileField::model()->findAll();
@@ -163,7 +136,6 @@ class AdminController extends Controller
 			'manager'	=> $manager,
 			'admin'		=> $admin,
 			'fields'	=> $fields,
-			'specials'	=> $specials,
 		));	
 	}
 	/**

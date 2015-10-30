@@ -10,6 +10,7 @@ class User extends CActiveRecord
 	 * The followings are the available columns in table 'users':
 	 * @var integer $id
 	 * @var string $username
+	 * @var string $full_name
 	 * @var string $password
 	 * @var string $email
 	 * @var string $activkey
@@ -57,6 +58,7 @@ class User extends CActiveRecord
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
 			array('username', 'match', 'pattern' => '/^[-A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
+			array('full_name', 'match', 'pattern' => '/^[-а-яА-ЯёЁa-zA-Z_ ]+$/u','message' => UserModule::t("Incorrect symbols (A-z).")),
 			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
 			array('superuser', 'in', 'range'=>array(0,1)),
 			array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
@@ -68,6 +70,7 @@ class User extends CActiveRecord
 			array('phone_number, username, email', 'required','except'=>'social_network'),
 			array('phone_number', 'match', 'pattern' => '/^[-+()0-9]+$/u','message' => UserModule::t("Incorrect symbols (0-9,+,-,(,)).")),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
+			array('full_name', 'length', 'max'=>128, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('email', 'email'),
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists."),'except'=>'social_network'),
 			array('username', 'match', 'pattern' => '/^[-A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9)."),'except'=>'social_network'),
@@ -95,6 +98,7 @@ class User extends CActiveRecord
 		return array(
 			'id' => UserModule::t("Id"),
 			'username'=>UserModule::t("username"),
+			'full_name'=>UserModule::t("fullname"),
 			'password'=>UserModule::t("password"),
 			'verifyPassword'=>UserModule::t("Retype Password"),
 			'email'=>UserModule::t("E-mail"),
@@ -125,7 +129,7 @@ class User extends CActiveRecord
 				'condition'=>'superuser=1',
 			),
 			'notsafe'=>array(
-				'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status',
+				'select' => 'id, username, full_name, password, email, activkey, create_at, lastvisit_at, superuser, status',
 			),
 		);
 	}
@@ -134,7 +138,7 @@ class User extends CActiveRecord
 	{
 		return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
 			'alias'=>'user',
-			'select' => 'user.id, user.phone_number, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status',
+			'select' => 'user.id, user.phone_number, user.username, user.full_name, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status',
 		));
 	}
 

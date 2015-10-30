@@ -79,10 +79,16 @@ class ChatController extends Controller {
 		
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
-                $model = new ProjectMessages;
-                $model->sender = Yii::app()->user->id;
-                $model->moderated = 0;
-                $model->order = $orderId;
+
+				$id = (int)$_POST['ProjectMessages']['id'];
+				if ($id>0)	{
+					$model = ProjectMessages::model()->findByPk($id);
+				} else {		
+					$model = new ProjectMessages;
+					$model->sender = Yii::app()->user->id;
+					$model->moderated = 0;
+					$model->order = $orderId;
+				};
 				
 				$post	= $_POST['ProjectMessages']['message'];
 				$post	= str_replace("\x0D\x0A",'<br>',$post);
@@ -90,21 +96,37 @@ class ChatController extends Controller {
 				$_POST['ProjectMessages']['message'] = $post;
 				
                 $model->attributes = Yii::app()->request->getPost('ProjectMessages');
-					
                 $model->date = date('Y-m-d H:i:s');
                 switch ($model->recipient) {
                     case 'manager':
                         $model->recipient = 1;
                         break;
                     case 'customer':
-                        if (User::model()->isCustomer())
+						if (User::model()->isCustomer()) {
                             $model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
-                        if (User::model()->isAuthor())
+							$type_id = Emails::TYPE_20;
+                        } else if (User::model()->isAuthor()) {
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
+							$type_id = Emails::TYPE_16;
+						};
+						$user = User::model()->findByPk($model->recipient);
+						$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
+						
+						$email = new Emails;
+						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+						$title = $rec[0]->title;
+						$body  = $rec[0]->text;
+						$email->name = $user->full_name;
+						if (strlen($email->name) < 2) $email->name = $user->username;
+						$email->num_order = $orderId;
+						$email->message = $post;
+						$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+						$email->sendTo( $user->email, $body, $type_id);
                         break;
                 }
-
-                $model->save();
+//print_r($model);
+//echo '<br>$model->save()='.
+				$model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(
@@ -116,6 +138,9 @@ class ChatController extends Controller {
 		
 		$order = Zakaz::model()->resetScope()->findByPk($orderId);
 		
+		$parts = ZakazParts::model()->findAll(array(
+					'condition' => "`proj_id`='$orderId'",
+				));
 		if ($isGuest) {
 			Yii::app()->theme='client';
 			
@@ -137,16 +162,14 @@ class ChatController extends Controller {
 			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
 
 //			Catalog::model()->tableName();
-			
+			//$EmptyChat = UserModule::t('EmptyChat');
 			$this->render('index', array(
 				'orderId'	=> $orderId,
 				'order'		=> $order,
 				'executor'	=> Zakaz::getExecutor($orderId),
 				'moderated'	=> $moderated,
 				'isGuest'	=> $isGuest,
-				'parts'		=> ZakazParts::model()->findAll(array(
-					'condition' => "`proj_id`='$orderId'",
-				)),
+				'parts'		=> $parts,
 			));
             Yii::app()->end();
 		}
@@ -165,6 +188,7 @@ class ChatController extends Controller {
             'executor'	=> Zakaz::getExecutor($orderId),
 			'moderated'	=> $moderated,
 			'isGuest'	=> $isGuest,
+			'parts'		=> $parts,
         ));
     }
 	

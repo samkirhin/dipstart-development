@@ -19,7 +19,7 @@ $this->breadcrumbs = array(
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
     <h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span>
 			<?php if ($model->status < 5) { ?>
-				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>';"><?=ProjectModule::t('Complete the order')?></button>
+				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>'; send_message(17,'Заказчику о завершении заказа');"><?=ProjectModule::t('Complete the order')?></button>
 			<?php } else { ?>
 				<button id="open_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';"><?=ProjectModule::t('Open order')?></button>
 			<?php } ?>

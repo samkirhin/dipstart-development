@@ -166,13 +166,13 @@ if (file_exists($path)){
         <div class="col-xs-8">
             
             <div id="chat" class="col-xs-12 user-chat-block">
-                <?php $this->renderPartial('chat',array('orderId'=>$order->id));?>
+                <?php $this->renderPartial('chat',array('order'=>$order, 'orderId'=>$order->id));?>
 				<? 	// кнопку выносим из блока, который передаётся 
 					// ajax'а, чтобы избежать манипуляций с 
 					// обработчиками событий
 				?>
-                <?php $this->renderPartial('chatbtn');?>
             </div>
+            <?php $this->renderPartial('chatbtn');?>
             
             <div class="row">
             <?php
@@ -187,6 +187,7 @@ if (file_exists($path)){
                 </div>
                 <?php endif; ?> 
                 -->
+				<?php if (!$isGuest) : ?>
                 
                 <div class="col-xs-9">
                     <?php echo CHtml::label(ProjectModule::t('Message'),'message', array('id' => 'msgLabel')); ?>
@@ -202,13 +203,14 @@ if (file_exists($path)){
                     } else if(User::model()->isCustomer()) {
                         $middle_button = ProjectModule::t('Send the author');
                     }
-                    $attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block');
+                    $attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit1','id'=>'chat-to-customer');
 					if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled';
 					echo  CHtml::submitButton($middle_button, $attr) ;
-                    $attr = array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2');
+                    $attr = array('name' => 'manager', 'class' => 'btn btn-primary btn-chat btn-block chtpl0-submit2','id'=>'chat-to-manager');
 					if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled';
                     echo  CHtml::submitButton(ProjectModule::t('Send manager'), $attr) ;
                     ?>
+				<?php endif; ?>
                     
                 <?php if (User::model()->isAuthor()): ?>
                     <?php echo CHtml::label(ProjectModule::t('Цена за работу:'),'cost',array('class' => 'control-label')); ?>
@@ -221,14 +223,21 @@ if (file_exists($path)){
             }
             ?>
             <!-- form -->
+		<?php
+				if ($isGuest) {
+					
+					$href = 'http://'.$_SERVER['SERVER_NAME'].'/user/registration?role=Author';
+					$attr = array('onclick'=>"document.location.href = '$href'", 'class'=>"btn btn-primary btn-chat btn-block");
+                    echo  CHtml::submitButton(UserModule::t('Get It!'), $attr) ;
+				};	
+		?>
             </div>
         </div>
-
 
     </div>
 </div>
 
-<?php if (User::model()->isAuthor() && $order->executor == 0) : ?>
+<?php if ((User::model()->isAuthor() && $order->executor == 0) or $isGuest) : ?>
     
 <script>
     var e = $(".info-block");

@@ -46,11 +46,13 @@ $(document).ready(function() {
  		});
 		return false;
 	});
-    $('.btn-chat').click(function(){
+	
+	function view_chat(message, id){
         var order=$('#order').val();
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
-                message:$('#message').val(),
+				id: id,
+                message: message,
                 recipient:this.name,
 				order: order,
 				cost: $('.price-for-work-avtor input').val()
@@ -60,43 +62,38 @@ $(document).ready(function() {
             $('.chat-view').scrollTop(10000);
             $('#message').val('');
         });
-        return false;
+	};	
+
+	
+    $('.btn-chat').click(function(){
+        view_chat($('#message').val(), 0);
+		return false;
     });
     $('.chat-edit').click(function(){
 		var step = $('#chat-edit').attr('step');
 		step++;	step &= 1;
 		$('#chat-edit').attr( 'step', step);
+		var text = document.getElementsByClassName("text");
 		if (step)	{ 
-            $('#edit-message').val($('#message').val());
+			$('#edit-message').val(text[text.length-1].innerHTML);
             $('#div-edit-message').css('display', 'block');
 			$('#chat-edit').val('Сохранить'); 
+			$('#chat-edit').css('display', 'block');
+			$('.chat-view').scrollTop(10000);
 		} else { 
 			$('#chat-edit').val('Редактирование последнего сообщения'); 
             $('#div-edit-message').css('display', 'none');
-			var order=$('#order').val();
-			$.post('/project/chat?orderId='+order,{
-				ProjectMessages:{
-					message:$('#message').val(),
-					recipient:this.name,
-					order: order,
-					cost: $('.price-for-work-avtor input').val()
-				}
-			},function(data){
-				$('#chat').html(data);
-				$('.chat-view').scrollTop(10000);
-			});
+			view_chat($('#edit-message').val(),text[text.length-1].id);			
 		};
         return false;
     });
-	
-    $('.chat-view').scrollTop(10000);
+	$('.chat-view').scrollTop(10000);
 });
 function zakaz_done(part_id)
 {
 		$.ajax({
 			type: "POST",
-//			url: 'http://'+document.domain+'/ajax/ajax.php'
-			url: 'chat/status?id=143'
+			url: 'chat/status'
 			, data: 'cmd=done&id='+part_id+'&status_id=6'
 			, success: function(html) {
 				html = BackReplacePlusesFromStr(html);

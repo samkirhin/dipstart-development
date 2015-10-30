@@ -41,7 +41,7 @@ class Zakaz extends CActiveRecord {
     public $dateIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateOutcomeFormat = 'dd.MM.yyyy';
     
-    public $unixtime;
+    public $unixtime = '';
 	
 	/**
 	 * @return string the associated database table name

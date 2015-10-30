@@ -3,6 +3,12 @@
 /* @var $model ProjectMessages */
 /* @var $form CActiveForm */
 ?>
+	<script>
+		var content="<? UserModule::t('Write what is ready to take this order or ask a question') ?>";
+		$('div#chatWindow').css('content',content);
+	</script>
+	<input id="empty-chat-message" type="hidden" value="">
+
 
 <?php 
     if (User::model()->isAuthor()) {
@@ -74,6 +80,7 @@
 
 <?php
 // the widget
+/*
 if (!$isGuest)
 $this->widget('application.components.FileManViewer'
     ,array(
@@ -109,31 +116,31 @@ $this->widget('application.components.FileManViewer'
 				'progress: '+status+' '+progress+'%<br/>');
 			}",
     ));
-	
+*/	
 ?>
+
 <?php if (User::model()->isAuthor()) echo Yii::t('site','Notes to the author').': '.$order->getAttribute('author_notes'); ?>
 <table>
     <tr>
         <?php
         foreach (ZakazParts::model()->attributeLabels() as $k=>$v) {
-            if (User::model()->isAuthor() || $k=='file')echo '<th>'.CHtml::encode($v).'</th>';
+//            if (User::model()->isAuthor() || $k=='file')echo '<th>'.CHtml::encode($v).'</th>';
         }
         ?>
     </tr>
     <?php
+ die('!!!!!!!!!!!!!!!!!!!!!!');
 	
+		if (is_object($parts))
         $this->widget('zii.widgets.CListView', array(
             'dataProvider'=>$parts,
             'itemView'=>'_part',
         ));
-		
     ?>
 </table>
 <?php if (count($messages)) foreach($messages as $message): ?>
         <?php echo $message->date; ?> -
         <?php
-echo $message->senderObject->id.' '.$message->senderObject->username;
-		
             $this->beginWidget('ProfileLinkWidget',array(
                 	'params'=>array(
                      	'userId' => $message->senderObject->id,
