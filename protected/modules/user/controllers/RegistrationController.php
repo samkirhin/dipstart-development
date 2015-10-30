@@ -22,7 +22,6 @@ class RegistrationController extends Controller
 			$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
 			if(isset($_POST['RegistrationForm'])) {
-				echo 'hello!';
 				$model->attributes=$_POST['RegistrationForm'];
 				if($model->validate()) {
 					$soucePassword = $this->generate_password(8);
@@ -35,8 +34,8 @@ class RegistrationController extends Controller
 						$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$model->id);
 						$AuthAssignment->save();
 
-						$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
-//						UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
+						//$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
+						//UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
 						
 						// новая служба системных сообщений
 
@@ -67,11 +66,11 @@ class RegistrationController extends Controller
 						$identity=new UserIdentity($model->username,$soucePassword);
 						$identity->authenticate();
 						Yii::app()->user->login($identity,0);
-
-						$this->redirect(Yii::app()->controller->module->returnUrl);
-//						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{login}}) before start.", ['{{login}}'=>$model->email]));
-//						$this->refresh();
-						Yii::app()->end();
+						
+						//$this->redirect(Yii::app()->controller->module->returnUrl);
+						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{email}}) before start.", ['{{email}}'=>$model->email]));
+						$this->refresh();
+						//Yii::app()->end();
 
 					} else {
 						Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
