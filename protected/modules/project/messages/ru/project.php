@@ -233,5 +233,6 @@ return array(
 	
 	'Please, write that you are ready to take this order or ask a question.' => 'Напишите что готовы взять этот заказ или задайте вопрос.',
 	'Here is your correspondence' => 'Здесь будет ваша переписка',
+	'Price for a job:' => 'Цена за работу:',
 	
 );
