@@ -207,6 +207,7 @@ return array(
 	'Get It!' => 'Get It!',
 	'EmptyChat'=>'Write what is ready to take this order or ask a question',
 	'fullname' => 'Full Name',
+	'recoveryMessage' => 'Please check your email. An instructions was sent to your email address.',
 );
 
 
