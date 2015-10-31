@@ -6,14 +6,13 @@ $this->breadcrumbs=array(
 ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');?>
 <div class="col-xs-offset-3 col-xs-6 login-form-bg">
-<h1><?php echo UserModule::t("Restore"); ?></h1>
-
 <?php if(Yii::app()->user->hasFlash('recoveryMessage')): ?>
-<div class="success-recovery">
-<?php echo Yii::app()->user->getFlash('recoveryMessage'); ?>
+
+<div class="success-recovery" style="text-align: center;">
+<?php echo UserModule::t("recoveryMessage").'<br><br><br><a href="login">'.UserModule::t("Login").'</a>'; ?>
 </div>
 <?php else: ?>
-
+<h1><?php //echo UserModule::t("Restore"); ?></h1>
 <div class="form">
 <?php echo CHtml::beginForm(); ?>
 
