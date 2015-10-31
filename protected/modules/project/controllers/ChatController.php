@@ -94,7 +94,7 @@ class ChatController extends Controller {
 				$post	= str_replace("\x0D\x0A",'<br>',$post);
 				$post	= str_replace("\x0A",'<br>',$post);
 				$_POST['ProjectMessages']['message'] = $post;
-				
+			
                 $model->attributes = Yii::app()->request->getPost('ProjectMessages');
                 $model->date = date('Y-m-d H:i:s');
                 switch ($model->recipient) {
@@ -124,8 +124,7 @@ class ChatController extends Controller {
 						$email->sendTo( $user->email, $body, $type_id);
                         break;
                 }
-//print_r($model);
-//echo '<br>$model->save()='.$model->save();
+				$model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(

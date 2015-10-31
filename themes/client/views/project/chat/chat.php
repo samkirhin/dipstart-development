@@ -23,6 +23,7 @@ div.chat-window::before {
      content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
 }'); ?>
     <?php foreach ($messages as $message): 
+//		$message->message = str_replace('<br>',"\x0D\x0A",$message->message);
 		$msg_role = 'manager-message';
 		$isAuthor = (User::model()->getUserRole($message->senderObject->id) == 'Author');
 		$isCustomer = (User::model()->getUserRole($message->senderObject->id) == 'Customer');
@@ -55,7 +56,7 @@ div.chat-window::before {
                 <div class="cost"><?=ProjectModule::t('Price for a job:')?> <?php echo $message->cost ?></div>
             <?php endif; ?>
                 
-            <div class="text" id="<?php echo $message->id ?>"><?php echo $message->message; ?></div>7
+            <div class="text" id="<?php echo $message->id ?>"><?php echo $message->message; ?></div>
 			
         </div>
     </div>

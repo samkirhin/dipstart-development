@@ -62,11 +62,13 @@ $(document).ready(function() {
             $('.chat-view').scrollTop(10000);
             $('#message').val('');
         });
+		return	false;
 	};	
 
 	
     $('.btn-chat').click(function(){
         view_chat($('#message').val(), 0);
+		return	false;
     });
     $('.chat-edit').click(function(){
 		var step = $('#chat-edit').attr('step');
@@ -74,7 +76,9 @@ $(document).ready(function() {
 		$('#chat-edit').attr( 'step', step);
 		var text = document.getElementsByClassName("text");
 		if (step)	{ 
-			$('#edit-message').val(text[text.length-1].innerHTML);
+			text = text[text.length-1].innerHTML;
+			text = text.replace(/<br>/g,"\r\n");
+			$('#edit-message').val(text);
             $('#div-edit-message').css('display', 'block');
 			$('#chat-edit').val('Сохранить'); 
 			$('#chat-edit').css('display', 'block');
