@@ -27,6 +27,7 @@ if (empty($messages)) {
 	}');
 } ?>
     <?php foreach ($messages as $message): 
+//		$message->message = str_replace('<br>',"\x0D\x0A",$message->message);
 		$msg_role = 'manager-message';
 		$isAuthor = (User::model()->getUserRole($message->senderObject->id) == 'Author');
 		$isCustomer = (User::model()->getUserRole($message->senderObject->id) == 'Customer');

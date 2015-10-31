@@ -12,7 +12,7 @@ $this->breadcrumbs=array(
 
 <div class="success-recovery" style="text-align: center;">
 <?php
-	$href = UserModule::t("recoveryMessage").'<br><a href="'.Yii::app()->getModule("user")->loginUrl).'>'.UserModule::t("Login").'</a>';
+	$href = UserModule::t("recoveryMessage").'<br><a href="'.Yii::app()->getModule("user")->loginUrl.'>'.UserModule::t("Login").'</a>';
 	echo Yii::app()->user->getFlash($href); 
 ?>
 </div>
