@@ -55,7 +55,7 @@ $(document).ready(function() {
                 message: message,
                 recipient: name,
 				order: order,
-				cost: $('.price-for-work-avtor input').val()
+				cost: $('input#cost').val()
             }
         },function(data){
             $('#chat').html(data);
@@ -68,7 +68,7 @@ $(document).ready(function() {
 	
     $('.btn-chat').click(function(){
         view_chat( this.name, $('#message').val(), 0);
-		return	false;
+		return false;
     });
     $('.chat-edit').click(function(){
 		var step = $('#chat-edit').attr('step');
