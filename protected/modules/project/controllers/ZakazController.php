@@ -619,8 +619,8 @@ class ZakazController extends Controller
 			$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
             $mail->setBody('<a href="'.$link.'">'.$link.'</a>');
             foreach ($authors as $author) {
-                $mail->setTo($author->email);
-                if($author->getUserRole($author->id)=='Author') $mail->send();
+//                $mail->setTo($author->email);
+//                if($author->getUserRole($author->id)=='Author') $mail->send();
             }
             
             echo 'ok =)';
