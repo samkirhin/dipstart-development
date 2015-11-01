@@ -241,21 +241,19 @@ class Emails extends CActiveRecord {
 			$this->name_part,
 //			$this->neworder,
 		);
-
 //echo '<br>$subject(0)='.$subject; 
 //echo '<br>$body(0)='.$body; 
 		// собственно, замены
 		foreach($dictionary as $key=>$fraze) {
 			$translate = Yii::t('site',$fraze);
-			if (strpos( $body, $fraze)) {
-				$body = str_replace( $fraze, $subst[$key], $body);
-				if ($translate != $fraze) continue;
-				$body = str_replace( $translate, $subst[$key], $body);
-			};	
-			if (strpos( $subect, $fraze)) {
-				$subject = str_replace( $fraze, $subst[$key], $subject);
-				if ($translate != $fraze) continue;
+//echo '<br>$fraze(0)='.$fraze.' $translate(0)='.$translate; 
+			if (strpos( $subject, $translate)) {
 				$subject = str_replace( $translate, $subst[$key], $subject);
+//echo '<br>subject: '.$fraze.'-->'.$translate; 
+			};	
+			if (strpos( $body, $translate)) {
+				$body = str_replace( $translate, $subst[$key], $body);
+//echo '<br>body: '.$fraze.'-->'.$translate; 
 			};	
 		}	
 //echo '<br>$subject(1)='.$subject; 

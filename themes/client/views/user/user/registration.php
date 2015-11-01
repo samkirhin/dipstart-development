@@ -68,7 +68,7 @@ $form=$this->beginWidget('UActiveForm', array(
 	</div>	
 	-->
 	<div class="row user_submit">
-		<?php echo CHtml::submitButton(UserModule::t("Register")); ?>
+		<?php echo CHtml::submitButton(UserModule::t("Register"));?>
 	</div>
 
 <?php $this->endWidget(); ?>

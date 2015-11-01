@@ -23,7 +23,8 @@ class RegistrationController extends Controller
 		} else {
 			
 			if(isset($_POST['RegistrationForm'])) {
-				$model->attributes=$_POST['RegistrationForm'];
+			$model->attributes=$_POST['RegistrationForm'];
+			
 				if($model->validate()) {
 					$soucePassword = $this->generate_password(8);
 					$model->password=UserModule::encrypting($soucePassword);
@@ -65,18 +66,10 @@ class RegistrationController extends Controller
 						$identity=new UserIdentity($model->username,$soucePassword);
 						$identity->authenticate();
 						Yii::app()->user->login($identity,0);
-//=======
 						//$this->redirect(Yii::app()->controller->module->returnUrl[0]);
-//						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{login}}) before start.", ['{{login}}'=>$model->email]));
-//						$this->refresh();
-						//Yii::app()->end();
-//>>>>>>> refs/remotes/origin/oldbadger
-						
-						//$this->redirect(Yii::app()->controller->module->returnUrl);
 						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{email}}) before start.", ['{{email}}'=>$model->email]));
 						$this->refresh();
 						//Yii::app()->end();
-
 					} else {
 						Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
 						$this->refresh();
