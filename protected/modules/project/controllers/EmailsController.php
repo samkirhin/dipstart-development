@@ -81,7 +81,7 @@ class EmailsController extends Controller
 		$model->message = $rec[0]->text;
 		$model->price_order = $cost;
 		$model->sum_order  = $cost;
-		$model->sendTo( $user->email, $rec[0]->text, $typeId);
+		$model->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
 				
 		$model->save();
 /*		

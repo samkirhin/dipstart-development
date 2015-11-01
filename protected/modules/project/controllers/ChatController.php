@@ -113,14 +113,12 @@ class ChatController extends Controller {
 						
 						$email = new Emails;
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-						$title = $rec[0]->title;
-						$body  = $rec[0]->text;
 						$email->name = $user->full_name;
 						if (strlen($email->name) < 2) $email->name = $user->username;
 						$email->num_order = $orderId;
 						$email->message = $post;
 						$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-						$email->sendTo( $user->email, $body, $type_id);
+						$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
                         break;
                 }
 				$model->save();
@@ -264,15 +262,16 @@ class ChatController extends Controller {
 								$type_id = Emails::TYPE_15;
 								
 		$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+		
 		$title = $rec[0]->title;
 		$body  = $rec[0]->text;
 		$email->name = $user->full_name;
+		if (strlen($email->name) < 2) $email->name = $user->username;
 		$email->num_order = $orderId;
 //		$model->date = date('Y-m-d H:i:s');
 		$email->subject_order = $subject_order;
-		if (strlen($email->name) < 2) $email->name = $user->username;
 		$email->num_order = $orderId;
 		$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-		$email->sendTo( $user->email, $body, $type_id);
+		$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
     }
 }

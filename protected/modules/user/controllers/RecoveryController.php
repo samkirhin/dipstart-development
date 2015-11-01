@@ -74,8 +74,6 @@ class RecoveryController extends Controller
 						$email->to_id   = $user->id;
 						
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-						$title = $rec[0]->title;
-						$body  = $rec[0]->text;
 						$id = Campaign::getId();
 						$email->campaign = Campaign::getName();
 						$email->name = $model->full_name;
@@ -85,7 +83,7 @@ class RecoveryController extends Controller
 						$email->page_psw = $activation_url;
 					
 						$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
-						$email->sendTo( $user->email, $body, $type_id);
+						$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
 		    			
 						Yii::app()->user->setFlash('recoveryMessage',UserModule::t("Please check your email. An instructions was sent to your email address."));
 		    			$this->refresh();
