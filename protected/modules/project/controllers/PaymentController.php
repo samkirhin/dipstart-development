@@ -368,6 +368,7 @@ class PaymentController extends Controller {
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
             'ORDER_ID'=>$orderId
         ));
+
         $payment->received = $payment->received + $payment->to_receive;
         $to_res = $payment->to_receive;
         $payment->to_receive = 0;

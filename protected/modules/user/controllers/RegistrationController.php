@@ -21,6 +21,7 @@ class RegistrationController extends Controller
 		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {
 			$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
+			
 			if(isset($_POST['RegistrationForm'])) {
 				$model->attributes=$_POST['RegistrationForm'];
 				if($model->validate()) {
@@ -66,7 +67,7 @@ class RegistrationController extends Controller
 						$identity=new UserIdentity($model->username,$soucePassword);
 						$identity->authenticate();
 						Yii::app()->user->login($identity,0);
-						$this->redirect(Yii::app()->controller->module->returnUrl);
+						$this->redirect(Yii::app()->controller->module->returnUrl[0]);
 //						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{login}}) before start.", ['{{login}}'=>$model->email]));
 //						$this->refresh();
 						Yii::app()->end();
@@ -77,6 +78,7 @@ class RegistrationController extends Controller
 					}
 				}
 			}
+			
 			Yii::app()->theme='client';
 			$this->render('/user/registration',array('model'=>$model, 'role'=>$role));
 		}

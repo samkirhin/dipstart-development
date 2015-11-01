@@ -81,15 +81,14 @@ class ChatController extends Controller {
             if (Yii::app()->request->getPost('ProjectMessages')) {
 
 				$id = (int)$_POST['ProjectMessages']['id'];
-				if ($id>0)	{
+				if ($id>0)	{ // редактирование сообщения
 					$model = ProjectMessages::model()->findByPk($id);
-				} else {		
+				} else {	  // новое сообщение
 					$model = new ProjectMessages;
 					$model->sender = Yii::app()->user->id;
 					$model->moderated = 0;
 					$model->order = $orderId;
 				};
-				
 				$post	= $_POST['ProjectMessages']['message'];
 				$post	= str_replace("\x0D\x0A",'<br>',$post);
 				$post	= str_replace("\x0A",'<br>',$post);
@@ -234,14 +233,47 @@ class ChatController extends Controller {
     }
 	
     public function actionStatus() {
+
+		$orderId	= Yii::app()->request->getPost('orderId');
+		$status_id	= Yii::app()->request->getPost('status_id');
+		$id			= Yii::app()->request->getPost('id');
+
 		$row	= array(
-			'status_id' => Yii::app()->request->getPost('status_id'),
+			'status_id'	=> $status_id,
 		);
 		$id		= Yii::app()->request->getPost('id');
 		$condition 	= array();
 		$params		= array();
 		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
-        Yii::app()->end();
+		
+		$status_id = (int)$_POST['status_id'];
+		if ($status_id != 6) Yii::app()->end();
+		
+		$parts = ZakazParts::model()->findAll("`proj_id` = '$orderId' AND `status_id` IN (1,2,3,4,5)");
+echo '$parts)='; print_r($parts);
+		
+		// завершение части проекта
+		$orderId = Yii::app()->request->getPost('orderId');
+
+		$order = Zakaz::model()->resetScope()->findByPk($orderId);
+		$subject_order = $order->title;
+		$user_id = $order->user_id;
+		$user = User::model()->findByPk($user_id);
+echo '<br>count($parts)='.count($parts);
+		$email = new Emails;
+		if (count($parts) > 0)  $type_id = Emails::TYPE_14; else
+								$type_id = Emails::TYPE_15;
+								
+		$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+		$title = $rec[0]->title;
+		$body  = $rec[0]->text;
+		$email->name = $user->full_name;
+		$email->num_order = $orderId;
+//		$model->date = date('Y-m-d H:i:s');
+		$email->subject_order = $subject_order;
+		if (strlen($email->name) < 2) $email->name = $user->username;
+		$email->num_order = $orderId;
+		$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+		$email->sendTo( $user->email, $body, $type_id);
     }
-	
 }
