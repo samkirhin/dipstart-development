@@ -3,7 +3,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2
 ?>
 
 <?php if(Yii::app()->user->hasFlash('reg_success')): ?>
-<div class="">
+<div class="reg-success">
 <?php echo Yii::app()->user->getFlash('reg_success'); ?>
 </div>
 
@@ -27,7 +27,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2
 <?php echo Yii::app()->user->getFlash('reg_failed'); ?>
 </div>
 <?php else: ?>
-<div class="col-xs-offset-3 col-xs-6 login-form-bg">
+<div class="col-xs-offset-3 col-xs-6 login-form-bg" id="login-form-bg">
 <?php
 $this->widget('application.components.UloginWidget', array(
     'params'=>array(
@@ -68,7 +68,7 @@ $form=$this->beginWidget('UActiveForm', array(
 	</div>	
 	-->
 	<div class="row user_submit">
-		<?php echo CHtml::submitButton(UserModule::t("Register")); ?>
+		<?php echo CHtml::submitButton(UserModule::t("Register")); //,array('onclick'=>'javascript: getElementById("login-form-bg").style.display="none";')?>
 	</div>
 
 <?php $this->endWidget(); ?>
