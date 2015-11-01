@@ -1,12 +1,14 @@
 <?php
 /* @var $this ZakazController */
 /* @var $model Zakaz */
-$filelist = Yii::app()->fileman->list_files($model->id);
-    foreach ($filelist as $fd) {
-      $real_path = Yii::app()->fileman->get_file_path($fd['id'], $fd['file_id']);
-      $files .= CHtml::link($fd['filename'], array('zakaz/download', 'path' => $real_path)).'&nbsp;&nbsp;';
-      //echo EDownloadHelper::download($real_path);
-}
+	if (isset(Yii::app()->fileman)){
+		$filelist = Yii::app()->fileman->list_files($model->id);
+		foreach ($filelist as $fd) {
+			$real_path = Yii::app()->fileman->get_file_path($fd['id'], $fd['file_id']);
+			$files .= CHtml::link($fd['filename'], array('zakaz/download', 'path' => $real_path)).'&nbsp;&nbsp;';
+			//echo EDownloadHelper::download($real_path);
+		}
+	}
 /*$this->breadcrumbs=array(
 	ProjectModule::t('Zakazs')=>array('index'),
 	$model->title,

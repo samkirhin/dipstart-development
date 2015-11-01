@@ -584,87 +584,77 @@ class ZakazController extends Controller
 			$this->redirect(Yii::app()->request->urlReferrer);
 	}
 
-    public function actionSpam($order_id) {
+    public function actionSpam($orderId) {
+
+		header('Content-type: application/json');
         
-        header('Content-type: application/json');
+        $order = Zakaz::model()->findByPk($orderId);
         
-        $zakaz = Zakaz::model()->findByPk($order_id);
-        
-        if (!$zakaz) {
+        if (!$order) {
             throw new CHttpException(500);
         }
 		
 		$criteria = new CDbCriteria();
         if(Campaign::getId()) {
-			$projectFields = $zakaz->getFields();
+			$projectFields = $order->getFields();
 			if ($projectFields) 
 				foreach($projectFields as $field) {
 					if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
 						$varname = $field->varname;
-						$value = $zakaz->$varname;
+						$value = $order->$varname;
 						$criteria->addSearchCondition('profile.'.$varname,$value);
 						//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
 					}
 				}
-			//echo json_encode(array('error'=>$tmp));
-			//Yii::app()->end();
-		}/* else {
-			$job = $zakaz->job_id;
-			$discipline = $zakaz->category_id;
-			
-			$criteria->addSearchCondition('profile.discipline',$discipline);
-			$criteria->addSearchCondition('profile.job_type',$job, true, 'OR');
-        }*/
+		}
 		$authors = User::model()->with('profile')->findAll($criteria);
-		
+
 		if(!empty($authors)) {
 
-            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $order_id]);
+            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
             $mail = new YiiMailer(/*'invite', ['link' => $link]*/);
 			$mail->clearLayout();
             $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
             $mail->setSubject('Приглашение в проект');
-			$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$order_id;
+			$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
             $mail->setBody('<a href="'.$link.'">'.$link.'</a>');
             foreach ($authors as $author) {
-                $mail->setTo($author->email);
-                if($author->getUserRole($author->id)=='Author') $mail->send();
+//                $mail->setTo($author->email);
+//                if($author->getUserRole($author->id)=='Author') $mail->send();
             }
             
             echo 'ok =)';
 
-			$email = new Emails;
-
+			
 			// новая рассылка
-			
-			$orderId = $order_id;
-			$typeId = Emails::TYPE_14;
-			$order	 = Zakaz::model()->findByPk($orderId);
-			$user = User::model()->findByPk($order->user_id);
 
-			$type_id = Emails::TYPE_18;
-			
-			$email->to_id = $user->id;
-
-			$profile = Profile::model()->findAll("`user_id`='$user->id'");
+			$typeId = Emails::TYPE_18;
 			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
-			$title = $rec[0]->title;
+            foreach ($authors as $user) {
+				
+				$specials = explode(',',$user->profile->specials);
+				if (!in_array($order->specials, $specials)) continue;
+				
+				$email = new Emails;
 
-			$email->name = $profle->firstname;
-			if (strlen($email->name) < 2) $email->name = $user->username;
-			$email->login= $user->username;
+				$email->to_id = $user->id;
+
+				$email->name = $user->profile->full_name;
+				if (strlen($email->name) < 2) $email->name = $user->username;
+				$email->login= $user->username;
 		
-			$email->num_order = $orderId;
-			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-			$email->message = $rec[0]->text;
-			$email->sendTo( $user->email, $rec[0]->text, $typeId);
-            
+				$email->num_order = $orderId;
+				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+//				$email->neworder = $order->title;
+				$email->sendTo( $user->email, $rec[0]->text, $typeId);
+			}	
         } else {
              echo json_encode(array('error'=>'Нет авторов'));
         }
         
         Yii::app()->end();
     }
+	
     public function actionApiApproveFile() {
         $this->_prepairJson();
         $data = $this->_request->getParam('data');
@@ -732,7 +722,6 @@ class ZakazController extends Controller
 			$email->num_order = $orderId;
 			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 			$email->message = $rec[0]->text;
-	echo '<br>$user->email='.$user->email;
 			$email->sendTo( $user->email, $rec[0]->text, $typeId);
 		};	
 		

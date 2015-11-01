@@ -56,8 +56,8 @@ class UserModule extends CWebModule
 	public $recoveryUrl = array("/user/recovery");
 	public $loginUrl = array("/user/login");
 	public $logoutUrl = array("/user/logout");
-	public $profileUrl = array("/user/profile");
-	public $returnUrl = array("/user/profile");
+	public $profileUrl = array("/user/profile/edit");
+	public $returnUrl = array("/user/profile/edit");
 	public $returnLogoutUrl = array("index");
 	
 	
@@ -220,8 +220,8 @@ class UserModule extends CWebModule
 	 */
 	public static function sendMail($email,$subject,$message) {
     	//$adminEmail = Yii::app()->params['adminEmail'];
-		$adminEmail = 'no-reply@'.$_SERVER['SERVER_NAME'];
-	    $headers = "Return-path: $adminEmail\r\nMIME-Version: 1.0\r\nFrom: $adminEmail\r\nReply-To: $adminEmail\r\nContent-Type: text/html; charset=utf-8";
+		$supportEmail = 'no-reply@'.$_SERVER['SERVER_NAME'];
+	    $headers = "Return-path: $supportEmail\r\nMIME-Version: 1.0\r\nFrom: $supportEmail\r\nReply-To: $supportEmail\r\nContent-Type: text/html; charset=utf-8";
 	    $message = wordwrap($message, 70);
 	    $message = str_replace("\n.", "\n..", $message);
 	    return mail($email,'=?UTF-8?B?'.base64_encode($subject).'?=',$message,$headers);

@@ -67,7 +67,7 @@ class ChangesController extends Controller {
             </div>
             <?php if (ProjectChanges::approveAllowed()) { ?>
                 <div class="row">
-                    Модерация
+                    <?= ProjectModele::t('Moderation'); ?>
                     <?php echo CHtml::dropDownList(
                         'moderate',
                         $data['moderate'],

@@ -28,6 +28,25 @@ class Emails extends CActiveRecord {
 	const TYPE_23=23; // +Исполнителю о новой доработке
 	const TYPE_24=24; // +Исполнителю об оплате заказа
 	
+	public static $names_of_email = array(
+	TYPE_10 =>'Восстановление пароля',
+	TYPE_11 =>'Заказчику после регистрации',
+	TYPE_12 =>'Заказчику проект принят',
+	TYPE_13 =>'Заказчику об оплате когда выставлен счет',
+	TYPE_14 =>'Заказчику когда готова часть',
+	TYPE_15 =>'Заказчику когда готова вся работа',
+	TYPE_16 =>'Заказчику о сообщении в чате',
+	TYPE_17 =>'Заказчику о завершении заказа',
+	TYPE_18 =>'Исполнителю сообщение рассылки',
+	TYPE_19 =>'Исполнителю о назначении',
+	TYPE_20 =>'Исполнителю о сообщении в чате',
+	TYPE_21 =>'Исполнителю о съеме с заказа',
+	TYPE_22 =>'Исполнителю о том что срок сдачи части наступил',
+	TYPE_23 =>'Исполнителю о новой доработке',
+	TYPE_24 =>'Исполнителю об оплате заказа',
+	);
+
+	
 	public static $table_prefix;
 	
 	// эти переменные будут использоваться для подстановок в
@@ -51,6 +70,7 @@ class Emails extends CActiveRecord {
 	public 	$page_payment;
 	public 	$specialization;
 	public 	$name_part;
+//	public 	$neworder;
 	
 	public 	$from_id;
 	public 	$to_id;
@@ -92,7 +112,7 @@ class Emails extends CActiveRecord {
         parent::init();
 		$this->site				= 'http://'.$_SERVER['SERVER_NAME'].'/';
 		$this->page_psw			= '';
-		$this->support			= Yii::app()->params['adminEmail'];
+		$this->support			= Yii::app()->params['support'];
 		$this->campaign			= '';
 		$this->name				= '';
 		$this->login			= '';
@@ -136,11 +156,13 @@ class Emails extends CActiveRecord {
 	
     public function sendTo($to, $body, $type_id = 0)
 	{
-		
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site','Notification')).'?=';
+//		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
+	
 		$from	= Yii::app()->params['supportEmail'];
 		$headers="From: $from<$from>\r\n".
 			"To: $to\r\n".
+//			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8";
 		$dictionary = array(
@@ -169,6 +191,7 @@ class Emails extends CActiveRecord {
 			'%ссылка на страницу оплаты%',
 			'%специальность%',
 			'%название части%',
+			'%новый заказ%',
 		);
 
 		$subst = array(
@@ -197,6 +220,7 @@ class Emails extends CActiveRecord {
 			$this->page_payment,
 			$this->specialization,
 			$this->name_part,
+//			$this->neworder,
 		);
 	
 		// собственно, замены
@@ -205,6 +229,7 @@ class Emails extends CActiveRecord {
 				$body = str_replace( $fraze, $subst[$key], $body);
 			};	
 		}	
+
 		mail($from,$subject,$body,$headers);
 
 		$this->from		= $this->from_id;;
