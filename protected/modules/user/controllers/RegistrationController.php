@@ -53,8 +53,6 @@ class RegistrationController extends Controller
 						$email->to_id   = $user->id;
 						
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-						$title = $rec[0]->title;
-						$body  = $rec[0]->text;
 						$id = Campaign::getId();
 						$email->campaign = Campaign::getName();
 						$email->name = $model->full_name;
@@ -62,7 +60,7 @@ class RegistrationController extends Controller
 						$email->password= $soucePassword;
 						
 						$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
-						$email->sendTo( $user->email, $body, $type_id);
+						$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
 						
 						$identity=new UserIdentity($model->username,$soucePassword);
 						$identity->authenticate();

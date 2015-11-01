@@ -154,18 +154,36 @@ class Emails extends CActiveRecord {
 		return parent::model($className);
 	}
 	
-    public function sendTo($to, $body, $type_id = 0)
+    public function sendTo($to, $subject, $body, $type_id = 0)
 	{
-		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site','Notification')).'?=';
-//		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
-	
-		$from	= Yii::app()->params['supportEmail'];
-		$headers="From: $from<$from>\r\n".
-			"To: $to\r\n".
-//			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
-			"MIME-Version: 1.0\r\n".
-			"Content-Type: text/plain; charset=UTF-8";
 		$dictionary = array(
+	'%site%',
+	'%the link to the password change page%',
+	'%support%',
+	'%campaign%',
+	'%name%',
+	'%Name%',
+	'%login%',
+	'%password%',
+	'%the link to the personal account page%',
+	'%Order link%',
+	'%order link%',
+	'%Job title%',
+	'%order no%',
+	'%the order number%',
+	'%Job title%',
+	'%job title%',
+	'%Title%',
+	'%title%',
+	'%from the cost field%',
+	'%the amount of charged%',
+	'%the amount to be paid%',
+	'%message body%',
+	'%the link to the payment page%',
+	'%specialization%',
+	'%the name of the stage%',
+	'%new order%',
+/*		
 			'%сайт%',
 			'%ссылка на страницу изменения пароля%',
 			'%support%',
@@ -192,8 +210,9 @@ class Emails extends CActiveRecord {
 			'%специальность%',
 			'%название части%',
 			'%новый заказ%',
+*/			
 		);
-
+		
 		$subst = array(
 			$this->site,
 			$this->page_psw,
@@ -222,13 +241,35 @@ class Emails extends CActiveRecord {
 			$this->name_part,
 //			$this->neworder,
 		);
-	
+
+//echo '<br>$subject(0)='.$subject; 
+//echo '<br>$body(0)='.$body; 
 		// собственно, замены
 		foreach($dictionary as $key=>$fraze) {
+			$translate = Yii::t('site',$fraze);
 			if (strpos( $body, $fraze)) {
 				$body = str_replace( $fraze, $subst[$key], $body);
+				if ($translate != $fraze) continue;
+				$body = str_replace( $translate, $subst[$key], $body);
+			};	
+			if (strpos( $subect, $fraze)) {
+				$subject = str_replace( $fraze, $subst[$key], $subject);
+				if ($translate != $fraze) continue;
+				$subject = str_replace( $translate, $subst[$key], $subject);
 			};	
 		}	
+//echo '<br>$subject(1)='.$subject; 
+//echo '<br>$body(1)='.$body; 
+
+		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
+//		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
+	
+		$from	= Yii::app()->params['supportEmail'];
+		$headers="From: $from<$from>\r\n".
+			"To: $to\r\n".
+//			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
+			"MIME-Version: 1.0\r\n".
+			"Content-Type: text/plain; charset=UTF-8";
 
 		mail($from,$subject,$body,$headers);
 

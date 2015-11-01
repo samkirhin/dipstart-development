@@ -378,17 +378,16 @@ class ZakazController extends Controller
 					$email->to_id   = $user->id;
 						
 					$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-					$title = $rec[0]->title;
-					$body  = $rec[0]->text;
-						
 					$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
 					$email->campaign = $campaign->name;
 					$email->name = $profle->firstname;
 					// временно так
 					$email->name = $user->username;;
+					$model->num_order = $id;
+					
 					$email->login= $user->username;
 					$email->password= $soucePassword;
-					$email->sendTo( $user->email, $body, $type_id);
+					$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
 					
                     $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
                         'id' => $model->id
@@ -646,7 +645,7 @@ class ZakazController extends Controller
 				$email->num_order = $orderId;
 				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 //				$email->neworder = $order->title;
-				$email->sendTo( $user->email, $rec[0]->text, $typeId);
+				$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
 			}	
         } else {
              echo json_encode(array('error'=>'Нет авторов'));
@@ -713,7 +712,6 @@ class ZakazController extends Controller
 
 			$profile = Profile::model()->findAll("`user_id`='$user->id'");
 			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
-			$title = $rec[0]->title;
 
 			$email->name = $profle->firstname;
 			if (strlen($email->name) < 2) $email->name = $user->username;
@@ -722,7 +720,7 @@ class ZakazController extends Controller
 			$email->num_order = $orderId;
 			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 			$email->message = $rec[0]->text;
-			$email->sendTo( $user->email, $rec[0]->text, $typeId);
+			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
 		};	
 		
         Yii::app()->end();
