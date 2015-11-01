@@ -250,7 +250,6 @@ class ChatController extends Controller {
 		if ($status_id != 6) Yii::app()->end();
 		
 		$parts = ZakazParts::model()->findAll("`proj_id` = '$orderId' AND `status_id` IN (1,2,3,4,5)");
-echo '$parts)='; print_r($parts);
 		
 		// завершение части проекта
 		$orderId = Yii::app()->request->getPost('orderId');
@@ -259,7 +258,7 @@ echo '$parts)='; print_r($parts);
 		$subject_order = $order->title;
 		$user_id = $order->user_id;
 		$user = User::model()->findByPk($user_id);
-echo '<br>count($parts)='.count($parts);
+
 		$email = new Emails;
 		if (count($parts) > 0)  $type_id = Emails::TYPE_14; else
 								$type_id = Emails::TYPE_15;
