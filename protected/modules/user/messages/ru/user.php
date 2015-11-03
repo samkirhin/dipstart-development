@@ -55,6 +55,7 @@ return array(
 	'Please check your email. An instructions was sent to your email address.' => 'На Ваш адрес электронной почты было отправлено письмо с инструкциями.',
 	'Thank you for your registration. Please {{login}}.' => 'Спасибо за регистрацию. <br>Пароль был отправлен Вам на почту. <br>Вы можете авторизоваться перейдя по ссылке {{login}}',
 	'Thank you for your registration. Contact Admin to activate your account.' => 'Регистрация завершена. Пожалуйста свяжитесь с администрацией сайта для активации аккаунта.',
+	'Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{email}}) before start.' => 'Спасибо за регистрацию. <br>Пароль был отправлен Вам на почту. <br>Проверьте свою почту {{email}} перед началом работы.',
 	'Restore' => 'Восстановить',
 	'Please enter your login or email addres.' => 'Пожалуйста, введите Ваш логин или адрес электронной почты.',
 	'Incorrect recovery link.' => 'Неправильная ссылка востановления пароля.',

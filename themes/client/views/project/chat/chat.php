@@ -7,21 +7,25 @@
  */
 $criteria=new CDbCriteria;
 if(!Yii::app()->user->isGuest)
- $criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
+$criteria->addCondition('(moderated=1 OR sender IN (SELECT userid FROM AuthAssignment WHERE itemname IN ("Admin","Manager")) OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
+//$criteria->addCondition('(moderated=1 OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
 $criteria->addCondition('`order` = :oid');
 $criteria->params[':oid'] = (int) $orderId;
 $messages = ProjectMessages::model()->findAll($criteria);
 ?>
 
 <div id="chatWindow" class="col-xs-12 chat-view chtpl0-chatblock">
-<?php Yii::app()->clientScript->registerCss('cs1','
-div.chat-window::after {
-    content: "'.ProjectModule::t('Here is your correspondence').'";
-}');
-if(User::model()->isAuthor() && !$order->executor && $order->status<=2) Yii::app()->clientScript->registerCss('cs2','
-div.chat-window::before {
-     content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
-}'); ?>
+<?php
+if (empty($messages)) {
+	Yii::app()->clientScript->registerCss('cs1','
+	div#chatWindow::after {
+		content: "'.ProjectModule::t('Here is your correspondence').'";
+	}');
+	if(User::model()->isAuthor() && !$order->executor && $order->status<=2) Yii::app()->clientScript->registerCss('cs2','
+	div#chatWindow::before {
+		 content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
+	}');
+} ?>
     <?php foreach ($messages as $message): 
 //		$message->message = str_replace('<br>',"\x0D\x0A",$message->message);
 		$msg_role = 'manager-message';

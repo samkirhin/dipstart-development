@@ -3,7 +3,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2
 ?>
 
 <?php if(Yii::app()->user->hasFlash('reg_success')): ?>
-<div class="reg-success">
+<div class="col-xs-offset-3 col-xs-6 login-form-bg">
 <?php echo Yii::app()->user->getFlash('reg_success'); ?>
 </div>
 
@@ -19,11 +19,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2
 		function toTarget(){ 
 		 location='<?php echo $redirect;?>'; 
 		} 
-		setTimeout( 'toTarget()', 3000 ); 
+		setTimeout( 'toTarget()', 4000 ); 
 	</script>
 	
 <?php elseif (Yii::app()->user->hasFlash('reg_failed')):?>
-<div class="">
+<div class="col-xs-offset-3 col-xs-6 login-form-bg">
 <?php echo Yii::app()->user->getFlash('reg_failed'); ?>
 </div>
 <?php else: ?>
@@ -38,9 +38,9 @@ $this->widget('application.components.UloginWidget', array(
 $form=$this->beginWidget('UActiveForm', array(
 	'id'=>'simple-registration-form',
 	'enableAjaxValidation'=>true,
-	'clientOptions'=>array(
+	/*'clientOptions'=>array(
 		'validateOnSubmit'=>true,
-	),
+	),*/
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 )); ?>
 

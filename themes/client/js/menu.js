@@ -14,17 +14,17 @@ $(document).ready(function(){
         }
     });
     
-    function chatEmpty() {
+    /*function chatEmpty() {
         if ($('div#chatWindow').has('div.post').length > 0) {
             $('div#chatWindow').removeClass('chat-window');
         } else {
             $('div#chatWindow').addClass('chat-window');
         }
-    }
+    }*/
     
-    chatEmpty();
+    //chatEmpty();
     
-    $('input.btn-chat').on('click', chatEmpty);
+    //$('input.btn-chat').on('click', chatEmpty);
    
     $('div#new-changes-block button.addPart').append('<i style="font-size: 1.4em!important; margin-left: 4px; color: rgb(197, 225, 165);" class="fa fa-check fa-lg">');
     
