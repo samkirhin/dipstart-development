@@ -256,8 +256,8 @@ class Emails extends CActiveRecord {
 //echo '<br>body: '.$fraze.'-->'.$translate; 
 			};	
 		}	
-//echo '<br>$subject(1)='.$subject; 
-//echo '<br>$body(1)='.$body; 
+echo '<br>$subject(1)='.$subject; 
+echo '<br>$body(1)='.$body; 
 
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
 //		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';

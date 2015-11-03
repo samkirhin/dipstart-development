@@ -95,4 +95,48 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+	
+	public function actionPage()
+	{
+		if ($_POST) {
+			print_r($_POST);
+			die('!!!!!!!!!!!!!!!!!!!');
+/*			
+type_of_paper
+subject
+sources
+topic
+paper_details
+additional_materials
+tos
+Academic_Level
+spaced
+hours
+customer-service
+pages_number
+slides_number
+options
+email
+first_name
+last_name
+pass
+country
+cellphone
+have_email                                                     
+have_password                                                  
+*/
+		};	
+		Yii::app()->theme='perfect-paper';
+		$this->render('page', array(
+			'role' => 'stranger'
+		));
+		die();
+		if (User::model()->isAuthor()){
+			$this->redirect('/project/zakaz/ownList');
+		} elseif (User::model()->isCustomer()){
+			$this->redirect('/project/zakaz/customerOrderList');
+        } else {
+            $this->render('main');
+        }
+	}
 }

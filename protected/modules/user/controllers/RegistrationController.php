@@ -24,7 +24,8 @@ class RegistrationController extends Controller
 		} else {
 			
 			if(isset($_POST['RegistrationForm'])) {
-			$model->attributes=$_POST['RegistrationForm'];
+				
+				$model->attributes=$_POST['RegistrationForm'];
 			
 				if($model->validate() && isset($_POST['yt0'])) {
 					$soucePassword = $this->generate_password(8);

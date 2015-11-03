@@ -45,15 +45,6 @@ if (file_exists($path)){
             <div class="panel-group" id="info-block">
                 <div class="panel panel-default">
                     <div class="panel-heading panel-heading-white">
-                        <h4 class="panel-title" style="text-align: center;">
-							<?php echo CHtml::activeCheckBox($order,'uppercheckbox',array('id'=>'uppercheckbox','name'=>'uppercheckbox')); ?>
-							<label for='uppercheckbox'><?= ProjectModule::t("uppercheckbox") ?></label>
-                        </h4>
-                    </div>
-				</div>
-			
-                <div class="panel panel-default">
-                    <div class="panel-heading panel-heading-white">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#info-block" href="#infoZakaz">
                                 <?=ProjectModule::t('Ordering Information').' №'.$order->id ?>
@@ -77,7 +68,9 @@ if (file_exists($path)){
 										$projectFields = $order->getFields();
 										if ($projectFields) {
 											foreach($projectFields as $field) {
-												if ($field->field_type == 'LIST'){
+												if ($field->field_type=="BOOL"){
+													echo $form->checkBox($model,$field->varname);
+												} elseif ($field->field_type=="LIST"){
 													$tmp = $field->varname;
 													$columns[] = [
 														'name' => $field->title,
