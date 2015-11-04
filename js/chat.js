@@ -50,7 +50,7 @@ $(document).ready(function() {
 	function view_chat(message, id){
 	       message = Trim(message);
         if (message.length<=0) return false;
-   
+        var role = parseInt($('div#message_send').attr('role'));
         var order=$('#order').val();
         var message_send = $('div#message_send').attr('message_send');
         var html_message_send = 
@@ -71,12 +71,14 @@ $(document).ready(function() {
               $('.chat-view').scrollTop(10000);
               $('#message').val('');
               
-              $('#message_send').append(html_message_send);
-              $('.message_send').fadeIn(400,function(){
-                  setTimeout(function() {
-                    $('.message_send').fadeOut(400);
-                  },5000);
-              });
+              if (role==1) {
+                $('#message_send').append(html_message_send);
+                $('.message_send').fadeIn(400,function(){
+                    setTimeout(function() {
+                      $('.message_send').fadeOut(400);
+                    },5000);
+                });
+              }
             
         });
 	};
