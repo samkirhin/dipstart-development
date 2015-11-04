@@ -256,8 +256,11 @@ class Emails extends CActiveRecord {
 //echo '<br>body: '.$fraze.'-->'.$translate; 
 			};	
 		}	
+//		if (isset($_POST['debug'])) {
+echo '<br>$headers='.$headers;
 echo '<br>$subject(1)='.$subject; 
 echo '<br>$body(1)='.$body; 
+//		};
 
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
 //		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
@@ -269,7 +272,7 @@ echo '<br>$body(1)='.$body;
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8";
 
-		mail($from,$subject,$body,$headers);
+		mail( $to, $subject,$body,$headers);
 
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;
