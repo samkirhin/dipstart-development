@@ -1,4 +1,7 @@
 <?php
+
+
+
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 // --- campaign      генерируем список загруженных материалов
 if(isset(Zakaz::$files_folder)){
@@ -174,7 +177,7 @@ if (file_exists($path)){
             </div>
             <?php $this->renderPartial('chatbtn');?>
             
-            <div class="row" id="message_send" message_send="<?=ProjectModule::t('Message was send')?>">
+            <div class="row" role="<?=User::model()->isCustomer()?>" id="message_send" message_send="<?=ProjectModule::t('Message was send')?>">
             <?php
             if (!Yii::app()->request->isAjaxRequest){
                 echo CHtml::form(); ?>
