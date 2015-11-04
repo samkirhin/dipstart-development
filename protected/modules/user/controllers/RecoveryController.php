@@ -71,7 +71,7 @@ class RecoveryController extends Controller
 						$user = $user[0];*/
 
 						$email->from_id = 1;
-						$email->to_id   = $user->id;
+						$email->to_id = $form->user_id; //  = $user->id;
 						
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
 						$id = Campaign::getId();

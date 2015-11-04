@@ -383,7 +383,7 @@ class ZakazController extends Controller
 					$email->name = $profle->firstname;
 					// временно так
 					$email->name = $user->username;;
-					$model->num_order = $id;
+					$email->num_order = $id;
 					
 					$email->login= $user->username;
 					$email->password= $soucePassword;

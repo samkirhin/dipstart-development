@@ -263,13 +263,15 @@ class Emails extends CActiveRecord {
 //		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
 	
 		$from = Yii::app()->params['supportEmail'];
-		$headers="From: $from<$from>\r\n".
-			"To: $to\r\n".
-//			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
+		$headers =
 			"MIME-Version: 1.0\r\n".
-			"Content-Type: text/plain; charset=UTF-8";
+			"Content-Type: text/plain; charset=UTF-8\r\n".
+			"From: Support <$from>\r\n";
+//			"From: Support <no-reply@crm2.obshya.com>\r\n";
+//			"To: $to\r\n".
+//			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
 
-		mail($from,$subject,$body,$headers);
+		mail($to,$subject,$body,$headers);
 
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;
