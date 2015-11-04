@@ -257,11 +257,9 @@ class Emails extends CActiveRecord {
 			};	
 		}	
 //		if (isset($_POST['debug'])) {
-echo '<br>$headers='.$headers;
 echo '<br>$subject(1)='.$subject; 
 echo '<br>$body(1)='.$body; 
 //		};
-
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
 //		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
 	
@@ -270,8 +268,9 @@ echo '<br>$body(1)='.$body;
 			"To: $to\r\n".
 //			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
 			"MIME-Version: 1.0\r\n".
-			"Content-Type: text/plain; charset=UTF-8";
+			"Content-Type: text/plain; charset=UTF-8\r\n";
 
+echo '<br>$headers='.$headers;
 		mail( $to, $subject,$body,$headers);
 
 		$this->from		= $this->from_id;;
