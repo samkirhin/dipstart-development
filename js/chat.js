@@ -62,7 +62,8 @@ $(document).ready(function() {
                 message: message,
                 recipient:this.name,
         				order: order,
-        				cost: $('.price-for-work-avtor input').val()
+        				cost: $('input#cost').val()
+
             }
         },function(data){
           
