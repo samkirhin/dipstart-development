@@ -98,45 +98,69 @@ class SiteController extends Controller
 	
 	public function actionPage()
 	{
-		if ($_POST) {
-			print_r($_POST);
-			die('!!!!!!!!!!!!!!!!!!!');
-/*			
-type_of_paper
-subject
-sources
-topic
-paper_details
-additional_materials
-tos
-Academic_Level
-spaced
-hours
-customer-service
-pages_number
-slides_number
-options
-email
-first_name
-last_name
-pass
-country
-cellphone
-have_email                                                     
-have_password                                                  
-*/
-		};	
+		if (isset($_POST['User']))           {
+			$model = new User();
+			$attributes = $_POST['User'];
+			$attributes['full_name'] =  $_POST['User']['first_name'].' '.$_POST['User']['last_name'];
+			$pos = strpos( $attributes['email'], '@');
+			$attributes['username'] =  substr( $attributes['email'], 0, $pos);
+			$attributes['full_name'] =  $_POST['User']['first_name'].' '.$_POST['User']['last_name'];
+			$model->attributes	= $attributes;
+			
+			if($model->validate()) {
+				$soucePassword = UserModule::generate_password(8);
+				$model->password = UserModule::encrypting($soucePassword);
+				$model->superuser=0;
+				$model->status=1;
+				if ($model->save()) {
+					$AuthAssignment = new AuthAssignment;
+					$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$model->id);
+					$AuthAssignment->save();
+					$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
+					
+					$type_id = Emails::TYPE_11;
+					$email = new Emails;
+						
+					$criteria = new CDbCriteria();
+					$criteria->order = 'id DESC';
+					$criteria->limit = 1;
+					$model = User::model()->findAll($criteria)[0];
+
+					$email->from_id = 1;
+					$email->to_id   = $model->id;
+						
+					$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+					$id = Campaign::getId();
+					$email->campaign = Campaign::getName();
+					$email->name = $model->full_name;
+					$email->login= $model->username;
+					$email->password= $soucePassword;
+				
+					$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
+					$email->sendTo( $model->email, $rec[0]->title, $rec[0]->text, $type_id);
+						
+					$identity=new UserIdentity($model->username,$soucePassword);
+					$identity->authenticate();
+					Yii::app()->user->login($identity,0);
+					$this->redirect(Yii::app()->controller->module->returnUrl[0]);
+				
+					// регистрация прошла, формируем запрос
+
+					Yii::app()->end();
+				};	
+			};	
+			
+			$model = new ProjectFields();
+			$model->attributes	= $_POST['ProjectFields'];
+			
+			if ($model->validate()) {
+				$model->save();
+			}		
+		}
 		Yii::app()->theme='perfect-paper';
-		$this->render('page', array(
+		$this->render('page/order', array(
 			'role' => 'stranger'
 		));
-		die();
-		if (User::model()->isAuthor()){
-			$this->redirect('/project/zakaz/ownList');
-		} elseif (User::model()->isCustomer()){
-			$this->redirect('/project/zakaz/customerOrderList');
-        } else {
-            $this->render('main');
-        }
-	}
+		Yii::app()->end();
+	}	
 }

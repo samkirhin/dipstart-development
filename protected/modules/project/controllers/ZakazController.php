@@ -38,8 +38,10 @@ class ZakazController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
+		$projectFields = $model->getFields();
 		$this->render('view',array(
-			'model'=> $model
+			'model'			=> $model,
+			'projectFields'	=> $projectFields,
 		));
 	}
 	protected $_request;

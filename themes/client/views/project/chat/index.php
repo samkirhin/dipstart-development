@@ -67,6 +67,9 @@ if (file_exists($path)){
                                             ]);
 										$projectFields = $order->getFields();
 										if ($projectFields) {
+echo '<pre>';
+print_r($projectFields);
+echo '</pre>';
 											foreach($projectFields as $field) {
 												if ($field->field_type=="BOOL"){
 													echo $form->checkBox($model,$field->varname);
