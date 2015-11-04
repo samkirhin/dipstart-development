@@ -174,7 +174,7 @@ if (file_exists($path)){
             </div>
             <?php $this->renderPartial('chatbtn');?>
             
-            <div class="row">
+            <div class="row" id="message_send" message_send="<?=ProjectModule::t('Message was send')?>">
             <?php
             if (!Yii::app()->request->isAjaxRequest){
                 echo CHtml::form(); ?>

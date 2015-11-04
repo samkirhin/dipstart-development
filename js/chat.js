@@ -48,22 +48,37 @@ $(document).ready(function() {
 	});
 	
 	function view_chat(message, id){
+	       message = Trim(message);
+        if (message.length<=0) return false;
+   
         var order=$('#order').val();
+        var message_send = $('div#message_send').attr('message_send');
+        var html_message_send = 
+            '<div class="message_send info"><div class="message_send flash-success"><a>'+message_send+'</a></div></div>';
+        $('#message_send div.message_send').remove();
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
-				id: id,
+				        id: id,
                 message: message,
                 recipient:this.name,
-				order: order,
-				cost: $('input#cost').val()
+        				order: order,
+        				cost: $('.price-for-work-avtor input').val()
             }
         },function(data){
-            $('#chat').html(data);
-            $('.chat-view').scrollTop(10000);
-            $('#message').val('');
+          
+              $('#chat').html(data);
+              $('.chat-view').scrollTop(10000);
+              $('#message').val('');
+              
+              $('#message_send').append(html_message_send);
+              $('.message_send').fadeIn(400,function(){
+                  setTimeout(function() {
+                    $('.message_send').fadeOut(400);
+                  },5000);
+              });
+            
         });
-		return	false;
-	};	
+	};
 
 	
     $('.btn-chat').click(function(){
@@ -109,3 +124,9 @@ function zakaz_done(part_id)
 		document.getElementById('partStatus-status-'+part_id).innerHTML = 'завершён';
         return false;
 };
+
+function Trim(s) {
+    s = s.replace(/^ +/,'');
+    s = s.replace(/ +$/,'');
+    return s;
+}
