@@ -115,7 +115,7 @@ function removeFile(obj){
 }/*END Remove attachment file*/
 function spam(orderid){
     $.ajax({
-        url: '/project/zakaz/spam?order_id='+orderid,
+        url: '/project/zakaz/spam?orderId='+orderid,
         type: 'POST',
         datatype: 'json',
         success: function (data,textStatus,errorThrown) {

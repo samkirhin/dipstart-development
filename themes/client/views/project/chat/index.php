@@ -54,6 +54,7 @@ if (file_exists($path)){
                             </a>
                         </h4>
                     </div>
+
                     <div id="infoZakaz" class="panel-collapse collapse">
                         <div class="panel-body">
 

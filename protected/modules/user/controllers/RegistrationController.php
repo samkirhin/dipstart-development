@@ -21,8 +21,10 @@ class RegistrationController extends Controller
 		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {
 			$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
+			
 			if(isset($_POST['RegistrationForm'])) {
-				$model->attributes=$_POST['RegistrationForm'];
+			$model->attributes=$_POST['RegistrationForm'];
+			
 				if($model->validate()) {
 					$soucePassword = $this->generate_password(8);
 					$model->password=UserModule::encrypting($soucePassword);
@@ -52,8 +54,6 @@ class RegistrationController extends Controller
 						$email->to_id   = $user->id;
 						
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-						$title = $rec[0]->title;
-						$body  = $rec[0]->text;
 						$id = Campaign::getId();
 						$email->campaign = Campaign::getName();
 						$email->name = $model->full_name;
@@ -61,23 +61,22 @@ class RegistrationController extends Controller
 						$email->password= $soucePassword;
 						
 						$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
-						$email->sendTo( $user->email, $body, $type_id);
+						$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
 						
 						$identity=new UserIdentity($model->username,$soucePassword);
 						$identity->authenticate();
 						Yii::app()->user->login($identity,0);
-						
-						//$this->redirect(Yii::app()->controller->module->returnUrl);
+						//$this->redirect(Yii::app()->controller->module->returnUrl[0]);
 						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{email}}) before start.", ['{{email}}'=>$model->email]));
 						$this->refresh();
 						//Yii::app()->end();
-
 					} else {
 						Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
 						$this->refresh();
 					}
 				}
 			}
+			
 			Yii::app()->theme='client';
 			$this->render('/user/registration',array('model'=>$model, 'role'=>$role));
 		}

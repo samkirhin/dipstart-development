@@ -47,8 +47,8 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	function view_chat(message, id){
-	       message = Trim(message);
+	function view_chat(name, message, id){
+	    message = Trim(message);
         if (message.length<=0) return false;
         var role = parseInt($('div#message_send').attr('role'));
         var order=$('#order').val();
@@ -58,11 +58,11 @@ $(document).ready(function() {
         $('#message_send div.message_send').remove();
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
-				        id: id,
+				id: id,
                 message: message,
-                recipient:this.name,
-        				order: order,
-        				cost: $('.price-for-work-avtor input').val()
+                recipient: name,
+				order: order,
+				cost: $('input#cost').val()
             }
         },function(data){
           
@@ -84,7 +84,7 @@ $(document).ready(function() {
 
 	
     $('.btn-chat').click(function(){
-        view_chat($('#message').val(), 0);
+        view_chat( this.name, $('#message').val(), 0);
 		return false;
     });
     $('.chat-edit').click(function(){
@@ -103,7 +103,7 @@ $(document).ready(function() {
 		} else { 
 			$('#chat-edit').val('Редактирование последнего сообщения'); 
             $('#div-edit-message').css('display', 'none');
-			view_chat($('#edit-message').val(),text[text.length-1].id);			
+			view_chat( 'customer', $('#edit-message').val(),text[text.length-1].id);			
 		};
         return false;
     });
@@ -111,10 +111,11 @@ $(document).ready(function() {
 });
 function zakaz_done(part_id)
 {
+		var orderId = $('#order').val();
 		$.ajax({
 			type: "POST",
 			url: 'chat/status'
-			, data: 'cmd=done&id='+part_id+'&status_id=6'
+			, data: 'cmd=done&id='+part_id+'&status_id=6'+'&orderId='+orderId
 			, success: function(html) {
 				html = BackReplacePlusesFromStr(html);
 				ajax_response = html;
