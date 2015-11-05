@@ -385,7 +385,8 @@ class ZakazController extends Controller
 					$email->name = $profle->firstname;
 					// временно так
 					$email->name = $user->username;;
-					$model->num_order = $id;
+					$email->num_order = $id;
+					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 					
 					$email->login= $user->username;
 					$email->password= $soucePassword;
