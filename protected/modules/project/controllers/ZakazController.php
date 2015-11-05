@@ -625,9 +625,6 @@ class ZakazController extends Controller
 //                if($author->getUserRole($author->id)=='Author') $mail->send();
             }
             
-            echo 'ok =)';
-
-			
 			// новая рассылка
 
 			$typeId = Emails::TYPE_18;
