@@ -37,7 +37,7 @@ var ProjectPayments = function(orderId) {
             }
         }, 'json');}
 
-		if (pay==0) && (receive)
+		if ((pay==0) && (receive))
 			send_message(13,'Заказчику об оплате когда выставлен счет',receive);
 		if (pay>0)	
 			send_message(24,'Исполнителю об оплате заказа',pay);
