@@ -22,6 +22,7 @@
  * @property User $user
  * @property User $author
  * @property ProjectStatus $projectStatus
+ * @property integer $uppercheckbox
  */
 class Zakaz extends CActiveRecord {
 	private $_model;
@@ -264,7 +265,7 @@ class Zakaz extends CActiveRecord {
 			// will receive user inputs.
 			return array(
 				array('category_id, title', 'required', 'on'=>'create'),
-				array('category_id, job_id, status', 'numerical', 'integerOnly'=>true),
+				array('category_id, job_id, status, uppercheckbox', 'numerical', 'integerOnly'=>true),
 				array('user_id', 'length', 'max'=>11),
 				array('title', 'length', 'max'=>255),
 				array('executor', 'length', 'max'=>10),
@@ -330,6 +331,7 @@ class Zakaz extends CActiveRecord {
 				'notes' => ProjectModule::t('Notes'),
 				'author_notes' => ProjectModule::t('author_notes'),
 				'closestDate' => ProjectModule::t('closestDate'),
+				'uppercheckbox' => ProjectModule::t('uppercheckbox'),
 			);
 			$projectFields = $this->getFields();
 			if ($projectFields) {
@@ -360,6 +362,7 @@ class Zakaz extends CActiveRecord {
 			'author_notes' => ProjectModule::t('author_notes'),
 			'time_for_call' => ProjectModule::t('time_for_call'),
 			'edu_dep' => ProjectModule::t('edu_dep'),
+			'uppercheckbox' => ProjectModule::t('uppercheckbox'),
 		);
 	}
 

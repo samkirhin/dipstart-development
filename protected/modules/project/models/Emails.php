@@ -28,6 +28,25 @@ class Emails extends CActiveRecord {
 	const TYPE_23=23; // +Исполнителю о новой доработке
 	const TYPE_24=24; // +Исполнителю об оплате заказа
 	
+	public static $names_of_email = array(
+	TYPE_10 =>'Восстановление пароля',
+	TYPE_11 =>'Заказчику после регистрации',
+	TYPE_12 =>'Заказчику проект принят',
+	TYPE_13 =>'Заказчику об оплате когда выставлен счет',
+	TYPE_14 =>'Заказчику когда готова часть',
+	TYPE_15 =>'Заказчику когда готова вся работа',
+	TYPE_16 =>'Заказчику о сообщении в чате',
+	TYPE_17 =>'Заказчику о завершении заказа',
+	TYPE_18 =>'Исполнителю сообщение рассылки',
+	TYPE_19 =>'Исполнителю о назначении',
+	TYPE_20 =>'Исполнителю о сообщении в чате',
+	TYPE_21 =>'Исполнителю о съеме с заказа',
+	TYPE_22 =>'Исполнителю о том что срок сдачи части наступил',
+	TYPE_23 =>'Исполнителю о новой доработке',
+	TYPE_24 =>'Исполнителю об оплате заказа',
+	);
+
+	
 	public static $table_prefix;
 	
 	// эти переменные будут использоваться для подстановок в
@@ -51,6 +70,7 @@ class Emails extends CActiveRecord {
 	public 	$page_payment;
 	public 	$specialization;
 	public 	$name_part;
+//	public 	$neworder;
 	
 	public 	$from_id;
 	public 	$to_id;
@@ -92,7 +112,7 @@ class Emails extends CActiveRecord {
         parent::init();
 		$this->site				= 'http://'.$_SERVER['SERVER_NAME'].'/';
 		$this->page_psw			= '';
-		$this->support			= Yii::app()->params['adminEmail'];
+		$this->support			= Yii::app()->params['support'];
 		$this->campaign			= '';
 		$this->name				= '';
 		$this->login			= '';
@@ -134,16 +154,36 @@ class Emails extends CActiveRecord {
 		return parent::model($className);
 	}
 	
-    public function sendTo($to, $body, $type_id = 0)
+    public function sendTo($to, $subject, $body, $type_id = 0)
 	{
-		
-		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site','Notification')).'?=';
-		$from	= Yii::app()->params['supportEmail'];
-		$headers="From: $from<$from>\r\n".
-			"To: $to\r\n".
-			"MIME-Version: 1.0\r\n".
-			"Content-Type: text/plain; charset=UTF-8";
 		$dictionary = array(
+	'%site%',
+	'%the link to the password change page%',
+	'%support%',
+	'%campaign%',
+	'%name%',
+	'%Name%',
+	'%login%',
+	'%password%',
+	'%the link to the personal account page%',
+	'%Order link%',
+	'%order link%',
+	'%Job title%',
+	'%order no%',
+	'%the order number%',
+	'%Job title%',
+	'%job title%',
+	'%Title%',
+	'%title%',
+	'%from the cost field%',
+	'%the amount of charged%',
+	'%the amount to be paid%',
+	'%message body%',
+	'%the link to the payment page%',
+	'%specialization%',
+	'%the name of the stage%',
+	'%new order%',
+/*		
 			'%сайт%',
 			'%ссылка на страницу изменения пароля%',
 			'%support%',
@@ -169,8 +209,10 @@ class Emails extends CActiveRecord {
 			'%ссылка на страницу оплаты%',
 			'%специальность%',
 			'%название части%',
+			'%новый заказ%',
+*/			
 		);
-
+		
 		$subst = array(
 			$this->site,
 			$this->page_psw,
@@ -197,15 +239,39 @@ class Emails extends CActiveRecord {
 			$this->page_payment,
 			$this->specialization,
 			$this->name_part,
+//			$this->neworder,
 		);
-	
+//echo '<br>$subject(0)='.$subject; 
+//echo '<br>$body(0)='.$body; 
 		// собственно, замены
 		foreach($dictionary as $key=>$fraze) {
-			if (strpos( $body, $fraze)) {
-				$body = str_replace( $fraze, $subst[$key], $body);
+			$translate = Yii::t('site',$fraze);
+//echo '<br>$fraze(0)='.$fraze.' $translate(0)='.$translate; 
+			if (strpos( $subject, $translate)) {
+				$subject = str_replace( $translate, $subst[$key], $subject);
+//echo '<br>subject: '.$fraze.'-->'.$translate; 
+			};	
+			if (strpos( $body, $translate)) {
+				$body = str_replace( $translate, $subst[$key], $body);
+//echo '<br>body: '.$fraze.'-->'.$translate; 
 			};	
 		}	
-		mail($from,$subject,$body,$headers);
+//echo '<br>$subject(1)='.$subject; 
+//echo '<br>$body(1)='.$body; 
+
+		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
+//		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
+	
+		$from = Yii::app()->params['supportEmail'];
+		$headers =
+			"MIME-Version: 1.0\r\n".
+			"Content-Type: text/plain; charset=UTF-8\r\n".
+			"From: Support <$from>\r\n";
+//			"From: Support <no-reply@crm2.obshya.com>\r\n";
+//			"To: $to\r\n".
+//			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
+
+		mail($to,$subject,$body,$headers);
 
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;

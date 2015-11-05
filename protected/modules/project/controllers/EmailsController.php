@@ -58,19 +58,21 @@ class EmailsController extends Controller
 				Emails::TYPE_24,
 		);
 		if (in_array($typeId,$arr_type)) {
-			$user = User::model()->findByPk($order->executor);
+			$user_id = $order->executor;
 		} else {
-			$user = User::model()->findByPk($order->user_id);
+			$user_id = $order->user_id;
 		};
+		if (!$user_id) Yii::app()->end();
+			
+		$user = User::model()->findByPk($user_id);
 
-		$model->to_id = $user->id;
-		$profile = Profile::model()->findAll("`user_id`='$user->id'");
+		$model->to_id = $user_id;
+		$profile = Profile::model()->findAll("`user_id`='$user_id'");
 		
 		$rec   = Templates::model()->findAll("`type_id`='$typeId'");
 		
 		$title = $rec[0]->title;
-
-		$model->name = $profle->firstname;
+		$model->name = $profle->full_name;
 		if (strlen($model->name) < 2) $model->name = $user->username;
 		$model->login= $user->username;
 		
@@ -78,8 +80,8 @@ class EmailsController extends Controller
 		$model->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 		$model->message = $rec[0]->text;
 		$model->price_order = $cost;
-		$this->sum_order  = $cost;
-		$model->sendTo( $user->email, $rec[0]->text, $typeId);
+		$model->sum_order  = $cost;
+		$model->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
 				
 		$model->save();
 /*		

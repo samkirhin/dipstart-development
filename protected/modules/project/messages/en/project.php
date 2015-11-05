@@ -205,4 +205,6 @@ return array(
 	
 	'Please, write that you are ready to take this order or ask a question.' => 'Please, write that you are ready to take this order or ask a question.',
 	'Here is your correspondence' => 'Here is your correspondence',
+	
+	'upperckeckbox' => 'UpperCkeckbox',
 );

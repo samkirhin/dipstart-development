@@ -28,6 +28,7 @@ class RecoveryController extends Controller
 								$find->status = 1;
 							}
 							$find->save();
+							
 							Yii::app()->user->setFlash('recoveryMessage',UserModule::t("New password is saved."));
 							$this->redirect(Yii::app()->controller->module->recoveryUrl);
 						}
@@ -45,9 +46,8 @@ class RecoveryController extends Controller
 						$user->activkey = UserModule::encrypting(microtime().$user->password);
 						$user->save();
 						$activation_url = 'http://' . $_SERVER['HTTP_HOST'].$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl),array("activkey" => $user->activkey, "email" => $user->email));
-echo 	'<br>'.$activation_url;
-echo 	'<br>'.Yii::app()->controller->module->recoveryUrl;
-$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl));
+/*
+						$this->createUrl(implode(Yii::app()->controller->module->recoveryUrl));
 						$subject = UserModule::t("You have requested the password recovery site {site_name}",
 		    					array(
 		    						'{site_name}'=>Yii::app()->name,
@@ -59,6 +59,31 @@ $this->createUrl(implode(Yii::app()->controller->module->recoveryUrl));
 		    					));
 							
 		    			UserModule::sendMail($user->email,$subject,$message);
+*/						
+						// новая служба системных сообщений
+						$type_id = Emails::TYPE_10;
+						$email = new Emails;
+						
+						/*$criteria = new CDbCriteria();
+						$criteria->order = 'id DESC';
+						$criteria->limit = 1;
+						$user = User::model()->findAll($criteria);
+						$user = $user[0];*/
+
+						$email->from_id = 1;
+						$email->to_id = $form->user_id; //  = $user->id;
+						
+						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+						$id = Campaign::getId();
+						$email->campaign = Campaign::getName();
+						$email->name = $model->full_name;
+						$email->login= $model->username;
+						$email->password= $soucePassword;
+						
+						$email->page_psw = $activation_url;
+					
+						$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
+						$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
 		    			
 						Yii::app()->user->setFlash('recoveryMessage',UserModule::t("Please check your email. An instructions was sent to your email address."));
 		    			$this->refresh();
