@@ -55,7 +55,9 @@ class Zakaz extends CActiveRecord {
 	}
 	public function getFields() {
 		if (!$this->_model) {
-			if (User::model()->isAdmin() || User::model()->isManager()) {
+			if (User::model()->isAdmin()) {
+				$this->_model=ProjectField::model()->findAll();
+			} elseif (User::model()->isManager()) {
 				$this->_model=ProjectField::model()->forManager()->findAll();
 			} elseif (User::model()->isCustomer()) {
 				$this->_model=ProjectField::model()->forCustomer()->findAll();

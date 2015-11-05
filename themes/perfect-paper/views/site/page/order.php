@@ -17,7 +17,7 @@ $form=$this->beginWidget('CActiveForm',array(
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
                 <div class="col-sm-9">
-                    <select id="type_of_paper" name="type_of_paper" class="form-control">
+                    <select id="type_of_paper" name="ProfilesFields[type_of_paper]" class="form-control">
                         <optgroup label="Essays">
                             <option value="100016">Annotated bibliography</option>
                             <option value="100017">Argumentative essay</option>
@@ -74,7 +74,7 @@ $form=$this->beginWidget('CActiveForm',array(
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Subject"></a>
                 </label>
                 <div class="col-sm-9">
-                    <select name="subject" id="subject" class="form-control">
+                    <select name="ProfilesFields[subject]" id="subject" class="form-control">
                         <option value="">Choose...</option>
                         <option value="1">Accounting</option>
                         <option value="2">Anthropology</option>
@@ -136,19 +136,19 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_MLA">MLA
+                            <input type="radio" name="ProfilesFields[paperformat]" id="ProfilesFields[paperformat]_MLA">MLA
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_APA">APA
+                            <input type="radio" name="ProfilesFields[paperformat]" id="ProfilesFields[paperformat]_APA">APA
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_Chicago">Chicago / Turabian
+                            <input type="radio" name="ProfilesFields[paperformat]" id="ProfilesFields[paperformat]_Chicago">Chicago / Turabian
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_Harvard">Harvard
+                            <input type="radio" name="ProfilesFields[paperformat]" id="ProfilesFields[paperformat]_Harvard">Harvard
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="paper_format" id="paper_format_Other">Other
+                            <input type="radio" name="ProfilesFields[paperformat]" id="ProfilesFields[paperformat]_Other">Other
                         </label>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                         <label>
-                            <input name="add_abstract" type="checkbox"> Add an Abstract page to my paper
+                            <input name="ProfilesFields[abstract]" type="checkbox"> Add an Abstract page to my paper
                         </label>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div class="input-group spinner">
                         <button class="btn btn-primary pull-left" type="button">+</button>
-                        <input name="sources" id="sources" type="text" class="form-control pull-left" value="1">
+                        <input name="ProfilesFields[sources]" id="sources" type="text" class="form-control pull-left" value="1">
                         <button class="btn btn-primary pull-left" type="button">-</button>
                     </div>
                 </div>
@@ -179,7 +179,7 @@ $form=$this->beginWidget('CActiveForm',array(
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
                 <div class="col-sm-9">
-                    <input id="topic" name="topic" type="text" class="form-control">
+                    <input id="topic" name="ProfilesFields[title]" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group">
@@ -187,7 +187,7 @@ $form=$this->beginWidget('CActiveForm',array(
                     <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                 </label>
                 <div class="col-sm-9">
-                    <textarea name="paper_details" id="paper_details" class="form-control" rows="4"></textarea>
+                    <textarea name="ProfilesFields[paperdetails]" id="paper_details" class="form-control" rows="4"></textarea>
                 </div>
             </div>
             <div class="radio">
@@ -197,13 +197,13 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary active">
-                            <input type="radio" name="additional_materials" id="not" checked>Not needed
+                            <input type="radio" name="ProfilesFields[Additionalmaterials]" id="not" checked>Not needed
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="additional_materials" id="later">Needed, I will provide them later
+                            <input type="radio" name="ProfilesFields[Additionalmaterials]" id="later">Needed, I will provide them later
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="additional_materials" id="wont">Needed, I won't be able to provide them
+                            <input type="radio" name="ProfilesFields[Additionalmaterials]" id="wont">Needed, I won't be able to provide them
                         </label>
                     </div>
                 </div>
@@ -236,10 +236,10 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div id="tos" class="btn-group calc_elem" data-toggle="buttons">
                         <label class="btn btn-primary active">
-                            <input type="radio" name="tos" id="wr_from_scratch" data-val="1" checked>Writing from scratch
+                            <input type="radio" name="ProfilesFields[Typeofservice]" id="wr_from_scratch" data-val="1" checked>Writing from scratch
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="tos" id="edit_proof" data-val="2">Editing/proofreading
+                            <input type="radio" name="ProfilesFields[Typeofservice]" id="edit_proof" data-val="2">Editing/proofreading
                         </label>
                     </div>
                 </div>
@@ -251,16 +251,16 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div id="academ_level" class="btn-group calc_elem" data-toggle="buttons">
                         <label class="btn btn-primary active">
-                            <input type="radio" name="Academic_Level" id="High_school" checked>High school
+                            <input type="radio" name="ProfilesFields[AcademicLevel]" id="High_school" checked>High school
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="Academic_Level" id="Undergraduate">Undergraduate
+                            <input type="radio" name="ProfilesFields[AcademicLevel]" id="Undergraduate">Undergraduate
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="Academic_Level" id="Bachelor">Bachelor
+                            <input type="radio" name="ProfilesFields[AcademicLevel]" id="Bachelor">Bachelor
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="Academic_Level" id="Professional">Professional
+                            <input type="radio" name="ProfilesFields[AcademicLevel]" id="Professional">Professional
                         </label>
                     </div>
                 </div>
@@ -269,7 +269,7 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox"> I want to order VIP customer service
+                            <input type="checkbox" name="ProfilesFields[VIPcustomer]"> I want to order VIP customer service
                             <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                         </label>
                     </div>
@@ -282,7 +282,7 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-3">
                     <div class="input-group spinner">
                         <button class="btn btn-primary pull-left calc_elem" type="button">+</button>
-                        <input id="pages_number" type="text" class="form-control pull-left" value="1">
+                        <input id="pages_number" name="ProfilesFields[Numberofpages]" type="text" class="form-control pull-left" value="1">
                         <button class="btn btn-primary pull-left calc_elem" type="button">-</button>
                     </div>
                 </div>
@@ -292,7 +292,7 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-3">
                     <div class="input-group spinner">
                         <button class="btn btn-primary pull-left" type="button">+</button>
-                        <input id="slides_number" type="text" class="form-control pull-left" value="1">
+                        <input id="slides_number" name="ProfilesFields[Numberofslides]" type="text" class="form-control pull-left" value="1">
                         <button class="btn btn-primary pull-left" type="button">-</button>
                     </div>
                 </div>
@@ -301,10 +301,10 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-offset-3 col-sm-4">
                     <div id="spaced" class="btn-group calc_elem" data-toggle="buttons">
                         <label class="btn btn-primary active">
-                            <input type="radio" name="spaced" data-val="2" checked>Single Spaced
+                            <input type="radio" name="ProfilesFields[Spaced]" data-val="1" checked>Single Spaced
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="spaced" data-val="1">Double Spaced
+                            <input type="radio" name="ProfilesFields[Spaced]" data-val="2">Double Spaced
                         </label>
                     </div>
                 </div>
@@ -317,44 +317,44 @@ $form=$this->beginWidget('CActiveForm',array(
                 </label>
                     <div id="hours" class="col-sm-7 btn-group calc_elem" data-toggle="buttons">
                         <label class="btn btn-primary btn-deadline active">
-                            <input type="radio" name="hours" id="threeHours" checked>3
+                            <input type="radio" name="ProfilesFields[hours]" id="threeHours" checked>3
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="sixHours">6
+                            <input type="radio" name="ProfilesFields[hours]" id="sixHours">6
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="twelveHours">12
+                            <input type="radio" name="ProfilesFields[hours]" id="twelveHours">12
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="oneDay">24
+                            <input type="radio" name="ProfilesFields[hours]" id="oneDay">24
                         </label>
                         <div class="col-sm-1"></div>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="twoDays">2
+                            <input type="radio" name="ProfilesFields[hours]" id="twoDays">2
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="threeDays">3
+                            <input type="radio" name="ProfilesFields[hours]" id="threeDays">3
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="fourDays">4
+                            <input type="radio" name="ProfilesFields[hours]" id="fourDays">4
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="fiveDays">5
+                            <input type="radio" name="ProfilesFields[hours]" id="fiveDays">5
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="sevenDays">7
+                            <input type="radio" name="ProfilesFields[hours]" id="sevenDays">7
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="tenDays">10
+                            <input type="radio" name="ProfilesFields[hours]" id="tenDays">10
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="twentyDays">12
+                            <input type="radio" name="ProfilesFields[hours]" id="twentyDays">12
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="thirtyDays">30
+                            <input type="radio" name="ProfilesFields[hours]" id="thirtyDays">30
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="hours" id="twoMonths">60
+                            <input type="radio" name="ProfilesFields[hours]" id="twoMonths">60
                         </label>
                     </div>
                 <div class="col-sm-offset-3 col-sm-3">Hours</div>
@@ -377,16 +377,16 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary" style="padding: 16px 15px !important;">
-                            <input type="radio" name="options" id="option17">Regular writer
+                            <input type="radio" name="ProfilesFields[Preferredwriter]" id="option17">Regular writer
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option18">Advanced regular<br>writer
+                            <input type="radio" name="ProfilesFields[Preferredwriter]" id="option18">Advanced regular<br>writer
                         </label>
                         <label class="btn btn-primary" style="padding: 16px 15px !important;">
-                            <input type="radio" name="options" id="option19">My previous writer
+                            <input type="radio" name="ProfilesFields[Preferredwriter]" id="option19">My previous writer
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option20">TOP writer:<br>Fullfiled by top 10 writers
+                            <input type="radio" name="ProfilesFields[Preferredwriter]" id="option20">TOP writer:<br>Fullfiled by top 10 writers
                         </label>
                     </div>
                 </div>
@@ -404,10 +404,10 @@ $form=$this->beginWidget('CActiveForm',array(
                 <div class="col-sm-9">
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option21">Credit card
+                            <input type="radio" name="ProfilesFields[Preferredwriter]" id="option21">Credit card
                         </label>
                         <label class="btn btn-primary btn-deadline">
-                            <input type="radio" name="options" id="option22">PayPal
+                            <input type="radio" name="ProfilesFields[Preferredwriter]" id="option22">PayPal
                         </label>
                     </div>
                 </div>
@@ -441,7 +441,7 @@ $form=$this->beginWidget('CActiveForm',array(
                     <div class="form-group">
                         <label for="email" class="col-sm-3 control-label">Email:</label>
                         <div class="col-sm-9">
-                            <input id="email" type="email" class="form-control">
+                            <input id="email" name="User[email]" type="email" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -453,13 +453,13 @@ $form=$this->beginWidget('CActiveForm',array(
                     <div class="form-group">
                         <label for="first_name" class="col-sm-3 control-label">First Name:</label>
                         <div class="col-sm-9">
-                            <input id="first_name" type="text" class="form-control">
+                            <input id="first_name" name="User[first_name]" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="last_name" class="col-sm-3 control-label">Last name:</label>
                         <div class="col-sm-9">
-                            <input id="last_name" type="text" class="form-control">
+                            <input id="last_name" name="User[last_name]" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -467,7 +467,7 @@ $form=$this->beginWidget('CActiveForm',array(
                             <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                         </label>
                         <div class="col-sm-9">
-                            <input id="pass" type="password" class="form-control">
+                            <input id="pass" name="User[pass]" type="password" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -479,7 +479,7 @@ $form=$this->beginWidget('CActiveForm',array(
                     <div class="form-group">
                         <label for="country" class="col-sm-3 control-label">Country:</label>
                         <div id="country" class="col-sm-9">
-                            <select id="country" class="form-control">
+                            <select id="country" name="country" class="form-control">
                                 <option>Choose...</option>
                                 <option>Lorem ipsum</option>
                                 <option>Dolor sit amet</option>
@@ -497,7 +497,7 @@ $form=$this->beginWidget('CActiveForm',array(
                             <span class="input-group-addon">
                                 +225
                             </span>
-                                <input id="cellphone" type="text" class="form-control">
+                                <input id="cellphone" name="User[phone_number]" type="text" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -519,15 +519,15 @@ $form=$this->beginWidget('CActiveForm',array(
                         </label>
 
                         <div class="col-sm-9">
-                            <input id="have_email" type="email" class="form-control">
+                            <input id="have_email" name="have_email" type="email" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="have_password" class="col-sm-3 control-label">Password:
+                        <label for="have_password" name="have_password" class="col-sm-3 control-label">Password:
                             <a class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Lorem ipsum dolor sit amet"></a>
                         </label>
                         <div class="col-sm-9">
-                            <input id="have_password" type="password" class="form-control">
+                            <input id="have_password" name="have_password" type="password" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

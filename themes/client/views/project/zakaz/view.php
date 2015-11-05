@@ -21,13 +21,22 @@
 </div>
 
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
+<pre>
+<?php print_r($model); ?>
+</pre>
 <?php
 if (Campaign::getId()){
 	$attr = array('id');
 	$projectFields = $model->getFields();
 	if ($projectFields) {
 		foreach($projectFields as $field) {
-			if ($field->field_type=="LIST"){
+			if ($field->field_type=="BOOL"){
+				$tmp = $field->varname;
+				$attr[] = [
+					'name' => $field->title,
+					'value' => $model->$tmp
+					];
+			} elseif ($field->field_type=="LIST"){
 				$tmp = $field->varname;
 				$attr[] = [
 					'name' => $field->title,
@@ -75,11 +84,12 @@ if (Campaign::getId()){
 		'add_demands',
 	);
 }
+/*
 	$this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
 		'attributes'=>$attr,
 	));
-
+*/
 ?>
 <?php /*
     $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(

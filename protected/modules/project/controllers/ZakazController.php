@@ -38,8 +38,10 @@ class ZakazController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
+		$projectFields = $model->getFields();
 		$this->render('view',array(
-			'model'=> $model
+			'model'			=> $model,
+			'projectFields'	=> $projectFields,
 		));
 	}
 	protected $_request;
@@ -384,6 +386,7 @@ class ZakazController extends Controller
 					// временно так
 					$email->name = $user->username;;
 					$email->num_order = $id;
+					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 					
 					$email->login= $user->username;
 					$email->password= $soucePassword;
@@ -638,7 +641,7 @@ class ZakazController extends Controller
 
 				$email->to_id = $user->id;
 
-				$email->name = $user->profile->full_name;
+				$email->name = $user->full_name;
 				if (strlen($email->name) < 2) $email->name = $user->username;
 				$email->login= $user->username;
 		

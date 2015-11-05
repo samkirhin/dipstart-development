@@ -70,7 +70,9 @@ if (file_exists($path)){
 				$projectFields = $model->getFields();
 				if ($projectFields) {
 					foreach($projectFields as $field) {
-						if ($field->field_type=="LIST"){
+						if ($field->field_type=="BOOL"){
+							echo $form->checkBox($model,$field->varname);
+                        } elseif ($field->field_type=="LIST"){
 							echo '<div class="form-item">';
 							echo $form->labelEx($model,$field->varname).'<br/>';
 							$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
