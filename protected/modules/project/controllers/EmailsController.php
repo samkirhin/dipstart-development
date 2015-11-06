@@ -37,7 +37,7 @@ class EmailsController extends Controller
     
     public function actionSend()
     {
-		$model = new Emails;
+		$email = new Emails;
 		
 		$this->_prepairJson();
 
@@ -66,29 +66,26 @@ class EmailsController extends Controller
 			
 		$user = User::model()->findByPk($user_id);
 
-		$model->to_id = $user_id;
+		$email->to_id = $user_id;
 		$profile = Profile::model()->findAll("`user_id`='$user_id'");
 		
 		$rec   = Templates::model()->findAll("`type_id`='$typeId'");
 		
 		$title = $rec[0]->title;
-		$model->name = $profle->full_name;
-		if (strlen($model->name) < 2) $model->name = $user->username;
-		$model->login= $user->username;
+		$email->name = $profle->full_name;
+		if (strlen($email->name) < 2) $email->name = $user->username;
+		$email->login= $user->username;
 		
-		$model->num_order = $orderId;
-		$model->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-		$model->message = $rec[0]->text;
-		$model->price_order = $cost;
-		$model->sum_order  = $cost;
-		$model->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
-				
-		$model->save();
-/*		
-		if (!isset($back)) $back = 'index';
-        $this->render($back, [
-            'model'=>$model
-        ]);
-*/		
+		$email->num_order = $orderId;
+		$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+		$email->message = $rec[0]->text;
+		$email->price_order = $cost;
+		$email->sum_order  = $cost;
+		
+		$specials = Catalog::model()->findByPk($order->specials);
+		$email->specialization	= $specials->cat_name;
+		$email->name_order		= $order->title;		
+		$email->subject_order	= $order->title;		
+		$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
     }
 }
