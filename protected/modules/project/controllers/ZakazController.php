@@ -625,9 +625,6 @@ class ZakazController extends Controller
 //                if($author->getUserRole($author->id)=='Author') $mail->send();
             }
             
-            echo 'ok =)';
-
-			
 			// новая рассылка
 
 			$typeId = Emails::TYPE_18;
@@ -644,10 +641,12 @@ class ZakazController extends Controller
 				$email->name = $user->full_name;
 				if (strlen($email->name) < 2) $email->name = $user->username;
 				$email->login= $user->username;
-		
 				$email->num_order = $orderId;
 				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-//				$email->neworder = $order->title;
+				$specials = Catalog::model()->findByPk($order->specials);
+				$email->specialization	= $specials->cat_name;
+				$email->name_order		= $order->title;		
+				$email->subject_order	= $order->title;		
 				$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
 			}	
         } else {

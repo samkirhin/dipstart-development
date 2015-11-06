@@ -241,8 +241,6 @@ class Emails extends CActiveRecord {
 			$this->name_part,
 //			$this->neworder,
 		);
-//echo '<br>$subject(0)='.$subject; 
-//echo '<br>$body(0)='.$body; 
 		// собственно, замены
 		foreach($dictionary as $key=>$fraze) {
 			$translate = Yii::t('site',$fraze);
@@ -257,11 +255,10 @@ class Emails extends CActiveRecord {
 			};	
 		}	
 //		if (isset($_POST['debug'])) {
-echo '<br>$subject(1)='.$subject; 
-echo '<br>$body(1)='.$body; 
+//echo '<br>$subject(1)='.$subject; 
+//echo '<br>$body(1)='.$body; 
 //		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
-//		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
 	
 		$from = Yii::app()->params['supportEmail'];
 		$headers =
@@ -269,14 +266,15 @@ echo '<br>$body(1)='.$body;
 			"Content-Type: text/plain; charset=UTF-8\r\n".
 			"From: Support <$from>\r\n";
 			
+echo 'mail $to:'.$to;
 echo '<br>$headers='.$headers;
-		mail( $to, $subject,$body,$headers);
-
+		$result = mail( $to, $subject,$body,$headers);
+echo '<br>$result='.$result;
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;
 		$this->body		= $body;		
 		$this->type		= $type_id;
 		$this->dt		= time();
+//		$this->save();
 	}			
-	
 }
