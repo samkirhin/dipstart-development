@@ -382,11 +382,9 @@ class ZakazController extends Controller
 					$rec   = Templates::model()->findAll("`type_id`='$type_id'");
 					$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
 					$email->campaign = $campaign->name;
-					$email->name = $profle->firstname;
-					// временно так
-					$email->name = $user->username;;
+					$email->name = $user->full_name;;
 					$email->num_order = $id;
-					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$id;
 					
 					$email->login= $user->username;
 					$email->password= $soucePassword;
