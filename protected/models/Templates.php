@@ -89,19 +89,33 @@ class Templates extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	public function types()
+	{
+		return array(
+			1 => Yii::t('site','Customer'),
+			2 => Yii::t('site','Author'),
+			3 => Yii::t('site','Service'),
+			10 => Yii::t('site','Service mail: Password recovery'), //Восстановление пароля
+			11 => Yii::t('site','Service mail: Registration'), //Успешная регистрация
+			12 => Yii::t('site','Service mail: Project accepted'), //Регистрация проекта
+			13 => Yii::t('site','Service mail: payment awayting'), //Оплата заказа
+			14 => Yii::t('site','Service mail: part done'), //По Вашему заказу появилась готовая часть
+			15 => Yii::t('site','Service mail: work done'), //Работа готова
+			16 => Yii::t('site','Service mail: new message for customer'), //Сообщение в чате
+			17 => Yii::t('site','Service mail: order closed'), //Заказ завершен
+			18 => Yii::t('site','Service mail: new project'), //Появился новый заказ по Вашей специальности
+			19 => Yii::t('site','Service mail: executor assigment'), //О назначении Исполнителем
+			20 => Yii::t('site','Service mail: new message for author'), //Сообщение в чате
+			21 => Yii::t('site','Service mail: ouster'), //О съеме с заказа
+			22 => Yii::t('site','Service mail: deadline arrived'), //Срок сдачи части наступил
+			23 => Yii::t('site','Service mail: new revision'), //О новой доработке
+			24 => Yii::t('site','Service mail: your salary'), //Об оплате заказа
+		);
+	}
+	
     public function performType($type_id) {
-        switch ($type_id) {
-         case 1:
-          $type = Yii::t('site','Customer');
-          break;
-         case 2:
-          $type = Yii::t('site','Author');
-          break;
-         case 3:
-          $type = Yii::t('site','Service');
-          break;
-        }
-        return $type;
+		$types = $this->types();
+		return $types[$type_id];
     }
 	/**
 	 * Returns the static model of the specified AR class.
