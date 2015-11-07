@@ -260,16 +260,16 @@ class Emails extends CActiveRecord {
 //		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
 	
-		$from = Yii::app()->params['supportEmail'];
+		$from = '=?UTF-8?B?'.base64_encode($this->campaign).'?= <'.Campaign::getSupportEmail().'>';
 		$headers =
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8\r\n".
-			"From: Support <$from>\r\n";
+			"From: $from\r\n";
 			
-echo 'mail $to:'.$to;
-echo '<br>$headers='.$headers;
+//echo 'mail $to:'.$to;
+//echo '<br>$headers='.$headers;
 		$result = mail( $to, $subject,$body,$headers);
-echo '<br>$result='.$result;
+//echo '<br>$result='.$result;
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;
 		$this->body		= $body;		
