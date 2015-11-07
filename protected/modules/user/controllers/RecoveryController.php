@@ -64,14 +64,14 @@ class RecoveryController extends Controller
 						$type_id = Emails::TYPE_10;
 						$email = new Emails;
 						
-						$criteria = new CDbCriteria();
+						/*$criteria = new CDbCriteria();
 						$criteria->order = 'id DESC';
 						$criteria->limit = 1;
 						$user = User::model()->findAll($criteria);
-						$user = $user[0];
+						$user = $user[0];*/
 
 						$email->from_id = 1;
-						$email->to_id   = $user->id;
+						$email->to_id = $form->user_id; //  = $user->id;
 						
 						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
 						$id = Campaign::getId();
