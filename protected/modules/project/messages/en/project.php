@@ -175,6 +175,7 @@ return array(
 	'Please fill out the following form with your login credentials:'=>'Пожалуйста, заполните форму',
 	'Login' => 'Login',
 	'Update Templates' => 'Update Templates',
+  'Update profile' => 'Changes are saved, and will be accepted after moderation.',
 	
 	// payment
     'Bookkeeping' => 'Bookkeeping',

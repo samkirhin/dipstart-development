@@ -7,9 +7,6 @@ $this->breadcrumbs=array(
 
 ?><div class="row"><div class="col-md-offset-3 col-md-4"><h3><?php echo UserModule::t('Edit profile'); ?></h3></div></div>
 
-<?php if(Yii::app()->user->hasFlash('profileMessage'))
-    echo '<div class="success" >'.Yii::app()->user->getFlash('profileMessage').'</div >';
-?>
 <div class="row">
     <div class="col-md-7">
 <?php
@@ -31,6 +28,14 @@ $form=$this->beginWidget('UActiveForm', array(
 	),
 	'htmlOptions' => array('enctype'=>'multipart/form-data','class'=>'form-horizontal'),
 )); ?>
+
+  <?php if(Yii::app()->user->hasFlash('profileMessage'))
+      echo '<p style="color: #D9534F;">'.Yii::app()->user->getFlash('profileMessage').'</p>';
+  ?>
+
+  <p style="font-weight: bold;">
+    <?=ProjectModule::t('Message for profile')?>
+  </p>
 
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
