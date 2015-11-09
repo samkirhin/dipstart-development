@@ -1,10 +1,10 @@
 <?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Registration"); 
-Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');
+    Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');
 ?>
 
 <?php if(Yii::app()->user->hasFlash('reg_success')): ?>
 <div class="col-xs-offset-3 col-xs-6 login-form-bg">
-<?php echo Yii::app()->user->getFlash('reg_success'); ?>
+  <?php echo Yii::app()->user->getFlash('reg_success'); ?>
 </div>
 
 	<?php 
@@ -24,7 +24,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2
 	
 <?php elseif (Yii::app()->user->hasFlash('reg_failed')):?>
 <div class="col-xs-offset-3 col-xs-6 login-form-bg">
-<?php echo Yii::app()->user->getFlash('reg_failed'); ?>
+    <?php echo Yii::app()->user->getFlash('reg_failed'); ?>
 </div>
 <?php else: ?>
 <div class="col-xs-offset-3 col-xs-6 login-form-bg">
@@ -44,7 +44,10 @@ $form=$this->beginWidget('UActiveForm', array(
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 )); ?>
 
-	
+  <div class="form-group" style="text-align: center; font-weight: bold;">
+      <?=ProjectModule::t('This is registration')?>
+  </div>
+  
 	<div class="form-group">
         <!--<?php //echo CHtml::activeLabelEx($model,'username'); ?> <br />-->
 		<?php echo CHtml::activeTextField($model,'email',array('placeholder' => 'E-mail')); ?>
