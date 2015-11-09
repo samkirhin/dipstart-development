@@ -638,7 +638,7 @@ class ZakazController extends Controller
 
 				$email->to_id = $user->id;
 
-				$email->name = $user->profile->full_name;
+				$email->name = $user->full_name;
 				if (strlen($email->name) < 2) $email->name = $user->username;
 				$email->login= $user->username;
 		
