@@ -255,8 +255,8 @@ class Emails extends CActiveRecord {
 			};	
 		}	
 //		if (isset($_POST['debug'])) {
-echo '<br>$subject(1)='.$subject; 
-echo '<br>$body(1)='.$body; 
+//echo '<br>$subject(1)='.$subject; 
+//echo '<br>$body(1)='.$body; 
 //		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
 	

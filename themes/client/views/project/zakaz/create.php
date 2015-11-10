@@ -73,7 +73,8 @@ if (file_exists($path)){
 						if ($field->field_type=="BOOL"){
 							echo '<div class="form-item" style="padding-left: 20px;">';
 							echo $form->checkBox($model,$field->varname);
-							echo '<label>'.YII::t('project',$field->title).'</label>';
+							echo $form->labelEx($model,$field->varname);
+//							echo '<label>'.YII::t('project',$field->title).'</label>';
 							echo '</div>';
                         } elseif ($field->field_type=="LIST"){
 							echo '<div class="form-item">';
