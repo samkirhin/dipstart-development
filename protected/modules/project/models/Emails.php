@@ -260,15 +260,16 @@ echo '<br>$body(1)='.$body;
 //		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
 	
-		$from	= Yii::app()->params['supportEmail'];
-		$headers="From: $from<$from>\r\n".
-			"To: $to\r\n".
+		$from = '=?UTF-8?B?'.base64_encode($this->campaign).'?= <'.Campaign::getSupportEmail().'>';
+		$headers =
 			"MIME-Version: 1.0\r\n".
-			"Content-Type: text/plain; charset=UTF-8\r\n";
-echo 'mail $to:'.$to;
-echo '<br>$headers='.$headers;
+			"Content-Type: text/plain; charset=UTF-8\r\n".
+			"From: $from\r\n";
+			
+//echo 'mail $to:'.$to;
+//echo '<br>$headers='.$headers;
 		$result = mail( $to, $subject,$body,$headers);
-echo '<br>$result='.$result;
+//echo '<br>$result='.$result;
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;
 		$this->body		= $body;		

@@ -21,9 +21,9 @@
 </div>
 
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
-<pre>
-<?php print_r($model); ?>
-</pre>
+<!--<pre>
+<?php //print_r($model); ?>
+</pre>-->
 <?php
 if (Campaign::getId()){
 	$attr = array('id');
@@ -52,7 +52,7 @@ if (Campaign::getId()){
 			}
 		}
 	}
-} else {
+}/* else {
 	$attr = array(
 		'id',
 		array(
@@ -83,13 +83,13 @@ if (Campaign::getId()){
 		'pages',
 		'add_demands',
 	);
-}
-/*
+}*/
+
 	$this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
 		'attributes'=>$attr,
 	));
-*/
+
 ?>
 <?php /*
     $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(

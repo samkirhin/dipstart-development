@@ -3,7 +3,6 @@
 class RegistrationController extends Controller
 {
 	public $defaultAction = 'registration';
-	public static $orgz;
 	
 	/**
 	 * Registration user
@@ -27,7 +26,7 @@ class RegistrationController extends Controller
 				
 				$model->attributes=$_POST['RegistrationForm'];
 			
-				if($model->validate() && isset($_POST['yt0'])) {
+				if($model->validate()) {
 					$soucePassword = UserModule::generate_password(8);
 					$model->password=UserModule::encrypting($soucePassword);
 					$model->superuser=0;
