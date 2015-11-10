@@ -71,10 +71,14 @@ if (file_exists($path)){
 				if ($projectFields) {
 					foreach($projectFields as $field) {
 						if ($field->field_type=="BOOL"){
+							echo '<div class="form-item" style="padding-left: 20px;">';
 							echo $form->checkBox($model,$field->varname);
+							echo '<label>'.YII::t('project',$field->title).'</label>';
+							echo '</div>';
                         } elseif ($field->field_type=="LIST"){
 							echo '<div class="form-item">';
 							echo $form->labelEx($model,$field->varname).'<br/>';
+							
 							$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
 							$list = CHtml::listData($models, 'id', 'cat_name');
 							echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));

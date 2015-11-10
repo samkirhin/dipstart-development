@@ -591,7 +591,7 @@ class ZakazController extends Controller
 		header('Content-type: application/json');
         
         $order = Zakaz::model()->findByPk($orderId);
-        
+
         if (!$order) {
             throw new CHttpException(500);
         }
@@ -629,6 +629,7 @@ class ZakazController extends Controller
 
 			$typeId = Emails::TYPE_18;
 			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
+		
             foreach ($authors as $user) {
 				
 				$specials = explode(',',$user->profile->specials);
