@@ -18,11 +18,11 @@ class ZakazController extends Controller
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions'=>array('view','create', 'uploadPayment','list','update','status','customerOrderList','index','ownList','apiRemoveFile','Upload','ApiRenameFile'),
+                    'actions'=>array('view','create', 'uploadPayment', 'list', 'update', 'status','customerOrderList','index','ownList','apiRemoveFile','Upload','ApiRenameFile', ),
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index','delete'),
+                    'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index','delete', 'deleteFile'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
@@ -691,37 +691,37 @@ class ZakazController extends Controller
     }
 
     public function actionStatus() {
-		$row	= array(
-			'status_id' => Yii::app()->request->getPost('status_id'),
-		);
-		$id		= Yii::app()->request->getPost('id');
-		$condition 	= array();
-		$params		= array();
-		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
-		if ($row['status_id'] == 3) {
-
-			$email = new Emails;
-
-			$orderId = Yii::app()->request->getPost('id');
-			$typeId = Emails::TYPE_14;
-			$order	 = Zakaz::model()->findByPk($orderId);
-		
-			$user = User::model()->findByPk($order->user_id);
-			
-			$email->to_id = $user->id;
-
-			$profile = Profile::model()->findAll("`user_id`='$user->id'");
-			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
-
-			$email->name = $profle->firstname;
-			if (strlen($email->name) < 2) $email->name = $user->username;
-			$email->login= $user->username;
-		
-			$email->num_order = $orderId;
-			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-			$email->message = $rec[0]->text;
-			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
-		};	
+    		$row	= array(
+    			'status_id' => Yii::app()->request->getPost('status_id'),
+    		);
+    		$id		= Yii::app()->request->getPost('id');
+    		$condition 	= array();
+    		$params		= array();
+    		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
+    		if ($row['status_id'] == 3) {
+    
+    			$email = new Emails;
+    
+    			$orderId = Yii::app()->request->getPost('id');
+    			$typeId = Emails::TYPE_14;
+    			$order	 = Zakaz::model()->findByPk($orderId);
+    		
+    			$user = User::model()->findByPk($order->user_id);
+    			
+    			$email->to_id = $user->id;
+    
+    			$profile = Profile::model()->findAll("`user_id`='$user->id'");
+    			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
+    
+    			$email->name = $profle->firstname;
+    			if (strlen($email->name) < 2) $email->name = $user->username;
+    			$email->login= $user->username;
+    		
+    			$email->num_order = $orderId;
+    			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+    			$email->message = $rec[0]->text;
+    			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
+    		};	
 		
         Yii::app()->end();
     }
@@ -755,4 +755,33 @@ class ZakazController extends Controller
         chmod($folder.$result['fileName'],0666);
         echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }
+    
+    
+    public function actionDeleteFile() {
+
+        $file_name = trim(Yii::app()->request->getPost('file_name'));
+        
+        $id = (int)Yii::app()->request->getPost('id');
+        
+        $path=Yii::getPathOfAlias('webroot').$file_name;
+  
+        if (file_exists($path)) {
+          
+          $note = ZakazPartsFiles::model()->findByPk($id);
+          
+          if ($note->delete()) {
+          
+            if (unlink($path)) {
+
+                echo 'true';
+                
+            } else echo 'false';
+
+          } else echo 'false';
+
+        } else echo 'false';
+
+
+    }
+    
 }

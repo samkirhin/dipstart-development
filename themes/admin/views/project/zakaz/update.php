@@ -275,10 +275,10 @@ $this->breadcrumbs = array(
 
             <div class="row">
                 <div class="col-xs-12">
-					<!-- Тут была кнопка рассылки -->
+					       <!-- Тут была кнопка рассылки -->
                 </div>
                 <div class="col-xs-12 notes">
-                    <h4><?=ProjectModule::t('Notes (on all orders)')?></h4
+                    <h4><?=ProjectModule::t('Notes (on all orders)')?></h4>
 
                     <?php $form = $this->beginWidget('CActiveForm', array(
                         'id' => 'zakaz-form',
@@ -320,6 +320,7 @@ $this->breadcrumbs = array(
             </div>
             <!-- Конец блока добавления частей менеджера -->
             <!-- Начало блока правок (доработок) менеджера -->
+
             <?php
             $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
                 'project' => $model,
