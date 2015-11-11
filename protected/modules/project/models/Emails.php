@@ -234,7 +234,7 @@ class Emails extends CActiveRecord {
 			$this->subject_order,
 			$this->subject_order,
 			$this->price_order,
-			$this->price_order_part,
+			$this->price_order,//_part,
 			$this->sum_order,
 			$this->message,
 			$this->page_payment,

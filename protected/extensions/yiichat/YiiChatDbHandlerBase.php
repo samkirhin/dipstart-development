@@ -142,7 +142,22 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				'Reply-To: no-reply@'.$_SERVER['SERVER_NAME'] . "\r\n" .
 				'Content-Type: text/html; charset=utf-8;' .
 				'X-Mailer: PHP/' . phpversion();
-			mail($obj['recipient']->attributes['email'],$title,$message,$headers);
+			//mail($obj['recipient']->attributes['email'],$title,$message,$headers);
+			
+			if (User::model()->getUserRole($obj['recipient']->id)=='Customer') {
+				$type_id = Emails::TYPE_16;
+			} else if (User::model()->getUserRole($obj['recipient']->id)=='Author') {
+				$type_id = Emails::TYPE_20;
+			}
+			$email = new Emails;
+			$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+			$email->name = $obj['recipient']->full_name;
+			if (strlen($email->name) < 2) $email->name = $obj['recipient']->username;
+			$email->num_order = $chat_id;
+			$email->message = strip_tags($obj['message']);
+			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$chat_id;
+			$email->sendTo( $obj['recipient']->email, $rec[0]->title, $rec[0]->text, $type_id);
+			
             if ($postdata['flags'])
                 foreach($postdata['flags'] as $v)
                     switch($v){
