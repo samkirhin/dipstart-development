@@ -96,9 +96,8 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
 	
-	public function actionPage()
-	{
-		if (isset($_POST['User']))           {
+	public function actionPage($view) {
+		/*if (isset($_POST['User']))           {
 			$model = new User();
 			$attributes = $_POST['User'];
 			$attributes['full_name'] =  $_POST['User']['first_name'].' '.$_POST['User']['last_name'];
@@ -156,11 +155,11 @@ class SiteController extends Controller
 			if ($model->validate()) {
 				$model->save();
 			}		
-		}
-		Yii::app()->theme='perfect-paper';
-		$this->render('page/order', array(
+		}*/
+		//Yii::app()->theme='perfect-paper';
+		$this->render('page/'.$view, array(
 			'role' => 'stranger'
 		));
-		Yii::app()->end();
-	}	
+		//Yii::app()->end();
+	}
 }
