@@ -69,7 +69,7 @@ function send(url) {
 		$.post('/project/emails/send', JSON.stringify({
 			'url': url,
 			'orderId': arr[arr.length-1],
-			'typeId': 23,
+			'typeId': 23, // Emails::TYPE_23
 			'name': 'Новое изменение'
 		}), function (response) {
 			if (response.data) {

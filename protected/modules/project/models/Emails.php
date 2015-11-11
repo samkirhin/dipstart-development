@@ -27,6 +27,7 @@ class Emails extends CActiveRecord {
 	const TYPE_22=22; // Исполнителю о том что срок сдачи части наступил
 	const TYPE_23=23; // +Исполнителю о новой доработке
 	const TYPE_24=24; // +Исполнителю об оплате заказа
+	const TYPE_25=25; // +Исполнителю "новая доработка одобрена менеджером"
 	
 	public static $names_of_email = array(
 	TYPE_10 =>'Восстановление пароля',
@@ -259,7 +260,6 @@ class Emails extends CActiveRecord {
 //echo '<br>$body(1)='.$body; 
 //		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
-	
 		$from = '=?UTF-8?B?'.base64_encode($this->campaign).'?= <'.Campaign::getSupportEmail().'>';
 		$headers =
 			"MIME-Version: 1.0\r\n".

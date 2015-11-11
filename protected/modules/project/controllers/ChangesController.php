@@ -176,6 +176,20 @@ class ChangesController extends Controller {
             $model->date_update = date('Y-m-d H:i:s');
             if (ProjectChanges::approveAllowed()) {
                 $model->date_moderate = date('Y-m-d H:i:s');
+
+				$type_id = Emails::TYPE_25;
+				$email = new Emails;
+				$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+				$email->name = $user->full_name;
+				if (strlen($email->name) < 2) $email->name = $user->username;
+				$email->num_order = $orderId;
+				$email->message = $post;
+				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+				$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
+				
+				
+				
+				
             }
 
             if ($model->save(false)) {
