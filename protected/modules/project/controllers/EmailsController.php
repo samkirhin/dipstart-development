@@ -56,7 +56,7 @@ class EmailsController extends Controller
 				Emails::TYPE_22,
 				Emails::TYPE_23,
 				Emails::TYPE_24,
-				Emails::TYPE_25,
+				//Emails::TYPE_25,
 		);
 		if (in_array($typeId,$arr_type)) {
 			$user_id = $order->executor;
