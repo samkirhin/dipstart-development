@@ -67,7 +67,7 @@ class ChangesController extends Controller {
             </div>
             <?php if (ProjectChanges::approveAllowed()) { ?>
                 <div class="row">
-                    <?= ProjectModele::t('Moderation'); ?>
+                    <?= ProjectModule::t('Moderation'); ?>
                     <?php echo CHtml::dropDownList(
                         'moderate',
                         $data['moderate'],
@@ -108,7 +108,7 @@ class ChangesController extends Controller {
             return false;
         }
 
-		/*/ --- кампании
+		// --- кампании
 		$c_id = Campaign::getId();
 		if ($c_id) {
 			ProjectChanges::$table_prefix = $c_id.'_';
@@ -116,7 +116,7 @@ class ChangesController extends Controller {
 		} else {
 			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
-		// --- */
+		// ---
 		
         $model = new ProjectChanges();
         $model->scenario = 'add';
