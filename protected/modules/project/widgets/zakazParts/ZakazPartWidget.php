@@ -70,14 +70,15 @@ class ZakazPartWidget extends CWidget{
 				<script type=\"text/javascript\">
 					function status_changed_$this->record_id( item_id ){
 						var status_id = document.getElementById('select-status-$this->record_id').value;
+						var orderId = $('#order_number').text();
 						$.ajax({
 							type: \"POST\",
-							url:'http://'+document.domain+'/project/zakaz/status'
-							, data : 'cmd=status&status_id='+status_id+'&id='+item_id
+							url:'http://'+document.domain+'/project/zakazParts/status'
+							, data : 'cmd=status&status_id='+status_id+'&id='+item_id+'&orderId='+orderId
 							, success: function(html) {
-								html = BackReplacePlusesFromStr(html);
-								ajax_response = html;
+								/*html = BackReplacePlusesFromStr(html);*/
 								if (html != 'null') {
+									/*alert(html);*/
 								}
 							}
 						});

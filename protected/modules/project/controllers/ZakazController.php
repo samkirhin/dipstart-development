@@ -691,42 +691,6 @@ class ZakazController extends Controller
         $this->_response->send();
     }
 
-    public function actionStatus() {
-		$row	= array(
-			'status_id' => Yii::app()->request->getPost('status_id'),
-		);
-		$id		= Yii::app()->request->getPost('id');
-		$condition 	= array();
-		$params		= array();
-		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
-		if ($row['status_id'] == 3) {
-
-			$email = new Emails;
-
-			$orderId = Yii::app()->request->getPost('id');
-			$typeId = Emails::TYPE_14;
-			$order	 = Zakaz::model()->findByPk($orderId);
-		
-			$user = User::model()->findByPk($order->user_id);
-			
-			$email->to_id = $user->id;
-
-			$profile = Profile::model()->findAll("`user_id`='$user->id'");
-			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
-
-			$email->name = $profle->firstname;
-			if (strlen($email->name) < 2) $email->name = $user->username;
-			$email->login= $user->username;
-		
-			$email->num_order = $orderId;
-			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-			$email->message = $rec[0]->text;
-			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
-		};	
-		
-        Yii::app()->end();
-    }
-    
     
     public function actionUpload() {
         Yii::import("ext.EAjaxUpload.qqFileUploader");

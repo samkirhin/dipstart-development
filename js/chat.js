@@ -103,8 +103,8 @@ function zakaz_done(part_id)
 		var orderId = $('#order').val();
 		$.ajax({
 			type: "POST",
-			url: 'chat/status'
-			, data: 'cmd=done&id='+part_id+'&status_id=6'+'&orderId='+orderId
+			url: 'zakazParts/status'
+			, data: 'cmd=done&id='+part_id+'&status_id=2'+'&orderId='+orderId
 			, success: function(html) {
 				html = BackReplacePlusesFromStr(html);
 				ajax_response = html;
