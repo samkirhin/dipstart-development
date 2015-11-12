@@ -27,6 +27,7 @@ class Emails extends CActiveRecord {
 	const TYPE_22=22; // Исполнителю о том что срок сдачи части наступил
 	const TYPE_23=23; // +Исполнителю о новой доработке
 	const TYPE_24=24; // +Исполнителю об оплате заказа
+	//const TYPE_25=25; // +Исполнителю "новая доработка одобрена менеджером"
 	
 	public static $names_of_email = array(
 	TYPE_10 =>'Восстановление пароля',
@@ -233,7 +234,7 @@ class Emails extends CActiveRecord {
 			$this->subject_order,
 			$this->subject_order,
 			$this->price_order,
-			$this->price_order_part,
+			$this->price_order,//_part,
 			$this->sum_order,
 			$this->message,
 			$this->page_payment,
@@ -241,8 +242,6 @@ class Emails extends CActiveRecord {
 			$this->name_part,
 //			$this->neworder,
 		);
-//echo '<br>$subject(0)='.$subject; 
-//echo '<br>$body(0)='.$body; 
 		// собственно, замены
 		foreach($dictionary as $key=>$fraze) {
 			$translate = Yii::t('site',$fraze);
@@ -256,28 +255,26 @@ class Emails extends CActiveRecord {
 //echo '<br>body: '.$fraze.'-->'.$translate; 
 			};	
 		}	
+//		if (isset($_POST['debug'])) {
 //echo '<br>$subject(1)='.$subject; 
 //echo '<br>$body(1)='.$body; 
-
+//		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
-//		$subject.= ' Тестовая рассылка. Тип сообщения '.$type_id.'. ('.$names_of_email[$type_id].')';
-	
-		$from = Yii::app()->params['supportEmail'];
+		$from = '=?UTF-8?B?'.base64_encode($this->campaign).'?= <'.Campaign::getSupportEmail().'>';
 		$headers =
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8\r\n".
-			"From: Support <$from>\r\n";
-//			"From: Support <no-reply@crm2.obshya.com>\r\n";
-//			"To: $to\r\n".
-//			"Cc: gregory.pelipenko@gmail.com,ako40ff@gmail.com,ekomixds@mail.ru\r\n".
-
-		mail($to,$subject,$body,$headers);
-
+			"From: $from\r\n";
+			
+//echo 'mail $to:'.$to;
+//echo '<br>$headers='.$headers;
+		$result = mail( $to, $subject,$body,$headers);
+//echo '<br>$result='.$result;
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;
 		$this->body		= $body;		
 		$this->type		= $type_id;
 		$this->dt		= time();
+//		$this->save();
 	}			
-	
 }

@@ -67,7 +67,7 @@ class ChangesController extends Controller {
             </div>
             <?php if (ProjectChanges::approveAllowed()) { ?>
                 <div class="row">
-                    <?= ProjectModele::t('Moderation'); ?>
+                    <?= ProjectModule::t('Moderation'); ?>
                     <?php echo CHtml::dropDownList(
                         'moderate',
                         $data['moderate'],
@@ -108,7 +108,7 @@ class ChangesController extends Controller {
             return false;
         }
 
-		/*/ --- кампании
+		// --- кампании
 		$c_id = Campaign::getId();
 		if ($c_id) {
 			ProjectChanges::$table_prefix = $c_id.'_';
@@ -116,7 +116,7 @@ class ChangesController extends Controller {
 		} else {
 			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
-		// --- */
+		// ---
 		
         $model = new ProjectChanges();
         $model->scenario = 'add';
@@ -176,6 +176,19 @@ class ChangesController extends Controller {
             $model->date_update = date('Y-m-d H:i:s');
             if (ProjectChanges::approveAllowed()) {
                 $model->date_moderate = date('Y-m-d H:i:s');
+				if($model->moderate) {
+					$orderId = $model->project_id;
+					$order = Zakaz::model()->findByPk($orderId);
+					$user = User::model()->findByPk($order->executor);
+					$type_id = Emails::TYPE_23;
+					$email = new Emails;
+					$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+					$email->name = $user->full_name;
+					if (strlen($email->name) < 2) $email->name = $user->username;
+					$email->num_order = $orderId;
+					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+					$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
+				}
             }
 
             if ($model->save(false)) {

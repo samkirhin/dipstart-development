@@ -26,7 +26,7 @@ die();
         $filelist = Yii::app()->fileman->list_files(Yii::app()->session['project_id']);
 /*		
 		if (count($filelist))
-        foreach ($filelist as $fd) {
+        // foreach ($filelist as $fd) {
           $real_path = Yii::app()->fileman->get_file_path($fd['id'], $fd['file_id']);
           echo CHtml::link($fd['filename'],  array('zakaz/download','path' => $real_path)).'&nbsp;&nbsp;';
           //echo EDownloadHelper::download($real_path);

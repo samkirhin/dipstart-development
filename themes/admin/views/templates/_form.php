@@ -39,8 +39,8 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'type_id');
-         $list = array('1'=>Yii::t('site','Customer'), '2'=>Yii::t('site','Author'),'3'=>Yii::t('site','Service'));
-         echo $form->dropDownList($model, 'type_id', $list, array('empty' => Yii::t('site','Select')));
+		$list = $model->types();
+        echo $form->dropDownList($model, 'type_id', $list, array('empty' => Yii::t('site','Select')));
 	    ?>
 	</div>
 

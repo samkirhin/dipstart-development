@@ -3,10 +3,6 @@
 /* @var $model Zakaz */
 /* @var $form CActiveForm */
 ?>
-
-
-
-
 <div class="col-xs-12 terms-block" style="padding-right: 0px;">
     <div class="form">
 
@@ -109,7 +105,7 @@
                 <div class="panel-heading panel-heading-white">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
-                            <?=ProjectModule::t('Send the customer')?>Информация о заказе <i class="fa fa-angle-down fa-2x"></i>
+                            <?=ProjectModule::t('Send the customer')?><i class="fa fa-angle-down fa-2x"></i>
 		
                         </a>
 						<br/><a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz"><img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" /></a>

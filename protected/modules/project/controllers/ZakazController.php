@@ -38,8 +38,10 @@ class ZakazController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
+		$projectFields = $model->getFields();
 		$this->render('view',array(
-			'model'=> $model
+			'model'			=> $model,
+			'projectFields'	=> $projectFields,
 		));
 	}
 	protected $_request;
@@ -380,10 +382,9 @@ class ZakazController extends Controller
 					$rec   = Templates::model()->findAll("`type_id`='$type_id'");
 					$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
 					$email->campaign = $campaign->name;
-					$email->name = $profle->firstname;
-					// временно так
-					$email->name = $user->username;;
+					$email->name = $user->full_name;;
 					$email->num_order = $id;
+					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$id;
 					
 					$email->login= $user->username;
 					$email->password= $soucePassword;
@@ -588,7 +589,7 @@ class ZakazController extends Controller
 		header('Content-type: application/json');
         
         $order = Zakaz::model()->findByPk($orderId);
-        
+
         if (!$order) {
             throw new CHttpException(500);
         }
@@ -622,13 +623,11 @@ class ZakazController extends Controller
 //                if($author->getUserRole($author->id)=='Author') $mail->send();
             }
             
-            echo 'ok =)';
-
-			
 			// новая рассылка
 
 			$typeId = Emails::TYPE_18;
 			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
+		
             foreach ($authors as $user) {
 				
 				$specials = explode(',',$user->profile->specials);
@@ -638,13 +637,15 @@ class ZakazController extends Controller
 
 				$email->to_id = $user->id;
 
-				$email->name = $user->profile->full_name;
+				$email->name = $user->full_name;
 				if (strlen($email->name) < 2) $email->name = $user->username;
 				$email->login= $user->username;
-		
 				$email->num_order = $orderId;
 				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-//				$email->neworder = $order->title;
+				$specials = Catalog::model()->findByPk($order->specials);
+				$email->specialization	= $specials->cat_name;
+				$email->name_order		= $order->title;		
+				$email->subject_order	= $order->title;		
 				$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
 			}	
         } else {
@@ -690,43 +691,7 @@ class ZakazController extends Controller
         $this->_response->send();
     }
 
-    public function actionStatus() {
-    		$row	= array(
-    			'status_id' => Yii::app()->request->getPost('status_id'),
-    		);
-    		$id		= Yii::app()->request->getPost('id');
-    		$condition 	= array();
-    		$params		= array();
-    		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
-    		if ($row['status_id'] == 3) {
-    
-    			$email = new Emails;
-    
-    			$orderId = Yii::app()->request->getPost('id');
-    			$typeId = Emails::TYPE_14;
-    			$order	 = Zakaz::model()->findByPk($orderId);
-    		
-    			$user = User::model()->findByPk($order->user_id);
-    			
-    			$email->to_id = $user->id;
-    
-    			$profile = Profile::model()->findAll("`user_id`='$user->id'");
-    			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
-    
-    			$email->name = $profle->firstname;
-    			if (strlen($email->name) < 2) $email->name = $user->username;
-    			$email->login= $user->username;
-    		
-    			$email->num_order = $orderId;
-    			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-    			$email->message = $rec[0]->text;
-    			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
-    		};	
-		
-        Yii::app()->end();
-    }
-    
-    
+
     public function actionUpload() {
         Yii::import("ext.EAjaxUpload.qqFileUploader");
         // --- кампании

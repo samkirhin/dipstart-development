@@ -99,6 +99,12 @@ $(document).ready(function() {
             $('#div-edit-message').css('display', 'block');
 			$('#chat-edit').val('Сохранить'); 
 			$('#chat-edit').css('display', 'block');
+
+			// прячем контролы, чтобы не отвлекали
+			// вместо кнопки "сохранить" часто нажимаются "отправить"
+			$('.col-xs-9').css('display', 'none');
+			$('.col-xs-3 chtpl0-form').css('display', 'none');
+			
 			$('.chat-view').scrollTop(10000);
 		} else { 
 			$('#chat-edit').val('Редактирование последнего сообщения'); 
@@ -114,8 +120,8 @@ function zakaz_done(part_id)
 		var orderId = $('#order').val();
 		$.ajax({
 			type: "POST",
-			url: 'chat/status'
-			, data: 'cmd=done&id='+part_id+'&status_id=6'+'&orderId='+orderId
+			url: 'zakazParts/status'
+			, data: 'cmd=done&id='+part_id+'&status_id=2'+'&orderId='+orderId
 			, success: function(html) {
 				html = BackReplacePlusesFromStr(html);
 				ajax_response = html;

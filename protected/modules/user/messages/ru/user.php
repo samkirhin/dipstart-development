@@ -232,5 +232,7 @@ return array(
 	'EmptyChat'=>'Напишите что готовы взять этот заказ или задайте вопроc',
 	'fullname' => 'Ф.И.О',
 	'recoveryMessage' => 'На Ваш адрес электронной почты было отправлено письмо с инструкциями.',
+	'Incorrect password (minimal length 6 symbols).'=>'Минимальная длина email - 6 символов.',
+	'This email already exists.'=>'Такой email уже существует.',
 );
 

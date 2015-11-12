@@ -37,7 +37,10 @@ var ProjectPayments = function(orderId) {
             }
         }, 'json');}
 
-		if (pay>0)	send_message(24,'Исполнителю об оплате заказа',pay);
+		if ((pay==0) && (receive))
+			send_message(13,'Заказчику об оплате когда выставлен счет',receive);
+		if (pay>0)	
+			send_message(24,'Исполнителю об оплате заказа',pay);
 		
         /*if (receive!='') {$.post('/project/payment/savePaymentsToUser', JSON.stringify({
             'order_id': self.orderId,
@@ -82,8 +85,7 @@ var ProjectPayments = function(orderId) {
             } else {
             }
         }, 'json');
-		// уведомление выдаётся, даже если система оплаты даёт ошибку
-		send_message(13,'Заказчику об оплате когда выставлен счет',0);
+		
     });
     
     self.form.find('.send_managers_cancel'). on('click', function() {

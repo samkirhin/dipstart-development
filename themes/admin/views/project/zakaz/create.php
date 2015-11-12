@@ -40,7 +40,9 @@ $this->menu=array(
 			foreach($projectFields as $field) {
 				echo '<div class="form-group">';
 				echo $form->labelEx($model,$field->varname).'<br/>';
-				if ($field->field_type=="LIST"){
+				if ($field->field_type=="BOOL"){
+					echo $form->checkBox($model,$field->varname);
+                } elseif ($field->field_type=="LIST"){
 					$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
 					$list = CHtml::listData($models, 'id', 'cat_name');
 					echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
