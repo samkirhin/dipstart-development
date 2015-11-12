@@ -5,7 +5,40 @@
  * Date: 05.05.15
  * Time: 15:55
  */
+
+$js = <<<JS
+
+    $(document).on("click", 'li span.deletefile', function(e) {
+        
+        var item = $(this).parent();
+        
+        var id = parseInt($(this).attr('id'));
+        var file_name = $(this).attr('file_name');
+
+        if(!isNaN(id) && file_name.toString().length>0) {
+            $.ajax({
+              type: "POST",
+              url:'http://'+document.domain+'/project/zakaz/deleteFile',
+              data : 'id='+id+'&file_name='+file_name,
+              success: function(html) {
+              	 if(html == 'true') {
+              	     item.fadeOut(400,function(){
+              	         item.remove();
+              	     });
+              	 }
+              }
+        		});
+        
+        }
+      
+    });
+
+JS;
+
+Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READY); 
+
 ?>
+
 <div class="row zero-edge">
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
@@ -19,7 +52,7 @@
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion"
                            href="#collapseOne<?php echo $data['id']; ?>" id="part_title_<?php echo $data['id']; ?>">
-                            <?php echo $data['title']; ?>
+                            <?=$data['title'];?>
                         </a>
                     </h4>
                 </div>
@@ -39,7 +72,7 @@
                     ?>
                 </div>
             </div>
-            <div id="collapseOne<?php echo $data['id']; ?>" class="panel-collapse collapse">
+            <div id="collapseOne<?=$data['id'];?>" class="panel-collapse collapse">
                 <div class="panel-body">
 
                     <p>
@@ -49,6 +82,12 @@
                         <?php 
 						$tmp = '';
 						foreach ($data['files'] as $k => $v){
+						                /*print '<pre>';
+                            print_r ($v);
+                            print '</pre>';
+                            die;*/
+              
+              
                             $tmp .= '<li><a href="' . $v['file_name'] . '" id="parts_file">' . $v['orig_name'] . '</a>';
                             $tmp .= '<button class="zakaz_part_approve_file on right btn'.(!isset($v['for_approved'])?' hidden':'').'" ';
                             foreach ($v as $kk => $vv)
@@ -58,7 +97,7 @@
                             foreach ($v as $kk => $vv)
                                 $tmp .= 'data-'.$kk.'="'.$vv.'" ';
                             $tmp .= ' onclick="approve(this)">'. Yii::t('site', 'Reset') .'</button>';
-                            $tmp .= '</li>';
+                            $tmp .= '<span class="deletefile" style="color: #FF0000; display: inline; right: -10px; top: 10px; cursor: pointer;" id="'.$v['id'].'" file_name="'.$v['file_name'].'">x</span></li>';
                         }
 
                         $this->widget('ext.EAjaxUpload.EAjaxUpload',
@@ -76,6 +115,8 @@
                                 )
                             )
                         ); ?>
+                        
+                        <!--Удаление отдельно взятого блока задания-->
                         <div class="col-xs-12 btn btn-primary deletePart"
                              onclick="delete_part(<?php echo $data['id']; ?>);"> <?=Yii::t('site', 'Remove part')?>
                         </div>

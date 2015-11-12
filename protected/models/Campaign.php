@@ -23,6 +23,10 @@ class Campaign extends CActiveRecord {
 		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
 		return self::$orgz->language;
 	}
+	public static function getSupportEmail() {
+		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		return self::$orgz->supportEmail;
+	}
 	public static function getPaymentCash() {
 		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
 		return self::$orgz->PaymentCash;

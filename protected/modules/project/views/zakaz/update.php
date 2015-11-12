@@ -25,7 +25,7 @@ $this->breadcrumbs = array(
     <div>
         <?= ProjectModule::t('Author') ?><br>
         <?= $author->profile->firstname ?> <?= $author->profile->lastname ?> <br>
-        <?= $author->email ?> <br>
+        <?= $author->email ?> <br />
         <?= $author->profile->mob_tel ?>
     </div>
     <?php endif; ?>

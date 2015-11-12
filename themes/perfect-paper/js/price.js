@@ -71,9 +71,9 @@ Professional["threeHours"] = 47;
 
 function calc(){
     var summ = 0;
-    var price = eval($('input[name="Academic_Level"]:checked').attr('id'))[$('input[name="hours"]:checked').attr('id')];
+    var price = eval($('input[name="ProfilesFields[AcademicLevel]"]:checked').attr('id'))[$('input[name="ProfilesFields[hours]"]:checked').attr('id')];
     console.log(price);
-    $('.appr_price').html(price*$('#pages_number').val()*$('input[name="spaced"]:checked').data('val')/$('input[name="tos"]:checked').data('val'));
+    $('.appr_price').html(price*$('#pages_number').val()*$('input[name="ProfilesFields[Spaced]"]:checked').data('val')/$('input[name="ProfilesFields[Typeofservice]"]:checked').data('val'));
 }
 
 $(document).ready(function(){

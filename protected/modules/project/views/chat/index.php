@@ -129,9 +129,7 @@ $this->widget('application.components.FileManViewer'
         ?>
     </tr>
     <?php
- die('!!!!!!!!!!!!!!!!!!!!!!');
-	
-		if (is_object($parts))
+ 		if (is_object($parts))
         $this->widget('zii.widgets.CListView', array(
             'dataProvider'=>$parts,
             'itemView'=>'_part',
@@ -230,3 +228,4 @@ $this->widget('application.components.FileManViewer'
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<?php die(); ?>

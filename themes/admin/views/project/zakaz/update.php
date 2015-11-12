@@ -127,7 +127,9 @@ $this->breadcrumbs = array(
                                                 foreach($projectFields as $field) {
                                                     echo '<div class="form-group">';
                                                     echo $form->labelEx($model,$field->varname).'<br/>';
-                                                    if ($field->field_type=="LIST"){
+													if ($field->field_type=="BOOL"){
+														echo $form->checkBox($model,$field->varname);
+                                                    } elseif ($field->field_type=="LIST"){
                                                         $models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
                                                         $list = CHtml::listData($models, 'id', 'cat_name');
                                                         echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
@@ -275,10 +277,10 @@ $this->breadcrumbs = array(
 
             <div class="row">
                 <div class="col-xs-12">
-					<!-- Тут была кнопка рассылки -->
+					       <!-- Тут была кнопка рассылки -->
                 </div>
                 <div class="col-xs-12 notes">
-                    <h4><?=ProjectModule::t('Notes (on all orders)')?></h4
+                    <h4><?=ProjectModule::t('Notes (on all orders)')?></h4>
 
                     <?php $form = $this->beginWidget('CActiveForm', array(
                         'id' => 'zakaz-form',
@@ -320,6 +322,7 @@ $this->breadcrumbs = array(
             </div>
             <!-- Конец блока добавления частей менеджера -->
             <!-- Начало блока правок (доработок) менеджера -->
+
             <?php
             $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
                 'project' => $model,

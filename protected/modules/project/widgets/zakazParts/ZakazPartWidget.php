@@ -2,14 +2,14 @@
 
 class ZakazPartWidget extends CWidget{
     
-    public $projectId;
+  public $projectId;
 	public $status;
 	public $item_id;
 	public $record_id;
 	public $status_id;
 	public $_status;
 	public $select;
-    public $arrDataProvider;
+  public $arrDataProvider;
 	public static $folder;
 
 
@@ -70,14 +70,15 @@ class ZakazPartWidget extends CWidget{
 				<script type=\"text/javascript\">
 					function status_changed_$this->record_id( item_id ){
 						var status_id = document.getElementById('select-status-$this->record_id').value;
+						var orderId = $('#order_number').text();
 						$.ajax({
 							type: \"POST\",
-							url:'http://'+document.domain+'/project/zakaz/status'
-							, data : 'cmd=status&status_id='+status_id+'&id='+item_id
+							url:'http://'+document.domain+'/project/zakazParts/status'
+							, data : 'cmd=status&status_id='+status_id+'&id='+item_id+'&orderId='+orderId
 							, success: function(html) {
-								html = BackReplacePlusesFromStr(html);
-								ajax_response = html;
+								/*html = BackReplacePlusesFromStr(html);*/
 								if (html != 'null') {
+									/*alert(html);*/
 								}
 							}
 						});
@@ -88,9 +89,15 @@ class ZakazPartWidget extends CWidget{
 			foreach ($records as $rec) {
 				$this->select.= "<option value='$rec->id' ";
 				if ($rec->id == $item->status_id) $this->select.= 'selected="selected"';
-				$this->select.= ">$rec->status</option>";
+				$this->select.= ">{$rec->status}</option>";
 			};	
 			$this->select.= '</select>';
+      
+      /*print '<pre>';
+      print_r ($item);
+      print '</pre>';
+      die;*/
+      
 			$this->render('newview', $item);
 		}
     }
