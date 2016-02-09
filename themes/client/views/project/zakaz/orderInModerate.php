@@ -1,1 +1,0 @@
-<h2> <?=ProjectModule::t('Your order for moderation. Please wait for the processing of your order manager')?> </h2>

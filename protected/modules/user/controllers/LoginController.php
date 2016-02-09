@@ -29,7 +29,8 @@ class LoginController extends Controller
             Yii::app()->theme='client';
 			$this->render('/user/login',array('model'=>$model));
 		} else
-			$this->redirect(Yii::app()->controller->module->returnUrl);
+			$this->redirect(Yii::app()->user->returnUrl);
+			//$this->redirect(Yii::app()->controller->module->returnUrl);
 	}
     protected function performAjaxValidation($model)
     {

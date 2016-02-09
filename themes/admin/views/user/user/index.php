@@ -3,30 +3,22 @@ $this->breadcrumbs=array(
 	UserModule::t("Users"),
 );
 if(UserModule::isAdmin()) {
-	//$this->layout='//layouts/column2';
 	$this->menu=array(
 		array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin')),
 		array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('profileField/admin')),
-		array('label'=>UserModule::t('List Author User'), 'url'=>array('/user&s=Author')),
-		array('label'=>UserModule::t('List Customer User'), 'url'=>array('/user&s=Customer')),
+		array('label'=>UserModule::t('List Author User'), 'url'=>array('/user/default/index/s/Author')),
+		array('label'=>UserModule::t('List Customer User'), 'url'=>array('/user/default/index/s/Customer')),
 	);
-	$this->widget('zii.widgets.CMenu', array(
-		'items'=>$this->menu,
-		'htmlOptions'=>array('class'=>'operations'),
-	));
+}elseif( true ) {
+	$this->menu=array(
+		array('label'=>UserModule::t('List Author User'), 'url'=>array('/user/default/index/s/Author')),
+		array('label'=>UserModule::t('List Customer User'), 'url'=>array('/user/default/index/s/Customer')),
+	);
 }
-?>
-<table>
-	<tr>
-		<td>
-			<?php echo CHtml::link(Yii::t('site', 'Authors'),array('','s'=>'Author'),array('class'=>'btn btn-default btn-block'));?>
-		</td>
-		<td>
-			<?php echo CHtml::link(Yii::t('site', 'Customers'),array('','s'=>'Customer'),array('class'=>'btn btn-default btn-block'));?>
-		</td>
-	</tr>
-</table>
-<?php
+$this->widget('zii.widgets.CMenu', array(
+	'items'=>$this->menu,
+	'htmlOptions'=>array('class'=>'operations'),
+));
 
 echo '<h1>'.UserModule::t("List User").'</h1>';
 switch ($_GET['s']) {
@@ -40,7 +32,7 @@ switch ($_GET['s']) {
 				array(
 					'name' => UserModule::t("username"),
 					'type'=>'raw',
-					'value' => 'CHtml::link(CHtml::encode($data["username"]),array("admin/update","id"=>$data["id"]))',
+					'value' => 'CHtml::link(CHtml::encode($data["username"]),array("admin/view","id"=>$data["id"]))',
 				),
 				array(
 					'type'=>'raw',
@@ -80,7 +72,7 @@ switch ($_GET['s']) {
 					'header' => UserModule::t("username"),
 					'name' => 'username',
 					'type'=>'raw',
-					'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/update","id"=>$data->id))',
+					'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/view","id"=>$data->id))',
 				),
 				'email',
 				array(

@@ -27,7 +27,7 @@ class Controller extends RController
 		// --- Организации
 		$c_id = Campaign::getId();
 		if ($c_id) {
-			Payment::$table_prefix = $c_id.'_';
+			//Payment::$table_prefix = $c_id.'_';
 			//Profile::$table_prefix = $c_id.'_';
 			//ProfileField::$table_prefix = $c_id.'_';
 			ProjectChanges::$table_prefix = $c_id.'_';
@@ -38,14 +38,20 @@ class Controller extends RController
 			Zakaz::$files_folder = '/uploads/c'.$c_id.'/';
 			Events::$table_prefix = $c_id.'_';
 			ZakazParts::$table_prefix = $c_id.'_';
-			UpdateProfile::$table_prefix = $c_id.'_';
+			//UpdateProfile::$table_prefix = $c_id.'_';
 			ZakazPartsFiles::$table_prefix = $c_id.'_';
-            PaymentImage::$table_prefix = $c_id.'_';
+            //PaymentImage::$table_prefix = $c_id.'_';
 			Emails::$table_prefix = $c_id.'_';
 			
 			Yii::app()->language = Campaign::getLanguage();
 		} else {
-			ProjectChanges::$file_path = 'uploads/changes_documents';
+			$tmp = explode('.',$_SERVER['SERVER_NAME']);
+			if (array_shift($tmp)=='www') {
+				$this->redirect('http://'.implode('.',$tmp));
+			} else {
+				echo 'Requested company not found.';
+			}
+			Yii::app()->end();
 		}
 		// ---
         if (!Yii::app()->user->isGuest)
@@ -73,6 +79,18 @@ class Controller extends RController
 						array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create')),
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                         //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
+						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
+                    );
+					$this->authMenu = array(
+					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
+					);
+                    Yii::app()->theme='client';
+                    break;
+                case ('Webmaster'):
+                    $this->menu = array(
+						array('label'=>Yii::t('site','Stats'), 'url'=>array('/partner/stats')),
+						array('label'=>Yii::t('site','Promo materials'), 'url'=>array('/partner/naterials')),
+						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
 						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
                     );
 					$this->authMenu = array(

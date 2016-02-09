@@ -1,20 +1,39 @@
 <?php
 
-class ZakazController extends Controller
-{
-	public function filters()
-    {
+class ZakazController extends Controller {
+	/*
+	actionView              - просмотр заказа заказчиком после его создания
+	actionCreate            - создаёт заказ
+	//actionApiRenameFile     - в корзину файл от заказачика
+	actionUpdate            - изменение в заказе
+	actionUploadPayment     - загрузка чека
+	actionPreview           - Превью заказа который должен быть отмодерирован
+	actionModerationAnswer  - модерация нового
+	actionDelete            - удаляет заказ
+	actionIndex             - список заказов (мен)
+	getProviders            - формирует списки закзов (для автора и для зак)
+	actionOwnList           - заказы исполнителя
+	actionCustomerOrderList - заказы заказчика
+	actionList              - новые заказы у автора
+	loadModel               - возвращает модель по ID
+	actionSpam              - рассылка по авторам  
+	actionApiApproveFile    - модерация файла
+	actionApiRemoveFile     - удаление файла
+	actionUpload            - загрузка файлов в заказе 
+	//actionDeleteFile        - удаление файла ??? повтор?
+	*/
+	/*public function filters() {
         return array(
             'accessControl',
         );
-    }
+    }*/
 	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
+	/*public function accessRules()
 	{
 			return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -25,32 +44,36 @@ class ZakazController extends Controller
                     'actions'=>array('preview', 'moderationAnswer','apiview','apifindauthor','spam','apiapprovefile','update','status','index','delete', 'deleteFile'),
                     'users'=>array('admin','manager'),
                 ),
+				array('allow',
+					'actions'=>array('upload'),
+					'users'=>array('*'),
+				),
 				array('deny',  // deny all users
 					'users'=>array('*'),
 				),
 			);
-	}
+	}*/
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$model = $this->loadModel($id);
-		$projectFields = $model->getFields();
-		$this->render('view',array(
-			'model'			=> $model,
-			'projectFields'	=> $projectFields,
-		));
-	}
 	protected $_request;
 	protected $_response;
 	protected function _prepairJson() {
 		$this->_request = Yii::app()->jsonRequest;
 		$this->_response = new JsonHttpResponse();
 	}
-	public function actionApiFindAuthor() {
+
+	/**
+	 * Performs the AJAX validation.
+	 * @param Zakaz $model the model to be validated
+	 */
+	protected function performAjaxValidation($model) {
+		if(isset($_POST['ajax']) && $_POST['ajax']==='zakaz-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
+	
+	/*public function actionApiFindAuthor() { // - непонятно зачем нужно (ManagerChat)
 		$user = User::model()->findByPk(Yii::app()->user->id);
 		$request = Yii::app()->Request;
 		if (!$user->superuser)
@@ -63,8 +86,8 @@ class ZakazController extends Controller
 				$model->status=1;
 			$model->save();
 		}
-	}
-	public function actionApiView() {
+	}*/
+	/*public function actionApiView() { // - непонятно зачем нужно
 		$user = User::model()->findByPk(Yii::app()->user->id);
 		if (!$user->superuser) {
 			$this->redirect('/');
@@ -126,17 +149,26 @@ class ZakazController extends Controller
 			));
 			$this->_response->send();
 		}
-	}
+	}*/
 
+	public function actionView($id) { // просмотр заказа заказчиком после его создания
+		$model = $this->loadModel($id);
+		$projectFields = $model->getFields();
+		$this->render('view',array(
+			'model'			=> $model,
+			'projectFields'	=> $projectFields,
+		));
+	}
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
-	{
-        $model = new Zakaz();
+	public function actionCreate() {
+        if(isset($_GET['iframe']) and $_GET['iframe']=='yes') $iframe = true; else $iframe = false;
+		$model = new Zakaz();
 
-        if (!isset($model->unixtime)) {
+        if (!isset($model->unixtime) or $model->unixtime=='' ) {
             $model->unixtime = time();
         } 
         
@@ -159,7 +191,8 @@ class ZakazController extends Controller
                 $model->dbdate = date('d.m.Y H:i');
                 $d1=date_create();
                 $d2=date_create($model->dbmax_exec_date);
-                $d1->modify('+'.intval(date_diff($d1,$d2)->days/2).' days');
+				$interval = (int)($d2->format('U')) - (int)($d1->format('U'));
+				$d1->modify('+'.intval($interval/2).' seconds');
                 $model->dbauthor_informed = $d1->format('d.m.Y H:i');
             }
 
@@ -168,47 +201,36 @@ class ZakazController extends Controller
                 if (!(User::model()->isManager() || User::model()->isAdmin())) {
                     EventHelper::createOrder($model->id);
                 }
-                $this->moveFiles($model->unixtime,$model->id);
+                $model->moveFiles($model->unixtime/*,$model->id*/);
+				
+				$user = User::model()->findByPk($model->user_id);
+				if ( $user->pid){
+					$orders = $this->getProviders();
+					
+					$webmasterlog = new WebmasterLog();
+					$webmasterlog->pid = $user->pid;
+					$webmasterlog->uid = $user->id;
+					$webmasterlog->order_id = $model->id;
+					$webmasterlog->date = date("Y-m-d"); 
+					if (count($orders)>1)
+						$WebmasterLog->action =  WebmasterLog::NON_FIRST_ORDER;
+					else
+						$WebmasterLog->action =  WebmasterLog::FIRST_ORDER;
+					$webmasterlog->save();
+					
+				}
                 $this->redirect(array('view','id'=>$model->id));
             }
 			
         }
-
+		if( Yii::app()->user->isGuest ) Yii::app()->theme = 'client';
+		if( $iframe ) $this->layout = '//layouts/iframe';
         $this->render('create',array(
             'model'=>$model
         ));
 	}
     
-    protected function moveFiles($unixtime,$id) 
-    {
-        
-        $c_id = Campaign::getId();
-        $root = Yii::getPathOfAlias('webroot');
-        if ($c_id) {
-            $from = $root.'/uploads/c'.$c_id.'/temp/'.$unixtime.'/';
-        } else {
-            $from = $root.'/uploads/temp/'.$unixtime.'/';
-        }
-        if (file_exists($from)) {
-            $dir_handle = opendir($from);
-            if ($c_id) {
-                $to = $root.'/uploads/c'.$c_id.'/'.$id.'/';
-            } else {
-                $to = $root.'/uploads/'.$id.'/';
-            }
-            if (!file_exists($to)) {
-                mkdir($to, 0777);
-            }                    
-            while ($file = readdir($dir_handle)) {
-               if ($file === '.' || $file === '..' || is_dir($file)) continue;
-               rename($from.$file, $to.$file);   
-            }
-            rmdir($from);                    
-            
-        }
-    }
-    
-    public function actionApiRenameFile() {
+    /*public function actionApiRenameFile() { dubl in chatController
         $this->_prepairJson();
         $data = $this->_request->getParam('data');
         $path=Yii::getPathOfAlias('webroot').$data['dir'];
@@ -218,14 +240,13 @@ class ZakazController extends Controller
             $this->_response->setData(true);
         } else $this->_response->setData(false);
         $this->_response->send();
-    }
+    }*/
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-    {
+	public function actionUpdate($id) {
 
         if (Yii::app()->request->isAjaxRequest) {
             
@@ -242,9 +263,6 @@ class ZakazController extends Controller
             
         }
         
-        $role = User::model()->getUserRole();
-        $view = 'update';
-        $isModified = false;
 		Yii::app()->session['project_id'] = $id;
 		$model=$this->loadModel($id);
 		
@@ -252,10 +270,100 @@ class ZakazController extends Controller
             $model->old_status = $model->status;
 			$model->status = 5;
 			$model->save(false);
+			$user = User::model()->findByPk($model->user_id);
+			if($user->pid) {
+				$webmaster = User::model()->with('profile')->findByPk($user->pid);
+				$openlog = WebmasterLog::model()->findByAttributes(	array('order_id'=>$model->id),
+					'action = :p1 OR action = p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
+				);
+				$webmasterlog = new WebmasterLog();
+				$webmasterlog->pid = $user->pid;
+				$webmasterlog->uid = $user->id;
+				$webmasterlog->date = date("Y-m-d"); 
+				$webmasterlog->order_id = $model->id;
+				if($openlog->action == WebmasterLog::FIRST_ORDER){
+					$webmasterlog->action = WebmasterLog::FINISH_FIRST_ORDER_SUCCESS;
+				}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
+					$webmasterlog->action = WebmasterLog::FINISH_NON_FIRST_ORDER_SUCCESS;
+				}
+				$webmasterlog->save();
+				// Pament for webmaster ~~~~~~~~~~~~~~~~~~~~~~~~~~
+				$payed = Payment::model()->exists('order_id = :p1 AND payment_type = p2', array(':p1'=>$model->id, ':p2'=>Payment::OUTCOMING_WEBMASTER));
+				if ( !$payed ) { // Only first time
+					$payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+						':ORDER_ID'=>$model->id
+					));
+					$manag = User::model()->findByPk(Yii::app()->user->id);
+					$buh = new Payment;
+					$buh->order_id = $model->id;
+					$buh->receive_date = date('Y-m-d');
+					$buh->theme = $model->title;
+					$buh->user = $webmaster->email;
+					$buh->details_ya = $webmaster->profile->yandex;
+					$buh->details_wm = $webmaster->profile->wmr;
+					$buh->details_bank = $webmaster->profile->bank_account;
+					$buh->payment_type = Payment::OUTCOMING_WEBMASTER;
+					$buh->manager = $manag->email;
+					//$buh->approve = 0;
+					$buh->method = 'Cash or Bank';
+					if($openlog->action == WebmasterLog::FIRST_ORDER){
+						$buh->summ = (float) $payment->project_price * Campaign::getWebmasterFirstOrderRate();
+					}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
+						$buh->summ = (float) $payment->project_price * Campaign::getWebmasterSecondOrderRate();
+					}
+					$buh->save();
+				}
+			}
 			$this->redirect(array('update','id'=>$model->id));
 		} elseif (Yii::app()->request->getParam('open') == 'yes'){
 			$model->status = $model->old_status;
 			$model->save(false);
+			$this->redirect(array('update','id'=>$model->id));
+		} elseif (Yii::app()->request->getParam('refound') == 'yes'){
+            $model->old_status = $model->status;
+			$model->status = 5;
+			$model->save(false);
+			$user = User::model()->findByPk($model->user_id);
+			// Refound ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			$manag = User::model()->findByPk(Yii::app()->user->id);
+			$payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
+				':ORDER_ID'=>$model->id
+			));
+			if ($payment && $payment->received >0) {
+				$refound = $payment->received;
+				$payment->received = 0;
+				$payment->save();
+				$buh = new Payment;
+				$buh->order_id = $model->id;
+				$buh->receive_date = date('Y-m-d');
+				$buh->theme = $model->title;
+				$buh->user = $user->email;
+				$buh->summ = ((float) $refound);
+				$buh->payment_type = Payment::OUTCOMING_CUSTOMER;
+				$buh->manager = $manag->email;
+				//$buh->approve = 0;
+				$buh->method = 'Cash or Bank';
+				$buh->save();
+			}
+			if($user->pid) {
+				$webmasterlog = new WebmasterLog();
+				$webmasterlog->pid = $user->pid;
+				$webmasterlog->uid = $user->id;
+				$webmasterlog->date = date("Y-m-d"); 
+				$webmasterlog->order_id = $model->id;
+				$openlog = WebmasterLog::model()->findByAttributes(	array('order_id'=>$model->id),
+					'action = :p1 OR action = p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
+				);
+				if($openlog->action == WebmasterLog::FIRST_ORDER){
+					$webmasterlog->action = WebmasterLog::FINISH_FIRST_ORDER_FAILURE;
+				}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
+					$webmasterlog->action = WebmasterLog::FINISH_NON_FIRST_ORDER_FAILURE;
+				}else{
+					echo 'Somthing wrong...';
+					Yii::app()->end();
+				}
+				$webmasterlog->save();
+			}
 			$this->redirect(array('update','id'=>$model->id));
 		}
 		
@@ -268,26 +376,25 @@ class ZakazController extends Controller
 			if(isset($_POST['Zakaz']['dbdate']))
 				$model->dbdate = $_POST['Zakaz']['dbdate'];
 
-
-			if(Campaign::getId()){
-				$projectFields = $model->getFields();
-				if ($projectFields) foreach($projectFields as $field) {
-					if ($field->field_type=="TIMESTAMP") {
-						// ----------------------------------------------------
-						$tmp = $field->varname;
-						if (isset($_POST['Zakaz'][$tmp])) {
-							$model->$tmp = $_POST['Zakaz'][$tmp];
-							$model->timestampInput($field);
-						}
+			$projectFields = $model->getFields();
+			if ($projectFields) foreach($projectFields as $field) {
+				if ($field->field_type=="TIMESTAMP") {
+					// ----------------------------------------------------
+					$tmp = $field->varname;
+					if (isset($_POST['Zakaz'][$tmp])) {
+						$model->$tmp = $_POST['Zakaz'][$tmp];
+						$model->timestampInput($field);
 					}
 				}
 			}
+
 			if($model->save()) {
+				$role = User::model()->getUserRole();
 				if ($role != 'Manager' && $role != 'Admin') {
 // где-то есть дублрующий вызов записи события, поэтому этот комментируем
 // oldbadger 09.10.2015					
 //					EventHelper::editOrder($model->id);
-					$view = 'orderInModerate';
+					//$view = 'orderInModerate';
 					$this->redirect(array("../project/chat?orderId=$id"));
 				} else {
 //					$this->redirect(array('project/chat','orderId'=>$model->id));
@@ -296,7 +403,8 @@ class ZakazController extends Controller
 			}
 			
 		}
-
+		$view = 'update';
+		$isModified = false;
 		$this->render($view, array(
 			'model'=>$model,
 			'message'=>$model->projectStatus->status,
@@ -304,8 +412,7 @@ class ZakazController extends Controller
 		));
 	}
     
-    public function actionUploadPayment($id)
-    {
+    public function actionUploadPayment($id) {
         if(isset($_POST['UploadPaymentImage'])) {
             $upload = new UploadPaymentImage;
             $upload->orderId = $id;
@@ -373,8 +480,7 @@ class ZakazController extends Controller
 					$email = new Emails;
 						
 					$order= Zakaz::model()->findByPk($id);
-					$user = User::model()->findAll("`id`='$order->user_id'");
-					$user = $user[0];
+					$user = User::model()->findByPk($order->user_id);
 
 					$email->from_id = 1;
 					$email->to_id   = $user->id;
@@ -386,11 +492,11 @@ class ZakazController extends Controller
 					$email->num_order = $id;
 					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$id;
 					
-					$email->login= $user->username;
-					$email->password= $soucePassword;
+					//$email->login= $user->username;
+					//$email->password= $soucePassword;
 					$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
-					
-                    $this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
+
+					$this->redirect(Yii::app()->createUrl('project/zakaz/update', array(
                         'id' => $model->id
                     )));
                 }
@@ -500,7 +606,7 @@ class ZakazController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
+	/*public function actionAdmin()
 	{
 		$model=new Zakaz('search');
 		$model->unsetAttributes();  // clear any default values
@@ -510,7 +616,7 @@ class ZakazController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
-	}
+	}*/
 
 	public function actionOwnList()
 	{
@@ -535,11 +641,11 @@ class ZakazController extends Controller
         ]);
     }
 
-	public function actionList($status=0)
-	{
-		$new 	= User::model()->isAuthor();
+	public function actionList($status=0) {
+		$new 	= true;//User::model()->isAuthor();
 		$models = $this->getProviders(true);
 		$model	=  $models['model'];
+		$user = User::model()->with('profile')->findByPk(Yii::app()->user->id);
 
 		$this->render('list',array(
 			'model'=>$models['model'],
@@ -547,42 +653,15 @@ class ZakazController extends Controller
             'dataProvider' => $models['model'],
             'dataProvider_done' => $models['model_done'],
 			'only_new'		=> $new,
+			'profile' => $user->profile,
 		));
 	}
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Zakaz the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model = Zakaz::model()->resetScope()->findByPk($id);
-		if($model===null){
-            throw new CHttpException(404,Yii::t('site','The requested page does not exist.'));
-        }
-		return $model;
-	}
 
-	/**
-	 * Performs the AJAX validation.
-	 * @param Zakaz $model the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='zakaz-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
-
-	public function actionDownload()
+	/*public function actionDownload()
 	{
 	   EDownloadHelper::download($_GET['path']);
 			$this->redirect(Yii::app()->request->urlReferrer);
-	}
+	}*/
 
     public function actionSpam($orderId) {
 
@@ -593,6 +672,8 @@ class ZakazController extends Controller
         if (!$order) {
             throw new CHttpException(500);
         }
+		$order->status = 3;
+		$order->save();
 		
 		$criteria = new CDbCriteria();
         if(Campaign::getId()) {
@@ -692,61 +773,40 @@ class ZakazController extends Controller
     }
 
 
-    public function actionUpload() {
-        Yii::import("ext.EAjaxUpload.qqFileUploader");
-        // --- кампании
-        $c_id = Campaign::getId();
-        if ($c_id) {
-            $folder='uploads/c'.$c_id.'/temp/';
-        } else {
-            $folder='uploads/temp/';
-        }
-        // ---
-        if (!file_exists($folder)) {
-            mkdir($folder, 0777);
-        }
-        $folder = $folder.$_GET['unixtime'].'/';
-        if (!file_exists($folder)) {
-            mkdir($folder, 0777);
-        }
-        $config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx');
-        $config['disAllowedExtensions'] = array("exe");
-        $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
-        $uploader = new qqFileUploader($config, $sizeLimit);
-        if(!(User::model()->isAdmin())) $_GET['qqfile']='#pre#'.$_GET['qqfile'];
-        $result = $uploader->handleUpload($folder,true);
-        $result['fileSize']=filesize($folder.$result['filename']);//GETTING FILE SIZE
-        $result['fileName']=$result['filename'];//GETTING FILE NAME
-        chmod($folder.$result['fileName'],0666);
-        echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+    public function actionUpload($unixtime) {
+		//$folder='uploads/c'.Campaign::getId().'/temp/'.$_GET['unixtime'].'/';
+		$unixtime = intval($unixtime);
+		$folder='uploads/c'.Campaign::getId().'/temp/'.$unixtime.'/';
+		$result = Tools::uploadMaterials($folder);
+		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }
     
-    
-    public function actionDeleteFile() {
-
-        $file_name = trim(Yii::app()->request->getPost('file_name'));
-        
-        $id = (int)Yii::app()->request->getPost('id');
-        
-        $path=Yii::getPathOfAlias('webroot').$file_name;
-  
-        if (file_exists($path)) {
-          
-          $note = ZakazPartsFiles::model()->findByPk($id);
-          
-          if ($note->delete()) {
-          
-            if (unlink($path)) {
-
-                echo 'true';
-                
-            } else echo 'false';
-
-          } else echo 'false';
-
-        } else echo 'false';
-
-
-    }
-    
+    /*public function actionDeleteFile() {
+		$file_name = trim(Yii::app()->request->getPost('file_name'));
+		$id = (int)Yii::app()->request->getPost('id');
+		$path=Yii::getPathOfAlias('webroot').$file_name;
+		if (file_exists($path)) {
+			$note = ZakazPartsFiles::model()->findByPk($id);
+			if ($note->delete()) {
+				if (unlink($path)) {
+					echo 'true'; 
+				} else echo 'false';
+			} else echo 'false';
+		} else echo 'false';
+	}*/
+	
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return Zakaz the loaded model
+	 * @throws CHttpException
+	 */
+	public function loadModel($id) {
+		$model = Zakaz::model()->resetScope()->findByPk($id);
+		if($model===null){
+            throw new CHttpException(404,Yii::t('site','The requested page does not exist.'));
+        }
+		return $model;
+	}
 }

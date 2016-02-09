@@ -14,7 +14,7 @@
     echo CHtml::link('Sign in<br>',array('/user/login'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
     //echo CHtml::link('Registration<br>',array('/site/page','view'=>'registration'));
 	echo CHtml::link('Registration<br>',array('/site/page','view'=>'order'));
-    echo CHtml::link('Recover password',array('/user/recovery'),array('data-toggle'=>'modal','data-target'=>'#loginModalForm',));
+    echo CHtml::link('Recover password',array('/user/recovery'));
 ?>
 <!-- Login Form -->
 <?php
@@ -37,7 +37,7 @@ $form = $this->beginWidget('application.extensions.booster.widgets.TbActiveForm'
 ?>
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h4>Вход на сайт</h4>
+        <h4>Login</h4>
     </div>
     <div class="modal-body">
         <?php
@@ -50,12 +50,12 @@ $form = $this->beginWidget('application.extensions.booster.widgets.TbActiveForm'
         <?php
         $this->widget('application.extensions.booster.widgets.TbButton', array(
             'buttonType'=>'submit',
-            'label'=>'Вход',
+            'label'=>'Login',
         ));
         ?>
         <?php
         $this->widget('application.extensions.booster.widgets.TbButton', array(
-            'label'=>'Закрыть',
+            'label'=>'Close',
             'htmlOptions'=>array('data-dismiss'=>'modal'),
         ));
         ?>
@@ -66,7 +66,7 @@ $this->endWidget();
 $this->endWidget();
 ?>
 <?php else: ?>
-Привет, <?php echo User::model()->findByPk(Yii::app()->user->id)->username; ?>!</p>
+Hello, <?php echo User::model()->findByPk(Yii::app()->user->id)->username; ?>!</p>
 <?php $this->widget('application.extensions.booster.widgets.TbMenu',array(
     'items'=> $this->authMenu,
     'type'=>'list',

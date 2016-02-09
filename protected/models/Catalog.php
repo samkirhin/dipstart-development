@@ -15,48 +15,8 @@ class Catalog extends CActiveRecord {
      */
     public function tableName() {
 		$id  = Campaign::getId();
-/*
-		echo 'id='.$id;
-		if (strpos(Yii::app()->user->guestName,'Guest')!==false){
-			$this->getCampaignNumber();
-			$id  = Campaign::getId();
-			echo ' id(1)='.$id;
-		};
-*/
         return $id.'_Сatalog';
 	}
-	// здесь определяем, из какой компании проект нужно показывать гостю
-    
-	/*public function getCampaignNumber() 
-	{
-		$name = Yii::app()->user->guestName;
-		if (strpos($name,'uest')==0) return false;
-		// только для гостя
-		if (isset($_REQUEST['campaignId'])) {
-			$campaignId	= (int)$_REQUEST['campaignId'];
-			$campaign	= Campaign::model()->findByPk($campaignId);
-
-			$orderId	= 0;
-			if (isset($_REQUEST['orderId'])) $orderId = (int)$_REQUEST['orderId'];
-			if (!$orderId) return $campaign_id;
-			$order	= Zakaz::model()->find('id=:id', array(':id'=>$orderId));
-			
-			if ($campaign) {
-				$domains = explode( ',', $campaign->domains);
-				$domain	 = $domains[0];
-				$_SERVER['SERVER_NAME'] = $domain;
-				return	true;
-			};	
-		};	
-		$campaigns	= Campaign::model()->findAll();
-		foreach($campaigns as $campaign){
-			$domains = explode( ',', $campaign->domains);
-			$domain	 = $domains[0];
-			$_SERVER['SERVER_NAME'] = $domain;
-			if ($this->getCampaignNumber())	return	true;
-		}	
-	}*/
-	
 
     /**
      * @return array validation rules for model attributes.
@@ -138,16 +98,32 @@ class Catalog extends CActiveRecord {
     }
 
     public function performCatsTree($field_varname) {
-        $cats = $this->findAllByAttributes(array('field_varname'=>$field_varname), 'parent_id = 0');
+		$count = $this->count("field_varname=:field_varname and parent_id != 0", array("field_varname" => $field_varname ));
+		$cats = $this->findAllByAttributes(array('field_varname'=>$field_varname), 'parent_id = 0');
+		if($count > 0) {
+			foreach ($cats as $item) {
+				$cubats = $this->findAll('parent_id = ' . $item->id);
+				foreach ($cubats as $cat) {
+					$tree[$item->cat_name][$cat->id] = $cat->cat_name;
+				}
+			}
+		} else {
+			foreach ($cats as $item) {
+				$tree[$item->id] = $item->cat_name;
+			}
+		}
+		return $tree;
+    }
+	public function getGroupedList($field_varname) {
+		$cats = $this->findAllByAttributes(array('field_varname'=>$field_varname), 'parent_id = 0');
         foreach ($cats as $item) {
             $cubats = $this->findAll('parent_id = ' . $item->id);
 			foreach ($cubats as $cat) {
-				$tree[$item->cat_name][$cat->id] = $cat->cat_name;
+				$tree[$item->id][$cat->id] = $cat->cat_name;
 			}
         }
         return $tree;
-    }
-
+	}
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!

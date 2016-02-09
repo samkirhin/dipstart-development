@@ -14,7 +14,7 @@ class ProjectStatus extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ProjectStatus';
+		return Campaign::getId().'_ProjectStatus';
 	}
 
 	/**

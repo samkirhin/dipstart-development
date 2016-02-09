@@ -5,7 +5,7 @@ class CatalogController extends Controller {
 	public $layout='//layouts/second_menu';
 	//public $layout='//layouts/main';
 
-	public function filters()
+	/*public function filters()
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
@@ -28,7 +28,7 @@ class CatalogController extends Controller {
 				'users'=>array('*'),
 			),
 		);
-	}
+	}*/
 
 	/**
 	 * Displays a particular model.

@@ -4,6 +4,11 @@
     padding-bottom: 10px;
     font-weight: 300;
 }
+.login-form-bg p.error {
+	color: red;
+	text-align: center;
+	margin-bottom: 15px;
+}
 .user_submit {
 	display: table-cell;
 	width: 149px;
@@ -103,31 +108,43 @@ label[for="UserLogin_rememberMe"] {
 	font-size: 13px;
 	color: gray;
 }
-
+.login-form-bg .hint2 {
+	text-align: center;
+	font-size: 13px;
+	color: gray;
+	margin-top: 20px;
+	margin-bottom: 0;
+}
 
 .hint a[href="/user/registration"] {
 	margin-right: 7px;
 }
-
-
 .hint a[href="/user/recovery"] {
     text-decoration: none;
 	margin-left: 7px;
 }
-
+.hint2 a[href="/user/recovery"] {
+    text-decoration: none;
+	margin-left: 21px;
+}
 
         /* ========== */
 /* ===== Alex's styles ===== */
         /* ========== */
 
 body {
-    background-image: url('../images/autorisation-background.jpg');
 	height: 100vh;
 	background-size: cover;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-position: center;
 
+}
+body.bg0 {
+	background-image: url('../images/background0.jpg');
+}
+body.bg1 {
+	background-image: url('../images/background1.jpg');
 }
 
 .login-form-bg {
@@ -182,7 +199,6 @@ div.content-clearfix {
     margin-bottom: 64px !important;
 	min-height: 0px !important;
 	width: 100vw;
-	background-color: rgba(0, 0, 0, 0.5);
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
@@ -193,4 +209,23 @@ div#uLogin > img[src="https://ulogin.ru/img/blank.gif"]{
 
 div.container {
 	width: 100% !important;
+}
+/*body.bg0 header {
+	width: 100%;
+	height: 140px;
+}*/
+body.bg0 header {
+	display: none;
+}
+body.bg0 div.content-clearfix, body.bg1 div.content-clearfix {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+body div.container {
+	height: 100%;
+	min-height: 400px;
+}
+body div.content-clearfix {
+	position: absolute;
+	top: 50%;
+	margin-top: -190px;
 }

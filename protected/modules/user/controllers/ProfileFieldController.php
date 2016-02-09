@@ -25,13 +25,8 @@ class ProfileFieldController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
-	{
+	public function accessRules() {
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('*'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('create','update','view','admin','delete'),
 				'users'=>UserModule::getAdmins(),
@@ -453,7 +448,7 @@ class ProfileFieldController extends Controller
 				
 			} else {
 				$sql = 'ALTER TABLE '.Profile::model()->tableName().' DROP `'.$model->varname.'`';
-				if ($model->dbConnection->createCommand($sql)->execute()) {
+				if ($model->dbConnection->createCommand($sql)->execute() or true) {
 					$model->delete();
 				}
 			}

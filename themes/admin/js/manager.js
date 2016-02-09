@@ -8,11 +8,11 @@ function changes_approve(id, value){
 function reload(){
     location.reload();
 }
-function add_part(orderid){
+function add_part(orderid, title){
     $.post('/project/zakazParts/apiCreate', JSON.stringify({
         'orderId': orderid,
 
-        'name': 'Новая Часть'
+        'name': title
     }), function (response) {
         if (response.data) {
             reload();

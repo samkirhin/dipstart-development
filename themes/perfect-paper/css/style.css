@@ -412,17 +412,18 @@ background-position: top left;
 background-repeat: no-repeat;
 padding-left: 7px;
 line-height: 24px;
-margin-bottom: 5px;
+margin-bottom: 10px;
 position: relative;
 }
 .buy ol li p {
 	padding-left: 10px;
+	display: inline-block;
 }
 
 article p {
-    display: block!important;
-    margin: 0px 15px 10px!important;
-    text-align: justify!important;
+    display: block;
+    margin: 0px 15px 10px;
+    text-align: justify;
 }
 
 article h2.center {
@@ -692,4 +693,67 @@ p.submit-cost > span {
 
 .form-control {
     text-align: center;
+}
+
+.order-price-block {
+	font-size: 25px;
+	text-align: center;
+}
+.order-price-block span {
+	display: block;
+}
+#tab-1 .order-price-block {
+	display: none;
+}
+.appr_price {
+	color: #d9534f;
+}
+.form-message {
+	color: #d9534f;
+	padding: 10px;
+}
+.panel-heading {
+	padding-bottom: 0;
+}
+.qq-upload-drop-area {
+    display: block!important;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #DDDDDD;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    margin-top: 0;
+    /*overflow: hidden;*/
+    margin-bottom: 0;
+}
+.qq-upload-drop-area span {
+    margin-top: 15px;
+    margin-left: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #EDEDED;
+    position: relative;
+}
+div.qq-upload-button, div.qq-upload-button:hover {
+    color: #fff;
+    border: none;
+}
+div.qq-upload-button {
+    background-color: #737C8D !important;
+    -webkit-transition: background-color 0.2s ease-out;
+    transition: background-color 0.2s ease-out;
+}
+.qq-upload-button {
+    width: 90%;
+    background-color: white;
+    color: #9F9F9F;
+    margin: 15px auto;
+    border: 1px solid #ddd;
+}
+.qq-upload-list {
+    margin: 0;
+    padding-top: 10px;
 }

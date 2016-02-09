@@ -5,7 +5,7 @@
  * Date: 05.05.15
  * Time: 15:55
  */
-if (count($data['files']) > 0 || !User::model()->isCustomer()) {
+if ($this->status_id > 2 || !User::model()->isCustomer()) {
 ?>
 <div class="col-xs-12">
 	<div class="row zero-edge">
@@ -13,7 +13,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="partStatus">
-						<div class="partStatus-header"><?= ProjectModule::t("Status").':' ?></div>
+						<div class="partStatus-header"><?=ProjectModule::t("Status").':' ?></div>
 						<div class="partStatus-status" id="partStatus-status-<?= $this->record_id ?>"><?= $this->status ?></div>
 					</div>	
 					<div class="partStatus-bottom"></div>
@@ -32,20 +32,22 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 					<?php } ?>
 				</div>
 
-				<?php if ((int)$this->status_id < 2) : ?>
-				<?php $disabled = ''; if(Yii::app()->user->isGuest) $disabled = ' disabled'; ?>
-				<input id="zakaz-done-<?= $this->record_id ?>" name="zakaz-done-<?= $this->record_id ?>" class="btn btn-primary btn-block" value="Этап готов" type="button" onclick="zakaz_done(<?= $this->record_id ?>); return false;"<?= $disabled; ?>>
+				<?php if ((User::model()->isExecutor($data['proj_id']) && (int)$this->status_id < 2)
+						|| (User::model()->isOwner($data['proj_id']) && (int)$this->status_id == 3)){
+						if (User::model()->isCustomer()) $buttonValue = ProjectModule::t('Approve stage');
+						else $buttonValue = ProjectModule::t('Stage ready');?>
+				<input id="zakaz-done-<?= $this->record_id ?>" name="zakaz-done-<?= $this->record_id ?>" class="btn btn-primary btn-block" value="<?=$buttonValue?>" type="button" onclick="zakaz_done(<?= $this->record_id ?>); return false;">
 				<input id="zakaz-done-hidden-<?= $this->record_id ?>" name="zakaz-done-hidden-<?= $this->record_id ?>" class="btn btn-primary btn-block" type="hidden" value="<?= (int)$this->status_id ?>">
-				<?php endif ?>
-				
-				<div id="collapseOne<?php echo $data['id']; ?>" class="panel-collapse collapse">
+				<?php }
+				if (User::model()->isAuthor() || (User::model()->isCustomer() && (int)$this->status_id > 2)){
+				?>
+				<div id="collapseOne<?php echo $data['id']; ?>" class="panel-collapse collapse in">
 					<div class="panel-body">
 						<?php
 						if (User::model()->isAuthor()) {
 							?>
 							<p><?php echo $data['comment']; ?></p>
-						<?php } ?>
-
+						<?php }	?>
 						<div class="part_files">
 							<?php foreach ($data['files'] as $k => $v){
 								echo '<div class="row">';
@@ -55,13 +57,12 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 								echo '</div>';
 							} ?>
 						</div>
-
 						<?php if (User::model()->isExecutor($data['proj_id'])) $this->widget('ext.EAjaxUpload.EAjaxUpload',
 							array(
 								'id' => 'EAjaxUpload' . $data['id'],
 								'config' => array(
 									'action' => Yii::app()->createUrl('/project/zakazParts/upload', array('proj_id' => $data['proj_id'], 'id' => $data['id'])),
-									'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'.ProjectModule::t("Drag and drop files here'").'</span></div><div class="qq-upload-button">'.ProjectModule::t("Upload material'").':</div><ul class="qq-upload-list"></ul></div>',
+									'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'.ProjectModule::t('Drag and drop files here').'</span></div><div class="qq-upload-button">'.ProjectModule::t("Upload material").':</div><ul class="qq-upload-list"></ul></div>',
 									'disAllowedExtensions' => array('exe'),
 									'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
 									'minSizeLimit' => 10,// minimum file size in bytes
@@ -72,6 +73,7 @@ if (count($data['files']) > 0 || !User::model()->isCustomer()) {
 						?>
 					</div>
 				</div>
+				<?php } ?>
 			</div>
 		</div>
 	</div>

@@ -441,3 +441,9 @@ form#templates-form input[type="submit"]:hover {
     background-repeat: repeat-x !important;
     background-image: linear-gradient(to bottom, #32ADBB 0%, #2372A9 100%) !important;
 }
+p.error, div.errorSummary, div.errorMessage {
+	color: red;
+}
+p.success {
+	color: green;
+}

@@ -1,4 +1,4 @@
-<div id = "list-changes-block" class = "list-changes-block">
+<div class = "list-changes-block">
     <div class="list-changes-filename">
         <a href="<?php echo $data['file'];?>"><?php echo $data['filename'];?></a>
     </div>

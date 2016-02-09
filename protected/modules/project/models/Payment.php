@@ -19,15 +19,16 @@
  * @property integer $approve
  * @property string $method
  */
-class Payment extends CActiveRecord
-{
-	public static $table_prefix;
+class Payment extends CActiveRecord {
+
+	// Payment types
+	const INCOMING_CUSTOMER   = 0;
+	const OUTCOMING_EXECUTOR  = 1;
+	const OUTCOMING_WEBMASTER = 2;
+	const OUTCOMING_CUSTOMER  = 3; // Refound
 	
 	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.'Payment';
-		else
-			return 'Payment';
+		return Campaign::getId().'_Payment';
 	}
 
 	/**
@@ -84,30 +85,43 @@ class Payment extends CActiveRecord
 		);
 	}
 
-        public function approveFromBookkeeper($method) {    
-            if($this->approve != 1){
-				$tran = Yii::app()->db->beginTransaction();
-				try {
-					
-					$this->method = $method;
-					$this->approve = 1;
-					$this->pay_date = date("Y-m-d");
-					$this->save(false);
-					if($this->payment_type == 1) {
-						$payment = ProjectPayments::model()->findByAttributes(['order_id' => $this->order_id]);
-						$payment->payed += $this->summ;
-						$payment->to_pay -= $this->summ;
-						$payment->save(false);
-					}
-					$tran->commit();
-					
-				} catch (Exception $ex) {
-					$tran->rollback();
-					return false;
+	public static function types() {
+		return array(
+			self::INCOMING_CUSTOMER   => ProjectModule::t('Incoming from customer'),
+			self::OUTCOMING_EXECUTOR  => ProjectModule::t('Outcoming to executor'),
+			self::OUTCOMING_WEBMASTER => ProjectModule::t('Outcoming to webmaster'),
+			self::OUTCOMING_CUSTOMER  => ProjectModule::t('Outcoming refound'),
+		);
+	}
+    public function performType() {
+		$types = self::types();
+		return $types[$this->payment_type];
+    }
+	
+	public function approveFromBookkeeper($method) {    
+		if($this->approve != 1){
+			$tran = Yii::app()->db->beginTransaction();
+			try {
+				
+				$this->method = $method;
+				$this->approve = 1;
+				$this->pay_date = date("Y-m-d");
+				$this->save(false);
+				if($this->payment_type == self::OUTCOMING_EXECUTOR) {
+					$payment = ProjectPayments::model()->findByAttributes(['order_id' => $this->order_id]);
+					$payment->payed += $this->summ;
+					$payment->to_pay -= $this->summ;
+					$payment->save(false);
 				}
-				return true;
-            } else return false;
-        }
+				$tran->commit();
+				
+			} catch (Exception $ex) {
+				$tran->rollback();
+				return false;
+			}
+			return true;
+		} else return false;
+	}
         
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

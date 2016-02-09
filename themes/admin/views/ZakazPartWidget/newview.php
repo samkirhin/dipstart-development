@@ -44,7 +44,7 @@ Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READ
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="partStatus">
-					<div class="partStatus-header">Статус:</div>
+					<div class="partStatus-header"><?=ProjectModule::t('Status')?>:</div>
 					<div class="partStatus-status"><?= $this->select; ?></div>
 				</div>	
 				<div class="partStatus-bottom"></div>
@@ -92,7 +92,7 @@ Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READ
                             $tmp .= '<button class="zakaz_part_approve_file on right btn'.(!isset($v['for_approved'])?' hidden':'').'" ';
                             foreach ($v as $kk => $vv)
                                 $tmp .= 'data-'.$kk.'="'.$vv.'" ';
-                            $tmp .= ' onclick="approve(this)">Одобрить</button>';
+                            $tmp .= ' onclick="approve(this)">'.ProjectModule::t('Approve').'</button>';
                             $tmp .= '<button class="zakaz_part_approve_file off right btn'.(isset($v['for_approved'])?' hidden':'').'" ';
                             foreach ($v as $kk => $vv)
                                 $tmp .= 'data-'.$kk.'="'.$vv.'" ';

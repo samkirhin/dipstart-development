@@ -2,7 +2,7 @@
 
 class EventController extends Controller {
 
-    public function accessRules()
+    /*public function accessRules()
     {
         return array(
             array('allow',
@@ -17,13 +17,13 @@ class EventController extends Controller {
                 'users'=>array('*'),
             ),
         );
-    }
-    public function filters()
+    }*/
+    /*public function filters()
     {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
-    }
+    }*/
     public function actionIndex() {
         if (Yii::app()->request->isAjaxRequest){
 
@@ -63,9 +63,7 @@ class EventController extends Controller {
             'events' => $events,
         ));
     }
-    public function actionBack() {
+    /*public function actionBack() {
 		die('back back back back back back back ');
-    }
-	
-    
+    }*/   
 }

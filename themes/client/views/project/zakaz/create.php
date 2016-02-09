@@ -6,34 +6,9 @@
 /* @var $this ZakazController */
 /* @var $model Zakaz */
 /* @var $form CActiveForm */
-
-// --- campaign      генерируем список загруженных материалов
 $c_id = Campaign::getId();
-
-if ($c_id) {
-    $url = '/uploads/c'.$c_id.'/temp/'.$model->unixtime.'/';
-} else {
-    $url = '/uploads/temp/'.$model->unixtime.'/';
-}
-
-// ---
-$path = Yii::getPathOfAlias('webroot') . $url;
-
-$html_string = '';
-if (file_exists($path)){
-    foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
-        if ((!strstr($v, '#pre#') || User::model()->isCustomer()) && !strstr($v, '#trash#')) {
-            $tmp = '';
-            if(strstr($v, '#pre#')) {
-                $tmp = ' class="gray-file"';
-                $v0 = substr($v,5);
-            } else {
-                $v0 = $v;
-            }
-            $html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>'
-                                            . ' <a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a></li><br />'."\n"; #remove file btn
-        }
-} ;
+$url = '/uploads/c'.$c_id.'/temp/'.$model->unixtime.'/';
+$html_string = $model->generateMaterialsList($url);
 
 ?>
     <div class="container form-container">
@@ -79,9 +54,7 @@ if (file_exists($path)){
                         } elseif ($field->field_type=="LIST"){
 							echo '<div class="form-item">';
 							echo $form->labelEx($model,$field->varname).'<br/>';
-							
-							$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
-							$list = CHtml::listData($models, 'id', 'cat_name');
+							$list = Catalog::model()->performCatsTree($field->varname);
 							echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 							echo $form->error($model,$field->varname);
 							echo '</div>';
@@ -98,7 +71,7 @@ if (file_exists($path)){
 						} elseif ($field->field_type=="TEXT") {
 							echo '<div class="form-item">';
 							echo $form->labelEx($model,$field->varname).'<br/>';
-							echo$form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+							echo $form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
 							echo '</div>';
 						} else {
 							echo '<div class="form-item">';
@@ -111,7 +84,7 @@ if (file_exists($path)){
 			} ?>
             <div class="form-item">
               <?php
-                if (User::model()->isCustomer()) {
+                //if (User::model()->isCustomer()) {
                     
                     $this->widget('ext.EAjaxUpload.EAjaxUpload',
                         array(
@@ -129,11 +102,11 @@ if (file_exists($path)){
                             )
                         )
                     );
-                }                
+                //}                
                 ?>
             </div>
 		    </div>
-			<?php echo CHtml::submitButton(ProjectModule::t('Upload'), array('class' => 'create-order-button') ); ?>
+			<?php echo CHtml::submitButton(ProjectModule::t('Create'), array('class' => 'create-order-button') ); ?>
 		
 		<?php $this->endWidget(); ?>
     

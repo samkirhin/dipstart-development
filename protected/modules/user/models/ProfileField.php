@@ -29,7 +29,6 @@ class ProfileField extends CActiveRecord
 	 * @var string $default
 	 * @var integer $position
 	 * @var integer $visible
-	 * @var integer $editable
 	 * @var integer $paymentProps
 	 */
 
@@ -71,12 +70,12 @@ class ProfileField extends CActiveRecord
 			array('varname', 'match', 'pattern' => '/^[A-Za-z_0-9]+$/u','message' => UserModule::t("Variable name may consist of A-z, 0-9, underscores, begin with a letter.")),
 			array('varname', 'unique', 'message' => UserModule::t("This field already exists.")),
 			array('varname, field_type', 'length', 'max'=>50),
-			array('field_size_min, required, position, visible, editable, paymentProps', 'numerical', 'integerOnly'=>true),
-//			array('field_size_min, required, position, visible, editable', 'numerical', 'integerOnly'=>true),
+			array('field_size_min, required, position, visible, paymentProps', 'numerical', 'integerOnly'=>true),
+//			array('field_size_min, required, position, visible', 'numerical', 'integerOnly'=>true),
 			array('field_size', 'match', 'pattern' => '/^\s*[-+]?[0-9]*\,*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'),
 			array('title, match, error_message, other_validator, default, widget', 'length', 'max'=>255),
 			array('range, widgetparams', 'length', 'max'=>5000),
-			array('id, varname, title, field_type, field_size, field_size_min, required, match, range, error_message, other_validator, default, widget, widgetparams, position, visible, editable, paymentProps', 'safe', 'on'=>'search'),
+			array('id, varname, title, field_type, field_size, field_size_min, required, match, range, error_message, other_validator, default, widget, widgetparams, position, visible, paymentProps', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -113,7 +112,6 @@ class ProfileField extends CActiveRecord
 			'widgetparams' => UserModule::t('Widget parametrs'),
 			'position' => UserModule::t('Position'),
 			'visible' => UserModule::t('Visible'),
-			'editable' => UserModule::t('Editable'),
 			'paymentProps' => UserModule::t('PaymentProps'),
 		);
 	}
@@ -253,7 +251,6 @@ class ProfileField extends CActiveRecord
         $criteria->compare('widgetparams',$this->widgetparams,true);
         $criteria->compare('position',$this->position);
         $criteria->compare('visible',$this->visible);
-        $criteria->compare('editable',$this->editable);
         $criteria->compare('paymentProps',$this->paymentProps);
 
         return new CActiveDataProvider(get_class($this), array(

@@ -82,6 +82,7 @@ var ProjectPayments = function(orderId) {
             if (response.data) {
                 self.payment_received.text(response.data.received);
                 self.to_receive.text(0);
+				if(response.data.error) alert(response.data.error);
             } else {
             }
         }, 'json');

@@ -20,8 +20,14 @@ class UloginWidget extends CWidget
         $this->render('uloginWidget', $this->params);
     }
 
-    public function setParams($params)
-    {
+    public function setParams($params) {
+		if(Campaign::getLanguage()=='en') {
+			$this->params['providers'] = 'facebook';
+			$this->params['hidden'] = 'twitter,google,livejournal,openid,lastfm,linkedin,liveid,steam,soundcloud';
+		} elseif(Campaign::getLanguage()=='ru') {
+			$this->params['providers'] = 'vkontakte,facebook';
+			$this->params['hidden'] = 'twitter,google,yandex,mailru,livejournal,openid,lastfm,linkedin,liveid,steam,soundcloud';
+		}
         $this->params = array_merge($this->params, $params);
     }
 }

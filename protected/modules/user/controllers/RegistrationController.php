@@ -3,18 +3,28 @@
 class RegistrationController extends Controller
 {
 	public $defaultAction = 'registration';
+
+    protected function performAjaxValidation($model) {
+        if(isset($_POST['ajax']) && $_POST['ajax']==='simple-registration-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    } 
 	
 	/**
 	 * Registration user
 	 */
 	public function actionRegistration() {
 		$model = new RegistrationForm;
+		$this->performAjaxValidation($model);
 		if(isset($_GET['role']) && $_GET['role']=='Customer') {
 			$role = 'Customer';
 		} elseif(isset($_GET['role']) && $_GET['role']=='Author') {
 			$role = 'Author';
-		} elseif(isset($_GET['role']) && $_GET['role']=='Manager') {
-			$role = 'Manager';
+		/*} elseif(isset($_GET['role']) && $_GET['role']=='Manager') {
+			$role = 'Manager';*/
+		} elseif(isset($_GET['role']) && $_GET['role']=='Webmaster') {
+			$role = 'Webmaster';
 		} else {
 			$role = 'Customer';
 		}
@@ -25,17 +35,25 @@ class RegistrationController extends Controller
 			if(isset($_POST['RegistrationForm'])) {
 				
 				$model->attributes=$_POST['RegistrationForm'];
-			
+				if(isset($_COOKIE['partner'])) $model->pid = intval($_COOKIE['partner']);
+		
 				if($model->validate()) {
 					$soucePassword = UserModule::generate_password(8);
 					$model->password=UserModule::encrypting($soucePassword);
 					$model->superuser=0;
 					$model->status=1;
-					$model->username = $model->email;
+					//$model->username = $model->email;
 					if ($model->save()) {
 						$AuthAssignment = new AuthAssignment;
 						$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$model->id);
 						$AuthAssignment->save();
+						
+						$webmasterlog = new WebmasterLog();
+						$webmasterlog->pid = $model->pid;
+						$webmasterlog->uid = $model->id;
+						$webmasterlog->date = date("Y-m-d"); 
+						$webmasterlog->action =  WebmasterLog::REG;
+						$webmasterlog->save();
 
 						//$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
 						//UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
@@ -58,7 +76,7 @@ class RegistrationController extends Controller
 						$id = Campaign::getId();
 						$email->campaign = Campaign::getName();
 						$email->name = $model->full_name;
-						$email->login= $model->username;
+						$email->login= $model->email;
 						$email->password= $soucePassword;
 						
 						$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
@@ -75,6 +93,13 @@ class RegistrationController extends Controller
 						Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
 						$this->refresh();
 					}
+				} else {
+					$message = UserModule::t("Sorry, something wrong... :(");
+					$errors = $model->errors;
+					if(isset($errors['email'])) $message = $errors['email'][0];
+					//Yii::app()->end();
+					Yii::app()->user->setFlash('reg_failed',$message);
+					//$this->refresh();
 				}
 			}
 			

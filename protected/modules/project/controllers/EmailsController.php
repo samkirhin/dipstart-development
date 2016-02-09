@@ -6,8 +6,7 @@ class EmailsController extends Controller
     protected $_request;
     protected $_response;
 	
-    public function filters()
-	{
+    public function filters() {
 		return array(
 			'accessControl'
 		);
@@ -17,14 +16,22 @@ class EmailsController extends Controller
         return array(
             array('allow',
                 'actions'=>array('index','send'),
-                'users'=>array('admin','manager'),
+                //'users'=>array('admin','manager'),
+				'expression' => array('EmailsController', 'allowManagers'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
             ),
         );
 	}
-
+	public static function allowManagers(){
+		if(User::model()->isManager()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
     /*Вызов методов для работы с json*/
     protected function _prepairJson() {
         $this->_request = Yii::app()->jsonRequest;

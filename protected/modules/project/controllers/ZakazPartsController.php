@@ -1,8 +1,18 @@
 <?php
 
 
-class ZakazPartsController extends Controller
-{
+class ZakazPartsController extends Controller {
+	/* actions:
+	Manager: (manager.js)
+		apiCreate
+		apiDelete
+		apiEditPart
+		apiApprove (file)
+	Author and Customer: (chat.js)
+		status
+	Author (widget view)
+		upload
+	*/
     
     protected $_request;
     protected $_response;
@@ -18,18 +28,18 @@ class ZakazPartsController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	//public $layout='//layouts/column2';
 
 	/**
 	 * @return array action filters
 	 */
-	public function filters()
+	/*public function filters()
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
-	}
+	}*/
 
 	/**
 	 * Performs the AJAX validation.
@@ -43,18 +53,13 @@ class ZakazPartsController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
-	public function folder() { 	// --- campaign
-		$c_id = Campaign::getId();
-		if ($c_id) {
-			return '/uploads/c'.$c_id.'/parts/';
-		}else{
-			return '/uploads/additions/';
-		}
-	} 							// ---
-		
+
+	public function folder() {
+		return '/uploads/c'.Campaign::getId().'/parts/';
+	}
+
 	/* Получение списка частей для заказа по ИД*/
-	public function actionApiGetAll() {
+	/*public function actionApiGetAll() {
 		// --- campaign
 		$folder = $this->folder();
 		$this->_prepairJson();
@@ -110,8 +115,8 @@ class ZakazPartsController extends Controller
 			$this->_response->setData(array('parts'=>$parts));
 			$this->_response->send();
 		}
-	}
-	public function actionApiApprove() {
+	}*/
+	public function actionApiApprove() { /* Approve files in parts */
 		$folder = $this->folder();
 		if (!isset($this->_file_data['req'])) {
 			$this->_prepairJson();
@@ -313,7 +318,7 @@ class ZakazPartsController extends Controller
 		$this->result = $uploader->handleUpload($folder,true);
 		if ($this->result['success']) {
 			$part = ZakazParts::model()->findByPk($_GET['id']);
-			if (!User::model()->isManager()) EventHelper::partDone($_GET['proj_id'], $part->title);
+			if (!User::model()->isManager()) EventHelper::newFileInStage($_GET['proj_id'], $part->title);
 		}
 		chmod($folder.$_GET['qqfile'],0666);
 		
@@ -334,42 +339,63 @@ class ZakazPartsController extends Controller
 	}
 	
     public function actionStatus() {
-
-		$orderId	= Yii::app()->request->getPost('orderId');
 		$status_id	= Yii::app()->request->getPost('status_id');
 		$id			= Yii::app()->request->getPost('id');
-		$row	= array(
-			'status_id'	=> $status_id,
-		);
-		$condition 	= array();
-		$params		= array();
-		ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
-		
-		if ((int)$status_id == 3) {
-			$parts = ZakazParts::model()->findAll("`proj_id` = '$orderId' AND `status_id` IN (0,1,2)");
-			$order = Zakaz::model()->resetScope()->findByPk($orderId);
-			$subject_order = $order->title;
-			$user_id = $order->user_id;
-			$user = User::model()->findByPk($user_id);
+		if(User::model()->isAuthor() && $status_id=='+1' && $id){
+			$stage = ZakazParts::model()->findByPk($id);
+			if(User::model()->isExecutor($stage->proj_id) && $stage->status_id == 1) {
+				$stage->status_id = 2;
+				$stage->save();
+				echo $stage->status->status;
+				EventHelper::stageDoneByExecutor($stage->proj_id, $stage->title);
+			}else{
+				echo 'Wrong base status';
+			}
+		}elseif(User::model()->isCustomer() && $status_id=='+1' && $id){
+			$stage = ZakazParts::model()->findByPk($id);
+			if(User::model()->isOwner($stage->proj_id) && $stage->status_id == 3) {
+				$stage->status_id = 4;
+				$stage->save();
+				echo $stage->status->status;
+				EventHelper::stageDoneByCustomer($stage->proj_id, $stage->title);
+			}else{
+				echo 'Wrong base status';
+			}
+		}elseif(User::model()->isManager() && $status_id && $id) {
+			$orderId	= Yii::app()->request->getPost('orderId');
+			$row	= array(
+				'status_id'	=> $status_id,
+			);
+			$condition 	= array();
+			$params		= array();
+			ZakazParts::model()->updateByPk( $id, $row, $condition, $params);
+			
+			if ((int)$status_id == 3) {
+				$parts = ZakazParts::model()->findAll("`proj_id` = '$orderId' AND `status_id` IN (0,1,2)");
+				$order = Zakaz::model()->resetScope()->findByPk($orderId);
+				$subject_order = $order->title;
+				$user_id = $order->user_id;
+				$user = User::model()->findByPk($user_id);
 
-			$email = new Emails;
-			if (count($parts) > 0)  $type_id = Emails::TYPE_14; else
-									$type_id = Emails::TYPE_15;
-									
-			$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-			
-			echo count($parts);
-			
-			$title = $rec[0]->title;
-			$body  = $rec[0]->text;
-			$email->name = $user->full_name;
-			if (strlen($email->name) < 2) $email->name = $user->username;
-			$email->num_order = $orderId;
-	//		$model->date = date('Y-m-d H:i:s');
-			$email->subject_order = $subject_order;
-			$email->num_order = $orderId;
-			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
+				$email = new Emails;
+				if (count($parts) > 0)  $type_id = Emails::TYPE_14; else
+										$type_id = Emails::TYPE_15;
+										
+				$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+				
+				echo count($parts);
+				
+				$title = $rec[0]->title;
+				$body  = $rec[0]->text;
+				$email->name = $user->full_name;
+				if (strlen($email->name) < 2) $email->name = $user->username;
+				$email->num_order = $orderId;
+		//		$model->date = date('Y-m-d H:i:s');
+				$email->subject_order = $subject_order;
+				$email->num_order = $orderId;
+				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+				$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
+			}
 		}
     }
 }

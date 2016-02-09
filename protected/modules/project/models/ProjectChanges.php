@@ -20,7 +20,7 @@ Yii::import('application.helpers.STranslate');
 class ProjectChanges extends CActiveRecord {
 
     public static $file_path;/* = 'uploads/changes_documents';*/
-    public $old_file;
+    //public $old_file;
     public $fileupload;
 
     public static $table_prefix;
@@ -140,7 +140,7 @@ class ProjectChanges extends CActiveRecord {
     }
 
     public function beforeSave() {
-        if ($this->fileupload instanceof CUploadedFile) {
+        /*if ($this->fileupload instanceof CUploadedFile) {
             $mainName = $newName = STranslate::transliter($this->fileupload->getName());
             $i = 1;
             while (file_exists($this->getPathDirStoredFile() . '/' . $newName)) {
@@ -156,7 +156,7 @@ class ProjectChanges extends CActiveRecord {
 
                 $i++;
             }
-			
+			if (!file_exists($this->getPathDirStoredFile())) mkdir($this->getPathDirStoredFile(),0755,true);
             $this->fileupload->saveAs($this->getPathDirStoredFile() . '/' . $newName);
 			
             $this->file = $newName;
@@ -169,16 +169,16 @@ class ProjectChanges extends CActiveRecord {
         }
         if (empty($this->file) && !empty($this->old_file)) {
             $this->file = $this->old_file;
-        }
-
+        }*/
+		$this->file = Tools::saveUploadedFile($this->fileupload, $this->getPathDirStoredFile(), $this->file);
         return parent::beforeSave();
     }
 
-    public function afterFind() {
+    /*public function afterFind() {
 
         parent::afterFind();
         $this->old_file = $this->file;
-    }
+    }*/
 
     public function afterDelete() {
 
@@ -239,7 +239,6 @@ class ProjectChanges extends CActiveRecord {
     }
 
     static public function approveAllowed() {
-
         return (User::model()->isManager() || User::model()->isAdmin());
     }
 
@@ -289,7 +288,7 @@ class ProjectChanges extends CActiveRecord {
      *
      * @return string
      */
-    public function generateFileName() {
+    /*public function generateFileName() {
 
         $name = '';
         $count = rand(5, 8);
@@ -299,7 +298,7 @@ class ProjectChanges extends CActiveRecord {
 
         return $name;
 
-    }
+    }*/
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.

@@ -234,5 +234,9 @@ return array(
 	'recoveryMessage' => 'На Ваш адрес электронной почты было отправлено письмо с инструкциями.',
 	'Incorrect password (minimal length 6 symbols).'=>'Минимальная длина email - 6 символов.',
 	'This email already exists.'=>'Такой email уже существует.',
+	'payed for order'=>'оплатил заказ',
+	'Cell number' => 'Номер телефона',
+	
+	'Edit assignments' => 'Редактировать назначения',
 );
 

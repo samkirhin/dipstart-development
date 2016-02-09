@@ -66,6 +66,7 @@ class ZakazParts extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'status' => array(self::HAS_ONE, 'PartStatus', array('id'=>'status_id')),
             'files' => array(self::HAS_MANY, 'ZakazPartsFiles', array('part_id'=>'id')),
             'author' => array(self::HAS_ONE, 'User', array('id'=>'author_id'))
 		);

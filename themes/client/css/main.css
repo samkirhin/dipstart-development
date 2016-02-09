@@ -49,8 +49,22 @@ img {
 	border-top: 1px solid #EEEEEE;
 }
 .header {
-	margin: 1px 0 25px 0;
-	padding: 2em 2% 0 2%;
+	/*margin: 1px 0 25px 0;
+	padding: 2em 2% 0 2%;*/
+	
+}
+header .logo {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.header .header-text {
+	text-align: center;
+}
+.header .header-text p {
+	font-size: 17px;
+	background-color: rgba(255, 255, 255, 0.88);
+	padding: 15px;
+	border-radius: 15px;
 }
 .navbar {
 	margin: 1px 0 25px 0;
@@ -2161,7 +2175,7 @@ div.flash-success a
 }
 
 .message_send {
-  position: absolute; top: -53px; width: 532px; display: none; border-radius: 18px;
+  position: relative; top: -121px; width: 532px; display: none; border-radius: 18px;
 }
 
 #message_send {

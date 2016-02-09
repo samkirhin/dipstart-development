@@ -2,7 +2,7 @@
 
 class ProfileController extends Controller
 {
-	public $defaultAction = 'profile';
+	public $defaultAction = 'edit';//'profile';
 
 	/**
 	 * @var CActiveRecord the currently loaded data model instance.
@@ -11,11 +11,11 @@ class ProfileController extends Controller
 	/**
 	 * Shows a particular model.
 	 */
-	public function actionProfile()
+	/*public function actionProfile()
 	{
 		$model = $this->loadUser();
 	    $this->redirect('/');
-	}
+	}*/
 
 
 	/**
@@ -23,8 +23,7 @@ class ProfileController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 */
 	 
-	public function actionEdit()
-	{
+	public function actionEdit() {
 		$model = $this->loadUser();
 		
 		if($model->profile == null) {
@@ -63,7 +62,7 @@ class ProfileController extends Controller
 	/**
 	 * Change password
 	 */
-	public function actionChangepassword() {
+	/*public function actionChangepassword() {
 		$model = new UserChangePassword;
 		if (Yii::app()->user->id) {
 			
@@ -87,15 +86,14 @@ class ProfileController extends Controller
 			}
 			$this->render('changepassword',array('model'=>$model));
 	    }
-	}
+	}*/
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the primary key value. Defaults to null, meaning using the 'id' GET variable
 	 */
-	public function loadUser()
-	{
+	public function loadUser() {
 		if($this->_model===null)
 		{
 			if(Yii::app()->user->id)
@@ -110,7 +108,7 @@ class ProfileController extends Controller
      * отображение денежных средств
      * отображаем только для автора\заказчика
      */
-    public function actionAccount()
+    /*public function actionAccount()
     {
         
         if (User::model()->isCustomer()) {
@@ -145,20 +143,20 @@ class ProfileController extends Controller
         }
         
         $this->render('account', $params);
-    }
+    }*/
     /*
      * список изменений в профиле пользователя
      */
-	public function actionPreviewUpdate($id) {
+	/*public function actionPreviewUpdate($id) {
 		$models = Moderate::model()->findAllByAttributes(['event_id'=>$id]);
 
 		$user = User::model()->findbyPk($id);
 		$this->render('previewUpdate',array('models'=>$models,'user'=>$user));
-	}
+	}*/
 	/*
      * меняем статус изменения в профиле
      */
-	public function actionChStatus($id,$status){
+	/*public function actionChStatus($id,$status){
 		$model = UpdateProfile::model()->findByPk($id);
 		if ($status == 'appove') {
 			$model->status = 1;
@@ -197,5 +195,5 @@ class ProfileController extends Controller
 			Yii::app()->end();
 		}
 		Yii::app()->redirect(Yii::app()->request->urlReferrer);
-	}
+	}*/
 }

@@ -11,7 +11,7 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Admintrix',
     //'defaultController' => 'user/default',
-    'language' => 'ru',
+    'language' => 'en',
 	// preloading 'log' component
 	'preload'=>array('log','booster'),
     'theme' => explode('.',$_SERVER['SERVER_NAME'])[0],
@@ -24,6 +24,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.helpers.Tools',
         'application.modules.user.*',
         'application.modules.user.models.*',
         'application.modules.user.components.*',
@@ -56,7 +57,7 @@ return array(
             'tableProfiles' => 'Profiles',
             'tableProfileFields' => 'ProfilesFields',
         ),
-        'organization',
+        //'organization',
         'rights',
         'project',
        // uncomment the following to enable the Gii tool

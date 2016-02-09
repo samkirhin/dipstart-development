@@ -18,16 +18,16 @@ class Emails extends CActiveRecord {
 	const TYPE_13=13; // +Заказчику об оплате когда выставлен счет
 	const TYPE_14=14; // +Заказчику когда готова часть
 	const TYPE_15=15; // +Заказчику когда готова вся работа.
-	const TYPE_16=16; // +Заказчику о сообщении в чате
+	const TYPE_16=16; // Заказчику о сообщении в чате
 	const TYPE_17=17; // +Заказчику о завершении заказа
 	const TYPE_18=18; // +Исполнителю сообщение рассылки
 	const TYPE_19=19; // +Исполнителю о назначении
-	const TYPE_20=20; // +Исполнителю о сообщении в чате
+	const TYPE_20=20; // Исполнителю о сообщении в чате
 	const TYPE_21=21; // +Исполнителю о съеме с заказа
 	const TYPE_22=22; // Исполнителю о том что срок сдачи части наступил
 	const TYPE_23=23; // +Исполнителю о новой доработке
 	const TYPE_24=24; // +Исполнителю об оплате заказа
-	//const TYPE_25=25; // +Исполнителю "новая доработка одобрена менеджером"
+	//const TYPE_25=25; // Заказчику о поступлении оплаты
 	
 	public static $names_of_email = array(
 	TYPE_10 =>'Восстановление пароля',
@@ -45,6 +45,7 @@ class Emails extends CActiveRecord {
 	TYPE_22 =>'Исполнителю о том что срок сдачи части наступил',
 	TYPE_23 =>'Исполнителю о новой доработке',
 	TYPE_24 =>'Исполнителю об оплате заказа',
+	//TYPE_25 =>'Заказчику о поступлении оплаты',
 	);
 
 	
@@ -113,7 +114,7 @@ class Emails extends CActiveRecord {
         parent::init();
 		$this->site				= 'http://'.$_SERVER['SERVER_NAME'].'/';
 		$this->page_psw			= '';
-		$this->support			= Yii::app()->params['support'];
+		$this->support			= Campaign::getSupportEmail();
 		$this->campaign			= '';
 		$this->name				= '';
 		$this->login			= '';
@@ -161,7 +162,7 @@ class Emails extends CActiveRecord {
 	'%site%',
 	'%the link to the password change page%',
 	'%support%',
-	'%campaign%',
+	'%company%',
 	'%name%',
 	'%Name%',
 	'%login%',
@@ -260,7 +261,7 @@ class Emails extends CActiveRecord {
 //echo '<br>$body(1)='.$body; 
 //		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
-		$from = '=?UTF-8?B?'.base64_encode($this->campaign).'?= <'.Campaign::getSupportEmail().'>';
+		$from = '=?UTF-8?B?'.base64_encode($this->campaign).'?= <no-reply@'.$_SERVER['SERVER_NAME'].'>';
 		$headers =
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8\r\n".

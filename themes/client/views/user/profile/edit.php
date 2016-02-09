@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 	UserModule::t("Edit"),
 );
 
-?><div class="row"><div class="col-md-offset-3 col-md-4"><h3><?php echo UserModule::t('Edit profile'); ?></h3></div></div>
+?><!--<div class="row"><div class="col-md-offset-3 col-md-4"><h3><?php //echo UserModule::t('Edit profile'); ?></h3></div></div>-->
 
 <div class="row">
     <div class="col-md-7">
@@ -32,9 +32,8 @@ $form=$this->beginWidget('UActiveForm', array(
   <?php if(Yii::app()->user->hasFlash('profileMessage'))
       echo '<p style="color: #D9534F;">'.Yii::app()->user->getFlash('profileMessage').'</p>';
   ?>
-
   <p style="font-weight: bold;">
-    <?=ProjectModule::t('Message for profile')?>
+    <?php if(User::model()->isAuthor()) echo ProjectModule::t('Profile message for Authors');?>
   </p>
 
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
@@ -78,13 +77,13 @@ $form=$this->beginWidget('UActiveForm', array(
                     </div><?php
             }
         }?>
-        <div class="form-group">
+        <!--<div class="form-group">
             <?php echo $form->labelEx($model,'username',array('class'=>'col-md-4 control-label')); ?>
             <div class="col-md-8">
                 <?php echo $form->textField($model,'username',array('size'=>20,'maxlength'=>20,'class'=>'form-control')); ?>
             </div>
             <?php echo $form->error($model,'username'); ?>
-        </div>
+        </div>-->
 
         <div class="form-group">
             <?php echo $form->labelEx($model,'full_name',array('class'=>'col-md-4 control-label')); ?>

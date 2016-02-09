@@ -1,17 +1,15 @@
 <?php
 
-class AdminController extends Controller
-{
+class AdminController extends Controller {
 	public $defaultAction = 'admin';
-	public $layout='//layouts/second_menu';
+	//public $layout='//layouts/second_menu';
 	
 	private $_model;
 
 	/**
 	 * @return array action filters
 	 */
-	public function filters()
-	{
+	public function filters() {
 		return CMap::mergeArray(parent::filters(),array(
 			'accessControl', // perform access control for CRUD operations
 		));
@@ -21,13 +19,15 @@ class AdminController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
-	{
+	public function accessRules() {
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','update','view'),
-//				'users'=>UserModule::getAdmins(),
-				'users'=>array('admin','manager')
+				'actions'=>array('admin','delete','create','update'),
+				'users'=>UserModule::getAdmins(),
+			),
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('view'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -73,6 +73,10 @@ class AdminController extends Controller
 		$profile	= new Profile;
 		
 		$this->performAjaxValidation(array($model,$profile));
+		
+		$manager = !User::model()->isAuthor();
+		$admin	 = User::model()->isAdmin();
+		
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
@@ -90,10 +94,13 @@ class AdminController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
 		}
-
+		$fields = ProfileField::model()->findAll();
 		$this->render('create',array(
 			'model'		=> $model,
 			'profile'	=> $profile,
+			'fields'	=> $fields,
+			'manager'	=> $manager,
+			'admin'		=> $admin,
 		));
 	}
 
@@ -105,7 +112,7 @@ class AdminController extends Controller
 	{
 		$model		= $this->loadModel();
 		$profile	= $model->profile;
-
+		if(!$profile) $profile = new Profile;
 		$this->performAjaxValidation(array($model,$profile));
 
 		$manager = !User::model()->isAuthor();

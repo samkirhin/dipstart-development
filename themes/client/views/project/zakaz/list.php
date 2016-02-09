@@ -19,29 +19,11 @@ if (Campaign::getId()){
 		'title',
 		'closestDate',
 	);
-} else {
-	$columns = array(
-        'id',
-		'title',
-		array(
-           'name' => 'category_id',
-           'type' => 'raw',
-           'value' => 'isset($data->category) ? $data->category->cat_name : null'
-        ),
-		array(
-           'name' => 'job_id',
-           'type' => 'raw',
-           'value' => 'isset($data->job) ? $data->job->job_name : null'
-        ),
-		[
-            'header' => '',
-            'type' => 'raw',
-            'value' => 'CHtml::link(ProjectModule::t("chat"), ["/project/chat", "orderId"=>$data->id])'
-        ],
-	);
 }
-if (!isset($only_new)) {
 
+if (isset($only_new) && User::model()->isAuthor()) {
+	if(!$profile) echo '<div class="advice">'.ProjectModule::t('It is recommended to fill in the profile...').'</div>';
+} else {
 ?>
 <section>
 	<div id="control-menu">
@@ -59,16 +41,16 @@ if (!isset($only_new)) {
 <div class="twin-tab">
 <div class="first-tab" id="first-tab">
 <?php
-	}; //if (!isset($only_new)) {
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'zakaz-grid',
-		'dataProvider'=>$dataProvider,
-		'columns'=>$columns,
-		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
-		'selectionChanged'=>"js:function(sel_id){
-			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
-		}",
-	)); 
+}; //if (!isset($only_new)) {
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'zakaz-grid',
+	'dataProvider'=>$dataProvider,
+	'columns'=>$columns,
+	'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
+	'selectionChanged'=>"js:function(sel_id){
+		document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+	}",
+)); 
 if (!isset($only_new)) {
 ?>
 </div>
@@ -93,16 +75,16 @@ if (!isset($only_new)) {
 			document.getElementById('first-tab').style.display = 'block';
 			document.getElementById('second-tab').style.display = 'none';
 
-			document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
-			document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
+			//document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
+			//document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
 			$('#first-tab-li').addClass('active');
 			$('#second-tab-li').removeClass('active');
 		} else {
 			document.getElementById('first-tab').style.display = 'none';
 			document.getElementById('second-tab').style.display = 'block';
 
-			document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
-			document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
+			//document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
+			//document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
 			$('#first-tab-li').removeClass('active');
 			$('#second-tab-li').addClass('active');
 		};	

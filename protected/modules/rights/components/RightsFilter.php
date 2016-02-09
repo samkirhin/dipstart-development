@@ -37,17 +37,18 @@ class RightsFilter extends CFilter
 				$authItem .= ucfirst($module->id).'.';
 
 			// Append the controller id to the authorization item name
-			$authItem .= ucfirst($controller->id);
+			$authItem .= ucfirst($controller->id).'.';                    // Akoch-ov
 
 			// Check if user has access to the controller
-			if( $user->checkAccess($authItem.'.*')!==true )
+			if( $user->checkAccess($authItem.'*')!==true )                // Akoch-ov
 			{
 				// Append the action id to the authorization item name
-				$authItem = ucfirst($action->id);
-
+				$authItem .= ucfirst($action->id);                        // Akoch-ov
+				
 				// Check if the user has access to the controller action
 				if( $user->checkAccess($authItem)!==true )
-					$allow = false;
+					if( $user->checkAccess(ucfirst($action->id))!==true ) // Akoch-ov
+						$allow = false;
 			}
 		}
 

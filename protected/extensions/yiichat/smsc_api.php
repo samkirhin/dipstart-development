@@ -191,7 +191,7 @@ function get_balance()
 function _smsc_send_cmd($cmd, $arg = "", $files = array())
 {
     $url = (SMSC_HTTPS ? "https" : "http")."://smsc.ru/sys/$cmd.php?login=".urlencode(SMSC_LOGIN)."&psw=".urlencode(SMSC_PASSWORD)."&fmt=1&charset=".SMSC_CHARSET."&".$arg;
-echo '<br>url='.$url;
+//echo '<br>url='.$url;
     $i = 0;
     do {
         if ($i) {

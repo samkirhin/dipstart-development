@@ -48,22 +48,25 @@
     <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
     <link rel="icon" type="image/ico" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
     <link rel="icon" type="image/x-icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
+	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/css/gamma-teal-0.css" />
 </head>
-<body>
+<?php
+$bg = ' class="bg1"'; //Фон для регистрации и авторизации
+if ( Campaign::getId() == 1 ) {
+	if ($_SERVER['SERVER_NAME']=='adco.obshya.com') {
+		$bg = ' class="bg0"';
+	} else {
+		$bg = '';
+	}
+}
+?>
+<body<?=$bg?>>
 <!--[if lt IE 7]>
 <p class="browsehappy">Вы используете <strong>устаревший</strong> браузер. Пожалуйста, <a href="http://browsehappy.com/">обновите ваш браузер</a>.</p>
 <![endif]-->
 <div class="container">
     <header class="header clearfix">
-	<?php //$this->renderPartial('//layouts/header');?>
-	<div id="control-menu">
-		<? $this->widget('application.extensions.booster.widgets.TbMenu',array(
-			'items'=> $this->menu,
-			'type'=>'tabs',
-			'htmlOptions'=>array('class'=>'userMenu'),
-		));
-		?>
-	</div>
+	<?php $this->renderPartial('//layouts/header');?>
     </header>
 
 	<!-- Menu Dipstart -->
