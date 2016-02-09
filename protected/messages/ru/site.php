@@ -1,7 +1,8 @@
 <?php
 
 return array(
-    'stranger' => 'Странник',
+    'yes' => 'да',
+	'no' => 'нет',
     'Categories' => 'Категории',
     'Create Categories' => 'Добавить категории',
     'Manage Categories' => 'Управлять списком',
@@ -111,6 +112,8 @@ return array(
     'Confirmed' => 'Подтвержден',
     'Delete' => 'Удалить',
     'Show' => 'Показать',
+	'Saving...' => 'Сохраняем...',
+	'Click to edit' => 'Кликните, чтобы редактировать',
 
     //
     'Bookkeeping' => 'Бухгалтерия',
@@ -120,9 +123,23 @@ return array(
     'Customers' => 'Заказчики',
     // admin menu
     'Accounts department' => 'Бухгалтерия',
+	
+	//Company
+	'company' => 'компания',
+	'company name' => 'название компании',
+	'domains' => 'доменные имена',
+	'language' => 'язык',
+	'support email' => 'электронная почта поддержки',
+	'cash' => 'наличные',
+	'2Checkout id' => 'уникальный идентификатор 2Checkout',
+	'2checkout hash' => 'хэш 2Checkout',
+	'front page url' => 'адрес главной страницы',
+	'logo' => 'лого',
+	'header text' => 'текст в шапке',
+	'webmaster first order rate' => 'процент(множитель) вэбмастеру за первый заказ',
+	'webmaster second order rate' => 'процент(множитель) вэбмастеру за повторные заказы',
 
 	// работа с этапами 
-
     'StepStatuses' => 'Статусы этапов',
     'Part Statuses' =>  'Состояние этапов',
     'List PartStatus' =>  'Список состояний этапов',
@@ -131,18 +148,20 @@ return array(
 	'Update PartStatus' => 'Сохранить',
 	'Delete PartStatus' => 'Удалить',
 	'View PartStatus' => 'Показать списком',
-	'AfterModerate'  => 'Ваши изменения приняты, вступят в силу после модерации',
+	'AfterModerate'  => 'Ваши изменения приняты и вступят в силу после модерации.',
 	'YouAreExecutor'  => 'Вы назначены исполнителем данного заказа',
 	'The requested page does not exist.' => 'Приносим свои извинения, данной страницы не существует.',
-
-	'Editable'  => 'Редактируемое',
-	'editable'  => 'Редактируемое',
-	
+	'Approve'  => 'Одобрить',
+	'Reject'  => 'Отклонить',
+	'Changed' => 'Изменен',
 	'Message from' => 'Сообщение от',
 	'You may change the content of this page by modifying the following two files:'=>'Вы можете изменить содержимое этой страницы посредством изменения следующих файлов:',
 	'View file' => 'Файл представления',
 	'Layout file' => 'Файл шаблона',
-	
+	'Attribute' => 'Атрибут',
+	'Old value' => 'Старое значение',
+	'New value' => 'Новое значение',
+	'Date of change' => 'Дата изменения',
 	'Good day' => 'Добрый день',
 	'We invite You to project' => 'Приглашаем в проект',
 	
@@ -157,7 +176,6 @@ return array(
 	'Site News' => 'Новости сайта', 
 	'Check All' => 'Выбрать все',
 	'UnCheck All' => 'Сбросить все',
-	
 	'Link is absent' => 'Ссылка отсутствует',
 	
 	//sms
@@ -182,7 +200,7 @@ return array(
 	'%site%' => '%сайт%',
 	'%the link to the password change page%' => '%ссылка на страницу изменения пароля%',
 	'%support%' => '%support%',
-	'%campaign%' => '%компания%',
+	'%company%' => '%компания%',
 	'%name%' => '%имя%',
 	'%Name%' => '%Имя%',
 	'%login%' => '%login%',

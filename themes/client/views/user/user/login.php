@@ -4,7 +4,7 @@
 
 <?php  $this->widget('application.components.UloginWidget', array(
     'params'=>array(
-        'redirect'=>'http://'.$_SERVER['HTTP_HOST'].'/ulogin/login' //Адрес, на который ulogin будет редиректить браузер клиента. Он должен соответствовать контроллеру ulogin и действию login
+        'redirect'=>'http://'.$_SERVER['HTTP_HOST'].'/ulogin/login?role='.$_GET['role'] //Адрес, на который ulogin будет редиректить браузер клиента. Он должен соответствовать контроллеру ulogin и действию login
     )
 )); ?>
 
@@ -40,9 +40,8 @@
 	
 	<div>
 		<p class="hint">
-		<a href="/user/registration"><?=UserModule::t("Register") ?></a>
-
-                   <?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>
+			<a href="/user/registration<?php if($_GET['role']) echo '?role='.$_GET['role']; ?>"><?=UserModule::t("Register") ?></a>
+			<?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>
 		</p>
         <p>
 			<?php echo CHtml::activeCheckBox($model,'rememberMe'); ?> <label for="UserLogin_rememberMe"><?=UserModule::t("Remember me next time") ?></label>

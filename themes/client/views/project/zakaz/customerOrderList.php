@@ -10,7 +10,7 @@ if (Campaign::getId()){
 		'id',
 		'title',
 	);
-} else {
+}/* else {
 	$columns = array(
         'id',
         [
@@ -36,7 +36,7 @@ if (Campaign::getId()){
             'value' => 'CHtml::link("чат", ["/project/chat", "orderId"=>$data->id])'
         ],
 	);
-}
+}*/
 if (!isset($only_new)) {
 ?>
 <section>
@@ -93,16 +93,16 @@ if (!isset($only_new)) {
 			document.getElementById('first-tab').style.display = 'block';
 			document.getElementById('second-tab').style.display = 'none';
 
-			document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
-			document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
+			//document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
+			//document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
 			$('#first-tab-li').addClass('active');
 			$('#second-tab-li').removeClass('active');
 		} else {
 			document.getElementById('first-tab').style.display = 'none';
 			document.getElementById('second-tab').style.display = 'block';
 
-			document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
-			document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
+			//document.getElementById('first-tab').style.backgroundColor = '#FFFFFF';
+			//document.getElementById('second-tab').style.backgroundColor = '#EBF4FF';
 			$('#first-tab-li').removeClass('active');
 			$('#second-tab-li').addClass('active');
 		};	

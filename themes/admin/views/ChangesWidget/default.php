@@ -34,18 +34,18 @@
                 </div>
 				
 				<div id="new-changes-block" class="row zero-edge">
-					<div id="new-changes-link"><a data-toggle="collapse" data-parent="#new-changes-block" href="#new-changes-collapse">Новая доработка</a></div>
+					<div id="new-changes-link"><a data-toggle="collapse" data-parent="#new-changes-block" href="#new-changes-collapse"><?=ProjectModule::t('New revision')?></a></div>
 					<div id="new-changes-collapse" class="collapse">
 						<?php
 						echo CHtml::form('', 'post', array('id' => 'up_file', 'enctype' => 'multipart/form-data'));
 						?>
 						<div class="col-xs-12">
-							<?php echo CHtml::label('Прикрепить файл', 'fileupload'); ?>
+							<?php echo CHtml::label(ProjectModule::t('Attach file'), 'fileupload'); ?>
 							<?php echo CHtml::fileField('ProjectChanges[fileupload]', $fileupload, array('class' => 'col-xs-12 btn btn-user')); ?>
 						</div>
 
 						<div class="col-xs-12">
-							<?php echo CHtml::label('Комментарий', 'comment'); ?>
+							<?php echo CHtml::label(ProjectModule::t('Comment'), 'comment'); ?>
 							<?php echo CHtml::textArea('ProjectChanges[comment]', $comment, array('class' => 'col-xs-12')); ?>
 						</div>
 						<?php echo CHtml::endForm(); ?>

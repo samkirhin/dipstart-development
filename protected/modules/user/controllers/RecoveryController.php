@@ -8,6 +8,7 @@ class RecoveryController extends Controller
 	 * Recovery password
 	 */
 	public function actionRecovery () {
+
 		$form = new UserRecoveryForm;
 		Yii::app()->theme='client';
 		if (Yii::app()->user->id) {

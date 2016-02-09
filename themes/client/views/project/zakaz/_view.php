@@ -1,31 +1,69 @@
 <?php
 /* @var $this ZakazController */
-/* @var $data Zakaz */
-?>
+/* @var $model Zakaz */
 
-<tr>
-    <td>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('update', 'id'=>$data->id)); ?>
-    </td>
-    <td>
-        <?php echo CHtml::encode($data->title); ?>
-    </td>
-    <td>
-        <?php echo CHtml::encode(User::model()->findByPk($data->user_id)->username); ?>
-    </td>
-    <td>
-        <?php echo $data->job_id > 0 ? CHtml::encode(Jobs::model()->findByPk($data->job_id)->job_name) : ''; ?>
-    </td>
-    <td>
-        <?php echo CHtml::encode(Categories::model()->findByPk($data->category_id)->cat_name); ?>
-    </td>
-    <td>
-        <?php echo CHtml::encode(date("Y-m-d H:i", $data->date)); ?>
-    </td>
-    <td>
-        <?php echo CHtml::encode(date("Y-m-d H:i", $data->manager_informed)); ?>
-    </td>
-    <td>
-        <?php echo CHtml::encode(date("Y-m-d H:i", $data->date_finish)); ?>
-    </td>
-</tr>
+$attr = array('id');
+if(User::model()->isCustomer()) {
+	if(isset($model->max_exec_date)) $attr[] = [
+		'name' => 'deadline',
+		'value' => Yii::app()->dateFormatter->formatDateTime($model->max_exec_date),
+	];
+} else {
+	$attr[] = [
+		'name' => 'deadline',
+		'value' => Yii::app()->dateFormatter->formatDateTime($model->author_informed),
+	];
+}
+$projectFields = $model->getFields();
+if ($projectFields) {
+	foreach($projectFields as $field) {
+		if ($field->field_type=="BOOL"){
+			$tmp = $field->varname;
+			$tmp = $model->$tmp;
+			if($tmp) $tmp=ProjectModule::t('Yes'); else $tmp=ProjectModule::t('No');
+			$attr[] = [
+				'name' => $field->title,
+				'value' => $tmp
+			];
+		} elseif ($field->field_type=="LIST"){
+			$tmp = $field->varname;
+			$attr[] = [
+				'name' => $field->title,
+				'type' => 'raw',
+				'value' => Catalog::model()->findByPk($model->$tmp)->cat_name,
+			];
+		} else {
+			$tmp = $field->varname;
+			$attr[] = [
+				'name' => $field->title,
+				'value' => $model->$tmp
+			];
+		}
+	}
+}
+
+// --- campaign      генерируем список загруженных материалов
+if(isset(Zakaz::$files_folder)){
+	$url = Zakaz::$files_folder.$model->id.'/';
+} else {
+	$url = '/uploads/'.$model->id.'/';
+}
+$html_string = $model->generateMaterialsList($url);
+// ---
+$attr[] = [
+	'name' => ProjectModule::t('Attached materials'),
+	'type'=>'raw',
+	'value' => '<ul class="materials-files">'.$html_string.'</ul>'
+];
+
+if(!User::model()->isCustomer() && $model->getAttribute('author_notes')) {
+	$attr[] = [
+		'name' => ProjectModule::t('Comments to the work'),
+		'value' => $model->getAttribute('author_notes')
+	];
+}
+
+$this->widget('zii.widgets.CDetailView', array(
+	'data'=>$model,
+	'attributes'=>$attr,
+));

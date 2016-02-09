@@ -14,9 +14,10 @@ class AuthAssignment extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
-		return 'AuthAssignment';
+	public function tableName() {
+		$id  = Campaign::getId();
+        return $id.'_AuthAssignment';
+		//return 'AuthAssignment';
 	}
 
 	/**

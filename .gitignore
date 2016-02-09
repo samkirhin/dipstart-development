@@ -1,9 +1,8 @@
 .idea
 nbproject/
-/assets
+assets
 protected/runtime
 protected/backup
-protected/config
 cgi-bin
 uploads
 protected/config/main.php
@@ -12,4 +11,6 @@ webstat
 comments.txt
 doc
 sql
+work
+*Thumbs.db
 access.txt

@@ -131,7 +131,7 @@ return array(
 	'Update PartStatus' => 'Update Part Status',
 	'Delete PartStatus' => 'Delete Part Status',
 	'View PartStatus' => 'View Part Status',
-	'AfterModerate'  => 'After Moderate',
+	'AfterModerate'  => 'Changes will take effect after approval by the manager.',
 	'YouAreExecutor'  => 'You are appointed executor of the order',
 	'The requested page does not exist.' => 'The requested page does not exist.',
 

@@ -33,7 +33,10 @@ Yii::app()->language='en';
             <div class="col-xs-10 col-sm-10 col-md-9 contact">
                 <address style="margin-left: 50px; margin-top: 5px;">
                     E-mail:	<a href="mailto:#">perfect-paper.com@gmail.com</a><br>
-                    Skype: perfect-paper
+                    Skype: perfect-paper<br>
+					+1 (323) 984 75 11<br>
+					<!--<a href="http://perfect-paper.com/site/page?view=contacts">Contact information</a><br>-->
+					<a href="http://perfect-paper.com/site/page?view=disclaimer">Disclaimer</a>
                 </address>
             </div>
         </div>

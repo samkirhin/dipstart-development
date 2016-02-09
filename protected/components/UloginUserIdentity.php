@@ -41,9 +41,15 @@ class UloginUserIdentity implements IUserIdentity
 			
             $user->save();
 			
-			$AuthAssignment = new AuthAssignment;
-			$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$user->id);
-			$AuthAssignment->save();
+			$current_role = User::model()->getUserRole($user->id);
+			/*echo 'role: ';
+			print_r($current_role);
+			//Yii::app()->end();*/
+			if(!$current_role) {
+				$AuthAssignment = new AuthAssignment;
+				$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$user->id);
+				$AuthAssignment->save();
+			}
 		}
 		
 		$this->id = $user->id;

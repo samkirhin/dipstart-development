@@ -3,7 +3,7 @@
 class ModerateController extends Controller
 {
     
-    public function filters()
+    /*public function filters()
     {
         return array(
             'accessControl', // perform access control for CRUD operations
@@ -19,14 +19,14 @@ class ModerateController extends Controller
                     'users'=>array('@'),
                 ),
                 array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                    'actions'=>array('approve', 'delete','index'),
+                    'actions'=>array('approve', 'delete','field'),
                     'users'=>array('admin','manager'),
                 ),
 				array('deny',  // deny all users
 					'users'=>array('*'),
 				),
 			);
-	}
+	}*/
 	
 
     public function actionIndex($id)
@@ -57,6 +57,20 @@ class ModerateController extends Controller
         $model = $this->loadModel($id);
     }
     
+    public function actionField() {
+        if (isset($_POST['field'])) {
+            $field = $_POST['field'];
+            if (isset($_POST['id'])) {
+                $model = $this->loadModel($_POST['id']);
+                if ($model != null) {
+                    $model->$field = $_POST['value'];
+                    $model->save();
+                    Yii::app()->end();
+                }
+            }
+        }
+    }
+	
     public function loadModel($id)
 	{
 		$model=Moderate::model()->findByPk($id);

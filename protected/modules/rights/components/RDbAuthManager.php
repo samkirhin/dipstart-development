@@ -12,10 +12,18 @@ class RDbAuthManager extends CDbAuthManager
 	 * @var string the name of the rights table.
 	 */
 	public $rightsTable = 'Rights';
+	//public $assignmentTable = '1_AuthAssignment';
 
 	private $_items = array();
 	private $_itemChildren = array();
 
+    public function init() {
+		//'itemTable'=>'AuthItem',
+		//'itemChildTable'=>'AuthItemChild',
+		$this->assignmentTable = Campaign::getId().'_AuthAssignment';
+		parent::init();
+	}
+	
 	/**
 	 * Adds an item as a child of another item.
 	 * Overloads the parent method to make sure that

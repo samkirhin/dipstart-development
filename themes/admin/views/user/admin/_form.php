@@ -6,7 +6,7 @@
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 ));
 ?>
-	<p class="note">=)<?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
 <style>
@@ -86,13 +86,13 @@
 		foreach($fields as $field) {
 			$name = strtolower($field->varname);
 			if ($name == 'mailing_list') {
-				$mailing_list = $model->profile->getAttribute($name);
+				if(isset($model->profile)) $mailing_list = $model->profile->getAttribute($name);
 				$mailing_list = $_arr[$mailing_list];
 			}
 			
 ?>
 	<div class="row"><div class="left-div-admin-form">
-		<?= $form->labelEx($profile, $field->title); ?>
+		<?php if($profile) $form->labelEx($profile, $field->title); ?>
 		</div><div class="right-div-admin-form">
 <?php 
 			if ($widgetEdit = $field->widgetEdit($profile)) {

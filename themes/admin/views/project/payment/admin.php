@@ -24,7 +24,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'details_ya',
         'details_wm',
         'details_bank',
-        'payment_type',
+        array(
+			'name' => 'payment_type',
+			'value' => '$data->performType()',
+		),
         array(
             'class' => 'CButtonColumn',
             'template'=> '{approved} {for_approve} ',

@@ -28,10 +28,10 @@ class Moderate extends CActiveRecord
     public function attributeLabels()
 	{
 		return array(
-			'attribute' => 'Атрибут',
-			'old_value' => 'Старое значение',
-			'new_value' => 'Новое значение',
-			'date_update' => 'Дата изменения',
+			'attribute' => Yii::t('site','Attribute'),
+			'old_value' => Yii::t('site','Old value'),
+			'new_value' => Yii::t('site','New value'),
+			'date_update' => Yii::t('site','Date of change'),
 		);
 	}
     

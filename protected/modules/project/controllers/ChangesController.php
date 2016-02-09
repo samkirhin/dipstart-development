@@ -9,13 +9,13 @@ class ChangesController extends Controller {
     /**
      * @return array action filters
      */
-    public function filters() {
+    /*public function filters() {
 
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
         );
-    }
+    }*/
 
 
     /**
@@ -24,7 +24,7 @@ class ChangesController extends Controller {
      *
      * @return array access control rules
      */
-    public function accessRules() {
+    /*public function accessRules() {
 
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -39,7 +39,7 @@ class ChangesController extends Controller {
                   'users' => array('*'),
             ),
         );
-    }
+    }*/
     public function init(){
         parent::init();
         header("Content-type: application/json");
@@ -127,7 +127,7 @@ class ChangesController extends Controller {
             $model->fileupload = CUploadedFile::getInstance($model, 'fileupload');
 			
             if (!empty($model->fileupload)) {
-                $model->file = 'no';
+                //$model->file = 'no';
             } else {
 				echo  CJSON::encode(array('test' => array('text' => 'file-not-uploaded')));
 				Yii::app()->end();

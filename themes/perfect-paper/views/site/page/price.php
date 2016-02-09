@@ -1,6 +1,6 @@
 <?php
-Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/mmenu/src/js/jquery.mmenu.oncanvas.js',CClientScript::POS_END);
-Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/price.js',CClientScript::POS_END);
+//Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/mmenu/src/js/jquery.mmenu.oncanvas.js',CClientScript::POS_END);
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/price-simple.js',CClientScript::POS_END);
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/price.css');
 ?>
     <div class="wrapper mbody">
@@ -14,10 +14,10 @@ Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/
 		      <p>Find out how much your order will cost.</p>
               <div class="item">
                   <p>1. Select Academic Level</p>
-                  <button>H. School</button>
-                  <button>Undergrad</button>
-                  <button>Master</button>
-                  <button>Doctoral</button>
+                  <button onclick="selectAcademicLevel('High_school')">H. School</button>
+                  <button onclick="selectAcademicLevel('Undergraduate')">Undergrad</button>
+                  <button onclick="selectAcademicLevel('Bachelor')">Master</button>
+                  <button onclick="selectAcademicLevel('Professional')">Doctoral</button>
               </div>
               <div class="item">
                   <p>2. Select Undergrad Deadline</p>
@@ -43,14 +43,14 @@ Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/
                   <p>3. Number of pages</p>
 		            <div class="col-sm-9">
                         <div class="input-group spinner">
-                            <button class="btn btn-primary pull-left" type="button">+</button>
-                            <input name="sources" id="sources" type="text" class="form-control pull-left" value="1">
-                            <button class="btn btn-primary pull-left" type="button">-</button>
+                            <button class="btn btn-primary pull-left" type="button" onclick="plus()">+</button>
+                            <input name="sources" id="sources" type="text" class="form-control pull-left" value="1" onchange="calculateTotalHs()">
+                            <button class="btn btn-primary pull-left" type="button" onclick="minus()">-</button>
                         </div>
                     </div>
               </div>
-              <p class="submit-cost">Approximate cost: <span>60</span></p>
-              <button>Proceed to Order</button>
+              <p class="submit-cost">Approximate cost: <span id="price">0</span></p>
+              <button onclick="window.location.href = 'http://perfect-paper.com/site/page?view=order';">Proceed to Order</button>
     </div>
 	</p>
 	</div></div>

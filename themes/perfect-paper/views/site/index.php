@@ -50,7 +50,7 @@
         </div>
     </div>
 </div>
-<div id="fast-order" class="row" style="margin-top: 2em;">
+<div id="fast-order" class="row" style="margin-top: 2em; display: none;">
     <form id="go_price" action="/site/page" method="post">
         <div class="col-xs-12 col-md-3" style="padding-bottom: 2em;">
             <select type="text" class="form-control input-lg alternative-select">

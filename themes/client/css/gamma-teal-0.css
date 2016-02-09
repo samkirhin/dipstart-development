@@ -1,0 +1,65 @@
+/*
+#1b1411 - почти чёрный
+#2e3938 - тёмный
+#6ea194 - бирюзовый
+#e8e8c2 - бежево-кремовый
+#fffcf5 - нежно-кремовый, почти белый
+*/
+
+body, .header .header-text p, .content-clearfix .grid-view table.items th, .content-clearfix .grid-view table.items tr.odd,
+.content-clearfix  .grid-view table.items tr.even, .content-clearfix .panel, .content-clearfix .grid-view table.items {
+	background-color: #fffcf5;
+}
+.nav-tabs > li > a, .content-clearfix .panel-default > .panel-heading {
+	background-color: #e8e8c2;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .header .nav-tabs > li.active > a {
+	background-color: #fffcf5;
+}
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus, .nav-tabs > li.active > a:hover, header div#control-menu li a:hover,
+.content-clearfix .grid-view table.items tr.selected td {
+	background-color: #6ea194;
+}
+.header .nav-tabs, table.items td, table.items th, .content-clearfix .grid-view table.items td,
+.content-clearfix .grid-view table.items th, .content-clearfix table.detail-view th, .content-clearfix table.detail-view td {
+	border-bottom: 1px solid #e8e8c2;
+}
+header div#control-menu li a, .nav-tabs > li > a, .nav-tabs > li.active > a, .twin-tab div.first-tab, .twin-tab div.second-tab,
+.content-clearfix .panel-default > .panel-heading, .content-clearfix .panel-default, .thanks-for-order-message,
+div.stage, div.stage-number {
+    /*border: 1px solid #6ea194;*/
+	border-color: #e8e8c2;
+}
+body, .nav-tabs > li > a {
+    font-family: arial, sans-serif;
+    color: #1b1411;
+}
+a, .content-clearfix .grid-view table.items th a, .panel-title a {
+	color: #6ea194;
+}
+.table tr.even, .content-clearfix table.detail-view tr.even {
+	color: #2e3938;
+}
+#zakaz-form div.form-item {
+	background-color: #e8e8c2;
+}
+.qq-upload-drop-area span {
+	color: #f2f2de;
+}
+.btn, div.qq-upload-button, input.create-order-button, input.create-order-button:hover, #new-changes-link a {
+	background-color: #6ea194;
+}
+.chat-view div.author-message {
+    background-color: #f5f5db;
+}
+
+.chat-view div.manager-message {
+    background-color: #fff;
+}
+
+.chat-view div.customer-message, div.stage {
+    background-color: #f9f9ea;
+}
+.title, div.take-block label {
+	color: #6ea194;
+}

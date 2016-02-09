@@ -43,8 +43,9 @@ $this->menu=array(
 				if ($field->field_type=="BOOL"){
 					echo $form->checkBox($model,$field->varname);
                 } elseif ($field->field_type=="LIST"){
-					$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
-					$list = CHtml::listData($models, 'id', 'cat_name');
+					//$models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
+					//$list = CHtml::listData($models, 'id', 'cat_name');
+					$list = Catalog::model()->performCatsTree($field->varname);
 					echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
 					echo $form->error($model,$field->varname);
 				} elseif ($field->field_type=="TEXT") {
@@ -55,50 +56,7 @@ $this->menu=array(
 				echo '</div>';
 			}
 		}
-	} else { ?>		
-        <div class="row create-form-selects block-with-border">
-            <div class="col-md-6" style="padding-left: 0; padding-right: 0;">
-                <div class="col-md-12 create-form-selects">
-                    <?php echo $form->labelEx($model,'title'); ?>
-                    <?php echo $form->textField($model,'title',array('size'=>70,'maxlength'=>255)); ?>
-                    <?php echo $form->error($model,'title'); ?>
-                </div>
-                <div class="col-md-12 col-lg-12 create-form-selects">
-                    <?php echo $form->labelEx($model,'text'); ?>
-                    <?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>70)); ?>
-                    <?php echo $form->error($model,'text'); ?>
-                </div>
-            </div>
-            <div class="col-md-6" style="padding-left: 0; padding-right: 0;">
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'category_id'); ?>
-                    <?php $models = Categories::model()->findAll();
-                    $list = CHtml::listData($models, 'id', 'cat_name');
-                    echo $form->dropDownList($model, 'category_id', $list, array('empty' => ProjectModule::t('Select a category')));
-                    ?>
-                    <?php echo $form->error($model,'category_id'); ?>
-                </div>
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'job_id'); ?>
-                    <?php $models = Jobs::model()->findAll();
-                    $list = CHtml::listData($models, 'id', 'job_name');
-                    echo $form->dropDownList($model, 'job_id', $list, array('empty' => ProjectModule::t('Select a job')));
-                    ?>
-                    <?php echo $form->error($model,'job_id'); ?>
-                </div>
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'pages'); ?>
-                    <?php echo $form->textField($model,'pages'); ?>
-                    <?php echo $form->error($model,'pages'); ?>
-                </div>
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'edu_dep'); ?>
-                    <?php echo $form->textField($model,'edu_dep'); ?>
-                    <?php echo $form->error($model,'edu_dep'); ?>
-                </div>
-            </div>
-        </div>
-		<?php } ?>
+	} ?>
 
         <div class="row create-form-selects block-with-border" style="margin-top: 15px;">
             <div class="col-md-6" style="padding-left: 0; padding-right: 0;">
@@ -125,40 +83,17 @@ $this->menu=array(
                     <?php //echo $form->textField($model,'executor',array('size'=>53,'maxlength'=>100)); ?>
                     <?php echo $form->error($model,'executor'); ?>
                 </div>
-				<?php if(!Campaign::getId()){ ?>
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'time_for_call'); ?>
-                    <?php echo $form->textField($model,'time_for_call'); ?>
-                    <?php echo $form->error($model,'time_for_call'); ?>
-                </div>
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'add_demands'); ?>
-                    <?php echo $form->textArea($model,'add_demands',array('rows'=>6, 'cols'=>53)); ?>
-                    <?php echo $form->error($model,'add_demands'); ?>
-                </div>
-
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'notes'); ?>
-                    <?php echo $form->textArea($model,'notes',array('rows'=>6, 'cols'=>53)); ?>
-                    <?php echo $form->error($model,'notes'); ?>
-                </div>
-                <div class="col-md-12">
-                    <?php echo $form->labelEx($model,'author_notes'); ?>
-                    <?php echo $form->textArea($model,'author_notes',array('rows'=>6, 'cols'=>53)); ?>
-                    <?php echo $form->error($model,'author_notes'); ?>
-                </div>
-				<?php } ?>
             </div>
 
 
 		
 
             <div class="col-md-6 create-terms">
-                <h3>Сроки выполнения</h3>
+                <h3><?=ProjectModule::t('Deadlines')?></h3>
                 <table class="table" style="font-size: 12px">
                     <thead>
-                    <th>Наименование</th>
-                    <th>Дата Время</th>
+                    <th><?=ProjectModule::t('Designation')?></th>
+                    <th><?=ProjectModule::t('Date/Time')?></th>
                     </thead>
                     
                     <tr>

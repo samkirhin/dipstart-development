@@ -25,8 +25,8 @@ return array(
 	'Retype Password is incorrect.' => 'Пароли не совпадают.',
 	'Incorrect password (minimal length 4 symbols).' => 'Минимальная длина пароля 4 символа.',
 	'Incorrect username (length between 3 and 20 characters).' => 'Длина имени пользователя от 3 до 20 символов.',
-	"Incorrect symbols (A-z0-9)." => 'В имени пользователя допускаются только латинские буквы и цифры.',
-	"Incorrect symbols (A-z)." => 'В имени пользователя допускаются только буквы.',
+	"Incorrect symbols (A-z0-9)." => 'В логине допускаются только латинские буквы и цифры.',
+	"Incorrect symbols (A-z)." => 'В логине допускаются только буквы.',
 	'Variable name may consist of a-z, 0-9, underscores, begin with a letter.'=>'В название переменной допускаются только латинские буквы, цифры и символ подчеркивания.',
 	"Length of ' + n + ' must be between '+min+' and '+max+'."=>"Длинна ' + n + ' должна быть не меньше '+min+' и не более '+max+' символов.",
 	'Please enter the letters as they are shown in the image above.' => 'Пожалуйста, введите буквы, показанные на картинке выше.',
@@ -234,5 +234,9 @@ return array(
 	'recoveryMessage' => 'На Ваш адрес электронной почты было отправлено письмо с инструкциями.',
 	'Incorrect password (minimal length 6 symbols).'=>'Минимальная длина email - 6 символов.',
 	'This email already exists.'=>'Такой email уже существует.',
+	'payed for order'=>'оплатил заказ',
+	'Cell number' => 'Номер телефона',
+	
+	'Edit assignments' => 'Редактировать назначения',
 );
 

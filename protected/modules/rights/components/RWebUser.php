@@ -82,4 +82,13 @@ class RWebUser extends CWebUser
 		
 		return $returnUrl!==null ? CHtml::normalizeUrl($returnUrl) : CHtml::normalizeUrl($defaultUrl);
 	}
+	
+	public function isGuest() {
+		$id = $this->getId();
+		if(isset($id) && $id > 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

@@ -163,14 +163,15 @@ hr {
 	float:	 left;
 	color: #337AB7;
 	font-weight: bold;
-	width: 52%;
+	width: 35%;
 	padding-left: 8px;
 }
 .partStatus-status {
 	position: relative;
 	float: left;
-	width: 46%;
+	width: 65%;
     text-indent: 38px;
+	text-align: right;
 }
 .partStatus-bottom {
     width: 100%;
@@ -322,9 +323,6 @@ label
     margin-bottom: 5px;
     width: 49%;
 }
-.panel-default {
-    border-color: #dddddd;
-}
 .post {
     border-top: none !important;
     border-left: none !important;
@@ -415,9 +413,6 @@ label
 .info-block {
     margin-top: 10px;
 }
-.panel-group .panel {
-    border-radius: 0px;
-}
 .terms-save-btn {
     margin-top: 10px;
     margin-right: 15px;
@@ -426,9 +421,6 @@ label
 .label {
     border-radius: 0px;
     font-size: 14px;
-}
-.panel-heading-white {
-    background-color: #fff !important;
 }
 .authorName p:before {
     content: "";
@@ -705,6 +697,7 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
 .title-time {
     position: relative;
     float: right;
+	text-align: right;
 }
 .panel-heading {
     float: left;
@@ -814,11 +807,6 @@ div#accordion .panel-title a {
     text-align: left;
 }
 
-.panel-default > .panel-heading, #new-changes-collapse {
-    background-color: #FAFAFC!important;
-    border-color: #F6F7F9!important;
-}
-
 div#chatWindow::before {
 	/*content: "Напишите что готовы взять этот заказ или задайте вопрос";*/
     display: block!important;
@@ -865,32 +853,13 @@ textarea#message {
 }
 
 .zakaz-info-header {
-	float:		top; 
+	margin: 10px;
+	padding: 10px;
 	width:		100%;
-/*	color:		#337AB7;*/
 	font-weight:bold;
 	height:		24px;
 	text-align:	center;
 }
-.zakaz-info-header-customer {
-	float:		left; 
-	width:		95%;
-	font-weight:bold;
-	height:		20px;
-	text-align:	center;
-	border: 1px solid #DDD;
-	margin-left: 30px;
-	padding-bottom: 22px;
-	position:	relative;
-}
-.zakaz-info-header-customer-empty {
-	float:		left; 
-	width:		100%;
-	height:		10px;
-	position:	relative;
-}
-
-
 /*
 .title-name  {
     width: 100%;
@@ -937,10 +906,6 @@ div.materials {
     
 }
 
-div.project-changes div.panel-heading {
-    background-color: #f1f8e9 !important;
-}
-
 div.project-changes div.panel-heading h4.panel-title a {
     text-align: center !important;
 }
@@ -953,7 +918,6 @@ div.project-changes div.panel-heading h4.panel-title a i {
 div.first-tab{
 	float:	left;
 	width:	100%;
-    background-color: #fff;
 }
 div.second-tab{
 	float:	left;

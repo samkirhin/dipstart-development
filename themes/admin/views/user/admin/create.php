@@ -9,9 +9,22 @@ $this->menu=array(
     array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('profileField/admin')),
     array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
 );
+
+$this->widget('zii.widgets.CMenu', array(
+	'items'=>$this->menu,
+	'htmlOptions'=>array('class'=>'operations'),
+));
 ?>
 <h1><?php echo UserModule::t("Create User"); ?></h1>
 
 <?php
-	echo $this->renderPartial('_form', array('model'=>$model,'profile'=>$profile));
+	echo $this->renderPartial('_form', array(
+			'model'		=> $model,
+			'profile'	=> $profile,
+			'manager'	=> $manager,
+			'admin'		=> $admin,
+			'fields'	=> $fields,
+			//'specials' => $specials,
+		)
+		);
 ?>

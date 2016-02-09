@@ -1,27 +1,19 @@
 <?php
 
 class ZakazPartWidget extends CWidget{
-    
-    public $projectId;
+    public $number;
+	public $projectId;
 	public $status;
 	public $item_id;
 	public $record_id;
 	public $status_id;
 	public $_status;
 	public $select;
-    public $arrDataProvider;
+	public $arrDataProvider;
 	public static $folder;
 
-
     public function init() {
-		// --- campaign
-		$c_id = Campaign::getId();
-		if ($c_id) {
-			$folder = '/uploads/c'.$c_id.'/parts/';
-		}else{
-			$folder = '/uploads/additions/';
-		}
-		// ---
+		$folder = '/uploads/c'.Campaign::getId().'/parts/';
         $this->arrDataProvider = new CArrayDataProvider(
             ZakazParts::model()->with('files')->findAllByAttributes(['proj_id'=>$this->projectId])
         );
@@ -56,10 +48,11 @@ class ZakazPartWidget extends CWidget{
             'summaryText'=>'',
         ));*/
 		$data = $this->arrDataProvider->getData();
-		
 		$records = PartStatus::model()->findAll();
+		$number = 0;
 
 		foreach ($data as $this->item_id => $item) {
+			$number++;
 			$this->status = PartStatus::model()->findByPk($item->status_id);
 
 			$this->record_id = $item->id;
@@ -89,10 +82,16 @@ class ZakazPartWidget extends CWidget{
 			foreach ($records as $rec) {
 				$this->select.= "<option value='$rec->id' ";
 				if ($rec->id == $item->status_id) $this->select.= 'selected="selected"';
-				$this->select.= ">$rec->status</option>";
+				$this->select.= ">{$rec->status}</option>";
 			};	
 			$this->select.= '</select>';
-			$this->render('newview', $item);
+      
+			if(Yii::app()->user->isGuest || (User::model()->isAuthor() && !User::model()->isExecutor($item->proj_id))){
+				$this->number = $number;
+				$this->render('index', $item);
+			}else{
+				$this->render('newview', $item);
+			}
 		}
     }
 }

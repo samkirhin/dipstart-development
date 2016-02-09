@@ -39,9 +39,9 @@ class User extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
-		return Yii::app()->getModule('user')->tableUsers;
+	public function tableName() {
+		return Campaign::getId().'_Users';
+		//return Yii::app()->getModule('user')->tableUsers;
 	}
 
 	/**
@@ -54,7 +54,7 @@ class User extends CActiveRecord
 		return ((get_class(Yii::app())=='CConsoleApplication' || (get_class(Yii::app())!='CConsoleApplication' && Yii::app()->getModule('user')->isAdmin()))?array(
 			array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			array('email', 'email'),
-			array('email', 'length', 'min' => 6,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
+			array('email', 'length', 'min' => 6,'message' => UserModule::t("Incorrect password (minimal length 6 symbols).")),
 			array('email', 'unique','message' => UserModule::t("This email already exists.")),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
@@ -63,21 +63,21 @@ class User extends CActiveRecord
 			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
 			array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
 			array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
-			array('phone_number, username, email, superuser, status', 'required'),
+			array('username, email, superuser, status', 'required'),
 			array('superuser', 'in', 'range'=>array(0,1)),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('phone_number, username, email', 'required','except'=>'social_network'),
+			array('email', 'required','except'=>'social_network'),
 			array('phone_number', 'match', 'pattern' => '/^[-+()0-9]+$/u','message' => UserModule::t("Incorrect symbols (0-9,+,-,(,)).")),
 			array('full_name', 'length', 'max'=>128, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('email', 'email'),
 			array('email', 'length', 'min' => 6,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			array('email', 'unique','message' => UserModule::t("This email already exists.")),
-			array('username', 'unique', 'message' => UserModule::t("This user's name already exists."),'except'=>'social_network'),
-			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
-			array('username', 'match', 'pattern' => '/^[-A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9)."),'except'=>'social_network'),
-			array('id, identity, network, email, full_name, state', 'safe', 'on'=>'search')
+			//array('username', 'unique', 'message' => UserModule::t("This user's name already exists."),'except'=>'social_network'),
+			//array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
+			//array('username', 'match', 'pattern' => '/^[-A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9)."),'except'=>'social_network'),
+			array('id, identity, network, email, full_name, state, pid', 'safe', 'on'=>'search')
 		):array()));
 	}
 
@@ -235,6 +235,14 @@ class User extends CActiveRecord
 			else return false;
 		} else return FALSE;
 	}
+	public function isOwner($project_id){
+		if (Yii::app()->user->id && $this->getUserRole()=='Customer') {
+			$zakaz = Zakaz::model()->findByPk($project_id);
+			if(Yii::app()->user->id == $zakaz->user_id)
+				return true;
+			else return false;
+		} else return FALSE;
+	}
 
 	public function getCreatetime() {
 		return strtotime($this->create_at);
@@ -253,11 +261,11 @@ class User extends CActiveRecord
 	}
 
 	public function findAllAuthors(){
-		$sql = ('SELECT DISTINCT `id`, `username` FROM Users WHERE `id` IN (SELECT `userid` FROM AuthAssignment WHERE `itemname` = "Author")');
+		$sql = ('SELECT DISTINCT `id`, `username` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Author")');
 	   return $this->findAllBySql($sql);
 	}
 	public function findAllCustomers(){
-		$sql = ('SELECT DISTINCT `id`, `username` FROM Users WHERE `id` IN (SELECT `userid` FROM AuthAssignment WHERE `itemname` = "Customer")');
+		$sql = ('SELECT DISTINCT `id`, `username` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Customer")');
 	   return $this->findAllBySql($sql);
 	}
 	

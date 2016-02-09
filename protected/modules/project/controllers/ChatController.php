@@ -17,45 +17,41 @@ class ChatController extends Controller {
         $this->_response = new JsonHttpResponse();
     }
 
-	public function filters()
+	/*public function filters()
 	{
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete, ApiRenameFile', // we only allow deletion via POST request
         );
-	}
+	}*/
 
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
+	/*public function accessRules()
 	{
 		return array(
             array('allow', 
-                'actions' => array('index', 'ApiRenameFile'),
+                'actions' => array ('ApiRenameFile'),
                 'expression' => array('ChatController', 'allowOnlyOwner'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('upload','status'),
+                'actions' => array('index','upload'),
                 'users' => array('@'),
             ),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin', 'approve', 'remove', 'edit', 'setexecutor', 'delexecutor', 'readdress','status'),
-				'users'=>array('admin', 'manager'),
-			),
 			array('allow',  // allow all users
-				'actions'=>array('index'),
-				'users'=>array('*'),
+				'actions'=>array('view'),
+				'expression' => array('ChatController', 'allowAuthorsAndGuests'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
-	}
+	}*/
     public static function allowOnlyOwner(){
-        if(User::model()->isAdmin()){
+        if(User::model()->isManager()){
             return true;
         }
         else{
@@ -66,15 +62,24 @@ class ChatController extends Controller {
                 return (($zakaz->executor == 0) || ($zakaz->executor === Yii::app()->user->id));
         }
     }
+	/*public static function allowAuthorsAndGuests(){
+		if(User::model()->isAuthor() || Yii::app()->user->isGuest) {
+			return true;
+		} else {
+			return false;
+		}
+	}*/
 
 	/**
 	 *  Вывод и добавление сообщений
 	 */
-    public function actionIndex($orderId)
-    {
-
+    public function actionIndex($orderId) {
 		$isGuest = Yii::app()->user->isGuest;
-
+		if ($isGuest) {
+			$url = 'http://'.$_SERVER['SERVER_NAME'].'/user/login';
+			$this->redirect($url);
+		}
+		
 		Yii::app()->session['project_id'] = $orderId;
 		
         if (Yii::app()->request->isAjaxRequest) {
@@ -103,22 +108,12 @@ class ChatController extends Controller {
                     case 'customer':
 						if (User::model()->isCustomer()) {
                             $model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
-							$type_id = Emails::TYPE_20;
+							//$type_id = Emails::TYPE_20;
                         } else if (User::model()->isAuthor()) {
                             $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
-							$type_id = Emails::TYPE_16;
+							//$type_id = Emails::TYPE_16;
 						};
-						$user = User::model()->findByPk($model->recipient);
-						$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
-						
-						$email = new Emails;
-						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-						$email->name = $user->full_name;
-						if (strlen($email->name) < 2) $email->name = $user->username;
-						$email->num_order = $orderId;
-						$email->message = $post;
-						$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-						$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
+
                         break;
                 }
 				$model->save();
@@ -131,43 +126,14 @@ class ChatController extends Controller {
             Yii::app()->end();
         }
 		
-		$order = Zakaz::model()->resetScope()->findByPk($orderId);
-		
-		$parts = ZakazParts::model()->findAll(array(
-					'condition' => "`proj_id`='$orderId'",
-				));
-		if ($isGuest) {
-			Yii::app()->theme='client';
-			
-			// если гость прошёл по ссылке на неcуществующий
-			// проект, отправляем его на регистрацию
-			$url = 'http://'.$_SERVER['SERVER_NAME'].'/';
-			if (!$order) $this->redirect($url);
-
-			$moderate_types = EventHelper::get_moderate_types_string();
-			$events = Events::model()->findAll(array(
-				'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
-				'order' => 'timestamp DESC'
-				),
-				array(':event_id'=> $orderId) 			
-			);
-			$moderated = count($events) == 0;
-			// если гость прошёл по ссылке на непромодерированный
-			// проект, отправляем его на регистрацию
-			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
-
-//			Catalog::model()->tableName();
-			//$EmptyChat = UserModule::t('EmptyChat');
-			$this->render('index', array(
-				'orderId'	=> $orderId,
-				'order'		=> $order,
-				'executor'	=> Zakaz::getExecutor($orderId),
-				'moderated'	=> $moderated,
-				'isGuest'	=> $isGuest,
-				'parts'		=> $parts,
-			));
-            Yii::app()->end();
+		if(User::model()->isAuthor() && !User::model()->isExecutor($orderId)){
+			$this->redirect(Yii::app()->createUrl('/project/chat/view',array('orderId'=>$orderId)));
 		}
+		
+		$order = Zakaz::model()->resetScope()->findByPk($orderId);
+		$parts = ZakazParts::model()->findAll(array(
+			'condition' => "`proj_id`='$orderId'",
+		));
 		
 		$moderate_types = EventHelper::get_moderate_types_string();
         $events = Events::model()->findAll(array(
@@ -182,37 +148,56 @@ class ChatController extends Controller {
 			'order'		=> $order,
             'executor'	=> Zakaz::getExecutor($orderId),
 			'moderated'	=> $moderated,
-			'isGuest'	=> $isGuest,
 			'parts'		=> $parts,
         ));
     }
 	
+	public function actionView($orderId) {
+		$order = Zakaz::model()->resetScope()->findByPk($orderId);
+		$parts = ZakazParts::model()->findAll(array(
+			'condition' => "`proj_id`='$orderId'",
+		));
+		//$isGuest = Yii::app()->user->isGuest;
+		$isGuest = Yii::app()->user->isGuest();
+		if ($isGuest || User::model()->isManager()) {
+			Yii::app()->theme='client';
+			
+			// если гость прошёл по ссылке на неcуществующий
+			// проект, отправляем его на регистрацию
+			$url = 'http://'.$_SERVER['SERVER_NAME'].'/user/login';
+			if (!$order) $this->redirect($url);
+
+			/*$moderate_types = EventHelper::get_moderate_types_string();
+			$events = Events::model()->findAll(array(
+				'condition' => "`event_id`='$orderId' AND `type` in ($moderate_types)",
+				'order' => 'timestamp DESC'
+				),
+				array(':event_id'=> $orderId) 			
+			);
+			$moderated = count($events) == 0;
+			// если гость прошёл по ссылке на непромодерированный
+			// проект, отправляем его на регистрацию
+			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
+			*/
+		}
+		$this->render('view', array(
+			'orderId'	=> $orderId,
+			'order'		=> $order,
+			//'executor'	=> Zakaz::getExecutor($orderId),
+			//'moderated'	=> $moderated,
+			'isGuest'	=> $isGuest,
+			'parts'		=> $parts,
+		));
+        //Yii::app()->end();
+	}
+	
 	public function actionUpload() {
-        Yii::import("ext.EAjaxUpload.qqFileUploader");
-		// --- кампании
-		$c_id = Campaign::getId();
-		if ($c_id) {
-			$folder='uploads/c'.$c_id.'/'.$_GET['id'].'/';
-		} else {
-			$folder='uploads/'.$_GET['id'].'/';
+		$folder='uploads/c'.Campaign::getId().'/'.$_GET['id'].'/';
+		$result = Tools::uploadMaterials($folder);
+		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+		if ($result['success'] && User::model()->isCustomer()) {
+			EventHelper::materialsAdded($_GET['id']);
 		}
-		// ---
-		if (!file_exists($folder)) {
-			mkdir($folder, 0777);
-		}
-        $config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx');
-        $config['disAllowedExtensions'] = array("exe");
-        $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
-        $uploader = new qqFileUploader($config, $sizeLimit);
-        if(!(User::model()->isAdmin())) $_GET['qqfile']='#pre#'.$_GET['qqfile'];
-        $result = $uploader->handleUpload($folder,true);
-        if ($result['success'] && User::model()->isCustomer()) {
-            EventHelper::materialsAdded($_GET['id']);
-        }
-        $result['fileSize']=filesize($folder.$result['filename']);//GETTING FILE SIZE
-        $result['fileName']=$result['filename'];//GETTING FILE NAME
-		chmod($folder.$result['fileName'],0666);
-        echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }
     
     /*

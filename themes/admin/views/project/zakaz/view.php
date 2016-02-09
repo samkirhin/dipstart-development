@@ -1,4 +1,8 @@
 <?php
+$this->redirect(Yii::app()->createUrl('/project/zakaz/update', array('id'=>$model->id)));
+
+//Don't work...
+
 /* @var $this ZakazController */
 /* @var $model Zakaz */
 /* oldbadger 02.11.2015
@@ -60,10 +64,10 @@ foreach ($filelist as $fd) {
 //'notes',
 		);
 	}
-	$this->widget('zii.widgets.CDetailView', array(
-		'data'=>$model,
-		'attributes'=>$attr,
-	));
+	//$this->widget('zii.widgets.CDetailView', array(
+	//	'data'=>$model,
+	//	'attributes'=>$attr,
+	//));
 /*	
 echo '<pre>';
 print_r($projectFields);
@@ -73,11 +77,11 @@ echo '</pre>';
 	$projectFields = $model->getFields();
 	if ($projectFields) {
 		
-		$form = $this->beginWidget('CActiveForm', array(
+		/*$form = $this->beginWidget('CActiveForm', array(
 			'id'=>'zakaz-form',
 			'action'=>isset ($model->id) ? $this->createUrl('zakaz/update', ['id'=>$model->id]) : '',
 			'enableAjaxValidation'=>false,
-		));
+		));*/
 		
 		foreach($projectFields as $field) {
 			if ($field->field_type=="BOOL"){
@@ -114,7 +118,7 @@ echo '</pre>';
 		}
 	}
 	$this->widget('zii.widgets.CDetailView', array(
-		'data'=>$model,**
+		'data'=>$model,
 		'attributes'=>$attr,
 	));
 	

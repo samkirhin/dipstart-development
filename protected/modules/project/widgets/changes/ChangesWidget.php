@@ -35,8 +35,13 @@ class ChangesWidget extends CWidget
 
     public function run()
     {
-        if (count($this->changes->rawData) > 0 || User::model()->isCustomer() || User::model()->isManager() || User::model()->isAdmin())
-            $this->render('default', array('changes' => $this->changes, 'project' => $this->project, 'user' => $this->userObj));
+        if (count($this->changes->rawData) > 0 || User::model()->isCustomer() || User::model()->isManager() || User::model()->isAdmin()) {
+            if(Yii::app()->user->isGuest || (User::model()->isAuthor() && !User::model()->isExecutor($this->project->id))){
+				$this->render('simple', array('changes' => $this->changes));
+			}else{
+				$this->render('default', array('changes' => $this->changes, 'project' => $this->project, 'user' => $this->userObj));
+			}
+		}
     }
 
 }

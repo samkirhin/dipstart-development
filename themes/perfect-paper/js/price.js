@@ -17,6 +17,7 @@ High_school["twelveHours"] = 20;
 High_school["eightHours"] = 23;
 High_school["sixHours"] = 26;
 High_school["threeHours"] = 30;
+High_school["slide"] = 3;
 
 var Undergraduate = [];
 Undergraduate["selectDays"] = 0;
@@ -34,6 +35,7 @@ Undergraduate["twelveHours"] = 23;
 Undergraduate["eightHours"] = 26;
 Undergraduate["sixHours"] = 28;
 Undergraduate["threeHours"] = 37;
+Undergraduate["slide"] = 4;
 
 var Bachelor = [];
 Bachelor["selectDays"] = 0;
@@ -51,6 +53,7 @@ Bachelor["twelveHours"] = 24;
 Bachelor["eightHours"] = 27;
 Bachelor["sixHours"] = 29;
 Bachelor["threeHours"] = 40;
+Bachelor["slide"] = 5;
 
 var Professional = [];
 Professional["selectDays"] = 0;
@@ -68,18 +71,27 @@ Professional["twelveHours"] = 33;
 Professional["eightHours"] = 36;
 Professional["sixHours"] = 39;
 Professional["threeHours"] = 47;
+Professional["slide"] = 7;
 
 function calc(){
     var summ = 0;
-    var price = eval($('input[name="ProfilesFields[AcademicLevel]"]:checked').attr('id'))[$('input[name="ProfilesFields[hours]"]:checked').attr('id')];
+    var price = eval($('input[name="Project[AcademicLevel]"]:checked').attr('id'))[$('input[name="Project[FirstDraftDeadline]"]:checked').attr('id')];
     console.log(price);
-    $('.appr_price').html(price*$('#pages_number').val()*$('input[name="ProfilesFields[Spaced]"]:checked').data('val')/$('input[name="ProfilesFields[Typeofservice]"]:checked').data('val'));
+    price = price*$('#pages_number').val()*$('input[name="Project[spaced]"]:checked').data('val')/$('input[name="Project[Typeofservice]"]:checked').data('val');
+	$('.appr_price').html(price + eval($('input[name="Project[AcademicLevel]"]:checked').attr('id'))['slide']*$('#slides_number').val());
+}
+
+function changeCountryCode(){
+	var e = document.getElementById("country");
+	var code = $(e.options[e.selectedIndex]).data('val');
+	$("#countryCode").html('+'+code);
 }
 
 $(document).ready(function(){
     var calc_elem=$('.calc_elem');
     calc_elem.on('change',function(){calc();});
     calc_elem.on('click',function(){calc();});
+	$('#sources').on('change', function(){if(parseInt($('#sources').val())<0) $('#sources').val(0);});
     calc();
     //3B2mmEzVyKIf
 });

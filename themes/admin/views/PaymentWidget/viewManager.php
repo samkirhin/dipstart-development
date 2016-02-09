@@ -85,7 +85,7 @@
                 new UploadPaymentImage;
                 $i = 1;
                 foreach ($zakaz->images as $item) {
-                    echo CHtml::link(ProjectModule::t('Cheque') . $i++, UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' )) . ' ';
+                    echo CHtml::link(ProjectModule::t('Cheque') . $i++, PaymentImage::getFolder() . $item->image, array ('target' => '_blank' )) . ' ';
                 }
             }
 		?>

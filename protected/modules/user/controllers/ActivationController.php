@@ -1,14 +1,9 @@
 <?php
-
-class ActivationController extends Controller
-{
+/*
+class ActivationController extends Controller {
 	public $defaultAction = 'activation';
 
-	
-	/**
-	 * Activation user account
-	 */
-	public function actionActivation () {
+	public function actionActivation () { // Activation user account
 		$email = $_GET['email'];
 		$activkey = $_GET['activkey'];
 		if ($email&&$activkey) {
@@ -28,4 +23,4 @@ class ActivationController extends Controller
 		}
 	}
 
-}
+} */

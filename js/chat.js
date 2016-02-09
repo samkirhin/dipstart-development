@@ -47,72 +47,109 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	function view_chat( name, message, id){
+	function view_chat(name, message, id){
+	    message = Trim(message);
+        if (message.length<=0) return false;
+        var role = parseInt($('div#message_send').data('role'));
         var order=$('#order').val();
+        var message_send = $('div#message_send').data('messageSend');
+        var html_message_send = 
+            '<div class="message_send info"><div class="message_send flash-success"><a>'+message_send+'</a></div></div>';
+        $('#message_send div.message_send').remove();
+		var cost = $('input#cost').val();
         $.post('/project/chat?orderId='+order,{
             ProjectMessages:{
-				id: id,
+		id: id,
                 message: message,
                 recipient: name,
-				order: order,
-				cost: $('input#cost').val()
+		order: order,
+		cost: cost
             }
         },function(data){
-            $('#chat').html(data);
-            $('.chat-view').scrollTop(10000);
-            $('#message').val('');
+              $('#chat').html(data);
+		      if(cost) $($('div.take-block').data('message')).appendTo('div.chat-view');
+              $('.chat-view').scrollTop(10000);
+              $('#message').val('');
+			  $('<style>div#chatWindow::before{display:none} div#chatWindow::after{display:none}</style>').appendTo('head');
+              if (role==1) {
+                $('#message_send').append(html_message_send);
+                $('.message_send').fadeIn(400,function(){
+                    setTimeout(function() {
+                      $('.message_send').fadeOut(400);
+                    },5000);
+                });
+              }
+            
         });
-		return	false;
-	};	
+	};
 
 	
     $('.btn-chat').click(function(){
         view_chat( this.name, $('#message').val(), 0);
 		return false;
     });
+    $('#salary-to-chat').click(function(){
+		if($('input#cost').val()) {
+			view_chat( 'manager', $(this).val(), 0);
+			$('input#cost').val('');
+		}
+		return false;
+    });
     $('.chat-edit').click(function(){
-		var step = $('#chat-edit').attr('step');
-		step++;	step &= 1;
-		$('#chat-edit').attr( 'step', step);
 		var text = document.getElementsByClassName("text");
-		if (step)	{ 
-			text = text[text.length-1].innerHTML;
-			text = text.replace(/<br>/g,"\r\n");
-			$('#edit-message').val(text);
-            $('#div-edit-message').css('display', 'block');
-			$('#chat-edit').val('Сохранить'); 
-			$('#chat-edit').css('display', 'block');
+		if (text.length > 0) {
+			var step = $('#chat-edit').attr('step');
+			step++;	step &= 1;
+			$('#chat-edit').attr( 'step', step);
+			if (step)	{ 
+				text = text[text.length-1].innerHTML;
+				text = text.replace(/<br>/g,"\r\n");
+				$('#edit-message').val(text);
+				$('#div-edit-message').css('display', 'block');
+				$('#chat-edit').val('Сохранить'); 
+				//$('#chat-edit').css('display', 'block');
 
-			// прячем контролы, чтобы не отвлекали
-			// вместо кнопки "сохранить" часто нажимаются "отправить"
-			$('.col-xs-9').css('display', 'none');
-			$('.col-xs-3 chtpl0-form').css('display', 'none');
-			
-			$('.chat-view').scrollTop(10000);
-		} else { 
-			$('#chat-edit').val('Редактирование последнего сообщения'); 
-            $('#div-edit-message').css('display', 'none');
-			view_chat( 'customer', $('#edit-message').val(),text[text.length-1].id);			
-		};
+				//прячем текстовое поле и кнопки отправить
+				$('.chtpl0-submit1').css('display', 'none');
+				$('.chtpl0-submit2').css('display', 'none');
+				$('.chat-text-area').css('display', 'none');
+				
+				$('.chat-view').scrollTop(10000);
+			} else { 
+				$('#chat-edit').val('Редактирование последнего сообщения'); 
+				$('#div-edit-message').css('display', 'none');
+				view_chat( 'customer', $('#edit-message').val(),text[text.length-1].id);
+
+				//показываем текстовое поле и кнопки отправить
+				$('.chtpl0-submit1').css('display', 'inline-block');
+				$('.chtpl0-submit2').css('display', 'inline-block');
+				$('.chat-text-area').css('display', 'block');
+			}
+		}
         return false;
     });
 	$('.chat-view').scrollTop(10000);
 });
-function zakaz_done(part_id)
-{
+function zakaz_done(part_id) { /* Stage is ready */
 		var orderId = $('#order').val();
 		$.ajax({
 			type: "POST",
 			url: 'zakazParts/status'
-			, data: 'cmd=done&id='+part_id+'&status_id=2'+'&orderId='+orderId
-			, success: function(html) {
-				html = BackReplacePlusesFromStr(html);
-				ajax_response = html;
-				if (html != 'null') {
+			, data: 'cmd=done&id='+part_id+'&status_id=+1'
+			, success: function(answer) {
+				if(answer=='Wrong base status'){
+					alert(answer);
+				}else{
+					document.getElementById('zakaz-done-'+part_id).style.display = 'none';
+					document.getElementById('partStatus-status-'+part_id).innerHTML = answer;
 				}
 			}
 		});
-		document.getElementById('zakaz-done-'+part_id).style.display = 'none';
-		document.getElementById('partStatus-status-'+part_id).innerHTML = 'завершён';
         return false;
 };
+
+function Trim(s) {
+    s = s.replace(/^ +/,'');
+    s = s.replace(/ +$/,'');
+    return s;
+}

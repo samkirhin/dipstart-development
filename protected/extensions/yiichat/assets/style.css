@@ -224,12 +224,18 @@ width: 50%;*/
 
 .chtpl0-form button{
 	border: none;
-	width: 97px;
-	height: 23px;
 	font-weight: normal;
 	display: inline-block;
 	position: relative;
-	margin-right: 5px;
+	margin-right: 0px;
+
+	width: 195px;
+	height: auto;
+	margin-left: 5px;
+	margin-bottom:10px;
+	background-image: none;
+	opacity:0.8;
+	border-radius: 0;
 }
 
 .chtpl0-form button:hover{
@@ -252,10 +258,10 @@ color: #FFFFFF;
 }
 
 .chtpl0-subm{
-	display: inline-block;
-	position: relative;
-	top: -7px;
-	left: 5px
+	/*display: inline-block;
+	position: relative;*/
+	margin-top: 10px;
+	margin-left: 5px;
 }
 
 .chtpl0-admin{
@@ -360,16 +366,6 @@ font-size: 13px;
 .chtpl0-form textarea {
 width: 70%;
 margin:0;
-}
-
-.chtpl0-form button {
-width: 195px;
-height: auto;
-margin-left:0;
-margin-bottom:10px;
-background-image: none;
-opacity:0.8;
-border-radius: 0;
 }
 
 .chtpl0-form button:hover {

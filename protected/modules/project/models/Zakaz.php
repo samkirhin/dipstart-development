@@ -319,53 +319,27 @@ class Zakaz extends CActiveRecord {
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels() {
-		if(Campaign::getId()){
-			$tmp = array(
-				'id' => ProjectModule::t('Order number'),
-				'user_id' => ProjectModule::t('User'),
-				'date' => ProjectModule::t('Order date'),
-				'max_exec_date' => ProjectModule::t('Max Date'),
-				'status' => ProjectModule::t('Status'),
-				'executor' => ProjectModule::t('Executor'),
-				'manager_informed' => ProjectModule::t('Manager Informed'),
-				'author_informed' => ProjectModule::t('Author Informed'), //need4manager?
-				'deadline' => ProjectModule::t('Deadline'),
-				'notes' => ProjectModule::t('Notes'),
-				'author_notes' => ProjectModule::t('author_notes'),
-				'closestDate' => ProjectModule::t('closestDate'),
-				'uppercheckbox' => ProjectModule::t('uppercheckbox'),
-			);
-			$projectFields = $this->getFields();
-			if ($projectFields) {
-				foreach($projectFields as $field) {
-					$tmp[$field->varname] = $field->title;
-				}
-			}
-			return $tmp;
-		} else return array(
-			'id' => ProjectModule::t('ID'),
-            'jobName'=> ProjectModule::t('Job name'),
-            'catName'=>ProjectModule::t('Name of educational discipline'),
+		$tmp = array(
+			'id' => ProjectModule::t('Order number'),
 			'user_id' => ProjectModule::t('User'),
-			'category_id' => ProjectModule::t('Category'),
-			'job_id' => ProjectModule::t('Job'),
-			'title' => ProjectModule::t('Title'),
-			'text' => ProjectModule::t('Text'),
-			'date' => ProjectModule::t('Date'),
+			'date' => ProjectModule::t('Order date'),
 			'max_exec_date' => ProjectModule::t('Max Date'),
-			'date_finish' => ProjectModule::t('Date Finish'),
-			'pages' => ProjectModule::t('Pages'),
-			'add_demands' => ProjectModule::t('Add Demands'),
 			'status' => ProjectModule::t('Status'),
 			'executor' => ProjectModule::t('Executor'),
 			'manager_informed' => ProjectModule::t('Manager Informed'),
-			'author_informed' => ProjectModule::t('Author Informed'),
+			'author_informed' => ProjectModule::t('Author Informed'), //need4manager?
+			'deadline' => ProjectModule::t('Deadline'),
 			'notes' => ProjectModule::t('Notes'),
 			'author_notes' => ProjectModule::t('author_notes'),
-			'time_for_call' => ProjectModule::t('time_for_call'),
-			'edu_dep' => ProjectModule::t('edu_dep'),
-			'uppercheckbox' => ProjectModule::t('uppercheckbox'),
+			'closestDate' => ProjectModule::t('closestDate'),
 		);
+		$projectFields = $this->getFields();
+		if ($projectFields) {
+			foreach($projectFields as $field) {
+				$tmp[$field->varname] = $field->title;
+			}
+		}
+		return $tmp;
 	}
 
 	/**
@@ -523,6 +497,56 @@ class Zakaz extends CActiveRecord {
 		if (isset($this->$varname) && $this->$varname != ''){
 			$this->$varname = Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->$varname, $this->dateTimeIncomeFormat));
 		}
+	}
+	
+    public function moveFiles($unixtime/*,$id*/) {  // Перенести файлы из временной директории в постоянную при сохpании нового заказа
+		$id = $this->id;
+        $c_id = Campaign::getId();
+        $root = Yii::getPathOfAlias('webroot');
+        if ($c_id) {
+            $from = $root.'/uploads/c'.$c_id.'/temp/'.$unixtime.'/';
+        } else {
+            $from = $root.'/uploads/temp/'.$unixtime.'/';
+        }
+        if (file_exists($from)) {
+            $dir_handle = opendir($from);
+            if ($c_id) {
+                $to = $root.'/uploads/c'.$c_id.'/'.$id.'/';
+            } else {
+                $to = $root.'/uploads/'.$id.'/';
+            }
+            if (!file_exists($to)) {
+                mkdir($to, 0777);
+            }                    
+            while ($file = readdir($dir_handle)) {
+               if ($file === '.' || $file === '..' || is_dir($file)) continue;
+               rename($from.$file, $to.$file);   
+            }
+            rmdir($from);                    
+            
+        }
+    }
+	
+	public function generateMaterialsList($url, $for_guests = false) { // генерируем список загруженных материалов заказа
+		$path = Yii::getPathOfAlias('webroot') . $url;
+		$html_string = '';
+		//if (!file_exists($path)) mkdir($path,0755,true);
+		if (file_exists($path)){
+			foreach (array_diff(scandir($path), array('..', '.')) as $k => $v)
+				if ((!strstr($v, '#pre#') || User::model()->isCustomer() || ($for_guests && Yii::app()->user->isGuest)) && !strstr($v, '#trash#')) {
+					$tmp = '';
+					if(strstr($v, '#pre#')) {
+						$tmp = ' class="gray-file"';
+						$v0 = substr($v,5);
+					} else {
+						$v0 = $v;
+					}
+					$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>';
+					if (User::model()->isCustomer()) $html_string .= '<a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>';
+					$html_string .= '</li><br />'."\n";
+				}
+		}
+		return $html_string;
 	}
     /*public function beforeValidate() {
 

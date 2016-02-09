@@ -17,29 +17,31 @@ $this->menu=array(
 <h1><?php echo UserModule::t('View User').' "'.$model->username.'"'; ?></h1>
 
 <?php
- 
+	echo CHtml::link(UserModule::t('Edit assignments'), $this->createAbsoluteUrl('/rights/assignment/user',array('id'=>$model->id))).'<br /><br />';
 	$attributes = array(
 		'id',
 		'username',
 		'full_name',
 	);
 	$mailing_list = 0;
-	$profile= ProfileField::model()->findAll();
-	if ($profile) {
-		foreach($profile as $field) {
-			$arr = array(
-				'label' => UserModule::t($field->title),
-				'name' => $field->varname,
-				'type'=>'raw',
-				'value' => (($field->widgetView($model->profile))?$field->widgetView($model->profile):(($field->range)?Profile::range($field->range,$model->profile->getAttribute($field->varname)):$model->profile->getAttribute($field->varname))),
-			);
-			if ($field->varname == 'mailing_list') {
-				$index = $model->profile->getAttribute($field->varname);
-				if ($index > 3) $index = 0;
-				$_temp = array('','icq','sms','email');
-				$arr['value'] = $_temp[$index];
-			}	
-			array_push($attributes,$arr);
+	if($model->profile) {
+	$profile = ProfileField::model()->findAll();
+		if ($profile) {
+			foreach($profile as $field) {
+				$arr = array(
+					'label' => UserModule::t($field->title),
+					'name' => $field->varname,
+					'type'=>'raw',
+					'value' => (($field->widgetView($model->profile))?$field->widgetView($model->profile):(($field->range)?Profile::range($field->range,$model->profile->getAttribute($field->varname)):$model->profile->getAttribute($field->varname))),
+				);
+				if ($field->varname == 'mailing_list') {
+					$index = $model->profile->getAttribute($field->varname);
+					if ($index > 3) $index = 0;
+					$_temp = array('','icq','sms','email');
+					$arr['value'] = $_temp[$index];
+				}	
+				array_push($attributes,$arr);
+			}
 		}
 	}
 	

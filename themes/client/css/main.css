@@ -49,8 +49,22 @@ img {
 	border-top: 1px solid #EEEEEE;
 }
 .header {
-	margin: 1px 0 25px 0;
-	padding: 2em 2% 0 2%;
+	/*margin: 1px 0 25px 0;
+	padding: 2em 2% 0 2%;*/
+	
+}
+header .logo {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.header .header-text {
+	text-align: center;
+}
+.header .header-text p {
+	font-size: 17px;
+	background-color: rgba(255, 255, 255, 0.88);
+	padding: 15px;
+	border-radius: 15px;
 }
 .navbar {
 	margin: 1px 0 25px 0;
@@ -2140,3 +2154,32 @@ form#registration-form input {
     width: 150px!important   ;
 }
 
+/**Всплывающая плашка при отправке сообщений в админке! START*/
+div.flash-error, div.flash-notice, div.flash-success
+{
+	padding:.8em;
+	margin-bottom:1em;
+	border:2px solid #ddd;
+}
+
+div.flash-success
+{
+	background:#FFF;
+	color:#264409;
+	border-color:#737C8D;
+}
+
+div.flash-success a
+{
+	color:#264409;
+}
+
+.message_send {
+  position: relative; top: -121px; width: 532px; display: none; border-radius: 18px;
+}
+
+#message_send {
+  position: relative;
+}
+
+/**Всплывающая плашка при отправке сообщений в админке! END*/

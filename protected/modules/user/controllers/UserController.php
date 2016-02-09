@@ -1,15 +1,9 @@
 <?php
+/*
+class UserController extends Controller {
 
-class UserController extends Controller
-{
-	/**
-	 * @var CActiveRecord the currently loaded data model instance.
-	 */
-	private $_model;
+	private $_model; // @var CActiveRecord the currently loaded data model instance.
 
-	/**
-	 * @return array action filters
-	 */
 	public function filters()
 	{
 		return CMap::mergeArray(parent::filters(),array(
@@ -18,16 +12,12 @@ class UserController extends Controller
                     'postOnly +rating'
 		));
 	}
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
+
 	public function accessRules()
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'rating'),
+				'actions'=>array('index','view'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -36,10 +26,7 @@ class UserController extends Controller
 		);
 	}	
 
-	/**
-	 * Displays a particular model.
-	 */
-	public function actionView()
+	public function actionView() // Displays a particular model.
 	{
 		$model = $this->loadModel();
 		$this->render('view',array(
@@ -47,10 +34,7 @@ class UserController extends Controller
 		));
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
+	public function actionIndex() // Lists all models.
 	{
 		$dataProvider=new CActiveDataProvider('User', array(
 			'criteria'=>array(
@@ -67,10 +51,10 @@ class UserController extends Controller
 		));
 	}
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 */
+
+	// * Returns the data model based on the primary key given in the GET variable.
+	// * If the data model is not found, an HTTP exception will be raised.
+	 
 	public function loadModel()
 	{
 		if($this->_model===null)
@@ -83,45 +67,5 @@ class UserController extends Controller
 		return $this->_model;
 	}
 
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the primary key value. Defaults to null, meaning using the 'id' GET variable
-	 */
-	public function loadUser($id=null)
-	{
-		if($this->_model===null)
-		{
-			if($id!==null || isset($_GET['id']))
-				$this->_model=User::model()->findbyPk($id!==null ? $id : $_GET['id']);
-			if($this->_model===null)
-				throw new CHttpException(404,'The requested page does not exist.');
-		}
-		return $this->_model;
-	}
-        
-        public function actionRating()
-        {
-            if (!User::model()->isManager() && !User::model()->isAdmin()) {
-                throw new CHttpException(403);
-            }
-            
-            $user_id = Yii::app()->request->getPost('user_id');
-            $action = Yii::app()->request->getPost('action');
-            
-            $user = $this->loadUser($user_id);
-            
-            $rating = (int)$user->profile->rating;
-            
-            if ($action == 'up') {
-                $rating++;
-            } elseif ($action == 'down') {
-                $rating--;
-            }
-            $user->profile->rating = $rating;
-            $user->profile->save(false);
-            
-            echo $user->profile->rating;
-        }
 }
+*/
