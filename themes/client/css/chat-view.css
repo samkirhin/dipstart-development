@@ -156,6 +156,10 @@ div#chatWindow::after {
 div.get-it {
 	text-align: center;
 }
+div.text4guests {
+	margin-top: 20px;
+	text-align: center;
+}
 .clear {
 	clear: both;
 }

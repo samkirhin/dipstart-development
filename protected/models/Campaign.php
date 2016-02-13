@@ -20,11 +20,11 @@ class Campaign extends CActiveRecord {
 			array('language','in','range'=>array('en','ru'),'allowEmpty'=>false),
 			array('PaymentCash', 'in', 'range' => array(0, 1),'allowEmpty'=>false),
 			array('fileupload', 'file', 'types'=>'jpg,jpeg,gif,png', 'maxSize'=>'204800', 'allowEmpty'=>true),
-			array('header', 'length', 'max'=>65535),
+			array('header, text4guests', 'length', 'max'=>65535),
 			array('WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'type', 'type'=>'float'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, organization, name, domains, language, supportEmail, PaymentCash, Payment2Chekout, Payment2ChekoutHash, FrontPage, logo, header, WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'safe', 'on'=>'search'),
+			array('id, organization, name, domains, language, supportEmail, PaymentCash, Payment2Chekout, Payment2ChekoutHash, FrontPage, logo, header, text4guests, WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'safe', 'on'=>'search'),
 		);
 	}
 	public function attributeLabels() {
@@ -41,6 +41,7 @@ class Campaign extends CActiveRecord {
 			'FrontPage'                => Yii::t('site','front page url'),
 			'logo'                     => Yii::t('site','logo'),
 			'header'                   => Yii::t('site','header text'),
+			'text4guests'              => Yii::t('site','text for guests'),
 			'WebmasterFirstOrderRate'  => Yii::t('site','webmaster first order rate'),
 			'WebmasterSecondOrderRate' => Yii::t('site','webmaster second order rate'),
 		);
