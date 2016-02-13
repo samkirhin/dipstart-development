@@ -136,6 +136,7 @@ return array(
 	'front page url' => 'адрес главной страницы',
 	'logo' => 'лого',
 	'header text' => 'текст в шапке',
+	'text for guests' => 'текст для гостей',
 	'webmaster first order rate' => 'процент(множитель) вэбмастеру за первый заказ',
 	'webmaster second order rate' => 'процент(множитель) вэбмастеру за повторные заказы',
 

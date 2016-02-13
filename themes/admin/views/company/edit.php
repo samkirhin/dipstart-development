@@ -62,6 +62,11 @@
 		<?php echo $form->error($model,'header'); ?>
 	</div>
 	<div class="row">
+		<?php echo $form->labelEx($model,'text4guests'); ?>
+		<?php echo $form->textArea($model,'text4guests',array('rows'=>12, 'cols'=>50, 'class'=>'form-control')); ?>
+		<?php echo $form->error($model,'text4guests'); ?>
+	</div>
+	<div class="row">
 		<?php echo $form->labelEx($model,'WebmasterFirstOrderRate'); ?>
 		<?php echo $form->textField($model,'WebmasterFirstOrderRate',array('size'=>60,'maxlength'=>32)); ?>
 		<?php echo $form->error($model,'WebmasterFirstOrderRate'); ?>
