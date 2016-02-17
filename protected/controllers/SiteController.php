@@ -141,95 +141,29 @@ class SiteController extends Controller {
 			$countryCodes = $this->getCountryCodes();
 			$code = $countryCodes[$country];
 			$attributes['phone_number'] = '+'.$code.$attributes['phone_number'];
-			$model->attributes	= $attributes;
-			if(isset($_COOKIE['partner'])) $model->pid = intval($_COOKIE['partner']);
-
-			if($model->validate()) {
-				$soucePassword = $attributes['password'];//UserModule::generate_password(8);
-				$model->password = UserModule::encrypting($soucePassword);
-				$model->superuser=0;
-				$model->status=1;
-				if ($model->save()) {
-					$AuthAssignment = new AuthAssignment;
-					$AuthAssignment->attributes=array('itemname'=>'Customer','userid'=>$model->id);
-					$AuthAssignment->save();
-					
-					$webmasterlog = new WebmasterLog();
-					$webmasterlog->pid = $model->pid;
-					$webmasterlog->uid = $model->id;
-					$webmasterlog->date = date("Y-m-d"); 
-					$webmasterlog->action =  WebmasterLog::REG;
-					$webmasterlog->save();
-					
-					$profile = new Profile;
-					$profile->user_id = $model->id;
-					$profile->country = $country;
-					$profile->save();
-					
-					$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
-					
-					$type_id = Emails::TYPE_11;
-					$email = new Emails;
-						
-					$criteria = new CDbCriteria();
-					$criteria->order = 'id DESC';
-					$criteria->limit = 1;
-					$model = User::model()->findAll($criteria)[0];
-
-					$email->from_id = 1;
-					$email->to_id   = $model->id;
-						
-					$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-					$id = Campaign::getId();
-					$email->campaign = Campaign::getName();
-					$email->name = $model->full_name;
-					$email->login= $model->username;
-					$email->password= $soucePassword;
-				
-					$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
-					$email->sendTo( $model->email, $rec[0]->title, $rec[0]->text, $type_id);
-						
-					$identity=new UserIdentity($model->username,$soucePassword);
-					$identity->authenticate();
-					Yii::app()->user->login($identity,0);
-					//$this->redirect(Yii::app()->controller->module->returnUrl[0]);
-				
-					// регистрация прошла, формируем запрос
-					$login_ok = true;
-					//
-				} else {
-					echo 'Cant save';
-					Yii::app()->end();
-				}
-			} elseif($attributes['email']!='') {
-				$message = 'Sorry, registration faild...<br>';
-				foreach($model->errors as $err => $descr) {
-					$message .= /*$err.': '.*/$descr[0].'<br>';
+			Yii::import('user.controllers.RegistrationController');
+			if (RegistrationController::register($model, $attributes)){
+				$login_ok = true;
+				$profile = new Profile;
+				$profile->user_id = $model->id;
+				$profile->country = $country;
+				$profile->save();
+			} else {
+				if($attributes['email']!='') {
+					$message = 'Sorry, registration faild...<br>';
+					foreach($model->errors as $err => $descr) {
+						$message .= $descr[0].'<br>';
+					}
 				}
 			}
 		}
 
 		$model = new Zakaz();
-		$model->attributes	= $_POST['Zakaz'];
-		if (!isset($model->unixtime) or $model->unixtime=='' ) {
-			$model->unixtime = time();
-		}
-		if($login_ok && isset($_POST['Project'])){
-			$model->attributes	= $_POST['Project'];
-			$model->user_id = Yii::app()->user->id;    
-			$model->status = 1;
-			$model->dbmanager_informed = date('d.m.Y H:i');
-			$model->dbdate = date('d.m.Y H:i');
-			$d1=date_create();
-			$d2=date_create($model->dbmax_exec_date);
-			$interval = (int)($d2->format('U')) - (int)($d1->format('U'));
-			$d1->modify('+'.intval($interval/2).' seconds');
-			$model->dbauthor_informed = $d1->format('d.m.Y H:i');
-				
-			if ($model->save()) {
-				Yii::import('project.components.EventHelper');
-				EventHelper::createOrder($model->id);
-				$model->moveFiles($model->unixtime);
+		$model->attributes	= $_POST['Zakaz']; // (unixtime)
+		
+		if ($login_ok) {
+			Yii::import('project.controllers.ZakazController');
+			if (ZakazController::createProject($model,$_POST['Project'])) {
 				$cost = $this->calculateCost($model);
 				$payment = new ProjectPayments;
 				$payment->order_id = $model->id;
@@ -275,6 +209,10 @@ class SiteController extends Controller {
 				//Yii::app()->end();
 				$message = 'Please complete all required fields.';
 			}
+		}
+
+		if (!isset($model->unixtime) or $model->unixtime=='' ) {
+			$model->unixtime = time();
 		}
 		Yii::app()->theme = explode('.',$_SERVER['SERVER_NAME'])[0];
 		$this->render('page/order', array(

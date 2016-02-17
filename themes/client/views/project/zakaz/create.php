@@ -27,7 +27,7 @@ $html_string = $model->generateMaterialsList($url);
 		
 			<p class="note"><?=ProjectModule::t('Fields with <span class="required">*</span> are required.')?></p>
 			
-            <?php echo $form->errorSummary($model); ?>
+            <?php //echo $form->errorSummary($model); ?>
 			<div class="form-items">
 			
 			<?php
@@ -49,7 +49,7 @@ $html_string = $model->generateMaterialsList($url);
 							echo '<div class="form-item" style="padding-left: 20px;">';
 							echo $form->checkBox($model,$field->varname);
 							echo $form->labelEx($model,$field->varname);
-//							echo '<label>'.YII::t('project',$field->title).'</label>';
+							echo $form->error($model,$field->varname);
 							echo '</div>';
                         } elseif ($field->field_type=="LIST"){
 							echo '<div class="form-item">';
@@ -66,17 +66,21 @@ $html_string = $model->generateMaterialsList($url);
 								$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
 									'model' => $model,
 									'attribute' => $field->varname,
-								));?>
+								));
+								echo $form->error($model,$field->varname);
+								?>
 							</div><?php
 						} elseif ($field->field_type=="TEXT") {
 							echo '<div class="form-item">';
 							echo $form->labelEx($model,$field->varname).'<br/>';
 							echo $form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
+							echo $form->error($model,$field->varname);
 							echo '</div>';
 						} else {
 							echo '<div class="form-item">';
 							echo $form->labelEx($model,$field->varname).'<br/>';
 							echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
+							echo $form->error($model,$field->varname);
 							echo '</div>';
 						}
 					}
@@ -105,6 +109,18 @@ $html_string = $model->generateMaterialsList($url);
                 //}                
                 ?>
             </div>
+			<?php if ( $isGuest ) { ?>
+			<div class="form-item">
+			<?php echo $form->labelEx($user,'email'); ?><br/>
+			<?php echo $form->textField($user,'email'); ?>
+			<?php echo $form->error($user,'email'); ?>
+			</div>
+			<div class="form-item">
+			<?php echo $form->labelEx($user,'phone_number'); ?><br/>
+			<?php echo $form->textField($user,'phone_number'); ?>
+			<?php echo $form->error($user,'phone_number'); ?>
+			</div>
+			<?php } ?>
 		    </div>
 			<?php echo CHtml::submitButton(ProjectModule::t('Create'), array('class' => 'create-order-button') ); ?>
 		
