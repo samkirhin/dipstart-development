@@ -260,7 +260,10 @@ min-height: 40px;
 color: red;
 font-size: 12px;
 }
-
+.form-item .errorMessage {
+	padding-left: 30px;
+	padding-bottom: 10px;
+}
 .errorSummary {
 font-size: 12px;
 color: green;

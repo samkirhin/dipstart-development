@@ -14,6 +14,67 @@ class RegistrationController extends Controller
 	/**
 	 * Registration user
 	 */
+	static public function register($model, $post, $role = 'Customer'){
+		$model->attributes = $post;
+		if(isset($_COOKIE['partner'])) $model->pid = intval($_COOKIE['partner']);
+
+		if($model->validate()) {
+			$soucePassword = UserModule::generate_password(8);
+			$model->password=UserModule::encrypting($soucePassword);
+			$model->superuser=0;
+			$model->status=1;
+			
+			if ($model->save()) {
+				$AuthAssignment = new AuthAssignment;
+				$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$model->id);
+				$AuthAssignment->save();
+				
+				$webmasterlog = new WebmasterLog();
+				$webmasterlog->pid = $model->pid;
+				$webmasterlog->uid = $model->id;
+				$webmasterlog->date = date("Y-m-d"); 
+				$webmasterlog->action =  WebmasterLog::REG;
+				$webmasterlog->save();
+
+				// новая служба системных сообщений
+				$type_id = Emails::TYPE_11;
+				$email = new Emails;
+				
+				$criteria = new CDbCriteria();
+				$criteria->order = 'id DESC';
+				$criteria->limit = 1;
+				$user = User::model()->findAll($criteria);
+				$user = $user[0];
+
+				$email->from_id = 1;
+				$email->to_id   = $user->id;
+				
+				$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+				$id = Campaign::getId();
+				$email->campaign = Campaign::getName();
+				$email->name = $model->full_name;
+				$email->login= $model->email;
+				$email->password= $soucePassword;
+				
+				$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
+				$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
+				
+				$identity=new UserIdentity($model->email,$soucePassword);
+				$identity->authenticate();
+				Yii::app()->user->login($identity,0);
+				//$this->redirect(Yii::app()->controller->module->returnUrl[0]);
+				return true;
+				//Yii::app()->end();
+			} else {
+				//Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
+				//$this->refresh();
+				echo 'Cant save';
+				Yii::app()->end();
+			}
+		} else {
+			return false;
+		}
+	}
 	public function actionRegistration() {
 		$model = new RegistrationForm;
 		$this->performAjaxValidation($model);
@@ -31,68 +92,10 @@ class RegistrationController extends Controller
 		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {
 			$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
-			
-			if(isset($_POST['RegistrationForm'])) {
-				
-				$model->attributes=$_POST['RegistrationForm'];
-				if(isset($_COOKIE['partner'])) $model->pid = intval($_COOKIE['partner']);
-		
-				if($model->validate()) {
-					$soucePassword = UserModule::generate_password(8);
-					$model->password=UserModule::encrypting($soucePassword);
-					$model->superuser=0;
-					$model->status=1;
-					//$model->username = $model->email;
-					if ($model->save()) {
-						$AuthAssignment = new AuthAssignment;
-						$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$model->id);
-						$AuthAssignment->save();
-						
-						$webmasterlog = new WebmasterLog();
-						$webmasterlog->pid = $model->pid;
-						$webmasterlog->uid = $model->id;
-						$webmasterlog->date = date("Y-m-d"); 
-						$webmasterlog->action =  WebmasterLog::REG;
-						$webmasterlog->save();
-
-						//$login_url = '<a href="'.$this->createAbsoluteUrl('/user/login').'">'.Yii::app()->name.'</a>';
-						//UserModule::sendMail($model->email,UserModule::t("You registered from {site_name}",array('{site_name}'=>Yii::app()->name)),UserModule::t("You have registred from {login_url}<br /><br />Your password: {pass}",array('{login_url}'=>$login_url, '{pass}'=>$soucePassword)));
-						
-						// новая служба системных сообщений
-
-						$type_id = Emails::TYPE_11;
-						$email = new Emails;
-						
-						$criteria = new CDbCriteria();
-						$criteria->order = 'id DESC';
-						$criteria->limit = 1;
-						$user = User::model()->findAll($criteria);
-						$user = $user[0];
-
-						$email->from_id = 1;
-						$email->to_id   = $user->id;
-						
-						$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-						$id = Campaign::getId();
-						$email->campaign = Campaign::getName();
-						$email->name = $model->full_name;
-						$email->login= $model->email;
-						$email->password= $soucePassword;
-						
-						$email->page_cabinet = 'http://'.$_SERVER['SERVER_NAME'].'/user/profile/edit';
-						$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
-						
-						$identity=new UserIdentity($model->username,$soucePassword);
-						$identity->authenticate();
-						Yii::app()->user->login($identity,0);
-						//$this->redirect(Yii::app()->controller->module->returnUrl[0]);
-						Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{email}}) before start.", ['{{email}}'=>$model->email]));
-						$this->refresh();
-						//Yii::app()->end();
-					} else {
-						Yii::app()->user->setFlash('reg_failed',UserModule::t("Sorry, something wrong... :("));
-						$this->refresh();
-					}
+			if (isset($_POST['RegistrationForm'])) {
+				if (self::register($model, $_POST['RegistrationForm'], $role)){
+					Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{email}}) before start.", ['{{email}}'=>$model->email]));
+					$this->refresh();
 				} else {
 					$message = UserModule::t("Sorry, something wrong... :(");
 					$errors = $model->errors;

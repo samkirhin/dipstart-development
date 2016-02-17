@@ -20,7 +20,7 @@ class ZakazController extends Controller {
 	actionApiApproveFile    - модерация файла
 	actionApiRemoveFile     - удаление файла
 	actionUpload            - загрузка файлов в заказе 
-	//actionDeleteFile        - удаление файла ??? повтор?
+	actionDeleteFile        - удаление файла в этапе
 	*/
 	/*public function filters() {
         return array(
@@ -164,41 +164,29 @@ class ZakazController extends Controller {
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate() {
-        if(isset($_GET['iframe']) and $_GET['iframe']=='yes') $iframe = true; else $iframe = false;
-		$model = new Zakaz();
+	static public function createProject($model, $post){
+		if(User::model()->isManager()) {
+			$model->is_active = 1;
+		} else {
+			$model->status = 1;
+		}
+		if(isset($post)) {
+			$model->attributes=$post;
 
-        if (!isset($model->unixtime) or $model->unixtime=='' ) {
-            $model->unixtime = time();
-        } 
-        
-        if(User::model()->isManager() || User::model()->isAdmin()) {
-            $model->is_active = 1;
-        } else {
-            $model->status = 1;
-        }
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if(isset($_POST['Zakaz']))
-        {
-            $model->attributes=$_POST['Zakaz'];
-
-            if (!(User::model()->isManager() || User::model()->isAdmin())) {
-                $model->user_id = Yii::app()->user->id;                
-                $model->dbmanager_informed = date('d.m.Y H:i');
-                $model->dbdate = date('d.m.Y H:i');
-                $d1=date_create();
-                $d2=date_create($model->dbmax_exec_date);
+			if (!(User::model()->isManager())) {
+				$model->user_id = Yii::app()->user->id;                
+				$model->dbmanager_informed = date('d.m.Y H:i');
+				$model->dbdate = date('d.m.Y H:i');
+				$d1=date_create();
+				$d2=date_create($model->dbmax_exec_date);
 				$interval = (int)($d2->format('U')) - (int)($d1->format('U'));
 				$d1->modify('+'.intval($interval/2).' seconds');
-                $model->dbauthor_informed = $d1->format('d.m.Y H:i');
-            }
+				$model->dbauthor_informed = $d1->format('d.m.Y H:i');
+			}
 
-			
             if($model->save()){
-                if (!(User::model()->isManager() || User::model()->isAdmin())) {
+                if (!(User::model()->isManager())) {
+					Yii::import('project.components.EventHelper');
                     EventHelper::createOrder($model->id);
                 }
                 $model->moveFiles($model->unixtime/*,$model->id*/);
@@ -219,14 +207,44 @@ class ZakazController extends Controller {
 					$webmasterlog->save();
 					
 				}
-                $this->redirect(array('view','id'=>$model->id));
-            }
+                return true;
+            } else {
+				return false;
+			}
 			
         }
-		if( Yii::app()->user->isGuest ) Yii::app()->theme = 'client';
+	}
+	 
+	public function actionCreate() {
+        if(isset($_GET['iframe']) and $_GET['iframe']=='yes') $iframe = true; else $iframe = false;
+		$model = new Zakaz();
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+		if( Yii::app()->user->isGuest ) {
+			Yii::app()->theme = 'client';
+			$user = new RegistrationForm;
+			if (isset($_POST['RegistrationForm'])) {
+				Yii::import('user.controllers.RegistrationController');
+				if (RegistrationController::register($user, $_POST['RegistrationForm'])){
+				
+				}
+			}
+		}
+		$isGuest = Yii::app()->user->isGuest;
+		if (!$isGuest && self::createProject($model,$_POST['Zakaz']))
+			$this->redirect(array('view','id'=>$model->id));
+		
+		if (!isset($model->unixtime) or $model->unixtime=='' ) {
+			$model->unixtime = time();
+		}
+
 		if( $iframe ) $this->layout = '//layouts/iframe';
         $this->render('create',array(
-            'model'=>$model
+            'model'=>$model,
+			'isGuest' => $isGuest,
+			'user' => $user
         ));
 	}
     
@@ -781,7 +799,7 @@ class ZakazController extends Controller {
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }
     
-    /*public function actionDeleteFile() {
+    public function actionDeleteFile() {
 		$file_name = trim(Yii::app()->request->getPost('file_name'));
 		$id = (int)Yii::app()->request->getPost('id');
 		$path=Yii::getPathOfAlias('webroot').$file_name;
@@ -793,7 +811,7 @@ class ZakazController extends Controller {
 				} else echo 'false';
 			} else echo 'false';
 		} else echo 'false';
-	}*/
+	}
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
