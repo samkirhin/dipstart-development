@@ -7,7 +7,7 @@
             </a>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9 header-text">
-			<?php if($company->header) echo '<p>'.$company->header.'</p>';?>
+			<?php if($company->header) echo $company->header;?>
         </div>
 		<?php } ?>
 		<div id="control-menu">

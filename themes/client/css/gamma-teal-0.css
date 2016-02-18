@@ -6,15 +6,15 @@
 #fffcf5 - нежно-кремовый, почти белый
 */
 
-body, .header .header-text p, .content-clearfix .grid-view table.items th, .content-clearfix .grid-view table.items tr.odd,
+body, .content-clearfix .grid-view table.items th, .content-clearfix .grid-view table.items tr.odd,
 .content-clearfix  .grid-view table.items tr.even, .content-clearfix .panel, .content-clearfix .grid-view table.items {
-	background-color: #fffcf5;
+	background-color: white;/*#fffcf5;*/
 }
 .nav-tabs > li > a, .content-clearfix .panel-default > .panel-heading {
 	background-color: #e8e8c2;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .header .nav-tabs > li.active > a {
-	background-color: #fffcf5;
+	background-color: white;/*#fffcf5;*/
 }
 .nav-tabs > li > a:hover, .nav-tabs > li > a:focus, .nav-tabs > li.active > a:hover, header div#control-menu li a:hover,
 .content-clearfix .grid-view table.items tr.selected td {

@@ -51,13 +51,11 @@
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/css/gamma-teal-0.css" />
 </head>
 <?php
-$bg = ' class="bg1"'; //Фон для регистрации и авторизации
-if ( Campaign::getId() == 1 ) {
-	if ($_SERVER['SERVER_NAME']=='adco.obshya.com') {
-		$bg = ' class="bg0"';
-	} else {
-		$bg = '';
-	}
+$bg = ''; //Фон для регистрации и авторизации
+// bg0 - кабина пилота
+// bg1 - мужик с ноутбуком
+if ($_SERVER['SERVER_NAME']=='adco.obshya.com') {
+	$bg = ' class="bg0"';
 }
 ?>
 <body<?=$bg?>>
