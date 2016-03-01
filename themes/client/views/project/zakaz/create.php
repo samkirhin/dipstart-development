@@ -12,7 +12,10 @@ $html_string = $model->generateMaterialsList($url);
 
 ?>
     <div class="container form-container">
-		<?php $form = $this->beginWidget('CActiveForm', array(
+		<?php
+		$company = Campaign::getCompany();
+		if ($company->text4customers) echo '<div class="text4customerts">'.$company->text4customers.'</div>';
+		$form = $this->beginWidget('CActiveForm', array(
 			'id'=>'zakaz-form',
 			'action'=>isset ($model->id) ? $this->createUrl('zakaz/update', ['id'=>$model->id]) : '',
 			//'type' => 'horizontal',

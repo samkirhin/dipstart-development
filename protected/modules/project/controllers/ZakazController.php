@@ -265,9 +265,15 @@ class ZakazController extends Controller {
 	 * @param integer $id the ID of the model to be updated
 	 */
 	public function actionUpdate($id) {
-
+		if (isset($_GET['sid'])) { // Меняем статус, ajax
+			$sid = $_GET['sid'];
+			$model = $this->loadModel($id);
+			$model->status = $sid;
+			$model->save();
+			Yii::app()->end();
+		}
         if (Yii::app()->request->isAjaxRequest) {
-            
+            echo 'test';
             $data = Yii::app()->request->getRestParams();
 			$field = str_replace('Zakaz_','',$data['elid']);
             if (is_array($data)) {
@@ -425,7 +431,7 @@ class ZakazController extends Controller {
 		$isModified = false;
 		$this->render($view, array(
 			'model'=>$model,
-			'message'=>$model->projectStatus->status,
+			//'message'=>$model->projectStatus->status,
 			'isModified'=>$isModified,
 		));
 	}

@@ -1,8 +1,6 @@
-<?php $this->widget('zii.widgets.CMenu', array(
-	'firstItemCssClass'=>'first',
-	'lastItemCssClass'=>'last',
-	'htmlOptions'=>array('class'=>'actions'),
-	'items'=>array(
+<?php
+if(User::model()->getUserRole()=='root') {
+	$items = array(
 		array(
 			'label'=>Rights::t('core', 'Assignments'),
 			'url'=>array('assignment/view'),
@@ -28,5 +26,21 @@
 			'url'=>array('authItem/operations'),
 			'itemOptions'=>array('class'=>'item-operations'),
 		),
-	)
-));	?>
+	);
+} else {
+	$items = array(
+		array(
+			'label'=>Rights::t('core', 'Assignments'),
+			'url'=>array('assignment/view'),
+			'itemOptions'=>array('class'=>'item-assignments'),
+		),
+	);
+}
+$this->widget('zii.widgets.CMenu', array(
+	'firstItemCssClass'=>'first',
+	'lastItemCssClass'=>'last',
+	'htmlOptions'=>array('class'=>'actions'),
+	'items'=>$items,
+));	
+
+?>

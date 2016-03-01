@@ -32,18 +32,25 @@ class SiteController extends Controller {
 	{
         if (Yii::app()->user->isGuest) {
 //			Yii::app()->theme='client';
-            $this->render('index', array(
-//          $this->render('main', array(
-                'role' => 'stranger'
-            ));
+			if ($this->getViewFile('index')) {
+				$this->render('index', array(
+					'role' => 'stranger'
+				));
+			} elseif (Campaign::getFrontPage()) {
+				$this->redirect(Campaign::getFrontPage());
+			} else {
+				$this->redirect('/user/login');
+			}
 		} elseif (User::model()->isAuthor()){
 			$this->redirect('/project/zakaz/ownList');
 		} elseif (User::model()->isCustomer()){
 			$this->redirect('/project/zakaz/customerOrderList');
 		} elseif (User::model()->getUserRole()=='Webmaster'){
 			$this->redirect('/partner/stats');
-        } else {
-            $this->render('main');
+        } elseif (User::model()->getUserRole()=='root') {
+			$this->redirect('/company/list');
+		} else {
+			$this->redirect('/project/event');
         }
 	}
 

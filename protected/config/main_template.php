@@ -144,8 +144,9 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+		'rpswd' => 'rpswd',
 		// this is used in contact page
-		'adminEmail'=>'info@dipstart.ru',
-		'supportEmail'=>'ekomixds@mail.ru',
+		//'adminEmail'=>'info@dipstart.ru',
+		//'supportEmail'=>'ekomixds@mail.ru',
 	),
 );

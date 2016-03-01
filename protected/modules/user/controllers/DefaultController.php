@@ -101,7 +101,7 @@ class DefaultController extends Controller {
 	}
         
 	public function actionRating() {
-		if (!User::model()->isManager() && !User::model()->isAdmin()) {
+		if (!User::model()->isManager()) {
 			throw new CHttpException(403);
 		}
 		
@@ -110,8 +110,14 @@ class DefaultController extends Controller {
 		
 		$user = $this->loadUser($user_id);
 		
+		if(!isset($user->profile)) {
+			$profile = new Profile();
+			$profile->user_id = $user_id;
+			$profile->save();
+			$user = $this->loadUser($user_id);
+		}
 		$rating = (int)$user->profile->rating;
-		
+
 		if ($action == 'up') {
 			$rating++;
 		} elseif ($action == 'down') {

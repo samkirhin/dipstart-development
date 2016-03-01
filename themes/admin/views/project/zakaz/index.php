@@ -7,100 +7,44 @@ $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs'),
 );
 
-if (Campaign::getId()){
-	$columns = array('id');
-	$projectFields = $model->getFields();
-	if ($projectFields) {
-		foreach($projectFields as $field) {
-			if ($field->field_type=="LIST"){
-				$varname = $field->varname;
-				$columns[] = array(
-						'name'=>$varname,
-						'filter'=>Catalog::getAll($varname),
-						'value'=>'$data->catalog_'.$varname.'->cat_name',
-					);
-			} elseif ($field->varname != 'soderjanie' && $field->varname != 'description'  && $field->varname !='opisanie') { // !!! Сделать настраиваемым
-				$columns[] = $field->varname;
-			}
+$columns = array('id');
+$projectFields = $model->getFields();
+if ($projectFields) {
+	foreach($projectFields as $field) {
+		if ($field->field_type=="LIST"){
+			$varname = $field->varname;
+			$columns[] = array(
+					'name'=>$varname,
+					'filter'=>Catalog::getAll($varname),
+					'value'=>'$data->catalog_'.$varname.'->cat_name',
+				);
+		} elseif ($field->varname != 'soderjanie' && $field->varname != 'description'  && $field->varname !='opisanie') { // !!! Сделать настраиваемым
+			$columns[] = $field->varname;
 		}
 	}
-    /*$columns[] = array(
-            'name'=>'date',
-            'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model'=>$model,
-                'attribute'=>'dbdate',
-                'language'=>Yii::app()->language,
-                ),true),
-            'value'=>'$data->dbdate'
-        );*/
-    $columns[] = array(
-            'name'=>'manager_informed',
-            'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model'=>$model,
-                'attribute'=>'dbmanager_informed',
-                'language'=>Yii::app()->language,
-                ), true),
-            'value'=>'$data->dbmanager_informed',
-        );
-    $columns[] = array(
-            'class'=>'CButtonColumn',
-            'template'=>'{delete}{update}',
-        );
-} else {
-	$columns = array(
-        'id',
-        array(
-            'name'=>'status',
-            'filter'=>ProjectStatus::getAll(),
-            'value'=>'$data->statusName',
-        ),
-        'title',
-        array(
-            'name'=>'jobName',
-            'filter'=>Jobs::getAll(),
-            'value'=>'$data->jobName'
-        ),
-        array(
-            'name'=>'catName',
-            'filter'=>Categories::getAll(),
-        ),
-        array(
-            'name'=>'date',
-            'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model'=>$model,
-                'attribute'=>'dbdate',
-                'language'=>'ru',
-                ),true),
-            'value'=>'$data->dbdate'
-        ),
-        array(
-            'name'=>'manager_informed',
-            'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model'=>$model,
-                'attribute'=>'dbmanager_informed',
-                'language'=>'ru',
-                ), true),
-            'value'=>'$data->dbmanager_informed',
-        ),
-        array(
-            'name'=>'date_finish',
-            'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model'=>$model,
-                'attribute'=>'dbdate_finishstart',
-                'language'=>'ru',
-                ), true).$this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                    'model'=>$model,
-                    'attribute'=>'dbdate_finishend',
-                    'language'=>'ru',
-                ), true),
-            'value'=>'$data->dbdate_finish',
-        ),
-        array(
-            'class'=>'CButtonColumn',
-            'template'=>'{delete}{update}',
-        ),
-	);
 }
+/*$columns[] = array(
+		'name'=>'date',
+		'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			'model'=>$model,
+			'attribute'=>'dbdate',
+			'language'=>Yii::app()->language,
+			),true),
+		'value'=>'$data->dbdate'
+	);*/
+$columns[] = array(
+		'name'=>'manager_informed',
+		'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			'model'=>$model,
+			'attribute'=>'dbmanager_informed',
+			'language'=>Yii::app()->language,
+			), true),
+		'value'=>'$data->dbmanager_informed',
+	);
+$columns[] = array(
+		'class'=>'CButtonColumn',
+		'template'=>'{delete}{update}',
+	);
 ?>
 <div id="grid">
 <?php $this->widget('zii.widgets.grid.CGridView', array(

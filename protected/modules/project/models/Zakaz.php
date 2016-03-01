@@ -61,7 +61,7 @@ class Zakaz extends CActiveRecord {
 				$this->_model=ProjectField::model()->forManager()->findAll();
 			} elseif (User::model()->isCustomer()) {
 				$this->_model=ProjectField::model()->forCustomer()->findAll();
-			} elseif (User::model()->isAuthor()) {
+			} elseif (User::model()->isAuthor() || Yii::app()->user->isGuest) {
 				$this->_model=ProjectField::model()->forAuthor()->findAll();
 			}
 		}
@@ -229,7 +229,6 @@ class Zakaz extends CActiveRecord {
 				$fields = '';
 
 				$model=$this->getFields();
-
 				foreach ($model as $field) {
 					$field_rule = array();
 					$fields .= ' ,'.$field->varname;
@@ -374,104 +373,44 @@ class Zakaz extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-		if(Campaign::getId()){
-			$criteria->compare('id', $this->id);
-			$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
-			$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
-			$fields=$this->getFields();
-			foreach ($fields as $field) {
-				$tmp = $field->varname;
-				if (isset($this->$tmp) && $field->field_type == 'LIST' && $this->$tmp != '') {
-					$criteria->compare($tmp, explode(',',$this->$tmp));
-				} else {
-					$criteria->compare($tmp, $this->$tmp);
-				}
-			}
-			$criteria->compare('executor',$this->executor);
-			if (!($this->status) or $this->status == 0){            /// Так ли делать
-				$criteria->addNotInCondition('status', array(5));
-			} else if ($this->status == -1) {
-				// show all
+		$criteria->compare('id', $this->id);
+		$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
+		$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
+		$fields=$this->getFields();
+		foreach ($fields as $field) {
+			$tmp = $field->varname;
+			if (isset($this->$tmp) && $field->field_type == 'LIST' && $this->$tmp != '') {
+				$criteria->compare($tmp, explode(',',$this->$tmp));
 			} else {
-				$criteria->compare('status',$this->status);
+				$criteria->compare($tmp, $this->$tmp);
 			}
-			
-			$sort = new CSort();
-			$sort->defaultOrder = 't.id ASC';
-			$sort->attributes = array(
-				'dateCreation'=> array(
-					'asc' => 't.date',
-					'desc' => 't.date desc',
-				),
-				'managerInformed'=> array(
-					'asc' => 't.manager_informed',
-					'desc' => 't.manager_informed desc',
-				),
-				'dateFinish'=> array(
-					'asc' => 't.date_finish',
-					'desc' => 't.date_finish desc',
-				),
-				'*'
-			);
-		} else {
-			$criteria->with = array('job', 'category');
-
-			$criteria->compare('t.id', $this->id);
-
-			$criteria->compare('job_id', $this->jobName);
-			$criteria->compare('category_id', $this->catName);
-
-			$criteria->compare('title', $this->title, true);
-			$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
-			$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
-			if (isset($this->dbdate_finishend) && isset($this->dbdate_finishstart)) {
-				$criteria->addCondition('"' . $this->dbdate_finishstart . '"<=DATE_FORMAT(date_finish, "%d.%m.%Y")<="' . $this->dbdate_finishend . '"');
-				$criteria->addCondition('date_finish is not NULL');
-			}
-			else
-				$criteria->compare('DATE_FORMAT(date_finish, "%d.%m.%Y")', substr($this->dbdate_finishstart,0,10), true);
-			$criteria->compare('executor',$this->executor);
-			if (!($this->status) or $this->status == 0){
-				$criteria->addNotInCondition('status', array(5));
-			} else if ($this->status == -1) {
-				// show all
-			} else {
-				$criteria->compare('status',$this->status);
-			}
-			$sort = new CSort();
-			$sort->defaultOrder = 't.id ASC';
-			$sort->attributes = array(
-				'jobName'=> array(
-					'asc' => 'job.job_name',
-					'desc' => 'job.job_name desc',
-				),
-				'catName'=> array(
-					'asc' => 'category.cat_name',
-					'desc' => 'category.cat_name desc',
-				),
-				'id'=> array(
-					'asc' => 't.id',
-					'desc' => 't.id desc',
-				),
-				'title'=> array(
-					'asc' => 't.title',
-					'desc' => 't.title desc',
-				),
-				'dateCreation'=> array(
-					'asc' => 't.date',
-					'desc' => 't.date desc',
-				),
-				'managerInformed'=> array(
-					'asc' => 't.manager_informed',
-					'desc' => 't.manager_informed desc',
-				),
-				'dateFinish'=> array(
-					'asc' => 't.date_finish',
-					'desc' => 't.date_finish desc',
-				),
-				'*'
-			);
 		}
+		$criteria->compare('executor',$this->executor);
+		if (!($this->status) or $this->status == 0){            /// Так ли делать
+			$criteria->addNotInCondition('status', array(5));
+		} else if ($this->status == -1) {
+			// show all
+		} else {
+			$criteria->compare('status',$this->status);
+		}
+		
+		$sort = new CSort();
+		$sort->defaultOrder = 't.id ASC';
+		$sort->attributes = array(
+			'dateCreation'=> array(
+				'asc' => 't.date',
+				'desc' => 't.date desc',
+			),
+			'managerInformed'=> array(
+				'asc' => 't.manager_informed',
+				'desc' => 't.manager_informed desc',
+			),
+			'dateFinish'=> array(
+				'asc' => 't.date_finish',
+				'desc' => 't.date_finish desc',
+			),
+			'*'
+		);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

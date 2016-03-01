@@ -2,7 +2,7 @@
 body {
     font-family:arial, sans-serif;
     color:#333;
-    background-color: #DEE3E9;
+    /*background-color: #DEE3E9;*/
 }
 /*
 a { color:#004dd9; }
@@ -1384,4 +1384,9 @@ div.chat-buttons input {
 }
 .content-clearfix table.detail-view {
     background: transparent;
+}
+.text4customerts {
+	padding-left: 20px;
+	padding-right: 30px;
+	padding-bottom: 40px;
 }

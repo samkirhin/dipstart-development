@@ -43,18 +43,14 @@ class ModerateController extends Controller
         ]);
     }
     
-    public function actionApprove($id)
-    {
+    public function actionApprove($id) {
         $model = $this->loadModel($id);
         $model->approve();
-        $model = $this->loadModel($id);
     }
     
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->loadModel($id);
         $model->delete();
-        $model = $this->loadModel($id);
     }
     
     public function actionField() {

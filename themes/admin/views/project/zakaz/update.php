@@ -207,7 +207,12 @@ $this->breadcrumbs = array(
         <div class="col-xs-4 left-column">
             <div class="row zero-edge">
                <div class="col-xs-12 statusBlock">
-                   <span class="label label-warning"><b><?= $message; ?></b></span>
+                   <!--<span class="label label-warning"><b><?php //echo $message; ?></b></span>-->
+				   <?=CHtml::dropDownList('Zakaz_status', $model->status, CHtml::listData(ProjectStatus::model()->findAll(), 'id', 'status'),
+                            array('ajax' => array('url' => $this->createUrl('/project/zakaz/update'),
+                                                  'data' => 'js:"id='.$model->id.'&sid="+this.value',
+                                                  'cache' => false,
+                                                  ),)); ?>
 				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>
 					<!-- Тут была кнопка открыть или закрыть заказ -->
                </div>

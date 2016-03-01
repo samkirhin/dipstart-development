@@ -22,6 +22,7 @@ $this->menu=array(
 		'id',
 		'username',
 		'full_name',
+		'phone_number',
 	);
 	$mailing_list = 0;
 	if($model->profile) {

@@ -202,7 +202,9 @@ class User extends CActiveRecord
 		if($userId) {
 			$roles = $authorizer->getAuthItems(2, $userId);
 		}
-		else {
+		elseif (Yii::app()->user->id == 0) {
+			return 'root';
+		} else {
 			$roles = $authorizer->getAuthItems(2, Yii::app()->user->id);
 		}
 		$role =  array_keys($roles);

@@ -42,7 +42,7 @@ switch ($_GET['s']) {
 				array(
 					'type'=>'raw',
 					'name'=>UserModule::t("E-mail"),
-					'value'=>'$data["email"]',
+					'value'=>'CHtml::link(CHtml::encode($data["email"]),array("admin/view","id"=>$data["id"]))',
 				),
 				array(
 					'type'=>'raw',
@@ -74,7 +74,11 @@ switch ($_GET['s']) {
 					'type'=>'raw',
 					'value' => 'CHtml::link(CHtml::encode($data->username),array("admin/view","id"=>$data->id))',
 				),
-				'email',
+				array(
+					'type'=>'raw',
+					'name'=>UserModule::t("E-mail"),
+					'value'=>'CHtml::link(CHtml::encode($data["email"]),array("admin/view","id"=>$data["id"]))',
+				),
 				array(
 					'type'=>'raw',
 					'header'=>UserModule::t("Phone"),
