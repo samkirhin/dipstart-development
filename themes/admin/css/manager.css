@@ -72,6 +72,7 @@ hr {
     margin-bottom: 10px;
     max-width: 100%;
     min-width: 100%;
+	font-size: 80%;
 }
 .notesBlockArea {
     padding-left: 0;
@@ -835,7 +836,7 @@ ul.qq-upload-list > li {
 }
 
 div#ui-datepicker-div {
-	z-index: 11!important;
+	z-index: 3000!important;
 }
 
 div#send_buttons h5 {

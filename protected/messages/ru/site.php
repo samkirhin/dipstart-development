@@ -125,8 +125,12 @@ return array(
     'Accounts department' => 'Бухгалтерия',
 	
 	//Company
+	'List companies' => 'Список компаний',
+	'Create company' => 'Создать компанию',
+	'Edit company' => 'Редактировать компанию',
 	'company' => 'компания',
 	'company name' => 'название компании',
+	'frozen' => 'заморожена',
 	'domains' => 'доменные имена',
 	'language' => 'язык',
 	'support email' => 'электронная почта поддержки',
@@ -137,6 +141,7 @@ return array(
 	'logo' => 'лого',
 	'header text' => 'текст в шапке',
 	'text for guests' => 'текст для гостей',
+	'text for customers' => 'текст для заказчиков',
 	'webmaster first order rate' => 'процент(множитель) вэбмастеру за первый заказ',
 	'webmaster second order rate' => 'процент(множитель) вэбмастеру за повторные заказы',
 

@@ -9,6 +9,13 @@
 	if(Yii::app()->user->hasFlash('companyErrorMessage'))
 		echo $form->errorSummary($model);
 	?>
+	<?php if($root) { ?>
+	<div class="row">
+		<?php echo $form->labelEx($model,'frozen'); ?>
+		<?php echo $form->checkBox($model,'frozen'); ?>
+		<?php echo $form->error($model,'frozen'); ?>
+	</div>
+	<?php } ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
 		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
@@ -65,6 +72,11 @@
 		<?php echo $form->labelEx($model,'text4guests'); ?>
 		<?php echo $form->textArea($model,'text4guests',array('rows'=>12, 'cols'=>50, 'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'text4guests'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'text4customers'); ?>
+		<?php echo $form->textArea($model,'text4customers',array('rows'=>12, 'cols'=>50, 'class'=>'form-control')); ?>
+		<?php echo $form->error($model,'text4customers'); ?>
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'WebmasterFirstOrderRate'); ?>

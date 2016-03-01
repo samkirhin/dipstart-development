@@ -73,7 +73,7 @@ $html_string = $order->generateMaterialsList($url);
 	<div class="col-xs-4">
 		<div class="row">
 			<?php
-			$this->renderPartial('payment',array('order'=>$order));
+			$this->renderPartial('_payment',array('order'=>$order));
 			?>
 			
 			<?php

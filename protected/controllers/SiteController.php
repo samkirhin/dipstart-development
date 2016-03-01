@@ -47,8 +47,10 @@ class SiteController extends Controller {
 			$this->redirect('/project/zakaz/customerOrderList');
 		} elseif (User::model()->getUserRole()=='Webmaster'){
 			$this->redirect('/partner/stats');
-        } else {
-            $this->render('main');
+        } elseif (User::model()->getUserRole()=='root') {
+			$this->redirect('/company/list');
+		} else {
+			$this->redirect('/project/event');
         }
 	}
 

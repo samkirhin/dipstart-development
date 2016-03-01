@@ -1385,3 +1385,8 @@ div.chat-buttons input {
 .content-clearfix table.detail-view {
     background: transparent;
 }
+.text4customerts {
+	padding-left: 20px;
+	padding-right: 30px;
+	padding-bottom: 40px;
+}

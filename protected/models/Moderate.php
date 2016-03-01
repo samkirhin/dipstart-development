@@ -49,10 +49,8 @@ class Moderate extends CActiveRecord
         }
     }
     
-    public function approve()
-    {
+    public function approve() {
         try {
-            
             $model = (new $this->class_name)->findByPk($this->id_record);
             
             if ($this->attribute == 'max_exec_date') {
@@ -62,18 +60,15 @@ class Moderate extends CActiveRecord
             }
 
             $model->save(false);
-
             $this->delete();
-            
         } catch (Exception $ex) {
-            
+            print_r ($ex);
+			Yii::app()->end();
         }
     }
     
-    public function afterDelete()
-    {
+    public function afterDelete() {
         parent::afterDelete();
-        
         if ($this->countByAttributes(['event_id'=>$this->event_id]) == 0) {
             Events::model()->deleteByPk($this->event_id);
         }

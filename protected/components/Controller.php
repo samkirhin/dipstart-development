@@ -27,6 +27,10 @@ class Controller extends RController
 		// --- Организации
 		$c_id = Campaign::getId();
 		if ($c_id) {
+			if(Campaign::getCompany()->frozen) {
+				echo 'Where is my money, dude ?!?!?!';
+				die;
+			}
 			//Payment::$table_prefix = $c_id.'_';
 			//Profile::$table_prefix = $c_id.'_';
 			//ProfileField::$table_prefix = $c_id.'_';
@@ -58,6 +62,7 @@ class Controller extends RController
             switch (User::model()->getUserRole()) {
                 case ('Manager'):
                 case ('Admin'):
+				case ('root'):
                     Yii::app()->theme='admin';
                     break;
                 case ('Author'):

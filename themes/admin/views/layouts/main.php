@@ -8,6 +8,13 @@
 $items = array();
 $role = User::model()->getUserRole();
 switch ($role){
+	case 'root':
+		$items[] = array('label'=>Yii::t('site','List companies'), 'url'=>array('/company/list'));
+		$items[] = array('label'=>Yii::t('site','Create company'), 'url'=>array('/company/create'));
+		$items[] = array('label'=>Yii::t('site','Edit company'), 'url'=>array('/company/edit'));
+		$items[] = array('label'=>Yii::t('site','Rights'), 'url'=>array('/rights'));
+		$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
+		break;
     case 'Admin':
 
         //$items[] = array('label'=>Yii::t('site','Home'), 'url'=>Yii::app()->getBaseUrl(true));
