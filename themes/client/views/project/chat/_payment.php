@@ -4,36 +4,36 @@ if (User::model()->isCustomer()) {
 	if ($to_recive>0) {
 		if(Campaign::getPaymentCash()==1) {
 			echo '<div class="col-xs-12 block-for-upload-chek">';
-			$upload = new UploadPaymentImage;
-			$form = $this->beginWidget('CActiveForm', array(
-				'id' => 'check-form',
-				'action' => ['zakaz/uploadPayment', 'id' => $order->id],
-				'enableAjaxValidation' => false,
-				'htmlOptions' => array(
-					'enctype' => 'multipart/form-data',
-				)
-			)); ?>
+			?>
 			<div class="to-pay">
-				<span class="text-to-pay"><?=ProjectModule::t('To pay')?><span> <span class="value-to-pay"><? echo $to_recive; ?></span><!--<span class="rub">&#8381;</span>-->
+				<span class="text-to-pay"><?=ProjectModule::t('To pay:')?><span> <span class="value-to-pay"><? echo $to_recive; ?></span><!--<span class="rub">&#8381;</span>-->
 			</div>
-			<div class="row chek">
-				<span class="text_scan"><?=ProjectModule::t('Scan check')?></span> <?php echo $form->fileField($upload, 'file'); ?>
-			</div>
-			<div class="row buttons check-button-upload">
-				<?php echo CHtml::submitButton(ProjectModule::t('Upload')); ?>
-			</div>
-			<?php $this->endWidget();
+			<?php
+			$check_list = '';
 			if (count($images) > 0) {
 				echo '<div class="chek-is-approving">'.ProjectModule::t('Your payment at checkout ...').'</div>';
-				//$img = UploadPaymentImage::$folder . $chek_image;
 				$i = 1;
-				echo '<div class="chek-image-link">';
-
 				foreach ($images as $item) {
-					echo CHtml::link('Чек ' . $i++, UploadPaymentImage::$folder . $item->image, array ('target' => '_blank' )) . ' ';
+					$link = CHtml::link(ProjectModule::t('Check').' ' . $i++, PaymentImage::getFolder() . $item->image, array ('target' => '_blank' )) . ' ';
+					$check_list .= '<li>'.$link.'</li>';
 				}
-				echo '</div>';
 			}
+			$this->widget('ext.EAjaxUpload.EAjaxUpload',
+				array(
+					'id' => 'paymentImageUploader',
+					'postParams' => array(
+						'id' => $order->id,
+					),
+					'config' => array(
+						'action' => $this->createUrl('zakaz/uploadPayment', array('id' => $order->id)),
+						'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Upload check scan') .'</div><ul class="qq-upload-list">'.$check_list.'</ul></div></div>',
+						'disAllowedExtensions' => array('exe'),
+						'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+						'minSizeLimit' => 10,// minimum file size in bytes
+						'onComplete' => "js:function(id, fileName, responseJSON){}"
+					)
+				)
+			);
 			echo '</div>';
 		}
 		

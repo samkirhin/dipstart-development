@@ -77,7 +77,7 @@ $form=$this->beginWidget('UActiveForm', array(
 <?php $this->endWidget(); ?>
 
 	<p class="hint2">
-		<a href="/user/login<?php if($_GET['role']) echo '?role='.$_GET['role']; ?>"><?=UserModule::t("Login") ?></a>
+		<a href="/user/login<?php if($_GET['role']) echo '?role='.$_GET['role']; ?>"><?=UserModule::t('Login') ?></a>
 		<?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>
 	</p>
 </div><!-- form -->

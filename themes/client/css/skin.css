@@ -445,27 +445,60 @@ background-color: #F8F8F8;
 }
 
 #justFileUpload {padding: 15px;}
+
 .qq-upload-drop-area {
-display: block!important;
-position: relative;
-background-color: #fff;
-border: 1px solid #DDDDDD;
-margin-left: 0;
-width: 100%;
-height: auto;
-min-height: 100px;
-margin-top: 20px;
+    display: block!important;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #DDDDDD;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    /*margin-top: 20px;*/
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.qq-upload-drop-area span {
+    margin-top: 15px;
+    margin-left: 0;
+    font-size: 2rem;
+    /*font-weight: bold;*/
+    text-transform: uppercase;
+    color: #EDEDED;
+    position: relative;
+}
+
+.qq-upload-button {
+width: 90%;
+background-color: white;
+color: #9F9F9F;
+margin: 15px auto;
+border: 1px solid #ddd; 
+}
+
+.qq-upload-button:hover {color: #868686;	border: 1px solid #ccc;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;	}
+
+.qq-upload-list {
+margin: 0;
+padding-top: 10px;
+}
+
+.qq-upload-list li {
+text-align: left;
+padding-left: 15px;
+padding-right: 15px;
+list-style-type: none;
+display: block;
 overflow: hidden;
 }
-.qq-upload-drop-area span {
-margin-top: 15px;
-margin-left: 0;
-font-size: 2.1rem;
-font-weight: bold;
-text-transform: uppercase;
-color: #EDEDED;
-position: relative;
+
+li.gray-file a.file {
+color: silver;
+font-weight: normal;
 }
+
 .qq-upload-button {width: 90%; background-color: green;margin: 15px auto;}
 .qq-upload-list {margin:0;}
 .info-block {
@@ -511,25 +544,6 @@ background-color: #F8F8F8;
 
 
 .btn {border-radius:0;}
-
-#UploadPaymentImage_file {
-padding: 15px 0px;
-font-size: 13px;
-width: 100%;
-cursor: pointer;
-}
-
-.check-button-upload input{
-background-color: green;
-color: #fff;
-border: none;
-padding: 5px 20px;
-width: 100%;
-}
-
-.chek-image-link a img{
-margin-top:20px;
-}
 
 .text_scan {
 width: 100%;
@@ -1015,63 +1029,6 @@ margin-top:15px;
 margin:0;
 }
 
-.qq-upload-drop-area {
-display:block!important;
-}
-
-.qq-upload-drop-area {
-    display: block!important;
-    position: relative;
-    background-color: #fff;
-    border: 1px solid #DDDDDD;
-    margin-left: 0;
-    width: 100%;
-    height: auto;
-    min-height: 100px;
-    margin-top: 20px;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-
-.qq-upload-drop-area span {
-    margin-top: 15px;
-    margin-left: 0;
-    font-size: 2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #EDEDED;
-    position: relative;
-}
-
-.qq-upload-button {
-width: 90%;
-background-color: white;
-color: #9F9F9F;
-margin: 15px auto;
-border: 1px solid #ddd; 
-}
-
-.qq-upload-button:hover {color: #868686;	border: 1px solid #ccc;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;	}
-
-.qq-upload-list {
-margin: 0;
-padding-top: 10px;
-}
-
-.qq-upload-list li {
-text-align: left;
-padding-left: 15px;
-padding-right: 15px;
-list-style-type: none;
-display: block;
-overflow: hidden;
-}
-
-li.gray-file a.file {
-color: silver;
-font-weight: normal;
-}
-
 #new-changes-link a {
 padding: 10px;
 }
@@ -1389,4 +1346,9 @@ div.chat-buttons input {
 	padding-left: 20px;
 	padding-right: 30px;
 	padding-bottom: 40px;
+}
+.guest-links {
+	padding: 10px;
+	font-size: 18px;
+	min-height: 45px;
 }

@@ -102,8 +102,8 @@ $html_string = $model->generateMaterialsList($url);
                             'config' => array(
                                 'action' => $this->createUrl('/project/zakaz/upload', array('unixtime' => $model->unixtime)),
                                 'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Attach materials to the order') .'</div><ul class="qq-upload-list">'.$html_string.'</ul></div></div>',
-                                'disAllowedExtensions' => array('exe'),
-                                'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
+                                'disAllowedExtensions' => array('exe','scr'),
+                                'sizeLimit' => 200 * 1024 * 1024,// maximum file size in bytes
                                 'minSizeLimit' => 10,// minimum file size in bytes
                                 'onComplete' => "js:function(id, fileName, responseJSON){}"
                             )

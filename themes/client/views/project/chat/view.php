@@ -3,6 +3,13 @@ Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/cs
 if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 ?>
 <div class="container container-view">
+	<?php if($isGuest) { ?>
+	<div class="heading guest-links">
+		<a href="/project/zakaz/list">&lt;- <?=ProjectModule::t('Back to the orders list') ?></a>
+		<a class="right" href="/user/login?role=Author"><?=UserModule::t('Login') ?></a>
+		<a class="right" href="/user/registration?role=Author"><?=UserModule::t('Register') ?></a>
+	</div>
+	<?php } ?>
 	<div class="heading">
 		<h4 class="title">
 			<?=ProjectModule::t('Title').': '.$order->title ?>
@@ -74,5 +81,11 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 		</div>
 		<?php
 	}
-	?>
+	if($isGuest) { ?>
+	<div class="heading guest-links clear">
+		<a href="/project/zakaz/list">&lt;- <?=ProjectModule::t('Back to the orders list') ?></a>
+		<a class="right" href="/user/login?role=Author"><?=UserModule::t('Login') ?></a>
+		<a class="right" href="/user/registration?role=Author"><?=UserModule::t('Register') ?></a>
+	</div>
+	<?php } ?>
 </div>

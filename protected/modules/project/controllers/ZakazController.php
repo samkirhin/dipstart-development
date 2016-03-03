@@ -437,16 +437,16 @@ class ZakazController extends Controller {
 	}
     
     public function actionUploadPayment($id) {
-        if(isset($_POST['UploadPaymentImage'])) {
-            $upload = new UploadPaymentImage;
-            $upload->orderId = $id;
-            $upload->file = CUploadedFile::getInstance($upload, 'file');
-            if ($upload->file && $upload->validate()) {
-                $upload->save();
-				EventHelper::chekUploaded($id);
-            }
-        }
-        $this->redirect(['chat/index', 'orderId'=>$id]);
+		$folder = Yii::getPathOfAlias('webroot').PaymentImage::getFolder();
+		$result = Tools::uploadMaterials($folder,false);
+		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+		if ($result['success'] && User::model()->isCustomer()) {
+            $paymentImage = new PaymentImage;
+            $paymentImage->project_id = $id;
+            $paymentImage->image = $result['fileName'];
+            $paymentImage->save(false);
+			EventHelper::chekUploaded($id);
+		}
     }
 
     /**
@@ -670,7 +670,10 @@ class ZakazController extends Controller {
 		$models = $this->getProviders(true);
 		$model	=  $models['model'];
 		$user = User::model()->with('profile')->findByPk(Yii::app()->user->id);
-
+		$isGuest = Yii::app()->user->isGuest();
+		if ($isGuest) {
+			Yii::app()->theme='client';
+		}
 		$this->render('list',array(
 			'model'=>$models['model'],
             'model_done' => $models['model_done'],
@@ -678,6 +681,7 @@ class ZakazController extends Controller {
             'dataProvider_done' => $models['model_done'],
 			'only_new'		=> $new,
 			'profile' => $user->profile,
+			'isGuest' => $isGuest,
 		));
 	}
 
@@ -798,9 +802,8 @@ class ZakazController extends Controller {
 
 
     public function actionUpload($unixtime) {
-		//$folder='uploads/c'.Campaign::getId().'/temp/'.$_GET['unixtime'].'/';
 		$unixtime = intval($unixtime);
-		$folder='uploads/c'.Campaign::getId().'/temp/'.$unixtime.'/';
+		$folder=Yii::getPathOfAlias('webroot').'/uploads/c'.Campaign::getId().'/temp/'.$unixtime.'/';
 		$result = Tools::uploadMaterials($folder);
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }

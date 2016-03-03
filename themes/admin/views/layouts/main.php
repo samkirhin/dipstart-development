@@ -72,6 +72,8 @@ Yii::app()->clientScript->registerCssFile('/css/font-awesome/css/font-awesome.cs
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?php $company = Company::getCompany();
+	if($company->icon) echo '<link rel="shortcut icon" href="'.Yii::app()->getBaseUrl(/*true*/).'/'.$company->getFilesPath().'/'.$company->icon.'" type="image/x-icon">'."\n";?>
 	<title><?php echo Yii::app()->controller->pageTitle;?></title>
 </head>
 <body>
