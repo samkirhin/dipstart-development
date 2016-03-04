@@ -1,7 +1,7 @@
 <?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Login"); ?>
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/skin2.css');?>
-<div class="col-xs-offset-3 col-xs-6 login-form-bg">
-
+<!--<div class="col-xs-offset-3 col-xs-6 login-form-bg"> -->
+<div class="login-form-bg">
 <?php  $this->widget('application.components.UloginWidget', array(
     'params'=>array(
         'redirect'=>'http://'.$_SERVER['HTTP_HOST'].'/ulogin/login?role='.$_GET['role'] //Адрес, на который ulogin будет редиректить браузер клиента. Он должен соответствовать контроллеру ulogin и действию login
@@ -35,12 +35,12 @@
 	
 	<div class="form-group">
 		<!--<?php echo CHtml::activeLabelEx($model,'password'); ?> <br />-->
-		<?php echo CHtml::activePasswordField($model,'password',array('placeholder'=>'Пароль')) ?>
+		<?php echo CHtml::activePasswordField($model,'password',array('placeholder'=>'Пароль', 'class'=>'placeholder')) ?>
 	</div>
 	
 	<div>
 		<p class="hint">
-			<a href="/user/registration<?php if($_GET['role']) echo '?role='.$_GET['role']; ?>"><?=UserModule::t("Register") ?></a>
+			<a href="/user/registration<?php if($_GET['role']) echo '?role='.$_GET['role']; ?>"><?=UserModule::t('Register') ?></a>
 			<?php echo CHtml::link(UserModule::t("Lost Password?"),Yii::app()->getModule('user')->recoveryUrl); ?>
 		</p>
         <p>

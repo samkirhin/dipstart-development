@@ -82,7 +82,6 @@
 		<?php 
         
             if ($zakaz) {
-                new UploadPaymentImage;
                 $i = 1;
                 foreach ($zakaz->images as $item) {
                     echo CHtml::link(ProjectModule::t('Cheque') . $i++, PaymentImage::getFolder() . $item->image, array ('target' => '_blank' )) . ' ';

@@ -46,6 +46,7 @@ div.form-container > form {
 div.form-item {
     min-height: 50px;
     background-color: #C5D8F0;
+	width: 44%;
     width: -webkit-calc(50% - 35px);
     width: calc(50% - 35px);
     margin: 5px 15px;
@@ -76,6 +77,7 @@ div.form-item input[type="text"], div.form-item select {
     padding: 5px 8px;
     line-height: 22px;
     margin: 10px 20px 15px;
+	width: 93%;
     width: -webkit-calc(100% - 40px);
     width: calc(100% - 40px);
     -webkit-box-sizing: border-box;
@@ -106,6 +108,7 @@ div.form-item textarea {
     padding: 5px 8px;
     line-height: 22px;
     margin: 10px 20px 15px;
+	max-width: 90%;
     min-width: -webkit-calc(100% - 40px);
     min-width: calc(100% - 40px);
     max-width: -webkit-calc(100% - 40px);

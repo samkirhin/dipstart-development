@@ -38,8 +38,7 @@ class PaymentImage extends CActiveRecord {
 
 
     public function remove($id) {
-        //new UploadPaymentImage;
-        $dir = Yii::getPathOfAlias('webroot') . self::getFolder(); //UploadPaymentImage::$folder;
+        $dir = Yii::getPathOfAlias('webroot') . self::getFolder();
         
         foreach ($this->findAll('project_id=:project_id AND approved=0', [':project_id'=>$id]) as $item) {
             

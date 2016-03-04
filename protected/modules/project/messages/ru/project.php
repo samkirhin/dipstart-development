@@ -133,7 +133,9 @@ return array(
 	'Executor finished the stage' => 'Исполнитель закончил этап',
 	'The customer accepted the stage' => 'Заказчик принял этап',
 	'Approve stage' => 'Утвердить этап',
-
+	'Check' => 'Чек',
+	'Upload check scan' => 'Загрузить скан чека',
+	'Your payment at checkout ...' => 'Ваш платёж на проверке ...',
     //Блок оплаты
     'Payments' => 'Оплаты',
     'Project cost:' => 'Стоимость проекта:',
@@ -164,7 +166,8 @@ return array(
 	'SelectProject' => 'Выбрать заказ',
 	'chat' => 'чат',
 	'Chat' => 'чат',
-	'Edit Last Message' => 'Редактировать последнее сообщение',	
+	'Edit Last Message' => 'Редактировать последнее сообщение',
+	'Back to the orders list' => 'Назад к списку заказов',
 
 	'Error' => 'Ошибка',
 	'Authority Error' => 'Ошибка авторизации',
