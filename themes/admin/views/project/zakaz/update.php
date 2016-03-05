@@ -75,7 +75,7 @@ $this->breadcrumbs = array(
                                         $tmp = '';
                                         if (file_exists($path)) {
                                             foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
-                                                $tmp .= '<li><a class="link-to-material" href="' . $url . $v . '">' . str_replace('#pre#', '', $v) . '</a>';
+                                                $tmp .= '<li><a class="link-to-material" href="' . $url . rawurlencode($v) . '">' . str_replace('#pre#', '', $v) . '</a>';
                                                 $tmp .= '<a href="#" data-id="' . $model->id . '" data-name="' . $v . '" onclick="removeFile(this); return false;"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>'; #remove file btn
                                                 if (strstr($v, '#pre#'))
                                                     $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">'. ProjectModule::t('Approve') .'</button>';
@@ -92,9 +92,9 @@ $this->breadcrumbs = array(
                                                 'config' => array(
                                                     'action' => $this->createUrl('/project/chat/upload',array('id'=>$model->id)),
                                                     'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Upload material') .'</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
-                                                    'disAllowedExtensions'=>array('exe'),
-                                                    'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
-                                                    'minSizeLimit' => 10,// minimum file size in bytes
+                                                    'disAllowedExtensions'=>array('exe','scr'),
+                                                    'sizeLimit' => Tools::maxFileSize(),//200 * 1024 * 1024,// maximum file size in bytes
+                                                    'minSizeLimit' => 1,// minimum file size in bytes
                                                     'onComplete' => "js:function(id, fileName, responseJSON){}"
                                                 )
                                             )
