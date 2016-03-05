@@ -1,5 +1,8 @@
 <?php
 class Tools {
+	static public function maxFileSize() {
+		return 200 * 1024 * 1024;
+	}
 	static public function inlineEdit($data, $field, $type='text') {
 		return '<div class="inlineEdit" id="' . $data['id'] . '" field="'.$field.'" type="'.$type.'">' . $data[$field] . '</div>';
 	}
@@ -26,7 +29,7 @@ class Tools {
 
 			$newName = self::freeFileName(STranslate::transliter($fileupload->getName()), $dir);
 			
-			if (!file_exists($dir)) mkdir($dir,0755,true);
+			if (!file_exists($dir)) mkdir($dir,0775,true);
             $fileupload->saveAs($dir . '/' . $newName);
 			
             //$this->file = $newName;
@@ -45,18 +48,18 @@ class Tools {
 	static public function uploadMaterials($folder, $premoderation = true) {
 		Yii::import("ext.EAjaxUpload.qqFileUploader");
 		if (!file_exists($folder)) {
-			mkdir($folder, 0777, true);
+			mkdir($folder, 0775, true);
 		}
 		$config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx');
 		$config['disAllowedExtensions'] = array('exe','scr');
-		$sizeLimit = 200 * 1024 * 1024;// maximum file size in bytes
+		$sizeLimit = self::maxFileSize();// maximum file size in bytes
 		$uploader = new qqFileUploader($config, $sizeLimit);
 		$_GET['qqfile'] = self::freeFileName($_GET['qqfile'], $folder);
 		if($premoderation && !(User::model()->isManager())) $_GET['qqfile']='#pre#'.$_GET['qqfile'];
 		$result = $uploader->handleUpload($folder,true);
 		$result['fileSize']=filesize($folder.$result['filename']);//GETTING FILE SIZE
 		$result['fileName']=$result['filename'];//GETTING FILE NAME
-		chmod($folder.$result['fileName'],0666);
+		chmod($folder.$result['fileName'],0664);
 		return $result;
 	}
 }

@@ -138,7 +138,7 @@
 </div>
 </div>
 
-<div class="row" style="display: none">
+<!--<div class="row" style="display: none">     --------------4rm----------------
     <div class="col-xs-12 info-block">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -150,7 +150,7 @@
                         </a>
 						<br/><!--<a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">-->
 						<!--<img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" />-->
-						<!--</a>-->
+						<!--</a>--
                     </h4>
                 </div>
                 <div id="infoZakaz" class="panel-collapse collapse">
@@ -172,7 +172,7 @@
 
                                     <?php
                                     // --- campaign
-                                    if(isset(Zakaz::$files_folder)){
+                                    /*if(isset(Zakaz::$files_folder)){
                                         $url = Zakaz::$files_folder.$model->id.'/';
                                     } else {
                                         $url = '/uploads/'.$model->id.'/';
@@ -250,7 +250,7 @@
 												echo '</div>';
 											}
 										}
-									}
+									}*/
 									?>
                                     <h3> <?=ProjectModule::t('Deadlines')?> </h3>
 
@@ -341,11 +341,11 @@
 
                                 <?php $this->endWidget(); ?>
                             </div>
-                            <!-- form -->
+                            <!-- form --
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>-->

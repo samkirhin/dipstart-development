@@ -25,32 +25,32 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.helpers.Tools',
-        'application.modules.user.*',
-        'application.modules.user.models.*',
-        'application.modules.user.components.*',
-        'application.modules.rights.*',
-        'application.modules.rights.models.*',
-        'application.modules.rights.components.*',
-        'application.modules.project.*',
-        'application.modules.project.models.*',
-        'application.modules.project.controllers.*',
+		'application.modules.user.*',
+		'application.modules.user.models.*',
+		'application.modules.user.components.*',
+		'application.modules.rights.*',
+		'application.modules.rights.models.*',
+		'application.modules.rights.components.*',
+		'application.modules.project.*',
+		'application.modules.project.models.*',
+		'application.modules.project.controllers.*',
 		'application.behaviors.*',
-//        'application.extensions.yiifilemanager.*',
-//        'application.extensions.yiifilemanagerfilepicker.*',
-        'application.extensions.helpers.EDownloadHelper',
-        'application.extensions.yiichat.*',
-        'ext.YiiMailer.YiiMailer',
-        'bootstrap.helpers.TbHtml',
-        'ext.juidatetimepicker.EJuiDateTimePicker',
+		//'application.extensions.yiifilemanager.*',
+		//'application.extensions.yiifilemanagerfilepicker.*',
+		//'application.extensions.helpers.EDownloadHelper',
+		'application.extensions.yiichat.*',
+		'ext.YiiMailer.YiiMailer',
+		'bootstrap.helpers.TbHtml',
+		'ext.juidatetimepicker.EJuiDateTimePicker',
     ),
 	'modules'=>array(
-        'SimplePaypal' => array(
+        /*'SimplePaypal' => array(
             'components' => array(
                 'paypalManager' => array(
                     'class' => 'SimplePaypal.components.Paypal',
                 ),
             ),
-        ),
+        ),*/
         'user' => array(
         // названия таблиц взяты по умолчанию, их можно изменить
             'tableUsers' => 'Users',
@@ -66,7 +66,7 @@ return array(
 			'password'=>'sunrise',
             'generatorPaths' => array('booster.gii'),
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1','192.168.0.*','217.175.0.36'),
+			//'ipFilters'=>array('127.0.0.1','::1','192.168.0.*','217.175.0.36'),
 		),
 	),
 	// application components
@@ -118,9 +118,9 @@ return array(
 
         //dev server
         'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=dipstart',
+			'connectionString' => 'mysql:host=localhost;dbname=namedb',
 			'emulatePrepare' => true,
-			'username' => 'dipstart',
+			'username' => 'Shiva',
 			'password' => '',
 			'charset' => 'utf8',
 		),
