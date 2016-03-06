@@ -871,6 +871,8 @@ CREATE TABLE IF NOT EXISTS `Companies` (
   `icon` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `logo` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `header` text CHARACTER SET utf8,
+  `text4guests` text CHARACTER SET utf8,
+  `text4customers` text CHARACTER SET utf8,
   `WebmasterFirstOrderRate` float DEFAULT NULL,
   `WebmasterSecondOrderRate` float DEFAULT NULL,
   PRIMARY KEY (`id`)
