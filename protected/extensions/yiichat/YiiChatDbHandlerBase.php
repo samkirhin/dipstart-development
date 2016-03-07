@@ -149,7 +149,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			}
 			// now retrieve the post
             $obj['recipient']=User::model()->findByPk($obj['recipient']);
-            $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
+            if($obj['recipient']) $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
 
             $obj['sender']=User::model()->findByPk($obj['sender']);
             $obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
