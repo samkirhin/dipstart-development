@@ -56,7 +56,8 @@ class Emails extends CActiveRecord {
 	public 	$site;
 	public 	$page_psw;
 	public 	$support;
-	public 	$campaign;
+	public 	$campaign; //4rm
+	public 	$company;
 	public 	$name;
 	public 	$login;
 	public 	$password;
@@ -114,8 +115,9 @@ class Emails extends CActiveRecord {
         parent::init();
 		$this->site				= 'http://'.$_SERVER['SERVER_NAME'].'/';
 		$this->page_psw			= '';
-		$this->support			= Campaign::getSupportEmail();
+		$this->support			= Company::getSupportEmail();
 		$this->campaign			= '';
+		$this->company			= Company::getName();
 		$this->name				= '';
 		$this->login			= '';
 		$this->password			= '';
@@ -261,7 +263,7 @@ class Emails extends CActiveRecord {
 //echo '<br>$body(1)='.$body; 
 //		};
 		$subject='=?UTF-8?B?'.base64_encode(Yii::t('site', $subject)).'?=';
-		$from = '=?UTF-8?B?'.base64_encode($this->campaign).'?= <no-reply@'.$_SERVER['SERVER_NAME'].'>';
+		$from = '=?UTF-8?B?'.base64_encode($this->company).'?= <no-reply@'.$_SERVER['SERVER_NAME'].'>';
 		$headers =
 			"MIME-Version: 1.0\r\n".
 			"Content-Type: text/plain; charset=UTF-8\r\n".
