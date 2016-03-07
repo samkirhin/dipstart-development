@@ -57,7 +57,7 @@ switch ($role){
             array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
         ));
         $items[] = array('label'=>Yii::t('site','Events'), 'url'=>array('/project/event'));
-        $items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
+        $items[] = array('label'=>Yii::t('site','Logout')/*. ' ('.Yii::app()->user->name.')'*/, 'url'=>array('/user/logout'));
 
         break;
 }
