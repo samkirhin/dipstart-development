@@ -88,7 +88,7 @@ Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READ
                             die;*/
               
               
-                            $tmp .= '<li><a href="' . rawurlencode($v['file_name']) . '" id="parts_file">' . $v['orig_name'] . '</a>';
+                            $tmp .= '<li><a href="' . $v['file_name'] . '" id="parts_file">' . $v['orig_name'] . '</a>';
                             $tmp .= '<button class="zakaz_part_approve_file on right btn'.(!isset($v['for_approved'])?' hidden':'').'" ';
                             foreach ($v as $kk => $vv)
                                 $tmp .= 'data-'.$kk.'="'.$vv.'" ';
