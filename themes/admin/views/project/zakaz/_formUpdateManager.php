@@ -62,7 +62,7 @@
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
 		<div class="chtpl0-panel chtpl0-down chat-functions">
-			<input id="send_email" type="checkbox"><p><?=ProjectModule::t('Send to e-mail')?></p>
+			<input id="send_email" type="checkbox" checked="checked"><p><?=ProjectModule::t('Send to e-mail')?></p>
 			<input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
 			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p><?=ProjectModule::t('Use template')?></p>
 		</div>
