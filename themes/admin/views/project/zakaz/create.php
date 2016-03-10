@@ -70,14 +70,14 @@ $this->menu=array(
                 </div>
                 <div class="col-md-12">
                     <?php echo $form->labelEx($model,'user_id');
-                    $list = CHtml::listData(User::model()->findAllCustomers(), 'id', 'username');
+                    $list = CHtml::listData(User::model()->findAllCustomers(), 'id', 'email');
                     echo $form->dropDownList($model, 'user_id', $list, array('empty' => ProjectModule::t('Select a customer')));
                     ?>
                     <?php echo $form->error($model,'executor'); ?>
                 </div>
                 <div class="col-md-12">
                     <?php echo $form->labelEx($model,'executor');
-                    $list = CHtml::listData(User::model()->findAllAuthors(), 'id', 'username');
+                    $list = CHtml::listData(User::model()->findAllAuthors(), 'id', 'email');
                     echo $form->dropDownList($model, 'executor', $list, array('empty' => ProjectModule::t('Select a author')));
                     ?>
                     <?php //echo $form->textField($model,'executor',array('size'=>53,'maxlength'=>100)); ?>
