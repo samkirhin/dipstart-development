@@ -73,7 +73,7 @@ $this->menu=array(
                     $list = CHtml::listData(User::model()->findAllCustomers(), 'id', 'email');
                     echo $form->dropDownList($model, 'user_id', $list, array('empty' => ProjectModule::t('Select a customer')));
                     ?>
-                    <?php echo $form->error($model,'executor'); ?>
+                    <?php echo $form->error($model,'user_id'); ?>
                 </div>
                 <div class="col-md-12">
                     <?php echo $form->labelEx($model,'executor');
