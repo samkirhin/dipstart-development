@@ -252,6 +252,8 @@ class Zakaz extends CActiveRecord {
 					}
 				}
 				array_push($numerical, 'status');
+				array_push($numerical, 'user_id');
+				array_push($numerical, 'executor');
 				array_push($rules,array(implode(',',$required), 'required'));
 				array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
