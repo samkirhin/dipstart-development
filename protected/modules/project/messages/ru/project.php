@@ -222,7 +222,10 @@ return array(
 	'Records found' => 'Найдено записей',
 	'Confirmed' => 'Подтверждено',
 	'Approved' => 'Подтверждено',
-	
+	'Incoming from customer' => 'Входящий от заказчика',
+	'Outcoming to executor' => 'Исходящий исполнителю',
+	'Outcoming to webmaster' => 'Исходящий web-мастеру',
+	'Outcoming refound' => 'Исходящий возврат',
 	'No data' => 'Нет данных',
 	'Incomming' => 'Входящие',
 	'Outgouing' => 'Исходящие',
