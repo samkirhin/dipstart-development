@@ -65,7 +65,7 @@ $this->menu=array(
                     <?php echo $form->labelEx($model,'status');
                     $models = ProjectStatus::model()->findAll();
                     $list = CHtml::listData($models, 'id', 'status');
-                    echo $form->dropDownList($model, 'status', $list, array('empty' => ProjectModule::t('Select a status')));?>
+                    echo $form->dropDownList($model, 'status', $list/*, array('empty' => ProjectModule::t('Select a status'))*/);?>
                     <?php echo $form->error($model,'status'); ?>
                 </div>
                 <div class="col-md-12">
