@@ -62,7 +62,7 @@
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
 		<div class="chtpl0-panel chtpl0-down chat-functions">
-			<input id="send_email" type="checkbox"><p><?=ProjectModule::t('Send to e-mail')?></p>
+			<input id="send_email" type="checkbox" checked="checked"><p><?=ProjectModule::t('Send to e-mail')?></p>
 			<input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
 			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p><?=ProjectModule::t('Use template')?></p>
 		</div>
@@ -138,7 +138,7 @@
 </div>
 </div>
 
-<div class="row" style="display: none">
+<!--<div class="row" style="display: none">     --------------4rm----------------
     <div class="col-xs-12 info-block">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -150,7 +150,7 @@
                         </a>
 						<br/><!--<a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">-->
 						<!--<img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" />-->
-						<!--</a>-->
+						<!--</a>--
                     </h4>
                 </div>
                 <div id="infoZakaz" class="panel-collapse collapse">
@@ -172,7 +172,7 @@
 
                                     <?php
                                     // --- campaign
-                                    if(isset(Zakaz::$files_folder)){
+                                    /*if(isset(Zakaz::$files_folder)){
                                         $url = Zakaz::$files_folder.$model->id.'/';
                                     } else {
                                         $url = '/uploads/'.$model->id.'/';
@@ -250,7 +250,7 @@
 												echo '</div>';
 											}
 										}
-									}
+									}*/
 									?>
                                     <h3> <?=ProjectModule::t('Deadlines')?> </h3>
 
@@ -341,11 +341,11 @@
 
                                 <?php $this->endWidget(); ?>
                             </div>
-                            <!-- form -->
+                            <!-- form --
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>-->

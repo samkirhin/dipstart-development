@@ -2,6 +2,9 @@
 
 <div class="row white-bg inside-block">
 <div class="col-md-12">
+<div class="link-for-executors">
+	<?=ProjectModule::t('Link for freelancers') ?>: <a href="/project/zakaz/list"><?='http://'.$_SERVER['SERVER_NAME'].'/project/zakaz/list'?></a>
+</div>
 <?php
 $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs'),

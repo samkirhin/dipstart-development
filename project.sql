@@ -858,6 +858,7 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `frozen` int(1) NOT NULL DEFAULT '0',
   `organization` int(11) NOT NULL COMMENT 'Принадлежность к организации',
   `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'Название кампании',
   `domains` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -867,8 +868,11 @@ CREATE TABLE IF NOT EXISTS `Companies` (
   `Payment2Chekout` int(11) NOT NULL,
   `Payment2ChekoutHash` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `FrontPage` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `logo` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `header` text CHARACTER SET utf8,
+  `text4guests` text CHARACTER SET utf8,
+  `text4customers` text CHARACTER SET utf8,
   `WebmasterFirstOrderRate` float DEFAULT NULL,
   `WebmasterSecondOrderRate` float DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -878,8 +882,8 @@ CREATE TABLE IF NOT EXISTS `Companies` (
 -- Дамп данных таблицы `Companies`
 --
 
-INSERT INTO `Companies` (`id`, `organization`, `name`, `domains`, `language`, `supportEmail`, `PaymentCash`, `Payment2Chekout`, `Payment2ChekoutHash`, `FrontPage`, `logo`, `header`, `WebmasterFirstOrderRate`, `WebmasterSecondOrderRate`) VALUES
-(1, 1, 'Программариус', 'adco.obshya.com,adco2.obshya.com,programmarius.admintrix.com', 'ru', 'no-reply@programmarius.ru', 1, 0, '', 'http://programmarius.ru/', 'tools.png', '<br />Компания по созданию сайтов любой сложности.', 30, 10);
+INSERT INTO `Companies` (`id`, `frozen`, `organization`, `name`, `domains`, `language`, `supportEmail`, `PaymentCash`, `Payment2Chekout`, `Payment2ChekoutHash`, `FrontPage`, `icon`, `logo`, `header`, `WebmasterFirstOrderRate`, `WebmasterSecondOrderRate`) VALUES
+(1, 0, 1, 'Программариус', 'adco.obshya.com,adco2.obshya.com,programmarius.admintrix.com', 'ru', 'no-reply@programmarius.ru', 1, 0, '', '', '', '', '<br />Компания по созданию сайтов любой сложности.', 30, 10);
 
 -- --------------------------------------------------------
 

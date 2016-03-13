@@ -141,7 +141,7 @@ class User extends CActiveRecord
 	{
 		return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
 			'alias'=>'user',
-			'select' => 'user.id, user.phone_number, user.username, user.full_name, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status',
+			'select' => 'user.id, user.phone_number, user.username, user.full_name, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.pid',
 		));
 	}
 
@@ -264,11 +264,11 @@ class User extends CActiveRecord
 	}
 
 	public function findAllAuthors(){
-		$sql = ('SELECT DISTINCT `id`, `username` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Author")');
+		$sql = ('SELECT DISTINCT `id`, `email` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Author")');
 	   return $this->findAllBySql($sql);
 	}
 	public function findAllCustomers(){
-		$sql = ('SELECT DISTINCT `id`, `username` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Customer")');
+		$sql = ('SELECT DISTINCT `id`, `email` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Customer")');
 	   return $this->findAllBySql($sql);
 	}
 	

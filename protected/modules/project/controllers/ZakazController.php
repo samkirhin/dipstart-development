@@ -193,17 +193,21 @@ class ZakazController extends Controller {
 				
 				$user = User::model()->findByPk($model->user_id);
 				if ( $user->pid){
-					$orders = $this->getProviders();
-					
+					$count_orders = Yii::app()->db->createCommand()
+						->select('count(*) AS count')
+						->from(Zakaz::model()->tableName())
+						->where('user_id=:user_id', array(':user_id'=>$model->user_id))
+						->queryRow();
+					$count_orders = $count_orders['count'];
 					$webmasterlog = new WebmasterLog();
 					$webmasterlog->pid = $user->pid;
 					$webmasterlog->uid = $user->id;
 					$webmasterlog->order_id = $model->id;
 					$webmasterlog->date = date("Y-m-d"); 
-					if (count($orders)>1)
-						$WebmasterLog->action =  WebmasterLog::NON_FIRST_ORDER;
+					if ($count_orders>1)
+						$webmasterlog->action =  WebmasterLog::NON_FIRST_ORDER;
 					else
-						$WebmasterLog->action =  WebmasterLog::FIRST_ORDER;
+						$webmasterlog->action =  WebmasterLog::FIRST_ORDER;
 					$webmasterlog->save();
 					
 				}
@@ -296,24 +300,24 @@ class ZakazController extends Controller {
 			$model->save(false);
 			$user = User::model()->findByPk($model->user_id);
 			if($user->pid) {
-				$webmaster = User::model()->with('profile')->findByPk($user->pid);
-				$openlog = WebmasterLog::model()->findByAttributes(	array('order_id'=>$model->id),
-					'action = :p1 OR action = p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
-				);
-				$webmasterlog = new WebmasterLog();
-				$webmasterlog->pid = $user->pid;
-				$webmasterlog->uid = $user->id;
-				$webmasterlog->date = date("Y-m-d"); 
-				$webmasterlog->order_id = $model->id;
-				if($openlog->action == WebmasterLog::FIRST_ORDER){
-					$webmasterlog->action = WebmasterLog::FINISH_FIRST_ORDER_SUCCESS;
-				}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
-					$webmasterlog->action = WebmasterLog::FINISH_NON_FIRST_ORDER_SUCCESS;
-				}
-				$webmasterlog->save();
-				// Pament for webmaster ~~~~~~~~~~~~~~~~~~~~~~~~~~
-				$payed = Payment::model()->exists('order_id = :p1 AND payment_type = p2', array(':p1'=>$model->id, ':p2'=>Payment::OUTCOMING_WEBMASTER));
+				$payed = Payment::model()->exists('order_id = :p1 AND payment_type = :p2', array(':p1'=>$model->id, ':p2'=>Payment::OUTCOMING_WEBMASTER));
 				if ( !$payed ) { // Only first time
+					$webmaster = User::model()->with('profile')->findByPk($user->pid);
+					$openlog = WebmasterLog::model()->findByAttributes(	array('order_id'=>$model->id),
+						'action = :p1 OR action = :p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
+					);
+					$webmasterlog = new WebmasterLog();
+					$webmasterlog->pid = $user->pid;
+					$webmasterlog->uid = $user->id;
+					$webmasterlog->date = date("Y-m-d"); 
+					$webmasterlog->order_id = $model->id;
+					if($openlog->action == WebmasterLog::FIRST_ORDER){
+						$webmasterlog->action = WebmasterLog::FINISH_FIRST_ORDER_SUCCESS;
+					}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
+						$webmasterlog->action = WebmasterLog::FINISH_NON_FIRST_ORDER_SUCCESS;
+					}
+					$webmasterlog->save();
+					// Pament for webmaster ~~~~~~~~~~~~~~~~~~~~~~~~~~
 					$payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
 						':ORDER_ID'=>$model->id
 					));
@@ -437,16 +441,16 @@ class ZakazController extends Controller {
 	}
     
     public function actionUploadPayment($id) {
-        if(isset($_POST['UploadPaymentImage'])) {
-            $upload = new UploadPaymentImage;
-            $upload->orderId = $id;
-            $upload->file = CUploadedFile::getInstance($upload, 'file');
-            if ($upload->file && $upload->validate()) {
-                $upload->save();
-				EventHelper::chekUploaded($id);
-            }
-        }
-        $this->redirect(['chat/index', 'orderId'=>$id]);
+		$folder = Yii::getPathOfAlias('webroot').PaymentImage::getFolder();
+		$result = Tools::uploadMaterials($folder,false);
+		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+		if ($result['success'] && User::model()->isCustomer()) {
+            $paymentImage = new PaymentImage;
+            $paymentImage->project_id = $id;
+            $paymentImage->image = $result['fileName'];
+            $paymentImage->save(false);
+			EventHelper::chekUploaded($id);
+		}
     }
 
     /**
@@ -670,7 +674,10 @@ class ZakazController extends Controller {
 		$models = $this->getProviders(true);
 		$model	=  $models['model'];
 		$user = User::model()->with('profile')->findByPk(Yii::app()->user->id);
-
+		$isGuest = Yii::app()->user->isGuest();
+		if ($isGuest) {
+			Yii::app()->theme='client';
+		}
 		$this->render('list',array(
 			'model'=>$models['model'],
             'model_done' => $models['model_done'],
@@ -678,6 +685,7 @@ class ZakazController extends Controller {
             'dataProvider_done' => $models['model_done'],
 			'only_new'		=> $new,
 			'profile' => $user->profile,
+			'isGuest' => $isGuest,
 		));
 	}
 
@@ -798,9 +806,8 @@ class ZakazController extends Controller {
 
 
     public function actionUpload($unixtime) {
-		//$folder='uploads/c'.Campaign::getId().'/temp/'.$_GET['unixtime'].'/';
 		$unixtime = intval($unixtime);
-		$folder='uploads/c'.Campaign::getId().'/temp/'.$unixtime.'/';
+		$folder=Yii::getPathOfAlias('webroot').'/uploads/c'.Campaign::getId().'/temp/'.$unixtime.'/';
 		$result = Tools::uploadMaterials($folder);
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
     }

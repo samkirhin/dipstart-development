@@ -65,19 +65,19 @@ $this->menu=array(
                     <?php echo $form->labelEx($model,'status');
                     $models = ProjectStatus::model()->findAll();
                     $list = CHtml::listData($models, 'id', 'status');
-                    echo $form->dropDownList($model, 'status', $list, array('empty' => ProjectModule::t('Select a status')));?>
+                    echo $form->dropDownList($model, 'status', $list/*, array('empty' => ProjectModule::t('Select a status'))*/);?>
                     <?php echo $form->error($model,'status'); ?>
                 </div>
                 <div class="col-md-12">
                     <?php echo $form->labelEx($model,'user_id');
-                    $list = CHtml::listData(User::model()->findAllCustomers(), 'id', 'username');
+                    $list = CHtml::listData(User::model()->findAllCustomers(), 'id', 'email');
                     echo $form->dropDownList($model, 'user_id', $list, array('empty' => ProjectModule::t('Select a customer')));
                     ?>
-                    <?php echo $form->error($model,'executor'); ?>
+                    <?php echo $form->error($model,'user_id'); ?>
                 </div>
                 <div class="col-md-12">
                     <?php echo $form->labelEx($model,'executor');
-                    $list = CHtml::listData(User::model()->findAllAuthors(), 'id', 'username');
+                    $list = CHtml::listData(User::model()->findAllAuthors(), 'id', 'email');
                     echo $form->dropDownList($model, 'executor', $list, array('empty' => ProjectModule::t('Select a author')));
                     ?>
                     <?php //echo $form->textField($model,'executor',array('size'=>53,'maxlength'=>100)); ?>

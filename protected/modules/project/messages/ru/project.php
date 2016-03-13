@@ -133,7 +133,9 @@ return array(
 	'Executor finished the stage' => 'Исполнитель закончил этап',
 	'The customer accepted the stage' => 'Заказчик принял этап',
 	'Approve stage' => 'Утвердить этап',
-
+	'Check' => 'Чек',
+	'Upload check scan' => 'Загрузить скан чека',
+	'Your payment at checkout ...' => 'Ваш платёж на проверке ...',
     //Блок оплаты
     'Payments' => 'Оплаты',
     'Project cost:' => 'Стоимость проекта:',
@@ -164,7 +166,8 @@ return array(
 	'SelectProject' => 'Выбрать заказ',
 	'chat' => 'чат',
 	'Chat' => 'чат',
-	'Edit Last Message' => 'Редактировать последнее сообщение',	
+	'Edit Last Message' => 'Редактировать последнее сообщение',
+	'Back to the orders list' => 'Назад к списку заказов',
 
 	'Error' => 'Ошибка',
 	'Authority Error' => 'Ошибка авторизации',
@@ -219,7 +222,10 @@ return array(
 	'Records found' => 'Найдено записей',
 	'Confirmed' => 'Подтверждено',
 	'Approved' => 'Подтверждено',
-	
+	'Incoming from customer' => 'Входящий от заказчика',
+	'Outcoming to executor' => 'Исходящий исполнителю',
+	'Outcoming to webmaster' => 'Исходящий web-мастеру',
+	'Outcoming refound' => 'Исходящий возврат',
 	'No data' => 'Нет данных',
 	'Incomming' => 'Входящие',
 	'Outgouing' => 'Исходящие',
@@ -266,5 +272,5 @@ return array(
 	'Registration takes less than 1 minute!' => 'Регистрация занимает не более 1 минуты!',
 	'Sign up' => 'Зарегистрироваться',
 	'Thank you! Your proposal is on the process...' => 'Спасибо! Ваше предложение на обработке!<br><br>Если Ваше предложение окажется наиболее подходящим, то Вы будете назначены Исполнителем данного заказа.<br>Уведомление придет Вам на е-маил. Так же рекомендуем ознакомиться с другими заказами по Вашей специальности.<br><br>* Как правило, выбор исполнителя определяется в течении суток или ранее.',
-	
+	'Link for freelancers' => 'Ссылка для фрилансеров',
 );

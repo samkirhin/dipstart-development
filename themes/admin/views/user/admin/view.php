@@ -40,7 +40,10 @@ $this->menu=array(
 					if ($index > 3) $index = 0;
 					$_temp = array('','icq','sms','email');
 					$arr['value'] = $_temp[$index];
-				}	
+				}
+				if ($field->field_type=="LIST"){
+					$arr['value'] = Catalog::getNamesByIds($model->profile->getAttribute($field->varname),'<br>');
+				}
 				array_push($attributes,$arr);
 			}
 		}

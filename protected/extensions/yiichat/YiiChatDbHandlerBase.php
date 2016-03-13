@@ -149,32 +149,10 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			}
 			// now retrieve the post
             $obj['recipient']=User::model()->findByPk($obj['recipient']);
-            $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
+            if($obj['recipient']) $obj['recipient']->superuser=$obj['recipient']->getRelated('AuthAssignment');
 
             $obj['sender']=User::model()->findByPk($obj['sender']);
             $obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
-			
-			$title = Catalog::model()->findByPk($order->specials)->cat_name . '. ' . $order->attributes['title'] . '. '.Yii::t('site','You have received a new message.');
-			$message = CHtml::link(Yii::t('site','Link to order page'), Yii::app()->createAbsoluteUrl('/project/chat', array('orderId' => $chat_id))).'<br />'.$obj['message'];
-			$headers = 'From: no-reply@'.$_SERVER['SERVER_NAME'] . "\r\n" .
-				'Reply-To: no-reply@'.$_SERVER['SERVER_NAME'] . "\r\n" .
-				'Content-Type: text/html; charset=utf-8;' .
-				'X-Mailer: PHP/' . phpversion();
-			//mail($obj['recipient']->attributes['email'],$title,$message,$headers);
-			
-			if (User::model()->getUserRole($obj['recipient']->id)=='Customer') {
-				$type_id = Emails::TYPE_16;
-			} else if (User::model()->getUserRole($obj['recipient']->id)=='Author') {
-				$type_id = Emails::TYPE_20;
-			}
-			$email = new Emails;
-			$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-			$email->name = $obj['recipient']->full_name;
-			if (strlen($email->name) < 2) $email->name = $obj['recipient']->username;
-			$email->num_order = $chat_id;
-			$email->message = strip_tags($obj['message']);
-			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$chat_id;
-			$email->sendTo( $obj['recipient']->email, $rec[0]->title, $rec[0]->text, $type_id);
 			
             if ($postdata['flags'])
                 foreach($postdata['flags'] as $v)
@@ -185,7 +163,19 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 //                            list($sms_id, $sms_cnt, $cost, $balance) = send_sms(str_replace(['+','-'],'',$obj['recipient']->profile->attributes['mob_tel']), $obj['message']);
                             break;
                         case 'send_email':
-                            mail($obj['recipient']->attributes['email'],'You receive new message in chat',$obj['message']);
+							if (User::model()->getUserRole($obj['recipient']->id)=='Customer') {
+								$type_id = Emails::TYPE_16;
+							} else if (User::model()->getUserRole($obj['recipient']->id)=='Author') {
+								$type_id = Emails::TYPE_20;
+							}
+							$email = new Emails;
+							$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+							$email->name = $obj['recipient']->full_name;
+							if (strlen($email->name) < 2) $email->name = $obj['recipient']->username;
+							$email->num_order = $chat_id;
+							$email->message = strip_tags($obj['message']);
+							$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$chat_id;
+							$email->sendTo( $obj['recipient']->email, $rec[0]->title, $rec[0]->text, $type_id);
                             break;
                     }
 			$obj['time'] = date_format(date_create($obj['date']), 'd.m.Y H:i:s');
