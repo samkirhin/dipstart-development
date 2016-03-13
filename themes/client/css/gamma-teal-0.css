@@ -30,11 +30,11 @@ div.stage, div.stage-number {
     /*border: 1px solid #6ea194;*/
 	border-color: #e8e8c2;
 }
-body, .nav-tabs > li > a, .content-clearfix .grid-view table.items th {
+body, .nav-tabs > li > a {
     font-family: arial, sans-serif;
     color: #1b1411;
 }
-a, .content-clearfix .grid-view table.items th a, .panel-title a {
+a, .content-clearfix .grid-view table.items th a, .panel-title a, .content-clearfix .grid-view table.items th {
 	color: #6ea194;
 }
 .table tr.even, .content-clearfix table.detail-view tr.even {
