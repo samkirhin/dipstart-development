@@ -61,12 +61,23 @@ class WebmasterLog extends CActiveRecord
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 			'id' => Yii::t('site','ID'),
 			'status' => Yii::t('site','Status'),
+			'date' => Yii::t('site','Date'),
+			'unique' => Yii::t('partner','Unique'),
+			'sales_first' => Yii::t('partner','First order sales'),
+			'sales_repeat' => Yii::t('partner','Next orders sales'),
+			'completed_first' => Yii::t('partner','First order completions'),
+			'completed_repeat' => Yii::t('partner','Next orders completions'),
+			'profit' => Yii::t('partner','Profit'),
 		);
+	}
+	
+	public static function getLabel($varname) {
+		$arr = self::model()->attributeLabels();
+		return $arr[$varname];
 	}
 
 	/**
