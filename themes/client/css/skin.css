@@ -1366,3 +1366,6 @@ div.chat-buttons input {
 	text-align: center;
 	border-right: 1px dotted gray;
 }
+.content-clearfix .grid-view table.items th {
+	font-weight: normal;
+}
