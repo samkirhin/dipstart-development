@@ -30,7 +30,7 @@ div.stage, div.stage-number {
     /*border: 1px solid #6ea194;*/
 	border-color: #e8e8c2;
 }
-body, .nav-tabs > li > a {
+body, .nav-tabs > li > a, .content-clearfix .grid-view table.items th {
     font-family: arial, sans-serif;
     color: #1b1411;
 }

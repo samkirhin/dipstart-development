@@ -193,17 +193,21 @@ class ZakazController extends Controller {
 				
 				$user = User::model()->findByPk($model->user_id);
 				if ( $user->pid){
-					$orders = $this->getProviders();
-					
+					$count_orders = Yii::app()->db->createCommand()
+						->select('count(*) AS count')
+						->from(Zakaz::model()->tableName())
+						->where('user_id=:user_id', array(':user_id'=>$model->user_id))
+						->queryRow();
+					$count_orders = $count_orders['count'];
 					$webmasterlog = new WebmasterLog();
 					$webmasterlog->pid = $user->pid;
 					$webmasterlog->uid = $user->id;
 					$webmasterlog->order_id = $model->id;
 					$webmasterlog->date = date("Y-m-d"); 
-					if (count($orders)>1)
-						$WebmasterLog->action =  WebmasterLog::NON_FIRST_ORDER;
+					if ($count_orders>1)
+						$webmasterlog->action =  WebmasterLog::NON_FIRST_ORDER;
 					else
-						$WebmasterLog->action =  WebmasterLog::FIRST_ORDER;
+						$webmasterlog->action =  WebmasterLog::FIRST_ORDER;
 					$webmasterlog->save();
 					
 				}
@@ -296,24 +300,24 @@ class ZakazController extends Controller {
 			$model->save(false);
 			$user = User::model()->findByPk($model->user_id);
 			if($user->pid) {
-				$webmaster = User::model()->with('profile')->findByPk($user->pid);
-				$openlog = WebmasterLog::model()->findByAttributes(	array('order_id'=>$model->id),
-					'action = :p1 OR action = p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
-				);
-				$webmasterlog = new WebmasterLog();
-				$webmasterlog->pid = $user->pid;
-				$webmasterlog->uid = $user->id;
-				$webmasterlog->date = date("Y-m-d"); 
-				$webmasterlog->order_id = $model->id;
-				if($openlog->action == WebmasterLog::FIRST_ORDER){
-					$webmasterlog->action = WebmasterLog::FINISH_FIRST_ORDER_SUCCESS;
-				}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
-					$webmasterlog->action = WebmasterLog::FINISH_NON_FIRST_ORDER_SUCCESS;
-				}
-				$webmasterlog->save();
-				// Pament for webmaster ~~~~~~~~~~~~~~~~~~~~~~~~~~
-				$payed = Payment::model()->exists('order_id = :p1 AND payment_type = p2', array(':p1'=>$model->id, ':p2'=>Payment::OUTCOMING_WEBMASTER));
+				$payed = Payment::model()->exists('order_id = :p1 AND payment_type = :p2', array(':p1'=>$model->id, ':p2'=>Payment::OUTCOMING_WEBMASTER));
 				if ( !$payed ) { // Only first time
+					$webmaster = User::model()->with('profile')->findByPk($user->pid);
+					$openlog = WebmasterLog::model()->findByAttributes(	array('order_id'=>$model->id),
+						'action = :p1 OR action = :p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
+					);
+					$webmasterlog = new WebmasterLog();
+					$webmasterlog->pid = $user->pid;
+					$webmasterlog->uid = $user->id;
+					$webmasterlog->date = date("Y-m-d"); 
+					$webmasterlog->order_id = $model->id;
+					if($openlog->action == WebmasterLog::FIRST_ORDER){
+						$webmasterlog->action = WebmasterLog::FINISH_FIRST_ORDER_SUCCESS;
+					}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
+						$webmasterlog->action = WebmasterLog::FINISH_NON_FIRST_ORDER_SUCCESS;
+					}
+					$webmasterlog->save();
+					// Pament for webmaster ~~~~~~~~~~~~~~~~~~~~~~~~~~
 					$payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
 						':ORDER_ID'=>$model->id
 					));

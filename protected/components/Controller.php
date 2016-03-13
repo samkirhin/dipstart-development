@@ -94,7 +94,7 @@ class Controller extends RController
                 case ('Webmaster'):
                     $this->menu = array(
 						array('label'=>Yii::t('site','Stats'), 'url'=>array('/partner/stats')),
-						array('label'=>Yii::t('site','Promo materials'), 'url'=>array('/partner/naterials')),
+						array('label'=>Yii::t('site','Promo materials'), 'url'=>array('/partner/materials')),
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
 						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
                     );

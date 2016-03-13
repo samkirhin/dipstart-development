@@ -365,7 +365,7 @@ class PaymentController extends Controller {
 			$webmasterlog->date = date("Y-m-d"); 
 			$webmasterlog->order_id = $order->id;
 			$openlog = WebmasterLog::model()->findByAttributes(
-				array('order_id'=>$model->id),'action = :p1 OR action = p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
+				array('order_id'=>$order->id),'action = :p1 OR action = :p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
 			);
 			if($openlog->action == WebmasterLog::FIRST_ORDER){
 				$webmasterlog->action = WebmasterLog::FULL_PAYMENT_4_FIRST_ORDER;
@@ -373,7 +373,6 @@ class PaymentController extends Controller {
 				$webmasterlog->action = WebmasterLog::FULL_PAYMENT_4_NON_FIRST_ORDER;
 			}
 			$webmasterlog->save();
-			
 		}
 	}
 }
