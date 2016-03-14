@@ -18,10 +18,10 @@ switch ($role){
     case 'Admin':
 
         //$items[] = array('label'=>Yii::t('site','Home'), 'url'=>Yii::app()->getBaseUrl(true));
-        $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project'), 'items' => array(
+        $items[] = array('label'=>Yii::t('site','Projects'), 'url'=>array('/project/zakaz'), 'items' => array(
             array('label'=>Yii::t('site','Zakazs'), 'url'=>array('/project/zakaz')),
             array('label'=>Yii::t('site','Create Zakaz'), 'url'=>array('/project/zakaz/create')),
-			array('label'=>Yii::t('site','Zakaz Fields'), 'url'=>array('/project/projectField/admin')),
+			array('label'=>Yii::t('site','Project Fields'), 'url'=>array('/project/projectField/admin')),
         ), 'itemOptions' =>   array('class' => 'dropdown-submenu'));
         $items[] = array('label'=>Yii::t('site','Users'), 'url'=>array('/user'), 'items' => array(
             array('label'=>Yii::t('site','Users'), 'url'=>array('/user')),
