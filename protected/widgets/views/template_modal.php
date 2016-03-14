@@ -11,7 +11,17 @@
 <div class="modal-body">
     <?php foreach ($types as $type):
         $templates = Templates::model()->findAllByAttributes(['type_id' => $type]);
-        $templateNames = array_unique(array_column($templates, 'name'));
+        $templateNames = [];
+
+        foreach ($templates as $template) {
+            $name = $template['name'];
+            if (in_array($name, $templateNames)) {
+                continue;
+            }
+
+            $templateNames[] = $name;
+        }
+
         ?>
         <div class="chat_templates_wrapper template_type_<?= $type ?> hidden">
             <?= $this->render('_templates', compact('templates', 'templateNames', 'type')) ?>
