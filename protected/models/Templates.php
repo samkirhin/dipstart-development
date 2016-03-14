@@ -12,6 +12,9 @@
  */
 class Templates extends CActiveRecord
 {
+	const TYPE_AUTHOR = 2;
+	const TYPE_CUSTOMER = 1;
+
 	/**
 	 * @return string the associated database table name
 	 */
