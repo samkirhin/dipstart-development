@@ -23,7 +23,7 @@
     <?php
     $this->widget('application.extensions.booster.widgets.TbButton', [
         'buttonType' => 'submit',
-        'label' => 'Выбрать',
+        'label' => ProjectModule::t('Select a template'),
         'htmlOptions' => ['data-dismiss' => 'modal', 'class' => 'template-submit'],
     ]);
     ?>
