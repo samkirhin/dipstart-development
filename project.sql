@@ -883,7 +883,7 @@ CREATE TABLE IF NOT EXISTS `Companies` (
 --
 
 INSERT INTO `Companies` (`id`, `frozen`, `organization`, `name`, `domains`, `language`, `supportEmail`, `PaymentCash`, `Payment2Chekout`, `Payment2ChekoutHash`, `FrontPage`, `icon`, `logo`, `header`, `WebmasterFirstOrderRate`, `WebmasterSecondOrderRate`) VALUES
-(1, 0, 1, 'Программариус', 'adco.obshya.com,adco2.obshya.com,programmarius.admintrix.com', 'ru', 'no-reply@programmarius.ru', 1, 0, '', '', '', '', '<br />Компания по созданию сайтов любой сложности.', 30, 10);
+(1, 0, 1, 'Программариус', 'adco.obshya.com,adco2.obshya.com,programmarius.admintrix.com,dipstart.dev', 'ru', 'no-reply@programmarius.ru', 1, 0, '', '', '', '', '<br />Компания по созданию сайтов любой сложности.', 30, 10);
 
 -- --------------------------------------------------------
 
