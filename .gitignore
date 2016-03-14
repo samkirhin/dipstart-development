@@ -12,3 +12,5 @@ sql
 work
 *Thumbs.db
 access.txt
+/vendor
+/.vagrant
