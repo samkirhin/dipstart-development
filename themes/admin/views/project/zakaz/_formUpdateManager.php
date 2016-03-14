@@ -62,43 +62,32 @@
 		</div>
         <div id="chatWindow" class="chtpl0-chat"></div>
 		<div class="chtpl0-panel chtpl0-down chat-functions">
-			<input id="send_email" type="checkbox"><p><?=ProjectModule::t('Send to e-mail')?></p>
-			<input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
-			<button class="chtpl0-template" data-toggle="modal" data-target="#template"></button><p><?=ProjectModule::t('Use template')?></p>
+            <label>
+                <select class="select_recipient">
+                    <option value="" selected><?= ProjectModule::t('Not selected')?></option>
+                    <option value="<?= Templates::TYPE_AUTHOR ?>"><?= ProjectModule::t('to author')?></option>
+                    <option value="<?= Templates::TYPE_CUSTOMER ?>"><?= ProjectModule::t('to customer')?></option>
+                </select>
+            </label>
+            <input id="send_email" type="checkbox" checked="checked"><p><?=ProjectModule::t('Send to e-mail')?></p>
+            <input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
+            <button class="chtpl0-template attach_template hidden" data-toggle="modal" data-target="#templates_modal"></button>
+            <p class="attach_template hidden"><?=ProjectModule::t('Use template')?></p>
+            <?php
+                $this->widget('application.widgets.TemplateModal', [
+                    'id' => 'templates_modal',
+                    'types' => [
+                        Templates::TYPE_CUSTOMER,
+                        Templates::TYPE_AUTHOR,
+                    ]
+                ]);
+            ?>
 		</div>
         <?php
         Yii::app()->getClientScript()->registerScriptFile('/js/tinymce/tinymce.min.js');
-        $this->beginWidget('application.extensions.booster.widgets.TbModal', array(
-            'id' => 'template',
-        )); ?>
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
-            <h4><?php echo Yii::t('project','Please select template');?></h4>
-        </div>
-        <div class="modal-body">
-            <?php
-            echo CHtml::dropDownList('templates', '', CHtml::listData(Templates::model()->findAll(), 'id', 'title'));
-            ?>
-        </div>
-        <div class="modal-footer">
-            <?php
-            $this->widget('application.extensions.booster.widgets.TbButton', array(
-                'buttonType' => 'submit',
-                'label' => 'Выбрать',
-                'id'=>'select_template',
-                'htmlOptions' => array('data-dismiss' => 'modal'),
-            ));
-            ?>
-            <?php
-/*            $this->widget('application.extensions.booster.widgets.TbButton', array(
-                'label' => 'Закрыть',
-                'htmlOptions' => array('data-dismiss' => 'modal'),
-            ));*/
-            ?>
-        </div>
-        <?php
-        $this->endWidget();
+        Yii::app()->getClientScript()->registerScriptFile('/js/chat_templates.js', CClientScript::POS_END);
         ?>
+
 		<div class="chtpl0-form">
 			<textarea></textarea>
 			<div class="chtpl0-subm">
@@ -138,7 +127,7 @@
 </div>
 </div>
 
-<div class="row" style="display: none">
+<!--<div class="row" style="display: none">     --------------4rm----------------
     <div class="col-xs-12 info-block">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -150,7 +139,7 @@
                         </a>
 						<br/><!--<a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">-->
 						<!--<img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" />-->
-						<!--</a>-->
+						<!--</a>--
                     </h4>
                 </div>
                 <div id="infoZakaz" class="panel-collapse collapse">
@@ -172,7 +161,7 @@
 
                                     <?php
                                     // --- campaign
-                                    if(isset(Zakaz::$files_folder)){
+                                    /*if(isset(Zakaz::$files_folder)){
                                         $url = Zakaz::$files_folder.$model->id.'/';
                                     } else {
                                         $url = '/uploads/'.$model->id.'/';
@@ -228,7 +217,7 @@
                                     echo '<br>';
                                     echo $form->labelEx($model, 'text');
                                     echo $form->textArea($model, 'text', array('rows' => 6, 'cols' => 70));
-                                    echo $form->error($model, 'text'); 
+                                    echo $form->error($model, 'text');
 									} else {
 										$projectFields = $model->getFields();
 										if ($projectFields) {
@@ -250,7 +239,7 @@
 												echo '</div>';
 											}
 										}
-									}
+									}*/
 									?>
                                     <h3> <?=ProjectModule::t('Deadlines')?> </h3>
 
@@ -341,11 +330,11 @@
 
                                 <?php $this->endWidget(); ?>
                             </div>
-                            <!-- form -->
+                            <!-- form --
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>-->
