@@ -872,3 +872,17 @@ div.list-changes-filename > a {
     display: block;
     overflow: hidden;
 }
+.form-item {
+	width: 50%;
+	float: left;
+	padding: 15px;
+	margin: 0;
+}
+.form-container form {
+	margin-bottom: 55px;
+}
+.form-container form .form-save {
+    position: absolute;
+    bottom: -44px;
+    right: 30px;
+}

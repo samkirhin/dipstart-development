@@ -189,7 +189,7 @@ class ZakazController extends Controller {
 					Yii::import('project.components.EventHelper');
                     EventHelper::createOrder($model->id);
                 }
-                $model->moveFiles($model->unixtime/*,$model->id*/);
+                $model->moveFiles($model->unixtime/*, $model->id*/);
 				
 				$user = User::model()->findByPk($model->user_id);
 				if ( $user->pid){
@@ -475,10 +475,10 @@ class ZakazController extends Controller {
 
         $model = Zakaz::model()->resetScope()->findByPk($event->event_id);
         if (!$model->is_active) {
-			$profile = Profile::model()->findByPk($model->user_id);
+			$user = User::model()->findByPk($model->user_id);
             $this->render('preview', array(
                 'model' => $model,
-				'profile' => $profile,
+				'user' => $user,
                 'event' => $event
             ));
         } else {
@@ -805,11 +805,19 @@ class ZakazController extends Controller {
     }
 
 
-    public function actionUpload($unixtime) {
-		$unixtime = intval($unixtime);
-		$folder=Yii::getPathOfAlias('webroot').'/uploads/c'.Campaign::getId().'/temp/'.$unixtime.'/';
+    public function actionUpload() {
+		if($_GET['id']) $id = intval($_GET['id']);
+		if($_GET['unixtime']) $unixtime = intval($_GET['unixtime']);
+		$folder = Yii::getPathOfAlias('webroot').'/uploads/c'.Campaign::getId();
+		if ($id)
+			$folder .= '/'.$id.'/';
+		else
+			$folder .= '/temp/'.$unixtime.'/';
 		$result = Tools::uploadMaterials($folder);
 		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+		if ($id && $result['success'] && User::model()->isCustomer()) {
+			EventHelper::materialsAdded($id);
+		}
     }
     
     public function actionDeleteFile() {

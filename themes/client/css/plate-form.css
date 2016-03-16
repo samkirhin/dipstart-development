@@ -30,12 +30,9 @@ body {
 
 
 div.form-container {
-    /*padding-top: 30px;*/
-    padding-bottom: 30px;
-    /*background-color: #DDEAFA;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-radius: 2px;
-    margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 div.form-container > form {
@@ -124,24 +121,22 @@ div.form-item textarea {
     resize: none;
 }
 
-input.create-order-button {
+div.form-save {
     display: block;
+    position: absolute;
+    bottom: -60px;
+    right: 30px;
+}
+div.form-save input {
+
     padding: 8px 15px;
     border-radius: 2px;
     border: none;
     -webkit-box-shadow: none;
             box-shadow: none;
-    background-color: #5C95C5;
     -webkit-transition: all 0.3s ease-out;
             transition: all 0.3s ease-out;
     color: #fff;
-    position: absolute;
-    bottom: -60px;
-    right: 30px;
-}
-
-input.create-order-button:hover {
-    background-color: #5688B2;
 }
 
 .container {
@@ -150,11 +145,11 @@ input.create-order-button:hover {
     min-width: auto !important;
 }
 
-p.note {
+/*p.note {
     position: relative;
     top: -25px;
     left: 30px;
-}
+}*/
 
 .form-control {
     min-height: auto !important;
