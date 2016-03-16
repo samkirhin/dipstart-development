@@ -14,7 +14,7 @@ ul li, ol li {
 }*/
 
 .btn, div.qq-upload-button {
-    background-color: #737C8D;
+	font-size: 15px;
     -webkit-transition: background-color 0.2s ease-out;
     transition: background-color 0.2s ease-out;
 }
@@ -27,11 +27,6 @@ div.qq-upload-button, div.qq-upload-button:hover {
     color: #fff;
     border: none;
 }
-
-.btn:hover, div.qq-upload-button:hover {
-    background-color: #5e6676 !important;
-}
-
 
 /*
 .logo {
@@ -463,7 +458,7 @@ background-color: #F8F8F8;
 .qq-upload-drop-area span {
     margin-top: 15px;
     margin-left: 0;
-    font-size: 2rem;
+    font-size: 1.4em;
     /*font-weight: bold;*/
     text-transform: uppercase;
     color: #EDEDED;
@@ -572,7 +567,7 @@ list-style-type: none;
 padding-left: 15px;
 }
 
-.btn, /*input[type="submit"],*/ input[type="file"] {opacity:0.8;border-radius:10;  border:none; padding:10px; font-weight:bold;}
+.btn, /*input[type="submit"],*/ input[type="file"] {opacity:0.8;border-radius:10;  border:none; padding:10px;}
 
 
 .chek-image-link {margin-top: 10px;}
@@ -1343,9 +1338,10 @@ div.chat-buttons input {
     background: transparent;
 }
 .text4customerts {
+	padding-top: 10px;
 	padding-left: 20px;
 	padding-right: 30px;
-	padding-bottom: 40px;
+	padding-bottom: 10px;
 }
 .guest-links {
 	padding: 10px;

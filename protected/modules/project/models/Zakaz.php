@@ -442,7 +442,7 @@ class Zakaz extends CActiveRecord {
 	
     public function moveFiles($unixtime/*,$id*/) {  // Перенести файлы из временной директории в постоянную при сохpании нового заказа
 		$id = $this->id;
-        $c_id = Campaign::getId();
+        $c_id = Company::getId();
         $root = Yii::getPathOfAlias('webroot');
         if ($c_id) {
             $from = $root.'/uploads/c'.$c_id.'/temp/'.$unixtime.'/';
@@ -468,7 +468,7 @@ class Zakaz extends CActiveRecord {
         }
     }
 	
-	public function generateMaterialsList($url, $for_guests = false) { // генерируем список загруженных материалов заказа
+	public function generateMaterialsList($url, $for_guests = false, $cant_remove = false) { // генерируем список загруженных материалов заказа
 		$path = Yii::getPathOfAlias('webroot') . $url;
 		$html_string = '';
 		//if (!file_exists($path)) mkdir($path,0755,true);
@@ -482,8 +482,8 @@ class Zakaz extends CActiveRecord {
 					} else {
 						$v0 = $v;
 					}
-					$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>';
-					if (User::model()->isCustomer()) $html_string .= '<a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>';
+					$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . rawurlencode($v) . '" class="file" >' . $v0 . '</a>';
+					if (!$cant_remove && User::model()->isCustomer()) $html_string .= '<a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>';
 					$html_string .= '</li><br />'."\n";
 				}
 		}

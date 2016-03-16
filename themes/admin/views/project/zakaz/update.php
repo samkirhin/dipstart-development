@@ -9,11 +9,6 @@ $user = User::model();
 $author = $model->author;
 $customer = $model->user;
 
-$this->breadcrumbs = array(
-    ProjectModule::t('Zakazs') => array('index'),
-    $model->title => array('view', 'id' => $model->id),
-    ProjectModule::t('Update'),
-);
 ?>
 
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
@@ -48,128 +43,103 @@ $this->breadcrumbs = array(
                     </div>
                     <div id="infoZakaz" class="panel-collapse collapse">
                         <div class="panel-body">
-
                             <div class="col-xs-12 aboutZakaz">
-                                <div class="form">
+                                <div class="form-container">
 
                                     <?php $form = $this->beginWidget('CActiveForm', array(
                                         'id' => 'zakaz-form',
                                         'enableAjaxValidation' => false,
                                     ));
                                     echo $form->errorSummary($model); ?>
-                                    <div class="col-xs-6 info-column">
-                                        <div class="notesBlockArea">
-                                            <?php echo $form->labelEx($model, 'author_notes'); ?>
-                                            <?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
-                                        </div>
 
-                                        <?php
-                                        // --- campaign
-                                        if(isset(Zakaz::$files_folder)){
-                                            $url = Zakaz::$files_folder.$model->id.'/';
-                                        } else {
-                                            $url = '/uploads/'.$model->id.'/';
-                                        }
-                                        // ---
-                                        $path = Yii::getPathOfAlias('webroot').$url;
-                                        $tmp = '';
-                                        if (file_exists($path)) {
-                                            foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
-                                                $tmp .= '<li><a class="link-to-material" href="' . $url . rawurlencode($v) . '">' . str_replace('#pre#', '', $v) . '</a>';
-                                                $tmp .= '<a href="#" data-id="' . $model->id . '" data-name="' . $v . '" onclick="removeFile(this); return false;"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>'; #remove file btn
-                                                if (strstr($v, '#pre#'))
-                                                    $tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this)">'. ProjectModule::t('Approve') .'</button>';
-                                                $tmp .= '</li>';
-                                            }
-                                        }
+									<div class="form-item notesBlockArea">
+										<?php echo $form->labelEx($model, 'author_notes'); ?>
+										<?php echo $form->textArea($model, 'author_notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
+									</div>
 
-                                        $this->widget('ext.EAjaxUpload.EAjaxUpload',
-                                            array(
-                                                'id' => 'justFileUpload',
-                                                'postParams' => array(
-                                                    'id' => $model->id,
-                                                ),
-                                                'config' => array(
-                                                    'action' => $this->createUrl('/project/chat/upload',array('id'=>$model->id)),
-                                                    'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Upload material') .'</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
-                                                    'disAllowedExtensions'=>array('exe','scr'),
-                                                    'sizeLimit' => Tools::maxFileSize(),//200 * 1024 * 1024,// maximum file size in bytes
-                                                    'minSizeLimit' => 1,// minimum file size in bytes
-                                                    'onComplete' => "js:function(id, fileName, responseJSON){}"
-                                                )
-                                            )
-                                        );
-                                        ?>
+									<div class="form-item">
+									<?php
+									// --- campaign
+									if(isset(Zakaz::$files_folder)){
+										$url = Zakaz::$files_folder.$model->id.'/';
+									} else {
+										$url = '/uploads/'.$model->id.'/';
+									}
+									// ---
+									$path = Yii::getPathOfAlias('webroot').$url;
+									$tmp = '';
+									if (file_exists($path)) {
+										foreach (array_diff(scandir($path), array('..', '.')) as $k => $v) {
+											$tmp .= '<li><a class="link-to-material" href="' . $url . rawurlencode($v) . '">' . str_replace('#pre#', '', $v) . '</a>';
+											$tmp .= '<a href="#" data-id="' . $model->id . '" data-name="' . $v . '" onclick="removeFile(this); return false;"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>'; #remove file btn
+											if (strstr($v, '#pre#'))
+												$tmp .= '<button id="approveFile_file" data-id="' . $model->id . '" data-name="' . $v . '" class="right btn" onclick="approveFile(this); return false;">'. ProjectModule::t('Approve') .'</button>';
+											$tmp .= '</li>';
+										}
+									}
 
-                                        <?php
-                                            $projectFields = $model->getFields();
-                                            if ($projectFields) {
-                                                foreach($projectFields as $field) {
-                                                    echo '<div class="form-group">';
-                                                    echo $form->labelEx($model,$field->varname).'<br/>';
-													if ($field->field_type=="BOOL"){
-														echo $form->checkBox($model,$field->varname);
-                                                    } elseif ($field->field_type=="LIST"){
-                                                        $models = Catalog::model()->findAllByAttributes(array('field_varname'=>$field->varname));
-                                                        $list = CHtml::listData($models, 'id', 'cat_name');
-                                                        echo $form->dropDownList($model, $field->varname, $list, array('empty' => ProjectModule::t('Select a category'),'class'=>'form-control'));
-                                                        echo $form->error($model,$field->varname);
-                                                    } elseif ($field->field_type=="TEXT") {
-                                                        echo $form->textArea($model,$field->varname,array('rows'=>6, 'cols'=>50, 'class'=>'form-control'));
-                                                    } elseif ($field->field_type!="TIMESTAMP") {
-                                                        echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
-                                                    }
-                                                    echo '</div>';
-                                                }
-                                            }
-                                        ?>
-                                        <h3> <?=ProjectModule::t('Deadlines')?> </h3>
+									$this->widget('ext.EAjaxUpload.EAjaxUpload',
+										array(
+											'id' => 'justFileUpload',
+											'config' => array(
+												'action' => $this->createUrl('/project/zakaz/upload',array('id'=>$model->id)),
+												'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Upload material') .'</div><ul class="qq-upload-list">'.$tmp.'</ul></div></div>',
+												'disAllowedExtensions'=>array('exe','scr'),
+												'sizeLimit' => Tools::maxFileSize(), // maximum file size in bytes
+												'minSizeLimit' => 1,// minimum file size in bytes
+												'onComplete' => "js:function(id, fileName, responseJSON){}"
+											)
+										)
+									);
+									?>
+									</div>
+									<?php $this->renderPartial('_form', array('model' => $model, 'form' => $form)); ?>
 
-                                        <table class="table table-striped" style="font-size: 12px;">
-                                            <thead>
-                                            <th><?=ProjectModule::t('Product name')?></th>
-                                            <th><?=ProjectModule::t('Date/Time')?></th>
-                                            </thead>
-                                            <tr>
-                                                <td>
-                                                    <?php echo $form->labelEx($model, 'date'); ?>
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                    $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
-                                                        'model' => $model,
-                                                        'attribute' => 'dbdate',
-                                                    ));?>
-                                                </td>
-                                            </tr>
-                                            <?php
-                                                $projectFields = $model->getFields();
-                                                if ($projectFields) foreach($projectFields as $field) {
-                                                    if ($field->field_type=="TIMESTAMP") {
-                                                    $varname = $field->varname;
-                                                    $model->timestampOutput($field);
-                                            ?><tr>
-                                                <td>
-                                                    <?php echo $form->labelEx($model, $varname); ?>
-                                                </td>
-                                                <td><?php
-                                                        $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
-                                                            'model' => $model,
-                                                            'attribute' => $varname,
-                                                        ));?>
-                                                </td>
-                                            </tr><?php
-                                                    }
-                                                }
-                                            ?>
-                                        </table>
-                                    </div>
-                                    <div class="col-xs-12 info-buttons">
-									<?php $attr = array('class' => 'btn btn-primary'); ?>
-									<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
-                                        <div>
-										<?php echo CHtml::submitButton(ProjectModule::t('Save'), $attr); ?>
-										</div>
+									
+
+									<div class="form-item">
+										<h3> <?=ProjectModule::t('Deadlines')?> </h3>
+										<table class="table table-striped" style="font-size: 12px;">
+											<thead>
+											<th><?=ProjectModule::t('Product name')?></th>
+											<th><?=ProjectModule::t('Date/Time')?></th>
+											</thead>
+											<tr>
+												<td>
+													<?php echo $form->labelEx($model, 'date'); ?>
+												</td>
+												<td>
+													<?php
+													$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+														'model' => $model,
+														'attribute' => 'dbdate',
+													));?>
+												</td>
+											</tr>
+											<?php
+												$projectFields = $model->getFields();
+												if ($projectFields) foreach($projectFields as $field) {
+													if ($field->field_type=="TIMESTAMP") {
+													$varname = $field->varname;
+													$model->timestampOutput($field);
+											?><tr>
+												<td>
+													<?php echo $form->labelEx($model, $varname); ?>
+												</td>
+												<td><?php
+														$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
+															'model' => $model,
+															'attribute' => $varname,
+														));?>
+												</td>
+											</tr><?php
+													}
+												}
+											?>
+										</table>
+									</div>
+                                    <div class="form-save">
+										<?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?>
                                     </div>
 
                                     <?php $this->endWidget(); ?>

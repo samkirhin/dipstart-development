@@ -272,6 +272,7 @@ CREATE TABLE IF NOT EXISTS `1_ProjectFields` (
   `default` varchar(255) NOT NULL DEFAULT '' COMMENT 'По умолчанию',
   `position` int(3) NOT NULL DEFAULT '0' COMMENT 'Позиция',
   `visible` int(1) NOT NULL DEFAULT '0' COMMENT 'Видимое',
+  `work_types` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `varname` (`varname`,`visible`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Таблица для хранения полей профиля пользователя' AUTO_INCREMENT=18 ;
@@ -700,7 +701,6 @@ INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
 ('project.changes.list', 0, 'Changes.List', NULL, 'N;'),
 ('project.chat.apiRenameFile', 0, 'Chat.ApiRenameFile (only for owner) - delete materials by customer', 'return ChatController::allowOnlyOwner();', 'N;'),
 ('project.chat.index', 0, 'Chat.Index', NULL, 'N;'),
-('project.chat.upload', 0, 'Chat.Upload', NULL, 'N;'),
 ('project.chat.view', 0, 'Chat.View', NULL, 'N;'),
 ('project.event.delete', 0, 'Event.Delete', NULL, 'N;'),
 ('project.event.index', 0, 'Event.Index', NULL, 'N;'),
@@ -794,7 +794,6 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 ('Manager', 'project.chat.apiRenameFile'),
 ('Author', 'project.chat.index'),
 ('Customer', 'project.chat.index'),
-('Customer', 'project.chat.upload'),
 ('Author', 'project.chat.view'),
 ('Guest', 'project.chat.view'),
 ('Manager', 'project.event.delete'),
@@ -817,7 +816,7 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 ('Author', 'project.zakaz.ownList'),
 ('Manager', 'project.zakaz.preview'),
 ('Manager', 'project.zakaz.spam'),
-('Author', 'project.zakaz.update'),
+('Customer', 'project.zakaz.update'),
 ('Manager', 'project.zakaz.update'),
 ('Customer', 'project.zakaz.upload'),
 ('Guest', 'project.zakaz.upload'),

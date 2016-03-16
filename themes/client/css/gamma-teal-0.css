@@ -46,8 +46,11 @@ a, .content-clearfix .grid-view table.items th a, .panel-title a, .content-clear
 .qq-upload-drop-area span {
 	color: #f2f2de;
 }
-.btn, div.qq-upload-button, input.create-order-button, input.create-order-button:hover, #new-changes-link a {
+.btn, div.qq-upload-button, #new-changes-link a {
 	background-color: #6ea194;
+}
+.btn:hover, div.qq-upload-button:hover {
+	background-color: #5e6676;
 }
 .chat-view div.author-message {
     background-color: #f5f5db;
