@@ -14,7 +14,7 @@ class Catalog extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-		$id  = Campaign::getId();
+		$id  = Company::getId();
         return $id.'_Сatalog';
 	}
 

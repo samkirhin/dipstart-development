@@ -105,7 +105,7 @@ $form=$this->beginWidget('UActiveForm', array(
             <div class="col-md-offset-4 col-md-8">
                 <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save'),array('class'=>'btn btn-primary btn-save')); ?>
             </div>
-	</div>
+		</div>
 
 <?php $this->endWidget(); ?>
     </div>

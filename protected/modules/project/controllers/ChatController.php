@@ -197,15 +197,6 @@ class ChatController extends Controller {
         //Yii::app()->end();
 	}
 	
-	public function actionUpload() {
-		$folder='uploads/c'.Campaign::getId().'/'.$_GET['id'].'/';
-		$result = Tools::uploadMaterials($folder);
-		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-		if ($result['success'] && User::model()->isCustomer()) {
-			EventHelper::materialsAdded($_GET['id']);
-		}
-    }
-    
     /*
      * Rename attachment file
      */

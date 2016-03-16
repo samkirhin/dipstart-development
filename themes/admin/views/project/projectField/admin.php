@@ -78,6 +78,12 @@ $('.search-form form').submit(function(){
 			'filter'=>ProjectField::itemAlias("visible"),
 		),
 		array(
+			'name'=>'work_types',
+			'type'=>'raw',
+			'value'=>'"<a href=\"/project/projectField/workTypes?id=".$data->id."\">".
+						(($data->work_types==null)?"(".UserModule::t("All").")":$data->work_types) ."</a>"',
+		),
+		array(
 			'class'=>'CButtonColumn',
 		),
 	),
