@@ -3,20 +3,23 @@ var waitIfNotReady = function() {
 		waitIfNotReady();
 	}, 100);
 };
-
+function masonry() {
+	$('.form-container form').masonry({itemSelector : '.form-item',});
+}
 $(window).load(function() {
 	waitIfNotReady = function() {
 		$('panel-body').show();
 		setTimeout(function(){
-			$('.form-container form').masonry({itemSelector : '.form-item',})
+			masonry();
 		}, 400);
 	};
+	waitIfNotReady();
 });
 $(function() {
-	$('.form-container form').masonry({itemSelector : '.form-item',});
+	masonry();
 	$('[data-toggle="collapse"]').click(function() {
 		/*setTimeout(function(){
-			$('.form-container form').masonry({itemSelector : '.form-item',})
+			masonry()
 		}, 400);*/
 		waitIfNotReady();
 	});

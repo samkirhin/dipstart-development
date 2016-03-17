@@ -239,8 +239,8 @@ class ZakazController extends Controller {
 		$isGuest = Yii::app()->user->isGuest;
 		if (!$isGuest && self::createProject($model,$_POST['Zakaz']))
 			$this->redirect(array('view','id'=>$model->id));
-		
-		if (!isset($model->unixtime) or $model->unixtime=='' ) {
+		else $model->attributes = $_POST['Zakaz'];
+		if (!isset($model->unixtime) || $model->unixtime=='' ) {
 			$model->unixtime = time();
 		}
 

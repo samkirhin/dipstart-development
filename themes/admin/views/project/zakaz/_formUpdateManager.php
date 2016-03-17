@@ -93,8 +93,7 @@
 			<div class="chtpl0-subm">
 				<h5><?=ProjectModule::t('Send message')?></h5>
 				<br>
-				<button class="chtpl0-submit1"><?=ProjectModule::t('to author')?></button>
-				<button class="chtpl0-submit2"><?= YII::t('site','For Customer') ?></button><?= ProjectModule::t('to сustomer') ?>
+				<button class="chtpl0-submit1"><?=ProjectModule::t('Send message')?></button>
 			</div>
 		</div>
         <?php
