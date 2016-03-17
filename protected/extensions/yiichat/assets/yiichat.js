@@ -336,9 +336,7 @@ var YiiChat = function (options) {
         you.html('<textarea id="chat_message" class="pull-left im-msg-inp"></textarea><div class="exceded"></div>');
         you.append('<div id="send_buttons" class="buttons pull-right chtpl0-subm"></div>');
         var buttons = you.find('div.buttons');
-		buttons.append("<h5>Отправить сообщение</h5><br>");
-        buttons.append("<button class='chtpl0-submit1 button_author btn-primary pull-right btn smooth im-send' data-recipient='Author' data-uid=''>" + ((options.executor>0) ? options.sendAuthorText : options.sendAuthorText.slice(0,-1)+'ам') + "</button>");
-        buttons.append("<button class='chtpl0-submit2 button_customer btn-primary pull-right btn smooth im-send' data-recipient='Customer'>" + options.sendCustomerText + "</button>");
+	buttons.append("<button class='chtpl0-submit1 btn-primary pull-right btn smooth im-send disabled' data-recipient=''>Отправить сообщение</button>");
         posts.html("");
 
         var send = buttons.find('button');
