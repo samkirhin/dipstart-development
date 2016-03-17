@@ -9,5 +9,5 @@
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
 
 <?php
-$this->renderPartial('/zakaz/_view', array('model' => $model, 'cant_remove_files' => true));
+$this->renderPartial('/zakaz/_view', array('model' => $model, 'cant_remove_files' => true, 'role' => 'Customer'));
 ?>

@@ -40,7 +40,7 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 		'attribute' => 'dbmax_exec_date',
 	));
 	echo '</div>';
-	$projectFields = $model->getFields();
+	$projectFields = $model->getFields('Customer');
 	if ($projectFields) {
 		foreach($projectFields as $field) {
 			$work_types = '';
@@ -98,7 +98,7 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 	</div>
 	<?php } ?>
 	<div class="form-save">
-		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create order') : ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
