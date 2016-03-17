@@ -7,7 +7,7 @@ Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/
 /* @var $form CActiveForm */
 $c_id = Company::getId();
 $url = '/uploads/c'.$c_id.'/temp/'.$model->unixtime.'/';
-$uploaded_files = $model->generateMaterialsList($url);
+$uploaded_files = $model->generateMaterialsList($url, true);
 $upload_params = array('unixtime' => $model->unixtime);
 
 $this->renderPartial('/zakaz/_form', array(	'model' => $model,

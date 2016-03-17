@@ -5,16 +5,7 @@ class ProjectMessages extends CActiveRecord
 	//public static $table_prefix;
 	
 	public function tableName() {
-		$c_id = Campaign::getId();
-		if ($c_id) {
-			return $c_id.'_ProjectMessages';
-		} else {
-			return 'ProjectMessages';
-		}
-		/*if(isset(self::$table_prefix))
-			return self::$table_prefix.'ProjectMessages';
-		else
-			return 'ProjectMessages';*/
+		return Company::getId().'_ProjectMessages';
 	}
 
 	/**

@@ -1,6 +1,7 @@
 var TYPE_CUSTOMER = 1, TYPE_AUTHOR = 2;
 
 $('.select_recipient').on('change', function () {
+	$('.msg_answer').html('');
     var value = parseInt($(this).val());
     var submitButton = $('.chtpl0-submit1');
     var templateButton = $('.attach_template');

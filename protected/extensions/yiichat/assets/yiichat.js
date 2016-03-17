@@ -176,7 +176,7 @@ var YiiChat = function (options) {
 
                 var tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/admin/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
                 if (typeof post.recipient === 'object') {
-                    tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/admin/view?id='" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
+                    tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/admin/view?id='" + post.recipient.superuser + "'>" + post.recipient.username + "</a>";
                 } else if (post.recipient == -1) tmp_html += " написал авторам";
                 tmp_html += "  |</div>";
 				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>";
@@ -219,13 +219,14 @@ var YiiChat = function (options) {
                     var answer=$('.msg_answer');
                     if (answer.length == 0) $(msg).parent().before('<div class="col-xs-12 msg_answer">Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text() + 'у</div>');
                     else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
-                    $('#send_buttons').children().each(function(){$(this).hide()});
+                    //$('#send_buttons').children().each(function(){$(this).hide()});
                     answer=$('.msg_answer');
-                    if ($(this).data('sender')=='Author') button=$('.button_author');
-                    if ($(this).data('sender')=='Customer') button=$('.button_customer');
-                    button.show();
-		    button.data('recipient',$(this).data('uid'));
-		    button.data('uid',$(this).data('uid'));
+                    if ($(this).data('sender')=='Author') $(".select_recipient [value='2']").attr("selected", "selected");
+                    if ($(this).data('sender')=='Customer') $(".select_recipient [value='1']").attr("selected", "selected");
+                    var button = $('.chtpl0-submit1');
+					button.removeClass('disabled');
+					button.data('recipient',$(this).data('uid'));
+					button.data('uid',$(this).data('uid'));
                 });
                 var btn_remove = p.find('button.chtpl0-delete');
                 btn_remove.click(function () {

@@ -68,7 +68,7 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 		}
 	}
 	?>
-	<div class="form-item">
+	<div class="form-item" style="min-height: 162px;">
 	  <?php
 		$this->widget('ext.EAjaxUpload.EAjaxUpload',
 			array(
@@ -79,7 +79,7 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 					'disAllowedExtensions' => array('exe','scr'),
 					'sizeLimit' => Tools::maxFileSize(), // maximum file size in bytes
 					'minSizeLimit' => 1,// minimum file size in bytes
-					'onComplete' => "js:function(id, fileName, responseJSON){}"
+					'onComplete' => "js:function(id, fileName, responseJSON){masonry();}",
 				)
 			)
 		);
