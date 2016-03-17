@@ -53,13 +53,13 @@ class Zakaz extends CActiveRecord {
 		else
 			return 'Projects';
 	}
-	public function getFields() {
-		if (!$this->_model) {
+	public function getFields($role = false) {
+		if (!$this->_model || $role) {
 			if (User::model()->isAdmin()) {
 				$this->_model=ProjectField::model()->sort()->findAll();
 			} elseif (User::model()->isManager()) {
 				$this->_model=ProjectField::model()->forManager()->findAll();
-			} elseif (User::model()->isCustomer()) {
+			} elseif (User::model()->isCustomer() || $role == 'Customer') {
 				$this->_model=ProjectField::model()->forCustomer()->findAll();
 			} elseif (User::model()->isAuthor() || Yii::app()->user->isGuest) {
 				$this->_model=ProjectField::model()->forAuthor()->findAll();

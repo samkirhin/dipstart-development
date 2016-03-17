@@ -16,7 +16,7 @@ if(User::model()->isCustomer()) {
 }
 $work_type = false;
 if(isset($model->specials2)) $work_type = $model->specials2;
-$projectFields = $model->getFields();
+$projectFields = $model->getFields($role);
 if ($projectFields) {
 	foreach($projectFields as $field) {
 		if ($work_type === false || $field->work_types == null || in_array($work_type, explode(',',$field->work_types))) {
