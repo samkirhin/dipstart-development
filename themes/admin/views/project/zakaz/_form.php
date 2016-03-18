@@ -3,6 +3,7 @@ Yii::app()->clientScript->registerScriptFile('/js/masonry.min.js', CClientScript
 Yii::app()->clientScript->registerScriptFile('/js/common-masonry.js', CClientScript::POS_END);
 Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 
+if ($model->unixtime) echo  $form->hiddenField($model,'unixtime');
 $projectFields = $model->getFields();
 if ($projectFields) {
 	foreach($projectFields as $field) {

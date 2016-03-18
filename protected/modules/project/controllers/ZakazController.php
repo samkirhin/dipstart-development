@@ -172,11 +172,10 @@ class ZakazController extends Controller {
 		}
 		if(isset($post)) {
 			$model->attributes=$post;
-
+			$model->dbdate = date('d.m.Y H:i');
 			if (!(User::model()->isManager())) {
 				$model->user_id = Yii::app()->user->id;                
 				$model->dbmanager_informed = date('d.m.Y H:i');
-				$model->dbdate = date('d.m.Y H:i');
 				$d1=date_create();
 				$d2=date_create($model->dbmax_exec_date);
 				$interval = (int)($d2->format('U')) - (int)($d1->format('U'));
