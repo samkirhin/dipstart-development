@@ -1,21 +1,9 @@
 <?php
-class WebmasterLog extends CActiveRecord
+class ManagerLog extends CActiveRecord
 {
 
 	// types of actions
-	const PARTNER_UNIQUE=1; //уник с партнерки 
-	const UNIQUE=2;  //просто уник
-	const PARTNER_REPEAT=3; //повторный с партнерки не зарегеный
-	const REPEAT=4; //повторный не зарегеный
-	const REG=5; //регистрация нов пользователя
-	const FIRST_ORDER=6; //рег нового заказа
-	const NON_FIRST_ORDER=7;
-	const FULL_PAYMENT_4_FIRST_ORDER=8;
-	const FULL_PAYMENT_4_NON_FIRST_ORDER=9;
-	const FINISH_FIRST_ORDER_SUCCESS=10;
-	const FINISH_FIRST_ORDER_FAILURE=11;
-	const FINISH_NON_FIRST_ORDER_SUCCESS=12;
-	const FINISH_NON_FIRST_ORDER_FAILURE=13;
+	const ORDER_PAGE_VIEW = 1; // загрузка страницы заказа 
 	
 	/*
 	 * @return string the associated database table name
@@ -25,7 +13,7 @@ class WebmasterLog extends CActiveRecord
 	}
 
 	public static function staticTableName() {
-		return Company::getId().'_WebmasterLogs';
+		return Company::getId().'_ManagerLogs';
 	}
 	
 	/**
@@ -36,11 +24,11 @@ class WebmasterLog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('pid, action, date', 'required'),
-			array('pid, uid, order_id, action', 'numerical', 'integerOnly' => true),
-			array('action', 'length', 'max'=>11),
+			array('uid, action, date', 'required'),
+			array('uid, order_id, action', 'numerical', 'integerOnly' => true),
+			array('action', 'length', 'max'=>3),
 			array('date', 'default', 'value' => date('Y-m-d'), 'setOnEmpty' => true, 'on' => 'insert'),
-			array('id, pid, uid, action, date, order_id', 'safe', 'on'=>'search'),
+			array('id, uid, action, date, order_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +40,6 @@ class WebmasterLog extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'partner' => [self::BELONGS_TO, 'User', 'pid'],
 			'user' => [self::BELONGS_TO, 'User', 'uid'],
 			'order' => [self::BELONGS_TO, 'Zakaz', 'order_id'],
 		);
@@ -64,14 +51,11 @@ class WebmasterLog extends CActiveRecord
 	public function attributeLabels() {
 		return array(
 			'id' => Yii::t('site','ID'),
-			'status' => Yii::t('site','Status'),
+			'uid' => Yii::t('site','Manager ID'),
 			'date' => Yii::t('site','Date'),
-			'unique' => Yii::t('partner','Unique'),
-			'sales_first' => Yii::t('partner','First order sales'),
-			'sales_repeat' => Yii::t('partner','Next orders sales'),
-			'completed_first' => Yii::t('partner','First order completions'),
-			'completed_repeat' => Yii::t('partner','Next orders completions'),
-			'profit' => Yii::t('partner','Profit'),
+			'oreder_id' => Yii::t('site','Order number'),
+			'action' => Yii::t('site','Action'),
+			'action_1' => Yii::t('site','Order page view'),
 		);
 	}
 	
@@ -99,8 +83,8 @@ class WebmasterLog extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('pid',$this->pid,true);
 		$criteria->compare('uid',$this->uid,true);
+		$criteria->compare('date',$this->date,true);
 		$criteria->compare('action',$this->action,true);
 		$criteria->compare('order_id',$this->order_id,true);
 
@@ -109,7 +93,7 @@ class WebmasterLog extends CActiveRecord
 		));
 	}
 	
-	public static function getLogsSumm($pid, $start_date, $finish_date){
+	/*public static function getLogsSumm($pid, $start_date, $finish_date){
 		$sql_dates = "select * from 
 			(select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) `date` from
 			 (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
@@ -130,7 +114,7 @@ class WebmasterLog extends CActiveRecord
 		$command->bindParam(":start_date",$start_date,PDO::PARAM_STR);
 		$command->bindParam(":finish_date",$finish_date,PDO::PARAM_STR);
 		return $command->queryAll();
-	}
+	}*/
 	
 	/**
 	 * Returns the static model of the specified AR class.
