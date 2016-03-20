@@ -28,6 +28,9 @@ switch ($role){
             array('label'=>Yii::t('site','Profile Fields'), 'url'=>array('/user/profileField/admin')),
             array('label'=>Yii::t('site','Rights'), 'url'=>array('/rights')),
         ));
+        $items[] = array('label'=>Yii::t('site','Logs'), 'url'=>array('/logs'), 'items' => array(
+            array('label'=>Yii::t('site','Managers logs'), 'url'=>array('/logs')),
+        ));
         $items[] = array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'items' => array(
 			array('label'=>Yii::t('site','company'), 'url'=>array('/company/edit')),
             array('label'=>Yii::t('site','Categories'), 'url'=>array('/catalog/index')),
