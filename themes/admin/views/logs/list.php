@@ -1,6 +1,10 @@
 <div class="col-md-12">
 <?php
-$columns = array('date','uid','user.email',
+$columns = array('datetime',
+					array(	'name'=>'uid',
+							'type'=>'raw',
+							'value'=>'"<a href=\"/user/admin/view/id/".$data->uid."\">".$data->uid.": ".$data->user->email."</a>"',
+					),
 					array(	'name'=>'action',
 							'type'=>'raw',
 							'value'=>'$data->action.": ".ManagerLog::getLabel("action_".$data->action)'

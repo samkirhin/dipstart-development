@@ -24,11 +24,11 @@ class ManagerLog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('uid, action, date', 'required'),
+			array('uid, action, datetime', 'required'),
 			array('uid, order_id, action', 'numerical', 'integerOnly' => true),
 			array('action', 'length', 'max'=>3),
-			array('date', 'default', 'value' => date('Y-m-d'), 'setOnEmpty' => true, 'on' => 'insert'),
-			array('id, uid, action, date, order_id', 'safe', 'on'=>'search'),
+			array('datetime', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
+			array('id, uid, action, datetime, order_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,8 +51,8 @@ class ManagerLog extends CActiveRecord
 	public function attributeLabels() {
 		return array(
 			'id' => Yii::t('site','ID'),
-			'uid' => Yii::t('site','Manager ID'),
-			'date' => Yii::t('site','Date'),
+			'uid' => Yii::t('site','Manager'),
+			'datetime' => Yii::t('site','Date and time'),
 			'oreder_id' => Yii::t('site','Order number'),
 			'action' => Yii::t('site','Action'),
 			'action_1' => Yii::t('site','Order page view'),
@@ -84,12 +84,16 @@ class ManagerLog extends CActiveRecord
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('uid',$this->uid,true);
-		$criteria->compare('date',$this->date,true);
+		$criteria->compare('user.email',$this->uid,true,'OR');
+		$criteria->compare('datetime',$this->datetime,true);
 		$criteria->compare('action',$this->action,true);
 		$criteria->compare('order_id',$this->order_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array(
+				'pageSize'=>100,
+			),
 		));
 	}
 	

@@ -434,7 +434,7 @@ class ZakazController extends Controller {
 		$managerlog = new ManagerLog();
 		$managerlog->uid = Yii::app()->user->id;
 		$managerlog->action = ManagerLog::ORDER_PAGE_VIEW;
-		$managerlog->date = date("Y-m-d"); 
+		$managerlog->datetime = date('Y-m-d H:i:s'); 
 		$managerlog->order_id = $model->id;
 		$managerlog->save();
 		
