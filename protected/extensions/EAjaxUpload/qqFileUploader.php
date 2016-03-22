@@ -126,7 +126,7 @@ class qqFileUploader {
         if ($size > $this->sizeLimit) {
             return array('error' => 'File is too large');
         }
-
+		setlocale(LC_ALL,'en_US.UTF-8');
         $pathinfo = pathinfo($this->file->getName());        
         $filename=$pathinfo['filename'];
         if(!isset($filename) or empty($filename)) $filename=uniqid();
