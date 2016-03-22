@@ -20,7 +20,6 @@ class ZakazController extends Controller {
 	actionApiApproveFile    - модерация файла
 	actionApiRemoveFile     - удаление файла
 	actionUpload            - загрузка файлов в заказе 
-	actionDeleteFile        - удаление файла в этапе
 	*/
 	/*public function filters() {
         return array(
@@ -815,7 +814,7 @@ class ZakazController extends Controller {
     public function actionUpload() {
 		if($_GET['id']) $id = intval($_GET['id']);
 		if($_GET['unixtime']) $unixtime = intval($_GET['unixtime']);
-		$folder = Yii::getPathOfAlias('webroot').'/uploads/c'.Campaign::getId();
+		$folder = Yii::getPathOfAlias('webroot').'/uploads/c'.Company::getId();
 		if ($id)
 			$folder .= '/'.$id.'/';
 		else
@@ -826,21 +825,7 @@ class ZakazController extends Controller {
 			EventHelper::materialsAdded($id);
 		}
     }
-    
-    public function actionDeleteFile() {
-		$file_name = trim(Yii::app()->request->getPost('file_name'));
-		$id = (int)Yii::app()->request->getPost('id');
-		$path=Yii::getPathOfAlias('webroot').$file_name;
-		if (file_exists($path)) {
-			$note = ZakazPartsFiles::model()->findByPk($id);
-			if ($note->delete()) {
-				if (unlink($path)) {
-					echo 'true'; 
-				} else echo 'false';
-			} else echo 'false';
-		} else echo 'false';
-	}
-	
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

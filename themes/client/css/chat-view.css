@@ -128,6 +128,11 @@ div.stage-second-column {
 	margin-bottom: 5px;
 	min-height: 20px;
 }
+div.stage-file {
+	display: inline-block;
+	overflow: hidden;
+	width: 100%;
+}
 div#chatWindow::before {
     display: block;
     position: absolute;

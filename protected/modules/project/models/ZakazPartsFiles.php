@@ -21,6 +21,10 @@ class ZakazPartsFiles extends CActiveRecord
 			return 'ZakazPartsFiles';
 	}
 
+	public function folder() {
+		return '/uploads/c'.Company::getId().'/parts/';
+	}
+	
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -29,12 +33,11 @@ class ZakazPartsFiles extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('part_id', 'numerical', 'integerOnly'=>true),
-			array('orig_name, file_name', 'length', 'max'=>100),
-			array('comment', 'safe'),
+			array('part_id, approved', 'numerical', 'integerOnly'=>true),
+			array('orig_name, file_name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, part_id, orig_name, file_name, comment', 'safe', 'on'=>'search'),
+			array('id, part_id, orig_name, file_name, approved', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,45 +51,24 @@ class ZakazPartsFiles extends CActiveRecord
 		return array(
 		);
 	}
-        
-        public function changeComment($id, $comment) {
-            $file = self::model()->findByPk($id);
-            $file->comment = $comment;
-            if ($file->save()) {
-                return $file->part_id;
-            } else {
-                return false;
-            }
-            
-        }
-        
-        public function deleteFile($id) {
-            $file = self::model()->findByPk($id);
-            $result = array(
-                'part' => $file->part_id,
-                'file' => $file->file_name
-            );
-            if ($file->delete()) {
-                return $result;
-            } else {
-                return false;
-            }
-        }
-        
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 			'id' => 'ID',
-			'part_id' => '№ части',
-			'orig_name' => 'Оригинальное имя',
-			'file_name' => 'Имя файла',
-			'comment' => 'Комментарий'
+			//'part_id' => '№ части',
+			//'orig_name' => 'Оригинальное имя',
+			//'file_name' => 'Имя файла',
 		);
 	}
 
+	protected function beforeDelete() {
+		unlink($_SERVER['DOCUMENT_ROOT'].$this->folder().$this->part_id.'/'.$this->file_name);
+		return parent::beforeDelete();
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -109,7 +91,7 @@ class ZakazPartsFiles extends CActiveRecord
 		$criteria->compare('part_id',$this->part_id);
 		$criteria->compare('orig_name',$this->orig_name,true);
 		$criteria->compare('file_name',$this->file_name,true);
-		$criteria->compare('comment',$this->comment,true);
+		$criteria->compare('approved',$this->approved,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

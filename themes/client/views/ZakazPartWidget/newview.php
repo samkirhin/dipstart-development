@@ -50,11 +50,15 @@ if ($this->status_id > 2 || !User::model()->isCustomer()) {
 						<?php }	?>
 						<div class="part_files">
 							<?php foreach ($data['files'] as $k => $v){
-								echo '<div class="row">';
-								if ($v['id']!=0) echo '<a href="' . $v['file_name'] . '" id="parts_file" data-part="' . $data['id'] . '">';
-								if (User::model()->isAuthor() || ($v['id']!=0)) echo $v['orig_name'];
-								if ($v['id']!=0) echo '</a>';
-								echo '</div>';
+								if (User::model()->isAuthor() || $v['approved']) {
+									$class = $v['approved'] ? '' : ' class="gray"';
+									echo '<div class="row">'.
+										'<a'.$class.' target="_blank" href="'.
+											ZakazPartsFiles::model()->folder(). $v['part_id'] . '/' . $v['file_name'] .
+											'" title="'.$v['orig_name'].'" data-part="' . $data['id'] . '">'.$v['orig_name'].
+										'</a>'.
+										'</div>';
+								}
 							} ?>
 						</div>
 						<?php if (User::model()->isExecutor($data['proj_id'])) $this->widget('ext.EAjaxUpload.EAjaxUpload',

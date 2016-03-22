@@ -585,9 +585,9 @@ CREATE TABLE IF NOT EXISTS `1_WebmasterLogs` (
 CREATE TABLE IF NOT EXISTS `1_ZakazPartsFiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `part_id` int(11) DEFAULT NULL,
-  `orig_name` varchar(100) DEFAULT NULL,
-  `file_name` varchar(100) DEFAULT NULL,
-  `comment` text,
+  `orig_name` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `approved` INT( 1 ) NOT NULL DEFAULT  '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -729,6 +729,7 @@ INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
 ('project.zakazParts.apiApprove', 0, 'ZakazParts.ApiApprove (file)', NULL, 'N;'),
 ('project.zakazParts.apiCreate', 0, 'ZakazParts.ApiCreate', NULL, 'N;'),
 ('project.zakazParts.apiDelete', 0, 'ZakazParts.ApiDelete', NULL, 'N;'),
+('project.zakazParts.apiDeleteFile', 0, 'ZakazParts.ApiDeleteFile', NULL, 'N;'),
 ('project.zakazParts.apiEditPart', 0, 'ZakazParts.ApiEditPart', NULL, 'N;'),
 ('project.zakazParts.status', 0, 'ZakazParts.Status', NULL, 'N;'),
 ('project.zakazParts.upload', 0, 'ZakazParts.Upload', NULL, 'N;'),
@@ -826,10 +827,12 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 ('Manager', 'project.zakazParts.apiApprove'),
 ('Manager', 'project.zakazParts.apiCreate'),
 ('Manager', 'project.zakazParts.apiDelete'),
+('Manager', 'project.zakazParts.apiDeleteFile'),
 ('Manager', 'project.zakazParts.apiEditPart'),
 ('Author', 'project.zakazParts.status'),
 ('Customer', 'project.zakazParts.status'),
 ('Author', 'project.zakazParts.upload'),
+('Manager', 'project.zakazParts.upload'),
 ('Author', 'recovery'),
 ('Customer', 'recovery'),
 ('Guest', 'recovery'),
