@@ -1365,3 +1365,9 @@ div.chat-buttons input {
 .content-clearfix .grid-view table.items th {
 	font-weight: normal;
 }
+.gray {
+	color: #bbb;
+}
+.part_files .row {
+	overflow: hidden;
+}

@@ -8,6 +8,7 @@ class ZakazPartsController extends Controller {
 		apiDelete
 		apiEditPart
 		apiApprove (file)
+		apiDeleteFile
 	Author and Customer: (chat.js)
 		status
 	Author (widget view)
@@ -55,7 +56,7 @@ class ZakazPartsController extends Controller {
 	}
 
 	public function folder() {
-		return '/uploads/c'.Campaign::getId().'/parts/';
+		return ZakazPartsFiles::model()->folder();
 	}
 
 	/* Получение списка частей для заказа по ИД*/
@@ -117,37 +118,15 @@ class ZakazPartsController extends Controller {
 		}
 	}*/
 	public function actionApiApprove() { /* Approve files in parts */
-		$folder = $this->folder();
-		if (!isset($this->_file_data['req'])) {
-			$this->_prepairJson();
-			$this->_file_data = $this->_request->getParam('data');
-		}
-		$list = explode('.', $this->_file_data['orig_name']);
-		$extention = array_pop($list);
-		$newName = $this->getGuid();
-		$filePath = $_SERVER['DOCUMENT_ROOT'].$folder.'temp/'.implode('.',$list).'_'.$this->_file_data['part_id'].'.'.$extention;
-		$newDir = $_SERVER['DOCUMENT_ROOT'].$folder.$this->_file_data['part_id'];
-		$fileNewPath = $newDir.'/'.$newName.".".$extention;
-		if (!file_exists($newDir)) {
-			mkdir($newDir,0777);
-		}
-		if ($this->_file_data['id']==0){
-			if (rename($filePath, $fileNewPath)) {
-				$fileModel = new ZakazPartsFiles();
-				$fileModel->part_id = $this->_file_data['part_id'];
-				$fileModel->orig_name = $this->_file_data['orig_name'];
-				$fileModel->file_name = $newName . "." . $extention;
-				$fileModel->comment = '';
-				$fileModel->save();
-				$this->result=array('file_name'=>$folder.$this->_file_data['part_id'].'/'.$newName.".".$extention);
-			} else $this->result=array('success'=>false);
-		} elseif (rename($_SERVER['DOCUMENT_ROOT'].$this->_file_data['file_name'],$filePath)) {
-			$this->result['delete']=ZakazPartsFiles::model()->findByPk($this->_file_data['id'])->delete();
-		} else $this->result=array('success'=>false);
-		if (!isset($this->_file_data['req'])) {
-			$this->_response->setData($this->result);
-			$this->_response->send();
-		}
+		$this->_prepairJson();
+		$fileid = $this->_request->getParam('data')['id'];
+		$file = ZakazPartsFiles::model()->findByPk($fileid);
+		$file->approved = $file->approved ? 0 : 1;
+		$file->save();
+		$this->_response->setData(array(
+			'success' => 1
+		));
+		$this->_response->send();
 	}
 	public function actionApiEditPart() {
 		$folder = $this->folder();
@@ -156,7 +135,7 @@ class ZakazPartsController extends Controller {
 		$model = ZakazParts::model()->findByPk($partId);
 		foreach ($this->_request->_params as $par=>$val)
 			$model->$par =$val;
-		if ($this->_request->isParam('files')) {
+		/*if ($this->_request->isParam('files')) {
 			$files = $this->_request->getParam('files');
 			$path = $folder.$partId.'/';
 			$this->checkDir($path);
@@ -173,7 +152,7 @@ class ZakazPartsController extends Controller {
 				$fileModel->comment = '';
 				$fileModel->save();
 			}
-		}
+		}*/
 
 		$this->_response->setData(array(
 			'result' => $model->save()
@@ -181,7 +160,7 @@ class ZakazPartsController extends Controller {
 		$this->_response->send();
 	}
 	
-	private function checkDir($path) {
+	/*private function checkDir($path) {
 		if (!file_exists($path)){
 			mkdir($path, 0755, true);
 		}
@@ -201,9 +180,9 @@ class ZakazPartsController extends Controller {
 				.substr($charid,20,12);// "}"
 			return $uuid;
 		}
-	}
+	}*/
 	
-	public function actionApiEditFilesComment() {
+	/*public function actionApiEditFilesComment() {
 		$this->_prepairJson();
 		$fileid = $this->_request->getParam('id');
 		$file = new ZakazPartsFiles;
@@ -212,9 +191,9 @@ class ZakazPartsController extends Controller {
 			'id' => $id
 		));
 		$this->_response->send();
-	}
+	}*/
 	
-	public function actionApiChangeIsShowed() {
+	/*public function actionApiChangeIsShowed() {
 		$this->_prepairJson();
 		$partId = $this->_request->getParam('id');
 		$part = ZakazParts::model()->findByPk($partId);
@@ -228,17 +207,15 @@ class ZakazPartsController extends Controller {
 			'result' => true
 		));
 		$this->_response->send();
-	}
+	}*/
 	
 	public function actionApiDeleteFile() {
-		$folder = $this->folder();
 		$this->_prepairJson();
 		$fileid = $this->_request->getParam('id');
-		$file = new ZakazPartsFiles;
-		$this->result = $file->deleteFile($fileid);
-		unlink($_SERVER['DOCUMENT_ROOT'].$folder.$this->result['part'].'/'.$this->result['file']);
+		$file = ZakazPartsFiles::model()->findByPk($fileid);
+		$file->delete();
 		$this->_response->setData(array(
-			'id' => $this->result['part']
+			'success' => 1
 		));
 		$this->_response->send();
 	}
@@ -302,38 +279,27 @@ class ZakazPartsController extends Controller {
 	}
 	
 	public function actionUpload() {
-		$folder = $this->folder();
 		$this->_prepairJson();
-		$folder = $_SERVER['DOCUMENT_ROOT'].$folder;
-		Yii::import("ext.EAjaxUpload.qqFileUploader");
-		//chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
-		$folder=$folder.'temp/';
-		//chmod($folder, 0777);     // !-----------------------------DeBuG oNlY !!-----------------------------------------
-		$config['allowedExtensions'] = array('jpg', 'jpeg', 'png', 'gif', 'txt', 'doc', 'docx');
-		$config['disAllowedExtensions'] = array("exe, php");
-		$sizeLimit = 10 * 1024 * 1024;
-		$pi = pathinfo($_GET['qqfile']);
-		$_GET['qqfile']=$pi['filename'].'_'.$_GET['id'].'.'.$pi['extension'];
-		$uploader = new qqFileUploader($config, $sizeLimit);
-		$this->result = $uploader->handleUpload($folder,true);
+		$folder = $_SERVER['DOCUMENT_ROOT'].$this->folder().$_GET['id'].'/';
+		
+		$fileModel = new ZakazPartsFiles();
+		$fileModel->part_id = $_GET['id'];
+		$fileModel->orig_name = $_GET['qqfile'];
+
+		$this->result = Tools::uploadMaterials($folder, false);
+
 		if ($this->result['success']) {
+			$fileModel->file_name = $this->result['fileName'];
 			$part = ZakazParts::model()->findByPk($_GET['id']);
-			if (!User::model()->isManager()) EventHelper::newFileInStage($_GET['proj_id'], $part->title);
+			if (User::model()->isManager()) {
+				$fileModel->approved = 1;
+			} else {
+				EventHelper::newFileInStage($_GET['proj_id'], $part->title);
+			}
+			$fileModel->save();
 		}
-		chmod($folder.$_GET['qqfile'],0666);
-		
-		if (User::model()->isManager()||User::model()->isAdmin()) {
-			
-			$this->_file_data['part_id']=$_GET['id'];
-			$this->_file_data['orig_name']=$pi['filename'].'.'.$pi['extension'];
-			$this->_file_data['id']=0;
-			$this->_file_data['req']=1;
-			$this->actionApiApprove();
-		}
-		
 		//$this->result['html']='=)';//'<li>!!!<a href="' . $this->result['file_name'] . '" id="parts_file">' . $_GET['qqfile'] . '</a></li>';
-		
-		$this->result = array('test' => $this->result['error']);
+		//$this->result = array('error' => $this->result['error']);
 		$this->_response->setData($this->result);
 		$this->_response->send();
 	}

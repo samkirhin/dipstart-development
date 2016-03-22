@@ -50,7 +50,7 @@ class Tools {
 		if (!file_exists($folder)) {
 			mkdir($folder, 0775, true);
 		}
-		$config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx');
+		$config['allowedExtensions'] = array('png', 'jpg', 'jpeg', 'gif', 'txt', 'doc', 'docx', 'pdf');
 		$config['disAllowedExtensions'] = array('exe','scr');
 		$sizeLimit = self::maxFileSize();// maximum file size in bytes
 		$uploader = new qqFileUploader($config, $sizeLimit);
