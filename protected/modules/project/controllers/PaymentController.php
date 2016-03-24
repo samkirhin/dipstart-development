@@ -42,10 +42,49 @@ class PaymentController extends Controller {
 			$model->setAttributes($params);
 			Yii::app()->user->setState('PaymentFilterState', $params);
 		}
+
+		$c_id = Company::getId();
+		$table_prefix = '';
+		if ($c_id) $table_prefix = $c_id.'_';
+		
+		$data = Yii::app()->db->createCommand("SELECT payment_type, SUM(summ) AS s, COUNT(*) AS ctn FROM `{$table_prefix}payment` GROUP BY payment_type ORDER BY payment_type")->queryAll();
+		if (empty($data)) {
+			$data = array(
+				'in' => array(
+					'sum' => '0',
+					'count' => '0',
+				),
+				'out' => array(
+					'sum' => '0',
+					'count' => '0',
+				)
+			);
+		}
+		else {
+			$data = array(
+				'in' => array(
+					'sum' => $data[0]['s'],
+					'count' => $data[0]['ctn'],
+				),
+				'out' => array(
+					'sum' => $data[1]['s'],
+					'count' => $data[1]['ctn'],
+				)
+			);
+		}
+		
 		$this->render('admin',array(
 			'model'=>$model,
+			'data'=>$data,
 		));
     }
+	
+	public function actionGetPayNumber($payType, $user) {
+		$data = Yii::app()->db->createCommand("SELECT * FROM " . Campaign::getId() . "_profiles WHERE user_id = {$user}")->queryRow();
+		if ($payType != 'cash') echo $data[$payType];
+		else echo '';
+    }
+	
 
     /*public function actionApiView() {
 		$c_id = Company::getId();
@@ -110,7 +149,32 @@ class PaymentController extends Controller {
         $this->render('admin');
     }*/
 
-    public function actionApproveTransaction(){  // Ajax approve in actionView
+     public function actionApproveTransaction(){  // Ajax approve in actionView
+        $this->_prepairJson();
+        $id = $this->_request->getParam('id');
+        $method = $this->_request->getParam('method');
+        $type = $this->_request->getParam('type');
+        $number = $this->_request->getParam('number');
+        if (!$method) {
+            $method = 'Cash';
+        }
+		
+        $payment = Payment::model()->findByPk($id);
+        if (!$payment) {
+            $this->_response->setData(array(
+                'result'  => false,
+                'message' => 'Not found'
+            ));
+            Yii::app()->end();
+        }
+
+		$this->_response->setData(array(
+            'result' => $payment->approveFromBookkeeper($method, $type, $number)
+        ));
+        $this->_response->send();
+    }
+	
+	public function actionRejectTransaction(){  // Ajax approve in actionView
         $this->_prepairJson();
         $id = $this->_request->getParam('id');
         $method = $this->_request->getParam('method');
@@ -128,7 +192,30 @@ class PaymentController extends Controller {
         }
 
         $this->_response->setData(array(
-            'result' => $payment->approveFromBookkeeper($method)
+            'result' => $payment->rejectFromBookkeeper($method)
+        ));
+        $this->_response->send();
+    }
+	
+	public function actionCancelTransaction() {  // Ajax approve in actionView
+        $this->_prepairJson();
+        $id = $this->_request->getParam('id');
+        $method = $this->_request->getParam('method');
+        if (!$method) {
+            $method = 'Cash';
+        }
+
+        $payment = Payment::model()->findByPk($id);
+        if (!$payment) {
+            $this->_response->setData(array(
+                'result'  => false,
+                'message' => 'Not found'
+            ));
+            Yii::app()->end();
+        }
+
+        $this->_response->setData(array(
+            'result' => $payment->cancelPayment($method)
         ));
         $this->_response->send();
     }

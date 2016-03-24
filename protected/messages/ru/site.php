@@ -114,6 +114,10 @@ return array(
     'Show' => 'Показать',
 	'Saving...' => 'Сохраняем...',
 	'Click to edit' => 'Кликните, чтобы редактировать',
+	'Reject' => 'Отклонить',
+	'Rejected' => 'Отклонен',
+	'Cancel' => 'Отмена',
+	'Payment method' => 'Способ оплаты',
 
     //
     'Bookkeeping' => 'Бухгалтерия',
@@ -123,7 +127,6 @@ return array(
     'Customers' => 'Заказчики',
     // admin menu
     'Accounts department' => 'Бухгалтерия',
-	'Project Fields' => 'Поля Проекта',
 	
 	//Company
 	'List companies' => 'Список компаний',

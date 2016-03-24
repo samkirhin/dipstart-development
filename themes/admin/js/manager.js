@@ -80,14 +80,15 @@ function send(url) {
 
     return false;
 }
-function stageFileApprove(obj){ /* Approve files in parts */
+function approve(obj){ /* Approve files in parts */
     var data=$(obj).data();
 	$(obj).hide();
     $.post('/project/zakazParts/apiApprove', JSON.stringify({
         'data': data
     }), function (response) {
         if (response.data) {
-            //console.log(response.data.success);
+            console.log(response);
+			//console.log();
 			$(obj).siblings("button").show();
 			$(obj).siblings("button").removeClass("hidden");
 			//if($(obj).hasClass('on')) $($('button[data-id="'+data['id']+']').find('.on[data-part_id="'+data['part_id']+'"]').removeClass("hidden")).show();
@@ -95,28 +96,6 @@ function stageFileApprove(obj){ /* Approve files in parts */
         }
     }, 'json');
 }
-
-$(document).on("click", 'li span.deletefile', function(e) { /* Delete files in parts */
-	var item = $(this).parent();
-	var id = parseInt($(this).attr('id'));
-	if(!isNaN(id)) {
-		$.ajax({
-		  type: "POST",
-		  url:'http://'+document.domain+'/project/zakazParts/apiDeleteFile',
-		  data : JSON.stringify({
-			'id': id
-		  }),
-		  success: function(response) {
-			 if(response.data && response.data.success) {
-				 item.fadeOut(400,function(){
-					 item.remove();
-				 });
-			 }
-		  }
-		});
-	}
-});
-	
 function approveFile(obj){
     var data=$(obj).data();
     $.post('/project/zakaz/apiApproveFile', JSON.stringify({
@@ -150,8 +129,24 @@ function spam(orderid){
     alert('Рассылка запущена');
     return false;
 }
-function setApprove (id) {
-    $.post('/project/payment/approveTransaction', JSON.stringify({
+function setApprove (id, type, number) {
+    $.post('/dipstart-development/project/payment/approveTransaction', JSON.stringify({
+        'id': id,
+        'type': type,
+        'number': number
+    }), function (response) {
+        $.fn.yiiGridView.update('buh_transaction');
+    }, 'json');
+}
+function setReject (id) {
+    $.post('/dipstart-development/project/payment/rejectTransaction', JSON.stringify({
+        'id': id
+    }), function (response) {
+        $.fn.yiiGridView.update('buh_transaction');
+    }, 'json');
+}
+function cancelPayment (id) {
+    $.post('/dipstart-development/project/payment/cancelTransaction', JSON.stringify({
         'id': id
     }), function (response) {
         $.fn.yiiGridView.update('buh_transaction');
