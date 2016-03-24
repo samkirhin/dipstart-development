@@ -130,7 +130,7 @@ function spam(orderid){
     return false;
 }
 function setApprove (id, type, number) {
-    $.post('/dipstart-development/project/payment/approveTransaction', JSON.stringify({
+    $.post('/project/payment/approveTransaction', JSON.stringify({
         'id': id,
         'type': type,
         'number': number
@@ -139,14 +139,14 @@ function setApprove (id, type, number) {
     }, 'json');
 }
 function setReject (id) {
-    $.post('/dipstart-development/project/payment/rejectTransaction', JSON.stringify({
+    $.post('/project/payment/rejectTransaction', JSON.stringify({
         'id': id
     }), function (response) {
         $.fn.yiiGridView.update('buh_transaction');
     }, 'json');
 }
 function cancelPayment (id) {
-    $.post('/dipstart-development/project/payment/cancelTransaction', JSON.stringify({
+    $.post('/project/payment/cancelTransaction', JSON.stringify({
         'id': id
     }), function (response) {
         $.fn.yiiGridView.update('buh_transaction');
