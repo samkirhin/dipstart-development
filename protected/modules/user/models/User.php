@@ -40,7 +40,7 @@ class User extends CActiveRecord
 	 * @return string the associated database table name
 	 */
 	public function tableName() {
-		return Campaign::getId().'_Users';
+		return Campaign::getId().'_Users';;
 		//return Yii::app()->getModule('user')->tableUsers;
 	}
 
