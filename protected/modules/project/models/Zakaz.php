@@ -54,7 +54,7 @@ class Zakaz extends CActiveRecord {
 			return 'Projects';
 	}
 	public function getFields($role = false) {
-		if (!$this->_model) {
+		if (!$this->_model || $role) {
 			if (User::model()->isAdmin()) {
 				$this->_model=ProjectField::model()->sort()->findAll();
 			} elseif (User::model()->isManager()) {
