@@ -127,6 +127,7 @@ return array(
     'Customers' => 'Заказчики',
     // admin menu
     'Accounts department' => 'Бухгалтерия',
+	'Project Fields' => 'Поля Проекта',
 	
 	//Company
 	'List companies' => 'Список компаний',

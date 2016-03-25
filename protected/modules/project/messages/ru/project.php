@@ -168,7 +168,7 @@ return array(
 	'Chat' => 'чат',
 	'Edit Last Message' => 'Редактировать последнее сообщение',
 	'Back to the orders list' => 'Назад к списку заказов',
-
+	'Work types' => 'Типы работ',
 	'Error' => 'Ошибка',
 	'Authority Error' => 'Ошибка авторизации',
   'This is registration' => 'Регистрация',

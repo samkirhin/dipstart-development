@@ -28,7 +28,11 @@ class Payment extends CActiveRecord {
 	const OUTCOMING_CUSTOMER  = 3; // Refound
 	
 	public function tableName() {
-		return Campaign::getId().'_Payment';
+		$c_id = Campaign::getId();
+		if ($c_id)
+			return $c_id.'_Payment';
+		else
+			return 'Payment';
 	}
 
 	/**
@@ -100,7 +104,8 @@ class Payment extends CActiveRecord {
 		return $types[$this->payment_type];
     }
 	
-	public function approveFromBookkeeper($method, $type, $number) {
+	public function approveFromBookkeeper($method, $type, $number)
+	{
 		if($this->approve != 1){
 			$tran = Yii::app()->db->beginTransaction();
 			try {
@@ -127,7 +132,8 @@ class Payment extends CActiveRecord {
 		} else return false;
 	}
 	
-	public function rejectFromBookkeeper($method) {   
+	public function rejectFromBookkeeper($method)
+	{   
 		if($this->approve != 0) {
 		
 			$this->method = $method;
@@ -139,13 +145,18 @@ class Payment extends CActiveRecord {
 		} else return false;
 	}
 	
-	public function cancelPayment($method) {   
-	
+	public function cancelPayment($method)
+	{
 		$this->method = $method;
 		$this->approve = 0;
 		$this->pay_date = NULL;
 		$this->save(false);
 		return true;
+	}
+	
+	public function getTotalData()
+	{
+		return Yii::app()->db->createCommand("SELECT payment_type, SUM(summ) AS s, COUNT(*) AS ctn FROM `" . self::tableName() . "` GROUP BY payment_type ORDER BY payment_type")->queryAll();
 	}
         
 	/**

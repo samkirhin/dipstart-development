@@ -43,35 +43,18 @@ class PaymentController extends Controller {
 			Yii::app()->user->setState('PaymentFilterState', $params);
 		}
 
-		$c_id = Company::getId();
-		$table_prefix = '';
-		if ($c_id) $table_prefix = $c_id.'_';
-		
-		$data = Yii::app()->db->createCommand("SELECT payment_type, SUM(summ) AS s, COUNT(*) AS ctn FROM `{$table_prefix}payment` GROUP BY payment_type ORDER BY payment_type")->queryAll();
-		if (empty($data)) {
-			$data = array(
-				'in' => array(
-					'sum' => '0',
-					'count' => '0',
-				),
-				'out' => array(
-					'sum' => '0',
-					'count' => '0',
-				)
-			);
-		}
-		else {
-			$data = array(
-				'in' => array(
-					'sum' => $data[0]['s'],
-					'count' => $data[0]['ctn'],
-				),
-				'out' => array(
-					'sum' => $data[1]['s'],
-					'count' => $data[1]['ctn'],
-				)
-			);
-		}
+		$data = $model->getTotalData();
+			
+		$data = array(
+			'in' => array(
+				'sum' => empty($data) ? 0 : $data[0]['s'],
+				'count' => empty($data) ? 0 : $data[0]['ctn'],
+			),
+			'out' => array(
+				'sum' => empty($data) ? 0 : $data[1]['s'],
+				'count' => empty($data) ? 0 : $data[1]['ctn'],
+			)
+		);
 		
 		$this->render('admin',array(
 			'model'=>$model,
@@ -80,9 +63,7 @@ class PaymentController extends Controller {
     }
 	
 	public function actionGetPayNumber($payType, $user) {
-		$data = Yii::app()->db->createCommand("SELECT * FROM " . Campaign::getId() . "_profiles WHERE user_id = {$user}")->queryRow();
-		if ($payType != 'cash') echo $data[$payType];
-		else echo '';
+		echo Profile::model()->getPayNumber($payType, $user);
     }
 	
 
