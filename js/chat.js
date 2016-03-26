@@ -67,7 +67,7 @@ $(document).ready(function() {
             }
         },function(data){
               $('#chat').html(data);
-		      if(cost) $('div.post.chtpl0-msg.author-message').filter(':last').before(($('div.take-block').data('message')));
+		      $('div.post.chtpl0-msg.author-message').filter(':last').before(($('div.take-block').data('message')));
               $('.chat-view').scrollTop(10000);
               $('#message').val('');
 			  $('<style>div#chatWindow::before{display:none} div#chatWindow::after{display:none}</style>').appendTo('head');
