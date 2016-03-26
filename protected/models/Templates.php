@@ -130,4 +130,9 @@ class Templates extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+	public function getTemplate($name){
+		$template = $this->findByAttributes(array('name'=>$name));
+		return  $template->text;
+	}
 }

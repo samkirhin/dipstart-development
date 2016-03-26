@@ -69,9 +69,9 @@ class Controller extends RController
                     $this->menu = array(
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
 						array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
-						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                         //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
+						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
+						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                     );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
@@ -82,9 +82,9 @@ class Controller extends RController
                     $this->menu = array(
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/customerOrderList')),
 						array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create')),
-						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                         //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
+						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
+						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                     );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
@@ -95,8 +95,8 @@ class Controller extends RController
                     $this->menu = array(
 						array('label'=>Yii::t('site','Stats'), 'url'=>array('/partner/stats')),
 						array('label'=>Yii::t('site','Promo materials'), 'url'=>array('/partner/materials')),
+						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
                     );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),

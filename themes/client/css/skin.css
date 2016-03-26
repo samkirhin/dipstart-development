@@ -1262,12 +1262,16 @@ header div#control-menu li a {
     background-color: #6a7488;
 }*/
 
-header div#control-menu li:last-child {
+header div#control-menu li:nth-last-child(2){
     float: right;
     width: 100px;
 }
 
-header div#control-menu li:last-child a {
+header div#control-menu li:last-child {
+    float: right;
+}
+
+header div#control-menu li:last-child a, header div#control-menu li:nth-last-child(2) a  {
 	border-radius: 0px 15px 0px 0px;
 }
 /*
