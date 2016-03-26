@@ -159,6 +159,7 @@ return array(
 	'Phone' => 'Телефон',
 	'username' => 'логин',
 	'login' => 'логин',
+	'description' => 'Описание',
 	
 	//EventHelper.php
 	'Not transferred' =>  'Не передан тип',

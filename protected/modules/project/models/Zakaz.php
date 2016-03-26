@@ -291,6 +291,8 @@ class Zakaz extends CActiveRecord {
 				'author' => [self::BELONGS_TO, 'User', 'executor'],
 				'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
 				'images' => [self::HAS_MANY, 'PaymentImage', 'project_id'],
+				'catalog_spec1' => [self::BELONGS_TO, 'Catalog', 'specials'],
+				'catalog_spec2' => [self::BELONGS_TO, 'Catalog', 'specials2'],
 			);
 			$projectFields = $this->getFields();
 			if ($projectFields) {
@@ -442,7 +444,7 @@ class Zakaz extends CActiveRecord {
 	
     public function moveFiles($unixtime/*,$id*/) {  // Перенести файлы из временной директории в постоянную при сохpании нового заказа
 		$id = $this->id;
-        $c_id = Company::getId();
+        $c_id = Campaign::getId();
         $root = Yii::getPathOfAlias('webroot');
         if ($c_id) {
             $from = $root.'/uploads/c'.$c_id.'/temp/'.$unixtime.'/';
@@ -518,7 +520,7 @@ class Zakaz extends CActiveRecord {
     public function defaultScope()
     {
         return [
-            'condition' => 't.is_active = 1'
+            'condition' => 'is_active = 1'
         ];
     }
     

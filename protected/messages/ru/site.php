@@ -114,6 +114,10 @@ return array(
     'Show' => 'Показать',
 	'Saving...' => 'Сохраняем...',
 	'Click to edit' => 'Кликните, чтобы редактировать',
+	'Reject' => 'Отклонить',
+	'Rejected' => 'Отклонен',
+	'Cancel' => 'Отмена',
+	'Payment method' => 'Способ оплаты',
 
     //
     'Bookkeeping' => 'Бухгалтерия',

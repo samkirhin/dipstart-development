@@ -28,7 +28,11 @@ class Payment extends CActiveRecord {
 	const OUTCOMING_CUSTOMER  = 3; // Refound
 	
 	public function tableName() {
-		return Campaign::getId().'_Payment';
+		$c_id = Campaign::getId();
+		if ($c_id)
+			return $c_id.'_Payment';
+		else
+			return 'Payment';
 	}
 
 	/**
@@ -40,14 +44,14 @@ class Payment extends CActiveRecord {
 		// will receive user inputs.
 		return array(
 			array('id, order_id, payment_type, approve', 'numerical', 'integerOnly'=>true),
-			array('summ', 'numerical'),
-			array('theme, details_ya, details_wm', 'length', 'max'=>255),
+			array('summ, details_type', 'numerical'),
+			array('theme, , details_number', 'length', 'max'=>255),
 			array('manager, user, method', 'length', 'max'=>100),
                         array('user', 'email'),
 			array('receive_date, pay_date, details_bank', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, order_id, receive_date, pay_date, theme, manager, user, summ, details_ya, details_wm, details_bank, payment_type, approve, method', 'safe', 'on'=>'search'),
+			array('id, order_id, receive_date, pay_date, theme, manager, user, summ, details_type, details_number, payment_type, approve, method', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +63,9 @@ class Payment extends CActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'zakaz' => array(self::BELONGS_TO, 'Zakaz', 'order_id'),
+			'profileManager' => array(self::BELONGS_TO, 'User', 'manager'),
+			'profileUser' => array(self::BELONGS_TO, 'User', 'user'),
 		);
 	}
 
@@ -76,9 +83,8 @@ class Payment extends CActiveRecord {
 			'manager' => ProjectModule::t('Manager'),
 			'user' => ProjectModule::t('_User'),
 			'summ' => ProjectModule::t('Summa'),
-			'details_ya' => ProjectModule::t('Yandeх.Money'),
-			'details_wm' => ProjectModule::t('WebMoney'),
-			'details_bank' => ProjectModule::t('Bank'),
+			'details_type' => ProjectModule::t('Payment Type'),
+			'details_number' => ProjectModule::t('Payment Number'),
 			'payment_type' => ProjectModule::t('Payment Type'),
 			'approve' => ProjectModule::t('Approved'),
 			'method' => ProjectModule::t('Method of payment'),
@@ -98,14 +104,17 @@ class Payment extends CActiveRecord {
 		return $types[$this->payment_type];
     }
 	
-	public function approveFromBookkeeper($method) {    
+	public function approveFromBookkeeper($method, $type, $number)
+	{
 		if($this->approve != 1){
 			$tran = Yii::app()->db->beginTransaction();
 			try {
 				
 				$this->method = $method;
 				$this->approve = 1;
-				$this->pay_date = date("Y-m-d");
+				$this->pay_date = date("Y-m-d H:i:s");
+				$this->details_type = $type;
+				$this->details_number = $number;
 				$this->save(false);
 				if($this->payment_type == self::OUTCOMING_EXECUTOR) {
 					$payment = ProjectPayments::model()->findByAttributes(['order_id' => $this->order_id]);
@@ -122,6 +131,33 @@ class Payment extends CActiveRecord {
 			return true;
 		} else return false;
 	}
+	
+	public function rejectFromBookkeeper($method)
+	{   
+		if($this->approve != 0) {
+		
+			$this->method = $method;
+			$this->approve = 0;
+			$this->pay_date = NULL;
+			$this->save(false);
+			
+			return true;
+		} else return false;
+	}
+	
+	public function cancelPayment($method)
+	{
+		$this->method = $method;
+		$this->approve = 0;
+		$this->pay_date = NULL;
+		$this->save(false);
+		return true;
+	}
+	
+	public function getTotalData()
+	{
+		return Yii::app()->db->createCommand("SELECT payment_type, SUM(summ) AS s, COUNT(*) AS ctn FROM `" . self::tableName() . "` GROUP BY payment_type ORDER BY payment_type")->queryAll();
+	}
         
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -135,11 +171,14 @@ class Payment extends CActiveRecord {
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($type)
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		
+		$criteria->condition = 'payment_type = :type';
+		$criteria->params = array(':type'=>$type);
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('order_id',$this->order_id);
@@ -149,9 +188,8 @@ class Payment extends CActiveRecord {
 		$criteria->compare('manager',$this->manager,true);
 		$criteria->compare('user',$this->user,true);
 		$criteria->compare('summ',$this->summ);
-		$criteria->compare('details_ya',$this->details_ya,true);
-		$criteria->compare('details_wm',$this->details_wm,true);
-		$criteria->compare('details_bank',$this->details_bank,true);
+		$criteria->compare('details_type',$this->details_type,true);
+		$criteria->compare('details_number',$this->details_number,true);
 		$criteria->compare('payment_type',$this->payment_type);
 		$criteria->compare('approve',$this->approve);
 		$criteria->compare('method',$this->method,true);
@@ -161,7 +199,7 @@ class Payment extends CActiveRecord {
 			'pagination'=>false,
 		));
 	}
-
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
