@@ -29,7 +29,6 @@ class ProfileController extends Controller
 		if($model->profile == null) {
 			$model->profile = new Profile;
 			$model->profile->user_id = $model->id;
-			$my_rating = $model->profile->rating;
 		}
 		$profile=$model->profile;
 		// ajax validator
@@ -45,7 +44,6 @@ class ProfileController extends Controller
 			$profile->attributes=$_POST['Profile'];
 			if($model->validate()&&$profile->validate()) {
                 //Yii::app()->user->updateSession();
-				$model->profile->$my_rating;
 				$model->save();
 				$profile->save();
 				Yii::app()->user->setFlash('profileMessage',ProjectModule::t('Update profile'));
