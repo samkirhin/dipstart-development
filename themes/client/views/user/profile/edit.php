@@ -1,9 +1,5 @@
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
 <?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Profile");
-$this->breadcrumbs=array(
-	UserModule::t("Profile")=>array('profile'),
-	UserModule::t("Edit"),
-);
 
 ?><!--<div class="row"><div class="col-md-offset-3 col-md-4"><h3><?php //echo UserModule::t('Edit profile'); ?></h3></div></div>-->
 
@@ -39,6 +35,15 @@ $form=$this->beginWidget('UActiveForm', array(
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
+	
+        <div class="form-group">
+            <?php echo $form->labelEx($model,'full_name',array('class'=>'col-md-4 control-label')); ?>
+            <div class="col-md-8">
+                <?php echo $form->textField($model,'full_name',array('size'=>20,'maxlength'=>128,'class'=>'form-control')); ?>
+            </div>
+            <?php echo $form->error($model,'full_name'); ?>
+        </div>
+	
 	    <div class="form-group">
             <?php echo $form->labelEx($model,'phone_number',array('class'=>'col-md-4 control-label')); ?>
             <div class="col-md-8">
@@ -85,14 +90,6 @@ $form=$this->beginWidget('UActiveForm', array(
             <?php echo $form->error($model,'username'); ?>
         </div>-->
 
-        <div class="form-group">
-            <?php echo $form->labelEx($model,'full_name',array('class'=>'col-md-4 control-label')); ?>
-            <div class="col-md-8">
-                <?php echo $form->textField($model,'full_name',array('size'=>20,'maxlength'=>128,'class'=>'form-control')); ?>
-            </div>
-            <?php echo $form->error($model,'full_name'); ?>
-        </div>
-		
         <div class="form-group">
             <?php echo $form->labelEx($model,'email',array('class'=>'col-md-4 control-label')); ?>
             <div class="col-md-8">

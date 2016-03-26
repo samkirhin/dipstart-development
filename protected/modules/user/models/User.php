@@ -66,10 +66,11 @@ class User extends CActiveRecord
 			array('username, email, superuser, status', 'required'),
 			array('superuser', 'in', 'range'=>array(0,1)),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
-			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on'=>'search'),
+			array('phone_number', 'match', 'pattern' => '/^[-+()0-9 ]+$/u','message' => UserModule::t("Incorrect symbols (0-9,+,-,(,)).")),
+			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, phone_number', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
 			array('email', 'required','except'=>'social_network'),
-			array('phone_number', 'match', 'pattern' => '/^[-+()0-9]+$/u','message' => UserModule::t("Incorrect symbols (0-9,+,-,(,)).")),
+			array('phone_number', 'match', 'pattern' => '/^[-+()0-9 ]+$/u','message' => UserModule::t("Incorrect symbols (0-9,+,-,(,)).")),
 			array('full_name', 'length', 'max'=>128, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('email', 'email'),
 			array('email', 'length', 'min' => 6,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
@@ -77,7 +78,7 @@ class User extends CActiveRecord
 			//array('username', 'unique', 'message' => UserModule::t("This user's name already exists."),'except'=>'social_network'),
 			//array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			//array('username', 'match', 'pattern' => '/^[-A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9)."),'except'=>'social_network'),
-			array('id, identity, network, email, full_name, state, pid', 'safe', 'on'=>'search')
+			array('id, identity, network, email, full_name, state, pid, phone_number', 'safe', 'on'=>'search')
 		):array()));
 	}
 

@@ -30,11 +30,14 @@ class ZakazPartWidget extends CWidget{
 
 		foreach ($data as $this->item_id => $item) {
 			$number++;
-			$this->status = PartStatus::model()->findByPk($item->status_id);
-
+			if (User::model()->isCustomer() && $item->status_id == 4)
+				$this->status = ProjectModule::t('Approved by me');
+			else {
+				$this->status = PartStatus::model()->findByPk($item->status_id);
+				$this->status = $this->status->status;
+			}
 			$this->record_id = $item->id;
 			$this->status_id = $item->status_id;
-			$this->status = $this->status->status;
 			
 			$this->select = "
 				<script type=\"text/javascript\">

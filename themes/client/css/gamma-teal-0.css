@@ -31,7 +31,7 @@ div.stage, div.stage-number {
 	border-color: #e8e8c2;
 }
 body, .nav-tabs > li > a {
-    font-family: arial, sans-serif;
+    font-family: 'Roboto';
     color: #1b1411;
 }
 a, .content-clearfix .grid-view table.items th a, .panel-title a, .content-clearfix .grid-view table.items th {

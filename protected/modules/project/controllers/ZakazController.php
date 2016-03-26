@@ -235,8 +235,13 @@ class ZakazController extends Controller {
 			}
 		}
 		$isGuest = Yii::app()->user->isGuest;
-		if (!$isGuest && self::createProject($model,$_POST['Zakaz']))
-			$this->redirect(array('view','id'=>$model->id));
+		if (!$isGuest && self::createProject($model,$_POST['Zakaz'])) {
+			if (User::model()->isManager()) {
+				$this->redirect(Yii::app()->createUrl('/project/zakaz/update', array('id'=>$model->id)));
+			} else {
+				$this->redirect(array('view','id'=>$model->id));
+			}
+		}
 		else $model->attributes = $_POST['Zakaz'];
 		if (!isset($model->unixtime) || $model->unixtime=='' ) {
 			$model->unixtime = time();

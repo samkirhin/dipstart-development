@@ -142,6 +142,7 @@ function zakaz_done(part_id) { /* Stage is ready */
 				}else{
 					document.getElementById('zakaz-done-'+part_id).style.display = 'none';
 					document.getElementById('partStatus-status-'+part_id).innerHTML = answer;
+					$('#stage-'+part_id+' .partStatus').show();
 				}
 			}
 		});

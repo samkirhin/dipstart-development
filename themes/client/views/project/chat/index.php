@@ -75,9 +75,8 @@ $upload_params = array('id' => $order->id);
 		<div class="row">
 			<?php
 			$this->renderPartial('_payment',array('order'=>$order, 'images'=>$PaymentImages));
-			?>
-			
-			<?php
+
+			if (User::model()->isCustomer()) echo '<h7 class="center">'.ProjectModule::t('Completed stages').':</h7>';
 			$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
 				'projectId' => $order->id,
 			));
