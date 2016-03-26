@@ -158,16 +158,16 @@ $customer = $model->user;
         <?php if ($author): ?>
         <div class="col-lg-6 col-xs-6 rightBorder">
             <div class="authorText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/view',array('id'=>$author->id));?>"><?=ProjectModule::t('Author')?></a></b></div>
-            <div class="authorName"><p><?= $author->full_name ?></p></div>
+            <?php if ($author->full_name) { ?><div class="authorName"><p><?= $author->full_name ?></p></div><?php } ?>
             <div class="authorMail"><p class="author-mail-icon"></p><p><?= $author->email ?></p></div>
-            <div class="authorPhone"><p class="author-phone-icon"></p><p><?= $author->phone_number ?></p></div>
+            <?php if ($author->phone_number) { ?><div class="authorPhone"><p class="author-phone-icon"></p><p><?= $author->phone_number ?></p></div><?php } ?>
         </div>
         <?php endif; ?>
         <div class="col-lg-6 col-xs-7 leftBorder">
             <div class="customerText"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/view',array('id'=>$customer->id));?>"><?=ProjectModule::t('Customer')?></a></b></div>
-            <div class="customerName"><p><?= $customer->full_name ?></p></div>
+            <?php if ($customer->full_name) { ?><div class="customerName"><p><?= $customer->full_name ?></p></div><?php } ?>
             <div class="customerMail"><p class="customer-mail-icon"></p><p><?= $customer->email ?></p></div>
-            <div class="customerPhone"><p class="customer-phone-icon"></p><p><?= $customer->phone_number ?></p></div>
+            <?php if ($customer->phone_number) { ?><div class="customerPhone"><p class="customer-phone-icon"></p><p><?= $customer->phone_number ?></p></div><?php } ?>
         </div>
     </div>
 

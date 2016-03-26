@@ -322,7 +322,8 @@ class ZakazPartsController extends Controller {
 			if(User::model()->isOwner($stage->proj_id) && $stage->status_id == 3) {
 				$stage->status_id = 4;
 				$stage->save();
-				echo $stage->status->status;
+				//echo $stage->status->status;
+				echo ProjectModule::t('Approved by me');
 				EventHelper::stageDoneByCustomer($stage->proj_id, $stage->title);
 			}else{
 				echo 'Wrong base status';

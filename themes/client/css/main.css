@@ -19,10 +19,7 @@
 .col_100
 -------
 */
-body {
-	/*font-family: 'Open Sans Condensed', sans-serif;*/
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }

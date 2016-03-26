@@ -34,11 +34,13 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 	
 	if ($model->unixtime) echo  $form->hiddenField($model,'unixtime');
 	echo '<div class="form-item">';
-	echo $form->labelEx($model,'max_exec_date');
+	//echo $form->labelEx($model,'max_exec_date');
+	echo '<label for="Zakaz_max_exec_date">'.ProjectModule::t('Deadlines').'</label>';
 	$this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
 		'model' => $model,
 		'attribute' => 'dbmax_exec_date',
 	));
+	echo '<img src="/images/date_1398.png" style="margin-top: -3px;">';
 	echo '</div>';
 	$projectFields = $model->getFields('Customer');
 	if ($projectFields) {
@@ -61,6 +63,7 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 						'model' => $model,
 						'attribute' => $varname,
 					));
+					echo '<img src="/images/date_1398.png" style="margin-top: -3px;">';
 			} else {
 				echo $form->textField($model,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255), 'class'=>'form-control'));
 			}
