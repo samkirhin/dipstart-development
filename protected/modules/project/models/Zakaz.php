@@ -31,8 +31,8 @@ class Zakaz extends CActiveRecord {
 	public static $table_prefix;
 	public static $files_folder;
 
-    private $_job_name;
-    private $_cat_name;
+    /*private $_job_name;
+    private $_cat_name;*/
     private $_status_name;
     private $date_finishstart;
     private $date_finishend;
@@ -165,7 +165,7 @@ class Zakaz extends CActiveRecord {
             elseif (strlen($datetime) == 10) $this->author_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
         }
     }
-    public function getJobName()
+    /*public function getJobName()
     {
         if ($this->_job_name === null && $this->job !== null)
         {
@@ -188,7 +188,7 @@ class Zakaz extends CActiveRecord {
     public function setCatName($value)
     {
         $this->_cat_name = $value;
-    }
+    }*/
     public function getStatusName()
     {
         if ($this->_status_name === null && $this->projectStatus !== null)
@@ -219,7 +219,7 @@ class Zakaz extends CActiveRecord {
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules() {
-		if(Campaign::getId()){
+		if(Company::getId()){
 			if (!$this->_rules) {
 				$required = array();
 				$numerical = array();
@@ -285,14 +285,14 @@ class Zakaz extends CActiveRecord {
 	 * @return array relational rules.
 	 */
 	public function relations() {
-		if(Campaign::getId()){
+		if(Company::getId()){
 			$relations = array(
 				'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
 				'author' => [self::BELONGS_TO, 'User', 'executor'],
 				'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
 				'images' => [self::HAS_MANY, 'PaymentImage', 'project_id'],
-				'catalog_spec1' => [self::BELONGS_TO, 'Catalog', 'specials'],
-				'catalog_spec2' => [self::BELONGS_TO, 'Catalog', 'specials2'],
+				//'catalog_spec1' => [self::BELONGS_TO, 'Catalog', 'specials'],
+				//'catalog_spec2' => [self::BELONGS_TO, 'Catalog', 'specials2'],
 			);
 			$projectFields = $this->getFields();
 			if ($projectFields) {

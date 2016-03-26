@@ -31,7 +31,7 @@ $(document).ready(function () {
 	<?php
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'buh_transaction',
-		'dataProvider' => $model->search('1'),
+		'dataProvider' => $model->search('0'),
 		'filter'=>$model,
 		'columns'=>array(
 			array(
@@ -58,31 +58,34 @@ $(document).ready(function () {
 			),
 			array(
 				'header' => 'Спец',
-				'name' => 'zakaz.catalog_spec1.cat_name',
+				'name' => 'zakaz.catalog_specials.cat_name',
 			),
 			array(
 				'header' => 'Спец2',
 				'value' => function($data) {			
-					$columns = Yii::app()->db->createCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" . Company::getId() . "_projects'")->queryRow();
-				
-					if (in_array('specials2', $columns))
-						if (isset($data->zakaz->catalog_spec2)) return 'zakaz.catalog_spec2.cat_name';
-					
-					else return false;
+					//$columns = Yii::app()->db->createCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" . Company::getId() . "_projects'")->queryRow();
+					$specials2 = false;
+					$projectFields = Zakaz::model()->getFields();
+					foreach($projectFields as $field) {
+						if($field->varname == 'specials2') $specials2 = true;
+					}
+					if ($specials2) {
+						if (isset($data->zakaz->catalog_specials2)) return $data->zakaz->catalog_specials2->cat_name;
+					} else return false;
 				}
 			),
 			array(
 				'name' => 'manager',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::link($data->profileManager->email,array('/user/admin/view','id'=>$data->manager));
+					return CHtml::link($data->manager,array('/user/admin/view','id'=>$data->profileManager->id));
 				}
 			),
 			array(
 				'name' => 'user',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::link($data->profileUser->email,array('/user/admin/view','id'=>$data->manager));
+					return CHtml::link($data->user,array('/user/admin/view','id'=>$data->profileUser->id));
 				}
 			),
 			/*array(
@@ -105,9 +108,9 @@ $(document).ready(function () {
 					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->user)));
 
 					$fields = array();
-										
-					foreach ($userPayFields as $key => $field)
-						if ($field != null) $fields[$key] = $final[$key];
+					if(is_array($userPayFields))
+						foreach ($userPayFields as $key => $field)
+							if ($field != null) $fields[$key] = $final[$key];
 					
 					$model = Company::model()->findByPk(Company::getId());
 					if ($model !== null && $model->PaymentCash == '1') $fields['cash'] = 'Наличные';
@@ -194,7 +197,7 @@ $(document).ready(function () {
 	<?php
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'buh_transaction',
-		'dataProvider' => $model->search('2'),
+		'dataProvider' => $model->search('1,2,3'),
 		'filter'=>$model,
 		'columns'=>array(
 			array(
@@ -226,26 +229,29 @@ $(document).ready(function () {
 			array(
 				'header' => 'Спец2',
 				'value' => function($data) {			
-					$columns = Yii::app()->db->createCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" . Company::getId() . "_projects'")->queryRow();
-				
-					if (in_array('specials2', $columns))
-						if (isset($data->zakaz->catalog_spec2)) return 'zakaz.catalog_spec2.cat_name';
-					
-					else return false;
+					//$columns = Yii::app()->db->createCommand("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" . Company::getId() . "_projects'")->queryRow();
+					$specials2 = false;
+					$projectFields = Zakaz::model()->getFields();
+					foreach($projectFields as $field) {
+						if($field->varname == 'specials2') $specials2 = true;
+					}
+					if ($specials2) {
+						if (isset($data->zakaz->catalog_specials2)) return $data->zakaz->catalog_specials2->cat_name;
+					} else return false;
 				}
 			),
 			array(
 				'name' => 'manager',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::link($data->profileManager->email,array('/user/admin/view','id'=>$data->manager));
+					return CHtml::link($data->manager,array('/user/admin/view','id'=>$data->profileManager->id));
 				}
 			),
 			array(
 				'name' => 'user',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::link($data->profileUser->email,array('/user/admin/view','id'=>$data->manager));
+					return CHtml::link($data->user,array('/user/admin/view','id'=>$data->profileUser->id));
 				}
 			),
 			array(
@@ -268,9 +274,9 @@ $(document).ready(function () {
 					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->user)));
 
 					$fields = array();
-										
-					foreach ($userPayFields as $key => $field)
-						if ($field != null) $fields[$key] = $final[$key];
+					if(is_array($userPayFields))					
+						foreach ($userPayFields as $key => $field)
+							if ($field != null) $fields[$key] = $final[$key];
 					
 					$model = Company::model()->findByPk(Company::getId());
 					if ($model !== null && $model->PaymentCash == '1') $fields['cash'] = 'Наличные';

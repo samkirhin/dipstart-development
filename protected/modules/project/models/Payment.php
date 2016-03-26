@@ -28,11 +28,7 @@ class Payment extends CActiveRecord {
 	const OUTCOMING_CUSTOMER  = 3; // Refound
 	
 	public function tableName() {
-		$c_id = Campaign::getId();
-		if ($c_id)
-			return $c_id.'_Payment';
-		else
-			return 'Payment';
+		return Company::getId().'_Payment';
 	}
 
 	/**
@@ -48,7 +44,7 @@ class Payment extends CActiveRecord {
 			array('theme, , details_number', 'length', 'max'=>255),
 			array('manager, user, method', 'length', 'max'=>100),
                         array('user', 'email'),
-			array('receive_date, pay_date, details_bank', 'safe'),
+			array('receive_date, pay_date, details_bank, payment_type', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, order_id, receive_date, pay_date, theme, manager, user, summ, details_type, details_number, payment_type, approve, method', 'safe', 'on'=>'search'),
@@ -64,8 +60,8 @@ class Payment extends CActiveRecord {
 		// class name for the relations automatically generated below.
 		return array(
 			'zakaz' => array(self::BELONGS_TO, 'Zakaz', 'order_id'),
-			'profileManager' => array(self::BELONGS_TO, 'User', 'manager'),
-			'profileUser' => array(self::BELONGS_TO, 'User', 'user'),
+			'profileManager' => array(self::BELONGS_TO, 'User', array('manager'=>'email')),
+			'profileUser' => array(self::BELONGS_TO, 'User', array('user'=>'email')),
 		);
 	}
 
@@ -177,7 +173,7 @@ class Payment extends CActiveRecord {
 
 		$criteria=new CDbCriteria;
 		
-		$criteria->condition = 'payment_type = :type';
+		$criteria->condition = 'payment_type IN (:type)';
 		$criteria->params = array(':type'=>$type);
 
 		$criteria->compare('id',$this->id);
