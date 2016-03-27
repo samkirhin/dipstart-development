@@ -210,6 +210,5 @@ return array(
 	'upperckeckbox' => 'UpperCkeckbox',
 	'It is recommended to fill in the profile...' => 'It is recommended to fill in the profile. The filled profile increases the likelihood of obtaining new orders!',
 	'We also have other orders in this specialty. To see...' => 'We also have other orders in this specialty. To see the full list, as well as to be notified about new orders you have to register in the system.',
-	'Thank you! Your proposal is on the process...' => 'Thank you! Your proposal is on the process!<br><br>If your proposition is the most suitable, you will be assigned as the Performer of the order.<br>The notification will be sent to your e-mail. Also we recommend you to find out more about other orders on your specialty.<br><br>* As a rule, the selection of the Performer is accomplished during the day or earlier.',
 	
 );

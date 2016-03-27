@@ -238,5 +238,6 @@ return array(
 	'Cell number' => 'Номер телефона',
 	
 	'Edit assignments' => 'Редактировать назначения',
+	'Rating' => 'Рейтинг',
 );
 
