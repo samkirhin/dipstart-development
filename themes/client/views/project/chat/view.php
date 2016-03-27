@@ -17,6 +17,24 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 	</div>
 	<?php
 	if (!$order->executor) {
+		if($isGuest){
+			$href = 'http://'.$_SERVER['SERVER_NAME'].'/user/login?role=Author';
+			$attr = array('onclick'=>"document.location.href = '$href'", 'class'=>"btn btn-primary btn-block btn-green btn-30");
+			echo  '<div class="col-xs-12 get-it">'.CHtml::htmlButton(UserModule::t('Get It!'), $attr).'</div>';
+			$company = Campaign::getCompany();
+			if ($company->text4guests) echo '<div class="col-xs-12 text4guests">'.$company->text4guests.'</div>';
+		}else{
+			?>
+			<div class="col-xs-8 take-block" data-message="<?="<div class='post'>".$messageForAuthor.'</div>';?>"><?php
+				echo CHtml::form();
+				echo CHtml::label(ProjectModule::t('Offer your cost'),'cost',array('class' => 'control-label'));
+				echo CHtml::textField('cost');
+				$attr = array('name' => 'salary', 'class' => 'btn btn-primary','id'=>'salary-to-chat');
+				echo  CHtml::submitButton(ProjectModule::t('Take order'), $attr);
+				CHtml::endForm();
+				?></div><?
+		}
+		
 		if ($order->is_active) {
 		?>
 			<div class="col-xs-6">
@@ -43,22 +61,8 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 			$this->renderPartial('/zakaz/_orderInModerate', array('model' => $order));
 		}
 
-		if($isGuest){
-			$href = 'http://'.$_SERVER['SERVER_NAME'].'/user/login?role=Author';
-			$attr = array('onclick'=>"document.location.href = '$href'", 'class'=>"btn btn-primary btn-block btn-green btn-30");
-			echo  '<div class="col-xs-12 get-it">'.CHtml::htmlButton(UserModule::t('Get It!'), $attr).'</div>';
-			$company = Campaign::getCompany();
-			if ($company->text4guests) echo '<div class="col-xs-12 text4guests">'.$company->text4guests.'</div>';
-		}else{
+		if(!$isGuest){
 			?>
-			<div class="col-xs-8 take-block" data-message="<?="<div class='post'>".ProjectModule::t('Thank you! Your proposal is on the process...').'</div>';?>"><?php
-				echo CHtml::form();
-				echo CHtml::label(ProjectModule::t('Offer your cost'),'cost',array('class' => 'control-label'));
-				echo CHtml::textField('cost');
-				$attr = array('name' => 'salary', 'class' => 'btn btn-primary','id'=>'salary-to-chat');
-				echo  CHtml::submitButton(ProjectModule::t('Take order'), $attr);
-				CHtml::endForm();
-			?></div>
 			<div id="chat" class="col-xs-8 user-chat-block">
 				<?php $this->renderPartial('chat',array('order'=>$order, 'orderId'=>$orderId));?>
 			</div>

@@ -161,6 +161,7 @@ class ChatController extends Controller {
 		$parts = ZakazParts::model()->findAll(array(
 			'condition' => "`proj_id`='$orderId'",
 		));
+		$messageForAuthor = Templates::model()->getTemplate(Templates::TYPE_AUTHOR_RESPONSE_PROJECT);
 		//$isGuest = Yii::app()->user->isGuest;
 		$isGuest = Yii::app()->user->isGuest();
 		if ($isGuest || User::model()->isManager()) {
@@ -193,6 +194,7 @@ class ChatController extends Controller {
 			//'moderated'	=> $moderated,
 			'isGuest'	=> $isGuest,
 			'parts'		=> $parts,
+			'messageForAuthor'	=> $messageForAuthor,
 		));
         //Yii::app()->end();
 	}

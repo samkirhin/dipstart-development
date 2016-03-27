@@ -59,7 +59,6 @@ $upload_params = array('id' => $order->id);
 	<div class="col-xs-12 rating-line"><?php
 
 		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
-			echo '<div class="my-rating author-raiting">'.ProjectModule::t('My rating:').' <span class="value">'.Profile::model()->findByPk($order->executor)->rating.'</span></div>';
 			$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
 			echo '<div class="my-rating">'.ProjectModule::t('Work price:').' <span class="value">'.$payment->work_price.'</span></div>'; //Стоимость проекта для автора
 			echo '<div class="my-rating">'.ProjectModule::t('To pay:').' <span class="value">'.$payment->to_pay.'</span></div>';
