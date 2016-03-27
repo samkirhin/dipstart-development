@@ -19,11 +19,7 @@ class Profile extends UActiveRecord
 	//public static $table_prefix;
 	
 	public function tableName() {
-		$c_id = Campaign::getId();
-		if ($c_id)
-			return $c_id.'_'.Yii::app()->getModule('user')->tableProfiles;
-		else
-			return Yii::app()->getModule('user')->tableProfiles;
+		return Company::getId().'_'.Yii::app()->getModule('user')->tableProfiles;
 	}
 	
 	/**
@@ -135,6 +131,7 @@ class Profile extends UActiveRecord
 	{
 		$labels = array(
 			'user_id' => UserModule::t('User ID'),
+			'rating' => UserModule::t('Rating'),
 		);
 		$model=$this->getFields();
 
