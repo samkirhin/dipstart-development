@@ -579,6 +579,21 @@ CREATE TABLE IF NOT EXISTS `1_WebmasterLogs` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `1_ManagerLogs`
+--
+
+CREATE TABLE IF NOT EXISTS `1_ManagerLogs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `action` int(3) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `1_ZakazPartsFiles`
 --
 
