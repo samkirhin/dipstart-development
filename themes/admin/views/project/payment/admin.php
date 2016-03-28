@@ -109,8 +109,8 @@ $(document).ready(function () {
 
 					$fields = array();
 					//if(is_array($userPayFields))
-						foreach ($userPayFields as $key => $field)
-							if ($field != null) $fields[$key] = $final[$key];
+					foreach ($userPayFields as $key => $field)
+						if ($field != null) $fields[$key] = $final[$key];
 					
 					$model = Company::model()->findByPk(Company::getId());
 					if ($model !== null && $model->PaymentCash == '1') $fields['cash'] = 'Наличные';
@@ -274,9 +274,9 @@ $(document).ready(function () {
 					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->user)));
 
 					$fields = array();
-					if(is_array($userPayFields))					
-						foreach ($userPayFields as $key => $field)
-							if ($field != null) $fields[$key] = $final[$key];
+					//if(is_array($userPayFields))					
+					foreach ($userPayFields as $key => $field)
+						if ($field != null) $fields[$key] = $final[$key];
 					
 					$model = Company::model()->findByPk(Company::getId());
 					if ($model !== null && $model->PaymentCash == '1') $fields['cash'] = 'Наличные';
