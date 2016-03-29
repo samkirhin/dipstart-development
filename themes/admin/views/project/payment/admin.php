@@ -105,7 +105,7 @@ $(document).ready(function () {
 					}
 					$fields = implode($fields, ',');
 					
-					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->user)));
+					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->profileUser->id)));
 
 					$fields = array();
 					if(!empty($userPayFields))
@@ -123,7 +123,7 @@ $(document).ready(function () {
 								'url'=> PaymentController::createUrl('getPayNumber'),
 								'data' => array(
 									'payType' => 'js:this.value',
-									'user' => $data->user,
+									'user' => $data->profileUser->id,
 								),
 								'success' => 'function(html) {
 									if (html != "") $("#payDetailNumber_' . $data->id . '").val(html);
@@ -269,9 +269,10 @@ $(document).ready(function () {
 						$fields[] = $field->varname;
 						$final[$field->varname] = $field->title;
 					}
+
 					$fields = implode($fields, ',');
-					
-					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->user)));
+
+					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->profileUser->id)));
 
 					$fields = array();
 					if(!empty($userPayFields))					
@@ -289,7 +290,7 @@ $(document).ready(function () {
 								'url'=> PaymentController::createUrl('getPayNumber'),
 								'data' => array(
 									'payType' => 'js:this.value',
-									'user' => $data->user,
+									'user' => $data->profileUser->id,
 								),
 								'success' => 'function(html) {
 									if (html != "") $("#payDetailNumber_' . $data->id . '").val(html);
