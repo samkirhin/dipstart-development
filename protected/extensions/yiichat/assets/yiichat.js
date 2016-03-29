@@ -194,7 +194,7 @@ var YiiChat = function (options) {
 				tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-delete\">Удалить</button>";
 				if (options.identity != post.sender.superuser.userid) {
                     if (post.moderated == 0 && (post.sender.superuser.itemname == 'Author' || post.sender.superuser.itemname == 'Customer'))
-                        if (post.recipient != 0 && (post.recipient.superuser.itemname == 'Author' || post.recipient.superuser.itemname == 'Customer'))
+                        if (post.recipient == 0 || post.recipient != 0 && (post.recipient.superuser.itemname == 'Author' || post.recipient.superuser.itemname == 'Customer'))
 							tmp_html += "<button data-index=\"" + post.id + "\"class=\"chtpl0-accept\">Одобрить</button>";
                     
                 }
@@ -248,6 +248,7 @@ var YiiChat = function (options) {
                 var btn_ok = p.find('button.chtpl0-accept');
                 btn_ok.click(function () {
                     setdata = this.dataset;
+					alert(setdata.index);
                     jQuery.ajax({
                         cache: false, type: 'post',
                         url: options.action + '&action=dapprove&data=not_used',

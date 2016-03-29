@@ -66,22 +66,23 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		$model->moderated = 1;
 		
 		$orderId = $model->order;
-		$user = User::model()->findByPk($model->recipient);
-		//$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
-		
-		$role = $user->getUserRole($user->id);
-		if($role == 'Customer') $type_id = Emails::TYPE_16; // Заказчику о сообщении в чате
-		if($role == 'Author') $type_id = Emails::TYPE_20; // Исполнителю о сообщении в чате
-		
-		$email = new Emails;
-		$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-		$email->name = $user->full_name;
-		if (strlen($email->name) < 2) $email->name = $user->username;
-		$email->num_order = $orderId;
-		$email->message = $model->message;
-		$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-		$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
-		
+		if($model->recipient) {
+			$user = User::model()->findByPk($model->recipient);
+			//$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
+			
+			$role = $user->getUserRole($user->id);
+			if($role == 'Customer') $type_id = Emails::TYPE_16; // Заказчику о сообщении в чате
+			if($role == 'Author') $type_id = Emails::TYPE_20; // Исполнителю о сообщении в чате
+			
+			$email = new Emails;
+			$rec   = Templates::model()->findAll("`type_id`='$type_id'");
+			$email->name = $user->full_name;
+			if (strlen($email->name) < 2) $email->name = $user->username;
+			$email->num_order = $orderId;
+			$email->message = $model->message;
+			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
+		}
 		return $model->save();
 	}
 	public function yiichat_dpost($post){
