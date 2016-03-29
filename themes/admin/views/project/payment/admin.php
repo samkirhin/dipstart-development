@@ -30,7 +30,7 @@ $(document).ready(function () {
 	<h3>Входящие</h3>
 	<?php
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'buh_transaction',
+		'id'=>'buh_transaction_in',
 		'dataProvider' => $model->search('0'),
 		'filter'=>$model,
 		'columns'=>array(
@@ -106,7 +106,7 @@ $(document).ready(function () {
 					$fields = implode($fields, ',');
 					
 					$userPayFields = Profile::model()->find(array('select' => $fields, 'condition' => 'user_id = :user', 'params' => array(':user' => $data->profileUser->id)));
-
+					
 					$fields = array();
 					if(!empty($userPayFields))
 						foreach ($userPayFields as $key => $field)
@@ -114,11 +114,11 @@ $(document).ready(function () {
 					
 					$model = Company::model()->findByPk(Company::getId());
 					if ($model !== null && $model->PaymentCash == '1') $fields['cash'] = 'Наличные';
-										
+				
 					return CHtml::dropDownList('paymentType_' . $data->id, $data->details_type, $fields,
 						array(
 							'empty' => '',
-							'disabled' => $data->approve == 1 ? true : false,
+							'disabled' => in_array($data->approve, array('0','1')) == 1 ? true : false,
 							'ajax' => array(
 								'url'=> PaymentController::createUrl('getPayNumber'),
 								'data' => array(
@@ -138,7 +138,7 @@ $(document).ready(function () {
 				'name' => 'details_number',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => $data->approve == 1 ? true : false));
+					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => in_array($data->approve, array('0','1')) == 1 ? true : false));
 				}
 			),
 			array(
@@ -148,14 +148,14 @@ $(document).ready(function () {
 					'for_approve' => array(
 						'label' => Yii::t('site','Confirm'),
 						'options' => array("class"=>"btn btn-primary btn-xs approve_payment"),
-						'visible' => '$data->approve == 0',
+						'visible' => '$data->approve == 2',
 						'click' =>'function(){setApprove($(this).attr("href"),$("#paymentType_"+$(this).attr("href")).val(),$("#payDetailNumber_"+$(this).attr("href")).val());return false;}', // manager.js
 						'url'=>'$data->id',
 					),
 					'for_reject' => array(
 						'label' => Yii::t('site','Reject'),
 						'options' => array("class"=>"btn btn-primary btn-xs reject_payment"),
-						'visible' => '$data->approve == 1',
+						'visible' => '$data->approve == 2',
 						'click' => 'function(){setReject($(this).attr("href"));return false;}', 
 						'url'=>'$data->id',
 					),
@@ -177,7 +177,7 @@ $(document).ready(function () {
 					'cancel' => array(
 						'label' => Yii::t('site','Cancel'),
 						'options' => array("class"=>"btn btn-primary btn-xs cancel_payment"),
-						//'visible' => '$data->approve == 0',
+						'visible' => 'in_array($data->approve, array(0, 1))',
 						'click' => 'function(){cancelPayment($(this).attr("href"));return false;}', // manager.js
 						'url'=>'$data->id',
 					),
@@ -196,7 +196,7 @@ $(document).ready(function () {
 	<h3>Исходящие</h3>
 	<?php
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'buh_transaction',
+		'id'=>'buh_transaction_out',
 		'dataProvider' => $model->search('1,2,3'),
 		'filter'=>$model,
 		'columns'=>array(
@@ -281,11 +281,11 @@ $(document).ready(function () {
 					
 					$model = Company::model()->findByPk(Company::getId());
 					if ($model !== null && $model->PaymentCash == '1') $fields['cash'] = 'Наличные';
-										
+						
 					return CHtml::dropDownList('paymentType_' . $data->id, $data->details_type, $fields,
 						array(
 							'empty' => '',
-							'disabled' => $data->approve == 1 ? true : false,
+							'disabled' => in_array($data->approve, array('0','1')) ? true : false,
 							'ajax' => array(
 								'url'=> PaymentController::createUrl('getPayNumber'),
 								'data' => array(
@@ -305,7 +305,7 @@ $(document).ready(function () {
 				'name' => 'details_number',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => $data->approve == 1 ? true : false));
+					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => in_array($data->approve, array('0','1')) ? true : false));
 				}
 			),
 			array(
@@ -315,14 +315,14 @@ $(document).ready(function () {
 					'for_approve' => array(
 						'label' => Yii::t('site','Confirm'),
 						'options' => array("class"=>"btn btn-primary btn-xs approve_payment"),
-						'visible' => '$data->approve == 0',
+						'visible' => '$data->approve == 2',
 						'click' =>'function(){setApprove($(this).attr("href"),$("#paymentType_"+$(this).attr("href")).val(),$("#payDetailNumber_"+$(this).attr("href")).val());return false;}', // manager.js
 						'url'=>'$data->id',
 					),
 					'for_reject' => array(
 						'label' => Yii::t('site','Reject'),
 						'options' => array("class"=>"btn btn-primary btn-xs reject_payment"),
-						'visible' => '$data->approve == 1',
+						'visible' => '$data->approve == 2',
 						'click' => 'function(){setReject($(this).attr("href"));return false;}', 
 						'url'=>'$data->id',
 					),
@@ -344,7 +344,7 @@ $(document).ready(function () {
 					'cancel' => array(
 						'label' => Yii::t('site','Cancel'),
 						'options' => array("class"=>"btn btn-primary btn-xs cancel_payment"),
-						//'visible' => '$data->approve == 0',
+						'visible' => 'in_array($data->approve, array(0, 1))',
 						'click' => 'function(){cancelPayment($(this).attr("href"));return false;}', // manager.js
 						'url'=>'$data->id',
 					),

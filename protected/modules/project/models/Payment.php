@@ -144,7 +144,7 @@ class Payment extends CActiveRecord {
 	public function cancelPayment($method)
 	{
 		$this->method = $method;
-		$this->approve = 0;
+		$this->approve = 2;
 		$this->pay_date = NULL;
 		$this->save(false);
 		return true;

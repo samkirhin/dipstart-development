@@ -157,21 +157,24 @@ function setApprove (id, type, number) {
         'type': type,
         'number': number
     }), function (response) {
-        $.fn.yiiGridView.update('buh_transaction');
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
     }, 'json');
 }
 function setReject (id) {
     $.post('/project/payment/rejectTransaction', JSON.stringify({
         'id': id
     }), function (response) {
-        $.fn.yiiGridView.update('buh_transaction');
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
     }, 'json');
 }
 function cancelPayment (id) {
     $.post('/project/payment/cancelTransaction', JSON.stringify({
         'id': id
     }), function (response) {
-        $.fn.yiiGridView.update('buh_transaction');
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
     }, 'json');
 }
 $( window ).load( function() {
