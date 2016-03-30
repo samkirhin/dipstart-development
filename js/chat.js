@@ -47,7 +47,7 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	function view_chat(name, message, id, cost = null){
+	function view_chat(name, message, id, cost/* = null*/){
 	    message = Trim(message);
         if (message.length<=0) return false;
         var role = parseInt($('div#message_send').data('role'));
