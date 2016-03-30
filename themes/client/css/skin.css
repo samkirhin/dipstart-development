@@ -1369,3 +1369,9 @@ h7.center {
 .clear {
 	clear: both;
 }
+ul.files-list {
+	list-style: none;
+	padding-left: 0px;
+	overflow: hidden;
+	margin-bottom: 0px;
+}

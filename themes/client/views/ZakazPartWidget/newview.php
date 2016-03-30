@@ -47,7 +47,7 @@ if ($this->status_id > 2 || !User::model()->isCustomer()) {
 						if (User::model()->isAuthor()) {
 							echo '<p>'.$data['comment'].'</p>';
 						}
-						
+
 						$uploaded_files = '';
 						foreach ($data['files'] as $k => $v){
 							if (User::model()->isAuthor() || $v['approved']) {
@@ -59,8 +59,11 @@ if ($this->status_id > 2 || !User::model()->isCustomer()) {
 									'</a>'.
 									'</li>';
 							}
-						} ?>
-						<?php if (User::model()->isExecutor($data['proj_id'])) $this->widget('ext.EAjaxUpload.EAjaxUpload',
+						}
+						if (User::model()->isCustomer()) {
+							echo '<ul class="files-list">'.$uploaded_files.'</ul>';
+						}
+						if (User::model()->isExecutor($data['proj_id'])) $this->widget('ext.EAjaxUpload.EAjaxUpload',
 							array(
 								'id' => 'EAjaxUpload' . $data['id'],
 								'config' => array(
