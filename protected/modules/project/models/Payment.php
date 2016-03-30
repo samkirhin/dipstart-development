@@ -27,6 +27,11 @@ class Payment extends CActiveRecord {
 	const OUTCOMING_WEBMASTER = 2;
 	const OUTCOMING_CUSTOMER  = 3; // Refound
 	
+	// Payment statuses
+	const FREE = 0;
+	const APPROVED = 1;
+	const REJECTED = 2;
+	
 	public function tableName() {
 		return Company::getId().'_Payment';
 	}
@@ -130,10 +135,10 @@ class Payment extends CActiveRecord {
 	
 	public function rejectFromBookkeeper($method)
 	{   
-		if($this->approve != 0) {
+		if($this->approve != self::REJECTED) {
 		
 			$this->method = $method;
-			$this->approve = 0;
+			$this->approve = self::REJECTED;
 			$this->pay_date = NULL;
 			$this->save(false);
 			
@@ -144,7 +149,7 @@ class Payment extends CActiveRecord {
 	public function cancelPayment($method)
 	{
 		$this->method = $method;
-		$this->approve = 2;
+		$this->approve = self::FREE;
 		$this->pay_date = NULL;
 		$this->save(false);
 		return true;

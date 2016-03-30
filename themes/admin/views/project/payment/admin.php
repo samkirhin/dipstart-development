@@ -118,7 +118,7 @@ $(document).ready(function () {
 					return CHtml::dropDownList('paymentType_' . $data->id, $data->details_type, $fields,
 						array(
 							'empty' => '',
-							'disabled' => in_array($data->approve, array('0','1')) == 1 ? true : false,
+							'disabled' => in_array($data->approve, array(Payment::APPROVED,Payment::REJECTED)) == 1 ? true : false,
 							'ajax' => array(
 								'url'=> PaymentController::createUrl('getPayNumber'),
 								'data' => array(
@@ -138,34 +138,34 @@ $(document).ready(function () {
 				'name' => 'details_number',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => in_array($data->approve, array('0','1')) == 1 ? true : false));
+					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => in_array($data->approve, array(Payment::APPROVED,Payment::REJECTED)) == 1 ? true : false));
 				}
 			),
 			array(
 				'class' => 'CButtonColumn',
-				'template'=> '{approved} {reject} {for_reject} {for_approve} ',
+				'template'=> '{approved} {reject} {for_approve} {for_reject} ',
 				'buttons' => array(
 					'for_approve' => array(
 						'label' => Yii::t('site','Confirm'),
 						'options' => array("class"=>"btn btn-primary btn-xs approve_payment"),
-						'visible' => '$data->approve == 2',
+						'visible' => '$data->approve == '.Payment::FREE,
 						'click' =>'function(){setApprove($(this).attr("href"),$("#paymentType_"+$(this).attr("href")).val(),$("#payDetailNumber_"+$(this).attr("href")).val());return false;}', // manager.js
 						'url'=>'$data->id',
 					),
 					'for_reject' => array(
 						'label' => Yii::t('site','Reject'),
 						'options' => array("class"=>"btn btn-primary btn-xs reject_payment"),
-						'visible' => '$data->approve == 2',
+						'visible' => '$data->approve == '.Payment::FREE,
 						'click' => 'function(){setReject($(this).attr("href"));return false;}', 
 						'url'=>'$data->id',
 					),
 					'approved' => array(
 						'label' => Yii::t('site','Confirmed'),
-						'visible' => '$data->approve == 1',
+						'visible' => '$data->approve == '.Payment::APPROVED,
 					),
 					'reject' => array(
 						'label' => Yii::t('site','Rejected'),
-						'visible' => '$data->approve == 0',
+						'visible' => '$data->approve == '.Payment::REJECTED,
 					),
 				),
 			),
@@ -177,7 +177,7 @@ $(document).ready(function () {
 					'cancel' => array(
 						'label' => Yii::t('site','Cancel'),
 						'options' => array("class"=>"btn btn-primary btn-xs cancel_payment"),
-						'visible' => 'in_array($data->approve, array(0, 1))',
+						'visible' => 'in_array($data->approve, array('.Payment::APPROVED.', '.Payment::REJECTED.'))',
 						'click' => 'function(){cancelPayment($(this).attr("href"));return false;}', // manager.js
 						'url'=>'$data->id',
 					),
@@ -285,7 +285,7 @@ $(document).ready(function () {
 					return CHtml::dropDownList('paymentType_' . $data->id, $data->details_type, $fields,
 						array(
 							'empty' => '',
-							'disabled' => in_array($data->approve, array('0','1')) ? true : false,
+							'disabled' => in_array($data->approve, array(Payment::APPROVED,Payment::REJECTED)) ? true : false,
 							'ajax' => array(
 								'url'=> PaymentController::createUrl('getPayNumber'),
 								'data' => array(
@@ -305,34 +305,34 @@ $(document).ready(function () {
 				'name' => 'details_number',
 				'type' => 'raw',
 				'value'=>function($data) {
-					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => in_array($data->approve, array('0','1')) ? true : false));
+					return CHtml::textField("payDetailNumber_{$data->id}", $data->details_number, array('disabled' => in_array($data->approve, array(Payment::APPROVED,Payment::REJECTED)) ? true : false));
 				}
 			),
 			array(
 				'class' => 'CButtonColumn',
-				'template'=> '{approved} {reject} {for_reject} {for_approve} ',
+				'template'=> '{approved} {reject} {for_approve} {for_reject} ',
 				'buttons' => array(
 					'for_approve' => array(
 						'label' => Yii::t('site','Confirm'),
 						'options' => array("class"=>"btn btn-primary btn-xs approve_payment"),
-						'visible' => '$data->approve == 2',
+						'visible' => '$data->approve == '.Payment::FREE,
 						'click' =>'function(){setApprove($(this).attr("href"),$("#paymentType_"+$(this).attr("href")).val(),$("#payDetailNumber_"+$(this).attr("href")).val());return false;}', // manager.js
 						'url'=>'$data->id',
 					),
 					'for_reject' => array(
 						'label' => Yii::t('site','Reject'),
 						'options' => array("class"=>"btn btn-primary btn-xs reject_payment"),
-						'visible' => '$data->approve == 2',
+						'visible' => '$data->approve == '.Payment::FREE,
 						'click' => 'function(){setReject($(this).attr("href"));return false;}', 
 						'url'=>'$data->id',
 					),
 					'approved' => array(
 						'label' => Yii::t('site','Confirmed'),
-						'visible' => '$data->approve == 1',
+						'visible' => '$data->approve == '.Payment::APPROVED,
 					),
 					'reject' => array(
 						'label' => Yii::t('site','Rejected'),
-						'visible' => '$data->approve == 0',
+						'visible' => '$data->approve == '.Payment::REJECTED,
 					),
 				),
 			),
@@ -344,7 +344,7 @@ $(document).ready(function () {
 					'cancel' => array(
 						'label' => Yii::t('site','Cancel'),
 						'options' => array("class"=>"btn btn-primary btn-xs cancel_payment"),
-						'visible' => 'in_array($data->approve, array(0, 1))',
+						'visible' => 'in_array($data->approve, array('.Payment::APPROVED.', '.Payment::REJECTED.'))',
 						'click' => 'function(){cancelPayment($(this).attr("href"));return false;}', // manager.js
 						'url'=>'$data->id',
 					),
