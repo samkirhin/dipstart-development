@@ -248,7 +248,6 @@ var YiiChat = function (options) {
                 var btn_ok = p.find('button.chtpl0-accept');
                 btn_ok.click(function () {
                     setdata = this.dataset;
-					alert(setdata.index);
                     jQuery.ajax({
                         cache: false, type: 'post',
                         url: options.action + '&action=dapprove&data=not_used',
