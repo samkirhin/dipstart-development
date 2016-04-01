@@ -29,6 +29,15 @@ $(document).ready(function () {
 <div id="in">
 	<h3>Входящие</h3>
 	<?php
+	function approve_buttons($data) {
+		$html = '';
+		if($data->approve == Payment::FREE) $html .= CHtml::button(Yii::t('site','Confirm'), array('class'=>'btn btn-primary btn-xs approve_payment', 'href' => $data->id, 'onclick' => 'setApprove($(this).attr("href"),$("#paymentType_"+$(this).attr("href")).val(),$("#payDetailNumber_"+$(this).attr("href")).val());return false;'));
+		if($data->approve == Payment::FREE) $html .= CHtml::button(Yii::t('site','Reject'), array('class'=>'btn btn-primary btn-xs reject_payment', 'href' => $data->id, 'onclick' => 'setReject($(this).attr("href"));return false;'));
+		if($data->approve == Payment::APPROVED) $html .= Yii::t('site','Confirmed');
+		if($data->approve == Payment::REJECTED) $html .= Yii::t('site','Rejected');
+		return $html;
+	}
+	
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'buh_transaction_in',
 		'dataProvider' => $model->search('0'),
@@ -142,6 +151,12 @@ $(document).ready(function () {
 				}
 			),
 			array(
+				'name' => 'approve',
+				'type' => 'raw',
+				'value'=> function($data) {return approve_buttons($data);},
+				'filter' => array('0' => 'free', '1' => Yii::t('site','Confirmed'), '2' => Yii::t('site','Rejected')),
+			),
+			/*array(
 				'class' => 'CButtonColumn',
 				'template'=> '{approved} {reject} {for_approve} {for_reject} ',
 				'buttons' => array(
@@ -168,7 +183,7 @@ $(document).ready(function () {
 						'visible' => '$data->approve == '.Payment::REJECTED,
 					),
 				),
-			),
+			),*/
 			array(
 				'header' => 'Отменить платеж',
 				'class' => 'CButtonColumn',
@@ -309,6 +324,12 @@ $(document).ready(function () {
 				}
 			),
 			array(
+				'name' => 'approve',
+				'type' => 'raw',
+				'value'=> function($data) {return approve_buttons($data);},
+				'filter' => array('0' => 'free', '1' => Yii::t('site','Confirmed'), '2' => Yii::t('site','Rejected')),
+			),
+			/*array(
 				'class' => 'CButtonColumn',
 				'template'=> '{approved} {reject} {for_approve} {for_reject} ',
 				'buttons' => array(
@@ -335,7 +356,7 @@ $(document).ready(function () {
 						'visible' => '$data->approve == '.Payment::REJECTED,
 					),
 				),
-			),
+			),*/
 			array(
 				'header' => 'Отменить платеж',
 				'class' => 'CButtonColumn',
