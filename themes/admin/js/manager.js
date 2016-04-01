@@ -87,7 +87,8 @@ function stageFileApprove(obj){ /* Approve files in parts */
         'data': data
     }), function (response) {
         if (response.data) {
-            //console.log(response.data.success);
+            console.log(response);
+			//console.log();
 			$(obj).siblings("button").show();
 			$(obj).siblings("button").removeClass("hidden");
 			//if($(obj).hasClass('on')) $($('button[data-id="'+data['id']+']').find('.on[data-part_id="'+data['part_id']+'"]').removeClass("hidden")).show();
@@ -116,7 +117,7 @@ $(document).on("click", 'li span.deletefile', function(e) { /* Delete files in p
 		});
 	}
 });
-	
+
 function approveFile(obj){
     var data=$(obj).data();
     $.post('/project/zakaz/apiApproveFile', JSON.stringify({
@@ -150,11 +151,30 @@ function spam(orderid){
     alert('Рассылка запущена');
     return false;
 }
-function setApprove (id) {
+function setApprove (id, type, number) {
     $.post('/project/payment/approveTransaction', JSON.stringify({
+        'id': id,
+        'type': type,
+        'number': number
+    }), function (response) {
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
+    }, 'json');
+}
+function setReject (id) {
+    $.post('/project/payment/rejectTransaction', JSON.stringify({
         'id': id
     }), function (response) {
-        $.fn.yiiGridView.update('buh_transaction');
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
+    }, 'json');
+}
+function cancelPayment (id) {
+    $.post('/project/payment/cancelTransaction', JSON.stringify({
+        'id': id
+    }), function (response) {
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
     }, 'json');
 }
 $( window ).load( function() {

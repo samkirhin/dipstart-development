@@ -119,15 +119,14 @@ INSERT INTO `1_PartStatus` (`id`, `status`) VALUES
 CREATE TABLE IF NOT EXISTS `1_Payment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
-  `receive_date` date DEFAULT NULL,
-  `pay_date` date DEFAULT NULL,
+  `receive_date` datetime DEFAULT NULL,
+  `pay_date` datetime DEFAULT NULL,
   `theme` varchar(255) DEFAULT NULL,
   `manager` varchar(100) DEFAULT NULL,
   `user` varchar(100) DEFAULT NULL,
   `summ` float(10,2) DEFAULT NULL,
-  `details_ya` varchar(255) DEFAULT NULL,
-  `details_wm` varchar(255) DEFAULT NULL,
-  `details_bank` text,
+  `details_type` int(11) NOT NULL,
+  `details_number` varchar(255) NOT NULL,
   `payment_type` tinyint(1) DEFAULT NULL,
   `approve` tinyint(1) DEFAULT NULL,
   `method` varchar(100) DEFAULT NULL,
@@ -575,6 +574,21 @@ CREATE TABLE IF NOT EXISTS `1_WebmasterLogs` (
 -- Дамп данных таблицы `1_WebmasterLogs`
 --
 
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `1_ManagerLogs`
+--
+
+CREATE TABLE IF NOT EXISTS `1_ManagerLogs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `action` int(3) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
 
