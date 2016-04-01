@@ -256,6 +256,12 @@ class Profile extends UActiveRecord
 		$this->_modelSave = $this->attributes;
 		return parent::afterFind();
 	}
+	
+	public function getPayNumber($payType, $user) {
+		$data = Yii::app()->db->createCommand("SELECT * FROM `" . self::tableName() . "` WHERE user_id = {$user}")->queryRow();
+		return $payType != 'cash' ? $data[$payType] : '';
+	}
+	
 	/*
 	 * список изменений для записи
 	 */

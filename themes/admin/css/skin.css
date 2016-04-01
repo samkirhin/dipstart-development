@@ -371,10 +371,13 @@ table.payment-table th button {
     margin: 0px auto!important;
 }
 
-.approve_payment {
+.reject_payment {
     padding: 4px!important;
     margin-right: 0px!important;
     font-size: 10px!important;
+	background-color: #ff7777;
+	margin-top: 4px!important;
+	border-color: #aa4444;
 }
 
 table.payment-table td button {
