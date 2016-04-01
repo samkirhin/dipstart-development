@@ -383,6 +383,8 @@ class Zakaz extends CActiveRecord {
 			$tmp = $field->varname;
 			if (isset($this->$tmp) && $field->field_type == 'LIST' && $this->$tmp != '') {
 				$criteria->compare($tmp, explode(',',$this->$tmp));
+			} elseif ($field->field_type == 'VARCHAR' || $field->field_type == 'TEXT') {
+				$criteria->compare($tmp, $this->$tmp, true);
 			} else {
 				$criteria->compare($tmp, $this->$tmp);
 			}
