@@ -10,8 +10,8 @@ Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/j
 
 $this->widget('zii.widgets.grid.CGridView', array(
     'id'=>'buh_transaction',
-    'dataProvider' => $dataProvider->search(),
-    'filter'=>$dataProvider,
+    'dataProvider' => $model->search(),
+    'filter'=>$model,
     'columns'=>array(
         'id',
         'order_id',
@@ -36,7 +36,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'label' => Yii::t('site','Confirm'),
                     'options' => array("class"=>"btn btn-primary btn-xs approve_payment"),
                     'visible' => '$data->approve == 0',
-                    'click' => 'function(){setApprove($(this).attr("href"));return false;}',
+                    'click' => 'function(){setApprove($(this).attr("href"));return false;}', // manager.js
                     'url'=>'$data->id',
                 ),
                 'approved' => array(

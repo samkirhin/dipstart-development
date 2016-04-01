@@ -15,14 +15,14 @@
 	<div class="chat-buttons">
 		<?php
 		if(User::model()->isAuthor()) {
-			$middle_button = ProjectModule::t('Send the customer');
+			$middle_button = ProjectModule::t('Send to customer');
 		} else if(User::model()->isCustomer()) {
-			$middle_button = ProjectModule::t('Send the author');
+			$middle_button = ProjectModule::t('Send to author');
 		}
 		$attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat chtpl0-submit1','id'=>'chat-to-customer');
 		echo  CHtml::submitButton($middle_button, $attr) ;
 		$attr = array('name' => 'manager', 'class' => 'btn btn-primary btn-chat chtpl0-submit2','id'=>'chat-to-manager');
-		echo  CHtml::submitButton(ProjectModule::t('Send manager'), $attr) ;
+		echo  CHtml::submitButton(ProjectModule::t('Send to administrator'), $attr) ;
 		
 		//$edit_button = ProjectModule::t('Edit Last Message');
 		//echo CHtml::submitButton($edit_button, array('name' => 'edit-message', 'class' => 'btn btn-primary chat-edit','step' => '0','id' => 'chat-edit'));

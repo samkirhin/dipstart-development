@@ -447,3 +447,7 @@ p.error, div.errorSummary, div.errorMessage {
 p.success {
 	color: green;
 }
+div.link-for-executors {
+	width: 100%;
+	text-align: center;
+}

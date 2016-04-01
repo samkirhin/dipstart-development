@@ -1,4 +1,5 @@
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/custom.css');?>
+<?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/chat-view.css'); ?>
 <?php //Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/js/orders.js');?>
 
 <?php
@@ -21,9 +22,18 @@ if (Campaign::getId()){
 	);
 }
 
-if (isset($only_new) && User::model()->isAuthor()) {
-	if(!$profile) echo '<div class="advice">'.ProjectModule::t('It is recommended to fill in the profile...').'</div>';
+if (isset($only_new)) {
+	$url = Yii::app()->createUrl('/project/chat/view',array('orderId'=>'')).'/';
+	if (User::model()->isAuthor()) {
+		if(!$profile) echo '<div class="advice">'.ProjectModule::t('It is recommended to fill in the profile...').'</div>';
+	} elseif($isGuest) { ?>
+	<div class="heading guest-links">
+		<a class="right" href="/user/login?role=Author"><?=UserModule::t('Login') ?></a>
+		<a class="right" href="/user/registration?role=Author"><?=UserModule::t('Register') ?></a>
+	</div>
+	<?php }
 } else {
+	$url = Yii::app()->createUrl('/project/chat',array('orderId'=>''));
 ?>
 <section>
 	<div id="control-menu">
@@ -41,16 +51,16 @@ if (isset($only_new) && User::model()->isAuthor()) {
 <div class="twin-tab">
 <div class="first-tab" id="first-tab">
 <?php
-}; //if (!isset($only_new)) {
+}
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'zakaz-grid',
 	'dataProvider'=>$dataProvider,
 	'columns'=>$columns,
 	'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
 	'selectionChanged'=>"js:function(sel_id){
-		document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+		document.location.href='".$url."'+$('#'+sel_id).find('.selected').children().first().text();
 	}",
-)); 
+));
 if (!isset($only_new)) {
 ?>
 </div>
@@ -62,12 +72,12 @@ if (!isset($only_new)) {
 		'columns'=>$columns,
 		'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
 		'selectionChanged'=>"js:function(sel_id){
-			document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
+			document.location.href='".$url."'+$('#'+sel_id).find('.selected').children().first().text();
 		}",
 	)); 
 
 	echo '</div>';
-	}; //if (!isset($only_new)) 
+} //if (!isset($only_new)) 
 ?>
 <script>
 	function clickOnTab(num){
@@ -98,7 +108,7 @@ if (!isset($only_new)) {
 				keys = $('#zakaz-grid > div.keys > span'),
 				rowId = keys.eq(rowNum).text();
 
-			location.href = '/project/chat?orderId=' + rowId;
+			location.href = '<?=$url ?>' + rowId;
 		});
 	});
 	$(document).ready(function()
@@ -115,4 +125,12 @@ if (!isset($only_new)) {
 	});
 
 </script>
-	
+<?php 	if($isGuest) {
+$company = Campaign::getCompany();
+if ($company->text4guests) echo '<div class="col-xs-12 text4guests">'.$company->text4guests.'</div>';
+?>
+<div class="heading guest-links clear">
+	<a class="right" href="/user/login?role=Author"><?=UserModule::t('Login') ?></a>
+	<a class="right" href="/user/registration?role=Author"><?=UserModule::t('Register') ?></a>
+</div>
+<?php } ?>

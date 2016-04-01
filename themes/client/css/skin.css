@@ -1,20 +1,13 @@
 ﻿/* Skin "adaptive_dipstart" by Artem */
-body {
-    font-family:arial, sans-serif;
-    color:#333;
-    /*background-color: #DEE3E9;*/
-}
-/*
-a { color:#004dd9; }
-a:hover { color:#ea0000; }
-a:visited { color:#551a8b; }
+
+a:hover { color:#551a8b; }
 
 ul li, ol li {
   padding:0 0 0.4em 0;
 }*/
 
 .btn, div.qq-upload-button {
-    background-color: #737C8D;
+	font-size: 15px;
     -webkit-transition: background-color 0.2s ease-out;
     transition: background-color 0.2s ease-out;
 }
@@ -27,11 +20,6 @@ div.qq-upload-button, div.qq-upload-button:hover {
     color: #fff;
     border: none;
 }
-
-.btn:hover, div.qq-upload-button:hover {
-    background-color: #5e6676 !important;
-}
-
 
 /*
 .logo {
@@ -414,6 +402,7 @@ padding: 5px 10px;
     /*width: 160px;*/ 
     text-align: center;
 	margin-left: 5px;
+	padding-bottom: 0;
 }
 
 #touch-menu {display:none;}
@@ -437,37 +426,63 @@ height: 35px;
 margin: 0;
 }
 
-#new-changes-collapse {
-border: 1px solid #ddd;
-padding: 15px;
-margin-top: 15px;
-background-color: #F8F8F8;
+#justFileUpload {padding: 15px;}
+
+.qq-upload-drop-area {
+    display: block!important;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #DDDDDD;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    /*margin-top: 20px;*/
+    overflow: hidden;
+    margin-bottom: 10px;
 }
 
-#justFileUpload {padding: 15px;}
-.qq-upload-drop-area {
-display: block!important;
-position: relative;
-background-color: #fff;
-border: 1px solid #DDDDDD;
-margin-left: 0;
-width: 100%;
-height: auto;
-min-height: 100px;
-margin-top: 20px;
+.qq-upload-drop-area span {
+    margin-top: 15px;
+    margin-left: 0;
+    font-size: 1.4em;
+    /*font-weight: bold;*/
+    text-transform: uppercase;
+    color: #EDEDED;
+    position: relative;
+}
+
+.qq-upload-button {
+width: 90%;
+background-color: white;
+color: #9F9F9F;
+margin: 15px auto;
+border: 1px solid #ddd; 
+}
+
+.qq-upload-button:hover {color: #868686;	border: 1px solid #ccc;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;	}
+
+.qq-upload-list {
+	margin: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.qq-upload-list li {
+text-align: left;
+padding-left: 15px;
+padding-right: 15px;
+list-style-type: none;
+display: block;
 overflow: hidden;
 }
-.qq-upload-drop-area span {
-margin-top: 15px;
-margin-left: 0;
-font-size: 2.1rem;
-font-weight: bold;
-text-transform: uppercase;
-color: #EDEDED;
-position: relative;
+
+li.gray-file a.file {
+color: silver;
+font-weight: normal;
 }
+
 .qq-upload-button {width: 90%; background-color: green;margin: 15px auto;}
-.qq-upload-list {margin:0;}
 .info-block {
 	margin-top: 10px;
 } 
@@ -512,25 +527,6 @@ background-color: #F8F8F8;
 
 .btn {border-radius:0;}
 
-#UploadPaymentImage_file {
-padding: 15px 0px;
-font-size: 13px;
-width: 100%;
-cursor: pointer;
-}
-
-.check-button-upload input{
-background-color: green;
-color: #fff;
-border: none;
-padding: 5px 20px;
-width: 100%;
-}
-
-.chek-image-link a img{
-margin-top:20px;
-}
-
 .text_scan {
 width: 100%;
 text-align: center;
@@ -558,7 +554,7 @@ list-style-type: none;
 padding-left: 15px;
 }
 
-.btn, /*input[type="submit"],*/ input[type="file"] {opacity:0.8;border-radius:10;  border:none; padding:10px; font-weight:bold;}
+.btn, /*input[type="submit"],*/ input[type="file"] {opacity:0.8;border-radius:10;  border:none; padding:10px;}
 
 
 .chek-image-link {margin-top: 10px;}
@@ -658,9 +654,8 @@ p {font-size: 13px;}
 .qq-upload-fail .qq-upload-failed-text {display:inline;}
 
 .chtpl0-chatblock{
-	font-family: 'Roboto';
 	width: 822px;
-	height: 450px;
+	height: 330px;
 }
 .chtpl0-chatblock button{
 display: block;
@@ -920,7 +915,7 @@ color: #FFFFFF;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 0;
-    min-height: 400px;
+    min-height: 300px;
     background-color: #fff;
 }
 
@@ -1015,63 +1010,6 @@ margin-top:15px;
 margin:0;
 }
 
-.qq-upload-drop-area {
-display:block!important;
-}
-
-.qq-upload-drop-area {
-    display: block!important;
-    position: relative;
-    background-color: #fff;
-    border: 1px solid #DDDDDD;
-    margin-left: 0;
-    width: 100%;
-    height: auto;
-    min-height: 100px;
-    margin-top: 20px;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
-
-.qq-upload-drop-area span {
-    margin-top: 15px;
-    margin-left: 0;
-    font-size: 2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #EDEDED;
-    position: relative;
-}
-
-.qq-upload-button {
-width: 90%;
-background-color: white;
-color: #9F9F9F;
-margin: 15px auto;
-border: 1px solid #ddd; 
-}
-
-.qq-upload-button:hover {color: #868686;	border: 1px solid #ccc;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;	}
-
-.qq-upload-list {
-margin: 0;
-padding-top: 10px;
-}
-
-.qq-upload-list li {
-text-align: left;
-padding-left: 15px;
-padding-right: 15px;
-list-style-type: none;
-display: block;
-overflow: hidden;
-}
-
-li.gray-file a.file {
-color: silver;
-font-weight: normal;
-}
-
 #new-changes-link a {
 padding: 10px;
 }
@@ -1079,8 +1017,6 @@ padding: 10px;
 #new-changes-collapse {
 border: 1px solid #ddd;
 padding: 15px;
-margin-top: 15px;
-background-color: #F8F8F8;
 overflow: hidden;
 margin: 15px;
 }
@@ -1310,12 +1246,16 @@ header div#control-menu li a {
     background-color: #6a7488;
 }*/
 
-header div#control-menu li:last-child {
+header div#control-menu li:nth-last-child(2){
     float: right;
     width: 100px;
 }
 
-header div#control-menu li:last-child a {
+header div#control-menu li:last-child {
+    float: right;
+}
+
+header div#control-menu li:last-child a, header div#control-menu li:nth-last-child(2) a  {
 	border-radius: 0px 15px 0px 0px;
 }
 /*
@@ -1386,7 +1326,52 @@ div.chat-buttons input {
     background: transparent;
 }
 .text4customerts {
+	padding-top: 10px;
 	padding-left: 20px;
 	padding-right: 30px;
-	padding-bottom: 40px;
+	padding-bottom: 10px;
+}
+.guest-links {
+	padding: 10px;
+	font-size: 18px;
+	min-height: 45px;
+}
+#partner-stats-grid select {
+	position: relative;
+	top: 20px;
+}
+#partner-stats-grid .items {
+	float: none;
+}
+#partner-stats-grid #yw0_c0 {
+	width: 100px;
+}
+#partner-stats-grid td, #partner-stats-grid th {
+	text-align: center;
+	border-right: 1px dotted gray;
+}
+.content-clearfix .grid-view table.items th {
+	font-weight: normal;
+}
+.gray {
+	color: #bbb;
+}
+.center {
+	text-align: center;
+}
+h7.center {
+	width: 100%;
+	display: block;
+}
+.btn {
+	font-size: 15px;
+}
+.clear {
+	clear: both;
+}
+ul.files-list {
+	list-style: none;
+	padding-left: 0px;
+	overflow: hidden;
+	margin-bottom: 0px;
 }

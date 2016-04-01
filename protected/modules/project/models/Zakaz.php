@@ -53,13 +53,13 @@ class Zakaz extends CActiveRecord {
 		else
 			return 'Projects';
 	}
-	public function getFields() {
-		if (!$this->_model) {
+	public function getFields($role = false) {
+		if (!$this->_model || $role) {
 			if (User::model()->isAdmin()) {
-				$this->_model=ProjectField::model()->findAll();
+				$this->_model=ProjectField::model()->sort()->findAll();
 			} elseif (User::model()->isManager()) {
 				$this->_model=ProjectField::model()->forManager()->findAll();
-			} elseif (User::model()->isCustomer()) {
+			} elseif (User::model()->isCustomer() || $role == 'Customer') {
 				$this->_model=ProjectField::model()->forCustomer()->findAll();
 			} elseif (User::model()->isAuthor() || Yii::app()->user->isGuest) {
 				$this->_model=ProjectField::model()->forAuthor()->findAll();
@@ -251,7 +251,9 @@ class Zakaz extends CActiveRecord {
 						array_push($rules,$field_rule);
 					}
 				}
-
+				array_push($numerical, 'status');
+				array_push($numerical, 'user_id');
+				array_push($numerical, 'executor');
 				array_push($rules,array(implode(',',$required), 'required'));
 				array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
@@ -381,6 +383,8 @@ class Zakaz extends CActiveRecord {
 			$tmp = $field->varname;
 			if (isset($this->$tmp) && $field->field_type == 'LIST' && $this->$tmp != '') {
 				$criteria->compare($tmp, explode(',',$this->$tmp));
+			} elseif ($field->field_type == 'VARCHAR' || $field->field_type == 'TEXT') {
+				$criteria->compare($tmp, $this->$tmp, true);
 			} else {
 				$criteria->compare($tmp, $this->$tmp);
 			}
@@ -440,7 +444,7 @@ class Zakaz extends CActiveRecord {
 	
     public function moveFiles($unixtime/*,$id*/) {  // Перенести файлы из временной директории в постоянную при сохpании нового заказа
 		$id = $this->id;
-        $c_id = Campaign::getId();
+        $c_id = Company::getId();
         $root = Yii::getPathOfAlias('webroot');
         if ($c_id) {
             $from = $root.'/uploads/c'.$c_id.'/temp/'.$unixtime.'/';
@@ -466,7 +470,7 @@ class Zakaz extends CActiveRecord {
         }
     }
 	
-	public function generateMaterialsList($url, $for_guests = false) { // генерируем список загруженных материалов заказа
+	public function generateMaterialsList($url, $for_guests = false, $cant_remove = false) { // генерируем список загруженных материалов заказа
 		$path = Yii::getPathOfAlias('webroot') . $url;
 		$html_string = '';
 		//if (!file_exists($path)) mkdir($path,0755,true);
@@ -480,8 +484,8 @@ class Zakaz extends CActiveRecord {
 					} else {
 						$v0 = $v;
 					}
-					$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>';
-					if (User::model()->isCustomer()) $html_string .= '<a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>';
+					$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . rawurlencode($v) . '" class="file" >' . $v0 . '</a>';
+					if (!$cant_remove && User::model()->isCustomer()) $html_string .= '<a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>';
 					$html_string .= '</li><br />'."\n";
 				}
 		}

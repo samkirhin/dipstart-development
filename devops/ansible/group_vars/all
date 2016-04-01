@@ -1,0 +1,111 @@
+---
+# application requirements
+app_requirements:
+  - git
+
+shell_users:
+  - root
+  - vagrant
+
+php_repository: ppa:ondrej/php5-oldstable
+php_cli_pkg: php5-cli
+php_fpm_pkg: php5-fpm
+php_fpm_service: php5-fpm
+php_dev_pkg: php5-dev
+php_packages:
+  - php5-intl
+  - php5-curl
+  - php5-mysql
+
+php_fpm_pools_dir: /etc/php5/fpm/pool.d
+php_fpm_ini_file: /etc/php5/fpm/php.ini
+php_cli_ini_file: /etc/php5/cli/php.ini
+
+php_cli_ini:
+  - { section: date, key: date.timezone, value: UTC }
+  - { key: upload_max_filesize, value: 1G }
+  - { key: post_max_size, value: 1G }
+
+php_fpm_ini: "{{ php_cli_ini }}"
+
+php_xdebug_for_cli: true
+php_xdebug_for_fpm: true
+
+php_fpm_ini:
+  - { section: date, key: date.timezone, value: UTC }
+  - { key: short_open_tag, value: 'On' }
+
+php_cli_ini: "{{ php_fpm_ini }}"
+
+php_xdebug:
+  idekey: PHPSTORM
+  remote_autostart: 1
+  remote_enable: 1
+  remote_connect_back: 1
+
+php_fpm_pools:
+ - name: "{{app_name}}"
+   user: vagrant
+   group: vagrant
+
+mysql_databases:
+  - name: "{{ mysql_database }}"
+
+mysql_users:
+  - name: "{{ mysql_user }}"
+    pass: "{{ mysql_password }}"
+
+mysql_packages:
+  - python-mysqldb
+  - mysql-server-5.6
+  - mysql-client-5.6
+
+nginx_sites:
+  vagrant:
+    - "listen 80"
+    - "server_name {{app_name}}.dev"
+    - "root /srv"
+    - "index index.html"
+    - "error_log /var/log/nginx/{{app_name}}_error.log"
+    - "access_log /var/log/nginx/{{app_name}}_access.log"
+    - 'set $yii_bootstrap "index.php"'
+    - >
+      location / {
+          index  index.html $yii_bootstrap;
+          try_files $uri $uri/ /$yii_bootstrap?$args;
+      }
+
+    - >
+      location ~ ^/(protected|framework|themes/\w+/views) {
+          deny  all;
+      }
+
+    - >
+      location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+          try_files $uri =404;
+      }
+
+    - >
+      location ~ \.php {
+          fastcgi_split_path_info  ^(.+\.php)(.*)$;
+
+          set $fsn /$yii_bootstrap;
+          if (-f $document_root$fastcgi_script_name){
+              set $fsn $fastcgi_script_name;
+          }
+
+          fastcgi_pass  unix:/var/run/php-fpm-{{ app_name }}.sock;
+          include fastcgi_params;
+          fastcgi_param  SCRIPT_FILENAME  $document_root$fsn;
+
+          #PATH_INFO and PATH_TRANSLATED can be omitted, but RFC 3875 specifies them for CGI
+          fastcgi_param  PATH_INFO        $fastcgi_path_info;
+          fastcgi_param  PATH_TRANSLATED  $document_root$fsn;
+      }
+
+    - >
+      location ~ /\. {
+          deny all;
+          access_log off;
+          log_not_found off;
+      }

@@ -35,18 +35,20 @@ class PaymentController extends Controller {
     }
 
     public function actionView() {
-        $user = User::model()->findByPk(Yii::app()->user->id);
-        if (!$user->superuser) {
-            $this->redirect('/');
-        } else {
-            $this->render('admin', array(
-                'dataProvider'=>Payment::model(),
-            ));
-        }
+		$model = new Payment('search');
+		$model->unsetAttributes();
+		if(Yii::app()->request->isAjaxRequest) {
+			$params = Yii::app()->request->getParam('Payment');
+			$model->setAttributes($params);
+			Yii::app()->user->setState('PaymentFilterState', $params);
+		}
+		$this->render('admin',array(
+			'model'=>$model,
+		));
     }
 
-    public function actionApiView() {
-		$c_id = Campaign::getId();
+    /*public function actionApiView() {
+		$c_id = Company::getId();
 		$table_prefix = '';
 		if ($c_id) {
 			$table_prefix = $c_id.'_';
@@ -102,7 +104,7 @@ class PaymentController extends Controller {
             ));
             $this->_response->send();
         }
-    }
+    }*/
 
     /*public function actionAdmin() {
         $this->render('admin');
@@ -282,8 +284,6 @@ class PaymentController extends Controller {
 		//echo $result;
 	}
     public function actionManagersApprove() {  // Approve payment image
-		//new UploadPaymentImage;
-		/////////////////////////////////////////////////////////////
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
@@ -365,7 +365,7 @@ class PaymentController extends Controller {
 			$webmasterlog->date = date("Y-m-d"); 
 			$webmasterlog->order_id = $order->id;
 			$openlog = WebmasterLog::model()->findByAttributes(
-				array('order_id'=>$model->id),'action = :p1 OR action = p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
+				array('order_id'=>$order->id),'action = :p1 OR action = :p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
 			);
 			if($openlog->action == WebmasterLog::FIRST_ORDER){
 				$webmasterlog->action = WebmasterLog::FULL_PAYMENT_4_FIRST_ORDER;
@@ -373,7 +373,6 @@ class PaymentController extends Controller {
 				$webmasterlog->action = WebmasterLog::FULL_PAYMENT_4_NON_FIRST_ORDER;
 			}
 			$webmasterlog->save();
-			
 		}
 	}
 }

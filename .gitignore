@@ -1,10 +1,8 @@
 .idea
 nbproject/
-assets
 protected/runtime
 protected/backup
 cgi-bin
-uploads
 protected/config/main.php
 madm
 webstat
@@ -14,3 +12,5 @@ sql
 work
 *Thumbs.db
 access.txt
+/vendor
+/.vagrant
