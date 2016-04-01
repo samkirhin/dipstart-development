@@ -21,13 +21,12 @@ $(document).ready(function () {
 	});
 });
 </script>
-
-<a href="#" id="extremum-in">Входящие</a>
-<br>
-<a href="#" id="extremum-out">Исходящие</a>
-
+<ul class="operations">
+	<li><a href="#" id="extremum-in"><?=ProjectModule::t('Getting money')?></a></li>
+	<li><a href="#" id="extremum-out"><?=ProjectModule::t('Pay for all')?></a></li>
+</ul>
 <div id="in">
-	<h3>Входящие</h3>
+	<h3><?=ProjectModule::t('Getting money')?></h3>
 	<?php
 	function approve_buttons($data) {
 		$html = '';
@@ -53,13 +52,13 @@ $(document).ready(function () {
 			array(
 				'name' => 'receive_date',
 				'value' => function($data) {
-					if($data->receive_date) return date("d.m.Y", strtotime($data->receive_date));
+					if($data->receive_date) return date('d.m.Y H:i:s', strtotime($data->receive_date));
 				},
 			),
 			array(
 				'name' => 'pay_date',
 				'value' => function($data) {
-					if($data->pay_date) return date("d.m.Y H:i:s", strtotime($data->pay_date));
+					if($data->pay_date) return date('d.m.Y H:i:s', strtotime($data->pay_date));
 				},
 			),
 			array(
@@ -154,7 +153,7 @@ $(document).ready(function () {
 				'name' => 'approve',
 				'type' => 'raw',
 				'value'=> function($data) {return approve_buttons($data);},
-				'filter' => array('0' => 'free', '1' => Yii::t('site','Confirmed'), '2' => Yii::t('site','Rejected')),
+				'filter' => array('0' => Yii::t('site','New'), '1' => Yii::t('site','Confirmed'), '2' => Yii::t('site','Rejected')),
 			),
 			/*array(
 				'class' => 'CButtonColumn',
@@ -208,7 +207,7 @@ $(document).ready(function () {
 </div>
 
 <div id="out" style="display: none;">
-	<h3>Исходящие</h3>
+	<h3><?=ProjectModule::t('Pay for all')?></h3>
 	<?php
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'buh_transaction_out',
@@ -225,13 +224,13 @@ $(document).ready(function () {
 			array(
 				'name' => 'receive_date',
 				'value' => function($data) {
-					if($data->receive_date) return date("d.m.Y", strtotime($data->receive_date));
+					if($data->receive_date) return date('d.m.Y H:i:s', strtotime($data->receive_date));
 				},
 			),
 			array(
 				'name' => 'pay_date',
 				'value' => function($data) {
-					if($data->pay_date) return date("d.m.Y H:i:s", strtotime($data->pay_date));
+					if($data->pay_date) return date('d.m.Y H:i:s', strtotime($data->pay_date));
 				},
 			),
 			array(

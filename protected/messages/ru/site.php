@@ -118,7 +118,7 @@ return array(
 	'Rejected' => 'Отклонен',
 	'Cancel' => 'Отмена',
 	'Payment method' => 'Способ оплаты',
-
+	'New' => 'Новые',
     //
     'Bookkeeping' => 'Бухгалтерия',
     'My account' => 'Личный кабинет',

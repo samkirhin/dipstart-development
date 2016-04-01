@@ -78,8 +78,8 @@ class Payment extends CActiveRecord {
 		return array(
 			'id' => 'ID',
 			'order_id' => ProjectModule::t('Order Num'),
-			'receive_date' => ProjectModule::t('Receive Date'),
-			'pay_date' => ProjectModule::t('Pay Date'),
+			'receive_date' => ProjectModule::t('Create Date'),
+			'pay_date' => ProjectModule::t('Approve Date'),
 			'theme' => ProjectModule::t('Topic'),
 			'manager' => ProjectModule::t('Manager'),
 			'user' => ProjectModule::t('_User'),

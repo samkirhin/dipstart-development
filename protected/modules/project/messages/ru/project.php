@@ -162,7 +162,10 @@ return array(
 	'Update Profile Field' => 'Редактирование поля профиля',
 	'UPDATE PROFILE FIELD' => 'Редактирование поля профиля',
 	'PaymentProps'=>'Платёжный реквизит',
-	
+	'Getting money' => 'Приход от клиентов',
+	'Pay for all' => 'Оплаты всем',
+	'Create Date' => 'Дата созд.',
+	'Approve Date' => 'Дата подтв.',
 	'SelectProject' => 'Выбрать заказ',
 	'chat' => 'чат',
 	'Chat' => 'чат',
