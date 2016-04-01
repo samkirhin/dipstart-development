@@ -277,9 +277,9 @@ class PaymentController extends Controller {
                 $buh->summ = $paying;
                 $buh->payment_type = Payment::OUTCOMING_EXECUTOR;
                 $buh->manager = $manag->email;
-                $buh->details_ya = $user->profile->yandex;
+                /*$buh->details_ya = $user->profile->yandex;
                 $buh->details_wm = $user->profile->wmr;
-                $buh->details_bank = $user->profile->bank_account;
+                $buh->details_bank = $user->profile->bank_account;*/
                 $buh->save();
             }
             
