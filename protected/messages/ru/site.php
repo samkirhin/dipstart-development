@@ -65,6 +65,7 @@ return array(
     'Customer' => 'Заказчик',
     'For Customer' => 'Заказчикy',
     'Service' => 'Сервис',
+	'Hint for manager' => 'Подсказка для менеджера',
     'Update Templates' => 'Редактировать шаблон',
     'Delete Templates' => 'Удалить шаблон',
     'View Templates' => 'Просмотреть шаблон',

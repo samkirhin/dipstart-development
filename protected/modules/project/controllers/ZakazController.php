@@ -441,11 +441,13 @@ class ZakazController extends Controller {
 		$managerlog->datetime = date('Y-m-d H:i:s'); 
 		$managerlog->order_id = $model->id;
 		$managerlog->save();
-		
+
+		$hints = Templates::model()->getTemplateList(4);
 		$view = 'update';
 		$isModified = false;
 		$this->render($view, array(
 			'model'=>$model,
+			'hints'=>$hints,
 			//'message'=>$model->projectStatus->status,
 			'isModified'=>$isModified,
 		));

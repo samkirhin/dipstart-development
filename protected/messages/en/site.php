@@ -64,6 +64,7 @@ return array(
     'Customer' => 'Customer',
     'For Customer' => 'For Customer',
     'Service' => 'Service',
+	'Hint for manager' => 'Hint for manager',
     'Update Templates' => 'Update Templates',
     'Delete Templates' => 'Delete Templates',
     'View Templates' => 'View Templates',

@@ -183,6 +183,16 @@ $customer = $model->user;
                                                   'data' => 'js:"id='.$model->id.'&sid="+this.value',
                                                   'cache' => false,
                                                   ),)); ?>
+					<?php if ($hints['Zakaz_status']) { ?>
+					<div class="statusBlock_hint">
+				   		<div class="hint-block">
+							?
+							<div class="hint-block_content">
+								<?=$hints['Zakaz_status']?>
+							</div>
+						</div>
+					</div>
+					<?php } ?>
 				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>
 					<!-- Тут была кнопка открыть или закрыть заказ -->
                </div>
@@ -216,6 +226,16 @@ $customer = $model->user;
                     echo $form->errorSummary($model); ?>
                     <div class="col-xs-12 notesBlockArea">
                         <?php echo $form->labelEx($model, 'notes'); ?>
+						<?php if ($hints['Zakaz_notes']) { ?>
+						<div class="notesBlock_hint">
+							<div class="hint-block">
+								?
+								<div class="hint-block_content">
+									<?=$hints['Zakaz_notes']?>
+								</div>
+							</div>
+						</div>
+						<?php } ?>
                         <?php echo $form->textArea($model, 'notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
 
