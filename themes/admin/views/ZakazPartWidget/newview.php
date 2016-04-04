@@ -15,7 +15,19 @@ Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READ
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="partStatus">
-					<div class="partStatus-header"><?=ProjectModule::t('Status')?>:</div>
+					<div class="partStatus-header">
+                        <?=ProjectModule::t('Status')?>:
+                        <?php if ($this->hints['Zakaz_partStatus']) { ?>
+                        <div class="partStatus_hint">
+                            <div class="hint-block">
+                                ?
+                                <div class="hint-block_content">
+                                    <?=$this->hints['Zakaz_partStatus']?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
 					<div class="partStatus-status"><?= $this->select; ?></div>
 				</div>	
 				<div class="partStatus-bottom"></div>
@@ -25,9 +37,29 @@ Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READ
                            href="#collapseOne<?php echo $data['id']; ?>" id="part_title_<?php echo $data['id']; ?>">
                             <?=$data['title'];?>
                         </a>
+                        <?php if ($this->hints['Zakaz_partTitle']) { ?>
+                        <div class="partTitle_hint">
+                            <div class="hint-block">
+                                ?
+                                <div class="hint-block_content">
+                                    <?=$this->hints['Zakaz_partTitle']?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
                     </h4>
                 </div>
                 <div class="title-time">
+                    <?php if ($this->hints['Zakaz_partTime']) { ?>
+                    <div class="partTime_hint">
+                        <div class="hint-block">
+                            ?
+                            <div class="hint-block_content">
+                                <?=$this->hints['Zakaz_partTime']?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
                     <?php
                     $url=Yii::app()->createUrl('/project/zakazParts/apiEditPart');
                     $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
@@ -82,6 +114,16 @@ Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READ
                         <!--Удаление отдельно взятого блока задания-->
                         <div class="col-xs-12 btn btn-primary deletePart"
                              onclick="delete_part(<?php echo $data['id']; ?>);"> <?=Yii::t('site', 'Remove part')?>
+                            <?php if ($this->hints['Zakaz_partDelete']) { ?>
+                            <div class="partDelete_hint">
+                                <div class="hint-block">
+                                    ?
+                                    <div class="hint-block_content">
+                                        <?=$this->hints['Zakaz_partDelete']?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                         </div>
                     </p>
                 </div>

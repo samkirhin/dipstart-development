@@ -16,6 +16,16 @@ $customer = $model->user;
 			<?php if ($model->status < 5) { ?>
 				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>'; send_message(17,'Заказчику о завершении заказа');"><?=ProjectModule::t('Complete the order')?></button>
 				<button id="refound_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'refound'=>'yes'));?>';"><?=ProjectModule::t('Refound and close order')?></button>
+				<?php if ($hints['Zakaz_order']) { ?>
+				<div class="orderBlock_hint">
+					<div class="hint-block">
+						?
+						<div class="hint-block_content">
+							<?=$hints['Zakaz_order']?>
+						</div>
+					</div>
+				</div>
+				<?php } ?>
 			<?php } else { ?>
 				<button id="open_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';"><?=ProjectModule::t('Open order')?></button>
 			<?php } ?>
@@ -34,7 +44,16 @@ $customer = $model->user;
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
                                 <?=ProjectModule::t('Order information').' '.$model->id.': "'.$model->title.'"'?> <i class="fa fa-angle-down fa-lg"></i>
-
+								<?php if ($hints['Zakaz_info']) { ?>
+								<div class="infoBlock_hint">
+									<div class="hint-block">
+										?
+										<div class="hint-block_content">
+											<?=$hints['Zakaz_info']?>
+										</div>
+									</div>
+								</div>
+								<?php } ?>
                             </a>
                             <br/><!--<a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">-->
                             <!--<img onclick="this.style.transform+='rotate(180deg)'" src="http://crm.obshya.com/themes/admin/views/project/zakaz/line_2.jpg" id="str" />-->
@@ -193,11 +212,31 @@ $customer = $model->user;
 						</div>
 					</div>
 					<?php } ?>
+					<?php if ($hints['Zakaz_search']) { ?>
+					<div class="searchBlock_hint">
+				   		<div class="hint-block">
+							?
+							<div class="hint-block_content">
+								<?=$hints['Zakaz_search']?>
+							</div>
+						</div>
+					</div>
+					<?php } ?>
 				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>
 					<!-- Тут была кнопка открыть или закрыть заказ -->
                </div>
 			   <div class="col-xs-12 linkToAuthors">
 					<?='http://'.$_SERVER["HTTP_HOST"].Yii::app()->createUrl('/project/chat/view',array('orderId'=>$model->id));?>
+					<?php if ($hints['Zakaz_search']) { ?>
+					<div class="linkBlock_hint">
+				   		<div class="hint-block">
+							?
+							<div class="hint-block_content">
+								<?=$hints['Zakaz_search']?>
+							</div>
+						</div>
+					</div>
+					<?php } ?>
 			   </div>
             </div>
             <?php if ($isModified) echo '<span><b>'. ProjectModule::t('Order moderation') .'</b></span>';?>
@@ -252,10 +291,23 @@ $customer = $model->user;
           <?php
             $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
                 'projectId'=>$model->id,
+				'hints'=>$hints,
             ));
             ?>
             <div class="row zero-edge">
-                <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>,'<?=ProjectModule::t('New part')?>');"><?=ProjectModule::t('Add part')?></div>
+                <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>,'<?=ProjectModule::t('New part')?>');">
+                	<?=ProjectModule::t('Add part')?>
+                	<?php if ($hints['Zakaz_partAdd']) { ?>
+                    <div class="partAdd_hint">
+                        <div class="hint-block">
+                            ?
+                            <div class="hint-block_content">
+                                <?=$hints['Zakaz_partAdd']?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
             </div>
             <!-- Конец блока добавления частей менеджера -->
             <!-- Начало блока правок (доработок) менеджера -->
@@ -263,6 +315,7 @@ $customer = $model->user;
             <?php
             $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
                 'project' => $model,
+                'hints'=>$hints,
             ))
             ?>
             <!-- Конец блока правок (доработок) менеджера -->

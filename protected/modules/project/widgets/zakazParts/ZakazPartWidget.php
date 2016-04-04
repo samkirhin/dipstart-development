@@ -3,6 +3,7 @@
 class ZakazPartWidget extends CWidget{
     public $number;
 	public $projectId;
+	public $hints;
 	public $status;
 	public $item_id;
 	public $record_id;

@@ -159,25 +159,42 @@ hr {
     margin: 0px 0 20px 0;
 }
 .statusBlock_hint,
-.notesBlock_hint {
+.notesBlock_hint,
+.orderBlock_hint,
+.infoBlock_hint,
+.linkBlock_hint,
+.partStatus_hint,
+.partTitle_hint,
+.partTime_hint,
+.partDelete_hint,
+.partAdd_hint,
+.changes_hint {
 	display: inline-block;
 }
+.searchBlock_hint {
+	float:right;
+	margin-top:6px;
+}
 .hint-block {
-	width: 18px;
+	width: 7px;
 	height: 18px;
 	line-height: 18px;
-	border-radius: 50%;
-	background-color: #c3c8ce;
-	color: #fff;
+	color: #ff0000;
 	text-align: center;
 	cursor: pointer;
 	position:relative;
+	font-weight:normal;
+	text-transform:none;
+	font-size:9px;
+}
+.partDelete_hint .hint-block {
+	color:#ffffff;
 }
 .hint-block_content{
 	position:absolute;
-	top:25px;
+	top:20px;
 	width: 200px;
-	right:-98px;
+	right:-105px;
 	padding:7px 12px;
 	border-radius:5px;
 	background:#4A4A4A;
