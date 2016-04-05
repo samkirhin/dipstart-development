@@ -158,45 +158,8 @@ hr {
     padding: 0;
     margin: 0px 0 20px 0;
 }
-.statusBlock_hint,
-.notesBlock_hint,
-.orderBlock_hint,
-.infoBlock_hint,
-.linkBlock_hint,
-.partStatus_hint,
-.partTitle_hint,
-.partTime_hint,
-.partDelete_hint,
-.partAdd_hint,
-.changes_hint,
-.execDate_hint,
-.managerDate_hint,
-.authorDate_hint,
-.recipient_hint,
-.sendEmail_hint,
-.sendSms_hint,
-.projectPrice_hint,
-.fromClient_hint,
-.toReceive_hint,
-.worthPay_hint,
-.costAuthor_hint,
-.paidWork_hint,
-.sendPayment_hint,
-.totalPay_hint,
-.confirm_hint,
-.cancel_hint {
-	display: inline-block;
-}
-.chat_hint {
-    position: absolute;
-    left: 5px;
-    top: 5px;
-}
-.searchBlock_hint {
-	float:right;
-	margin-top:6px;
-}
 .hint-block {
+    display: inline-block;
 	width: 7px;
 	height: 18px;
 	line-height: 18px;
@@ -208,7 +171,18 @@ hr {
 	text-transform:none;
 	font-size:9px;
 }
-.partDelete_hint .hint-block {
+.hint-block.__search {
+    display: block;
+    float:right;
+    margin-top:6px;
+}
+.hint-block.__chat {
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+.hint-block.__part_delete {
 	color:#ffffff;
 }
 .hint-block_content{

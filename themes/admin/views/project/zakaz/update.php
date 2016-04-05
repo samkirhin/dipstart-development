@@ -17,12 +17,10 @@ $customer = $model->user;
 				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>'; send_message(17,'Заказчику о завершении заказа');"><?=ProjectModule::t('Complete the order')?></button>
 				<button id="refound_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'refound'=>'yes'));?>';"><?=ProjectModule::t('Refound and close order')?></button>
 				<?php if ($hints['Zakaz_order']) { ?>
-				<div class="orderBlock_hint">
-					<div class="hint-block">
-						?
-						<div class="hint-block_content">
-							<?=$hints['Zakaz_order']?>
-						</div>
+				<div class="hint-block __order">
+					?
+					<div class="hint-block_content">
+						<?=$hints['Zakaz_order']?>
 					</div>
 				</div>
 				<?php } ?>
@@ -45,12 +43,10 @@ $customer = $model->user;
                             <a data-toggle="collapse" data-parent="#accordion" href="#infoZakaz">
                                 <?=ProjectModule::t('Order information').' '.$model->id.': "'.$model->title.'"'?> <i class="fa fa-angle-down fa-lg"></i>
 								<?php if ($hints['Zakaz_info']) { ?>
-								<div class="infoBlock_hint">
-									<div class="hint-block">
-										?
-										<div class="hint-block_content">
-											<?=$hints['Zakaz_info']?>
-										</div>
+								<div class="hint-block __info">
+									?
+									<div class="hint-block_content">
+										<?=$hints['Zakaz_info']?>
 									</div>
 								</div>
 								<?php } ?>
@@ -203,22 +199,18 @@ $customer = $model->user;
                                                   'cache' => false,
                                                   ),)); ?>
 					<?php if ($hints['Zakaz_status']) { ?>
-					<div class="statusBlock_hint">
-				   		<div class="hint-block">
-							?
-							<div class="hint-block_content">
-								<?=$hints['Zakaz_status']?>
-							</div>
+			   		<div class="hint-block __status">
+						?
+						<div class="hint-block_content">
+							<?=$hints['Zakaz_status']?>
 						</div>
 					</div>
 					<?php } ?>
 					<?php if ($hints['Zakaz_search']) { ?>
-					<div class="searchBlock_hint">
-				   		<div class="hint-block">
-							?
-							<div class="hint-block_content">
-								<?=$hints['Zakaz_search']?>
-							</div>
+			   		<div class="hint-block __search">
+						?
+						<div class="hint-block_content">
+							<?=$hints['Zakaz_search']?>
 						</div>
 					</div>
 					<?php } ?>
@@ -227,13 +219,11 @@ $customer = $model->user;
                </div>
 			   <div class="col-xs-12 linkToAuthors">
 					<?='http://'.$_SERVER["HTTP_HOST"].Yii::app()->createUrl('/project/chat/view',array('orderId'=>$model->id));?>
-					<?php if ($hints['Zakaz_search']) { ?>
-					<div class="linkBlock_hint">
-				   		<div class="hint-block">
-							?
-							<div class="hint-block_content">
-								<?=$hints['Zakaz_search']?>
-							</div>
+					<?php if ($hints['Zakaz_link']) { ?>
+			   		<div class="hint-block __link">
+						?
+						<div class="hint-block_content">
+							<?=$hints['Zakaz_link']?>
 						</div>
 					</div>
 					<?php } ?>
@@ -266,12 +256,10 @@ $customer = $model->user;
                     <div class="col-xs-12 notesBlockArea">
                         <?php echo $form->labelEx($model, 'notes'); ?>
 						<?php if ($hints['Zakaz_notes']) { ?>
-						<div class="notesBlock_hint">
-							<div class="hint-block">
-								?
-								<div class="hint-block_content">
-									<?=$hints['Zakaz_notes']?>
-								</div>
+						<div class="hint-block __notes">
+							?
+							<div class="hint-block_content">
+								<?=$hints['Zakaz_notes']?>
 							</div>
 						</div>
 						<?php } ?>
@@ -297,13 +285,11 @@ $customer = $model->user;
             <div class="row zero-edge">
                 <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>,'<?=ProjectModule::t('New part')?>');">
                 	<?=ProjectModule::t('Add part')?>
-                	<?php if ($hints['Zakaz_partAdd']) { ?>
-                    <div class="partAdd_hint">
-                        <div class="hint-block">
-                            ?
-                            <div class="hint-block_content">
-                                <?=$hints['Zakaz_partAdd']?>
-                            </div>
+                	<?php if ($hints['Zakaz_add_part']) { ?>
+                    <div class="hint-block __add_part">
+                        ?
+                        <div class="hint-block_content">
+                            <?=$hints['Zakaz_add_part']?>
                         </div>
                     </div>
                     <?php } ?>

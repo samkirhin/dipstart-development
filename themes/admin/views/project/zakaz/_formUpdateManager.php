@@ -24,13 +24,11 @@
         <div class="col-xs-4 terms-columns terms-column-1">
             <span>
                 <?php echo $form->labelEx($model, 'max_exec_date'); ?>
-                <?php if ($hints['Zakaz_execDate']) { ?>
-                <div class="execDate_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$hints['Zakaz_execDate']?>
-                        </div>
+                <?php if ($hints['Zakaz_exec_date']) { ?>
+                <div class="hint-block __exec_date">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_exec_date']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -44,13 +42,11 @@
         <div class="col-xs-4 terms-columns terms-column-2">
             <span>
                 <?php echo $form->labelEx($model, 'manager_informed'); ?>
-                <?php if ($hints['Zakaz_managerDate']) { ?>
-                <div class="managerDate_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$hints['Zakaz_managerDate']?>
-                        </div>
+                <?php if ($hints['Zakaz_manager_informed']) { ?>
+                <div class="hint-block __manager_informed">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_manager_informed']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -64,13 +60,11 @@
         <div class="col-xs-4 terms-columns terms-column-3 terms-columns-last">
             <span>
                 <?php echo $form->labelEx($model, 'author_informed'); ?>
-                <?php if ($hints['Zakaz_authorDate']) { ?>
-                <div class="authorDate_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$hints['Zakaz_authorDate']?>
-                        </div>
+                <?php if ($hints['Zakaz_author_informed']) { ?>
+                <div class="hint-block __author_informed">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_author_informed']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -93,12 +87,10 @@
 <div class="col-xs-12 chatBlockBg">
     <div class="chatBlock chtpl0-chatblock chtpl0-admin">
         <?php if ($hints['Zakaz_chat']) { ?>
-        <div class="chat_hint">
-            <div class="hint-block">
-                ?
-                <div class="hint-block_content">
-                    <?=$hints['Zakaz_chat']?>
-                </div>
+        <div class="hint-block __chat">
+            ?
+            <div class="hint-block_content">
+                <?=$hints['Zakaz_chat']?>
             </div>
         </div>
         <?php } ?>
@@ -114,35 +106,29 @@
                     <option value="<?= Templates::TYPE_CUSTOMER ?>"><?= ProjectModule::t('to customer')?></option>
                 </select>
                 <?php if ($hints['Zakaz_recipient']) { ?>
-                <div class="recipient_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$hints['Zakaz_recipient']?>
-                        </div>
+                <div class="hint-block __recipient">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_recipient']?>
                     </div>
                 </div>
                 <?php } ?>
             </label>
             <input id="send_email" type="checkbox" checked="checked"><p><?=ProjectModule::t('Send to e-mail')?></p>
-            <?php if ($hints['Zakaz_sendEmail']) { ?>
-            <div class="sendEmail_hint">
-                <div class="hint-block">
-                    ?
-                    <div class="hint-block_content">
-                        <?=$hints['Zakaz_sendEmail']?>
-                    </div>
+            <?php if ($hints['Zakaz_send_email']) { ?>
+            <div class="hint-block __send_email">
+                ?
+                <div class="hint-block_content">
+                    <?=$hints['Zakaz_send_email']?>
                 </div>
             </div>
             <?php } ?>
             <input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
-            <?php if ($hints['Zakaz_sendSms']) { ?>
-            <div class="sendSms_hint">
-                <div class="hint-block">
-                    ?
-                    <div class="hint-block_content">
-                        <?=$hints['Zakaz_sendSms']?>
-                    </div>
+            <?php if ($hints['Zakaz_send_sms']) { ?>
+            <div class="hint-block __send_sms">
+                ?
+                <div class="hint-block_content">
+                    <?=$hints['Zakaz_send_sms']?>
                 </div>
             </div>
             <?php } ?>

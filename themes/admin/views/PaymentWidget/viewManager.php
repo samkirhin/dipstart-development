@@ -6,13 +6,11 @@
        <tr>
             <td>
                 <?=ProjectModule::t('Project cost:')?>
-                <?php if ($this->hints['Zakaz_projectPrice']) { ?>
-                <div class="projectPrice_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_projectPrice']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_project_cost']) { ?>
+                <div class="hint-block __project_cost">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_project_cost']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -25,13 +23,11 @@
         <tr>
             <td>
                 <?=ProjectModule::t('Obtained from the client:')?>
-                <?php if ($this->hints['Zakaz_fromClient']) { ?>
-                <div class="fromClient_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_fromClient']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_payment_received']) { ?>
+                <div class="hint-block __payment_received">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_payment_received']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -43,13 +39,11 @@
         <tr>
             <td>
                 <?=ProjectModule::t('To draw up the account:')?>
-                <?php if ($this->hints['Zakaz_toReceive']) { ?>
-                <div class="toReceive_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_toReceive']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_to_receive']) { ?>
+                <div class="hint-block __to_receive">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_to_receive']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -61,13 +55,11 @@
         <tr>
             <td>
                 <?=ProjectModule::t('It is worth to pay:')?>
-                <?php if ($this->hints['Zakaz_worthPay']) { ?>
-                <div class="worthPay_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_worthPay']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_payment_to_receive']) { ?>
+                <div class="hint-block __payment_to_receive">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_payment_to_receive']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -81,13 +73,11 @@
        <tr>
             <td>
                 <?=ProjectModule::t('The cost for the author:')?>
-                <?php if ($this->hints['Zakaz_costAuthor']) { ?>
-                <div class="costAuthor_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_costAuthor']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_work_price']) { ?>
+                <div class="hint-block __work_price">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_work_price']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -99,13 +89,11 @@
         <tr>
             <td>
                 <?=ProjectModule::t('Paid work:')?>
-                <?php if ($this->hints['Zakaz_paidWork']) { ?>
-                <div class="paidWork_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_paidWork']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_payment_payed']) { ?>
+                <div class="hint-block __payment_payed">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_payment_payed']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -118,13 +106,11 @@
         <tr>
             <td>
                 <?=ProjectModule::t('Send payment to:')?>
-                <?php if ($this->hints['Zakaz_sendPayment']) { ?>
-                <div class="sendPayment_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_sendPayment']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_to_pay']) { ?>
+                <div class="hint-block __to_pay">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_to_pay']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -136,13 +122,11 @@
         <tr>
             <td>
                 <?=ProjectModule::t('Total to pay:')?>
-                <?php if ($this->hints['Zakaz_totalPay']) { ?>
-                <div class="totalPay_hint">
-                    <div class="hint-block">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$this->hints['Zakaz_totalPay']?>
-                        </div>
+                <?php if ($this->hints['Zakaz_payment_to_pay']) { ?>
+                <div class="hint-block __payment_to_pay">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$this->hints['Zakaz_payment_to_pay']?>
                     </div>
                 </div>
                 <?php } ?>
@@ -159,23 +143,19 @@
 		<div class="btn-group-xs" role="group">
 		<button class="btn btn-default send_managers_approve"><?=ProjectModule::t('Confirm')?></button>
         <?php if ($this->hints['Zakaz_confirm']) { ?>
-        <div class="confirm_hint">
-            <div class="hint-block">
-                ?
-                <div class="hint-block_content">
-                    <?=$this->hints['Zakaz_confirm']?>
-                </div>
+        <div class="hint-block __confirm">
+            ?
+            <div class="hint-block_content">
+                <?=$this->hints['Zakaz_confirm']?>
             </div>
         </div>
         <?php } ?>
 		<button class="btn btn-default send_managers_cancel"><?=ProjectModule::t('Cancel')?></button>
         <?php if ($this->hints['Zakaz_cancel']) { ?>
-        <div class="cancel_hint">
-            <div class="hint-block">
-                ?
-                <div class="hint-block_content">
-                    <?=$this->hints['Zakaz_cancel']?>
-                </div>
+        <div class="hint-block __cancel">
+            ?
+            <div class="hint-block_content">
+                <?=$this->hints['Zakaz_cancel']?>
             </div>
         </div>
         <?php } ?>

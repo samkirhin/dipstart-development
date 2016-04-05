@@ -14,12 +14,10 @@
                     <a data-toggle="collapse" data-parent="#accordion"
                        href="#collapseEdits"><?php echo ProjectModule::t('Changes'); ?></a>
 					<?php if ($this->hints['Zakaz_changes']) { ?>
-					<div class="changes_hint">
-						<div class="hint-block">
-							?
-							<div class="hint-block_content">
-								<?=$this->hints['Zakaz_changes']?>
-							</div>
+					<div class="hint-block __changes">
+						?
+						<div class="hint-block_content">
+							<?=$this->hints['Zakaz_changes']?>
 						</div>
 					</div>
 					<?php } ?>
