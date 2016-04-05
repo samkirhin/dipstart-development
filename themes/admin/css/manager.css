@@ -168,8 +168,20 @@ hr {
 .partTime_hint,
 .partDelete_hint,
 .partAdd_hint,
-.changes_hint {
+.changes_hint,
+.execDate_hint,
+.managerDate_hint,
+.authorDate_hint,
+.recipient_hint,
+.sendEmail_hint,
+.sendSms_hint,
+.projectPrice_hint {
 	display: inline-block;
+}
+.chat_hint {
+    position: absolute;
+    left: 5px;
+    top: 5px;
 }
 .searchBlock_hint {
 	float:right;

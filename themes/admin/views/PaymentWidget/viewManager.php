@@ -6,6 +6,16 @@
        <tr>
             <td>
                 <?=ProjectModule::t('Project cost:')?>
+                <?php if ($this->hints['Zakaz_projectPrice']) { ?>
+                <div class="projectPrice_hint">
+                    <div class="hint-block">
+                        ?
+                        <div class="hint-block_content">
+                            <?=$this->hints['Zakaz_projectPrice']?>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
             </td>
             <td>
                 <input type="text" class="project_price_input" size="10" value="<?php echo $model->project_price; ?>"/>

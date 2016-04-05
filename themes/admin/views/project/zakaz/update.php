@@ -326,7 +326,11 @@ $customer = $model->user;
         <div class="col-xs-8">
            <div class="row">
                 <?php
-                    $this->renderPartial('_formUpdateManager', array('model' => $model, 'times' => $times));
+                    $this->renderPartial('_formUpdateManager', array(
+                    	'model' => $model,
+                    	'times' => $times,
+                    	'hints' => $hints,
+                    ));
                 ?>
 
             </div>
