@@ -22,7 +22,7 @@
             <?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary terms-save-btn')); ?>
         </div>
         <div class="col-xs-4 terms-columns terms-column-1">
-            <p>
+            <span>
                 <?php echo $form->labelEx($model, 'max_exec_date'); ?>
                 <?php if ($hints['Zakaz_execDate']) { ?>
                 <div class="execDate_hint">
@@ -34,8 +34,7 @@
                     </div>
                 </div>
                 <?php } ?>
-            </p>
-
+            </span>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
                 'model' => $model,
@@ -43,7 +42,7 @@
             ));?>
         </div>
         <div class="col-xs-4 terms-columns terms-column-2">
-            <p>
+            <span>
                 <?php echo $form->labelEx($model, 'manager_informed'); ?>
                 <?php if ($hints['Zakaz_managerDate']) { ?>
                 <div class="managerDate_hint">
@@ -55,7 +54,7 @@
                     </div>
                 </div>
                 <?php } ?>
-            </p>
+            </span>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
                 'model' => $model,
@@ -63,7 +62,7 @@
             ));?>
         </div>
         <div class="col-xs-4 terms-columns terms-column-3 terms-columns-last">
-            <p>
+            <span>
                 <?php echo $form->labelEx($model, 'author_informed'); ?>
                 <?php if ($hints['Zakaz_authorDate']) { ?>
                 <div class="authorDate_hint">
@@ -75,7 +74,7 @@
                     </div>
                 </div>
                 <?php } ?>
-            </p>
+            </span>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
                 'model' => $model,
@@ -114,17 +113,17 @@
                     <option value="<?= Templates::TYPE_AUTHOR ?>"><?= ProjectModule::t('to author')?></option>
                     <option value="<?= Templates::TYPE_CUSTOMER ?>"><?= ProjectModule::t('to customer')?></option>
                 </select>
-            </label>
-            <?php if ($hints['Zakaz_recipient']) { ?>
-            <div class="recipient_hint">
-                <div class="hint-block">
-                    ?
-                    <div class="hint-block_content">
-                        <?=$hints['Zakaz_recipient']?>
+                <?php if ($hints['Zakaz_recipient']) { ?>
+                <div class="recipient_hint">
+                    <div class="hint-block">
+                        ?
+                        <div class="hint-block_content">
+                            <?=$hints['Zakaz_recipient']?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php } ?>
+                <?php } ?>
+            </label>
             <input id="send_email" type="checkbox" checked="checked"><p><?=ProjectModule::t('Send to e-mail')?></p>
             <?php if ($hints['Zakaz_sendEmail']) { ?>
             <div class="sendEmail_hint">

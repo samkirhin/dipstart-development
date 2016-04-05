@@ -175,7 +175,16 @@ hr {
 .recipient_hint,
 .sendEmail_hint,
 .sendSms_hint,
-.projectPrice_hint {
+.projectPrice_hint,
+.fromClient_hint,
+.toReceive_hint,
+.worthPay_hint,
+.costAuthor_hint,
+.paidWork_hint,
+.sendPayment_hint,
+.totalPay_hint,
+.confirm_hint,
+.cancel_hint {
 	display: inline-block;
 }
 .chat_hint {
@@ -337,6 +346,10 @@ label
 .terms-columns p {
     margin-bottom: 5px;
 }
+.terms-columns span {
+    display: block;
+    margin-bottom: 5px;
+}
 .terms-columns input {
     margin-bottom: 5px;
     width: 49%;
@@ -451,6 +464,9 @@ label
 }
 .chtpl0-down p {
 //top:-8px!important;
+}
+.chtpl0-down.chat-functions p {
+    margin-right: 0;
 }
 .chtpl0-chatblock button.chtpl0-template {
     margin-top: 0px;
@@ -886,6 +902,14 @@ div.chat-functions {
 
 div.chat-functions > button {
     margin-bottom: 5px;
+}
+
+.chat-functions select.select_recipient {
+    margin-right: 0;
+}
+
+.chat-functions .hint-block{
+    margin-right: 15px;
 }
 
 .nav-justified > li {
