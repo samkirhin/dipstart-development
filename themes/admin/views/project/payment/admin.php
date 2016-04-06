@@ -326,7 +326,7 @@ $(document).ready(function () {
 				'name' => 'approve',
 				'type' => 'raw',
 				'value'=> function($data) {return approve_buttons($data);},
-				'filter' => array('0' => 'free', '1' => Yii::t('site','Confirmed'), '2' => Yii::t('site','Rejected')),
+				'filter' => array('0' => Yii::t('site','New'), '1' => Yii::t('site','Confirmed'), '2' => Yii::t('site','Rejected')),
 			),
 			/*array(
 				'class' => 'CButtonColumn',

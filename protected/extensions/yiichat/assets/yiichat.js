@@ -116,6 +116,9 @@ var YiiChat = function (options) {
                     }
                 },
                 error: function (e) {
+					var foo = {baz: "tubular", goo: "rad"}, bar = "baz";
+					console.log("string",1,foo.goo,bar,foo.baz);
+					console.log(e.responseText);
                     options.onError('timer_error', e.responseText, e);
                 }
             });
@@ -130,7 +133,11 @@ var YiiChat = function (options) {
                 var tmp_html = '';
                 var rating = '';
 
-                if (post.sender.superuser.itemname == 'Author') {
+                if (!post.sender.superuser) {
+					console.warn('Message from deleted user: post.id=='+post.id);
+					return;
+				}
+				if (post.sender.superuser.itemname == 'Author') {
                     
                     rating = 
                             '<div><img class="left" data-ownerid="' + post.sender.superuser.userid + '" />' +
