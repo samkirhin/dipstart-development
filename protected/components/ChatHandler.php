@@ -40,7 +40,7 @@ class ChatHandler extends YiiChatDbHandlerBase {
                 $res1[$k]=$v->attributes;
                 $res1[$k]['sender']=array();
                 $res1[$k]['sender']['fullusername']=$res[$k]->senderObject->email;
-                $res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes;
+                if($res[$k]->senderObject) $res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes; // При удалённом пользователе необходима проверка
                 $res1[$k]['sender']['rating'] = (int)$res[$k]->senderObject->profile->rating;
                 
                 switch($res1[$k]['sender']['superuser']['itemname']){

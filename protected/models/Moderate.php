@@ -17,7 +17,7 @@ class Moderate extends CActiveRecord
 {
 	
 	public function tableName() {
-		return Campaign::getId().'_Moderate';
+		return Company::getId().'_Moderate';
 	}
     
     public static function model($className=__CLASS__)
