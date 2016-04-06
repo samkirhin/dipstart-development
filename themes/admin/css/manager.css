@@ -158,6 +158,58 @@ hr {
     padding: 0;
     margin: 0px 0 20px 0;
 }
+.hint-block {
+    display: inline-block;
+	width: 7px;
+	height: 18px;
+	line-height: 18px;
+	color: #ff0000;
+	text-align: center;
+	cursor: pointer;
+	position:relative;
+	font-weight:normal;
+	text-transform:none;
+	font-size:9px;
+}
+.hint-block.__search {
+    display: block;
+    float:right;
+    margin-top:6px;
+}
+.hint-block.__chat {
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+.hint-block.__part_delete {
+	color:#ffffff;
+}
+.hint-block_content{
+	position:absolute;
+	top:20px;
+	width: 200px;
+	right:-105px;
+	padding:7px 12px;
+	border-radius:5px;
+	background:#4A4A4A;
+	color:#FFFFFF;
+	font-size:11px;
+	z-index:1;
+	text-align:left;
+	display:none;
+}
+.hint-block:hover .hint-block_content {
+	display:block;
+}
+.hint-block_content:after{
+	content:'';
+	position:absolute;
+	border:5px solid transparent;
+	top:-10px;
+	right:103px;
+	border-bottom:5px solid #4A4A4A;
+}
 .linkToAuthors {
 	padding: 0;
 	font-size: 12px;
@@ -266,6 +318,10 @@ label
     text-align: center;
 }
 .terms-columns p {
+    margin-bottom: 5px;
+}
+.terms-columns span {
+    display: block;
     margin-bottom: 5px;
 }
 .terms-columns input {
@@ -382,6 +438,9 @@ label
 }
 .chtpl0-down p {
 //top:-8px!important;
+}
+.chtpl0-down.chat-functions p {
+    margin-right: 0;
 }
 .chtpl0-chatblock button.chtpl0-template {
     margin-top: 0px;
@@ -817,6 +876,14 @@ div.chat-functions {
 
 div.chat-functions > button {
     margin-bottom: 5px;
+}
+
+.chat-functions select.select_recipient {
+    margin-right: 0;
+}
+
+.chat-functions .hint-block{
+    margin-right: 15px;
 }
 
 .nav-justified > li {

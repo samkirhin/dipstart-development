@@ -22,8 +22,17 @@
             <?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary terms-save-btn')); ?>
         </div>
         <div class="col-xs-4 terms-columns terms-column-1">
-            <p><?php echo $form->labelEx($model, 'max_exec_date'); ?></p>
-
+            <span>
+                <?php echo $form->labelEx($model, 'max_exec_date'); ?>
+                <?php if ($hints['Zakaz_exec_date']) { ?>
+                <div class="hint-block __exec_date">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_exec_date']?>
+                    </div>
+                </div>
+                <?php } ?>
+            </span>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
                 'model' => $model,
@@ -31,7 +40,17 @@
             ));?>
         </div>
         <div class="col-xs-4 terms-columns terms-column-2">
-            <p><?php echo $form->labelEx($model, 'manager_informed'); ?></p>
+            <span>
+                <?php echo $form->labelEx($model, 'manager_informed'); ?>
+                <?php if ($hints['Zakaz_manager_informed']) { ?>
+                <div class="hint-block __manager_informed">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_manager_informed']?>
+                    </div>
+                </div>
+                <?php } ?>
+            </span>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
                 'model' => $model,
@@ -39,7 +58,17 @@
             ));?>
         </div>
         <div class="col-xs-4 terms-columns terms-column-3 terms-columns-last">
-            <p><?php echo $form->labelEx($model, 'author_informed'); ?></p>
+            <span>
+                <?php echo $form->labelEx($model, 'author_informed'); ?>
+                <?php if ($hints['Zakaz_author_informed']) { ?>
+                <div class="hint-block __author_informed">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_author_informed']?>
+                    </div>
+                </div>
+                <?php } ?>
+            </span>
             <?php
             $this->widget('ext.juidatetimepicker.EJuiDateTimePicker', array(
                 'model' => $model,
@@ -57,6 +86,14 @@
 
 <div class="col-xs-12 chatBlockBg">
     <div class="chatBlock chtpl0-chatblock chtpl0-admin">
+        <?php if ($hints['Zakaz_chat']) { ?>
+        <div class="hint-block __chat">
+            ?
+            <div class="hint-block_content">
+                <?=$hints['Zakaz_chat']?>
+            </div>
+        </div>
+        <?php } ?>
 		<div class="chtpl0-panel chtpl0-up">
 			<button class="chtpl0-show"><?=ProjectModule::t('Show messages')?></button>
 		</div>
@@ -68,9 +105,33 @@
                     <option value="<?= Templates::TYPE_AUTHOR ?>"><?= ProjectModule::t('to author')?></option>
                     <option value="<?= Templates::TYPE_CUSTOMER ?>"><?= ProjectModule::t('to customer')?></option>
                 </select>
+                <?php if ($hints['Zakaz_recipient']) { ?>
+                <div class="hint-block __recipient">
+                    ?
+                    <div class="hint-block_content">
+                        <?=$hints['Zakaz_recipient']?>
+                    </div>
+                </div>
+                <?php } ?>
             </label>
             <input id="send_email" type="checkbox" checked="checked"><p><?=ProjectModule::t('Send to e-mail')?></p>
+            <?php if ($hints['Zakaz_send_email']) { ?>
+            <div class="hint-block __send_email">
+                ?
+                <div class="hint-block_content">
+                    <?=$hints['Zakaz_send_email']?>
+                </div>
+            </div>
+            <?php } ?>
             <input id="send_sms" type="checkbox"><p><?=ProjectModule::t('Send SMS')?></p>
+            <?php if ($hints['Zakaz_send_sms']) { ?>
+            <div class="hint-block __send_sms">
+                ?
+                <div class="hint-block_content">
+                    <?=$hints['Zakaz_send_sms']?>
+                </div>
+            </div>
+            <?php } ?>
             <button class="chtpl0-template attach_template hidden" data-toggle="modal" data-target="#templates_modal"></button>
             <p class="attach_template hidden"><?=ProjectModule::t('Use template')?></p>
             <?php
@@ -118,7 +179,8 @@
 <div class="col-xs-12 payment-block">
     <?php
     $this->widget('application.modules.project.widgets.payment.PaymentWidget', array(
-        'projectId' => $model->id
+        'projectId' => $model->id,
+        'hints'=>$hints,
     ));
     ?>
 </div>
