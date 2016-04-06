@@ -5,6 +5,18 @@
 }
 
 /* Akoch-ov */
+.bg-green {
+	background-color: #a0e486;
+}
+.bg-red {
+	background-color: #da8383;
+}
+.bg-blue, .chtpl0-msg .chtpl0-buttons button.chtpl0-answer, .btn-primary, #new-changes-link a {
+	background-color: #85b3da;
+}
+.btn-primary {
+	border: 0;
+}
 #user-form {
 	text-align: center;
 }
@@ -15,18 +27,43 @@
 	display: none;
 }
 .btn-spam {
-	float: right;
-	margin-top: -2px;
+	/*float: right;
+	margin-top: -2px;*/
+	margin-left: 5px;
+	height: 40px;
+	padding: 0;
+	color: white;
+	border: 0;
+}
+.before-panel-group+.left {
+	text-align: left;
+}
+.before-panel-group+.right {
+	text-align: right;
+}
+.before-panel-group {
+	position: relative;
+	margin-top: 13px;
+	margin-bottom: -53px;
+}
+.before-panel-group button {
+	position: relative;
+	z-index: 10;
 }
 .btn-change-status {
-	background: #81B2DC;
-	margin-top: -4px;
-	margin-left: 10px;
+	/*background: #81B2DC;*/
+	margin-right: 10px;
+	height: 40px;
+	padding: 0;
 	color: white;
+	border: 0;
 }
-#refound_order {
+.btn-icon-40 img{
+	height: 40px;
+}
+/*#refound_order {
 	background: #DCB281;
-}
+}*/
 /*.aboutZakaz #justFileUpload {
 	height: 100px;
 }*/

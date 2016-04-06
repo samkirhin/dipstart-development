@@ -776,7 +776,7 @@ div#chatWindow:empty:before {
 #new-changes-link a {
     margin: 0px 5px 9px !important;
     width: 100%!important;
-    background-color: #286090!important;
+    /*background-color: #286090!important;*/
     border-color: #204D74!important;
     padding: 7px 112px!important;
     width: -webkit-calc(100% - 30px)!important;

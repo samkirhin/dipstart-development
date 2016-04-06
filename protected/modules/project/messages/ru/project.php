@@ -21,7 +21,7 @@ return array(
     'Zakazs' => 'Заказы',
     'Author' => 'Автор',
     'Zakaz' => 'Заказ',
-    'Create Zakaz' => 'Создать заказ',
+    'Create order' => 'Создать заказ',
     'Manage Zakaz' => 'Управлять заказами',
     'Max Date' => 'Дата и время исполнения заказа',
     'Advanced Search' => 'Расширенный поиск',

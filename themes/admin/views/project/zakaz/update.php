@@ -12,15 +12,23 @@ $customer = $model->user;
 ?>
 
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
-    <h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span>
-			<?php if ($model->status < 5) { ?>
-				<button id="close_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>'; send_message(17,'Заказчику о завершении заказа');"><?=ProjectModule::t('Complete the order')?></button>
-				<button id="refound_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'refound'=>'yes'));?>';"><?=ProjectModule::t('Refound and close order')?></button>
-			<?php } else { ?>
-				<button id="open_order" class="btn btn-change-status" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';"><?=ProjectModule::t('Open order')?></button>
-			<?php } ?>
-	</h1>
-    <div class="row">
+    <!--<h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span>-->
+
+	<!--</h1>-->
+	<div class="row before-panel-group left">
+		<button id="close_order" class="btn btn-icon-40 btn-spam bg-blue" onclick="spam(<?php echo $model->id; ?>);" href="">
+			<img src="<?=Yii::app()->theme->baseUrl?>\images\spam.png" title="<?=ProjectModule::t('Search author')?>"></button>
+	</div>
+    <div class="row before-panel-group right">
+		<?php if ($model->status < 5) { ?>
+			<button id="close_order" class="btn btn-icon-40 btn-change-status bg-green" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>'; send_message(17,'Заказчику о завершении заказа');">
+				<img src="<?=Yii::app()->theme->baseUrl?>\images\handshake.png" title="<?=ProjectModule::t('Complete the order')?>"></button>
+			<button id="refound_order" class="btn btn-icon-40 btn-change-status bg-red" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'refound'=>'yes'));?>';">
+				<img src="<?=Yii::app()->theme->baseUrl?>\images\refound.png" title="<?=ProjectModule::t('Refound and close order')?>"></button>
+		<?php } else { ?>
+			<button id="open_order" class="btn btn-icon-40 btn-change-status bg-red" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';">
+			<img src="<?=Yii::app()->theme->baseUrl?>\images\handshake.png" title="<?=ProjectModule::t('Open order')?>"></button>
+		<?php } ?>
         <?php
         //$this->renderPartial('_order_list_update');
         ?>
@@ -183,7 +191,7 @@ $customer = $model->user;
                                                   'data' => 'js:"id='.$model->id.'&sid="+this.value',
                                                   'cache' => false,
                                                   ),)); ?>
-				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>
+				   <!--<button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>-->
 					<!-- Тут была кнопка открыть или закрыть заказ -->
                </div>
 			   <div class="col-xs-12 linkToAuthors">
