@@ -95,6 +95,7 @@ class Templates extends CActiveRecord
 			1 => Yii::t('site','Customer'),
 			2 => Yii::t('site','Author'),
 			3 => Yii::t('site','Service'),
+			5 => Yii::t('site','Tip'),
 			10 => Yii::t('site','Service mail: Password recovery'), //Восстановление пароля
 			11 => Yii::t('site','Service mail: Registration'), //Успешная регистрация
 			12 => Yii::t('site','Service mail: Project accepted'), //Регистрация проекта
