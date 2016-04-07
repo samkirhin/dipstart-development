@@ -99,6 +99,7 @@ class Templates extends CActiveRecord
 			1 => Yii::t('site','Customer'),
 			2 => Yii::t('site','Author'),
 			3 => Yii::t('site','Service'),
+			4 => Yii::t('site','Hint for manager'),
 			10 => Yii::t('site','Service mail: Password recovery'), //Восстановление пароля
 			11 => Yii::t('site','Service mail: Registration'), //Успешная регистрация
 			12 => Yii::t('site','Service mail: Project accepted'), //Регистрация проекта
@@ -136,5 +137,13 @@ class Templates extends CActiveRecord
 	public function getTemplate($type_id){
 		$template = $this->findByAttributes(array('type_id'=>$type_id));
 		return  $template->text;
+	}
+
+	public function getTemplateList($type_id){
+		$templates = $this->findAllByAttributes(array('type_id'=>$type_id));
+		$custom_arr = array();
+		foreach ($templates as $item)
+			$custom_arr[$item->name] = $item->text;
+		return $custom_arr;
 	}
 }
