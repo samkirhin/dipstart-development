@@ -61,10 +61,10 @@ class qqUploadedFileForm {
 class qqFileUploader {
     private $allowedExtensions = array();
     private $disAllowedExtensions = array();
-    private $sizeLimit = 10485760;
+    private $sizeLimit = 209715200; //200mb
     private $file;
 
-    function __construct(array $config = array(), $sizeLimit = 10485760){
+    function __construct(array $config = array(), $sizeLimit = 209715200){
         $allowedExtensions = array_map("strtolower", $config['allowedExtensions']);
         $disAllowedExtensions = array_map("strtolower", $config['disAllowedExtensions']);
 
@@ -126,7 +126,7 @@ class qqFileUploader {
         if ($size > $this->sizeLimit) {
             return array('error' => 'File is too large');
         }
-
+		setlocale(LC_ALL,'en_US.UTF-8');
         $pathinfo = pathinfo($this->file->getName());        
         $filename=$pathinfo['filename'];
         if(!isset($filename) or empty($filename)) $filename=uniqid();

@@ -34,7 +34,7 @@
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'supportEmail'); ?>
-		<?php echo $form->textField($model,'supportEmail',array('size'=>60,'maxlength'=>30)); ?>
+		<?php echo $form->textField($model,'supportEmail',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'supportEmail'); ?>
 	</div>
 	<div class="row">
@@ -58,9 +58,15 @@
 		<?php echo $form->error($model,'FrontPage'); ?>
 	</div>
 	<div class="row">
+		<?php echo CHtml::image(Yii::app()->getBaseUrl(/*true*/) . '/' . $model->getFilesPath() . '/' . $model->icon, 'icon'); ?><br />
+		<?php echo CHtml::label(ProjectModule::t('Attach file'), 'iconupload'); ?>
+		<?php echo CHtml::fileField('Company[iconupload]', '', array('class' => 'col-xs-12 btn btn-user')); ?>
+		<?php echo $form->error($model,'iconupload'); ?>
+	</div>
+	<div class="row">
 		<?php echo CHtml::image(Yii::app()->getBaseUrl(/*true*/) . '/' . $model->getFilesPath() . '/' . $model->logo, 'logo'); ?><br />
 		<?php echo CHtml::label(ProjectModule::t('Attach file'), 'fileupload'); ?>
-		<?php echo CHtml::fileField('Campaign[fileupload]', '', array('class' => 'col-xs-12 btn btn-user')); ?>
+		<?php echo CHtml::fileField('Company[fileupload]', '', array('class' => 'col-xs-12 btn btn-user')); ?>
 		<?php echo $form->error($model,'fileupload'); ?>
 	</div>
 	<div class="row">

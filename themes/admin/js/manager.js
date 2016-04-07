@@ -80,7 +80,7 @@ function send(url) {
 
     return false;
 }
-function approve(obj){ /* Approve files in parts */
+function stageFileApprove(obj){ /* Approve files in parts */
     var data=$(obj).data();
 	$(obj).hide();
     $.post('/project/zakazParts/apiApprove', JSON.stringify({
@@ -96,6 +96,28 @@ function approve(obj){ /* Approve files in parts */
         }
     }, 'json');
 }
+
+$(document).on("click", 'li span.deletefile', function(e) { /* Delete files in parts */
+	var item = $(this).parent();
+	var id = parseInt($(this).attr('id'));
+	if(!isNaN(id)) {
+		$.ajax({
+		  type: "POST",
+		  url:'http://'+document.domain+'/project/zakazParts/apiDeleteFile',
+		  data : JSON.stringify({
+			'id': id
+		  }),
+		  success: function(response) {
+			 if(response.data && response.data.success) {
+				 item.fadeOut(400,function(){
+					 item.remove();
+				 });
+			 }
+		  }
+		});
+	}
+});
+
 function approveFile(obj){
     var data=$(obj).data();
     $.post('/project/zakaz/apiApproveFile', JSON.stringify({
@@ -129,11 +151,30 @@ function spam(orderid){
     alert('Рассылка запущена');
     return false;
 }
-function setApprove (id) {
+function setApprove (id, type, number) {
     $.post('/project/payment/approveTransaction', JSON.stringify({
+        'id': id,
+        'type': type,
+        'number': number
+    }), function (response) {
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
+    }, 'json');
+}
+function setReject (id) {
+    $.post('/project/payment/rejectTransaction', JSON.stringify({
         'id': id
     }), function (response) {
-        $.fn.yiiGridView.update('buh_transaction');
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
+    }, 'json');
+}
+function cancelPayment (id) {
+    $.post('/project/payment/cancelTransaction', JSON.stringify({
+        'id': id
+    }), function (response) {
+        $.fn.yiiGridView.update('buh_transaction_in');
+        $.fn.yiiGridView.update('buh_transaction_out');
     }, 'json');
 }
 $( window ).load( function() {

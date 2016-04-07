@@ -2,6 +2,9 @@
 
 <div class="row white-bg inside-block">
 <div class="col-md-12">
+<div class="link-for-executors">
+	<?=ProjectModule::t('Link for freelancers') ?>: <a href="/project/zakaz/list"><?='http://'.$_SERVER['SERVER_NAME'].'/project/zakaz/list'?></a>
+</div>
 <?php
 $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs'),
@@ -13,9 +16,11 @@ if ($projectFields) {
 	foreach($projectFields as $field) {
 		if ($field->field_type=="LIST"){
 			$varname = $field->varname;
+			$arr = Catalog::getAll($varname);
+			if (!$arr) $arr = Catalog::getAll($varname, 0); // Если список одноуровненвый
 			$columns[] = array(
 					'name'=>$varname,
-					'filter'=>Catalog::getAll($varname),
+					'filter'=>$arr,
 					'value'=>'$data->catalog_'.$varname.'->cat_name',
 				);
 		} elseif ($field->varname != 'soderjanie' && $field->varname != 'description'  && $field->varname !='opisanie') { // !!! Сделать настраиваемым
@@ -52,7 +57,9 @@ $columns[] = array(
 	'dataProvider'=>$model->search(),
     'filter'=>$model,
 	'ajaxUpdate' => true,
-//    'afterAjaxUpdate' => 'reinstallDatePicker',
+    'afterAjaxUpdate' => "function(id, data) {
+		jQuery('#Zakaz_dbmanager_informed').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['".Yii::app()->language."']));
+    }",
     'columns'=>$columns,
     'ajaxType'=>'POST',
     'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',

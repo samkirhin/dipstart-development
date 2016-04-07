@@ -32,5 +32,10 @@ echo UserModule::t('FieldOfOrders').' "'.$model->varname.'"';
 		'default',
 		'position',
 		'visible',
+		array(
+			'label'=>ProjectModule::t('Work types'),
+			'type'=>'raw',
+			'value'=>$model->work_types==null?'('.UserModule::t("All").')':Catalog::getNamesByIds($model->work_types,', '),
+		),
 	),
 )); ?>

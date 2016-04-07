@@ -12,6 +12,10 @@
  */
 class Templates extends CActiveRecord
 {
+	const TYPE_AUTHOR = 2;
+	const TYPE_CUSTOMER = 1;
+	const TYPE_AUTHOR_RESPONSE_PROJECT = 25;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -110,6 +114,7 @@ class Templates extends CActiveRecord
 			22 => Yii::t('site','Service mail: deadline arrived'), //Срок сдачи части наступил
 			23 => Yii::t('site','Service mail: new revision'), //О новой доработке
 			24 => Yii::t('site','Service mail: your salary'), //Об оплате заказа
+			25 => Yii::t('site','Message for an author in response to project'), //Сообщение для автора при отклике на проект
 		);
 	}
 	
@@ -126,5 +131,10 @@ class Templates extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function getTemplate($type_id){
+		$template = $this->findByAttributes(array('type_id'=>$type_id));
+		return  $template->text;
 	}
 }

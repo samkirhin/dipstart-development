@@ -6,20 +6,20 @@
 * @copyright Copyright &copy; 2010 Christoffer Niska
 * @since 0.5
 */
-class RWebUser extends CWebUser
-{
+class RWebUser extends CWebUser {
+	private $fullName;
 	/**
 	* Actions to be taken after logging in.
 	* Overloads the parent method in order to mark superusers.
 	* @param boolean $fromCookie whether the login is based on cookie.
 	*/
-	public function afterLogin($fromCookie)
-	{
+	public function afterLogin($fromCookie) {
 		parent::afterLogin($fromCookie);
 
 		// Mark the user as a superuser if necessary.
 		if( Rights::getAuthorizer()->isSuperuser($this->getId())===true )
 			$this->isSuperuser = true;
+		
 	}
 
 	/**
@@ -90,5 +90,15 @@ class RWebUser extends CWebUser
 		} else {
 			return true;
 		}
+	}
+	public function fullName(){
+		if (!$this->fullName) {
+			$user = User::model()->findByPk($this->id);
+			if($user->full_name)
+				$this->fullName = $user->full_name;
+			else
+				$this->fullName = $user->email;
+		}
+		return $this->fullName;
 	}
 }

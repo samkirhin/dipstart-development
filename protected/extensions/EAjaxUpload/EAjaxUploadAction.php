@@ -8,7 +8,7 @@ class EAjaxUploadAction extends CAction
                 Yii::import("ext.EAjaxUpload.qqFileUploader");
 
                 $allowedExtensions = array("jpg");
-                $sizeLimit = 1 * 1024 * 1024;
+                $sizeLimit = 200 * 1024 * 1024;
 
                 $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
                 $result = $uploader->handleUpload('upload/eajaxupload/');

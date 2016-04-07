@@ -70,9 +70,9 @@ return array(
     'View Templates' => 'Просмотреть шаблон',
     'Submit' => 'Отправвить',
     'Projects' => 'Проекты',
-    'Zakaz' => 'Заказ',
-    'Zakazs' => 'Заказы',
-    'Create Zakaz' => 'Создать заказ',
+    'Order' => 'Заказ',
+    'All orders' => 'Все заказы',
+    'Create order' => 'Создать заказ',
     'Nam' => 'Имя',
     'Subject' => 'Тема',
     'Body' => 'Текст',
@@ -114,7 +114,11 @@ return array(
     'Show' => 'Показать',
 	'Saving...' => 'Сохраняем...',
 	'Click to edit' => 'Кликните, чтобы редактировать',
-
+	'Reject' => 'Отклонить',
+	'Rejected' => 'Отклонен',
+	'Cancel' => 'Отмена',
+	'Payment method' => 'Способ оплаты',
+	'New' => 'Новые',
     //
     'Bookkeeping' => 'Бухгалтерия',
     'My account' => 'Личный кабинет',
@@ -123,6 +127,7 @@ return array(
     'Customers' => 'Заказчики',
     // admin menu
     'Accounts department' => 'Бухгалтерия',
+	'Project Fields' => 'Поля Проекта',
 	
 	//Company
 	'List companies' => 'Список компаний',

@@ -108,15 +108,13 @@ class ChangesController extends Controller {
             return false;
         }
 
-		// --- кампании
-		$c_id = Campaign::getId();
+		$c_id = Company::getId();
 		if ($c_id) {
 			ProjectChanges::$table_prefix = $c_id.'_';
 			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
 		} else {
 			ProjectChanges::$file_path = 'uploads/changes_documents';
 		}
-		// ---
 		
         $model = new ProjectChanges();
         $model->scenario = 'add';

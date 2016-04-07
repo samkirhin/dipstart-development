@@ -30,12 +30,12 @@ class CompanyController extends Controller {
 	}
 
 	public function actionList() {
-		$model = new Campaign('search');
+		$model = new Company('search');
 		$model->unsetAttributes();
 		if(Yii::app()->request->isAjaxRequest) {
-			$params = Yii::app()->request->getParam('Campaign');
+			$params = Yii::app()->request->getParam('Company');
 			$model->setAttributes($params);
-			Yii::app()->user->setState('CampaignFilterState', $params);
+			Yii::app()->user->setState('CompanyFilterState', $params);
 		}
 		$this->render('list',array(
 			'model'=>$model,
@@ -44,17 +44,18 @@ class CompanyController extends Controller {
 	
 	public function actionEdit($id = false) {
 		if($id) {
-			$model = Campaign::model()->findByPk($id);
+			$model = Company::model()->findByPk($id);
 		} else {
-			$model = Campaign::getCompany();
+			$model = Company::getCompany();
 		}
 		if(isset($_POST['ajax']) && $_POST['ajax']==='company-form') {
 			echo UActiveForm::validate(array($model));
 			Yii::app()->end();
 		}
-		if(isset($_POST['Campaign'])) {
-			$model->attributes = $_POST['Campaign'];
+		if(isset($_POST['Company'])) {
+			$model->attributes = $_POST['Company'];
 			$model->fileupload = CUploadedFile::getInstance($model, 'fileupload');
+			$model->iconupload = CUploadedFile::getInstance($model, 'iconupload');
 			if($model->validate()) {
 				$model->save();
 				Yii::app()->user->setFlash('companySuccessMessage',ProjectModule::t('Successfully updated'));
@@ -73,7 +74,7 @@ class CompanyController extends Controller {
 		if(isset($_POST['company_to_copy']) && $_POST['company_to_copy']) {
 			$copy_data_list = array('Templates', 'Сatalog','ProjectStatus','PartStatus','ProjectFields','ProfilesFields');
 			$prefix = intval($_POST['company_to_copy']).'_';
-			$model = new Campaign();
+			$model = new Company();
 			$model->organization = 1;
 			$model->name = 'New company';
 			$model->domains = 'new.company.admintrix.com';
@@ -107,7 +108,7 @@ class CompanyController extends Controller {
 			
 			$this->redirect(array('edit','id'=>$model->id));
 		}
-		$companies = Campaign::getList();
+		$companies = Company::getList();
 		//Yii::app()->theme = 'admin';
 		$this->render('create',array(
 			'companies'=>$companies,

@@ -146,5 +146,16 @@ class Catalog extends CActiveRecord {
             $res[$v['id']] = $v['cat_name'];
         return $res;
     }
-
+	public static function getNamesByIds($ids,$delimiter = null) {
+		if(!is_array($ids)) $ids = explode(',',$ids);
+		$cats = Yii::app()->db->createCommand()
+			->select('cat_name')
+			->from(Campaign::getId().'_Сatalog')
+			->where(array('in', 'id', $ids))
+			->queryAll();
+		if(!($delimiter === null)) foreach($cats as $item){
+			$names .= $item['cat_name'].$delimiter;
+		} else return $cats;
+		return $names;
+	}
 }
