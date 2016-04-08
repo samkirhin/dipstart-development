@@ -135,7 +135,7 @@
     ?>
 </div>
 
-<div class="col-xs-12 tips-block">
+<div class="col-xs-12 tips-wrapper">
     <?php
     $this->widget('application.modules.project.widgets.tips.TipsWidget', array(
         'project' => $model

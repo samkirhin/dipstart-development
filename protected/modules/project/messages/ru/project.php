@@ -149,6 +149,9 @@ return array(
     'Save' => 'Сохранить',
     'Confirm payment:' => 'Подтвердить платеж:',
 
+    //Блок советов
+    'Tips' => 'Советы',
+
     'List ZakazParts' => 'Список этапов проекта',
     'Manage Zakaz Parts' => 'Работа с этапами проекта',
     'Additionally send:' => 'Дополнительно отправить:',
