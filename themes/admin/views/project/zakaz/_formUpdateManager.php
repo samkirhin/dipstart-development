@@ -135,13 +135,11 @@
     ?>
 </div>
 
-<div class="col-xs-12 tips-wrapper">
-    <?php
-    $this->widget('application.modules.project.widgets.tips.TipsWidget', array(
-        'project' => $model
-    ));
-    ?>
-</div>
+<?php
+$this->widget('application.modules.project.widgets.tips.TipsWidget', array(
+    'project' => $model
+));
+?>
 
 </div>
 </div>
