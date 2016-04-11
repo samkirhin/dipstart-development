@@ -117,6 +117,7 @@ return array(
 	'To pay:' => 'To pay:',
 	'Payed:' => 'Payed:',
 	'closestDate' => 'Closest stages deadline',
+    'technicalspec' => 'Requires a technical specialist',
 
     //Блок оплаты
     'Payments' => 'Payments',

@@ -253,6 +253,10 @@ class Zakaz extends CActiveRecord {
 					}
 				}
 
+				// include static fields
+				$fields .= ' , technicalspec';
+				array_push($numerical, 'technicalspec');
+
 				array_push($rules,array(implode(',',$required), 'required'));
 				array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
@@ -332,6 +336,7 @@ class Zakaz extends CActiveRecord {
 			'notes' => ProjectModule::t('Notes'),
 			'author_notes' => ProjectModule::t('author_notes'),
 			'closestDate' => ProjectModule::t('closestDate'),
+			'technicalspec' => ProjectModule::t('technicalspec'),
 		);
 		$projectFields = $this->getFields();
 		if ($projectFields) {

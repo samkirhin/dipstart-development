@@ -57,7 +57,10 @@ $this->menu=array(
 			}
 		}
 	} ?>
-
+        <div class="form-group">
+            <?php echo $form->labelEx($model,'technicalspec'); ?><br />
+            <?php echo $form->checkBox($model, 'technicalspec'); ?>
+        </div>
         <div class="row create-form-selects block-with-border" style="margin-top: 15px;">
             <div class="col-md-6" style="padding-left: 0; padding-right: 0;">
                 <?php echo $form->errorSummary($model); ?>

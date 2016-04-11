@@ -123,6 +123,12 @@ $this->breadcrumbs = array(
                                                 }
                                             }
                                         ?>
+
+                                        <div class="form-group">
+                                            <?php echo $form->labelEx($model,'technicalspec'); ?><br />
+                                            <?php echo $form->checkBox($model, 'technicalspec'); ?>
+                                        </div>
+                                        
                                         <h3> <?=ProjectModule::t('Deadlines')?> </h3>
 
                                         <table class="table table-striped" style="font-size: 12px;">

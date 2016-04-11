@@ -17,6 +17,7 @@ class ZakazController extends Controller {
 	actionList              - новые заказы у автора
 	loadModel               - возвращает модель по ID
 	actionSpam              - рассылка по авторам  
+	actionSpamTech          - рассылка по техническим руководителям
 	actionApiApproveFile    - модерация файла
 	actionApiRemoveFile     - удаление файла
 	actionUpload            - загрузка файлов в заказе 
@@ -752,6 +753,75 @@ class ZakazController extends Controller {
         }
         
         Yii::app()->end();
+    }
+
+    public function actionSpamTech($orderId) {
+
+		header('Content-type: application/json');
+        
+        $order = Zakaz::model()->findByPk($orderId);
+
+        if (!$order) {
+            throw new CHttpException(500);
+        }
+		
+		$criteria = new CDbCriteria();
+        if(Campaign::getId()) {
+			$projectFields = $order->getFields();
+			if ($projectFields) 
+				foreach($projectFields as $field) {
+					if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
+						$varname = $field->varname;
+						$value = $order->$varname;
+						$criteria->addSearchCondition('profile.'.$varname,$value);
+						//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+					}
+				}
+		}
+		$criteria->addSearchCondition('AuthAssignment.itemname', 'Corrector');
+		$authors = User::model()->with('profile','AuthAssignment')->findAll($criteria);
+
+		if(!empty($authors)) {
+
+            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
+            $mail = new YiiMailer(/*'invite', ['link' => $link]*/);
+			$mail->clearLayout();
+            $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
+            $mail->setSubject('Приглашение в проект');
+			$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+            $mail->setBody('<a href="'.$link.'">'.$link.'</a>');
+            
+			// новая рассылка
+
+			$typeId = Emails::TYPE_18;
+			$rec   = Templates::model()->findAll("`type_id`='$typeId'");
+		
+            foreach ($authors as $user) {
+				
+				$specials = explode(',',$user->profile->specials);
+				if (!in_array($order->specials, $specials)) continue;
+				
+				$email = new Emails;
+
+				$email->to_id = $user->id;
+
+				$email->name = $user->full_name;
+				if (strlen($email->name) < 2) $email->name = $user->username;
+				$email->login= $user->username;
+				$email->num_order = $orderId;
+				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+				$specials = Catalog::model()->findByPk($order->specials);
+				$email->specialization	= $specials->cat_name;
+				$email->name_order		= $order->title;		
+				$email->subject_order	= $order->title;		
+				$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
+			}	
+        } else {
+             // echo json_encode(array('error'=>'Нет авторов'));
+        	echo 'Нет авторов';
+        }
+        
+        // Yii::app()->end();
     }
 	
     public function actionApiApproveFile() {
