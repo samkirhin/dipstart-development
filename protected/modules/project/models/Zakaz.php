@@ -326,13 +326,13 @@ class Zakaz extends CActiveRecord {
 			'id' => ProjectModule::t('Order number'),
 			'user_id' => ProjectModule::t('User'),
 			'date' => ProjectModule::t('Order date'),
-			'max_exec_date' => ProjectModule::t('Max Date'),
+			'max_exec_date' => ProjectModule::t('Deadline'),
 			'status' => ProjectModule::t('Status'),
 			'executor' => ProjectModule::t('Executor'),
-			'manager_informed' => ProjectModule::t('Manager Informed'),
-			'author_informed' => ProjectModule::t('Author Informed'), //need4manager?
+			'manager_informed' => ProjectModule::t('Reminder'),
+			'author_informed' => ProjectModule::t('The deadline for the executor'),
 			'deadline' => ProjectModule::t('Deadline'),
-			'notes' => ProjectModule::t('Notes'),
+			'notes' => ProjectModule::t('Notes for manager'),
 			'author_notes' => ProjectModule::t('author_notes'),
 			'closestDate' => ProjectModule::t('closestDate'),
 		);

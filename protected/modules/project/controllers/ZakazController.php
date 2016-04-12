@@ -441,11 +441,13 @@ class ZakazController extends Controller {
 		$managerlog->datetime = date('Y-m-d H:i:s'); 
 		$managerlog->order_id = $model->id;
 		$managerlog->save();
-		
+
+		$hints = Templates::model()->getTemplateList(4);
 		$view = 'update';
 		$isModified = false;
 		$this->render($view, array(
 			'model'=>$model,
+			'hints'=>$hints,
 			//'message'=>$model->projectStatus->status,
 			'isModified'=>$isModified,
 		));
@@ -719,19 +721,20 @@ class ZakazController extends Controller {
 		$order->save();
 		
 		$criteria = new CDbCriteria();
-        if(Campaign::getId()) {
-			$projectFields = $order->getFields();
-			if ($projectFields) 
-				foreach($projectFields as $field) {
-					if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
-						$varname = $field->varname;
-						$value = $order->$varname;
-						$criteria->addSearchCondition('profile.'.$varname,$value);
-						//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
-					}
+		$projectFields = $order->getFields();
+		$spamFields = array();
+		if ($projectFields) 
+			foreach($projectFields as $field) {
+				if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
+					$varname = $field->varname;
+					$value = $order->$varname;
+					//$criteria->addSearchCondition('profile.'.$varname,$value,true);
+					//$criteria->addCondition('profile.'.$varname.' REGEXP \'(^|[[:punct:]])'.$value.'($|[[:punct:]])\'');
+					$spamFields[] = $varname;
 				}
-		}
-		$authors = User::model()->with('profile')->findAll($criteria);
+			}
+		$criteria->addSearchCondition('AuthAssignment.itemname','Author');
+		$authors = User::model()->with('AuthAssignment')->findAll($criteria);
 
 		if(!empty($authors)) {
 
@@ -754,9 +757,16 @@ class ZakazController extends Controller {
 		
             foreach ($authors as $user) {
 				
-				$specials = explode(',',$user->profile->specials);
-				if (!in_array($order->specials, $specials)) continue;
-				
+				foreach ($spamFields as $field) {
+					if($user->profile->$field) {
+						$specials = explode(',',$user->profile->$field);
+						if (!in_array($order->$field, $specials)) continue 2;
+					}
+					//if($user->profile->specials2) {
+					//	$specials = explode(',',$user->profile->specials2);
+					//	if (!in_array($order->specials2, $specials)) continue;
+					//}
+				}
 				$email = new Emails;
 
 				$email->to_id = $user->id;
