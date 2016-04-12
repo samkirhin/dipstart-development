@@ -76,6 +76,7 @@ return array(
     'Order number' => 'Номер заказа',
     'Job name' => 'Имя работы',
     'Name of educational discipline' => 'Наименование учебной дисциплина',
+	'Create order' => 'Создать заказ',
     'The new revision' => 'Новая доработка',
     ///project/zakaz/update/id/x
     'Author' => 'Автор',
