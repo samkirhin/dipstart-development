@@ -197,7 +197,7 @@ div.rightBorder, div.leftBorder {
 }
 .statusBlock  {
     padding: 0;
-    margin: 0px 0 20px 0;
+    margin: 0px 0 10px 0;
 }
 .hint-block {
     display: inline-block;
@@ -264,7 +264,6 @@ div.rightBorder, div.leftBorder {
 .linkToAuthors {
 	padding: 0;
 	font-size: 12px;
-	text-align: center;
 }
 .grey-line {
     width: 94%;
@@ -362,6 +361,7 @@ label
 }
 .terms-columns-last {
     border-right: none;
+	padding-right: 0;
 }
 .terms-columns label {
     font-size: 12px;
@@ -820,19 +820,17 @@ div#chatWindow:empty:before {
     color: #D2D2D2 !important;
 }
 */
+#new-changes-link {
+	text-align: center;
+}
 #new-changes-link a {
-    margin: 0px 5px 9px !important;
-    width: 100%!important;
+	display: inline-block;
+	text-align: center;
+	margin: 10px;
     /*background-color: #286090!important;*/
-    border-color: #204D74!important;
-    padding: 7px 112px!important;
-    width: -webkit-calc(100% - 30px)!important;
-    width: calc(100% - 30px)!important;
-    color: rgb(255, 255, 255)!important;
-    opacity: 1!important;
-    -webkit-transition: all 0.2s ease 0s!important;
-            transition: all 0.2s ease 0s!important;
-    opacity: 0.8!important;
+    border-color: #204D74;
+    padding: 7px;
+    color: white!important;
 }
 
 #new-changes-link a:hover {
@@ -925,4 +923,12 @@ div.list-changes-filename > a {
     position: absolute;
     bottom: -44px;
     right: 30px;
+}
+.left-column hr {
+	margin: 10px;
+	clear: both;
+}
+h5.stages {
+	position: relative;
+	top: 10px;
 }

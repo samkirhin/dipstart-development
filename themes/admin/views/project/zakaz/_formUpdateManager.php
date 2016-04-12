@@ -102,7 +102,7 @@
             <label>
                 <select class="select_recipient">
                     <option value="" selected><?= ProjectModule::t('Not selected')?></option>
-                    <option value="<?= Templates::TYPE_AUTHOR ?>"><?= ProjectModule::t('to author')?></option>
+                    <option value="<?= Templates::TYPE_AUTHOR ?>"><?= ProjectModule::t('to executor')?></option>
                     <option value="<?= Templates::TYPE_CUSTOMER ?>"><?= ProjectModule::t('to customer')?></option>
                 </select>
                 <?php if ($hints['Zakaz_recipient']) { ?>

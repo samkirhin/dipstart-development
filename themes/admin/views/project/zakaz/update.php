@@ -28,7 +28,7 @@ function hint($val, $class){
 	<!--</h1>-->
 	<div class="row before-panel-group left">
 		<button id="close_order" class="btn btn-icon-40 btn-spam bg-blue" onclick="spam(<?php echo $model->id; ?>);" href="">
-			<img src="<?=Yii::app()->theme->baseUrl?>\images\spam.png" title="<?=ProjectModule::t('Search author')?>">
+			<img src="<?=Yii::app()->theme->baseUrl?>\images\spam.png" title="<?=ProjectModule::t('Search executor')?>">
 			<?=hint($hints['Zakaz_search'], 'hint-block __search')?></button>
 	</div>
     <div class="row before-panel-group right">
@@ -188,14 +188,14 @@ function hint($val, $class){
     <div class="row order-contacts">
         <?php if ($author): ?>
         <div class="col-lg-6 col-xs-6 rightBorder">
-            <div class="role"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/view',array('id'=>$author->id));?>"><?=ProjectModule::t('Author')?></a></b></div>
+            <div class="role"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/view',array('id'=>$author->id));?>"><?=ProjectModule::t('Executor')?></a></b></div>
             <?php if ($author->full_name) { ?><div class="name"><p><?= $author->full_name ?></p></div><?php } ?>
             <?php if ($author->full_name && $author->phone_number) echo '<br>'; ?>
 			<div class="mail"><p><?= $author->email ?></p></div>
             <?php if ($author->phone_number) { ?><div class="phone"><p><?= $author->phone_number ?></p></div><?php } ?>
         </div>
         <?php endif; ?>
-        <div class="col-lg-6 col-xs-7 leftBorder<?php if (!$author) echo ' fullwidth'; ?>">
+        <div class="col-lg-6 col-xs-6 leftBorder<?php if (!$author) echo ' fullwidth'; ?>">
             <div class="role"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/view',array('id'=>$customer->id));?>"><?=ProjectModule::t('Customer')?></a></b></div>
             <?php if ($customer->full_name) { ?><div class="name"><p><?= $customer->full_name ?></p></div><?php } ?>
 			<?php if ($author && $customer->full_name && $author->phone_number) echo '<br>'; ?>
@@ -211,52 +211,29 @@ function hint($val, $class){
             <div class="row zero-edge">
                <div class="col-xs-12 statusBlock">
                    <!--<span class="label label-warning"><b><?php //echo $message; ?></b></span>-->
+				   <?php echo $form->labelEx($model, 'status'); ?>:&nbsp;
 				   <?=CHtml::dropDownList('Zakaz_status', $model->status, CHtml::listData(ProjectStatus::model()->findAll(), 'id', 'status'),
                             array('ajax' => array('url' => $this->createUrl('/project/zakaz/update'),
                                                   'data' => 'js:"id='.$model->id.'&sid="+this.value',
                                                   'cache' => false,
                                                   ),)); ?>
 
-					<?php if ($hints['Zakaz_status']) { ?>
-			   		<div class="hint-block __status">
-						?
-						<div class="hint-block_content">
-							<?=$hints['Zakaz_status']?>
-						</div>
-					</div>
-					<?php } ?>
-					<!--<?php if ($hints['Zakaz_search']) { ?>
-			   		<div class="hint-block __search">
-						?
-						<div class="hint-block_content">
-							<?=$hints['Zakaz_search']?>
-						</div>
-					</div>
-					<?php } ?>-->
-				   <!--<button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>-->
-
-					<!-- Тут была кнопка открыть или закрыть заказ -->
+					<?=hint($hints['Zakaz_status'], 'hint-block __status')?>
+					<!--<button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>-->
                </div>
+			   <hr>
 			   <div class="col-xs-12 linkToAuthors">
+					<?=ProjectModule::t('Link for freelancer')?>:<br>
 					<?='http://'.$_SERVER["HTTP_HOST"].Yii::app()->createUrl('/project/chat/view',array('orderId'=>$model->id));?>
-					<?php if ($hints['Zakaz_link']) { ?>
-			   		<div class="hint-block __link">
-						?
-						<div class="hint-block_content">
-							<?=$hints['Zakaz_link']?>
-						</div>
-					</div>
-					<?php } ?>
+					<?=hint($hints['Zakaz_link'], 'hint-block __link')?>
 			   </div>
             </div>
+			<hr>
             <?php if ($isModified) echo '<span><b>'. ProjectModule::t('Order moderation') .'</b></span>';?>
 
             <div class="row">
                 <div class="col-xs-12">
-					       <!-- Тут была кнопка рассылки -->
-                </div>
-                <div class="col-xs-12 notes">
-                    <h4><?=ProjectModule::t('Notes (on all orders)')?></h4>
+                    <!--<h4><?=ProjectModule::t('Notes (on all orders)')?></h4>-->
 
                     <?php $form = $this->beginWidget('CActiveForm', array(
                         'id' => 'zakaz-form',
@@ -275,14 +252,7 @@ function hint($val, $class){
                     echo $form->errorSummary($model); ?>
                     <div class="col-xs-12 notesBlockArea">
                         <?php echo $form->labelEx($model, 'notes'); ?>
-						<?php if ($hints['Zakaz_notes']) { ?>
-						<div class="hint-block __notes">
-							?
-							<div class="hint-block_content">
-								<?=$hints['Zakaz_notes']?>
-							</div>
-						</div>
-						<?php } ?>
+						<?=hint($hints['Zakaz_notes'], 'hint-block __notes')?>
                         <?php echo $form->textArea($model, 'notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
 
@@ -291,31 +261,25 @@ function hint($val, $class){
                     <?php $this->endWidget(); ?>
                 </div>
             </div>
-
-
+			<hr>
 
             <?php Yii::app()->getClientscript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/manager.js');?>
-          <!-- Начало блока добавления частей менеджера -->
-          <?php
+			<!-- Начало блока добавления этапов менеджера -->
+			<h5 class="stages"><?=ProjectModule::t('Work stages')?>:</h5>
+			<?php
             $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
                 'projectId'=>$model->id,
 				'hints'=>$hints,
             ));
             ?>
             <div class="row zero-edge">
-                <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>,'<?=ProjectModule::t('New part')?>');">
-                	<?=ProjectModule::t('Add part')?>
-                	<?php if ($hints['Zakaz_add_part']) { ?>
-                    <div class="hint-block __add_part">
-                        ?
-                        <div class="hint-block_content">
-                            <?=$hints['Zakaz_add_part']?>
-                        </div>
-                    </div>
-                    <?php } ?>
+                <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>,'<?=ProjectModule::t('New stage')?>');">
+                	<?=ProjectModule::t('Add a stage')?>
+					<?=hint($hints['Zakaz_add_part'], 'hint-block __add_part')?>
                 </div>
             </div>
-            <!-- Конец блока добавления частей менеджера -->
+            <!-- Конец блока добавления этапов менеджера -->
+			<br><hr>
             <!-- Начало блока правок (доработок) менеджера -->
 
             <?php

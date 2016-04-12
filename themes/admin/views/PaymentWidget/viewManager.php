@@ -139,7 +139,7 @@
     </table>
 	<? //if($model->to_receive>0){ ?>
 	<div class="confirm-the-payment">
-		<span><?=ProjectModule::t('Confirm payment:')?></span>
+		<span><?=ProjectModule::t('Confirm payment from client:')?></span>
 		<div class="btn-group-xs" role="group">
 		<button class="btn btn-default send_managers_approve"><?=ProjectModule::t('Confirm')?></button>
         <?php if ($this->hints['Zakaz_confirm']) { ?>
