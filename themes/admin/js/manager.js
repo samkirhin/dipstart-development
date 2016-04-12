@@ -177,6 +177,22 @@ $( document ).ready( function() {
             if (response.data)obj.remove();
         });
     });
+
+    $('input#technicalspec').change(function(){
+        var val = $(this).prop('checked') ? 1 : 0;
+        var orderId = $(this).data('id');
+        $.post('/project/zakaz/setTechSpec', {orderId: orderId, val: val}, function (status){
+            switch (status) {
+                case 'no_users':
+                    alert('Нет тех.руководителей');
+                    break;
+
+                case 'send_email':
+                    alert('Рассылка произведена');
+                    break;
+            }
+        });
+    });
     
     var posts = $('div#chatWindow');
     console.log(posts);
