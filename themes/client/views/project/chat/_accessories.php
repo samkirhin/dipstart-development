@@ -17,7 +17,7 @@
 		if(User::model()->isAuthor()) {
 			$middle_button = ProjectModule::t('Send to customer');
 		} else if(User::model()->isCustomer()) {
-			$middle_button = ProjectModule::t('Send to author');
+			$middle_button = ProjectModule::t('Send to executor');
 		}
 		$attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat chtpl0-submit1','id'=>'chat-to-customer');
 		echo  CHtml::submitButton($middle_button, $attr) ;
