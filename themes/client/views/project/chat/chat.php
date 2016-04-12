@@ -34,7 +34,7 @@ if (empty($messages)) {
 		$isCustomer = ($role == 'Customer');
 		if($isAuthor) {
 			$msg_role = 'author-message';
-			if($message->senderObject->id == $order->executor) $role = 'Executor';
+			/*if($message->senderObject->id == $order->executor)*/ $role = 'Executor';
 		}
 		if($isCustomer) $msg_role = 'customer-message';
 		$recipientRole = User::model()->getUserRole($message->recipientObject->id);
