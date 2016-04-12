@@ -29,13 +29,54 @@ hr {
 .order-contacts {
 	text-align: center;
 }
+div.rightBorder, div.leftBorder {
+    padding: 5px 0px;
+	padding-bottom: 0;
+}
 .order-contacts div div{
+	position: relative;
 	display: inline-block;
     margin-top: 10px;
+	height: 41px;
     padding: 0;
-	padding: 0 20px 0 0;
+    padding: 0px 15px 0px 0px;
 }
-
+.order-contacts div div.role:first-child {
+	padding-left: 21px;
+}
+.fullwidth {
+	width: 100%;
+}
+.name p:before{
+    content: "";
+    display: inline-block;
+    position: relative;
+    background: url(../images/user.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+    top: 3px;
+}
+.mail p:before {
+	content: "";
+    position: relative;
+	display: inline-block;
+    background: url(../images/mail.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 5px;
+	top: 5px;
+}
+.phone p:before {
+	content: "";
+    position: relative;
+	display: inline-block;
+    background: url(../images/phone.png) no-repeat center center;
+    width: 15px;
+    height: 20px;
+    margin-right: 10px;
+	margin-bottom: -5px;
+}
 .rightBorder {
     border-right: solid 1px #cccccc;
 }
@@ -156,12 +197,73 @@ hr {
 }
 .statusBlock  {
     padding: 0;
-    margin: 0px 0 20px 0;
+    margin: 0px 0 10px 0;
+}
+.hint-block {
+    display: inline-block;
+	width: 7px;
+	height: 18px;
+	line-height: 18px;
+	color: #ff0000;
+	text-align: center;
+	cursor: pointer;
+	position:relative;
+	font-weight:normal;
+	text-transform:none;
+	font-size:9px;
+}
+.btn-icon-40 .hint-block {
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	margin: 0;
+	padding: 0;
+	background: white;
+	float: left;
+}
+/*.hint-block .__search {
+    display: block;
+    float:right;
+}*/
+.hint-block.__chat {
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+.hint-block.__part_delete {
+	color:#ffffff;
+}
+.hint-block_content{
+	position:absolute;
+	top:20px;
+	min-width: 150px;
+	right:-105px;
+	padding:7px 12px;
+	padding-right: 7px;
+	border-radius:5px;
+	background:#4A4A4A;
+	color:#FFFFFF;
+	font-size:11px;
+	text-align:left;
+	display:none;
+	z-index: 200;
+	white-space: normal;
+}
+.hint-block:hover .hint-block_content {
+	display:block;
+}
+.hint-block_content:after{
+	content:'';
+	position:absolute;
+	border:5px solid transparent;
+	top:-10px;
+	right:103px;
+	border-bottom:5px solid #4A4A4A;
 }
 .linkToAuthors {
 	padding: 0;
 	font-size: 12px;
-	text-align: center;
 }
 .grey-line {
     width: 94%;
@@ -259,6 +361,7 @@ label
 }
 .terms-columns-last {
     border-right: none;
+	padding-right: 0;
 }
 .terms-columns label {
     font-size: 12px;
@@ -266,6 +369,10 @@ label
     text-align: center;
 }
 .terms-columns p {
+    margin-bottom: 5px;
+}
+.terms-columns span {
+    display: block;
     margin-bottom: 5px;
 }
 .terms-columns input {
@@ -383,6 +490,9 @@ label
 .chtpl0-down p {
 //top:-8px!important;
 }
+.chtpl0-down.chat-functions p {
+    margin-right: 0;
+}
 .chtpl0-chatblock button.chtpl0-template {
     margin-top: 0px;
 	}
@@ -392,65 +502,6 @@ label
 }
 .panel-heading-white {
     background-color: #fff !important;
-}
-
-.authorMail > p, .authorPhone > p, .customerMail > p, .customerPhone > p {
-    display: inline-block;
-}
-
-.authorName p:before {
-    content: "";
-    display: block;
-    position: relative;
-    float: left;
-    background: url(../images/user.png) no-repeat center center;
-    width: 15px;
-    height: 20px;
-    margin-right: 10px;
-}
-.authorMail p:first-child {
-    position: relative;
-    float: left;
-    background: url(../images/mail.png) no-repeat center center;
-    width: 15px;
-    height: 20px;
-    margin-right: 10px;
-    /*cursor: pointer;*/
-}
-.authorPhone p:first-child {
-    position: relative;
-    float: left;
-    background: url(../images/phone.png) no-repeat center center;
-    width: 15px;
-    height: 20px;
-    margin-right: 10px;
-    /*cursor: pointer;*/
-}
-.customerName p:before{
-    content: "";
-    display: block;
-    position: relative;
-    float: left;
-    background: url(../images/user.png) no-repeat center center;
-    width: 15px;
-    height: 20px;
-    margin-right: 10px;
-}
-.customerMail p:first-child {
-    position: relative;
-    float: left;
-    background: url(../images/mail.png) no-repeat center center;
-    width: 15px;
-    height: 20px;
-    margin-right: 5px;
-}
-.customerPhone p:first-child {
-    position: relative;
-    float: left;
-    background: url(../images/phone.png) no-repeat center center;
-    width: 15px;
-    height: 20px;
-    margin-right: 10px;
 }
 
 #show-msg {
@@ -712,10 +763,6 @@ div.partStatus {
     min-width: 100%;
 }
 
-.order-contacts div div {
-    padding: 0px 15px 0px 0px;
-}
-
 img#str {
     display: none;
 }
@@ -773,19 +820,17 @@ div#chatWindow:empty:before {
     color: #D2D2D2 !important;
 }
 */
+#new-changes-link {
+	text-align: center;
+}
 #new-changes-link a {
-    margin: 0px 5px 9px !important;
-    width: 100%!important;
-    background-color: #286090!important;
-    border-color: #204D74!important;
-    padding: 7px 112px!important;
-    width: -webkit-calc(100% - 30px)!important;
-    width: calc(100% - 30px)!important;
-    color: rgb(255, 255, 255)!important;
-    opacity: 1!important;
-    -webkit-transition: all 0.2s ease 0s!important;
-            transition: all 0.2s ease 0s!important;
-    opacity: 0.8!important;
+	display: inline-block;
+	text-align: center;
+	margin: 10px;
+    /*background-color: #286090!important;*/
+    border-color: #204D74;
+    padding: 7px;
+    color: white!important;
 }
 
 #new-changes-link a:hover {
@@ -796,27 +841,20 @@ div#chatWindow:empty:before {
     font-size: 1.8em!important;
 }
 
-div.rightBorder, div.leftBorder {
-    padding: 5px 0px;
-}
-
-div.authorMail, div.customerMail {
-    padding-right: 8px!important;
-    vertical-align: middle;
-    padding-top: 3px!important;
-}
-
-div.authorMail, div.authorPhone, dic.customerMail, div.customerPhone {
-    vertical-align: middle;
-    padding-top: 3px!important;
-}
-
 div.chat-functions {
     padding-top: 15px;
 }
 
 div.chat-functions > button {
     margin-bottom: 5px;
+}
+
+.chat-functions select.select_recipient {
+    margin-right: 0;
+}
+
+.chat-functions .hint-block{
+    margin-right: 15px;
 }
 
 .nav-justified > li {
@@ -885,4 +923,12 @@ div.list-changes-filename > a {
     position: absolute;
     bottom: -44px;
     right: 30px;
+}
+.left-column hr {
+	margin: 10px;
+	clear: both;
+}
+h5.stages {
+	position: relative;
+	top: 10px;
 }
