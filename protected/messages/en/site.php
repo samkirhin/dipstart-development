@@ -100,6 +100,7 @@ return array(
     'Profile'=>'Profile',
     'Orders'=>'Orders',
     'New projects'=>'New projects',
+    'New projects for technical'=>'Projects for technical supervisor',
     'NEW ORDERS'=>'NEW ORDERS',
     'My orders'=>'My orders',
     'Create order'=>'Create order',

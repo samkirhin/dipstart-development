@@ -15,6 +15,7 @@ class ZakazController extends Controller {
 	actionOwnList           - заказы исполнителя
 	actionCustomerOrderList - заказы заказчика
 	actionList              - новые заказы у автора
+	actionListTech          - заказы для технических руководителей
 	loadModel               - возвращает модель по ID
 	actionSpam              - рассылка по авторам  
 	actionSetTechSpec       - сохранение и рассылка по техническим руководителям
@@ -673,6 +674,26 @@ class ZakazController extends Controller {
             'dataProvider_done' => $models['model_done'],
 			'only_new'		=> $new,
 			'profile' => $user->profile,
+		));
+	}
+
+	public function actionListTech() {
+		$new = true;
+		$user = User::model()->with('profile')->findByPk(Yii::app()->user->id);
+        $criteria = new CDbCriteria();
+		$criteria->compare('technicalspec', 1);
+        $dataProvider = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria,
+			'pagination' => false
+        ]);
+		$this->render('list',array(
+			'model'=>$dataProvider,
+            'model_done' => null,
+            'dataProvider' => $dataProvider,
+            'dataProvider_done' => null,
+			'profile' => $user->profile,
+			'only_new' => $new,
+			'tech' => 1,
 		));
 	}
 
