@@ -23,7 +23,7 @@ function hint($val, $class){
 
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
 
-    <!--<h1><?= ProjectModule::t('Update Zakaz') ?> <span id="order_number"><?php echo $model->id; ?></span>-->
+    <span id="order_number" style="visibility: hidden; position: absolute;"><?php echo $model->id; ?></span>
 
 	<!--</h1>-->
 	<div class="row before-panel-group left">
