@@ -26,10 +26,11 @@ class ProjectField extends CActiveRecord
 	 * @var string $default
 	 * @var integer $position
 	 * @var integer $visible
+	 * @var string $work_types
 	 */
 	
 	public function tableName() {
-		return Campaign::getId().'_ProjectFields';
+		return Company::getId().'_ProjectFields';
 	}
 	 
 	/**
@@ -54,8 +55,8 @@ class ProjectField extends CActiveRecord
 			array('varname, field_type', 'length', 'max'=>50),
 			array('required, position, visible', 'numerical', 'integerOnly'=>true),
 			array('field_size', 'match', 'pattern' => '/^\s*[-+]?[0-9]*\,*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'),
-			array('title, error_message, default', 'length', 'max'=>255),
-			array('id, varname, title, field_type, field_size, required, error_message, default, position, visible', 'safe', 'on'=>'search'),
+			array('title, error_message, default, work_types', 'length', 'max'=>255),
+			array('id, varname, title, field_type, field_size, required, error_message, default, position, visible, work_types', 'safe', 'on'=>'search'),
 			
 		);
 	}
@@ -87,7 +88,8 @@ class ProjectField extends CActiveRecord
 			'default' => UserModule::t('Default'),
 			'position' => UserModule::t('Position'),
 			'visible' => UserModule::t('Visible'),
-			'editable' => UserModule::t('Editable'),
+			//'editable' => UserModule::t('Editable'),
+			'work_types' => ProjectModule::t('Work types'),
 		);
 	}
 	
@@ -188,13 +190,4 @@ class ProjectField extends CActiveRecord
 			),
         ));
     }
-
-	public function inTableByVarname($varname){
-		if (self::model()->findByAttributes(array('varname' => $varname)) != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 }

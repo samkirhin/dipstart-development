@@ -9,22 +9,47 @@
 $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs'),
 );
-/*
+
+$columns = array('id');
 $projectFields = $model->getFields();
 if ($projectFields) {
 	foreach($projectFields as $field) {
 		if ($field->field_type=="LIST"){
 			$varname = $field->varname;
+			$arr = Catalog::getAll($varname);
+			if (!$arr) $arr = Catalog::getAll($varname, 0); // Если список одноуровненвый
 			$columns[] = array(
 					'name'=>$varname,
-					'filter'=>Catalog::getAll($varname),
+					'filter'=>$arr,
 					'value'=>'$data->catalog_'.$varname.'->cat_name',
 				);
 		} elseif ($field->varname != 'soderjanie' && $field->varname != 'description'  && $field->varname !='opisanie') { // !!! Сделать настраиваемым
 			$columns[] = $field->varname;
 		}
 	}
-} */
+}
+/*$columns[] = array(
+		'name'=>'date',
+		'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			'model'=>$model,
+			'attribute'=>'dbdate',
+			'language'=>Yii::app()->language,
+			),true),
+		'value'=>'$data->dbdate'
+	);*/
+$columns[] = array(
+		'name'=>'manager_informed',
+		'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			'model'=>$model,
+			'attribute'=>'dbmanager_informed',
+			'language'=>Yii::app()->language,
+			), true),
+		'value'=>'$data->dbmanager_informed',
+	);
+$columns[] = array(
+		'class'=>'CButtonColumn',
+		'template'=>'{delete}{update}',
+	);
 ?>
 <div id="grid">
 <?php $this->widget('zii.widgets.grid.CGridView', array(
@@ -32,7 +57,9 @@ if ($projectFields) {
 	'dataProvider'=>$model->search(),
     'filter'=>$model,
 	'ajaxUpdate' => true,
-//    'afterAjaxUpdate' => 'reinstallDatePicker',
+    'afterAjaxUpdate' => "function(id, data) {
+		jQuery('#Zakaz_dbmanager_informed').datepicker(jQuery.extend({showMonthAfterYear:false},jQuery.datepicker.regional['".Yii::app()->language."']));
+    }",
     'columns'=>$columns,
     'ajaxType'=>'POST',
     'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
@@ -59,8 +86,6 @@ if ($projectFields) {
     </div>
 </div>
 <?php
-
-
 /*
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {

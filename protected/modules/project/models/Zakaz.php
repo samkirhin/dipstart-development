@@ -31,8 +31,8 @@ class Zakaz extends CActiveRecord {
 	public static $table_prefix;
 	public static $files_folder;
 
-    private $_job_name;
-    private $_cat_name;
+    /*private $_job_name;
+    private $_cat_name;*/
     private $_status_name;
     private $date_finishstart;
     private $date_finishend;
@@ -43,10 +43,7 @@ class Zakaz extends CActiveRecord {
     public $dateOutcomeFormat = 'dd.MM.yyyy';
     
     public $unixtime = '';
-
-    private $_lastPartStatus = null;
-	private $_lastPartDate = null;
-
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -56,27 +53,16 @@ class Zakaz extends CActiveRecord {
 		else
 			return 'Projects';
 	}
-	public function getFields() {
-		if (!$this->_model) {
+	public function getFields($role = false) {
+		if (!$this->_model || $role) {
 			if (User::model()->isAdmin()) {
-				$this->_model=ProjectField::model()->findAll();
+				$this->_model=ProjectField::model()->sort()->findAll();
 			} elseif (User::model()->isManager()) {
 				$this->_model=ProjectField::model()->forManager()->findAll();
-			} elseif (User::model()->isCustomer()) {
+			} elseif (User::model()->isCustomer() || $role == 'Customer') {
 				$this->_model=ProjectField::model()->forCustomer()->findAll();
 			} elseif (User::model()->isAuthor() || Yii::app()->user->isGuest) {
 				$this->_model=ProjectField::model()->forAuthor()->findAll();
-			}
-		}
-		return $this->_model;
-	}
-
-	public function getField($varname){
-		if (!$this->_model) {
-			if (User::model()->isAdmin()) {
-				$this->_model=ProjectField::model()->findByAttributes(array('varname'=>$varname));
-			} elseif (User::model()->isManager()) {
-				$this->_model=ProjectField::model()->forManager()->findByAttributes(array('varname'=>$varname));
 			}
 		}
 		return $this->_model;
@@ -179,7 +165,7 @@ class Zakaz extends CActiveRecord {
             elseif (strlen($datetime) == 10) $this->author_informed = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
         }
     }
-    public function getJobName()
+    /*public function getJobName()
     {
         if ($this->_job_name === null && $this->job !== null)
         {
@@ -202,7 +188,7 @@ class Zakaz extends CActiveRecord {
     public function setCatName($value)
     {
         $this->_cat_name = $value;
-    }
+    }*/
     public function getStatusName()
     {
         if ($this->_status_name === null && $this->projectStatus !== null)
@@ -215,7 +201,6 @@ class Zakaz extends CActiveRecord {
     {
         $this->_status_name = $value;
     }
-
 	public function getClosestDate(){
 		$date = $this->author_informed;
 		$parts = ZakazParts::model()->findAllByAttributes( array('proj_id'=>$this->id) );
@@ -223,45 +208,6 @@ class Zakaz extends CActiveRecord {
 			if($part->date < $date) $date = $part->date;
 		}
 		return $date;
-	}
-
-	public function getLastPartStatus()
-	{
-		if ($this->_lastPartStatus === null && $this->parts !== null)
-		{
-			if ($this->parts[0]->status_id != PartStatus::COMPLETED){
-				$this->_lastPartStatus = PartStatus::getStatus($this->parts[0]->status_id);
-			}
-			else {
-				$this->_lastPartStatus = '';
-			}
-		}
-		return $this->_lastPartStatus;
-	}
-	public function setLastPartStatus($value)
-	{
-		$this->_lastPartStatus = $value;
-	}
-
-	public function getLastPartDate()
-	{
-		if ($this->_lastPartDate === null && $this->parts !== null && $this->parts[0]->status_id != PartStatus::COMPLETED)
-		{
-			$this->_lastPartDate = $this->parts[0]->date;
-		}
-		if ($this->_lastPartDate != null) {
-			if ($this->_lastPartDate == '0000-00-00 00:00:00') return '';
-			if (strlen($this->_lastPartDate) == 19) return Yii::app()->dateFormatter->format($this->dateTimeOutcomeFormat, CDateTimeParser::parse($this->_lastPartDate, $this->dateTimeIncomeFormat));
-			elseif (strlen($this->_lastPartDate) == 10) return Yii::app()->dateFormatter->format($this->dateOutcomeFormat, CDateTimeParser::parse($this->_lastPartDate, $this->dateTimeIncomeFormat));
-		}
-		return $this->_lastPartDate;
-	}
-	public function setLastPartDate($datetime)
-	{
-		if ($datetime!=''){
-			if (strlen($datetime) == 16) $this->_lastPartDate = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateTimeOutcomeFormat));
-			elseif (strlen($datetime) == 10) $this->_lastPartDate = Yii::app()->dateFormatter->format($this->dateTimeIncomeFormat, CDateTimeParser::parse($datetime, $this->dateOutcomeFormat));
-		}
 	}
 
     public function init()
@@ -273,7 +219,7 @@ class Zakaz extends CActiveRecord {
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules() {
-		if(Campaign::getId()){
+		if(Company::getId()){
 			if (!$this->_rules) {
 				$required = array();
 				$numerical = array();
@@ -313,7 +259,7 @@ class Zakaz extends CActiveRecord {
 				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
 				array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
 				array_push($rules,array('dbmax_exec_date, dbmanager_informed, dbauthor_informed,unixtime', 'safe'));
-				array_push($rules,array('id, dbmanager_informed, lastPartStatus, lastPartDate, specials, specials2', 'safe', 'on'=>'search'));
+				array_push($rules,array('id, dbdate, dbmanager_informed'.$fields, 'safe', 'on'=>'search'));
 				$this->_rules = $rules;
 			}
 		return $this->_rules;
@@ -339,13 +285,14 @@ class Zakaz extends CActiveRecord {
 	 * @return array relational rules.
 	 */
 	public function relations() {
-		if(Campaign::getId()){
+		if(Company::getId()){
 			$relations = array(
 				'user' => array(self::HAS_ONE, 'User', array('id'=>'user_id')),
 				'author' => [self::BELONGS_TO, 'User', 'executor'],
 				'projectStatus'=>array(self::BELONGS_TO, 'ProjectStatus', 'status'),
 				'images' => [self::HAS_MANY, 'PaymentImage', 'project_id'],
-				'parts' => array(self::HAS_MANY, 'ZakazParts', 'proj_id'),
+				//'catalog_spec1' => [self::BELONGS_TO, 'Catalog', 'specials'],
+				//'catalog_spec2' => [self::BELONGS_TO, 'Catalog', 'specials2'],
 			);
 			$projectFields = $this->getFields();
 			if ($projectFields) {
@@ -379,17 +326,15 @@ class Zakaz extends CActiveRecord {
 			'id' => ProjectModule::t('Order number'),
 			'user_id' => ProjectModule::t('User'),
 			'date' => ProjectModule::t('Order date'),
-			'max_exec_date' => ProjectModule::t('Max Date'),
+			'max_exec_date' => ProjectModule::t('Deadline'),
 			'status' => ProjectModule::t('Status'),
 			'executor' => ProjectModule::t('Executor'),
-			'manager_informed' => ProjectModule::t('Manager Informed'),
-			'author_informed' => ProjectModule::t('Author Informed'), //need4manager?
+			'manager_informed' => ProjectModule::t('Reminder'),
+			'author_informed' => ProjectModule::t('The deadline for the executor'),
 			'deadline' => ProjectModule::t('Deadline'),
-			'notes' => ProjectModule::t('Notes'),
+			'notes' => ProjectModule::t('Notes for manager'),
 			'author_notes' => ProjectModule::t('author_notes'),
 			'closestDate' => ProjectModule::t('closestDate'),
-			'lastPartStatus' => ProjectModule::t('lastPartStatus'),
-			'lastPartDate' => ProjectModule::t('lastPartDate'),
 		);
 		$projectFields = $this->getFields();
 		if ($projectFields) {
@@ -432,23 +377,21 @@ class Zakaz extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-		$criteria->compare('t.id', $this->id);
-		$criteria->compare('t.title', $this->title, true);
-		if (isset($this->specials) && $this->specials != '') {
-			$criteria->compare('t.specials', explode(',', $this->specials));
-		}
-		//$criteria->compare('t.specials', explode(',',$this->specials));
-		if (ProjectField::model()->inTableByVarname('specials2'))
-			$criteria->compare('t.specials2', explode(',',$this->specials2));
-		$criteria->compare('t.status', $this->status);
-		$criteria->compare('t.technicalspec', $this->technicalspec);
-		$criteria->with = array('parts' => array('select' => 'parts.date, parts.status_id', 'order' => 'parts.date'));
-		$criteria->together = true;
-		$criteria->compare('parts.status_id', $this->lastPartStatus, true);
-		$criteria->compare('DATE_FORMAT(max_exec_date, "%d.%m.%Y")', substr($this->dbmax_exec_date,0,10), true);
-		$criteria->compare('DATE_FORMAT(author_informed, "%d.%m.%Y")', substr($this->dbauthor_informed,0,10), true);
+		$criteria->compare('id', $this->id);
+		$criteria->compare('DATE_FORMAT(date, "%d.%m.%Y")', substr($this->dbdate,0,10), true);
 		$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
-		$criteria->compare('DATE_FORMAT(parts.date, "%d.%m.%Y")', substr($this->lastPartDate,0,10),true);
+		$fields=$this->getFields();
+		foreach ($fields as $field) {
+			$tmp = $field->varname;
+			if (isset($this->$tmp) && $field->field_type == 'LIST' && $this->$tmp != '') {
+				$criteria->compare($tmp, explode(',',$this->$tmp));
+			} elseif ($field->field_type == 'VARCHAR' || $field->field_type == 'TEXT') {
+				$criteria->compare($tmp, $this->$tmp, true);
+			} else {
+				$criteria->compare($tmp, $this->$tmp);
+			}
+		}
+		$criteria->compare('executor',$this->executor);
 		if (!($this->status) or $this->status == 0){            /// Так ли делать
 			$criteria->addNotInCondition('status', array(5));
 		} else if ($this->status == -1) {
@@ -456,7 +399,7 @@ class Zakaz extends CActiveRecord {
 		} else {
 			$criteria->compare('status',$this->status);
 		}
-
+		
 		$sort = new CSort();
 		$sort->defaultOrder = 't.id ASC';
 		$sort->attributes = array(
@@ -475,26 +418,11 @@ class Zakaz extends CActiveRecord {
 			'*'
 		);
 
-		$dataProvider = new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-			'sort'=>$sort,
-			'pagination'=>false,
-		));
-		$data = $dataProvider->data;
-		$keys = $dataProvider->keys;
-		for ($i=0; $i < count($data); $i++) {
-			if($data[$i]->parts[0]->date != ZakazParts::model()->getDateLastUncompleted($data[$i]->id)) {
-				for ($j = $i; $j < count($data)-1; $j++) {
-					$data[$j] = $data[$j + 1];
-					$keys[$j] = $keys[$j + 1];
-				}
-				unset($data[count($data) - 1]);
-				unset($keys[count($keys) - 1]);
-			}
-		}
-		$dataProvider->data = $data;
-		$dataProvider->keys = $keys;
-        return $dataProvider;
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'sort'=>$sort,
+            'pagination'=>false,
+        ));
 	}
 
     public static function getExecutor($orderId) {
@@ -544,7 +472,7 @@ class Zakaz extends CActiveRecord {
         }
     }
 	
-	public function generateMaterialsList($url, $for_guests = false) { // генерируем список загруженных материалов заказа
+	public function generateMaterialsList($url, $for_guests = false, $cant_remove = false) { // генерируем список загруженных материалов заказа
 		$path = Yii::getPathOfAlias('webroot') . $url;
 		$html_string = '';
 		//if (!file_exists($path)) mkdir($path,0755,true);
@@ -558,8 +486,8 @@ class Zakaz extends CActiveRecord {
 					} else {
 						$v0 = $v;
 					}
-					$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . $v . '" class="file" >' . $v0 . '</a>';
-					if (User::model()->isCustomer()) $html_string .= '<a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>';
+					$html_string .= '<li'.$tmp.'><a id="j-file-'.$k.'" target="_blank" href="' . $url . rawurlencode($v) . '" class="file" >' . $v0 . '</a>';
+					if (!$cant_remove && User::model()->isCustomer()) $html_string .= '<a href="#" data-link="j-file-'.$k.'" data-dir="' . $url . '"  data-name="' . $v . '" onclick="removeFile(this); return false"><i class="glyphicon glyphicon-remove" title="'. Yii::t('site', 'Delete') .'"></i></a>';
 					$html_string .= '</li><br />'."\n";
 				}
 		}
@@ -594,7 +522,7 @@ class Zakaz extends CActiveRecord {
     public function defaultScope()
     {
         return [
-            'condition' => 't.is_active = 1'
+            'condition' => 'is_active = 1'
         ];
     }
     
