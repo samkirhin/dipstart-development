@@ -15,6 +15,7 @@ class EventHelper {
 	const TYPE_ORDER_PAYED = 11;            // Пользователь %..% оплатил заказ
 	const TYPE_STAGE_DONE_BY_EXECUTOR = 12;
 	const TYPE_STAGE_DONE_BY_CUSTOMER = 13;
+    const TYPE_ACCEPTED_ORDER = 14;
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
 
@@ -132,5 +133,11 @@ class EventHelper {
     public static function stageDoneByCustomer($id, $title) {
 		$description = ProjectModule::t('The customer accepted the stage')." '$title'";
         self::sendEvent($id, self::TYPE_STAGE_DONE_BY_CUSTOMER, $description);
+    }
+
+    public static function correctorAccepted($id) {
+        $userName = User::model()->findByPk(Yii::app()->user->id)->username;
+        $description = Yii::t('site','User').' '.$userName." ".UserModule::t('accepted order');
+        return self::sendEvent($id, self::TYPE_ACCEPTED_ORDER, $description);
     }
 }

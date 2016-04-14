@@ -60,6 +60,7 @@
 	<?php
 		if (User::model()->isCorrector()) {
 			echo $form->hiddenField($model, 'technicalspec', array('value' => 0));
+			echo CHtml::hiddenField('accepted', 1);
 		}
 	?>
 	<div class="row buttons">

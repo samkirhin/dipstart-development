@@ -409,15 +409,15 @@ class ZakazController extends Controller {
 			}
 
 			if($model->save()) {
+				if (Yii::app()->request->getParam('accepted') && User::model()->isCorrector())
+					EventHelper::correctorAccepted($model->id);
+
 				$role = User::model()->getUserRole();
 				if ($role != 'Manager' && $role != 'Admin') {
 // где-то есть дублрующий вызов записи события, поэтому этот комментируем
 // oldbadger 09.10.2015					
 //					EventHelper::editOrder($model->id);
 					//$view = 'orderInModerate';
-					if (User::model()->isCorrector() && !User::model()->isExecutor && !$model->technicalspec)
-						EventHelper::techspecAccepted($model->id);
-
 					$this->redirect(array("../project/chat?orderId=$id"));
 				} else {
 //					$this->redirect(array('project/chat','orderId'=>$model->id));
