@@ -22,7 +22,7 @@ class ZakazParts extends CActiveRecord
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
 	
 	public static $table_prefix;
-	
+
 	public function tableName() {
 		if(isset(self::$table_prefix))
 			return self::$table_prefix.'ProjectsParts';
@@ -54,7 +54,7 @@ class ZakazParts extends CActiveRecord
 			array('payment', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, proj_id, title, comment, file, dbdate, author_id, payment, show', 'safe', 'on'=>'search'),
+			array('id, proj_id, title, comment, file, dbdate, author_id, payment, show, status_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,7 +68,7 @@ class ZakazParts extends CActiveRecord
 		return array(
 			'status' => array(self::HAS_ONE, 'PartStatus', array('id'=>'status_id')),
             'files' => array(self::HAS_MANY, 'ZakazPartsFiles', array('part_id'=>'id')),
-            'author' => array(self::HAS_ONE, 'User', array('id'=>'author_id'))
+            'author' => array(self::HAS_ONE, 'User', array('id'=>'author_id')),
 		);
 	}
 
@@ -118,7 +118,7 @@ class ZakazParts extends CActiveRecord
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('author_id',$this->author_id,true);
 		$criteria->compare('show',$this->show);
-                
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -133,5 +133,18 @@ class ZakazParts extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function getDateLastUncompleted($id){
+		$part = self::model()->findAllByAttributes(array('proj_id' => $id), array('order' => 'date asc', 'limit' => '1'));
+		return $part[0]->date;
+	}
+
+	public function getForFilter(){
+		return CHtml::listData(
+			self::model()->with('status')->findAll(array(
+				'select' => array('id', 'status_id'), 'condition' => 'status_id != :id', 'params' => array(':id' => PartStatus::COMPLETED)
+			)), 'status_id', 'status.status'
+		);
 	}
 }
