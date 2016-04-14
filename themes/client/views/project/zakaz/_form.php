@@ -57,10 +57,15 @@
 			}
 		}
 	} ?>
+	<?php
+		if (User::model()->isCorrector()) {
+			echo $form->hiddenField($model, 'technicalspec', array('value' => 0));
+		}
+	?>
 	<div class="row buttons">
 		<?php $attr = array('class' => 'btn btn-primary'); ?>
 		<?php if(Yii::app()->user->isGuest) $attr['disabled'] = 'disabled'; ?>
-		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : ProjectModule::t('Save'), $attr); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : (User::model()->isCorrector() ? ProjectModule::t('Technical spec accepted') : ProjectModule::t('Save')), $attr); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -28,6 +28,7 @@ return array(
     'List Zakaz' => 'Projects List',
     'Create' => 'Create',
     'Save' => 'Save',
+    'Technical spec accepted' => 'Checked technical manager',
     'Select a category' => 'Select a category',
     'Select a job' => 'Select a job',
     'Yes' => 'Yes',

@@ -386,7 +386,7 @@ class ZakazController extends Controller {
 			}
 			$this->redirect(array('update','id'=>$model->id));
 		}
-		
+
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -415,6 +415,9 @@ class ZakazController extends Controller {
 // oldbadger 09.10.2015					
 //					EventHelper::editOrder($model->id);
 					//$view = 'orderInModerate';
+					if (User::model()->isCorrector() && !User::model()->isExecutor && !$model->technicalspec)
+						EventHelper::techspecAccepted($model->id);
+
 					$this->redirect(array("../project/chat?orderId=$id"));
 				} else {
 //					$this->redirect(array('project/chat','orderId'=>$model->id));
@@ -801,7 +804,8 @@ class ZakazController extends Controller {
 						}
 					}
 			}
-			$authors = User::model()->with('profile')->findAll($criteria);
+			$criteria->addSearchCondition('AuthAssignment.itemname', 'Corrector');
+			$authors = User::model()->with('profile','AuthAssignment')->findAll($criteria);
 
 			if(!empty($authors)) {
 	            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);

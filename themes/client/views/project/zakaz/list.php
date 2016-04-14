@@ -42,14 +42,13 @@ if (isset($only_new) && User::model()->isAuthor()) {
 <div class="first-tab" id="first-tab">
 <?php
 }; //if (!isset($only_new)) {
-$params = $tech ? ['tech'=>$tech, 'orderId'=>''] : ['orderId'=>''];
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'zakaz-grid',
 	'dataProvider'=>$dataProvider,
 	'columns'=>$columns,
 	'rowHtmlOptionsExpression'=>'array("style" => "cursor:pointer")',
 	'selectionChanged'=>"js:function(sel_id){
-		document.location.href='".Yii::app()->createUrl('/project/chat', $params)."'+$('#'+sel_id).find('.selected').children().first().text();
+		document.location.href='".Yii::app()->createUrl('/project/chat',array('orderId'=>''))."'+$('#'+sel_id).find('.selected').children().first().text();
 	}",
 )); 
 if (!isset($only_new)) {

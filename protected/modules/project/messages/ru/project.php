@@ -28,6 +28,7 @@ return array(
     'List Zakaz' => 'Список заказов',
     'Create' => 'Создать',
     'Save' => 'Сохранить',
+    'Technical spec accepted' => 'Проверено техническим руководителем',
     'Select a category' => 'Выберите категорию',
     'Select a job' => 'Выберите вид работ',
     'Yes' => 'Да',
