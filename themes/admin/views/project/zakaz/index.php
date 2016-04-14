@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 	ProjectModule::t('Zakazs'),
 );
 
-$columns = array('id');
+/*$columns = array('id');
 $projectFields = $model->getFields();
 if ($projectFields) {
 	foreach($projectFields as $field) {
@@ -27,7 +27,7 @@ if ($projectFields) {
 			$columns[] = $field->varname;
 		}
 	}
-}
+}*/
 /*$columns[] = array(
 		'name'=>'date',
 		'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -36,7 +36,7 @@ if ($projectFields) {
 			'language'=>Yii::app()->language,
 			),true),
 		'value'=>'$data->dbdate'
-	);*/
+	);
 $columns[] = array(
 		'name'=>'manager_informed',
 		'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -49,7 +49,7 @@ $columns[] = array(
 $columns[] = array(
 		'class'=>'CButtonColumn',
 		'template'=>'{delete}{update}',
-	);
+	);*/
 ?>
 <div id="grid">
 <?php $this->widget('zii.widgets.grid.CGridView', array(

@@ -575,6 +575,78 @@ class ZakazController extends Controller {
         $model = new Zakaz('search');
         $model->unsetAttributes();
 		if($all == 1) $model->setAttribute('status', -1);
+		$columns = $columns = array('id');
+		$columns[] = array(
+			'name'=>'title',
+		);
+		$columns[] = array(
+			'name'=>'specials',
+			'filter'=>Catalog::getAll('specials'),
+			'value'=>'$data->catalog_specials->cat_name',
+		);
+		if (ProjectField::model()->inTableByVarname('specials2')) {
+			$columns[] = array(
+				'name'=>'specials2',
+				'filter'=>Catalog::getAll('specials2'),
+				'value'=>'$data->catalog_specials2->cat_name',
+			);
+		}
+		$columns[] = array(
+			'name'=>'max_exec_date',
+			'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+				'model'=>$model,
+				'attribute'=>'dbmax_exec_date',
+				'language'=>Yii::app()->language,
+			), true),
+			'value'=>'$data->dbmax_exec_date',
+		);
+		$columns[] = array(
+			'name'=>'author_informed',
+			'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+				'model'=>$model,
+				'attribute'=>'dbauthor_informed',
+				'language'=>Yii::app()->language,
+			), true),
+			'value'=>'$data->dbauthor_informed',
+		);
+		$columns[] = array(
+			'name'=>'manager_informed',
+			'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+				'model'=>$model,
+				'attribute'=>'dbmanager_informed',
+				'language'=>Yii::app()->language,
+			), true),
+			'value'=>'$data->dbmanager_informed',
+		);
+		$columns[] = array(
+			'name'=>'status',
+			'filter'=>ProjectStatus::getAll(),
+			'value'=>'$data->statusName',
+		);
+		$columns[] = array(
+			'name'=>'lastPartStatus',
+			'filter'=>ZakazParts::model()->getForFilter(),
+			'value'=>'$data->lastPartStatus',
+		);
+		$columns[] = array(
+			'name'=>'lastPartDate',
+			'filter' => $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+				'model'=>$model,
+				'attribute'=>'lastPartDate',
+				'language'=>Yii::app()->language,
+			), true),
+			'value'=>'$data->lastPartDate',
+		);
+		$columns[] = array(
+			'name'=>'technicalspec',
+			'value'=>'$data->technicalspec == 1 ? ProjectModule::t(\'Yes\') : ProjectModule::t(\'No\')',
+			//'filter'=>CHtml::listData(array('Yes','No'), array(1,0), )
+			'filter'=>array("0" => ProjectModule::t('No'), "1" => ProjectModule::t('Yes')),
+		);
+		$columns[] = array(
+			'class'=>'CButtonColumn',
+			'template'=>'{delete}{update}',
+		);
         if(Yii::app()->request->isAjaxRequest) {
 
             array_walk($_POST['Zakaz'],function(&$v,$k){
@@ -586,6 +658,7 @@ class ZakazController extends Controller {
 			Yii::app()->user->setState('ZakazFilterState', $params);
             $this->renderPartial('index', array(
                 'model' => $model,
+				'columns' => $columns,
             ), false, true);
         }
         else {
@@ -595,6 +668,7 @@ class ZakazController extends Controller {
 			}
             $this->render('index',array(
                 'model'=>$model,
+				'columns' => $columns,
             ));
 		}
 	}

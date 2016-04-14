@@ -129,6 +129,9 @@ return array(
 	'Payed:' => 'Уже оплачено:',
 	'closestDate' => 'Дата сдачи ближайшей части',
 	'New stage' => 'Новый этап',
+	'lastPartDate' => 'Дата сдачи ближайшей части',
+	'lastPartStatus' => 'Статус ближайшей части',
+	'New part' => 'Новая Часть', // to delete
 	'New revision' => 'Новая доработка',
 	'Stage ready' => 'Этап готов',
 	'Executor finished the stage' => 'Исполнитель закончил этап',
