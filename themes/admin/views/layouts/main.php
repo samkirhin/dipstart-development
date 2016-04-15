@@ -30,6 +30,7 @@ switch ($role){
         ));
         $items[] = array('label'=>Yii::t('site','Logs'), 'url'=>array('/logs'), 'items' => array(
             array('label'=>Yii::t('site','Managers logs'), 'url'=>array('/logs')),
+			array('label'=>Yii::t('site','Calls'), 'url'=>array('/call/index')),
         ));
         $items[] = array('label'=>Yii::t('site','References'), 'url'=>array('#'), 'items' => array(
 			array('label'=>Yii::t('site','company'), 'url'=>array('/company/edit')),

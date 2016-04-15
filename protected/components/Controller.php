@@ -25,9 +25,9 @@ class Controller extends RController
 
     public function init(){
 		// --- Организации
-		$c_id = Campaign::getId();
+		$c_id = Company::getId();
 		if ($c_id) {
-			if(Campaign::getCompany()->frozen) {
+			if(Company::getCompany()->frozen) {
 				echo 'Where is my money, dude ?!?!?!';
 				die;
 			}
@@ -47,7 +47,7 @@ class Controller extends RController
             //PaymentImage::$table_prefix = $c_id.'_';
 			Emails::$table_prefix = $c_id.'_';
 			
-			Yii::app()->language = Campaign::getLanguage();
+			Yii::app()->language = Company::getLanguage();
 		} else {
 			$tmp = explode('.',$_SERVER['SERVER_NAME']);
 			if (array_shift($tmp)=='www') {

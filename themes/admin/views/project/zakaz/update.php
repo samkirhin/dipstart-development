@@ -192,7 +192,13 @@ function hint($val, $class){
             <?php if ($author->full_name) { ?><div class="name"><p><?= $author->full_name ?></p></div><?php } ?>
             <?php if ($author->full_name && $author->phone_number) echo '<br>'; ?>
 			<div class="mail"><p><?= $author->email ?></p></div>
-            <?php if ($author->phone_number) { ?><div class="phone"><p><?= $author->phone_number ?></p></div><?php } ?>
+            <?php if ($author->phone_number) {
+				$this->widget('application.widgets.CallBtn', array(
+					'to'=>$author->phone_number,
+				));
+				?><div class="phone"><p><?= $author->phone_number ?></p></div><?php
+				
+			} ?>
         </div>
         <?php endif; ?>
         <div class="col-lg-6 col-xs-7 leftBorder<?php if (!$author) echo ' fullwidth'; ?>">

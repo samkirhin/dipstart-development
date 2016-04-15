@@ -14,16 +14,18 @@
 class CallBtn  extends CWidget
 {
     public $to;
-    public function run()
-    {
+    public function run() {
         echo CHtml::ajaxButton(
             'Call',
             ['/call/call'],
                 [
                     'type' => 'POST',
-                    'data'=> 'to='.$this->to,
+                    'data'=> 'to='.$this->fixNumber($this->to),
                     'success'=>'function(msg){alert(msg);}',
                 ]
         );
     }
+	private function fixNumber($number){
+		return str_replace( '+7' , '8' , $number);
+	}
 }
