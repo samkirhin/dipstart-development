@@ -71,12 +71,14 @@ $columns[] = array(
 	), true),
 	'value'=>'$data->lastPartDate',
 );
-$columns[] = array(
-	'name'=>'technicalspec',
-	'value'=>'$data->technicalspec == 1 ? ProjectModule::t(\'Yes\') : ProjectModule::t(\'No\')',
-	//'filter'=>CHtml::listData(array('Yes','No'), array(1,0), )
-	'filter'=>array("0" => ProjectModule::t('No'), "1" => ProjectModule::t('Yes')),
-);
+if (ProjectField::model()->inTableByVarname('technicalspec')) {
+	$columns[] = array(
+		'name'=>'technicalspec',
+		'value'=>'$data->technicalspec == 1 ? ProjectModule::t(\'Yes\') : ProjectModule::t(\'No\')',
+		//'filter'=>CHtml::listData(array('Yes','No'), array(1,0), )
+		'filter'=>array("0" => ProjectModule::t('No'), "1" => ProjectModule::t('Yes')),
+	);
+}
 $columns[] = array(
 	'class'=>'CButtonColumn',
 	'template'=>'{delete}{update}',
