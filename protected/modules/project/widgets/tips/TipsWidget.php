@@ -74,7 +74,7 @@ class TipsWidget extends CWidget{
                 break;
 
             case 'is_enter_cost':
-                if ($this->project->status == 3)
+                if ($this->project->status == 3 && !$this->project->executor)
                 {
                     foreach ($this->messages as $message)
                         if ($message->cost > 0)
