@@ -575,7 +575,7 @@ class ZakazController extends Controller {
         $model = new Zakaz('search');
         $model->unsetAttributes();
 		if($all == 1) $model->setAttribute('status', -1);
-		$columns = $columns = array('id');
+		$columns = array('id');
 		$columns[] = array(
 			'name'=>'title',
 		);

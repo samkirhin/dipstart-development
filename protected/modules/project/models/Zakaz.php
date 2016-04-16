@@ -423,15 +423,6 @@ class Zakaz extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 		$criteria->compare('t.id', $this->id);
-		$criteria->compare('t.title', $this->title, true);
-		if (isset($this->specials) && $this->specials != '') {
-			$criteria->compare('t.specials', explode(',', $this->specials));
-		}
-		//$criteria->compare('t.specials', explode(',',$this->specials));
-		if (ProjectField::model()->inTableByVarname('specials2'))
-			$criteria->compare('t.specials2', explode(',',$this->specials2));
-		$criteria->compare('t.status', $this->status);
-		$criteria->compare('t.technicalspec', $this->technicalspec);
 		$criteria->with = array('parts' => array('select' => 'parts.date, parts.status_id', 'order' => 'parts.date'));
 		$criteria->together = true;
 		$criteria->compare('parts.status_id', $this->lastPartStatus, true);
@@ -439,6 +430,17 @@ class Zakaz extends CActiveRecord {
 		$criteria->compare('DATE_FORMAT(author_informed, "%d.%m.%Y")', substr($this->dbauthor_informed,0,10), true);
 		$criteria->compare('DATE_FORMAT(manager_informed, "%d.%m.%Y")', substr($this->dbmanager_informed,0,10),true);
 		$criteria->compare('DATE_FORMAT(parts.date, "%d.%m.%Y")', substr($this->lastPartDate,0,10),true);
+		$fields=$this->getFields();
+		foreach ($fields as $field) {
+			$tmp = $field->varname;
+			if (isset($this->$tmp) && $field->field_type == 'LIST' && $this->$tmp != '') {
+				$criteria->compare('t.'.$tmp, explode(',',$this->$tmp));
+			} elseif ($field->field_type == 'VARCHAR' || $field->field_type == 'TEXT') {
+				$criteria->compare('t.'.$tmp, $this->$tmp, true);
+			} else {
+				$criteria->compare('t.'.$tmp, $this->$tmp);
+			}
+		}
 		if (!($this->status) or $this->status == 0){            /// Так ли делать
 			$criteria->addNotInCondition('status', array(5));
 		} else if ($this->status == -1) {
