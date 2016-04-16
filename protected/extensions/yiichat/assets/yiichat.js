@@ -228,9 +228,10 @@ var YiiChat = function (options) {
                     else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
                     //$('#send_buttons').children().each(function(){$(this).hide()});
                     answer=$('.msg_answer');
-                    if ($(this).data('sender')=='Author') $(".select_recipient [value='2']").attr("selected", "selected");
-                    if ($(this).data('sender')=='Customer') $(".select_recipient [value='1']").attr("selected", "selected");
-                    var button = $('.chtpl0-submit1');
+					if ($(this).data('sender')=='Author') {document.getElementById("select_recipient").options[1].selected=true;}
+					if ($(this).data('sender')=='Customer') {document.getElementById("select_recipient").options[2].selected=true;}
+                    $('.select_recipient').change();
+					var button = $('.chtpl0-submit1');
 					button.removeClass('disabled');
 					button.data('recipient',$(this).data('uid'));
 					button.data('uid',$(this).data('uid'));

@@ -186,7 +186,22 @@ a.link-to-material {
 	padding-top: 5px;
 	overflow: hidden;
 	width: 65%;
+	width: calc(100% - 15px);
 	word-wrap: break-word;
+	border-bottom: 1px dashed #337ab7;
+}
+.qq-upload-list i {
+	margin-top: 8px;
+}
+.qq-upload-list li a#parts_file, div.list-changes-filename > a, .chtpl0-nickname a, .order-contacts a {
+	word-wrap: normal;
+	border-bottom: 1px dashed #337ab7;
+}
+
+.order-contacts br + div, .order-contacts br + div + div {
+	position: relative;
+	top: -20px;
+	margin-bottom: -20px;
 }
 
 .pay-save-btn {-webkit-border-radius:0;border-radius:0;}

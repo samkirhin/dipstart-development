@@ -100,7 +100,7 @@
         <div id="chatWindow" class="chtpl0-chat"></div>
 		<div class="chtpl0-panel chtpl0-down chat-functions">
             <label>
-                <select class="select_recipient">
+                <select id="select_recipient" class="select_recipient">
                     <option value="" selected><?= ProjectModule::t('Not selected')?></option>
                     <option value="<?= Templates::TYPE_AUTHOR ?>"><?= ProjectModule::t('to executor')?></option>
                     <option value="<?= Templates::TYPE_CUSTOMER ?>"><?= ProjectModule::t('to customer')?></option>
