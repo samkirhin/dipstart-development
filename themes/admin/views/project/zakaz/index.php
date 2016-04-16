@@ -13,11 +13,13 @@ $columns = array('id');
 $columns[] = array(
 	'name'=>'title',
 );
-$columns[] = array(
-	'name'=>'specials',
-	'filter'=>Catalog::getAll('specials'),
-	'value'=>'$data->catalog_specials->cat_name',
-);
+if (ProjectField::model()->inTableByVarname('specials')) {
+	$columns[] = array(
+		'name'=>'specials',
+		'filter'=>Catalog::getAll('specials'),
+		'value'=>'$data->catalog_specials->cat_name',
+	);
+}
 if (ProjectField::model()->inTableByVarname('specials2')) {
 	$columns[] = array(
 		'name'=>'specials2',
