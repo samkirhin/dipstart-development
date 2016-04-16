@@ -134,4 +134,17 @@ class ZakazParts extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+	public function getDateLastUncompleted($id){
+		$part = self::model()->findAllByAttributes(array('proj_id' => $id), array('order' => 'date asc', 'limit' => '1'));
+		return $part[0]->date;
+	}
+
+	public function getForFilter(){
+		return CHtml::listData(
+			self::model()->with('status')->findAll(array(
+				'select' => array('id', 'status_id'), 'condition' => 'status_id != :id', 'params' => array(':id' => PartStatus::COMPLETED)
+			)), 'status_id', 'status.status'
+		);
+	}
 }
