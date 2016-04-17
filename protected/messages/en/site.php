@@ -87,6 +87,7 @@ return array(
     'Uploading your file(s), please wait...' => 'Uploading your file(s), please wait...',
     'Select File(s)' => 'Select File(s)',
     'Delete Selected File(s)' => 'Delete Selected File(s)',
+	'Tip' => 'Tip for manager',
     'Close Window' => 'Close Window',
     'cancel the upload' => 'cancel the upload',
     'Upload' => 'Upload',

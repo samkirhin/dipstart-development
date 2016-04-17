@@ -133,6 +133,9 @@ return array(
     'Save' => 'Save',
     'Confirm payment:' => 'Confirm the payment:',
 
+    //Блок советов
+    'Tips' => 'Tips',
+
     'List ZakazParts' => 'ProjectPart List',
     'Manage Zakaz Parts' => 'ProjectPart Manage',
     'Additionally send:' => 'Additionally send:',

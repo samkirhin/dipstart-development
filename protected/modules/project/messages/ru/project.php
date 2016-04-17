@@ -155,6 +155,9 @@ return array(
     'Save' => 'Сохранить',
     'Confirm payment from client:' => 'Подтвердить платеж от клиента:',
 
+    //Блок советов
+    'Tips' => 'Советы',
+
     'List ZakazParts' => 'Список этапов проекта',
     'Manage Zakaz Parts' => 'Работа с этапами проекта',
     'Additionally send:' => 'Дополнительно отправить:',
