@@ -28,6 +28,21 @@
 		//echo CHtml::submitButton($edit_button, array('name' => 'edit-message', 'class' => 'btn btn-primary chat-edit','step' => '0','id' => 'chat-edit'));
 		?>
 	</div>
+	<?php
+		if (count($buttonTemplates))
+		{
+	?>
+			<div class="message-buttons">
+			<?php
+				foreach ($buttonTemplates as $item) {
+					$attr = array('class' => 'btn btn-primary btn-chat','id'=>$item->name);
+					echo  CHtml::submitButton($item->title, $attr) ;
+				}
+			?>
+			</div>
+	<?php
+		}
+	?>
 	<?php echo CHtml::hiddenField('order',$order->id);
 	CHtml::endForm();
 //}

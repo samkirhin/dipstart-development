@@ -115,6 +115,8 @@ class Templates extends CActiveRecord
 			23 => Yii::t('site','Service mail: new revision'), //О новой доработке
 			24 => Yii::t('site','Service mail: your salary'), //Об оплате заказа
 			25 => Yii::t('site','Message for an author in response to project'), //Сообщение для автора при отклике на проект
+			26 => Yii::t('site','Button in chat for author'), // Шаблоны для кнопок в чате исполнителя
+			27 => Yii::t('site','Button in chat for guest'), // Шаблон для кнопок в заказе гостя
 		);
 	}
 	
