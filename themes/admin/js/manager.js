@@ -178,7 +178,7 @@ function cancelPayment (id) {
     }, 'json');
 }
 $( window ).load( function() {
-    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
+    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){ // Сохранение заметок
         var data = $(this).val();
         var elid = $(this).attr('id');
         var id = $('#order_number').html();
@@ -186,6 +186,16 @@ $( window ).load( function() {
             {'data': data,'id':id,'elid': elid},
         function (response) {
             if (response.data)obj.remove();
+        });
+    });
+	$('#Zakaz_dbmax_exec_date, #Zakaz_dbmanager_informed, #Zakaz_dbauthor_informed').on('change',function(event){ // Сохраниние сроков (три поля)
+        var data = $(this).val();
+        var elid = $(this).attr('id');
+        var id = $('#order_number').html();
+        $.post('/project/zakaz/update?id='+id,
+            {'data': data,'id':id,'elid': elid},
+        function (response) {
+			console.log(response);
         });
     });
     $('#select_template').on('click',function(event){

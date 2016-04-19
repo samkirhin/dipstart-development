@@ -8,17 +8,6 @@
 $user = User::model();
 $author = $model->author;
 $customer = $model->user;
-
-function hint($val, $class){
-	if ($val) { ?>
-	<div class="<?=$class?>">
-		?
-		<div class="hint-block_content">
-			<?=$val?>
-		</div>
-	</div>
-	<?php }
-}
 ?>
 
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
@@ -29,20 +18,20 @@ function hint($val, $class){
 	<div class="row before-panel-group left">
 		<button id="close_order" class="btn btn-icon-40 btn-spam bg-blue" onclick="spam(<?php echo $model->id; ?>);" href="">
 			<img src="<?=Yii::app()->theme->baseUrl?>\images\spam.png" title="<?=ProjectModule::t('Search executor')?>">
-			<?=hint($hints['Zakaz_search'], 'hint-block __search')?></button>
+			<?=Tools::hint($hints['Zakaz_search'], 'hint-block __search')?></button>
 	</div>
     <div class="row before-panel-group right">
 		<?php if ($model->status < 5) { ?>
 			<button id="close_order" class="btn btn-icon-40 btn-change-status bg-green z-index-2" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'close'=>'yes'));?>'; send_message(17,'Заказчику о завершении заказа');">
 				<img src="<?=Yii::app()->theme->baseUrl?>\images\handshake.png" title="<?=ProjectModule::t('Complete the order')?>">
-				<?php echo hint($hints['Zakaz_close'], (strlen($hints['Zakaz_close'])>50)?'hint-block __order 2x':'hint-block __order'); ?></button>
+				<?php echo Tools::hint($hints['Zakaz_close'], (strlen($hints['Zakaz_close'])>50)?'hint-block __order 2x':'hint-block __order'); ?></button>
 			<button id="refound_order" class="btn btn-icon-40 btn-change-status bg-red" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'refound'=>'yes'));?>';">
 				<img src="<?=Yii::app()->theme->baseUrl?>\images\refound.png" title="<?=ProjectModule::t('Refound and close order')?>">
-				<?=hint($hints['Zakaz_refound'], 'hint-block __order')?></button>
+				<?=Tools::hint($hints['Zakaz_refound'], 'hint-block __order')?></button>
 		<?php } else { ?>
 			<button id="open_order" class="btn btn-icon-40 btn-change-status bg-red" onclick="js: window.location='<?php echo $this->createUrl('',array('id'=>$model->id,'open'=>'yes'));?>';">
 			<img src="<?=Yii::app()->theme->baseUrl?>\images\handshake.png" title="<?=ProjectModule::t('Open order')?>">
-			<?=hint($hints['Zakaz_open'], 'hint-block __order')?></button>
+			<?=Tools::hint($hints['Zakaz_open'], 'hint-block __order')?></button>
 		<?php } ?>
 
         <?php
@@ -218,14 +207,14 @@ function hint($val, $class){
                                                   'cache' => false,
                                                   ),)); ?>
 
-					<?=hint($hints['Zakaz_status'], 'hint-block __status')?>
+					<?=Tools::hint($hints['Zakaz_status'], 'hint-block __status')?>
 					<!--<button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>-->
                </div>
 			   <hr>
 			   <div class="col-xs-12 linkToAuthors">
 					<?=ProjectModule::t('Link for freelancer')?>:<br>
 					<?='http://'.$_SERVER["HTTP_HOST"].Yii::app()->createUrl('/project/chat/view',array('orderId'=>$model->id));?>
-					<?=hint($hints['Zakaz_link'], 'hint-block __link')?>
+					<?=Tools::hint($hints['Zakaz_link'], 'hint-block __link')?>
 			   </div>
             </div>
 			<hr>
@@ -252,7 +241,7 @@ function hint($val, $class){
                     echo $form->errorSummary($model); ?>
                     <div class="col-xs-12 notesBlockArea">
                         <?php echo $form->labelEx($model, 'notes'); ?>
-						<?=hint($hints['Zakaz_notes'], 'hint-block __notes')?>
+						<?=Tools::hint($hints['Zakaz_notes'], 'hint-block __notes')?>
                         <?php echo $form->textArea($model, 'notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
 
@@ -275,7 +264,7 @@ function hint($val, $class){
             <div class="row zero-edge">
                 <div class="col-xs-12 btn btn-primary addPart" onclick="add_part(<?php echo $model->id;?>,'<?=ProjectModule::t('New stage')?>');">
                 	<?=ProjectModule::t('Add a stage')?>
-					<?=hint($hints['Zakaz_add_part'], 'hint-block __add_part')?>
+					<?=Tools::hint($hints['Zakaz_add_part'], 'hint-block __add_part')?>
                 </div>
             </div>
             <!-- Конец блока добавления этапов менеджера -->

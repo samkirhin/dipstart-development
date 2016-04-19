@@ -23,10 +23,10 @@ h1, .h1 {
 .container {margin-top: 50px;}
 
 .chatBlock {
-border: none;
-margin: 15px 0;
-width: 100%;
-padding: 0;
+	border: none;
+	margin: 15px 0 0 0;
+	width: 100%;
+	padding: 0;
 }
 
 .you textarea {
@@ -119,16 +119,15 @@ margin-top: 15px;
 
 textarea, select {border: 1px solid #ddd;}
 
-.chtpl0-panel
-{
-height: 50px;
-width: 100%;
-position:relative;
-bottom:15px;
+.chtpl0-panel {
+	height: 50px;
+	width: 100%;
+	position:relative;
+	bottom:15px;
 }
 
 .chtpl0-form {
-margin-top: 20px;
+	margin-top: -15px;
 }
 .chtpl0-form p {
 position:relative;
