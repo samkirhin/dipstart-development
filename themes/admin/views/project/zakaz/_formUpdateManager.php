@@ -185,6 +185,8 @@
     ?>
 </div>
 
-<!--</div>-->
-
-
+<?php
+$this->widget('application.modules.project.widgets.tips.TipsWidget', array(
+    'project' => $model
+));
+?>

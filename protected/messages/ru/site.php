@@ -88,6 +88,7 @@ return array(
     'Uploading your file(s), please wait...' => 'Подождите, идет загрузка...',
     'Select File(s)' => 'Выбрать файлы',
     'Delete Selected File(s)' => 'Удалить выбранные',
+	'Tip' => 'Совет менеджеру',
     'Close Window' => 'Закрыть окно',
     'cancel the upload' => 'отменить загрузку',
     'Upload' => 'Загрузить',
