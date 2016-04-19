@@ -35,8 +35,8 @@
 			<div class="message-buttons">
 			<?php
 				foreach ($buttonTemplates as $item) {
-					$attr = array('class' => 'btn btn-primary btn-chat','id'=>$item->name);
-					echo  CHtml::submitButton($item->title, $attr) ;
+					$attr = array('class' => 'btn btn-primary','id'=>$item->name);
+					echo  CHtml::button($item->title, $attr);
 				}
 			?>
 			</div>
