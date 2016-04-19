@@ -62,5 +62,15 @@ class Tools {
 		chmod($folder.$result['fileName'],0664);
 		return $result;
 	}
+	static public function hint($val, $class){
+		if ($val) { ?>
+		<div class="<?=$class?>">
+			?
+			<div class="hint-block_content">
+				<?=$val?>
+			</div>
+		</div>
+		<?php }
+	}
 }
 ?>
