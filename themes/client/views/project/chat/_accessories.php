@@ -12,6 +12,26 @@
 		<?php echo CHtml::textArea('edit-message','', array('rows' => 6, 'class' => 'col-xs-12', 'placeholder' => ProjectModule::t('Enter your message...'), 'id' => 'edit-message')); ?>
 	</div>
 
+	<?php
+		if (count($buttonTemplates))
+		{
+	?>
+			<div class="message-buttons">
+			<?php
+				foreach ($buttonTemplates as $item) {
+			?>
+					<div class="message-buttons-items">
+						<button type="button" class="btn btn-primary btn-message" id="<?=$item->name?>"><?=$item->title?></button>
+						<div class="message-buttons-text-hidden"><?=$item->text?></div>
+					</div>
+			<?php
+				}
+			?>
+			</div>
+	<?php
+		}
+	?>
+
 	<div class="chat-buttons">
 		<?php
 		if(User::model()->isAuthor()) {
@@ -28,21 +48,7 @@
 		//echo CHtml::submitButton($edit_button, array('name' => 'edit-message', 'class' => 'btn btn-primary chat-edit','step' => '0','id' => 'chat-edit'));
 		?>
 	</div>
-	<?php
-		if (count($buttonTemplates))
-		{
-	?>
-			<div class="message-buttons">
-			<?php
-				foreach ($buttonTemplates as $item) {
-					$attr = array('class' => 'btn btn-primary','id'=>$item->name);
-					echo  CHtml::button($item->title, $attr);
-				}
-			?>
-			</div>
-	<?php
-		}
-	?>
+
 	<?php echo CHtml::hiddenField('order',$order->id);
 	CHtml::endForm();
 //}
