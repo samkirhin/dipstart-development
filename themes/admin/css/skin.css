@@ -73,9 +73,8 @@ margin: 10px;
 }
 
 .list-changes-comment {
-margin: 10px 0;
-font-style: italic;
-font-size: 13px;
+	font-style: italic;
+	font-size: 12px;
 }
 
 .terms-columns input {
@@ -83,10 +82,10 @@ width: 120px;
 }
 
 .list-changes-block {
-border: 1px solid #eee;
-margin-bottom: 15px;
-padding: 10px;
-background-color: #FAFAFA;
+	border: 1px solid #eee;
+	margin-bottom: 5px;
+	padding: 5px;
+	overflow: hidden;
 }
 
 .panel-title a {
@@ -104,10 +103,7 @@ width:10%;
 height:10%;
 margin-top:5px;
 }
-.panel-group .panel {
-margin-bottom: 30px;
-margin-top: 20px;
-}
+
 .form label {
 display: inline-block;
 text-transform: uppercase;
@@ -467,4 +463,50 @@ p.success {
 div.link-for-executors {
 	width: 100%;
 	text-align: center;
+}
+.instant-send-buttons {
+    height: 22px;
+	margin: 0;
+    padding: 0;
+	border: 0;
+}
+.bg-gray {
+	background-color: #ccc;
+}
+.instant-send-buttons img {
+	margin: 0;
+	height: 22px;
+}
+.last-delivery {
+	font-size: 8px;
+}
+.block-title {
+	font-size: 13px;
+	color: gray;
+}
+.block-title label {
+	text-transform: capitalize;
+}
+.panel-default {
+	margin-top: 10px;
+}
+.new-revision-button {
+	font-size: 30px;
+	color: #75B865;
+	padding-top: 15px;
+}
+button.change-approve {
+	position: absolute;
+	margin-left: -2px;
+}
+.list-changes-filename {
+	display: inline-block;
+	margin-left: 30px;
+}
+.float-right {
+	float: right;
+}
+.stage .title-name input {
+	min-width: 100px;
+	width: calc(100% - 110px);
 }

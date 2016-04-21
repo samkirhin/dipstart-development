@@ -91,6 +91,7 @@ return array(
     'Notes (on all orders)' => 'Примечания (по всему заказу)',
     'Add a stage' => 'Добавить этап',
     'Show messages' => 'Показать сообщения',
+	'Send' => 'Отправить',
     'Send to e-mail' => 'Отправить на почту',
     'Send SMS' => 'Отправить SMS',
     'Use template' => 'Вставить шаблон',
@@ -134,6 +135,7 @@ return array(
 	'lastPartStatus' => 'Статус ближайшей части',
 	'New part' => 'Новая Часть', // to delete
 	'New revision' => 'Новая доработка',
+	'Delete revision' => 'Удалить доработку',
 	'Stage ready' => 'Этап готов',
 	'Executor finished the stage' => 'Исполнитель закончил этап',
 	'The customer accepted the stage' => 'Заказчик принял этап',
@@ -155,7 +157,8 @@ return array(
     'Cancel' => 'Отмена',
     'Save' => 'Сохранить',
     'Confirm payment from client:' => 'Подтвердить платеж от клиента:',
-
+	'Last delivery' => 'Последняя рассылка',
+	'Remove stage' => 'Удалить этап',
     //Блок советов
     'Tips' => 'Советы',
 

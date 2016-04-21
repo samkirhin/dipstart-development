@@ -6,7 +6,7 @@
 
 body {
     background: #ecf0f5;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-weight: 400;
 }
 h1 {
@@ -140,10 +140,7 @@ div.rightBorder, div.leftBorder {
 }
 .partStatus {
     width: 100%;
-    height: 16px;
-    margin: 0 10px 0 0;
-/*    background: url(../images/check.png) no-repeat center center;*/
-    float:left;
+	margin-bottom: 5px;
 }
 .partStatus-header {
 	position: relative;
@@ -158,12 +155,6 @@ div.rightBorder, div.leftBorder {
 	float:	 left;
 	width: 64%;
 }
-.partStatus-bottom {
-    width: 100%;
-    height: 16px;
-    float:  left;
-};
-
 
 .partTitle {
     float: left;
@@ -228,11 +219,8 @@ div.rightBorder, div.leftBorder {
 .hint-block.__chat {
     display: block;
     position: absolute;
-    left: 5px;
-    top: 5px;
-}
-.hint-block.__part_delete {
-	color:#ffffff;
+    right: -11px;
+    top: -11px;
 }
 .hint-block_content{
 	position:absolute;
@@ -740,10 +728,6 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
 .table > thead > tr > th {
     border-bottom: none;
 }
-.title-name {
-    position: relative;
-    float: left;
-}
 .title-time {
     position: relative;
     float: right;
@@ -928,17 +912,12 @@ div.change-row div.panel-heading {
 }
 
 div.partStatus-status > select {
-    float: right;
+
 }
 
 .rating {
     font-weight: bold;
     margin-top: 2px;
-}
-
-div.list-changes-filename > a {
-    display: block;
-    overflow: hidden;
 }
 .form-item {
 	width: 50%;
@@ -961,4 +940,10 @@ div.list-changes-filename > a {
 h5.stages {
 	position: relative;
 	top: 10px;
+}
+.partStatus input {
+	display: inline-block;
+}
+.stage {
+	padding: 5px;
 }

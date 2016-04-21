@@ -40,26 +40,7 @@ class ZakazPartWidget extends CWidget{
 			$this->record_id = $item->id;
 			$this->status_id = $item->status_id;
 			
-			$this->select = "
-				<script type=\"text/javascript\">
-					function status_changed_$this->record_id( item_id ){
-						var status_id = document.getElementById('select-status-$this->record_id').value;
-						var orderId = $('#order_number').text();
-						$.ajax({
-							type: \"POST\",
-							url:'http://'+document.domain+'/project/zakazParts/status'
-							, data : 'cmd=status&status_id='+status_id+'&id='+item_id+'&orderId='+orderId
-							, success: function(html) {
-								/*html = BackReplacePlusesFromStr(html);*/
-								if (html != 'null') {
-									/*alert(html);*/
-								}
-							}
-						});
-					}
-				</script>";
-
-			$this->select.= '<select name="select-status-'.$this->record_id.'" id="select-status-'.$this->record_id.'" onchange="status_changed_'.$this->record_id.'('.$this->record_id.'); return false;">';
+			$this->select = '<select name="select-status-'.$this->record_id.'" id="select-status-'.$this->record_id.'" onchange="stage_change_status('.$this->record_id.'); return false;">';
 			foreach ($records as $rec) {
 				$this->select.= "<option value='$rec->id' ";
 				if ($rec->id == $item->status_id) $this->select.= 'selected="selected"';

@@ -79,7 +79,7 @@ $customer = $model->user;
 
 									<div class="form-item">
 									<?php
-									// --- campaign
+									// --- company
 									if(isset(Zakaz::$files_folder)){
 										$url = Zakaz::$files_folder.$model->id.'/';
 									} else {
@@ -158,9 +158,9 @@ $customer = $model->user;
 											?>
 										</table>
 									</div>
-                                    <div class="form-save">
+                                    <!--<div class="form-save">
 										<?php echo CHtml::submitButton(ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?>
-                                    </div>
+                                    </div>-->
 
                                     <?php $this->endWidget(); ?>
                                 </div>
@@ -200,7 +200,7 @@ $customer = $model->user;
             <div class="row zero-edge">
                <div class="col-xs-12 statusBlock">
                    <!--<span class="label label-warning"><b><?php //echo $message; ?></b></span>-->
-				   <?php echo $form->labelEx($model, 'status'); ?>:&nbsp;
+				   <span class="block-title"><?php echo $form->labelEx($model, 'status'); ?>:&nbsp;</span>
 				   <?=CHtml::dropDownList('Zakaz_status', $model->status, CHtml::listData(ProjectStatus::model()->findAll(), 'id', 'status'),
                             array('ajax' => array('url' => $this->createUrl('/project/zakaz/update'),
                                                   'data' => 'js:"id='.$model->id.'&sid="+this.value',
@@ -209,10 +209,11 @@ $customer = $model->user;
 
 					<?=Tools::hint($hints['Zakaz_status'], 'hint-block __status')?>
 					<!--<button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>-->
+					<br><span class="last-delivery"><?=ProjectModule::t('Last delivery').': '.$model->last_spam ?></span>
                </div>
 			   <hr>
 			   <div class="col-xs-12 linkToAuthors">
-					<?=ProjectModule::t('Link for freelancer')?>:<br>
+					<span class="block-title"><?=ProjectModule::t('Link for freelancer')?>:</span><br>
 					<?='http://'.$_SERVER["HTTP_HOST"].Yii::app()->createUrl('/project/chat/view',array('orderId'=>$model->id));?>
 					<?=Tools::hint($hints['Zakaz_link'], 'hint-block __link')?>
 			   </div>
@@ -240,7 +241,7 @@ $customer = $model->user;
                     ));
                     echo $form->errorSummary($model); ?>
                     <div class="col-xs-12 notesBlockArea">
-                        <?php echo $form->labelEx($model, 'notes'); ?>
+                        <span class="block-title"><?php echo $form->labelEx($model, 'notes'); ?></span>
 						<?=Tools::hint($hints['Zakaz_notes'], 'hint-block __notes')?>
                         <?php echo $form->textArea($model, 'notes', array('rows' => 3, 'class' => 'notesBlockTextarea')); ?>
                     </div>
@@ -254,7 +255,7 @@ $customer = $model->user;
 
             <?php Yii::app()->getClientscript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/manager.js');?>
 			<!-- Начало блока добавления этапов менеджера -->
-			<h5 class="stages"><?=ProjectModule::t('Work stages')?>:</h5>
+			<h5 class="stages"><span class="block-title"><?=ProjectModule::t('Work stages')?>:</span></h5>
 			<?php
             $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
                 'projectId'=>$model->id,

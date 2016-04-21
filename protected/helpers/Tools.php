@@ -65,7 +65,7 @@ class Tools {
 	static public function hint($val, $class){
 		if ($val) { ?>
 		<div class="<?=$class?>">
-			?
+			<sup>?</sup>
 			<div class="hint-block_content">
 				<?=$val?>
 			</div>

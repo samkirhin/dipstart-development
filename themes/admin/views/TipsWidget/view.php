@@ -1,7 +1,7 @@
 <div class="col-xs-12 tips-wrapper <?=(count($tips) ? '' : '__empty')?>">
 <?php if (count($tips)) { ?>
 	<div class="col-xs-12 tips-content">
-		<h4><?=ProjectModule::t('Tips')?></h4>
+		<span class="block-title"><?=ProjectModule::t('Tips')?></span>
 		<div class="tips-list">
 		<?php foreach ($tips as $tip) { ?>
 			<div class="tips-item">
