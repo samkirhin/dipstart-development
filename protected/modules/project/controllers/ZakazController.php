@@ -280,7 +280,7 @@ class ZakazController extends Controller {
 			Yii::app()->end();
 		}
         if (Yii::app()->request->isAjaxRequest) {
-            echo 'test';
+            //echo 'test';
             $data = Yii::app()->request->getRestParams();
 			$field = str_replace('Zakaz_','',$data['elid']);
             if (is_array($data)) {
@@ -718,6 +718,7 @@ class ZakazController extends Controller {
             throw new CHttpException(500);
         }
 		$order->status = 3;
+		$order->last_spam = date("Y-m-d H:i:s");
 		$order->save();
 		
 		$criteria = new CDbCriteria();
