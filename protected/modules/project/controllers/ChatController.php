@@ -81,6 +81,7 @@ class ChatController extends Controller {
 		}
 		
 		Yii::app()->session['project_id'] = $orderId;
+		$order = Zakaz::model()->resetScope()->findByPk($orderId);
 		
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
@@ -120,17 +121,17 @@ class ChatController extends Controller {
                 EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(
-                'orderId' => $orderId,
+            	'order'		=> $order,
+                'orderId' 	=> $orderId,
 				'isGuest'	=> $isGuest,
             ));
             Yii::app()->end();
         }
-		
-		if(User::model()->isAuthor() && !User::model()->isExecutor($orderId)){
+
+		if(User::model()->isAuthor() && (!User::model()->isCorrector() || !$order->technicalspec) && !User::model()->isExecutor($orderId)){
 			$this->redirect(Yii::app()->createUrl('/project/chat/view',array('orderId'=>$orderId)));
 		}
 		
-		$order = Zakaz::model()->resetScope()->findByPk($orderId);
 		$parts = ZakazParts::model()->findAll(array(
 			'condition' => "`proj_id`='$orderId'",
 		));

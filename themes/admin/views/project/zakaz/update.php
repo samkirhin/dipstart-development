@@ -123,6 +123,7 @@ $this->breadcrumbs = array(
                                                 }
                                             }
                                         ?>
+                                        
                                         <h3> <?=ProjectModule::t('Deadlines')?> </h3>
 
                                         <table class="table table-striped" style="font-size: 12px;">
@@ -210,6 +211,10 @@ $this->breadcrumbs = array(
                    <span class="label label-warning"><b><?= $message; ?></b></span>
 				   <button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>
 					<!-- Тут была кнопка открыть или закрыть заказ -->
+               </div>
+               <div class="col-xs-12 techspecBlock">
+                    <input type="checkbox" name="technicalspec" id="technicalspec" data-id="<?=$model->id?>" <?=($model->technicalspec ? 'checked="checked"' : '')?> />
+                    <label for="technicalspec"><?=ProjectModule::t('technicalspec')?></label>
                </div>
 			   <div class="col-xs-12 linkToAuthors">
 					<?='http://'.$_SERVER["HTTP_HOST"].Yii::app()->createUrl('/project/chat/view',array('orderId'=>$model->id));?>

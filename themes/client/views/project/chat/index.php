@@ -12,7 +12,7 @@ $html_string = $order->generateMaterialsList($url);
 ?>
 <div class="container container-chat">
 	<?php
-		if (User::model()->isCustomer() && (!$order->is_active || !$moderated)) {
+		if ((User::model()->isCustomer() || User::model()->isCorrector()) && (!$order->is_active || !$moderated)) {
 			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
 		}
 		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
@@ -30,15 +30,15 @@ $html_string = $order->generateMaterialsList($url);
 					</h4>
 				</div>
 
-				<div id="infoZakaz" class="panel-collapse collapse">
+				<div id="infoZakaz" class="panel-collapse <?=(User::model()->isCorrector() ? '' : 'collapse')?>">
 					<div class="panel-body">
 
 						<div class="col-xs-12 aboutZakaz">
 						<!--<div class="row">-->
 							<?php
-							if (User::model()->isAuthor()) {
+							if (User::model()->isAuthor() && !User::model()->isCorrector()) {
 								$this->renderPartial('/zakaz/_view', array('model' => $order));
-							} elseif(User::model()->isCustomer()) {
+							} elseif(User::model()->isCustomer() || User::model()->isCorrector()) {
 								if ($order->is_active) {
 									$this->renderPartial('/zakaz/_form', array('model' => $order));
 								} else {
@@ -124,7 +124,7 @@ $html_string = $order->generateMaterialsList($url);
 	</div>
 </div>
 
-<?php if (User::model()->isAuthor() && $order->executor == 0) : ?>
+<?php if (User::model()->isAuthor() && !User::model()->isCorrector() && $order->executor == 0) : ?>
     
 <script>
     var e = $(".info-block");

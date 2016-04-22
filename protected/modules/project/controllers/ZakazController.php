@@ -15,8 +15,10 @@ class ZakazController extends Controller {
 	actionOwnList           - заказы исполнителя
 	actionCustomerOrderList - заказы заказчика
 	actionList              - новые заказы у автора
+	actionListTech          - заказы для технических руководителей
 	loadModel               - возвращает модель по ID
 	actionSpam              - рассылка по авторам  
+	actionSetTechSpec       - сохранение и рассылка по техническим руководителям
 	actionApiApproveFile    - модерация файла
 	actionApiRemoveFile     - удаление файла
 	actionUpload            - загрузка файлов в заказе 
@@ -384,7 +386,7 @@ class ZakazController extends Controller {
 			}
 			$this->redirect(array('update','id'=>$model->id));
 		}
-		
+
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -407,6 +409,9 @@ class ZakazController extends Controller {
 			}
 
 			if($model->save()) {
+				if (Yii::app()->request->getParam('accepted') && User::model()->isCorrector())
+					EventHelper::correctorAccepted($model->id);
+
 				$role = User::model()->getUserRole();
 				if ($role != 'Manager' && $role != 'Admin') {
 // где-то есть дублрующий вызов записи события, поэтому этот комментируем
@@ -675,6 +680,26 @@ class ZakazController extends Controller {
 		));
 	}
 
+	public function actionListTech() {
+		$new = true;
+		$user = User::model()->with('profile')->findByPk(Yii::app()->user->id);
+        $criteria = new CDbCriteria();
+		$criteria->compare('technicalspec', 1);
+        $dataProvider = new CActiveDataProvider(Zakaz::model()->resetScope(), [
+            'criteria' => $criteria,
+			'pagination' => false
+        ]);
+		$this->render('list',array(
+			'model'=>$dataProvider,
+            'model_done' => null,
+            'dataProvider' => $dataProvider,
+            'dataProvider_done' => null,
+			'profile' => $user->profile,
+			'only_new' => $new,
+			'tech' => 1,
+		));
+	}
+
 	/*public function actionDownload()
 	{
 	   EDownloadHelper::download($_GET['path']);
@@ -753,7 +778,74 @@ class ZakazController extends Controller {
         
         Yii::app()->end();
     }
-	
+
+    public function actionSetTechSpec() {
+    	$orderId = $_POST['orderId'];
+    	$val = $_POST['val'];
+
+    	$order = Zakaz::model()->findByPk($orderId);
+        if (!$order) {
+            throw new CHttpException(500);
+        }
+		$order->technicalspec = $val;
+		$order->save();
+
+		if ($val)
+		{
+			$criteria = new CDbCriteria();
+	        if(Campaign::getId()) {
+				$projectFields = $order->getFields();
+				if ($projectFields) 
+					foreach($projectFields as $field) {
+						if ($field->required==ProjectField::REQUIRED_YES_REG_SPAM) {
+							$varname = $field->varname;
+							$value = $order->$varname;
+							$criteria->addSearchCondition('profile.'.$varname,$value);
+						}
+					}
+			}
+			$criteria->addSearchCondition('AuthAssignment.itemname', 'Corrector');
+			$authors = User::model()->with('profile','AuthAssignment')->findAll($criteria);
+
+			if(!empty($authors)) {
+	            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
+	            $mail = new YiiMailer();
+				$mail->clearLayout();
+	            $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
+	            $mail->setSubject('Приглашение в проект');
+				$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+	            $mail->setBody('<a href="'.$link.'">'.$link.'</a>');
+	            
+				// новая рассылка
+
+				$typeId = Emails::TYPE_26;
+				$rec   = Templates::model()->findAll("`type_id`='$typeId'");
+			
+	            foreach ($authors as $user) {
+					$specials = explode(',',$user->profile->specials);
+					if (!in_array($order->specials, $specials)) continue;
+					
+					$email = new Emails;
+					$email->to_id = $user->id;
+					$email->name = $user->full_name;
+					if (strlen($email->name) < 2) $email->name = $user->username;
+					$email->login= $user->username;
+					$email->num_order = $orderId;
+					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
+					$specials = Catalog::model()->findByPk($order->specials);
+					$email->specialization	= $specials->cat_name;
+					$email->name_order		= $order->title;		
+					$email->subject_order	= $order->title;		
+					$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $typeId);
+				}
+				echo 'send_email';
+	        }
+	        else
+	        	echo 'no_users';
+	    }
+        Yii::app()->end();
+    }
+
     public function actionApiApproveFile() {
         $this->_prepairJson();
         $data = $this->_request->getParam('data');

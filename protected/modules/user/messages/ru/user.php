@@ -173,6 +173,7 @@ return array(
 	'deleted the file out of order' =>  'удалил файл из заказа',
 	'left a message' =>  'оставил сообщение',
 	'The user changed data in the profile' =>  'Пользователь изменил данные в профиле',
+	'accepted order' =>  'проверил заказ',
 	
 	// customerOrderList.php
 	'CurrentProjects' => 'Текущие проекты',

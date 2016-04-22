@@ -5,6 +5,7 @@ class User extends CActiveRecord
 	const STATUS_NOACTIVE=0;
 	const STATUS_ACTIVE=1;
 	const STATUS_BANNED=-1;
+	public $PRIORITY_ROLES = ['Admin', 'Manager', 'Customer', 'Author'];
 
 	/**
 	 * The followings are the available columns in table 'users':
@@ -206,7 +207,20 @@ class User extends CActiveRecord
 			$roles = $authorizer->getAuthItems(2, Yii::app()->user->id);
 		}
 		$role =  array_keys($roles);
-		return  $role[0];
+		foreach ($role as $item)
+			if (in_array($item, $this->PRIORITY_ROLES)) $priority = $item;
+		return  $priority ? $priority : $role[0];
+	}
+	public function getUserRoleArr($userId = false) {
+		$authorizer = Rights::module()->getAuthorizer();
+		if($userId) {
+			$roles = $authorizer->getAuthItems(2, $userId);
+		}
+		else {
+			$roles = $authorizer->getAuthItems(2, Yii::app()->user->id);
+		}
+		$role = array_keys($roles);
+		return $role;
 	}
 	public function isAdmin(){
 		 if (Yii::app()->user->id && $this->getUserRole()=='Admin')
@@ -226,6 +240,11 @@ class User extends CActiveRecord
 
 	public function isAuthor(){
 		if (Yii::app()->user->id && $this->getUserRole()=='Author') return true;
+		else    return FALSE;
+	}
+	public function isCorrector(){
+		$roles = $this->getUserRoleArr();
+		if (Yii::app()->user->id && in_array('Author', $roles) && in_array('Corrector', $roles)) return true;
 		else    return FALSE;
 	}
 	public function isExecutor($project_id){

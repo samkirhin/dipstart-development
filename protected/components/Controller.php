@@ -61,13 +61,23 @@ class Controller extends RController
                     Yii::app()->theme='admin';
                     break;
                 case ('Author'):
-                    $this->menu = array(
-						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
-						array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
-						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-                        //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
-                    );
+                	if (User::model()->isCorrector())
+	                    $this->menu = array(
+							array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
+							array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
+							array('label'=>Yii::t('site','New projects for technical'), 'url'=>array('/project/zakaz/listtech')),
+							array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
+	                        //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
+							array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
+	                    );
+	                else
+	                	$this->menu = array(
+							array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
+							array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
+							array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
+	                        //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
+							array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
+	                    );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
 					);
