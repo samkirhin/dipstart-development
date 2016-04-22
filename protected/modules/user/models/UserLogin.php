@@ -50,8 +50,7 @@ class UserLogin extends CFormModel
 		{
 			$identity=new UserIdentity($this->username,$this->password);
 			$identity->authenticate();
-			switch($identity->errorCode)
-			{
+			switch($identity->errorCode) {
 				case UserIdentity::ERROR_NONE:
 					$duration=$this->rememberMe ? Yii::app()->controller->module->rememberMeTime : 0;
 					Yii::app()->user->login($identity,$duration);

@@ -1,7 +1,7 @@
 <?php
 $this->redirect(Yii::app()->createUrl('/project/zakaz/update', array('id'=>$model->id)));
 
-//Don't work...
+// !!!!!!!!!!!!! --------------------------          Don't work...
 
 /* @var $this ZakazController */
 /* @var $model Zakaz */
@@ -22,48 +22,23 @@ foreach ($filelist as $fd) {
 
 <h1><?=ProjectModule::t('View Zakaz')?> #<?php echo $model->id; ?></h1>
 <?php 
-	if (User::model()->isManager() || User::model()->isAdmin()){
-		$attr = array(
-			'id',
-			array(
-				'name' => 'user_id',
-				'type' => 'raw',
-				'value' => User::model()->findByPk($model->user_id)->username,
-			),
-			'title',
-			'max_exec_date',
-			array(
-				'name' => 'status',
-				'type' => 'raw',
-				'value' => $model->status > 0 ? ProjectStatus::model()->findByPk($model->status)->status : null,
-			),
-			'notes',
-		);
-	}else{
-		$attr = array(
-			'id',
-			array(
-				'name' => 'user_id',
-				'type' => 'raw',
-				'value' => User::model()->findByPk($model->user_id)->username,
-			),
-			'title',
-			'text',
-			'date',
-			'max_exec_date',
-			//'date_finish',
-			'pages',
-			'add_demands',
-			array(
-				'name' => 'status',
-				'type' => 'raw',
-				'value' => $model->status > 0 ? ProjectStatus::model()->findByPk($model->status)->status : null,
-			),
-//'is_payed',
-//'informed',
-//'notes',
-		);
-	}
+	$attr = array(
+		'id',
+		array(
+			'name' => 'user_id',
+			'type' => 'raw',
+			'value' => User::model()->findByPk($model->user_id)->username,
+		),
+		'title',
+		'max_exec_date',
+		array(
+			'name' => 'status',
+			'type' => 'raw',
+			'value' => $model->status > 0 ? ProjectStatus::model()->findByPk($model->status)->status : null,
+		),
+		'notes',
+	);
+
 	//$this->widget('zii.widgets.CDetailView', array(
 	//	'data'=>$model,
 	//	'attributes'=>$attr,

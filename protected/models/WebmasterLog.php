@@ -25,7 +25,7 @@ class WebmasterLog extends CActiveRecord
 	}
 
 	public static function staticTableName() {
-		return Campaign::getId().'_WebmasterLogs';
+		return Company::getId().'_WebmasterLogs';
 	}
 	
 	/**
@@ -37,8 +37,8 @@ class WebmasterLog extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('pid, action, date', 'required'),
-			array('pid, uid, order_id', 'numerical', 'integerOnly' => true),
-			array('action', 'length', 'max'=>255),
+			array('pid, uid, order_id, action', 'numerical', 'integerOnly' => true),
+			array('action', 'length', 'max'=>11),
 			array('date', 'default', 'value' => date('Y-m-d'), 'setOnEmpty' => true, 'on' => 'insert'),
 			array('id, pid, uid, action, date, order_id', 'safe', 'on'=>'search'),
 		);
@@ -61,12 +61,23 @@ class WebmasterLog extends CActiveRecord
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return array(
 			'id' => Yii::t('site','ID'),
 			'status' => Yii::t('site','Status'),
+			'date' => Yii::t('site','Date'),
+			'unique' => Yii::t('partner','Unique'),
+			'sales_first' => Yii::t('partner','First order sales'),
+			'sales_repeat' => Yii::t('partner','Next orders sales'),
+			'completed_first' => Yii::t('partner','First order completions'),
+			'completed_repeat' => Yii::t('partner','Next orders completions'),
+			'profit' => Yii::t('partner','Profit'),
 		);
+	}
+	
+	public static function getLabel($varname) {
+		$arr = self::model()->attributeLabels();
+		return $arr[$varname];
 	}
 
 	/**
@@ -127,8 +138,7 @@ class WebmasterLog extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return ProjectStatus the static model class
 	 */
-	public static function model($className=__CLASS__)
-	{
+	public static function model($className=__CLASS__) {
 		return parent::model($className);
 	}
 	

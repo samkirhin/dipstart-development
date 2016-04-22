@@ -159,6 +159,7 @@ return array(
 	'Phone' => 'Телефон',
 	'username' => 'логин',
 	'login' => 'логин',
+	'description' => 'Описание',
 	
 	//EventHelper.php
 	'Not transferred' =>  'Не передан тип',
@@ -239,5 +240,6 @@ return array(
 	'Cell number' => 'Номер телефона',
 	
 	'Edit assignments' => 'Редактировать назначения',
+	'Rating' => 'Рейтинг',
 );
 

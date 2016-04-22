@@ -30,12 +30,9 @@ body {
 
 
 div.form-container {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    /*background-color: #DDEAFA;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-radius: 2px;
-    margin-top: 50px;
-    margin-bottom: 50px;
 }
 
 div.form-container > form {
@@ -46,6 +43,7 @@ div.form-container > form {
 div.form-item {
     min-height: 50px;
     background-color: #C5D8F0;
+	width: 44%;
     width: -webkit-calc(50% - 35px);
     width: calc(50% - 35px);
     margin: 5px 15px;
@@ -76,6 +74,7 @@ div.form-item input[type="text"], div.form-item select {
     padding: 5px 8px;
     line-height: 22px;
     margin: 10px 20px 15px;
+	width: 93%;
     width: -webkit-calc(100% - 40px);
     width: calc(100% - 40px);
     -webkit-box-sizing: border-box;
@@ -84,6 +83,11 @@ div.form-item input[type="text"], div.form-item select {
     border: 0px none !important;
     border-radius: 1.5px;
     background-color: #fff !important;
+}
+div.form-item input[type="text"].hasDatepicker {
+	display: inline-block;
+	width: 174px;
+	margin-right: -33px;
 }
 
 div.form-item select {
@@ -106,6 +110,7 @@ div.form-item textarea {
     padding: 5px 8px;
     line-height: 22px;
     margin: 10px 20px 15px;
+	max-width: 90%;
     min-width: -webkit-calc(100% - 40px);
     min-width: calc(100% - 40px);
     max-width: -webkit-calc(100% - 40px);
@@ -121,24 +126,22 @@ div.form-item textarea {
     resize: none;
 }
 
-input.create-order-button {
+div.form-save {
     display: block;
+    position: absolute;
+    bottom: -60px;
+    right: 30px;
+}
+div.form-save input {
+
     padding: 8px 15px;
     border-radius: 2px;
     border: none;
     -webkit-box-shadow: none;
             box-shadow: none;
-    background-color: #5C95C5;
     -webkit-transition: all 0.3s ease-out;
             transition: all 0.3s ease-out;
     color: #fff;
-    position: absolute;
-    bottom: -60px;
-    right: 30px;
-}
-
-input.create-order-button:hover {
-    background-color: #5688B2;
 }
 
 .container {
@@ -147,11 +150,11 @@ input.create-order-button:hover {
     min-width: auto !important;
 }
 
-p.note {
+/*p.note {
     position: relative;
     top: -25px;
     left: 30px;
-}
+}*/
 
 .form-control {
     min-height: auto !important;

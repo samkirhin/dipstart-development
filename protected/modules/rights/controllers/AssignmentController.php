@@ -16,8 +16,8 @@ class AssignmentController extends RController
 	/**
 	* Initializes the controller.
 	*/
-	public function init()
-	{
+	public function init() {
+		Yii::app()->theme='admin';
 		$this->_authorizer = $this->module->getAuthorizer();
 		$this->layout = $this->module->layout;
 		$this->defaultAction = 'view';

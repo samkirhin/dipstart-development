@@ -35,18 +35,40 @@ class PaymentController extends Controller {
     }
 
     public function actionView() {
-        $user = User::model()->findByPk(Yii::app()->user->id);
-        if (!$user->superuser) {
-            $this->redirect('/');
-        } else {
-            $this->render('admin', array(
-                'dataProvider'=>Payment::model(),
-            ));
-        }
-    }
+		$model = new Payment('search');
+		$model->unsetAttributes();
+		if(Yii::app()->request->isAjaxRequest) {
+			$params = Yii::app()->request->getParam('Payment');
+			$model->setAttributes($params);
+			Yii::app()->user->setState('PaymentFilterState', $params);
+		}
 
-    public function actionApiView() {
-		$c_id = Campaign::getId();
+		$data = $model->getTotalData();
+			
+		$data = array(
+			'in' => array(
+				'sum' => empty($data) ? 0 : $data[0]['s'],
+				'count' => empty($data) ? 0 : $data[0]['ctn'],
+			),
+			'out' => array(
+				'sum' => empty($data) ? 0 : $data[1]['s'],
+				'count' => empty($data) ? 0 : $data[1]['ctn'],
+			)
+		);
+		
+		$this->render('admin',array(
+			'model'=>$model,
+			'data'=>$data,
+		));
+    }
+	
+	public function actionGetPayNumber($payType, $user) {
+		echo Profile::model()->getPayNumber($payType, $user);
+    }
+	
+
+    /*public function actionApiView() {
+		$c_id = Company::getId();
 		$table_prefix = '';
 		if ($c_id) {
 			$table_prefix = $c_id.'_';
@@ -102,13 +124,38 @@ class PaymentController extends Controller {
             ));
             $this->_response->send();
         }
-    }
+    }*/
 
     /*public function actionAdmin() {
         $this->render('admin');
     }*/
 
-    public function actionApproveTransaction(){  // Ajax approve in actionView
+     public function actionApproveTransaction(){  // Ajax approve in actionView
+        $this->_prepairJson();
+        $id = $this->_request->getParam('id');
+        $method = $this->_request->getParam('method');
+        $type = $this->_request->getParam('type');
+        $number = $this->_request->getParam('number');
+        if (!$method) {
+            $method = 'Cash';
+        }
+		
+        $payment = Payment::model()->findByPk($id);
+        if (!$payment) {
+            $this->_response->setData(array(
+                'result'  => false,
+                'message' => 'Not found'
+            ));
+            Yii::app()->end();
+        }
+
+		$this->_response->setData(array(
+            'result' => $payment->approveFromBookkeeper($method, $type, $number)
+        ));
+        $this->_response->send();
+    }
+	
+	public function actionRejectTransaction(){  // Ajax approve in actionView
         $this->_prepairJson();
         $id = $this->_request->getParam('id');
         $method = $this->_request->getParam('method');
@@ -126,7 +173,30 @@ class PaymentController extends Controller {
         }
 
         $this->_response->setData(array(
-            'result' => $payment->approveFromBookkeeper($method)
+            'result' => $payment->rejectFromBookkeeper($method)
+        ));
+        $this->_response->send();
+    }
+	
+	public function actionCancelTransaction() {  // Ajax approve in actionView
+        $this->_prepairJson();
+        $id = $this->_request->getParam('id');
+        $method = $this->_request->getParam('method');
+        if (!$method) {
+            $method = 'Cash';
+        }
+
+        $payment = Payment::model()->findByPk($id);
+        if (!$payment) {
+            $this->_response->setData(array(
+                'result'  => false,
+                'message' => 'Not found'
+            ));
+            Yii::app()->end();
+        }
+
+        $this->_response->setData(array(
+            'result' => $payment->cancelPayment($method)
         ));
         $this->_response->send();
     }
@@ -172,10 +242,10 @@ class PaymentController extends Controller {
         
         $to_receive = $this->_request->getParam('to_receive', 0);
         
-        $payment->project_price = $this->_request->getParam('project_price');
-        $payment->to_receive   += (int) $this->_request->getParam('to_receive');
-        $payment->work_price = $this->_request->getParam('work_price');
-        $paying              = (int) $this->_request->getParam('to_pay');
+        if($this->_request->getParam('project_price')) $payment->project_price = $this->_request->getParam('project_price');
+        if($this->_request->getParam('to_receive')) $payment->to_receive   += (int) $this->_request->getParam('to_receive');
+        if(!($this->_request->getParam('work_price') === null)) $payment->work_price = $this->_request->getParam('work_price');
+        if($this->_request->getParam('to_pay')) $paying              = (int) $this->_request->getParam('to_pay');
         
         if ( ($paying > 0) && ($to_receive == 0) && ($payment->work_price > 0) && ($paying + $payment->to_pay > $payment->work_price + $payment->payed) && ((int) $payment->to_pay > 0) ) {
             echo CJson::encode(['Оплата превышает лимит']);
@@ -207,9 +277,9 @@ class PaymentController extends Controller {
                 $buh->summ = $paying;
                 $buh->payment_type = Payment::OUTCOMING_EXECUTOR;
                 $buh->manager = $manag->email;
-                $buh->details_ya = $user->profile->yandex;
+                /*$buh->details_ya = $user->profile->yandex;
                 $buh->details_wm = $user->profile->wmr;
-                $buh->details_bank = $user->profile->bank_account;
+                $buh->details_bank = $user->profile->bank_account;*/
                 $buh->save();
             }
             
@@ -282,8 +352,6 @@ class PaymentController extends Controller {
 		//echo $result;
 	}
     public function actionManagersApprove() {  // Approve payment image
-		//new UploadPaymentImage;
-		/////////////////////////////////////////////////////////////
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
@@ -365,7 +433,7 @@ class PaymentController extends Controller {
 			$webmasterlog->date = date("Y-m-d"); 
 			$webmasterlog->order_id = $order->id;
 			$openlog = WebmasterLog::model()->findByAttributes(
-				array('order_id'=>$model->id),'action = :p1 OR action = p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
+				array('order_id'=>$order->id),'action = :p1 OR action = :p2', array(':p1'=>WebmasterLog::FIRST_ORDER, ':p2'=>WebmasterLog::NON_FIRST_ORDER)
 			);
 			if($openlog->action == WebmasterLog::FIRST_ORDER){
 				$webmasterlog->action = WebmasterLog::FULL_PAYMENT_4_FIRST_ORDER;
@@ -373,7 +441,6 @@ class PaymentController extends Controller {
 				$webmasterlog->action = WebmasterLog::FULL_PAYMENT_4_NON_FIRST_ORDER;
 			}
 			$webmasterlog->save();
-			
 		}
 	}
 }
