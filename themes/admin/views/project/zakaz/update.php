@@ -255,7 +255,7 @@ $customer = $model->user;
 
             <?php Yii::app()->getClientscript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/manager.js');?>
 			<!-- Начало блока добавления этапов менеджера -->
-			<h5 class="stages"><span class="block-title"><?=ProjectModule::t('Work stages')?>:</span></h5>
+			<h5 class="stages"><span class="block-title"><?=ProjectModule::t('Work stages')?>:</span><?=Tools::hint($hints['Zakaz_stages'], 'hint-block __stages')?></h5>
 			<?php
             $this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
                 'projectId'=>$model->id,

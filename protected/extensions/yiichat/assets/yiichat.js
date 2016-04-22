@@ -309,6 +309,7 @@ var YiiChat = function (options) {
 									send_message(19,'Назначение исполнителя (определение цены)', cost);
 								};
 							}
+							$('.work_price_input').change(); // Сохранить стоимость заказа для исполнителя
                             clear();
                         },
                         error: function (e) {

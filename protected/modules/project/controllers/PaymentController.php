@@ -244,7 +244,7 @@ class PaymentController extends Controller {
         
         if($this->_request->getParam('project_price')) $payment->project_price = $this->_request->getParam('project_price');
         if($this->_request->getParam('to_receive')) $payment->to_receive   += (int) $this->_request->getParam('to_receive');
-        if($this->_request->getParam('work_price')) $payment->work_price = $this->_request->getParam('work_price');
+        if(!($this->_request->getParam('work_price') === null)) $payment->work_price = $this->_request->getParam('work_price');
         if($this->_request->getParam('to_pay')) $paying              = (int) $this->_request->getParam('to_pay');
         
         if ( ($paying > 0) && ($to_receive == 0) && ($payment->work_price > 0) && ($paying + $payment->to_pay > $payment->work_price + $payment->payed) && ((int) $payment->to_pay > 0) ) {

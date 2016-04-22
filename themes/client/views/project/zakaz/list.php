@@ -14,12 +14,26 @@ $this->breadcrumbs=array(
 <h1><?=ProjectModule::t('Zakazs')?></h1>
 <h1 class='projects-title'><?=ProjectModule::t('SelectProject')?></h1>
 <?php
-if (Campaign::getId()){
+if (Company::getId()){
 	$columns = array(
 		'id',
 		'title',
-		'closestDate',
 	);
+	if (ProjectField::model()->inTableByVarname('specials')) {
+		$columns[] = array(
+			'name'=>'specials',
+			'filter'=>Catalog::getAll('specials'),
+			'value'=>'$data->catalog_specials->cat_name',
+		);
+	}
+	if (ProjectField::model()->inTableByVarname('specials2')) {
+		$columns[] = array(
+			'name'=>'specials2',
+			'filter'=>Catalog::getAll('specials2'),
+			'value'=>'$data->catalog_specials2->cat_name',
+		);
+	}
+	$columns[] = 'closestDate';
 }
 
 if (isset($only_new)) {
