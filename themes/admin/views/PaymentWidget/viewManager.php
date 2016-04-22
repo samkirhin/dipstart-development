@@ -3,7 +3,7 @@
 
     <!--<span class="block-title"><?=ProjectModule::t('Payments')?></span>-->
 	<div style="padding-top: 5px;">
-		<table class="table table-striped paytable">
+		<table class="table paytable">
 		   <tr>
 				<td>
 					<?=ProjectModule::t('Project cost:')?>
@@ -43,7 +43,7 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table table-striped paytable">
+		<table class="table paytable">
 		   <tr>
 				<td>
 					<?=ProjectModule::t('The cost for the author:')?>
