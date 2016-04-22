@@ -510,3 +510,16 @@ button.change-approve {
 	min-width: 100px;
 	width: calc(100% - 110px);
 }
+.grid-view table.items th, .grid-view table.items td, .grid-view table.items {
+	border: 0;
+}
+.table tr, .grid-view table.items td {
+	border-bottom: 1px dotted #ccc;
+}
+.grid-view table.items tr.odd, .grid-view table.items tr.even {
+	background: transparent;
+}
+.hint-block_content td {
+	height: auto;
+	padding: 5px;
+}
