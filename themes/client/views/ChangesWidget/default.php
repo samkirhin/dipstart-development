@@ -75,6 +75,7 @@
 											data: formData,
 											datatype: 'json',
 											success: function (data) {
+												if(data.error) alert(JSON.stringify(data.error));
 												jQuery("#list_files").load("<?php echo Yii::app()->createUrl("/project/changes/list",array('project'=>$project->id)); ?>");
 											},
 											cache: false,

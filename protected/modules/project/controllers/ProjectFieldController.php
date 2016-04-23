@@ -376,9 +376,13 @@ class ProjectFieldController extends Controller
 	public function actionUpdate()
 	{
 		$model=$this->loadModel();
-		if(isset($_POST['ProjectField']))
-		{
+		if(isset($_POST['ProjectField'])) {
 			$model->attributes=$_POST['ProjectField'];
+			if(is_array($model->work_types)) {
+				$work_types = $model->work_types;
+				if($work_types[0]=='') $model->work_types = null;
+				else $model->work_types = implode(',',$work_types);
+			}
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -487,6 +491,14 @@ class ProjectFieldController extends Controller
 		));//*/
 	}
 
+	public function actionWorkTypes() {
+		$model = $this->loadModel();
+		
+        $this->render('work_types',array(
+            'model'=>$model,
+        ));
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -542,7 +554,6 @@ class ProjectFieldController extends Controller
 		}
 		return array($list,$widgets);		
 	}*/
-	
 
     /**
      * Performs the AJAX validation.

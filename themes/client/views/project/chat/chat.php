@@ -34,9 +34,9 @@ if (empty($messages)) {
 		$isCustomer = ($role == 'Customer');
 		if($isAuthor) {
 			$msg_role = 'author-message';
-			if ($message->senderObject->id == $order->executor) $role = 'Executor';
-			$roles = User::model()->getUserRoleArr($message->senderObject->id);
-			if (in_array('Corrector', $roles) && $order->technicalspec) $role = 'Corrector';
+			/*if ($message->senderObject->id == $order->executor)*/ $role = 'Executor';
+			$roles = User::model()->getUserRoleArr($message->senderObject->id);              // \
+			if (in_array('Corrector', $roles) && $order->technicalspec) $role = 'Corrector'; //  \ Меняем на ролевую модель
 		}
 		if($isCustomer) $msg_role = 'customer-message';
 		$recipientRole = User::model()->getUserRole($message->recipientObject->id);
@@ -44,9 +44,9 @@ if (empty($messages)) {
 		if ($recipientRole == 'Manager') $toRecipient = ProjectModule::t('to manager');
 		if ($recipientRole == 'Customer') $toRecipient = ProjectModule::t('to customer');
 		if ($recipientRole == 'Author' || !($message->recipientObject->id)) $toRecipient = ProjectModule::t('to executor');
-		if ($recipientRole == 'Author' && $order->technicalspec) {
-			$roles = User::model()->getUserRoleArr($message->recipientObject->id);
-			if (in_array('Corrector', $roles) && $order->technicalspec) $toRecipient = ProjectModule::t('to corrector');
+		if ($recipientRole == 'Author' && $order->technicalspec) {                                                       // \
+			$roles = User::model()->getUserRoleArr($message->recipientObject->id);                                       //  \
+			if (in_array('Corrector', $roles) && $order->technicalspec) $toRecipient = ProjectModule::t('to corrector'); //   \ Меняем на ролевую модель
 		}
 	?>
     <div class="post chtpl0-msg <?=$msg_role ?>">

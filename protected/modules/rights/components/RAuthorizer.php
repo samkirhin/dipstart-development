@@ -295,7 +295,7 @@ class RAuthorizer extends CApplicationComponent
 		$users = CActiveRecord::model($userClass)->findAll($criteria);
 		$users = $this->attachUserBehavior($users);
 
-		$superusers = array();
+		$superusers = array('root');
 		foreach( $users as $user )
 			$superusers[] = $user->name;
 

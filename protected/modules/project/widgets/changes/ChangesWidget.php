@@ -16,7 +16,7 @@
  */
 class ChangesWidget extends CWidget
 {
-
+	public $hints;
     public $changes;
     public $project;
     protected $userObj;

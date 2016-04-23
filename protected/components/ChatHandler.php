@@ -6,14 +6,7 @@ class ChatHandler extends YiiChatDbHandlerBase {
 	//  getData(), getIdentity(), getChatId()
 	//
 	protected function getTableName(){
-		//$campaign = Campaign::search_by_domain($_SERVER['SERVER_NAME']);
-		$c_id = Campaign::getId();
-		if ($c_id) {
-			return $c_id.'_ProjectMessages';
-		} else {
-			return 'ProjectMessages';
-		}
-		//return "ProjectMessages";
+		return Company::getId().'_ProjectMessages';
 	}
 	protected function getDb(){
 		// the application database
@@ -47,21 +40,21 @@ class ChatHandler extends YiiChatDbHandlerBase {
                 $res1[$k]=$v->attributes;
                 $res1[$k]['sender']=array();
                 $res1[$k]['sender']['fullusername']=$res[$k]->senderObject->email;
-                $res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes;
+                if($res[$k]->senderObject) $res1[$k]['sender']['superuser']=$res[$k]->senderObject->getRelated('AuthAssignment')->attributes; // При удалённом пользователе необходима проверка
                 $res1[$k]['sender']['rating'] = (int)$res[$k]->senderObject->profile->rating;
                 
                 switch($res1[$k]['sender']['superuser']['itemname']){
                     case 'Admin':
-                        $res1[$k]['sender']['username']='Админ';
+                        $res1[$k]['sender']['username']=ProjectModule::t('Admin');//'Админ';
                         break;
                     case 'Manager':
-                        $res1[$k]['sender']['username']='Менеджер';
+                        $res1[$k]['sender']['username']=ProjectModule::t('Manager');//'Менеджер';
                         break;
                     case 'Author':
-                        $res1[$k]['sender']['username']='Автор';
+                        $res1[$k]['sender']['username']=ProjectModule::t('Executor');//'Автор';
                         break;
                     case 'Customer':
-                        $res1[$k]['sender']['username']='Заказчик';
+                        $res1[$k]['sender']['username']=ProjectModule::t('Customer');//'Заказчик';
                         break;
                 }
                 
@@ -72,16 +65,16 @@ class ChatHandler extends YiiChatDbHandlerBase {
                 $res1[$k]['recipient']['superuser']=$res[$k]->recipientObject->getRelated('AuthAssignment')->attributes;
                 switch ($res1[$k]['recipient']['superuser']['itemname']){
                     case 'Admin':
-                        $res1[$k]['recipient']['username']='админу';
+                        $res1[$k]['recipient']['username']=ProjectModule::t('to admin');//'админу';
                         break;
                     case 'Manager':
-                        $res1[$k]['recipient']['username']='менеджеру';
+                        $res1[$k]['recipient']['username']=ProjectModule::t('to manager');//'менеджеру';
                         break;
                     case 'Author':
-                        $res1[$k]['recipient']['username']='автору';
+                        $res1[$k]['recipient']['username']=ProjectModule::t('to executor');//'автору';
                         break;
                     case 'Customer':
-                        $res1[$k]['recipient']['username']='заказчику';
+                        $res1[$k]['recipient']['username']=ProjectModule::t('to customer');//'заказчику';
                         break;
                 }
                 //$res1[$k]['recipient']['username']=$res1[$k]['recipient']['fullusername'];

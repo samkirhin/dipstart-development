@@ -19,10 +19,7 @@
 .col_100
 -------
 */
-body {
-	/*font-family: 'Open Sans Condensed', sans-serif;*/
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }
@@ -60,11 +57,8 @@ header .logo {
 .header .header-text {
 	text-align: center;
 }
-.header .header-text p {
+.header .header-text {
 	font-size: 17px;
-	background-color: rgba(255, 255, 255, 0.88);
-	padding: 15px;
-	border-radius: 15px;
 }
 .navbar {
 	margin: 1px 0 25px 0;
@@ -239,9 +233,6 @@ text-align: justify;
 .copyright span{
 	font: normal normal 40px serif;
 
-}
-.btn {
-	font-family: 'Open Sans Condensed', sans-serif;
 }
 .footerfirstbtn {
 	background-color: #337AB7;
@@ -1090,7 +1081,7 @@ width: 72%;
 float: left;
 }
 .right {
-width: 18%;
+/*width: 18%;*/
 padding-right: 2%;
 float: right;
 }

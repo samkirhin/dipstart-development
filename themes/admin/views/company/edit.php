@@ -9,6 +9,13 @@
 	if(Yii::app()->user->hasFlash('companyErrorMessage'))
 		echo $form->errorSummary($model);
 	?>
+	<?php if($root) { ?>
+	<div class="row">
+		<?php echo $form->labelEx($model,'frozen'); ?>
+		<?php echo $form->checkBox($model,'frozen'); ?>
+		<?php echo $form->error($model,'frozen'); ?>
+	</div>
+	<?php } ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
 		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
@@ -27,7 +34,7 @@
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'supportEmail'); ?>
-		<?php echo $form->textField($model,'supportEmail',array('size'=>60,'maxlength'=>30)); ?>
+		<?php echo $form->textField($model,'supportEmail',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'supportEmail'); ?>
 	</div>
 	<div class="row">
@@ -51,9 +58,15 @@
 		<?php echo $form->error($model,'FrontPage'); ?>
 	</div>
 	<div class="row">
+		<?php echo CHtml::image(Yii::app()->getBaseUrl(/*true*/) . '/' . $model->getFilesPath() . '/' . $model->icon, 'icon'); ?><br />
+		<?php echo CHtml::label(ProjectModule::t('Attach file'), 'iconupload'); ?>
+		<?php echo CHtml::fileField('Company[iconupload]', '', array('class' => 'col-xs-12 btn btn-user')); ?>
+		<?php echo $form->error($model,'iconupload'); ?>
+	</div>
+	<div class="row">
 		<?php echo CHtml::image(Yii::app()->getBaseUrl(/*true*/) . '/' . $model->getFilesPath() . '/' . $model->logo, 'logo'); ?><br />
 		<?php echo CHtml::label(ProjectModule::t('Attach file'), 'fileupload'); ?>
-		<?php echo CHtml::fileField('Campaign[fileupload]', '', array('class' => 'col-xs-12 btn btn-user')); ?>
+		<?php echo CHtml::fileField('Company[fileupload]', '', array('class' => 'col-xs-12 btn btn-user')); ?>
 		<?php echo $form->error($model,'fileupload'); ?>
 	</div>
 	<div class="row">
@@ -65,6 +78,11 @@
 		<?php echo $form->labelEx($model,'text4guests'); ?>
 		<?php echo $form->textArea($model,'text4guests',array('rows'=>12, 'cols'=>50, 'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'text4guests'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'text4customers'); ?>
+		<?php echo $form->textArea($model,'text4customers',array('rows'=>12, 'cols'=>50, 'class'=>'form-control')); ?>
+		<?php echo $form->error($model,'text4customers'); ?>
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'WebmasterFirstOrderRate'); ?>

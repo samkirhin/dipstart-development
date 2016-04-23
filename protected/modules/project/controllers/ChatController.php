@@ -143,6 +143,9 @@ class ChatController extends Controller {
 			),
 			array(':event_id'=> $orderId) 			
 		);
+		$PaymentImages = PaymentImage::model()->findAll(array(
+			'condition' => "`project_id`='$orderId'",
+		));
 		$moderated = count($events) == 0;
         $this->render('index', array(
             'orderId'	=> $orderId,
@@ -150,6 +153,7 @@ class ChatController extends Controller {
             'executor'	=> Zakaz::getExecutor($orderId),
 			'moderated'	=> $moderated,
 			'parts'		=> $parts,
+			'PaymentImages' => $PaymentImages,
         ));
     }
 	
@@ -158,6 +162,7 @@ class ChatController extends Controller {
 		$parts = ZakazParts::model()->findAll(array(
 			'condition' => "`proj_id`='$orderId'",
 		));
+		$messageForAuthor = Templates::model()->getTemplate(Templates::TYPE_AUTHOR_RESPONSE_PROJECT);
 		//$isGuest = Yii::app()->user->isGuest;
 		$isGuest = Yii::app()->user->isGuest();
 		if ($isGuest || User::model()->isManager()) {
@@ -180,7 +185,9 @@ class ChatController extends Controller {
 			// проект, отправляем его на регистрацию
 			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
 			*/
-		}
+		} elseif (Yii::app()->user->id == $order->executor) { // Current executor
+			$this->redirect( Yii::app()->createUrl('/project/chat',array('orderId'=>$orderId)));
+		}	
 		$this->render('view', array(
 			'orderId'	=> $orderId,
 			'order'		=> $order,
@@ -188,19 +195,11 @@ class ChatController extends Controller {
 			//'moderated'	=> $moderated,
 			'isGuest'	=> $isGuest,
 			'parts'		=> $parts,
+			'messageForAuthor'	=> $messageForAuthor,
 		));
         //Yii::app()->end();
 	}
 	
-	public function actionUpload() {
-		$folder='uploads/c'.Campaign::getId().'/'.$_GET['id'].'/';
-		$result = Tools::uploadMaterials($folder);
-		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-		if ($result['success'] && User::model()->isCustomer()) {
-			EventHelper::materialsAdded($_GET['id']);
-		}
-    }
-    
     /*
      * Rename attachment file
      */

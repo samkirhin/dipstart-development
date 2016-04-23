@@ -8,7 +8,6 @@
     min-width: 95%; 
 }
 body {
-    font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
 }
 h1 {
@@ -152,35 +151,27 @@ hr {
 }
 .partStatus {
     width: 100%;
-    height: 16px;
-    margin: 0 10px 0 0;
-/*    background: url(../images/check.png) no-repeat center center;*/
-    float:left;
+    margin: 10px 10px 10px 0;
+    float: left;
     display: block;
 }
 .partStatus-header {
-	position: relative;
 	float:	 left;
-	color: #337AB7;
-	font-weight: bold;
+	/*color: #337AB7;*/
+	/*font-weight: bold;*/
 	width: 35%;
 	padding-left: 8px;
 }
 .partStatus-status {
-	position: relative;
 	float: left;
 	width: 65%;
     text-indent: 38px;
 	text-align: right;
 }
-.partStatus-bottom {
-    width: 100%;
-    height: 16px;
-    float:  left;
-};
-
-.partTitle {
-    float: left;
+.partStatus-half {
+	float: left;
+	width: 50%;
+	text-align: center;
 }
 
 .addPart {
@@ -255,8 +246,8 @@ label
     resize: none;
 }
 .panel-title {
-    position: relative;
-    text-align: left;
+    /*position: relative;*/
+    text-align: center;
     font-size: 14px;
 }
 .chatBlock {
@@ -690,15 +681,6 @@ ul.yiiPager a:link, ul.yiiPager a:visited {
 .table > thead > tr > th {
     border-bottom: none;
 }
-.title-name {
-    position: relative;
-    float: left;
-}
-.title-time {
-    position: relative;
-    float: right;
-	text-align: right;
-}
 .panel-heading {
     float: left;
     width: 100%;
@@ -802,11 +784,6 @@ div.partStatus {
     line-height: 25px!important;
 }
 
-
-div#accordion .panel-title a {
-    text-align: left;
-}
-
 div#chatWindow::before {
 	/*content: "Напишите что готовы взять этот заказ или задайте вопрос";*/
     display: block!important;
@@ -822,7 +799,7 @@ div#chatWindow::after {
     /*content: "Здесь будет ваша переписка";*/
     display: block!important;
     position: absolute!important;
-    top: 38%!important;
+    top: 28%!important;
     left: 28%!important;
     font-size: 2rem!important;
     font-weight: bold!important;

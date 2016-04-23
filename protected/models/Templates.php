@@ -12,11 +12,15 @@
  */
 class Templates extends CActiveRecord
 {
+	const TYPE_AUTHOR = 2;
+	const TYPE_CUSTOMER = 1;
+	const TYPE_AUTHOR_RESPONSE_PROJECT = 25;
+
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName() {
-		return Campaign::getId().'_Templates';
+		return Company::getId().'_Templates';
 	}
 
 	/**
@@ -95,6 +99,8 @@ class Templates extends CActiveRecord
 			1 => Yii::t('site','Customer'),
 			2 => Yii::t('site','Author'),
 			3 => Yii::t('site','Service'),
+			4 => Yii::t('site','Hint for manager'),
+			5 => Yii::t('site','Tip'),
 			10 => Yii::t('site','Service mail: Password recovery'), //Восстановление пароля
 			11 => Yii::t('site','Service mail: Registration'), //Успешная регистрация
 			12 => Yii::t('site','Service mail: Project accepted'), //Регистрация проекта
@@ -110,6 +116,7 @@ class Templates extends CActiveRecord
 			22 => Yii::t('site','Service mail: deadline arrived'), //Срок сдачи части наступил
 			23 => Yii::t('site','Service mail: new revision'), //О новой доработке
 			24 => Yii::t('site','Service mail: your salary'), //Об оплате заказа
+			25 => Yii::t('site','Message for an author in response to project'), //Сообщение для автора при отклике на проект
 		);
 	}
 	
@@ -126,5 +133,18 @@ class Templates extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function getTemplate($type_id){
+		$template = $this->findByAttributes(array('type_id'=>$type_id));
+		return  $template->text;
+	}
+
+	public function getTemplateList($type_id){
+		$templates = $this->findAllByAttributes(array('type_id'=>$type_id));
+		$custom_arr = array();
+		foreach ($templates as $item)
+			$custom_arr[$item->name] = $item->text;
+		return $custom_arr;
 	}
 }

@@ -48,7 +48,6 @@
 		</div>
 	</div>
 	
-
 	<div class="row"><div class="left-div-admin-form">
 		<?php echo $form->labelEx($model,'email'); ?>
 		</div><div class="right-div-admin-form">
@@ -56,6 +55,16 @@
 		<?php if (!$admin && $manager && $fields['email']) $attributes['disabled'] = true;	?>
 		<?php echo $form->textField($model,'email', $attributes); ?>
 		<?php echo $form->error($model,'email'); ?>
+		</div>
+	</div>
+	
+	<div class="row"><div class="left-div-admin-form">
+		<?php echo $form->labelEx($model,'phone_number'); ?>
+		</div><div class="right-div-admin-form">
+		<?php $attributes = array('size'=>40,'maxlength'=>128,'placeholder'=>$model->getAttributeLabel( 'phone_number' ).($model->isAttributeRequired('phone_number')?' *':''));?>
+		<?php if (!$admin && $manager && $fields['phone_number']) $attributes['disabled'] = true;	?>
+		<?php echo $form->textField($model,'phone_number', $attributes); ?>
+		<?php echo $form->error($model,'phone_number'); ?>
 		</div>
 	</div>
 <?php 
