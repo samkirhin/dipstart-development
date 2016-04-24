@@ -69,6 +69,7 @@ class Controller extends RController
                     $this->menu = array(
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
 						array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
+						array('label'=>Yii::t('site','Agreement'), 'url'=>array('/site/agreement')),
                         //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
 						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
@@ -83,6 +84,7 @@ class Controller extends RController
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/customerOrderList')),
 						array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create')),
                         //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
+						array('label'=>Yii::t('site','Agreement'), 'url'=>array('/site/agreement')),
 						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                     );
