@@ -51,8 +51,16 @@ function update_events(){
 		$('.events-list').html(data);
 		if (newEvent)
 		{
-			titleMessage = newEvent.type == 1 ? 'Новый заказ' : 'Новое событие';
-			// alert(titleMessage);
+			if (newEvent.type == 1)
+			{
+				titleMessage = 'Новый заказ';
+				$('#is-new-order')[0].play();
+			}
+			else
+			{
+				titleMessage = 'Новое событие';
+				$('#is-new-event')[0].play();
+			}
 			if (!intervalTimer)
 				intervalTimer = setInterval(titleSignal, 500);
 		}

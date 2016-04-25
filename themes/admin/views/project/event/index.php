@@ -15,5 +15,5 @@
    </div>
 </div>  
 
-<audio id="is-new-event" src="audio/gb.wav"></audio>
-<audio id="is-new-order" src="audio/gb.wav"></audio>
+<audio id="is-new-event" src="/audio/new_event.wav"></audio>
+<audio id="is-new-order" src="/audio/new_order.wav"></audio>
