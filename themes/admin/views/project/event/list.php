@@ -14,7 +14,7 @@
         </th>
     </thead>
     <?php foreach ($events as $event) {?>
-     <tr>
+     <tr data-id="<?=$event->id?>" data-type="<?=$event->type?>">
         <td><?php echo $event->id?></td>
         <td><?php echo ProjectModule::t($event->description).' '?><a href="http://<?= $_SERVER['SERVER_NAME'] ?>/project/zakaz/update/id/<?= $event->event_id ?>"><?= '#'.$event->event_id ?></a></td>
         <td>

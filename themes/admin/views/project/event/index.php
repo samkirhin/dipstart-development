@@ -7,7 +7,6 @@
  */
 ?>
 <div class="events">
-    
     <h2><?=ProjectModule::t('Events')?></h2>
    <div class="row white-block">
         <div class="col-xs-12 events-list">
@@ -16,3 +15,5 @@
    </div>
 </div>  
 
+<audio id="is-new-event" src="audio/gb.wav"></audio>
+<audio id="is-new-order" src="audio/gb.wav"></audio>
