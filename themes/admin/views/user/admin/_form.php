@@ -90,14 +90,8 @@
 	
 <?php 
 		}
-		$mailing_list = 0;
-		$_arr = array('','icq','sms','email');
 		foreach($fields as $field) {
 			$name = strtolower($field->varname);
-			if ($name == 'mailing_list') {
-				if(isset($model->profile)) $mailing_list = $model->profile->getAttribute($name);
-				$mailing_list = $_arr[$mailing_list];
-			}
 			
 ?>
 	<div class="row"><div class="left-div-admin-form">
@@ -112,7 +106,6 @@
 				} else {	
 					$attributes = Profile::range($field->range);
 					$arr = array();
-					if ($field->varname == 'mailing_list' ) $arr['class'] = 'select-mailing-list';
 					if (!$admin && $manager && $field[paymentProps]) $arr['disabled'] = 'disabled';
 					echo $form->dropDownList($profile,$field->varname,Profile::range($field->range),$arr);
 				};	
@@ -144,11 +137,3 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
-<input type="hidden" id="mailing_list" value="<?= $mailing_list ?>">
-
-<script>
-	$(document).ready(function()
-	{
-		$('#Profile_mailing_list').val($('#mailing_list').val());
-	});
-</script>

@@ -735,7 +735,8 @@ class ZakazController extends Controller {
 				}
 			}
 		$criteria->addSearchCondition('AuthAssignment.itemname','Author');
-		$authors = User::model()->with('AuthAssignment')->findAll($criteria);
+		$criteria->addSearchCondition('profile.mailing_for_executors','1');
+		$authors = User::model()->with('AuthAssignment','profile')->findAll($criteria);
 
 		if(!empty($authors)) {
 

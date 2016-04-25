@@ -240,5 +240,6 @@ return array(
 	
 	'Edit assignments' => 'Редактировать назначения',
 	'Rating' => 'Рейтинг',
+	'Recive new projects notifications' => 'Получать уведомления о новых проектах',
 );
 
