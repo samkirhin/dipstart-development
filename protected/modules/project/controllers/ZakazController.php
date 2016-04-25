@@ -235,11 +235,16 @@ class ZakazController extends Controller {
 			}
 		}
 		$isGuest = Yii::app()->user->isGuest;
+		$new = true;
+		$agreementNotAccepted = null;
+		$messageForCustomer = null;
 		if (!$isGuest && self::createProject($model,$_POST['Zakaz'])) {
 			if (User::model()->isManager()) {
 				$this->redirect(Yii::app()->createUrl('/project/zakaz/update', array('id'=>$model->id)));
 			} else {
-				$this->redirect(array('view','id'=>$model->id));
+				$new = false;
+				$agreementNotAccepted = Templates::model()->getTemplate(Templates::TYPE_FOR_MANAGER_AGREEMENT_NOT_ACCEPTED);;
+				$messageForCustomer = Templates::model()->getTemplate(Templates::TYPE_FOR_CUSTOMER_AGREEMENT_NOT_ACCEPTED);
 			}
 		}
 		else $model->attributes = $_POST['Zakaz'];
@@ -251,7 +256,10 @@ class ZakazController extends Controller {
         $this->render('create',array(
             'model'=>$model,
 			'isGuest' => $isGuest,
-			'user' => $user
+			'user' => $user,
+			'new' => $new,
+			'agreementNotAccepted' => $agreementNotAccepted,
+			'messageForCustomer' => $messageForCustomer,
         ));
 	}
     

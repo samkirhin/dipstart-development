@@ -5,6 +5,7 @@ Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/
 /* @var $this ZakazController */
 /* @var $model Zakaz */
 /* @var $form CActiveForm */
+if ($new) {
 $c_id = Company::getId();
 $url = '/uploads/c'.$c_id.'/temp/'.$model->unixtime.'/';
 $uploaded_files = $model->generateMaterialsList($url, true);
@@ -15,7 +16,27 @@ $this->renderPartial('/zakaz/_form', array(	'model' => $model,
 											'uploaded_files' => $uploaded_files,
 											'isGuest' => $isGuest,
 											'user' => $user));
+} elseif(User::model()->isCustomer()) {
+	echo Company::getAgreement().'<br>';
+	echo CHtml::button('Да, я согласен',array('submit' => array('/project/chat','orderId' => $model->id)));
+	echo CHtml::button('Нет, я хочу другие условия',array('id' => 'not-accept-btn', 'message' => $agreementNotAccepted, 'template' => $messageForCustomer, 'href' => Yii::app()->createUrl('/project/chat', array('orderId'=>$model->id))));
+}
 ?>
+
+<?php if (!$new && User::model()->isCustomer()) : ?>
+<script>
+	$('#not-accept-btn').click(function(){
+		$.post(
+			$(this).attr('href'),
+			{
+				ProjectMessages : {recipient: "manager", message : $(this).attr('message')}
+			}).done(function(){
+			alert($('#not-accept-btn').attr('template'));
+			$(location).attr('href',$('#not-accept-btn').attr('href'));
+		});
+	});
+</script>
+<?php endif; ?>
 <!--<script>
     /*Remove attachment file*/
     function removeFile(obj){

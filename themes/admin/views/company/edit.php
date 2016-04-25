@@ -85,6 +85,16 @@
 		<?php echo $form->error($model,'text4customers'); ?>
 	</div>
 	<div class="row">
+		<?php echo $form->labelEx($model,'agreement4customers'); ?>
+		<?php echo $form->textArea($model,'agreement4customers',array('rows'=>12, 'cols'=>50, 'class'=>'form-control')); ?>
+		<?php echo $form->error($model,'agreement4customers'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'agreement4executors'); ?>
+		<?php echo $form->textArea($model,'agreement4executors',array('rows'=>12, 'cols'=>50, 'class'=>'form-control')); ?>
+		<?php echo $form->error($model,'agreement4executors'); ?>
+	</div>
+	<div class="row">
 		<?php echo $form->labelEx($model,'WebmasterFirstOrderRate'); ?>
 		<?php echo $form->textField($model,'WebmasterFirstOrderRate',array('size'=>60,'maxlength'=>32)); ?>
 		<?php echo $form->error($model,'WebmasterFirstOrderRate'); ?>

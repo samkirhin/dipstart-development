@@ -149,9 +149,13 @@ return array(
 	'header text' => 'текст в шапке',
 	'text for guests' => 'текст для гостей',
 	'text for customers' => 'текст для заказчиков',
+	'agreement for customers' => 'пользовательское соглашение для заказчиков',
+	'agreement for executors' => 'пользовательское соглашение для исполнителей',
 	'webmaster first order rate' => 'процент(множитель) вэбмастеру за первый заказ',
 	'webmaster second order rate' => 'процент(множитель) вэбмастеру за повторные заказы',
-
+	'User Agreement' => 'Пользовательское соглашение',
+	'Agreement' => 'Cоглашение',
+	
 	// работа с этапами 
     'StepStatuses' => 'Статусы этапов',
     'Part Statuses' =>  'Состояние этапов',
