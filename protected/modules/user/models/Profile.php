@@ -49,6 +49,8 @@ class Profile extends UActiveRecord
 			$float = array();
 			$decimal = array();
 			$rules = array();
+			
+			array_push($numerical,'mailing_for_executors');
 
 			$model=$this->getFields();
 
@@ -132,6 +134,7 @@ class Profile extends UActiveRecord
 		$labels = array(
 			'user_id' => UserModule::t('User ID'),
 			'rating' => UserModule::t('Rating'),
+			'mailing_for_executors' => UserModule::t('Recive new projects notifications'),
 		);
 		$model=$this->getFields();
 
