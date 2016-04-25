@@ -273,4 +273,7 @@ class User extends CActiveRecord
 	   return $this->findAllBySql($sql);
 	}
 	
+	public function findAllExecutors() {
+		return User::model()->with(array('AuthAssignment'=>array('select'=>false, 'joinType'=>'INNER JOIN', 'condition'=>'AuthAssignment.itemname="Author"')))->findAll();
+	}
 }
