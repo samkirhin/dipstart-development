@@ -195,10 +195,17 @@ class Templates extends CActiveRecord
         foreach ($out[1] as $k=>$o) {
             $var = explode('_', $o);
             $model_name = ucfirst(array_shift($var));
-            $project_model = $model_name::model()->findByPk(Yii::app()->session['project_id']);
-            $field = $project_model;
-            foreach ($var as $v) $field = $field->$v;
-            $fields[$k] = $field;
+			if(@class_exists($model_name)){
+				if($model_name == 'Projectpayments') $model = ProjectPayments::model()->find('order_id = :ORDER_ID', array( ':ORDER_ID'=>$orderId ));
+				else $model = $model_name::model()->findByPk(Yii::app()->session['project_id']);
+				$var = implode('_', $var);
+				if(in_array($var,$model->attributeNames()))
+					$fields[$k] = $model->$var;
+				else
+					$fields[$k] = '#wrong property#';
+			} else {
+				$fields[$k] = '#wrong model#';
+			}
         }
         return str_replace($out[0],$fields,$in);
 	}

@@ -18,10 +18,10 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 	<?php
 	if (!$order->executor) {
 		if($isGuest){
-			$href = 'http://'.$_SERVER['SERVER_NAME'].'/user/login?role=Author';
+			$href = 'http://'.$_SERVER['SERVER_NAME'].'/user/registration?role=Author';
 			$attr = array('onclick'=>"document.location.href = '$href'", 'class'=>"btn btn-primary btn-block btn-green btn-30");
 			echo  '<div class="col-xs-12 get-it">'.CHtml::htmlButton(UserModule::t('Get It!'), $attr).'</div>';
-			$company = Campaign::getCompany();
+			$company = Company::getCompany();
 			if ($company->text4guests) echo '<div class="col-xs-12 text4guests">'.$company->text4guests.'</div>';
 		}else{
 			?>
