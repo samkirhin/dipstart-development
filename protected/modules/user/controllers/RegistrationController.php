@@ -90,7 +90,10 @@ class RegistrationController extends Controller
 			$role = 'Customer';
 		}
 		if (Yii::app()->user->id && (!Yii::app()->user->hasFlash('reg_success') && !Yii::app()->user->hasFlash('reg_failed'))) {
-			$this->redirect(Yii::app()->controller->module->profileUrl);
+			if($role == 'Author')
+				$this->redirect('/project/zakaz/list');
+			else
+				$this->redirect(Yii::app()->controller->module->profileUrl);
 		} else {
 			if (isset($_POST['RegistrationForm'])) {
 				if (self::register($model, $_POST['RegistrationForm'], $role)){
