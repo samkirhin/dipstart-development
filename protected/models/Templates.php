@@ -15,8 +15,9 @@ class Templates extends CActiveRecord
 	const TYPE_AUTHOR = 2;
 	const TYPE_CUSTOMER = 1;
 	const TYPE_AUTHOR_RESPONSE_PROJECT = 25;
-	const TYPE_FOR_MANAGER_AGREEMENT_NOT_ACCEPTED = 26;
+	// 26 - мыло для техрука
 	const TYPE_FOR_CUSTOMER_AGREEMENT_NOT_ACCEPTED = 27;
+	const TYPE_FOR_MANAGER_AGREEMENT_NOT_ACCEPTED = 28;
 
 	/**
 	 * @return string the associated database table name
@@ -119,8 +120,8 @@ class Templates extends CActiveRecord
 			23 => Yii::t('site','Service mail: new revision'), //О новой доработке
 			24 => Yii::t('site','Service mail: your salary'), //Об оплате заказа
 			25 => Yii::t('site','Message for an author in response to project'), //Сообщение для автора при отклике на проект
-			26 => Yii::t('site','Message for a manager that the agreement was not accepted by the customer'), //Сообщение для менеджера, что соглашение не было принято заказчиком
 			27 => Yii::t('site','Message for a customer when the agreement was not accepted'), //Сообщение для клиента, когда он не согласен с условиями соглашения
+			28 => Yii::t('site','Message for a manager that the agreement was not accepted by the customer'), //Сообщение для менеджера, что соглашение не было принято заказчиком
 		);
 	}
 	

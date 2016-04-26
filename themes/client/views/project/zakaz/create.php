@@ -18,8 +18,8 @@ $this->renderPartial('/zakaz/_form', array(	'model' => $model,
 											'user' => $user));
 } elseif(User::model()->isCustomer()) {
 	echo Company::getAgreement().'<br>';
-	echo CHtml::button('Да, я согласен',array('submit' => array('/project/chat','orderId' => $model->id)));
-	echo CHtml::button('Нет, я хочу другие условия',array('id' => 'not-accept-btn', 'message' => $agreementNotAccepted, 'template' => $messageForCustomer, 'href' => Yii::app()->createUrl('/project/chat', array('orderId'=>$model->id))));
+	echo CHtml::button('Да, я согласен',array('submit' => array('/project/chat','orderId' => $model->id),'class'=>'btn btn-primary')).'&nbsp; &nbsp; &nbsp;';
+	echo CHtml::button('Нет, я хочу другие условия',array('id' => 'not-accept-btn', 'message' => $agreementNotAccepted, 'template' => $messageForCustomer, 'href' => Yii::app()->createUrl('/project/chat', array('orderId'=>$model->id)),'class'=>'btn btn-primary'));
 }
 ?>
 
