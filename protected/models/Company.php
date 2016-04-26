@@ -12,7 +12,7 @@ class Company extends CActiveRecord {
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, domains, language, supportEmail', 'required'),
+			array('name, domains, language, supportEmail, agreement4customers, agreement4executors', 'required'),
 			array('name, domains, FrontPage, icon, logo', 'length', 'max'=>255),
 			array('supportEmail', 'email'),
 			array('supportEmail', 'length', 'min' => 6, 'max'=>64,'message' => UserModule::t("Incorrect password (minimal length 6 symbols, maximum 30).")),
@@ -22,11 +22,11 @@ class Company extends CActiveRecord {
 			array('frozen, PaymentCash', 'in', 'range' => array(0, 1),'allowEmpty'=>false),
 			array('fileupload', 'file', 'types'=>'jpg,jpeg,gif,png', 'maxSize'=>'204800', 'allowEmpty'=>true),
 			array('iconupload', 'file', 'types'=>'ico', 'maxSize'=>'204800', 'allowEmpty'=>true),
-			array('header, text4guests, text4customers', 'length', 'max'=>65535),
+			array('header, text4guests, text4customers, agreement4customers, agreement4executors', 'length', 'max'=>65535),
 			array('WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'type', 'type'=>'float'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, frozen, organization, name, domains, language, supportEmail, PaymentCash, Payment2Chekout, Payment2ChekoutHash, FrontPage, icon, logo, header, text4guests, text4customers, WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'safe', 'on'=>'search'),
+			array('id, frozen, organization, name, domains, language, supportEmail, PaymentCash, Payment2Chekout, Payment2ChekoutHash, FrontPage, icon, logo, header, text4guests, text4customers, agreement4customers, agreement4executors, WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'safe', 'on'=>'search'),
 		);
 	}
 	public function attributeLabels() {
@@ -47,6 +47,8 @@ class Company extends CActiveRecord {
 			'header'                   => Yii::t('site','header text'),
 			'text4guests'              => Yii::t('site','text for guests'),
 			'text4customers'           => Yii::t('site','text for customers'),
+			'agreement4customers'      => Yii::t('site','agreement for customers'),
+			'agreement4executors'      => Yii::t('site','agreement for executors'),
 			'WebmasterFirstOrderRate'  => Yii::t('site','webmaster first order rate'),
 			'WebmasterSecondOrderRate' => Yii::t('site','webmaster second order rate'),
 		);
@@ -136,5 +138,15 @@ class Company extends CActiveRecord {
 	}
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
+	}
+	
+	public static function getAgreement() {
+		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if (User::model()->isAuthor()){
+			$agreement = self::$orgz->agreement4executors;
+		} elseif (User::model()->isCustomer()){
+			$agreement = self::$orgz->agreement4customers;
+		}
+		return $agreement;
 	}
 }
