@@ -122,6 +122,8 @@ class Templates extends CActiveRecord
 			25 => Yii::t('site','Message for an author in response to project'), //Сообщение для автора при отклике на проект
 			27 => Yii::t('site','Message for a customer when the agreement was not accepted'), //Сообщение для клиента, когда он не согласен с условиями соглашения
 			28 => Yii::t('site','Message for a manager that the agreement was not accepted by the customer'), //Сообщение для менеджера, что соглашение не было принято заказчиком
+			29 => Yii::t('site','Button in chat for author'), // Шаблоны для кнопок в чате исполнителя
+			30 => Yii::t('site','Button in chat for guest'), // Шаблон для кнопок в заказе гостя
 		);
 	}
 	
@@ -189,7 +191,7 @@ class Templates extends CActiveRecord
         return preg_replace($str_search, $str_replace, $text_post);
     }
 
-    public function insertVariables($in){
+    public function insertVariables($in, $orderId){
         $in = $this->replaceBBCode($in);
         preg_match_all("/\{(.+?)\}/is",$in,$out);
         foreach ($out[1] as $k=>$o) {
@@ -197,12 +199,14 @@ class Templates extends CActiveRecord
             $model_name = ucfirst(array_shift($var));
 			if(@class_exists($model_name)){
 				if($model_name == 'Projectpayments') $model = ProjectPayments::model()->find('order_id = :ORDER_ID', array( ':ORDER_ID'=>$orderId ));
-				else $model = $model_name::model()->findByPk(Yii::app()->session['project_id']);
+				else $model = $model_name::model()->findByPk($orderId);
 				$var = implode('_', $var);
-				if(in_array($var,$model->attributeNames()))
+				if($model && in_array($var,$model->attributeNames()))
 					$fields[$k] = $model->$var;
-				else
+				elseif($model) 
 					$fields[$k] = '#wrong property#';
+				else
+					$fields[$k] = '#cant find model#';
 			} else {
 				$fields[$k] = '#wrong model#';
 			}

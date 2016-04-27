@@ -61,17 +61,25 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 			$this->renderPartial('/zakaz/_orderInModerate', array('model' => $order));
 		}
 
-		if(!$isGuest){
+		if(!$isGuest)
+		{
 			?>
 			<div id="chat" class="col-xs-8 user-chat-block">
 				<?php $this->renderPartial('chat',array('order'=>$order, 'orderId'=>$orderId));?>
 			</div>
 			<div class="col-xs-8 chat-accessories-block">
 				<?php
-				$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId));
+				$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId, 'buttonTemplates'=>$buttonTemplates));
 				?>
 			</div><?
 		}
+		else
+		{
+			echo '<div class="chat-accessories-block-guest clear">';
+			$this->renderPartial('_accessoriesGuest',array('order'=>$order, 'orderId'=>$orderId, 'buttonTemplates'=>$buttonTemplates));
+			echo '</div>';
+		}
+
 	} else {
 		?>
 		<div class="col-xs-8 text-block">

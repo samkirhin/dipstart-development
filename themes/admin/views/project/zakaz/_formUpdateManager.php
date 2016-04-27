@@ -91,7 +91,8 @@
                     'types' => [
                         Templates::TYPE_CUSTOMER,
                         Templates::TYPE_AUTHOR,
-                    ]
+                    ],
+					'orderId' => $model->id
                 ]);
             ?>
 		</div>
