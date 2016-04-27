@@ -66,6 +66,8 @@ return array(
     'For Customer' => 'Заказчикy',
     'Service' => 'Сервис',
 	'Hint for manager' => 'Подсказка для менеджера',
+    'Button in chat for author' => 'Шаблоны для кнопок в чате исполнителя',
+    'Button in chat for guest' => 'Шаблон для кнопок в заказе гостя',
     'Update Templates' => 'Редактировать шаблон',
     'Delete Templates' => 'Удалить шаблон',
     'View Templates' => 'Просмотреть шаблон',

@@ -65,6 +65,8 @@ return array(
     'For Customer' => 'For Customer',
     'Service' => 'Service',
 	'Hint for manager' => 'Hint for manager',
+    'Button in chat for author' => 'Button in chat for author',
+    'Button in chat for guest' => 'Button in chat for guest',
     'Update Templates' => 'Update Templates',
     'Delete Templates' => 'Delete Templates',
     'View Templates' => 'View Templates',

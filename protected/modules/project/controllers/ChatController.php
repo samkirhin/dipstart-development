@@ -186,7 +186,11 @@ class ChatController extends Controller {
 			*/
 		} elseif (Yii::app()->user->id == $order->executor) { // Current executor
 			$this->redirect( Yii::app()->createUrl('/project/chat',array('orderId'=>$orderId)));
-		}	
+		}
+
+		if ($isGuest || User::model()->isAuthor())
+			$buttonTemplates = Templates::model()->findAllByAttributes(array('type_id'=>($isGuest ? 30 : 29)));
+
 		$this->render('view', array(
 			'orderId'	=> $orderId,
 			'order'		=> $order,
@@ -195,6 +199,7 @@ class ChatController extends Controller {
 			'isGuest'	=> $isGuest,
 			'parts'		=> $parts,
 			'messageForAuthor'	=> $messageForAuthor,
+			'buttonTemplates'	=> $buttonTemplates,
 		));
         //Yii::app()->end();
 	}
