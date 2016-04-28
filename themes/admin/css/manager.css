@@ -227,21 +227,26 @@ div.rightBorder, div.leftBorder {
     right: -11px;
     top: -11px;
 }
-.hint-block_content{
-	position:absolute;
-	top:20px;
-	min-width: 150px;
-	right:-105px;
-	padding:7px 12px;
-	padding-right: 7px;
-	border-radius:5px;
-	background:#4A4A4A;
-	color:#FFFFFF;
-	font-size:11px;
-	text-align:left;
-	display:none;
-	z-index: 200;
-	white-space: normal;
+.hint-block_content {
+    position: absolute;
+    top: 20px;
+    min-width: 150px;
+    right: -105px;
+    padding: 15px 17px;
+    padding-right: 15px;
+    border-radius: 5px;
+    background: #4A4A4A;
+    color: #fff;
+    font-size: 11px;
+    text-align: left;
+    display: none;
+    z-index: 200;
+    white-space: normal;
+    line-height: 13px;
+}
+.hint-block_content-2x {
+	min-width: 300px;
+	right: -155px;
 }
 .hint-block:hover .hint-block_content {
 	display:block;
@@ -253,6 +258,9 @@ div.rightBorder, div.leftBorder {
 	top:-10px;
 	right:103px;
 	border-bottom:5px solid #4A4A4A;
+}
+.hint-block_content-2x:after{
+	right:153px;
 }
 .linkToAuthors {
 	padding: 0;
