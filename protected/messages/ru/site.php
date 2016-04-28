@@ -68,6 +68,7 @@ return array(
 	'Hint for manager' => 'Подсказка для менеджера',
     'Button in chat for author' => 'Шаблоны для кнопок в чате исполнителя',
     'Button in chat for guest' => 'Шаблон для кнопок в заказе гостя',
+	'Hint for customer when he sending a message' => 'Всплывающая подсказка при отправлении сообщения заказчиком',
     'Update Templates' => 'Редактировать шаблон',
     'Delete Templates' => 'Удалить шаблон',
     'View Templates' => 'Просмотреть шаблон',

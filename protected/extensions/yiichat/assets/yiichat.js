@@ -188,7 +188,7 @@ var YiiChat = function (options) {
                 tmp_html += "  |</div>";
 				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>";
 				//tmp_html += "<div class='chtpl0-time'>" + post.date + "</div>"
-                if (post.cost > 0) tmp_html += "<div class='cost'>Цена:" + post.cost + "</div>";
+                if (post.cost > 0) tmp_html += "<div class='cost'>Цена: <span>" + post.cost + "</span></div>";
                 //tmp_html += "</div>";
 				tmp_html += "<div class='text'></div>";
                 p.find('.chtpl0-content').html(tmp_html);

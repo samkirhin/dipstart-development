@@ -43,8 +43,8 @@
 }
 .before-panel-group {
 	position: relative;
-	margin-top: 13px;
-	margin-bottom: -53px;
+	margin-top: 10px;
+	margin-bottom: -50px;
 }
 .before-panel-group button {
 	position: relative;
@@ -85,7 +85,7 @@ div.terms-column-2 {
 }
 
 div.terms-column-1, div.terms-column-2, div.terms-column-3 {
-    margin-top: 20px;
+    margin-top: 5px;
 } 
 
 .chtpl0-msg .chtpl0-buttons button {

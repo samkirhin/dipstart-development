@@ -18,6 +18,7 @@ class Templates extends CActiveRecord
 	// 26 - мыло для техрука
 	const TYPE_FOR_CUSTOMER_AGREEMENT_NOT_ACCEPTED = 27;
 	const TYPE_FOR_MANAGER_AGREEMENT_NOT_ACCEPTED = 28;
+	//31 - всплывающая подсказка при отправлении сообщения заказчиком
 
 	/**
 	 * @return string the associated database table name
@@ -124,6 +125,7 @@ class Templates extends CActiveRecord
 			28 => Yii::t('site','Message for a manager that the agreement was not accepted by the customer'), //Сообщение для менеджера, что соглашение не было принято заказчиком
 			29 => Yii::t('site','Button in chat for author'), // Шаблоны для кнопок в чате исполнителя
 			30 => Yii::t('site','Button in chat for guest'), // Шаблон для кнопок в заказе гостя
+			31 => Yii::t('site','Hint for customer when he sending a message'), // Шаблон для кнопок в заказе гостя
 		);
 	}
 	
@@ -144,7 +146,8 @@ class Templates extends CActiveRecord
 	
 	public function getTemplate($type_id){
 		$template = $this->findByAttributes(array('type_id'=>$type_id));
-		return  $template->text;
+		if($template) return  $template->text;
+		else return null;
 	}
 
 	public function getTemplateList($type_id){
@@ -199,6 +202,7 @@ class Templates extends CActiveRecord
             $model_name = ucfirst(array_shift($var));
 			if(@class_exists($model_name)){
 				if($model_name == 'Projectpayments') $model = ProjectPayments::model()->find('order_id = :ORDER_ID', array( ':ORDER_ID'=>$orderId ));
+				elseif($model_name == 'Company') $model = Company::getCompany();
 				else $model = $model_name::model()->findByPk($orderId);
 				$var = implode('_', $var);
 				if($model && in_array($var,$model->attributeNames()))
