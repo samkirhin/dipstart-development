@@ -66,7 +66,7 @@ class Tools {
 		if ($val) { ?>
 		<div class="<?=$class?>">
 			<sup>?</sup>
-			<div class="hint-block_content">
+			<div class="hint-block_content<?=(strlen($val)>180)?' hint-block_content-2x':''?>">
 				<?=$val?>
 			</div>
 		</div>
