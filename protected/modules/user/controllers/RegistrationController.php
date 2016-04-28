@@ -97,6 +97,8 @@ class RegistrationController extends Controller
 		} else {
 			if (isset($_POST['RegistrationForm'])) {
 				if (self::register($model, $_POST['RegistrationForm'], $role)){
+					Yii::import('project.components.EventHelper');
+					if($role == 'Customer') EventHelper::newCustomer();
 					Yii::app()->user->setFlash('reg_success',UserModule::t("Thank you for your registration. Password has been sent to your e-mail. Please check your e-mail ({{email}}) before start.", ['{{email}}'=>$model->email]));
 					$this->refresh();
 				} else {
