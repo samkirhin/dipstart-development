@@ -20,7 +20,7 @@ h1, .h1 {
 .btn {opacity:0.8;-webkit-border-radius:0;border-radius:0;}
 .btn:hover {opacity:1; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;	cursor: pointer;}
 
-.container {margin-top: 50px;}
+.container {margin-top: 40px;}
 
 .chatBlock {
 	border: none;
@@ -130,8 +130,8 @@ position:relative;
 bottom:20px!important;
 }
 .confirm-the-payment {
-float:left;
-margin-top: 20px;
+	float:left;
+	margin-top: 10px;
 }
 
 .confirm-the-payment span {
@@ -256,8 +256,8 @@ top: 0;
 }
 
 .info-block {
-	margin-top: 10px;
-	margin-bottom: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .table-striped label {margin-top: 0;}
@@ -522,4 +522,12 @@ button.change-approve {
 .hint-block_content td {
 	height: auto;
 	padding: 5px;
+}
+.inline-block {
+	display: inline-block;
+}
+.qq-upload-list li a#parts_file {
+	width: 84%;
+	width: calc(100% - 50px);
+	max-width: 90%;
 }

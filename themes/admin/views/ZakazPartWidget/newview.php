@@ -61,14 +61,15 @@ Yii::app()->clientScript->registerScript('loading', $js, CClientScript::POS_READ
                         <?php 
 						$tmp = '';
 						foreach ($data['files'] as $k => $v){
-                            $tmp .= '<li><a target="_blank" href="'.ZakazPartsFiles::model()->folder(). $v['part_id'] . '/' . $v['file_name'] . '" id="parts_file">' . $v['orig_name'] . '</a>';
-                            $tmp .= '<button class="zakaz_part_approve_file on right btn'.(($v['approved'])?' hidden':'').'" ';
+                            $tmp .= '<li>';
+                            $tmp .= '<button class="zakaz_part_approve_file on right btn instant-send-buttons bg-green'.(($v['approved'])?' hidden':'').'" ';
 							$tmp .= 'data-id="'.$v['id'].'" ';
-                            $tmp .= ' onclick="stageFileApprove(this)">'.ProjectModule::t('Approve').'</button>';
-                            $tmp .= '<button class="zakaz_part_approve_file off right btn'.(!($v['approved'])?' hidden':'').'" ';
+                            $tmp .= ' onclick="stageFileApprove(this)"><img src="'.Yii::app()->theme->baseUrl.'\images\ok.png" title="'.ProjectModule::t('Approve').'"></button>';
+                            $tmp .= '<button class="zakaz_part_approve_file off right btn instant-send-buttons bg-gray'.(!($v['approved'])?' hidden':'').'" ';
 							$tmp .= 'data-id="'.$v['id'].'" ';
-                            $tmp .= ' onclick="stageFileApprove(this)">'. Yii::t('site', 'Reset') .'</button>';
-                            $tmp .= '<span class="deletefile" style="color: #FF0000; display: inline; right: -10px; top: 10px; cursor: pointer;" id="'.$v['id'].'">x</span></li>';
+                            $tmp .= ' onclick="stageFileApprove(this)"><img src="'.Yii::app()->theme->baseUrl.'\images\ok.png" title="'. Yii::t('site', 'Reset') .'"></button>';
+                            $tmp .= '<span class="deletefile" style="color: #FF0000; display: inline; right: -10px; top: 10px; cursor: pointer;" id="'.$v['id'].'">x</span>';
+							$tmp .= '<a target="_blank" href="'.ZakazPartsFiles::model()->folder(). $v['part_id'] . '/' . $v['file_name'] . '" id="parts_file">' . $v['orig_name'] . '</a></li>';
                         }
 
                         $this->widget('ext.EAjaxUpload.EAjaxUpload',

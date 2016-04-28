@@ -1,4 +1,4 @@
-<div class="row" data-role="<?=User::model()->isCustomer()?>" id="message_send" data-message-send="<?=ProjectModule::t('Message was send')?>">
+<div class="row" data-role="<?=User::model()->isCustomer()?>" id="message_send" data-message-send="<?=Templates::model()->getTemplate(31)?>">
 <?php
 //if (!Yii::app()->request->isAjaxRequest){
 	echo CHtml::form(); ?>
