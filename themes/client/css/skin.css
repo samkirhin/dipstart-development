@@ -1375,3 +1375,10 @@ ul.files-list {
 	overflow: hidden;
 	margin-bottom: 0px;
 }
+.btn-link {
+	color: white;
+}
+.btn-link:active, .btn-link:hover, .btn-link:focus, .btn-link:active {
+	text-decoration: none;
+	color: white;
+}
