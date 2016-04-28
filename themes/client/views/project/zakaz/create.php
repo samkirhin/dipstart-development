@@ -34,11 +34,7 @@ $this->renderPartial('/zakaz/_form', array(	'model' => $model,
     }}/*END Remove attachment file*/
 </script>-->
 <?php if (!$new && User::model()->isCustomer()) : ?>
-	<script>
-		$(document).ready(function(){
-			$("#agreement").modal("show");
-		});
-	</script>
+
 
 
 <?php $this->beginWidget(
@@ -48,7 +44,7 @@ $this->renderPartial('/zakaz/_form', array(	'model' => $model,
 
 	<div class="modal-header">
 		<!--<a class="close" data-dismiss="modal">&times;</a>-->
-		<h4>Пользовательское соглашение</h4>
+		<h4><?= Yii::t('site','User Agreement') ?></h4>
 	</div>
 
 	<div class="modal-body">
@@ -59,7 +55,7 @@ $this->renderPartial('/zakaz/_form', array(	'model' => $model,
 		<?php $this->widget(
 			'booster.widgets.TbButton',
 			array(
-				'label' => 'Да, я принимаю',
+				'label' => ProjectModule::t('Yes, I accept'),
 				'context' => 'success',
 				'buttonType' => 'link',
 				'url' => Yii::app()->createUrl('/project/chat', array('orderId'=>$model->id)),
@@ -69,36 +65,37 @@ $this->renderPartial('/zakaz/_form', array(	'model' => $model,
 		<?php $this->widget(
 			'booster.widgets.TbButton',
 			array(
-				'label' => 'Нет, я хочу другие условия',
+				'label' => ProjectModule::t('No, I want the other conditions'),
 				'context' => 'warning',
-				'url' => '#',
+				'url' => Yii::app()->createUrl('/project/chat', array('orderId'=>$model->id)),
 				'buttonType' => 'ajaxButton',
 				'htmlOptions' => array(
 					'id' => 'not-accept-btn',
-					'message' => $agreementNotAccepted,
-					'template' => $messageForCustomer,
-					'href' => Yii::app()->createUrl('/project/chat', array('orderId'=>$model->id)),
-					'onclick' => '$.post(
-						$(this).attr("href"),
-						{
-							ProjectMessages : {recipient: "manager", message : $(this).attr("message")}
-						}).done(function(){
-						bootbox.alert($("#not-accept-btn").attr("template"), function(){
-							$(location).attr("href",$("#not-accept-btn").attr("href"));
-						});
-					});'
+					'data-message' => $agreementNotAccepted,
+					'data-template' => $messageForCustomer,
+					'data-href' => Yii::app()->createUrl('/project/chat', array('orderId'=>$model->id)),
+					//'onclick' => '',
 				),
 			)
 		); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
+	<script>
+		$(document).ready(function(){
+			$("#agreement").modal("show");
+		});
+		$("#not-accept-btn").click(function () { //можно вынести в отдельный файл
+			$.post(
+				$(this).attr("data-href"),
+				{
+					ProjectMessages : {recipient: "manager", message : $(this).attr("data-message")}
+				}).done(function(){
+					bootbox.alert($("#not-accept-btn").attr("data-template"), function(){
+						$(location).attr("href",$("#not-accept-btn").attr("data-href"));
+					});
+				});
+		});
+
+	</script>
 <?php endif; ?>
-<style>
-	#agreement .modal-dialog .modal-content {
-		min-width: 900px;
-	}
-	#agreement .modal-dialog {
-		width: 900px;
-	}
-</style>

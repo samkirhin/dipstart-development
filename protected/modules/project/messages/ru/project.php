@@ -31,6 +31,8 @@ return array(
     'No' => 'Нет',
     'Select a status' => 'Выберите статус',
     'Fields with <span class="required">*</span> are required.' => 'Поля с <span class="required">*</span> обязательны.',
+    'Yes, I accept' => 'Да, я принимаю',
+    'No, I want the other conditions' => 'Нет, я хочу другие условия',
     'Manage' => 'Управлять',
     'Notes for manager' => 'Комментарий менеджеру',
     'Check scan' => 'Скан чека',
