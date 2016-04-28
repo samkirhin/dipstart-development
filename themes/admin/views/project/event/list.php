@@ -13,10 +13,12 @@
             <?=ProjectModule::t('Date and time')?>
         </th>
     </thead>
-    <?php foreach ($events as $event) {?>
+    <?php foreach ($events as $event) {
+		if($event->type == EventHelper::TYPE_CUSTOMER_REGISTRED) $showLink = false; else $showLink = true;
+	?>
      <tr data-id="<?=$event->id?>" data-type="<?=$event->type?>">
         <td><?php echo $event->id?></td>
-        <td><?php echo ProjectModule::t($event->description).' '?><a href="http://<?= $_SERVER['SERVER_NAME'] ?>/project/zakaz/update/id/<?= $event->event_id ?>"><?= '#'.$event->event_id ?></a></td>
+        <td><?php echo ProjectModule::t($event->description).' '?><?php if($showLink) { ?><a href="http://<?= $_SERVER['SERVER_NAME'] ?>/project/zakaz/update/id/<?= $event->event_id ?>"><?= '#'.$event->event_id ?></a><?php } ?></td>
         <td>
 			<?php 
 			echo CHtml::button(Yii::t('site','Delete'),array('onclick'=>'this.parentNode.parentNode.style.display=\'none\';$.post("'.Yii::app()->createUrl('project/event/delete',array('id'=>$event->id)).'",function(xhr,data,msg){ /*alert(xhr.msg);*/},"json");'));
@@ -32,6 +34,7 @@
                     echo '<td>'.Yii::t('site','Link is absent').'</td>';
                 break;
                 case EventHelper::TYPE_MESSAGE:
+				case EventHelper::TYPE_CUSTOMER_REGISTRED:
                 default:
                     echo CHtml::link(Yii::t('site', 'Show'), ['/project/zakaz/preview', 'id' => $event->id]);
                 break;
