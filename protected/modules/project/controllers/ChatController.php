@@ -102,6 +102,7 @@ class ChatController extends Controller {
 			
                 $model->attributes = Yii::app()->request->getPost('ProjectMessages');
                 $model->date = date('Y-m-d H:i:s');
+                echo $model->recipient;
                 switch ($model->recipient) {
                     case 'manager':
                         $model->recipient = 1;

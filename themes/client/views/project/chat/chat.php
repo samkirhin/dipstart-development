@@ -21,7 +21,7 @@ if (empty($messages)) {
 	div#chatWindow::after {
 		content: "'.ProjectModule::t('Here is your correspondence').'";
 	}');
-	if(User::model()->isAuthor() && (!$order->executor || $order->executor==0) /*&& $order->status<=2*/) Yii::app()->clientScript->registerCss('cs2','
+	if(User::model()->isAuthor() && (!$order->executor || $order->executor==0) && !(User::model()->isCorrector() && $order->technicalspec) /*&& $order->status<=2*/) Yii::app()->clientScript->registerCss('cs2','
 	div#chatWindow::before {
 		 content: "'.ProjectModule::t('Please, write that you are ready to take this order or ask a question.').'";
 	}');

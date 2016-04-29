@@ -12,6 +12,7 @@
 		<?php echo CHtml::textArea('edit-message','', array('rows' => 6, 'class' => 'col-xs-12', 'placeholder' => ProjectModule::t('Enter your message...'), 'id' => 'edit-message')); ?>
 	</div>
 
+	<?php if (User::model()->isCustomer() || User::model()->isExecutor($order->id)) { ?>
 	<div class="chat-buttons">
 		<?php
 		if(User::model()->isAuthor()) {
@@ -28,6 +29,35 @@
 		//echo CHtml::submitButton($edit_button, array('name' => 'edit-message', 'class' => 'btn btn-primary chat-edit','step' => '0','id' => 'chat-edit'));
 		?>
 	</div>
+	<? } ?>
+	<?php if ($order->technicalspec) { ?>
+	<div class="chat-buttons">
+		<?php
+			if(User::model()->isCorrector()) {
+				echo '<h4>От технического руководителя</h4>';
+				$attr = array('name' => 'customer', 'class' => 'btn btn-primary btn-chat chtpl0-submit1','id'=>'chat-corrector-to-customer');
+				echo  CHtml::submitButton(ProjectModule::t('Send to customer'), $attr) ;
+				$attr = array('name' => 'manager', 'class' => 'btn btn-primary btn-chat chtpl0-submit2','id'=>'chat-corrector-to-manager');
+				echo  CHtml::submitButton(ProjectModule::t('Send to administrator'), $attr) ;
+				if ($order->executor)
+				{
+					$attr = array('name' => 'executor', 'class' => 'btn btn-primary btn-chat chtpl0-submit2','id'=>'chat-corrector-to-executor');
+					echo  CHtml::submitButton(ProjectModule::t('Send to executor'), $attr) ;
+				}
+			}
+			if(User::model()->isExecutor($order->id)) {
+				echo '<h4>Техническому руководителю</h4>';
+				$attr = array('name' => 'corrector', 'class' => 'btn btn-primary btn-chat chtpl0-submit1','id'=>'chat-customer-to-corrector');
+				echo  CHtml::submitButton(ProjectModule::t('Send to corrector'), $attr) ;
+			}
+			if(User::model()->isCustomer()) {
+				echo '<h4>Техническому руководителю</h4>';
+				$attr = array('name' => 'corrector', 'class' => 'btn btn-primary btn-chat chtpl0-submit1','id'=>'chat-customer-to-corrector');
+				echo  CHtml::submitButton(ProjectModule::t('Send to corrector'), $attr) ;
+			}
+		?>
+	</div>
+	<? } ?>
 	<?php echo CHtml::hiddenField('order',$order->id);
 	CHtml::endForm();
 //}

@@ -36,7 +36,7 @@ if (Company::getId()){
 	$columns[] = 'closestDate';
 }
 
-if (isset($only_new)) {
+if (isset($only_new) && !(User::model()->isCorrector() && $tech)) {
 	$url = Yii::app()->createUrl('/project/chat/view',array('orderId'=>'')).'/';
 	if (User::model()->isAuthor()) {
 		if(!$profile) echo '<div class="advice">'.ProjectModule::t('It is recommended to fill in the profile...').'</div>';
@@ -48,6 +48,7 @@ if (isset($only_new)) {
 	<?php }
 } else {
 	$url = Yii::app()->createUrl('/project/chat',array('orderId'=>''));
+	if (!(User::model()->isCorrector() && $tech)) {
 ?>
 <section>
 	<div id="control-menu">
@@ -65,6 +66,7 @@ if (isset($only_new)) {
 <div class="twin-tab">
 <div class="first-tab" id="first-tab">
 <?php
+	}
 }
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'zakaz-grid',
