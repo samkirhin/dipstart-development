@@ -104,18 +104,20 @@ class ChatController extends Controller {
                 $model->date = date('Y-m-d H:i:s');
                 echo $model->recipient;
                 switch ($model->recipient) {
-                    case 'manager':
+                	case 'author_to_manager':
+                    case 'customer_to_manager':
+                    case 'corrector_to_manager':
                         $model->recipient = 1;
                         break;
-                    case 'customer':
-						if (User::model()->isCustomer()) {
-                            $model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
-							//$type_id = Emails::TYPE_20;
-                        } else if (User::model()->isAuthor()) {
-                            $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
-							//$type_id = Emails::TYPE_16;
-						};
-
+                    case 'author_to_customer':
+                    case 'corrector_to_customer':
+                    	$model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
+                    	break;
+                    case 'customer_to_author':
+                    case 'corrector_to_author':
+                    	$model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
+                    case 'author_to_corrector':
+                    case 'customer_to_corrector':
                         break;
                 }
 				$model->save();
