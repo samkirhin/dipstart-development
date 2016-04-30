@@ -13,6 +13,7 @@
 class Templates extends CActiveRecord
 {
 	const TYPE_AUTHOR = 2;
+	const TYPE_CORRECTOR = 3;
 	const TYPE_CUSTOMER = 1;
 	const TYPE_AUTHOR_RESPONSE_PROJECT = 25;
 

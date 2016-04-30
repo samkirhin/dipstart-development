@@ -36,7 +36,7 @@
 	<div class="chat-buttons">
 		<?php
 			if(User::model()->isCorrector()) {
-				echo '<h4>От технического руководителя</h4>';
+				echo '<h4>От лица технического руководителя</h4>';
 				$attr = array('name' => 'corrector_to_customer', 'class' => 'btn btn-primary btn-chat chtpl0-submit1','id'=>'chat-corrector-to-customer');
 				echo  CHtml::submitButton(ProjectModule::t('Send to customer'), $attr) ;
 				$attr = array('name' => 'corrector_to_manager', 'class' => 'btn btn-primary btn-chat chtpl0-submit2','id'=>'chat-corrector-to-manager');

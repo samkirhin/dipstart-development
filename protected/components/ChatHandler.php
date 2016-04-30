@@ -51,7 +51,10 @@ class ChatHandler extends YiiChatDbHandlerBase {
                         $res1[$k]['sender']['username']=ProjectModule::t('Manager');//'Менеджер';
                         break;
                     case 'Author':
-                        $res1[$k]['sender']['username']=ProjectModule::t('Executor');//'Автор';
+                        if ($res1[$k]['sender_role'] == 'Corrector')
+                            $res1[$k]['sender']['username']=ProjectModule::t('Corrector');//'Тех.рук';
+                        else
+                            $res1[$k]['sender']['username']=ProjectModule::t('Executor');//'Автор';
                         break;
                     case 'Customer':
                         $res1[$k]['sender']['username']=ProjectModule::t('Customer');//'Заказчик';
@@ -71,7 +74,10 @@ class ChatHandler extends YiiChatDbHandlerBase {
                         $res1[$k]['recipient']['username']=ProjectModule::t('to manager');//'менеджеру';
                         break;
                     case 'Author':
-                        $res1[$k]['recipient']['username']=ProjectModule::t('to executor');//'автору';
+                        if ($res1[$k]['recipient_role'] == 'Corrector')
+                            $res1[$k]['recipient']['username']=ProjectModule::t('to corrector');//'тех.руку';
+                        else
+                            $res1[$k]['recipient']['username']=ProjectModule::t('to executor');//'автору';
                         break;
                     case 'Customer':
                         $res1[$k]['recipient']['username']=ProjectModule::t('to customer');//'заказчику';

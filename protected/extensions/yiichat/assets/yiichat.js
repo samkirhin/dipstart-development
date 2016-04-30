@@ -184,7 +184,10 @@ var YiiChat = function (options) {
                 var tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/admin/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
                 if (typeof post.recipient === 'object') {
                     tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/admin/view?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
-                } else if (post.recipient == -1) tmp_html += " написал авторам";
+                } else if (post.recipient == -1) 
+                    tmp_html += " написал авторам";
+                else if (post.recipient == -2)
+                    tmp_html += " написал техническим руководителям";
                 tmp_html += "  |</div>";
 				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>";
 				//tmp_html += "<div class='chtpl0-time'>" + post.date + "</div>"
@@ -195,7 +198,7 @@ var YiiChat = function (options) {
 				
 				tmp_html = '';//"<div class='buttons'>"
 				if (options.identity != post.sender.superuser.userid) {
-					tmp_html += "<button data-sender=\"" + post.sender.superuser.itemname + "\" data-uid=\""+post.sender.superuser.userid+"\" data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
+					tmp_html += "<button data-sender=\"" + (post.sender_role ? post.sender_role : post.sender.superuser.itemname) + "\" data-uid=\""+post.sender.superuser.userid+"\" data-index=\"" + post.id + "\" class=\"chtpl0-answer\">Ответить</button>";
 					tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-share\">Переслать</button>";
 				}
 				tmp_html += "<button data-index=\"" + post.id + "\" class=\"chtpl0-delete\">Удалить</button>";
@@ -230,6 +233,7 @@ var YiiChat = function (options) {
                     answer=$('.msg_answer');
 					if ($(this).data('sender')=='Author') {document.getElementById("select_recipient").options[1].selected=true;}
 					if ($(this).data('sender')=='Customer') {document.getElementById("select_recipient").options[2].selected=true;}
+                    if ($(this).data('sender')=='Corrector') {document.getElementById("select_recipient").options[3].selected=true;}
                     $('.select_recipient').change();
 					var button = $('.chtpl0-submit1');
 					button.removeClass('disabled');

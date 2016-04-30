@@ -102,22 +102,48 @@ class ChatController extends Controller {
 			
                 $model->attributes = Yii::app()->request->getPost('ProjectMessages');
                 $model->date = date('Y-m-d H:i:s');
-                echo $model->recipient;
                 switch ($model->recipient) {
                 	case 'author_to_manager':
+                		$model->sender_role = 'Author';
+                		$model->recipient_role = 'Admin';
+                		$model->recipient = 1;
+                        break;
                     case 'customer_to_manager':
+                    	$model->sender_role = 'Customer';
+                		$model->recipient_role = 'Admin';
+                		$model->recipient = 1;
+                        break;
                     case 'corrector_to_manager':
+                    	$model->sender_role = 'Corrector';
+                		$model->recipient_role = 'Admin';
                         $model->recipient = 1;
                         break;
                     case 'author_to_customer':
+                    	$model->sender_role = 'Author';
+                		$model->recipient_role = 'Customer';
+                    	$model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
+                    	break;
                     case 'corrector_to_customer':
+                    	$model->sender_role = 'Corrector';
+                		$model->recipient_role = 'Customer';
                     	$model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                     	break;
                     case 'customer_to_author':
-                    case 'corrector_to_author':
+                    	$model->sender_role = 'Customer';
+                		$model->recipient_role = 'Author';
                     	$model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
+                    	break;
+                    case 'corrector_to_author':
+                    	$model->sender_role = 'Corrector';
+                		$model->recipient_role = 'Author';
+                    	$model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
+                    	break;
                     case 'author_to_corrector':
+                    	$model->sender_role = 'Author';
+                		$model->recipient_role = 'Corrector';
                     case 'customer_to_corrector':
+                    	$model->sender_role = 'Customer';
+                		$model->recipient_role = 'Corrector';
                         break;
                 }
 				$model->save();
