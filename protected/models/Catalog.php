@@ -14,8 +14,7 @@ class Catalog extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-		$id  = Campaign::getId();
-        return $id.'_Сatalog';
+        return Company::getId().'_Сatalog';
 	}
 
     /**
@@ -53,7 +52,7 @@ class Catalog extends CActiveRecord {
     {
         return array(
             'id' => 'ID',
-			'field_varname' => 'varname',
+			'field_varname' => Yii::t('site', 'Variable name'),
             'cat_name' => Yii::t('site', 'Cat Name'),
             'parent_id' => Yii::t('site', 'Parent'),
         );
@@ -158,5 +157,12 @@ class Catalog extends CActiveRecord {
 			$names .= $item['cat_name'].$delimiter;
 		} else return $cats;
 		return $names;
+	}
+	public static function getAllVarnames(){
+		$criteria = new CDbCriteria();
+		$criteria->compare('field_type','LIST');
+		$list = CHtml::listData(ProjectField::model()->findAll($criteria),'varname',function($data){return $data->varname . " ({$data->title})";});
+		$list = array_merge($list,CHtml::listData(ProfileField::model()->findAll($criteria),'varname',function($data){return $data->varname . " ({$data->title})";}));
+		return $list;
 	}
 }

@@ -263,11 +263,11 @@ top: 0;
 .table-striped label {margin-top: 0;}
 
 .operations {
-	/*margin-top: 50px;*/
+	margin-top: 10px;
 	display: block;
 	list-style-type: none;
 	padding: 0;
- border: 1px solid #CEDFED;
+	border: 1px solid #CEDFED;
 }
 
 .operations li {
@@ -530,4 +530,7 @@ button.change-approve {
 	width: 84%;
 	width: calc(100% - 50px);
 	max-width: 90%;
+}
+#user-grid_c0 {
+	width: 55px;
 }

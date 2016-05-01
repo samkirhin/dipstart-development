@@ -3,14 +3,15 @@
 return array(
     'yes' => 'да',
 	'no' => 'нет',
-    'Categories' => 'Категории',
+    'Fields lists' => 'Списки полей',
     'Create Categories' => 'Добавить категории',
     'Manage Categories' => 'Управлять списком',
     'Home' => 'Главная',
     'Users' => 'Пользователи',
     'Profile Fields' => 'Настройка полей',
     'Rights' => 'Настройка прав',
-    'References' => 'Справочники',
+    'Company settings' => 'Настройки компании',
+	'Base settings' => 'Общие настройки',
     'Jobs' => 'Виды работ',
     'Statuses' => 'Статусы проектов',
     'Templates Messages' => 'Шаблоны сообщений',
@@ -73,7 +74,6 @@ return array(
     'Delete Templates' => 'Удалить шаблон',
     'View Templates' => 'Просмотреть шаблон',
     'Submit' => 'Отправвить',
-    'Projects' => 'Проекты',
     'Order' => 'Заказ',
     'All orders' => 'Все заказы',
     'Create order' => 'Создать заказ',
@@ -124,16 +124,17 @@ return array(
 	'Cancel' => 'Отмена',
 	'Payment method' => 'Способ оплаты',
 	'New' => 'Новые',
-    //
+    'Logs' => 'История действий',
+	'Managers logs' => 'История действий менеджеров',
     'Bookkeeping' => 'Бухгалтерия',
     'My account' => 'Личный кабинет',
     'Profile' => 'Профиль',
     'Authors' => 'Авторы',
     'Customers' => 'Заказчики',
-    // admin menu
     'Accounts department' => 'Бухгалтерия',
 	'Project Fields' => 'Поля Проекта',
-	
+	'Project fields settings' => 'Настройка полей проекта',
+	'Profile fields settings' => 'Настройка полей профиля',
 	//Company
 	'List companies' => 'Список компаний',
 	'Create company' => 'Создать компанию',
@@ -158,7 +159,7 @@ return array(
 	'webmaster second order rate' => 'процент(множитель) вэбмастеру за повторные заказы',
 	'User Agreement' => 'Пользовательское соглашение',
 	'Agreement' => 'Cоглашение',
-	
+	'Variable name' => 'Имя переменной',
 	// работа с этапами 
     'StepStatuses' => 'Статусы этапов',
     'Part Statuses' =>  'Состояние этапов',

@@ -12,7 +12,7 @@ class Company extends CActiveRecord {
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, domains, language, supportEmail, agreement4customers, agreement4executors', 'required'),
+			array('name, domains, language, supportEmail', 'required'),
 			array('name, domains, FrontPage, icon, logo', 'length', 'max'=>255),
 			array('supportEmail', 'email'),
 			array('supportEmail', 'length', 'min' => 6, 'max'=>64,'message' => UserModule::t("Incorrect password (minimal length 6 symbols, maximum 30).")),

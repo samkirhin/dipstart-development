@@ -208,6 +208,8 @@ class Profile extends UActiveRecord
 				} elseif (User::model()->isAuthor()) {
 					$criteria->addInCondition('visible',array(2,3));
 					$this->_model=ProfileField::model()->findAll($criteria);
+				} elseif (User::model()->isManager()) {
+					$this->_model=ProfileField::model()->findAll();
 				} else {
 					$this->_model=ProfileField::model()->forAll()->findAll();
 				}
@@ -239,12 +241,12 @@ class Profile extends UActiveRecord
 					}
 				}
 			}
-			if (isset($this->discipline) && is_array($this->discipline)) {
+			/*if (isset($this->discipline) && is_array($this->discipline)) {
 			   $this->discipline = implode(",", $this->discipline);
 			}
 			if (isset($this->job_type) && is_array($this->job_type)) {
 			   $this->job_type = implode(",", $this->job_type);
-			}
+			}*/
 			// запрашиваем модерацию перед сохранением данных профиля
 //			if((!$this->isNewRecord) && (!Yii::app()->user->checkAccess('Manager'))) {
 //				$this->getChanges();
