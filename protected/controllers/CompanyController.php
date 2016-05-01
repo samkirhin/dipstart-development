@@ -80,12 +80,13 @@ class CompanyController extends Controller {
 			$model->domains = 'new.company.admintrix.com';
 			$model->language = 'en';
 			$model->supportEmail = 'support@new.company.admintrix.com';
+			$model->PaymentCash = 1;
 			$model->save();
 			$new_prefix = $model->id.'_';
 			$s = strlen($prefix);
 			$result = Yii::app()->db->createCommand('SHOW TABLES;')->queryAll();
 			foreach($result as $item){
-				if(strpos($item['Tables_in_project'],$prefix)===0) $list[] = substr($item['Tables_in_project'],$s);
+				if(strpos($item[key($item)],$prefix)===0) $list[] = substr($item[key($item)],$s);
 			}
 			foreach($list as $table){
 				$sql = 'CREATE TABLE `'.$new_prefix.$table.'` LIKE `'.$prefix.$table.'`;';

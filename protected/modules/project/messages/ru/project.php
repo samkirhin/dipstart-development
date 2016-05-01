@@ -79,7 +79,11 @@ return array(
     'Name of educational discipline' => 'Наименование учебной дисциплина',
 	'Create order' => 'Создать заказ',
     'The new revision' => 'Новая доработка',
-    ///project/zakaz/update/id/x
+    'Create Project Field' => 'Создать поле формы заказа',
+	'View Project Field' => 'Просмотр поля формы заказа',
+	'Update Project Field' => 'Редактировать поле формы заказа',
+	'Delete Project Field' => 'Удалить поле формы заказа',
+	'Manage Project Fields' => 'Управление полями формы заказа',
     'Author' => 'Автор',
 	'Executor' => 'Исполнитель',
     'Customer' => 'Заказчик',
