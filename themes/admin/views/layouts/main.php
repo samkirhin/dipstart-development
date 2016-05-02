@@ -41,7 +41,7 @@ switch ($role){
 		$items[] = array('label'=>Yii::t('site','Logout'). ' ('.Yii::app()->user->name.')', 'url'=>array('/user/logout'));
 		break;
     case 'Manager':
-        $items[] = array('label'=>Yii::t('site','Users'), 'url'=>array('/user'));
+        $items[] = array('label'=>Yii::t('site','Users'), 'url'=>array('/user/admin'));
 		$items[] = array('label'=>Yii::t('site','All orders'), 'url'=>array('/project/zakaz'));
 		$items[] = array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create'));
         $items[] = array('label'=>Yii::t('site','Events'), 'url'=>array('/project/event'));
