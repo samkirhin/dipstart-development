@@ -52,7 +52,7 @@
 		<?php echo $form->labelEx($model,'email'); ?>
 		</div><div class="right-div-admin-form">
 		<?php $attributes = array('size'=>40,'maxlength'=>128,'placeholder'=>$model->getAttributeLabel( 'email' ).($model->isAttributeRequired('email')?' *':''));?>
-		<?php if (!$admin && $manager && $fields['email']) $attributes['disabled'] = true;	?>
+		<?php if (!$admin && $manager && $model->superuser) $attributes['disabled'] = true;	?>
 		<?php echo $form->textField($model,'email', $attributes); ?>
 		<?php echo $form->error($model,'email'); ?>
 		</div>
@@ -97,7 +97,7 @@
 			
 ?>
 	<div class="row"><div class="left-div-admin-form">
-		<?php echo $form->labelEx($profile, $field->title); ?>
+		<?php echo $form->labelEx($profile, $field->varname); ?>
 		</div><div class="right-div-admin-form">
 <?php 
 			if ($widgetEdit = $field->widgetEdit($profile)) {

@@ -21,12 +21,12 @@ class AdminController extends Controller {
 	 */
 	public function accessRules() {
 		return array(
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			/*array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','create','update'),
 				'users'=>UserModule::getAdmins(),
-			),
+			),*/
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('view'),
+				'actions'=>array('view','admin','delete','create','update'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
