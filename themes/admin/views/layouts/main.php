@@ -30,7 +30,7 @@ switch ($role){
 		));
 		$items[] = array('label'=>Yii::t('site','Company settings'), 'url'=>array('#'), 'items' => array(
 			array('label'=>Yii::t('site','Base settings'), 'url'=>array('/company/edit')),
-			array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/index')),
+			array('label'=>Yii::t('site','Templates'), 'url'=>array('/templates/admin')),
 			array('label'=>Yii::t('site','Statuses'), 'url'=>array('/projectStatus/index')),
 			array('label'=>Yii::t('site','Parts statuses'), 'url'=>array('/partStatus/index')),
 			array('label'=>Yii::t('site','Project fields settings'), 'url'=>array('/project/projectField/admin')),
