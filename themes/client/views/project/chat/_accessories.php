@@ -32,7 +32,7 @@
 	?>
 	</div>
 	<? } ?>
-	<?php if ($order->technicalspec) { ?>
+	<?php if (User::model()->isCorrector() || User::model()->isExecutor($order->id) || User::model()->isCustomer()) { ?>
 	<div class="chat-buttons">
 		<?php
 			if(User::model()->isCorrector()) {

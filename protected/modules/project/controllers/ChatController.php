@@ -141,9 +141,12 @@ class ChatController extends Controller {
                     case 'author_to_corrector':
                     	$model->sender_role = 'Author';
                 		$model->recipient_role = 'Corrector';
+                		$model->recipient = -2;
+                		break;
                     case 'customer_to_corrector':
                     	$model->sender_role = 'Customer';
                 		$model->recipient_role = 'Corrector';
+                		$model->recipient = -2;
                         break;
                 }
 				$model->save();
