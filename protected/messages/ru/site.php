@@ -188,7 +188,9 @@ return array(
 	'Date of change' => 'Дата изменения',
 	'Good day' => 'Добрый день',
 	'We invite You to project' => 'Приглашаем в проект',
-	
+	'Question category' => 'Категория вопроса',
+	'Question' => 'Вопрос',
+	'Answer text' => 'Текст ответа',
 	'Contact with us' => 'Связаться с нами',
 	'If You have suggestions or questions, please fill out the form below. Thank you' => 'Если у Вас есть предложения или вопросы, пожалуйста, заполните форму ниже. Спасибо.',
 	'Error' => 'Ошибка',
