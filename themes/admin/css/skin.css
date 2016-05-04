@@ -40,9 +40,7 @@ border: 1px solid #ddd;
 border: 1px solid #ddd;
 padding: 10px;
 }
-input[name="yt2"] {
-height:35px!important;
-}
+
 .notesBlockTextarea {border: 1px solid #ddd;}
 
 .hasDatepicker {

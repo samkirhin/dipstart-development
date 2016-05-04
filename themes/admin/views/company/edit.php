@@ -104,6 +104,16 @@
 		<?php echo $form->textField($model,'WebmasterSecondOrderRate',array('size'=>60,'maxlength'=>32)); ?>
 		<?php echo $form->error($model,'WebmasterSecondOrderRate'); ?>
 	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'telfin_id'); ?>
+		<?php echo $form->textField($model,'telfin_id',array('size'=>60,'maxlength'=>32)); ?>
+		<?php echo $form->error($model,'telfin_id'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'telfin_secret'); ?>
+		<?php echo $form->textField($model,'telfin_secret',array('size'=>60,'maxlength'=>32)); ?>
+		<?php echo $form->error($model,'telfin_secret'); ?>
+	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(UserModule::t('Save')); ?>
 	</div>

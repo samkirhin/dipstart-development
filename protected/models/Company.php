@@ -24,9 +24,10 @@ class Company extends CActiveRecord {
 			array('iconupload', 'file', 'types'=>'ico', 'maxSize'=>'204800', 'allowEmpty'=>true),
 			array('header, text4guests, text4customers, agreement4customers, agreement4executors', 'length', 'max'=>65535),
 			array('WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'type', 'type'=>'float'),
+			array('telfin_id, telfin_secret', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, frozen, organization, name, domains, language, supportEmail, PaymentCash, Payment2Chekout, Payment2ChekoutHash, FrontPage, icon, logo, header, text4guests, text4customers, agreement4customers, agreement4executors, WebmasterFirstOrderRate, WebmasterSecondOrderRate', 'safe', 'on'=>'search'),
+			array('id, frozen, organization, name, domains, language, supportEmail, PaymentCash, Payment2Chekout, Payment2ChekoutHash, FrontPage, icon, logo, header, text4guests, text4customers, agreement4customers, agreement4executors, WebmasterFirstOrderRate, WebmasterSecondOrderRate, telfin_id, telfin_secret', 'safe', 'on'=>'search'),
 		);
 	}
 	public function attributeLabels() {
@@ -51,10 +52,12 @@ class Company extends CActiveRecord {
 			'agreement4executors'      => Yii::t('site','agreement for executors'),
 			'WebmasterFirstOrderRate'  => Yii::t('site','webmaster first order rate'),
 			'WebmasterSecondOrderRate' => Yii::t('site','webmaster second order rate'),
+			'telfin_id'                => Yii::t('site','telfin id'),
+			'telfin_secret'            => Yii::t('site','telfin secret'),
 		);
 	}
 	public static function search_by_domain($domain) {
-		$orgz = Campaign::model()->findAll("domains like '%$domain%'");
+		$orgz = self::model()->findAll("domains like '%$domain%'");
 		if (count($orgz)==1) {
 			return $orgz[0];
 		}else

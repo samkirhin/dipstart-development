@@ -179,14 +179,22 @@ $customer = $model->user;
             <div class="role"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$customer->id));?>"><?=ProjectModule::t('Customer')?></a></b></div>
             <?php if ($customer->full_name) { ?><div class="name"><p><?= $customer->full_name ?></p></div><?php } ?>
             <div class="mail"><p><?= $customer->email ?></p></div>
-            <?php if ($customer->phone_number) { ?><div class="phone"><p><?= $customer->phone_number ?></p></div><?php } ?>
+            <?php if ($customer->phone_number) { ?><div class="phone"><p><?php
+				$this->widget('application.widgets.CallBtn', array(
+					'to'=>$customer->phone_number,
+				));
+				echo $customer->phone_number; ?></p></div><?php } ?>
         </div>
         <div class="col-lg-6 col-xs-6 leftBorder">
 			<?php if ($author){ ?>
             <div class="role"><b><a href="<?php echo Yii::app()->createUrl('/user/admin/update',array('id'=>$author->id));?>"><?=ProjectModule::t('Executor')?></a></b></div>
             <?php if ($author->full_name) { ?><div class="name"><p><?= $author->full_name ?></p></div><?php } ?>
 			<div class="mail"><p><?= $author->email ?></p></div>
-            <?php if ($author->phone_number) { ?><div class="phone"><p><?= $author->phone_number ?></p></div><?php } ?>
+            <?php if ($author->phone_number) { ?><div class="phone"><p><?php
+				$this->widget('application.widgets.CallBtn', array(
+					'to'=>$author->phone_number,
+				));
+				echo $author->phone_number; ?></p></div><?php } ?>
 			<?php } else { ?>
 				<div class="name"><p><?=ProjectModule::t('Executor is not assigned')?></p></div>
 			<? } ?>
