@@ -62,9 +62,9 @@ class Templates extends CActiveRecord
 	{
 		return array(
 			'id' => Yii::t('site','ID'),
-			'name' => Yii::t('site','Name'),
-			'title' => Yii::t('site','Title'),
-			'text' => Yii::t('site','Text'),
+			'name' => Yii::t('site','Question category'), //Yii::t('site','Name'),
+			'title' => Yii::t('site','Question'), //Yii::t('site','Title'),
+			'text' => Yii::t('site','Answer text'), //Yii::t('site','Text'),
 			'type_id' => Yii::t('site','Type'),
 		);
 	}
