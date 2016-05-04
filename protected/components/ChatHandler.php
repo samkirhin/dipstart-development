@@ -51,7 +51,7 @@ class ChatHandler extends YiiChatDbHandlerBase {
                         $res1[$k]['sender']['username']=ProjectModule::t('Manager');//'Менеджер';
                         break;
                     case 'Author':
-                        $res1[$k]['sender']['username']=ProjectModule::t('Author');//'Автор';
+                        $res1[$k]['sender']['username']=ProjectModule::t('Executor');//'Автор';
                         break;
                     case 'Customer':
                         $res1[$k]['sender']['username']=ProjectModule::t('Customer');//'Заказчик';
@@ -71,7 +71,7 @@ class ChatHandler extends YiiChatDbHandlerBase {
                         $res1[$k]['recipient']['username']=ProjectModule::t('to manager');//'менеджеру';
                         break;
                     case 'Author':
-                        $res1[$k]['recipient']['username']=ProjectModule::t('to author');//'автору';
+                        $res1[$k]['recipient']['username']=ProjectModule::t('to executor');//'автору';
                         break;
                     case 'Customer':
                         $res1[$k]['recipient']['username']=ProjectModule::t('to customer');//'заказчику';

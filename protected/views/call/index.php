@@ -14,9 +14,9 @@ $this->breadcrumbs=array(
         );
 ?>
 <br>
-<?php $this->widget('application.widgets.CallBtn', array(
+<?php /*$this->widget('application.widgets.CallBtn', array(
 	'to'=>'2203*03',
-));
+));*/
 ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(

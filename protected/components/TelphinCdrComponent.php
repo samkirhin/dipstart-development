@@ -18,7 +18,10 @@ class TelphinCdrComponent  extends CComponent
 	 * Initializes the component.
 	 */
 	public function init() {
-        $this->telfin = new telphin(
+		$company = Company::getCompany();
+		if($company->telfin_id) $this->app_id = $company->telfin_id;
+		if($company->telfin_secret) $this->app_secret = $company->telfin_secret;
+        if($this->app_id && $this->app_secret) $this->telfin = new telphin(
             $this->app_id,
             $this->app_secret,
             $this->extension,

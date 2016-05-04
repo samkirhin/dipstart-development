@@ -19,7 +19,7 @@ class CrmCdr extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'cdr';
+		return Company::getId().'_cdr';
 	}
 
 	/**

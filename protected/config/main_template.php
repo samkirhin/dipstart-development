@@ -139,13 +139,13 @@ return array(
                 ),
             ),
         ),
-		/*'cdr' => [
+		'cdr' => [
             'class' => 'application.components.TelphinCdrComponent',
-            'app_id' => '********************************',
-            'app_secret' => '********************************',
+            //'app_id' => '********************************',
+            //'app_secret' => '********************************',
             'extension' => 100,
             'count' => 2000,
-        ],*/
+        ],
 	),
     'timeZone' => 'Europe/Moscow',
 	// application-level parameters that can be accessed

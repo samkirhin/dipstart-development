@@ -128,6 +128,10 @@ $(document).ready(function() {
         return false;
     });
 	$('.chat-view').scrollTop(10000);
+
+	$('.message-buttons-items .btn-message').click(function(){
+		$('#message').val($(this).parent().find('.message-buttons-text-hidden').html());
+	});
 });
 function zakaz_done(part_id) { /* Stage is ready */
 		var orderId = $('#order').val();

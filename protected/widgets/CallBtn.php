@@ -15,14 +15,17 @@ class CallBtn  extends CWidget
 {
     public $to;
     public function run() {
+		$htmlOptions = array('class' => 'callBtn');
+		if(!Yii::app()->cdr->app_id) $htmlOptions['disabled'] = 'disabled';
         echo CHtml::ajaxButton(
-            'Call',
+            '',//'Call',
             ['/call/call'],
-                [
-                    'type' => 'POST',
-                    'data'=> 'to='.$this->fixNumber($this->to),
-                    'success'=>'function(msg){alert(msg);}',
-                ]
+			[
+				'type' => 'POST',
+				'data'=> 'to='.$this->fixNumber($this->to),
+				'success'=>'function(msg){alert(msg);}',
+			],
+			$htmlOptions
         );
     }
 	private function fixNumber($number){

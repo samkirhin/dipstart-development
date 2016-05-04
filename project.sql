@@ -352,6 +352,7 @@ CREATE TABLE IF NOT EXISTS `1_Projects` (
   `title` varchar(255) NOT NULL COMMENT 'Наименование',
   `add_demands` text COMMENT 'Доп. требования',
   `status` tinyint(4) DEFAULT '0' COMMENT 'Статус проекта',
+  `last_spam` TIMESTAMP NULL,
   `executor` int(10) unsigned DEFAULT '0' COMMENT 'ID исполнителя',
   `notes` text NOT NULL COMMENT 'Заметки',
   `date` timestamp NULL DEFAULT NULL,

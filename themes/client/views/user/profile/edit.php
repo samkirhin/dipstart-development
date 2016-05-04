@@ -35,12 +35,21 @@ $form=$this->beginWidget('UActiveForm', array(
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
+
 		<?php if(User::model()->isAuthor()) { ?>
 		<div class="form-group">
             <?php echo $form->labelEx($profile,'rating',array('class'=>'col-md-4 control-label')); ?>
             <div class="col-md-8">
                 <?php echo $form->textField($profile,'rating',array('size'=>20,'maxlength'=>20,'class'=>'form-control', 'disabled'=>'true')); ?>
             </div>
+        </div>
+        <div class="form-group">
+            <?php echo $form->labelEx($profile,'mailing_for_executors',array('class'=>'col-md-4 control-label')); ?>
+            <div class="col-md-8">
+                <?php if($profile->mailing_for_executors) $attr = array('checked'=>'checked'); else $attr = array();
+				echo $form->checkBox($profile,'mailing_for_executors', $attr ); ?>
+            </div>
+            <?php echo $form->error($profile,'mailing_for_executors'); ?>
         </div>
 		<?php } ?>
 		
