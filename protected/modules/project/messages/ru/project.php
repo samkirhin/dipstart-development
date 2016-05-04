@@ -100,6 +100,7 @@ return array(
     'Send to customer' => 'Отправить заказчику',
     'Send to executor' => 'Отправить исполнителю',
     'Send to administrator' => 'Отправить администратору',
+    'Send to corrector' => 'Отправить техническому руководителю',
     'Message' => 'Сообщение',
     'Enter your message...' => 'Введите сообщение...',
     'to author' => 'Автору',

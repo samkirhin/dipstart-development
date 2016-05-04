@@ -20,8 +20,8 @@ class ProjectMessages extends CActiveRecord
 			array('sender, recipient, moderated, order', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('cost', 'safe'),
-			array('id, message, sender, recipient, moderated, date, order, cost', 'safe', 'on'=>'search'),
+			array('cost, sender_role, recipient_role', 'safe'),
+			array('id, message, sender, recipient, moderated, date, order, cost, sender_role, recipient_role', 'safe', 'on'=>'search'),
 		);
 	}
 
