@@ -11,7 +11,11 @@ class EventsCommand extends CConsoleCommand {
 		$usersModel = User::findAllExecutors();
 		if (is_array($usersModel))
 			foreach ($usersModel as $user) {
-				if ($user->profile->notification == '1') {
+				
+				$profileModel = Profile::model()->findByPk($user->id);
+				if ($profileModel===null) throw new CHttpException(404, 'Данные профиля пользователя не найдены.');
+				
+				if ($profileModel->notification == '1') {
 					foreach ($user->zakaz as $zakaz) {
 						$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 						$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
