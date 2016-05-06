@@ -624,9 +624,17 @@ class ZakazController extends Controller {
         if ($new) {
 			$criteria->compare('executor', 0);
 			$user = User::model()->with('profile')->findByPk(Yii::app()->user->id);
-			$specials = explode(',',$user->profile->specials);
-			$criteria->addInCondition('specials',$specials);
-		} else {	
+			if (ProjectField::model()->inTableByVarname('specials') && isset($user->profile->specials) && $user->profile->specials)
+			{
+				$specials = explode(',',$user->profile->specials);
+				$criteria->addInCondition('specials',$specials);
+			}
+			if (ProjectField::model()->inTableByVarname('specials2') && isset($user->profile->specials2) && $user->profile->specials2)
+			{
+				$specials2 = explode(',',$user->profile->specials2);
+				$criteria->addInCondition('specials2',$specials2);
+			}
+		} else {
 			if (User::model()->isAuthor())	$criteria->compare('executor', $uid);
 			if (User::model()->isCustomer())$criteria->compare('user_id',  $uid);
 		};	
@@ -713,10 +721,18 @@ class ZakazController extends Controller {
 	public function actionListTech() {
 		$new = true;
 		$user = User::model()->with('profile')->findByPk(Yii::app()->user->id);
-		$specials = explode(',',$user->profile->specials);
 
         $criteria = new CDbCriteria();
-        $criteria->addInCondition('specials',$specials);
+        if (ProjectField::model()->inTableByVarname('specials') && isset($user->profile->specials) && $user->profile->specials)
+		{
+			$specials = explode(',',$user->profile->specials);
+			$criteria->addInCondition('specials',$specials);
+		}
+		if (ProjectField::model()->inTableByVarname('specials2') && isset($user->profile->specials2) && $user->profile->specials2)
+		{
+			$specials2 = explode(',',$user->profile->specials2);
+			$criteria->addInCondition('specials2',$specials2);
+		}
 		$criteria->compare('technicalspec', 1);
 
         $dataProvider = new CActiveDataProvider(Zakaz::model()->resetScope(), [
