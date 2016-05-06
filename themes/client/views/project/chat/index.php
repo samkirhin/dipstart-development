@@ -12,12 +12,11 @@ $upload_params = array('id' => $order->id);
 ?>
 <div class="container container-chat">
 	<?php
-		if ((User::model()->isCustomer() || User::model()->isCorrector()) && (!$order->is_active || !$moderated)) {
+		if (User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
+			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
+		} elseif ((User::model()->isCustomer() || User::model()->isCorrector()) && (!$order->is_active || !$moderated)) {
 			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
 		}
-		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
-			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
-		};	
 	?>
 	<div class="col-xs-12 info-block" style="margin-bottom: 15px;">
 		<div class="panel-group" id="info-block">
@@ -35,9 +34,9 @@ $upload_params = array('id' => $order->id);
 
 						<div class="col-xs-12 aboutZakaz">
 							<?php
-							if (User::model()->isAuthor() && !User::model()->isCorrector()) {
+							if (User::model()->isExecutor($order->id)) {
 								$this->renderPartial('/zakaz/_view', array('model' => $order));
-							} elseif(User::model()->isCustomer() || User::model()->isCorrector()) {
+							} elseif (User::model()->isCustomer() || User::model()->isCorrector()) {
 								if ($order->is_active) {
 									$this->renderPartial('/zakaz/_form', array('model' => $order,
 																		'upload_params' => $upload_params,
@@ -97,7 +96,10 @@ $upload_params = array('id' => $order->id);
 			?>
 		</div>
 		<?php 
-		$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId));
+		if (User::model()->isExecutor($order->id)) 	$role = 'Executor';
+		elseif (User::model()->isCustomer()) 		$role = 'Customer';
+		elseif (User::model()->isCorrector()) 		$role = 'Corrector';
+		$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId, 'role'=>$role ));
 		?>
 	</div>
 </div>
