@@ -733,6 +733,7 @@ class ZakazController extends Controller {
 			$specials2 = explode(',',$user->profile->specials2);
 			$criteria->addInCondition('specials2',$specials2);
 		}
+		// $criteria->compare('executor', '<>'.$user->id);
 		$criteria->compare('technicalspec', 1);
 
         $dataProvider = new CActiveDataProvider(Zakaz::model()->resetScope(), [

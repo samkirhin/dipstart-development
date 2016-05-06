@@ -12,7 +12,7 @@ $upload_params = array('id' => $order->id);
 ?>
 <div class="container container-chat">
 	<?php
-		if (User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
+		if (User::model()->isExecutor($order->id) && !$isCorrector) { // Если назначен исполнитель, и именнно он смотрит
 			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
 		} elseif ((User::model()->isCustomer() || User::model()->isCorrector()) && (!$order->is_active || !$moderated)) {
 			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
@@ -34,7 +34,7 @@ $upload_params = array('id' => $order->id);
 
 						<div class="col-xs-12 aboutZakaz">
 							<?php
-							if (User::model()->isExecutor($order->id)) {
+							if (User::model()->isExecutor($order->id) && !$isCorrector) {
 								$this->renderPartial('/zakaz/_view', array('model' => $order));
 							} elseif (User::model()->isCustomer() || User::model()->isCorrector()) {
 								if ($order->is_active) {
@@ -57,7 +57,7 @@ $upload_params = array('id' => $order->id);
 
 	<div class="col-xs-12 rating-line"><?php
 
-		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
+		if(User::model()->isExecutor($order->id) && !$isCorrector) { // Если назначен исполнитель, и именнно он смотрит
 			$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
 			echo '<div class="my-rating">'.ProjectModule::t('Work price:').' <span class="value">'.$payment->work_price.'</span></div>'; //Стоимость проекта для автора
 			echo '<div class="my-rating">'.ProjectModule::t('To pay:').' <span class="value">'.$payment->to_pay.'</span></div>';
@@ -96,9 +96,9 @@ $upload_params = array('id' => $order->id);
 			?>
 		</div>
 		<?php 
-		if (User::model()->isExecutor($order->id)) 	$role = 'Executor';
-		elseif (User::model()->isCustomer()) 		$role = 'Customer';
-		elseif (User::model()->isCorrector()) 		$role = 'Corrector';
+		if (User::model()->isExecutor($order->id) && !$isCorrector) 	$role = 'Executor';
+		elseif (User::model()->isCustomer()) 							$role = 'Customer';
+		elseif (User::model()->isCorrector()) 							$role = 'Corrector';
 		$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId, 'role'=>$role ));
 		?>
 	</div>
