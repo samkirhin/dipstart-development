@@ -73,7 +73,8 @@ class ChatController extends Controller {
 	/**
 	 *  Вывод и добавление сообщений
 	 */
-    public function actionIndex($orderId) {
+    public function actionIndex($orderId, $role = null) {
+    	$isCorrector = $role == 'Corrector' ? 1 : 0;
 		$isGuest = Yii::app()->user->isGuest;
 		if ($isGuest) {
 			$url = 'http://'.$_SERVER['SERVER_NAME'].'/user/login';
@@ -186,6 +187,7 @@ class ChatController extends Controller {
 			'moderated'	=> $moderated,
 			'parts'		=> $parts,
 			'PaymentImages' => $PaymentImages,
+			'isCorrector' => $isCorrector,
         ));
     }
 	
