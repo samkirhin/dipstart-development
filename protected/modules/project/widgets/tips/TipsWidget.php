@@ -12,14 +12,12 @@ class TipsWidget extends CWidget{
         'is_just_enter', // Заказ только поступил
         'is_wait_customer_decision_without_cash', // Ждем решения заказчика (если нет предоплаты еще)
         'is_wait_customer_decision_about_stage', // Ждем решения заказчика (по утверждению этапа)
-        'is_wait_customer_decision_about_all', // Ждем решения заказчика (по утврждению всей работы)
         'is_enter_prepayments', // Внесение предполаты заказчиком
         'is_no_author_after_mail', // Нет ни одного автора спустя сутки после рассылки
         'is_enter_cost', // Исполнитель написал свое предложение на новый заказ
         'is_sent_stage', // Исполнитель выслал этап работы
         'is_not_sent_stage_on_time', // Исполнитель не выслал этап в срок
         'is_not_sent_all_on_time', // Исполнитель не выслал в срок работу
-        'is_set_new_executors', // Назначение нового автора (после снятия предыдущего)
         'is_new_message', // Сообщение в чате
         'is_new_changes', // Появились доработки к работе
         'is_time_passed', // Дата и время выполнения прошли (от заказчика)
@@ -51,15 +49,6 @@ class TipsWidget extends CWidget{
                         return true;
                 }
                 return false;
-                break;
-
-            case 'is_wait_customer_decision_about_all':
-                $partsDone = true;
-                foreach ($this->parts as $part) {
-                    if ($part->status_id != 4)
-                        $partsDone = false;
-                }
-                return $this->project->status == 4 && $partsDone;
                 break;
 
             case 'is_enter_prepayments':
@@ -103,10 +92,6 @@ class TipsWidget extends CWidget{
             case 'is_not_sent_all_on_time':
                 $currentDate = date_create();
                 return $this->project->status == 4 && $currentDate > date_create($this->project->author_informed);
-                break;
-
-            case 'is_set_new_executors':
-                return $this->project->status == 3 && $this->project->old_status > 3;
                 break;
 
             case 'is_new_message':
