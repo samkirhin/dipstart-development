@@ -181,9 +181,9 @@ var YiiChat = function (options) {
                         p.addClass(options.othersPostCssStyle);
                 }
 
-                var tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/admin/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
+                var tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/admin/update?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
                 if (typeof post.recipient === 'object') {
-                    tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/admin/view?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
+                    tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/admin/update?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
                 } else if (post.recipient == -1) 
                     tmp_html += " написал авторам";
                 else if (post.recipient == -2)
@@ -191,7 +191,7 @@ var YiiChat = function (options) {
                 tmp_html += "  |</div>";
 				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>";
 				//tmp_html += "<div class='chtpl0-time'>" + post.date + "</div>"
-                if (post.cost > 0) tmp_html += "<div class='cost'>Цена:" + post.cost + "</div>";
+                if (post.cost > 0) tmp_html += "<div class='cost'>Цена: <span>" + post.cost + "</span></div>";
                 //tmp_html += "</div>";
 				tmp_html += "<div class='text'></div>";
                 p.find('.chtpl0-content').html(tmp_html);

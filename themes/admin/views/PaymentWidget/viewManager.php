@@ -88,8 +88,7 @@
 	<? //if($model->to_receive>0){ ?>
 	<div class="confirm-the-payment">
 		<span><?=ProjectModule::t('Confirm payment from client:')?></span>
-		<div class="btn-group-xs" role="group">
-		<button class="btn btn-default send_managers_approve"><?=ProjectModule::t('Confirm')?></button>
+		<button class="btn instant-send-buttons send_managers_approve bg-green"><img src="<?=Yii::app()->theme->baseUrl?>\images\ok.png" title="<?=ProjectModule::t('Confirm')?>"></button>
         <?php if ($this->hints['Zakaz_confirm']) { ?>
         <div class="hint-block __confirm">
             ?
@@ -98,7 +97,7 @@
             </div>
         </div>
         <?php } ?>
-		<button class="btn btn-default send_managers_cancel"><?=ProjectModule::t('Cancel')?></button>
+		<button class="btn instant-send-buttons send_managers_cancel bg-red"><img src="<?=Yii::app()->theme->baseUrl?>\images\del.png" title="<?=ProjectModule::t('Cancel')?>"></button>
         <?php if ($this->hints['Zakaz_cancel']) { ?>
         <div class="hint-block __cancel">
             ?
@@ -107,6 +106,7 @@
             </div>
         </div>
         <?php } ?>
+		<div class="btn-group-xs inline-block" role="group">
 		<?php 
         
             if ($zakaz) {
