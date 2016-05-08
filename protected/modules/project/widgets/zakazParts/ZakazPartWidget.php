@@ -33,7 +33,6 @@ class ZakazPartWidget extends CWidget{
 		$data = $this->arrDataProvider->getData();
 		$records = PartStatus::model()->findAll();
 		$number = 0;
-		echo count($data);
 		foreach ($data as $this->item_id => $item) {
 			$number++;
 			if (User::model()->isCustomer() && $item->status_id == 4)
