@@ -1379,3 +1379,10 @@ ul.files-list {
   font-size: 14px;
   font-weight: normal;
 }
+.btn-link {
+	color: white;
+}
+.btn-link:active, .btn-link:hover, .btn-link:focus, .btn-link:active {
+	text-decoration: none;
+	color: white;
+}

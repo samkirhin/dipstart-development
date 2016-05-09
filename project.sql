@@ -891,6 +891,8 @@ CREATE TABLE IF NOT EXISTS `Companies` (
   `text4customers` text CHARACTER SET utf8,
   `WebmasterFirstOrderRate` float DEFAULT NULL,
   `WebmasterSecondOrderRate` float DEFAULT NULL,
+  `telfin_id` VARCHAR( 32 ) NULL DEFAULT NULL,
+  `telfin_secret` VARCHAR( 32 ) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -918,6 +920,24 @@ CREATE TABLE IF NOT EXISTS `Rights` (
 -- Дамп данных таблицы `Rights`
 --
 
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `cdr` для логов телефонии
+--
+
+CREATE TABLE IF NOT EXISTS `1_cdr` (
+  `id` char(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `published` int(11) NOT NULL,
+  `answerDuration` int(11) DEFAULT NULL,
+  `source` varchar(255) COLLATE utf8_bin NOT NULL,
+  `destination` varchar(255) COLLATE utf8_bin NOT NULL,
+  `duration` int(11) NOT NULL,
+  `flow` enum('IN','OUT','LOCAL') COLLATE utf8_bin NOT NULL,
+  `result` enum('ANSWERED','BUSY','FAILED','NO_ANSWER','UNKNOWN','NOT_ALLOWED') COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 

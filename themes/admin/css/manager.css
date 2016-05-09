@@ -22,12 +22,17 @@ hr {
 }
 .order-contacts {
     background-color: #fff;
+	text-align: center;
+	font-size: 12px;
+}
+.order-contacts p {
+	font-size: 11px;
+}
+.chtpl0-msg .cost span {
+	color: #D36666;
 }
 .chtpl0-msg .chtpl0-buttons button.chtpl0-delete {
     background: #D36666!important;
-}
-.order-contacts {
-	text-align: center;
 }
 div.rightBorder, div.leftBorder {
     padding: 5px 0px;
@@ -36,13 +41,13 @@ div.rightBorder, div.leftBorder {
 .order-contacts div div{
 	position: relative;
 	display: inline-block;
-    margin-top: 10px;
-	height: 41px;
+    margin-top: 0px;
+	height: 30px;
     padding: 0;
     padding: 0px 15px 0px 0px;
 }
 .order-contacts div div.role:first-child {
-	padding-left: 21px;
+	padding-left: 10px;
 }
 .fullwidth {
 	width: 100%;
@@ -67,16 +72,21 @@ div.rightBorder, div.leftBorder {
     margin-right: 5px;
 	top: 5px;
 }
-.phone p:before {
-	content: "";
+.callBtn {
     position: relative;
 	display: inline-block;
-    background: url(../images/phone.png) no-repeat center center;
+    background: url(../images/phone-green.png) no-repeat center center;
     width: 15px;
     height: 20px;
-    margin-right: 10px;
+    margin-right: 7px;
 	margin-bottom: -5px;
+	border: 0;
+	top: 3px;
 }
+.callBtn[disabled] {
+	background: url(../images/phone.png) no-repeat center center;
+}
+
 .rightBorder {
     border-right: solid 1px #cccccc;
 }
@@ -222,21 +232,26 @@ div.rightBorder, div.leftBorder {
     right: -11px;
     top: -11px;
 }
-.hint-block_content{
-	position:absolute;
-	top:20px;
-	min-width: 150px;
-	right:-105px;
-	padding:7px 12px;
-	padding-right: 7px;
-	border-radius:5px;
-	background:#4A4A4A;
-	color:#FFFFFF;
-	font-size:11px;
-	text-align:left;
-	display:none;
-	z-index: 200;
-	white-space: normal;
+.hint-block_content {
+    position: absolute;
+    top: 20px;
+    min-width: 150px;
+    right: -105px;
+    padding: 15px 17px;
+    padding-right: 15px;
+    border-radius: 5px;
+    background: #4A4A4A;
+    color: #fff;
+    font-size: 11px;
+    text-align: left;
+    display: none;
+    z-index: 200;
+    white-space: normal;
+    line-height: 13px;
+}
+.hint-block_content-2x {
+	min-width: 300px;
+	right: -155px;
 }
 .hint-block:hover .hint-block_content {
 	display:block;
@@ -249,6 +264,10 @@ div.rightBorder, div.leftBorder {
 	right:103px;
 	border-bottom:5px solid #4A4A4A;
 }
+.hint-block_content-2x:after{
+	right:153px;
+}
+
 .techspecBlock {
     padding: 0;
     margin: 0px 0 5px 0;
@@ -419,7 +438,7 @@ label
     resize: none;
 }
 .terms-block {
-    padding-bottom: 15px;
+    padding-bottom: 5px;
     padding-right: 15px !important;
     background: none repeat scroll 0% 0% #FFF;
     margin-top: 10px;
@@ -884,7 +903,7 @@ div.chat-functions > button {
 }
 
 .zakaz_part_approve_file {
-    float: right;
+    float: left;
 }
 
 ul.qq-upload-list > li {
