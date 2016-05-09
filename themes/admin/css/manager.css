@@ -267,6 +267,10 @@ div.rightBorder, div.leftBorder {
 .hint-block_content-2x:after{
 	right:153px;
 }
+.hint-block_content b {
+	color: #7FFFD4;
+}
+
 .linkToAuthors {
 	padding: 0;
 	font-size: 12px;
