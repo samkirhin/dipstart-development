@@ -40,7 +40,7 @@ class TipsWidget extends CWidget{
                 break;
 
             case 'is_wait_customer_decision_without_cash':
-                return $this->project->status == 2;
+                return $this->project->status == 2 && !count($this->project->images);
                 break;
 
             case 'is_wait_customer_decision_about_stage':
@@ -52,7 +52,7 @@ class TipsWidget extends CWidget{
                 break;
 
             case 'is_enter_prepayments':
-                return $this->project->status == 1 && $this->payments->received > 0;
+                return (!$this->payments->received || $this->payments->received == 0) && count($this->project->images);
                 break;
 
             case 'is_no_author_after_mail':
@@ -65,9 +65,26 @@ class TipsWidget extends CWidget{
             case 'is_enter_cost':
                 if ($this->project->status == 3 && !$this->project->executor)
                 {
+                    $isNew = false;
                     foreach ($this->messages as $message)
-                        if ($message->cost > 0)
-                            return true;
+                    {
+                        if (User::model()->getUserRole($message->sender) == 'Author')
+                        {
+                            $tip = TipDone::model()->findByAttributes([
+                                'message_id' => $message->id,
+                                'status' => 'is_enter_cost',
+                            ]);
+                            if (!$tip)
+                            {
+                                $isNew = true;
+                                $tip = new TipDone;
+                                $tip->message_id = $message->id;
+                                $tip->status = 'is_enter_cost';
+                                $tip->save();
+                            }
+                        }
+                    }
+                    return $isNew;
                 }
                 return false;
                 break;
@@ -95,13 +112,27 @@ class TipsWidget extends CWidget{
                 break;
 
             case 'is_new_message':
+                $isNew = false;
                 foreach ($this->messages as $message)
                 {
-                    $current_role = User::model()->getUserRole($message->senderObject->id);
+                    $current_role = User::model()->getUserRole($message->sender);
                     if ($current_role != 'Manager' && $current_role != 'Admin')
-                        return true;
+                    {
+                        $tip = TipDone::model()->findByAttributes([
+                            'message_id' => $message->id,
+                            'status' => 'is_new_message',
+                        ]);
+                        if (!$tip)
+                        {
+                            $isNew = true;
+                            $tip = new TipDone;
+                            $tip->message_id = $message->id;
+                            $tip->status = 'is_new_message';
+                            $tip->save();
+                        }
+                    }
                 }
-                return false;
+                return $isNew;
                 break;
 
             case 'is_new_changes':
@@ -114,7 +145,7 @@ class TipsWidget extends CWidget{
 
             case 'is_time_passed':
                 $currentDate = date_create();
-                return $this->project->status == 4 && $currentDate > date_create($this->project->max_exec_date);
+                return ($this->project->status == 4 || $this->project->status == 3) && $currentDate > date_create($this->project->max_exec_date);
                 break;
         }
     }
