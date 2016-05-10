@@ -20,7 +20,7 @@ class ModerateBehavior extends CActiveRecordBehavior
         
         $role = User::model()->getUserRole();
         
-        if (!$this->owner->isNewRecord && $role != 'Manager' && $role != 'Admin') {
+        if (!$this->owner->isNewRecord && $role != 'Manager' && $role != 'Admin' && !(Yii::app()->request->getParam('accepted') && User::model()->isCorrector())) {
         
             $tmp_event_id = time();
             
