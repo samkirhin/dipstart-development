@@ -67,7 +67,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		$model->moderated = 1;
 		
 		$orderId = $model->order;
-		if($model->recipient) {
+		if($model->recipient > 0) {
 			$user = User::model()->findByPk($model->recipient);
 			//$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
 			
