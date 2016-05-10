@@ -8,15 +8,11 @@ class EventsCommand extends CConsoleCommand {
 	
 	// Событие у исполнителя - отправляет шаблон на емаил уведомление об этом (берем из справочника)
 	public function executor() {
-		$usersModel = User::findAllExecutors();
+		$usersModel = User::findAllNotificationExecutors();
 		if (is_array($usersModel))
 			foreach ($usersModel as $user) {
-				
-				$profileModel = User::model()->with(array('profile'=>array('select'=>false, 'joinType'=>'INNER JOIN', 'condition'=>'profile.notification="1"')))->findByPk($user->id);
-				if ($profileModel===null) throw new CHttpException(404, 'Данные профиля пользователя не найдены.');
-				
 				foreach ($user->zakaz as $zakaz) {
-					$time = explode(';', $profileModel->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
+					$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 					$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
 					if (strtotime(date('Y-m-d H:i',time())) == $date) {
