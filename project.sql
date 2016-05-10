@@ -892,6 +892,8 @@ CREATE TABLE IF NOT EXISTS `Companies` (
   `text4customers` text CHARACTER SET utf8,
   `WebmasterFirstOrderRate` float DEFAULT NULL,
   `WebmasterSecondOrderRate` float DEFAULT NULL,
+  `telfin_id` VARCHAR( 32 ) NULL DEFAULT NULL,
+  `telfin_secret` VARCHAR( 32 ) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -926,7 +928,7 @@ CREATE TABLE IF NOT EXISTS `Rights` (
 -- Структура таблицы `cdr` для логов телефонии
 --
 
-CREATE TABLE IF NOT EXISTS `cdr` (
+CREATE TABLE IF NOT EXISTS `1_cdr` (
   `id` char(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `published` int(11) NOT NULL,
   `answerDuration` int(11) DEFAULT NULL,
