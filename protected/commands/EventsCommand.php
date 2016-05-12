@@ -2,8 +2,13 @@
 class EventsCommand extends CConsoleCommand {
 	
     public function run($args) {
-		self::executor();
-		self::manager();
+		echo 'echo: '.get_class(Yii::app())."\n";
+		$companies = Company::model()->findAll('frozen=:p',array(':p'=>'0'));
+		foreach($companies as $company) {
+			Company::setActive($company);
+			self::executor();
+			self::manager();
+		}
     }
 	
 	// Событие у исполнителя - отправляет шаблон на емаил уведомление об этом (берем из справочника)

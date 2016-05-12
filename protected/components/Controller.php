@@ -25,9 +25,9 @@ class Controller extends RController
 
     public function init(){
 		// --- Организации
-		$c_id = Campaign::getId();
+		$c_id = Company::getId();
 		if ($c_id) {
-			if(Campaign::getCompany()->frozen) {
+			if(Company::getCompany()->frozen) {
 				echo 'Where is my money, dude ?!?!?!';
 				die;
 			}
@@ -38,10 +38,8 @@ class Controller extends RController
 			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
 			//ProjectMessages::$table_prefix = $c_id.'_';
 			ProjectPayments::$table_prefix = $c_id.'_';
-			Zakaz::$table_prefix = $c_id.'_';
 			Zakaz::$files_folder = '/uploads/c'.$c_id.'/';
 			Events::$table_prefix = $c_id.'_';
-			ZakazParts::$table_prefix = $c_id.'_';
 			//UpdateProfile::$table_prefix = $c_id.'_';
 			ZakazPartsFiles::$table_prefix = $c_id.'_';
             //PaymentImage::$table_prefix = $c_id.'_';

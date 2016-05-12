@@ -52,54 +52,57 @@ class Company extends CActiveRecord {
 		);
 	}
 	public static function search_by_domain($domain) {
-		$orgz = Campaign::model()->findAll("domains like '%$domain%'");
+		$orgz = Company::model()->findAll("domains like '%$domain%'");
 		if (count($orgz)==1) {
 			return $orgz[0];
 		}else
 			return false;
+	}
+	public static function setActive($company) {
+		self::$orgz = $company;
 	}
 	public static function getCompany() {
 		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
 		return self::$orgz;
 	}
 	public static function getId() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->id;
 	}
 	public static function getName() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->name;
 	}
 	public static function getLanguage() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->language;
 	}
 	public static function getSupportEmail() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->supportEmail;
 	}
 	public static function getPaymentCash() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->PaymentCash;
 	}
 	public static function getPayment2Chekout() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->Payment2Chekout;
 	}
 	public static function getPayment2ChekoutHash() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->Payment2ChekoutHash;
 	}
 	public static function getFrontPage() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->FrontPage;
 	}
 	public static function getWebmasterFirstOrderRate() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->WebmasterFirstOrderRate;
 	}
 	public static function getWebmasterSecondOrderRate() {
-		if(!self::$orgz) self::$orgz = self::search_by_domain($_SERVER['SERVER_NAME']);
+		if(!self::$orgz) self::getCompany();
 		return self::$orgz->WebmasterSecondOrderRate;
 	}
 	public static function filesPath() {
