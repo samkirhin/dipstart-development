@@ -32,12 +32,12 @@ return array(
             'routes'=>array(
                 array(
                     'class'=>'CFileLogRoute',
-                    'logFile'=>'~akoch-ov/logs/admintrix/cron.log',
+                    'logFile'=>'cron.log',
                     'levels'=>'error, warning',
                 ),
                 array(
                     'class'=>'CFileLogRoute',
-                    'logFile'=>'~akoch-ov/logs/admintrix/cron_trace.log',
+                    'logFile'=>'cron_trace.log',
                     'levels'=>'trace',
                 ),
             ),

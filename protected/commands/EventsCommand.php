@@ -2,7 +2,7 @@
 class EventsCommand extends CConsoleCommand {
 	
     public function run($args) {
-		echo 'echo: '.get_class(Yii::app())."\n";
+		//echo 'echo: '.get_class(Yii::app())."\n";
 		$companies = Company::model()->findAll('frozen=:p',array(':p'=>'0'));
 		foreach($companies as $company) {
 			Company::setActive($company);
