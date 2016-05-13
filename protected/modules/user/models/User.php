@@ -89,6 +89,7 @@ class User extends CActiveRecord
 	{
         $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
         $relations['zakaz'] = array(self::HAS_MANY, 'Zakaz', 'user_id');
+        $relations['zakaz_executor'] = array(self::HAS_MANY, 'Zakaz', 'executor');
         $relations['AuthAssignment'] = array(self::HAS_ONE, 'AuthAssignment', 'userid');
 		return $relations;
 	}

@@ -8,10 +8,10 @@ class EventsCommand extends CConsoleCommand {
 	
 	// Событие у исполнителя - отправляет шаблон на емаил уведомление об этом (берем из справочника)
 	public function executor() {
-		$usersModel = User::findAllNotificationExecutors();
+		$usersModel = User::model()->findAllNotificationExecutors();
 		if (is_array($usersModel))
 			foreach ($usersModel as $user) {
-				foreach ($user->zakaz as $zakaz) {
+				foreach ($user->zakaz_executor as $zakaz) {
 					$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 					$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
