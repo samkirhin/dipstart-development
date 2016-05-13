@@ -25,7 +25,7 @@ class ChangesWidget extends CWidget
         $this->userObj = User::model();
         $this->changes = new CArrayDataProvider(Yii::app()->db->createCommand()
             ->select('CONCAT("/' . ProjectChanges::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
-            ->from(ProjectChanges::$table_prefix.'ProjectChanges')
+            ->from(ProjectChanges::model()->tableName())
             ->where('project_id =' . (int)$this->project->id . ($this->userObj->isAuthor() ? ' AND moderate=1' : ''))
             ->queryAll(),
             array(

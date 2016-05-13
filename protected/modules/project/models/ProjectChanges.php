@@ -23,13 +23,8 @@ class ProjectChanges extends CActiveRecord {
     //public $old_file;
     public $fileupload;
 
-    public static $table_prefix;
-	
 	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.'ProjectChanges';
-		else
-			return 'ProjectChanges';
+		return Company::getId().'_ProjectChanges';
 	}
 
     /**

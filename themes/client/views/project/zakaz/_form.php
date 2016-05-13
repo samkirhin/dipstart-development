@@ -20,7 +20,7 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 	
 	$form = $this->beginWidget('CActiveForm', array(
 		'id'=>'zakaz-form',
-		'action'=>isset ($model->id) ? $this->createUrl('zakaz/update', ['id'=>$model->id]) : '',
+		'action'=>isset ($model->id) ? $this->createUrl('zakaz/update', ['id'=>$model->id]) : 'http://'.$_SERVER['SERVER_NAME'].'/project/zakaz/create',
 		//'type' => 'horizontal',
 		//'htmlOptions' => array('class' => 'well'),
 		// Please note: When you enable ajax validation, make sure the corresponding
