@@ -1,13 +1,17 @@
 <?php
 class EventsCommand extends CConsoleCommand {
 	
+	const TIME_NOTIFICATION = 3; 
+	
     public function run($args) {
 		//echo 'echo: '.get_class(Yii::app())."\n";
 		$companies = Company::model()->findAll('frozen=:p',array(':p'=>'0'));
-		foreach($companies as $company) {
-			Company::setActive($company);
-			self::executor();
-			self::manager();
+		if () {
+			foreach($companies as $company) {
+				Company::setActive($company);
+				self::executor();
+				self::manager();
+			}
 		}
     }
 	
@@ -20,7 +24,7 @@ class EventsCommand extends CConsoleCommand {
 					$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 					$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
-					if (strtotime(date('Y-m-d H:i',time())) == $date) {
+					if (strtotime(date('Y-m-d H:i',time())) >= $date) {
 						$templatesModel = Templates::model()->findByPk(21);
 						
 						$email = new Emails;
@@ -38,7 +42,7 @@ class EventsCommand extends CConsoleCommand {
 		// Дата информирования менеджера
 		$projectsModel = Zakaz::model()->findAll();
 		foreach ($projectsModel as $project) 
-			if (strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) == strtotime(date('Y-m-d H:i',time()))) {
+			if (strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) <= strtotime(date('Y-m-d H:i',time()))) {
 				Yii::import('project.components.EventHelper');
 				EventHelper::notification('description', $project->id);
 			}
@@ -46,7 +50,7 @@ class EventsCommand extends CConsoleCommand {
 		// У части заказа незавершенного заказа
 		$projectsPartsModel = ZakazParts::model()->findAllByAttributes(array('status_id'=>'1'));
 		foreach ($projectsPartsModel as $project) 
-			if (strtotime(date('Y-m-d H:i',strtotime($project->date))) == strtotime(date('Y-m-d H:i',time()))) {
+			if (strtotime(date('Y-m-d H:i',strtotime($project->date))) <= strtotime(date('Y-m-d H:i',time()))) {
 				Yii::import('project.components.EventHelper');
 				EventHelper::notification('description', $project->proj_id);
 			}
