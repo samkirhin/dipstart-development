@@ -1,17 +1,14 @@
 <?php
 class EventsCommand extends CConsoleCommand {
 	
-	const TIME_NOTIFICATION = 3; 
-	
     public function run($args) {
 		//echo 'echo: '.get_class(Yii::app())."\n";
 		$companies = Company::model()->findAll('frozen=:p',array(':p'=>'0'));
-		if () {
-			foreach($companies as $company) {
-				Company::setActive($company);
-				self::executor();
-				self::manager();
-			}
+
+		foreach($companies as $company) {
+			Company::setActive($company);
+			self::executor();
+			self::manager();
 		}
     }
 	
