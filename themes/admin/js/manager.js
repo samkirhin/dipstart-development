@@ -1,6 +1,54 @@
 /* Akoch-ov */
-function changes_approve(id, value){
+function changes_approve(id, self){
+	var value = $(self).data('moderate');
+	console.log(value);
 	$.post('/project/changes/approve?id='+id,{moderate: value});
+	if(value) {
+		$(self).data('moderate', 0);
+		$(self).attr('title',$(self).data('s0'));
+		$(self).removeClass('bg-gray');
+		$(self).addClass('bg-green');
+	} else {
+		$(self).data('moderate', 1);
+		$(self).attr('title',$(self).data('s1'));
+		$(self).removeClass('bg-green');
+		$(self).addClass('bg-gray');
+	}
+}
+function changes_delete(id, self){
+	$.post('/project/changes/delete?id='+id);
+	$(self).parent().remove();
+}
+function stage_change_status( item_id, status ){
+	if (status) {
+		var status_id = status;
+	} else {
+		var status_id = document.getElementById('select-status-'+item_id).value;
+	}
+	var orderId = $('#order_number').text();
+	$.ajax({
+		type: "POST",
+		url:'http://'+document.domain+'/project/zakazParts/status',
+		data : 'cmd=status&status_id='+status_id+'&id='+item_id+'&orderId='+orderId,
+		success: function(html) {
+			/*html = BackReplacePlusesFromStr(html);*/
+			if (html != 'null') {
+				if(status_id == 2){
+					var button = $('#stage-'+item_id+'-approve-button');
+					button.prop( "disabled", false );
+					button.removeClass('bg-gray');
+					button.addClass('bg-green');
+				}else {
+					var button = $('#stage-'+item_id+'-approve-button');
+					button.prop( "disabled", true );
+					button.removeClass('bg-green');
+					button.addClass('bg-gray');
+					if(status_id == 3) document.getElementById("select-status-"+item_id).options[2].selected=true;
+				}
+				//console.log(html);
+			}
+		}
+	});
 }
 /**
  * Created by coolfire on 08.05.15.
@@ -178,7 +226,7 @@ function cancelPayment (id) {
     }, 'json');
 }
 $( window ).load( function() {
-    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
+    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){ // Сохранение заметок
         var data = $(this).val();
         var elid = $(this).attr('id');
         var id = $('#order_number').html();
@@ -186,6 +234,16 @@ $( window ).load( function() {
             {'data': data,'id':id,'elid': elid},
         function (response) {
             if (response.data)obj.remove();
+        });
+    });
+	$('#Zakaz_dbmax_exec_date, #Zakaz_dbmanager_informed, #Zakaz_dbauthor_informed').on('change',function(event){ // Сохраниние сроков (три поля)
+        var data = $(this).val();
+        var elid = $(this).attr('id');
+        var id = $('#order_number').html();
+        $.post('/project/zakaz/update?id='+id,
+            {'data': data,'id':id,'elid': elid},
+        function (response) {
+			console.log(response);
         });
     });
     $('#select_template').on('click',function(event){
@@ -208,7 +266,7 @@ $( window ).load( function() {
 
 
 $( document ).ready( function() {
-    $('#Zakaz_notes, #Zakaz_author_notes').on('keyup',function(event){
+    $('#Zakaz_notes, #Zakaz_author_notes, form#zakaz-form input, form#zakaz-form textarea').on('keyup',function(event){
         var data = $(this).val();
         var elid = $(this).attr('id');
         var id = $('#order_number').html();
@@ -218,16 +276,29 @@ $( document ).ready( function() {
             if (response.data)obj.remove();
         });
     });
+	$('form#zakaz-form select, form#zakaz-form input:checkbox').on('change',function(event){
+        var data = $(this).val();
+		if($(this).attr('type')=='checkbox') {
+			if($(this).prop('checked')) data = 1; else data = 0;
+		}
+        var elid = $(this).attr('id');
+        var id = $('#order_number').html();
+        $.post('/project/zakaz/update?id='+id,
+            {'data': data,'id':id,'elid': elid},
+        function (response) {
+            if (response.data)obj.remove();
+        });
+    });
     
-    var posts = $('div#chatWindow');
-    console.log(posts);
+    //var posts = $('div#chatWindow');
+    //console.log(posts);
 });
 
 $( document ).ready( function() {
     var arrow = 'fa-angle-down fa-lg';
     
-    $('div.change-row div.panel-heading h4.panel-title a').append('<i style="font-size: 1.8em!important; padding-left: 4px" class="fa fa-angle-up fa-lg">');
-    $('div.zero-edge').not('.change-row').find('div.panel-heading h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
+    $('div.change-row div.panel-heading .panel-title a').append('<i style="font-size: 1.8em!important; padding-left: 4px" class="fa fa-angle-up fa-lg">');
+    $('div.zero-edge').not('.change-row').find('div.panel-heading .panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
     
     $('div.info-block div.panel-heading a').on('click', function() {
 		
@@ -245,7 +316,7 @@ $( document ).ready( function() {
         }
     });
     
-    $('div.zero-edge div.panel-heading h4.panel-title a').on('click', function() {
+    $('div.zero-edge div.panel-heading .panel-title a').on('click', function() {
         if ($(this).children('i').hasClass('fa-angle-down fa-lg')) {
             $(this).children('i').removeClass('fa-angle-down fa-lg').addClass('fa-angle-up fa-lg');
         } else {

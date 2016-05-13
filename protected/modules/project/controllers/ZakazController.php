@@ -235,11 +235,16 @@ class ZakazController extends Controller {
 			}
 		}
 		$isGuest = Yii::app()->user->isGuest;
+		$new = true;
+		$agreementNotAccepted = null;
+		$messageForCustomer = null;
 		if (!$isGuest && self::createProject($model,$_POST['Zakaz'])) {
 			if (User::model()->isManager()) {
 				$this->redirect(Yii::app()->createUrl('/project/zakaz/update', array('id'=>$model->id)));
 			} else {
-				$this->redirect(array('view','id'=>$model->id));
+				$new = false;
+				$agreementNotAccepted = Templates::model()->getTemplate(Templates::TYPE_FOR_MANAGER_AGREEMENT_NOT_ACCEPTED);;
+				$messageForCustomer = Templates::model()->getTemplate(Templates::TYPE_FOR_CUSTOMER_AGREEMENT_NOT_ACCEPTED);
 			}
 		}
 		else $model->attributes = $_POST['Zakaz'];
@@ -251,7 +256,10 @@ class ZakazController extends Controller {
         $this->render('create',array(
             'model'=>$model,
 			'isGuest' => $isGuest,
-			'user' => $user
+			'user' => $user,
+			'new' => $new,
+			'agreementNotAccepted' => $agreementNotAccepted,
+			'messageForCustomer' => $messageForCustomer,
         ));
 	}
     
@@ -280,7 +288,7 @@ class ZakazController extends Controller {
 			Yii::app()->end();
 		}
         if (Yii::app()->request->isAjaxRequest) {
-            echo 'test';
+            //echo 'test';
             $data = Yii::app()->request->getRestParams();
 			$field = str_replace('Zakaz_','',$data['elid']);
             if (is_array($data)) {
@@ -480,6 +488,11 @@ class ZakazController extends Controller {
             throw new CHttpException(404, "Событие не найдено");
         }
         
+        if ($event->type == EventHelper::TYPE_CUSTOMER_REGISTRED) {
+            $rid=$event->event_id;
+            $event->delete();
+            $this->redirect(['/user/admin/update', 'id' => $rid]);
+        }
         if ($event->type == EventHelper::TYPE_MESSAGE) {
             $rid=$event->event_id;
             $event->delete();
@@ -718,6 +731,7 @@ class ZakazController extends Controller {
             throw new CHttpException(500);
         }
 		$order->status = 3;
+		$order->last_spam = date("Y-m-d H:i:s");
 		$order->save();
 		
 		$criteria = new CDbCriteria();
@@ -734,7 +748,8 @@ class ZakazController extends Controller {
 				}
 			}
 		$criteria->addSearchCondition('AuthAssignment.itemname','Author');
-		$authors = User::model()->with('AuthAssignment')->findAll($criteria);
+		$criteria->addSearchCondition('profile.mailing_for_executors','1');
+		$authors = User::model()->with('AuthAssignment','profile')->findAll($criteria);
 
 		if(!empty($authors)) {
 

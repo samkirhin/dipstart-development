@@ -42,7 +42,7 @@ class ProjectChanges extends CActiveRecord {
             array('comment', 'safe', 'on' => 'edit'),
             array('file', 'length', 'max' => 350),
             array('file', 'validateOnEmptyFileComment'),
-            array('fileupload', 'file', 'types' => 'docx, doc, pdf, jpg, jpeg, png, xls, xlsx, txt, zip, rar', 'allowEmpty' => true, 'maxSize' => 1024 * 1024 * 5, 'tooLarge' => 'File has to be smaller than 5MB'),
+            array('fileupload', 'file', 'types' => 'docx, doc, pdf, jpg, jpeg, png, xls, xlsx, txt, zip, rar', 'allowEmpty' => true, 'maxSize' => Tools::maxFileSize(), 'tooLarge' => 'File has to be smaller than 200MB'),
             array('comment', 'length', 'max' => 450),
             array('moderate', 'length', 'max' => 45),
             array('date_update, date_moderate', 'safe'),

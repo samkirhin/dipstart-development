@@ -43,6 +43,14 @@ $form=$this->beginWidget('UActiveForm', array(
                 <?php echo $form->textField($profile,'rating',array('size'=>20,'maxlength'=>20,'class'=>'form-control', 'disabled'=>'true')); ?>
             </div>
         </div>
+        <div class="form-group">
+            <?php echo $form->labelEx($profile,'mailing_for_executors',array('class'=>'col-md-4 control-label')); ?>
+            <div class="col-md-8">
+                <?php if($profile->mailing_for_executors) $attr = array('checked'=>'checked'); else $attr = array();
+				echo $form->checkBox($profile,'mailing_for_executors', $attr ); ?>
+            </div>
+            <?php echo $form->error($profile,'mailing_for_executors'); ?>
+        </div>
 		<?php } ?>
 		
         <div class="form-group">

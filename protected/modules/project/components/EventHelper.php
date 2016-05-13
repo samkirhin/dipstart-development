@@ -15,6 +15,7 @@ class EventHelper {
 	const TYPE_ORDER_PAYED = 11;            // Пользователь %..% оплатил заказ
 	const TYPE_STAGE_DONE_BY_EXECUTOR = 12;
 	const TYPE_STAGE_DONE_BY_CUSTOMER = 13;
+	const TYPE_CUSTOMER_REGISTRED = 14;      // Пользователь %..% зарегистрировался
 	const TYPE_ORDER_MANAGER_INFORMED = 15; // Напоминание
 	const TYPE_ORDER_STAGE_EXPIRED = 16; // Срок сдачи этапа
     const STATUS_ACTIVE = 0;
@@ -143,5 +144,14 @@ class EventHelper {
     public static function stageDoneByCustomer($id, $title) {
 		$description = ProjectModule::t('The customer accepted the stage')." '$title'";
         self::sendEvent($id, self::TYPE_STAGE_DONE_BY_CUSTOMER, $description);
+    }
+
+    public static function newCustomer() {
+        $creator = Yii::app()->user->id;
+        $user = User::model()->findByPk($creator);
+		if($user->full_name) $name4link = $user->full_name;
+		else $name4link = $user->email;
+		$text = UserModule::t('New customer {link} have registred',array('{link}'=>'<a href="/user/admin/update/id/'.$creator.'">'.$name4link.'</a>')); 
+        return self::sendEvent($creator, self::TYPE_CUSTOMER_REGISTRED, $text);
     }
 }

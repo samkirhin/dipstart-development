@@ -181,14 +181,14 @@ var YiiChat = function (options) {
                         p.addClass(options.othersPostCssStyle);
                 }
 
-                var tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/admin/view?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
+                var tmp_html = "<div class='owner chtpl0-nickname' data-ownerid='" + post.sender.superuser.userid + "'><a data-toggle='tooltip' title='" + post.sender.fullusername + "' class='ownerref' href='/user/admin/update?id=" + post.sender.superuser.userid + "'>" + post.sender.username + "</a>";
                 if (typeof post.recipient === 'object') {
-                    tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/admin/view?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
+                    tmp_html += " ответил " + "<a data-toggle='tooltip' title='" + post.recipient.fullusername + "' class='ownerref' href='/user/admin/update?id=" + post.recipient.superuser.userid + "'>" + post.recipient.username + "</a>";
                 } else if (post.recipient == -1) tmp_html += " написал авторам";
                 tmp_html += "  |</div>";
 				tmp_html += "<div class='chtpl0-date'>" + post.date + "</div>";
 				//tmp_html += "<div class='chtpl0-time'>" + post.date + "</div>"
-                if (post.cost > 0) tmp_html += "<div class='cost'>Цена:" + post.cost + "</div>";
+                if (post.cost > 0) tmp_html += "<div class='cost'>Цена: <span>" + post.cost + "</span></div>";
                 //tmp_html += "</div>";
 				tmp_html += "<div class='text'></div>";
                 p.find('.chtpl0-content').html(tmp_html);
@@ -228,9 +228,10 @@ var YiiChat = function (options) {
                     else $('.msg_answer').text('Ответить ' + $(this).closest('.post').find('.owner').find('.ownerref:first').text()+'у');
                     //$('#send_buttons').children().each(function(){$(this).hide()});
                     answer=$('.msg_answer');
-                    if ($(this).data('sender')=='Author') $(".select_recipient [value='2']").attr("selected", "selected");
-                    if ($(this).data('sender')=='Customer') $(".select_recipient [value='1']").attr("selected", "selected");
-                    var button = $('.chtpl0-submit1');
+					if ($(this).data('sender')=='Author') {document.getElementById("select_recipient").options[1].selected=true;}
+					if ($(this).data('sender')=='Customer') {document.getElementById("select_recipient").options[2].selected=true;}
+                    $('.select_recipient').change();
+					var button = $('.chtpl0-submit1');
 					button.removeClass('disabled');
 					button.data('recipient',$(this).data('uid'));
 					button.data('uid',$(this).data('uid'));
@@ -308,6 +309,7 @@ var YiiChat = function (options) {
 									send_message(19,'Назначение исполнителя (определение цены)', cost);
 								};
 							}
+							$('.work_price_input').change(); // Сохранить стоимость заказа для исполнителя
                             clear();
                         },
                         error: function (e) {
