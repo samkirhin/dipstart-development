@@ -9,8 +9,23 @@ return array(
     'import'=>array(
         'application.components.*',
         'application.models.*',
+		'application.modules.user.*',
+		'application.modules.user.models.*',
+		
+		'application.modules.project.*',
+		'application.modules.project.models.*',
+		'application.behaviors.*',
     ),
 
+	'modules'=>array(
+        'user' => array(
+            'tableUsers' => 'Users',
+            'tableProfiles' => 'Profiles',
+            'tableProfileFields' => 'ProfilesFields',
+        ),
+		
+	),
+	
     'components'=>array(
         'log'=>array(
             'class'=>'CLogRouter',
@@ -29,13 +44,6 @@ return array(
         ),
  
         // Соединение с СУБД
-        'db'=>array(
-            'class'=>'CDbConnection',
-            'connectionString' => 'mysql:host=localhost;dbname=dipstart',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-        ),
+		'db'=>include 'db.php',
     ),
 );

@@ -40,7 +40,7 @@ class User extends CActiveRecord
 	 * @return string the associated database table name
 	 */
 	public function tableName() {
-		return Campaign::getId().'_Users';
+		return Company::getId().'_Users';
 		//return Yii::app()->getModule('user')->tableUsers;
 	}
 
@@ -266,11 +266,11 @@ class User extends CActiveRecord
 	}
 
 	public function findAllAuthors(){
-		$sql = ('SELECT DISTINCT `id`, `email` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Author")');
+		$sql = ('SELECT DISTINCT `id`, `email` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Company::getId().'_AuthAssignment WHERE `itemname` = "Author")');
 	   return $this->findAllBySql($sql);
 	}
 	public function findAllCustomers(){
-		$sql = ('SELECT DISTINCT `id`, `email` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Campaign::getId().'_AuthAssignment WHERE `itemname` = "Customer")');
+		$sql = ('SELECT DISTINCT `id`, `email` FROM '.$this->tableName().' WHERE `id` IN (SELECT `userid` FROM '.Company::getId().'_AuthAssignment WHERE `itemname` = "Customer")');
 	   return $this->findAllBySql($sql);
 	}
 	
@@ -278,7 +278,7 @@ class User extends CActiveRecord
 		return User::model()->with(
 			array(
 				'AuthAssignment'=>array('select'=>false, 'joinType'=>'INNER JOIN', 'condition'=>'AuthAssignment.itemname="Author"'),
-				'profile'=>array('select'=>false, 'joinType'=>'INNER JOIN', 'condition'=>'profile.notification="1"')
+				'profile'=>array('select'=>'profile.notification_time', 'joinType'=>'INNER JOIN', 'condition'=>'profile.notification="1"')
 			)
 		)->findAll();
 	}
