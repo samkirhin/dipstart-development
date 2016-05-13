@@ -226,7 +226,7 @@ class PaymentController extends Controller {
 
     }*/
 
-    public function actionSavePayments() { // Changes in payment block in order managment
+    public function actionSavePayments() { // Changes in payment block in order managment      // Не лишняя ли это функция?
         $this->_prepairJson();
         $orderId = $this->_request->getParam('order_id');
         $payment = ProjectPayments::model()->find('order_id = :ORDER_ID', array(
@@ -271,7 +271,7 @@ class PaymentController extends Controller {
                 $buh = new Payment;
                 $buh->approve = 0;
                 $buh->order_id = $orderId;
-                $buh->receive_date = date("Y-m-d");
+                $buh->receive_date = date('Y-m-d H:i:s');
                 $buh->theme = $order->title;
                 $buh->user = $user->email;
                 $buh->summ = $paying;
@@ -328,7 +328,7 @@ class PaymentController extends Controller {
 				
 				$buh = new Payment;
 				$buh->order_id = $orderId;
-				$buh->receive_date = date('Y-m-d');
+				$buh->receive_date = date('Y-m-d H:i:s');
 				$buh->theme = $order->title;
 				$user = User::model()->findByPk($order->user_id);
 				$buh->user = $user->email;
@@ -371,7 +371,7 @@ class PaymentController extends Controller {
 				$buh = new Payment;
 				$buh->approve = 0;
 				$buh->order_id = $orderId;
-				$buh->receive_date = date('Y-m-d');
+				$buh->receive_date = date('Y-m-d H:i:s');
 				$buh->theme = $order->title;
 				$user = User::model()->findByPk($order->user_id);
 				$buh->user = $user->email;
