@@ -1,10 +1,12 @@
 <?php
 class EventsCommand extends CConsoleCommand {
 	
+	const INTERVAL = 3;
+	
     public function run($args) {
 		//echo 'echo: '.get_class(Yii::app())."\n";
 		$companies = Company::model()->findAll('frozen=:p',array(':p'=>'0'));
-
+		
 		foreach($companies as $company) {
 			Company::setActive($company);
 			self::executor();
@@ -21,7 +23,11 @@ class EventsCommand extends CConsoleCommand {
 					$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 					$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
-					if (strtotime(date('Y-m-d H:i',time())) >= $date) {
+					
+					$dateStart = strtotime(date('Y-m-d H:i',time())) - (INTERVAL * 60);
+		
+					if ($date >= $dateStart && $date < strtotime(date('Y-m-d H:i',time()))) {
+					//if (strtotime(date('Y-m-d H:i',time())) == $date) {
 						$templatesModel = Templates::model()->findByPk(21);
 						
 						$email = new Emails;
@@ -38,18 +44,24 @@ class EventsCommand extends CConsoleCommand {
 	public function manager() {
 		// Дата информирования менеджера
 		$projectsModel = Zakaz::model()->findAll();
-		foreach ($projectsModel as $project) 
-			if (strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) <= strtotime(date('Y-m-d H:i',time()))) {
+		foreach ($projectsModel as $project) {
+			$dateStart = strtotime(date('Y-m-d H:i',time())) - (INTERVAL * 60);
+			if (strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) >= $dateStart && strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) < strtotime(date('Y-m-d H:i',time()))) {
+			//if (strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) == strtotime(date('Y-m-d H:i',time()))) {
 				Yii::import('project.components.EventHelper');
 				EventHelper::notification('description', $project->id);
 			}
+		}
 		
 		// У части заказа незавершенного заказа
 		$projectsPartsModel = ZakazParts::model()->findAllByAttributes(array('status_id'=>'1'));
-		foreach ($projectsPartsModel as $project) 
-			if (strtotime(date('Y-m-d H:i',strtotime($project->date))) <= strtotime(date('Y-m-d H:i',time()))) {
+		foreach ($projectsPartsModel as $project) {
+			$dateStart = strtotime(date('Y-m-d H:i',time())) - (INTERVAL * 60);
+			if (strtotime(date('Y-m-d H:i',strtotime($project->date))) >= $dateStart && strtotime(date('Y-m-d H:i',strtotime($project->date))) < strtotime(date('Y-m-d H:i',time()))) {
+			//if (strtotime(date('Y-m-d H:i',strtotime($project->date))) == strtotime(date('Y-m-d H:i',time()))) {
 				Yii::import('project.components.EventHelper');
 				EventHelper::notification('description', $project->proj_id);
 			}
+		}
 	}
 }
