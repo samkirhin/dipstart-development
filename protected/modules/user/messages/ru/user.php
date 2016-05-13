@@ -181,7 +181,8 @@ return array(
 	'deleted the file out of order' =>  'удалил файл из заказа',
 	'left a message' =>  'оставил сообщение',
 	'The user changed data in the profile' =>  'Пользователь изменил данные в профиле',
-	
+	'Order reminder' => 'Напоминание о заказе: ',
+	'Stage expired' => 'Срок этапа истёк... заказ: ',
 	// customerOrderList.php
 	'CurrentProjects' => 'Текущие проекты',
 	'DoneProjects' => 'Завершённые проекты',

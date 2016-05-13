@@ -16,6 +16,8 @@ class EventHelper {
 	const TYPE_STAGE_DONE_BY_EXECUTOR = 12;
 	const TYPE_STAGE_DONE_BY_CUSTOMER = 13;
 	const TYPE_CUSTOMER_REGISTRED = 14;      // Пользователь %..% зарегистрировался
+	const TYPE_ORDER_MANAGER_INFORMED = 15; // Напоминание
+	const TYPE_ORDER_STAGE_EXPIRED = 16; // Срок сдачи этапа
     const STATUS_ACTIVE = 0;
     const STATUS_DONE = 1;
 
@@ -112,6 +114,15 @@ class EventHelper {
         self::sendEvent($creator, self::TYPE_NOTIFICATION, $text);
     }
 
+    public static function managerInformed($creator) {
+		$text = UserModule::t('Order reminder');
+        self::sendEvent($creator, self::TYPE_ORDER_MANAGER_INFORMED, $text);
+    }
+	public static function stageExpired($creator) {
+		$text = UserModule::t('Stage expired');
+        self::sendEvent($creator, self::TYPE_ORDER_STAGE_EXPIRED, $text);
+    }
+	
     public static function updateProfile() {
         $creator = Yii::app()->user->id;
         $userName = User::model()->findByPk($creator)->username;

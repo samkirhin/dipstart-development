@@ -89,6 +89,7 @@ class User extends CActiveRecord
 	{
         $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
         $relations['zakaz'] = array(self::HAS_MANY, 'Zakaz', 'user_id');
+        $relations['zakaz_executor'] = array(self::HAS_MANY, 'Zakaz', 'executor');
         $relations['AuthAssignment'] = array(self::HAS_ONE, 'AuthAssignment', 'userid');
 		$relations['roles'] = array(self::HAS_MANY, 'AuthAssignment', 'userid');
 		return $relations;
@@ -285,6 +286,15 @@ class User extends CActiveRecord
 	   return $this->findAllBySql($sql);
 	}
 	
+	public function findAllNotificationExecutors() {
+		return User::model()->with(
+			array(
+				'AuthAssignment'=>array('select'=>false, 'joinType'=>'INNER JOIN', 'condition'=>'AuthAssignment.itemname="Author"'),
+				'profile'=>array('select'=>'profile.notification_time', 'joinType'=>'INNER JOIN', 'condition'=>'profile.notification="1"')
+			)
+		)->findAll();
+	}
+
 	public function printRoles(){
 		$roles = $this->roles;
 		$answer = '';
