@@ -338,9 +338,9 @@ class ZakazController extends Controller {
 					//$buh->approve = 0;
 					$buh->method = 'Cash or Bank';
 					if($openlog->action == WebmasterLog::FIRST_ORDER){
-						$buh->summ = (float) $payment->project_price * Campaign::getWebmasterFirstOrderRate();
+						$buh->summ = (float) $payment->project_price * Company::getWebmasterFirstOrderRate();
 					}elseif($openlog->action == WebmasterLog::NON_FIRST_ORDER){
-						$buh->summ = (float) $payment->project_price * Campaign::getWebmasterSecondOrderRate();
+						$buh->summ = (float) $payment->project_price * Company::getWebmasterSecondOrderRate();
 					}
 					$buh->save();
 				}

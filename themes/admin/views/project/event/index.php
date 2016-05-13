@@ -40,9 +40,11 @@
                             );
                     break;
                     case EventHelper::TYPE_NOTIFICATION:
-                        echo '<td>'.Yii::t('site','Link is absent').'</td>';
-                    break;
+                        //echo '<td>'.Yii::t('site','Link is absent').'</td>';
+                    //break;
                     case EventHelper::TYPE_MESSAGE:
+					case EventHelper::TYPE_ORDER_MANAGER_INFORMED:
+					case EventHelper::TYPE_ORDER_STAGE_EXPIRED:
                     default:
                         echo CHtml::link(Yii::t('site', 'Show'), ['/project/zakaz/preview', 'id' => $event->id]);
                     break;
