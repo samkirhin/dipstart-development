@@ -237,8 +237,10 @@ label
 {
     font-weight: normal;
 }
+@media (min-width: 1000px) {
 #agreement .modal-dialog .modal-content, #agreement .modal-dialog {
     min-width: 900px;
+}
 }
 .aboutZakaz
 {
