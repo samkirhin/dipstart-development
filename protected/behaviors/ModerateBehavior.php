@@ -20,7 +20,7 @@ class ModerateBehavior extends CActiveRecordBehavior
         
         $role = User::model()->getUserRole();
         
-        if (!$this->owner->isNewRecord && $role != 'Manager' && $role != 'Admin' && !(Yii::app()->request->getParam('accepted') && User::model()->isCorrector())) {
+        if (!$this->owner->isNewRecord && $role != 'Manager' && $role != 'Admin') {
         
             $tmp_event_id = time();
             
@@ -40,7 +40,7 @@ class ModerateBehavior extends CActiveRecordBehavior
                     $new_value = $this->owner->$key;
                 }
 
-                if ($old_value != $new_value) {
+                if ($old_value != $new_value && !(User::model()->isCorrector() && $key == 'technicalspec')) {
                     
                     $is_change = true;
 
@@ -73,6 +73,9 @@ class ModerateBehavior extends CActiveRecordBehavior
                 
                 Moderate::model()->updateAll(['event_id'=>$event_id], 'event_id=:event_id', [':event_id'=>$tmp_event_id]);
             }
+
+            if (User::model()->isCorrector() && ($this->owner->attributes['technicalspec'] != $this->old_attributes['technicalspec']))
+                $this->old_attributes['technicalspec'] = $this->owner->attributes['technicalspec'];
 
             $this->owner->attributes = $this->old_attributes;
         }
