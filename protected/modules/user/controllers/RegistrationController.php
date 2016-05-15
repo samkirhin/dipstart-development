@@ -6,7 +6,7 @@ class RegistrationController extends Controller
 
     protected function performAjaxValidation($model) {
         if(isset($_POST['ajax']) && $_POST['ajax']==='simple-registration-form') {
-            echo CActiveForm::validate($model);
+			echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     } 

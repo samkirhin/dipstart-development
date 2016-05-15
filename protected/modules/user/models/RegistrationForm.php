@@ -28,4 +28,12 @@ class RegistrationForm extends User {
 		return $rules;
 	}
 	
+	public function beforeValidate() {
+		$this->email = trim($this->email);
+		return parent::beforeValidate();
+	}
+	public function beforeSave() {
+		$this->email = trim($this->email);
+		return parent::beforeSave();
+	}
 }
