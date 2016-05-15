@@ -92,7 +92,7 @@ function change_comment(new_comment,part_id){
         'comment': new_comment
     }), function (response) {}, 'json');
 }
-function send(url) {
+function send(url) { // Добавление доработки
     var formData = new FormData($("#up_file")[0]);
     $.ajax({
         url: url,
@@ -101,7 +101,8 @@ function send(url) {
         datatype: 'json',
         success: function (data,textStatus,errorThrown) {
             jQuery("#list_files").load(url.replace('add','list'));
-            if (data.error) alert(data.error.ProjectChanges_file);
+            if (data.error) alert(data.error.text);
+			if (data.success) window.location.reload();
         },
         error: function (data,textStatus,errorThrown) {
             alert('err: '+data+"\nstatus: "+textStatus+errorThrown);

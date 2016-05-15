@@ -186,7 +186,7 @@ class ProjectChanges extends CActiveRecord {
 
         $result = Yii::app()->db->createCommand()
                                 ->select('CONCAT("/' . self::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
-                                ->from(self::tableName())
+                                ->from($this->tableName())
                                 ->where('project_id =' . (int)$project_id . (User::model()->isAuthor()?' AND moderate=1':''))
                                 ->queryAll();
 
@@ -197,7 +197,7 @@ class ProjectChanges extends CActiveRecord {
 
         $result = Yii::app()->db->createCommand()
                                 ->select('CONCAT("/' . self::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
-                                ->from(self::tableName())
+                                ->from($this->tableName())
                                 ->where('id =' . (int)$id)
                                 ->queryRow();
 
