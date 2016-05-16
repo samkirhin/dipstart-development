@@ -105,48 +105,48 @@ class ChatController extends Controller {
                 $model->date = date('Y-m-d H:i:s');
                 switch ($model->recipient) {
                 	case 'author_to_manager':
-                		$model->sender_role = 'Author';
-                		$model->recipient_role = 'Admin';
+                		$model->sender_role = ProjectMessages::model()->getRoleId('Author');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Admin');
                 		$model->recipient = 1;
                         break;
                     case 'customer_to_manager':
-                    	$model->sender_role = 'Customer';
-                		$model->recipient_role = 'Admin';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Customer');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Admin');
                 		$model->recipient = 1;
                         break;
                     case 'corrector_to_manager':
-                    	$model->sender_role = 'Corrector';
-                		$model->recipient_role = 'Admin';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Admin');
                         $model->recipient = 1;
                         break;
                     case 'author_to_customer':
-                    	$model->sender_role = 'Author';
-                		$model->recipient_role = 'Customer';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Author');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Customer');
                     	$model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                     	break;
                     case 'corrector_to_customer':
-                    	$model->sender_role = 'Corrector';
-                		$model->recipient_role = 'Customer';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Customer');
                     	$model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
                     	break;
                     case 'customer_to_author':
-                    	$model->sender_role = 'Customer';
-                		$model->recipient_role = 'Author';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Customer');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Author');
                     	$model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
                     	break;
                     case 'corrector_to_author':
-                    	$model->sender_role = 'Corrector';
-                		$model->recipient_role = 'Author';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Author');
                     	$model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
                     	break;
                     case 'author_to_corrector':
-                    	$model->sender_role = 'Author';
-                		$model->recipient_role = 'Corrector';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Author');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Corrector');
                 		$model->recipient = -2;
                 		break;
                     case 'customer_to_corrector':
-                    	$model->sender_role = 'Customer';
-                		$model->recipient_role = 'Corrector';
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Customer');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Corrector');
                 		$model->recipient = -2;
                         break;
                 }
