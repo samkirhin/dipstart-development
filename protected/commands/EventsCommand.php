@@ -21,7 +21,7 @@ class EventsCommand extends CConsoleCommand {
 		if (is_array($usersModel))
 			foreach ($usersModel as $user) {
 				foreach ($user->zakaz_executor as $zakaz) {
-					$time = explode(':', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5:48"
+					$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 					if (count($time)<2) $time[1] = 0;
 					$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
