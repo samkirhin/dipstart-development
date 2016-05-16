@@ -102,8 +102,8 @@ $form=$this->beginWidget('UActiveForm', array(
 					/*} elseif ($widgetEdit = $field->widgetEdit($profile,array('htmlOptions'=>array('class'=>'form-control')))) {
                         echo '<div class="col-md-8">'.$widgetEdit.'</div>';
                     } elseif ($field->range) {
-                        echo '<div class="col-md-8">'.$form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control')).'</div>';*/						
-					} elseif ($field->field_type=="TEXT") {
+                        echo '<div class="col-md-8">'.$form->dropDownList($profile,$field->varname,Profile::range($field->range),array('class'=>'form-control')).'</div>';*/
+						} elseif ($field->field_type=="TEXT") {
 //                        echo '<div class="col-md-8"><textarea name="Profile['.$field->varname.']" rows="6" cols="50" class="form-control">'.$attributes[$field->varname].'</textarea></div>';
                         echo '<div class="col-md-8">'.$form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50,'class'=>'form-control')).'</div>';
                     } else {
