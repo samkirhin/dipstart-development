@@ -2,6 +2,17 @@
 <?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Profile");
 
 ?><!--<div class="row"><div class="col-md-offset-3 col-md-4"><h3><?php //echo UserModule::t('Edit profile'); ?></h3></div></div>-->
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#Profile_notification").live("click", function(){
+		if ($(this).is(":checked")) $('#notificationParams').show();
+		else $('#notificationParams').hide();
+	});
+	
+	if ($("#Profile_notification").is(":checked")) $('#notificationParams').show();
+	else $('#notificationParams').hide();
+});
+</script>
 
 <div class="row">
     <div class="col-md-7">
@@ -58,7 +69,7 @@ $form=$this->beginWidget('UActiveForm', array(
             </div>
             <?php echo $form->error($profile,'notification'); ?>
         </div>
-		<div class="form-group">
+		<div class="form-group" id="notificationParams">
             <?php echo $form->labelEx($profile,'notification_time',array('class'=>'col-md-4 control-label')); ?>
             <div class="col-md-8">
 				<?php echo 'Часов '.$form->dropDownList($profile,'hours',$profile->getTime('hours')); ?>
