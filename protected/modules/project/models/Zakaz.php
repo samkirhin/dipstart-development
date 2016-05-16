@@ -257,7 +257,7 @@ class Zakaz extends CActiveRecord {
 				array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
 				array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
-				array_push($rules,array('dbmax_exec_date, dbmanager_informed, dbauthor_informed,unixtime', 'safe'));
+				array_push($rules,array('dbmax_exec_date, dbmanager_informed, dbauthor_informed,unixtime, executor_event, customer_event', 'safe'));
 				array_push($rules,array('id, dbdate, dbmanager_informed'.$fields, 'safe', 'on'=>'search'));
 				$this->_rules = $rules;
 			}
@@ -272,7 +272,7 @@ class Zakaz extends CActiveRecord {
 				array('title', 'length', 'max'=>255),
 				array('executor', 'length', 'max'=>10),
 				array('text, date_finishend, date_finishstart, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep,unixtime', 'safe'),
-				array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, pages', 'safe'),
+				array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, pages, executor_event, customer_event', 'safe'),
 				// The following rule is used by search().
 				// @todo Please remove those attributes that should not be searched.
 				array('id, jobName, catName, title, dateCreation, dateFinish, managerInformed', 'safe', 'on'=>'search'),
