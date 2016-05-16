@@ -26,7 +26,7 @@ switch ($role){
 		$items[] = array('label'=>Yii::t('site','Accounts department'), 'url'=>array('/project/payment/view'), 'visible'=>$user->superuser);
 		$items[] = array('label'=>Yii::t('site','Users'), 'url'=>array('/user/admin'));
 		  $logs[] = array('label'=>Yii::t('site','Managers logs'), 'url'=>array('/logs'));
-		  if(Yii::app()->cdr->app_id) $logs[] = array('label'=>Yii::t('site','Calls'), 'url'=>array('/call/index'));
+		  //if(Yii::app()->cdr->app_id) $logs[] = array('label'=>Yii::t('site','Calls'), 'url'=>array('/call/index'));
 		$items[] = array('label'=>Yii::t('site','Logs'), 'url'=>array('/logs'), 'items' => $logs);
 		$items[] = array('label'=>Yii::t('site','Company settings'), 'url'=>array('#'), 'items' => array(
 			array('label'=>Yii::t('site','Base settings'), 'url'=>array('/company/edit')),

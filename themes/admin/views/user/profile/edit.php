@@ -71,5 +71,5 @@ $this->renderPartial('_menu',array());
 	</div>
 
 <?php $this->endWidget(); ?>
-
+dsfdsfdsf
 </div><!-- form -->
