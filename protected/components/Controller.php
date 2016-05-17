@@ -31,21 +31,8 @@ class Controller extends RController
 				echo 'Where is my money, dude ?!?!?!';
 				die;
 			}
-			//Payment::$table_prefix = $c_id.'_';
-			//Profile::$table_prefix = $c_id.'_';
-			//ProfileField::$table_prefix = $c_id.'_';
-			ProjectChanges::$table_prefix = $c_id.'_';
 			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
-			//ProjectMessages::$table_prefix = $c_id.'_';
-			ProjectPayments::$table_prefix = $c_id.'_';
-			Zakaz::$table_prefix = $c_id.'_';
 			Zakaz::$files_folder = '/uploads/c'.$c_id.'/';
-			Events::$table_prefix = $c_id.'_';
-			ZakazParts::$table_prefix = $c_id.'_';
-			//UpdateProfile::$table_prefix = $c_id.'_';
-			ZakazPartsFiles::$table_prefix = $c_id.'_';
-            //PaymentImage::$table_prefix = $c_id.'_';
-			Emails::$table_prefix = $c_id.'_';
 			
 			Yii::app()->language = Company::getLanguage();
 		} else {

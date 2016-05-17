@@ -267,6 +267,10 @@ div.rightBorder, div.leftBorder {
 .hint-block_content-2x:after{
 	right:153px;
 }
+.hint-block_content b {
+	color: #7FFFD4;
+}
+
 
 .techspecBlock {
     padding: 0;
@@ -529,7 +533,7 @@ label
     float: left;
 }
 .chtpl0-down p {
-//top:-8px!important;
+/*top:-8px!important;*/
 }
 .chtpl0-down.chat-functions p {
     margin-right: 0;

@@ -23,13 +23,8 @@ class ProjectChanges extends CActiveRecord {
     //public $old_file;
     public $fileupload;
 
-    public static $table_prefix;
-	
 	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.'ProjectChanges';
-		else
-			return 'ProjectChanges';
+		return Company::getId().'_ProjectChanges';
 	}
 
     /**
@@ -47,7 +42,7 @@ class ProjectChanges extends CActiveRecord {
             array('comment', 'safe', 'on' => 'edit'),
             array('file', 'length', 'max' => 350),
             array('file', 'validateOnEmptyFileComment'),
-            array('fileupload', 'file', 'types' => 'docx, doc, pdf, jpg, jpeg, png, xls, xlsx, txt, zip, rar', 'allowEmpty' => true, 'maxSize' => 1024 * 1024 * 5, 'tooLarge' => 'File has to be smaller than 5MB'),
+            array('fileupload', 'file', 'types' => 'docx, doc, pdf, jpg, jpeg, png, xls, xlsx, txt, zip, rar', 'allowEmpty' => true, 'maxSize' => Tools::maxFileSize(), 'tooLarge' => 'File has to be smaller than 200MB'),
             array('comment', 'length', 'max' => 450),
             array('moderate', 'length', 'max' => 45),
             array('date_update, date_moderate', 'safe'),
@@ -191,7 +186,7 @@ class ProjectChanges extends CActiveRecord {
 
         $result = Yii::app()->db->createCommand()
                                 ->select('CONCAT("/' . self::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
-                                ->from(self::tableName())
+                                ->from($this->tableName())
                                 ->where('project_id =' . (int)$project_id . (User::model()->isAuthor()?' AND moderate=1':''))
                                 ->queryAll();
 
@@ -202,7 +197,7 @@ class ProjectChanges extends CActiveRecord {
 
         $result = Yii::app()->db->createCommand()
                                 ->select('CONCAT("/' . self::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
-                                ->from(self::tableName())
+                                ->from($this->tableName())
                                 ->where('id =' . (int)$id)
                                 ->queryRow();
 

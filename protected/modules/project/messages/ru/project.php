@@ -79,6 +79,7 @@ return array(
     'Order number' => 'Номер заказа',
     'Job name' => 'Имя работы',
     'Name of educational discipline' => 'Наименование учебной дисциплина',
+	'Create order' => 'Создать заказ',
     'The new revision' => 'Новая доработка',
     'Create Project Field' => 'Создать поле формы заказа',
 	'View Project Field' => 'Просмотр поля формы заказа',

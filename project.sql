@@ -942,6 +942,19 @@ CREATE TABLE IF NOT EXISTS `1_cdr` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `1_TipDone` для записи состояний подсказок для менеджера
+--
+
+CREATE TABLE IF NOT EXISTS `1_TipDone` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`message_id` int(11) NOT NULL,
+`status` varchar(100) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `tbl_migration`
 --
 

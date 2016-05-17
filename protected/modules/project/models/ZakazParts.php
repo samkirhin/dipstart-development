@@ -21,13 +21,8 @@ class ZakazParts extends CActiveRecord
     public $dateTimeIncomeFormat = 'yyyy-MM-dd HH:mm:ss';
     public $dateTimeOutcomeFormat = 'dd.MM.yyyy HH:mm';
 	
-	public static $table_prefix;
-	
 	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.'ProjectsParts';
-		else
-			return 'ProjectsParts';
+		return Company::getId().'_ProjectsParts';
 	}
 
     public function getDbdate()

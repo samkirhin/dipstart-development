@@ -1,15 +1,15 @@
 <?php
 
-class Events extends CActiveRecord {
-    
+class TipDone extends CActiveRecord {
+
 	public function tableName() {
-		return Company::getId().'_ProjectsEvents';
+		return Campaign::getId().'_TipDone';
 	}
     
     public function rules() {
         return array(
-            array('event_id, description, type', 'required'),
-            array('id, event_id, description, type, timestamp, status', 'safe'),
+            array('message_id, status', 'required'),
+            array('id, message_id, status', 'safe'),
         );
     }
     
@@ -25,27 +25,17 @@ class Events extends CActiveRecord {
 	{
 		return array(
 			'id' => 'ID',
-			'event_id' => 'Номер заказа',
-			'description' => 'описание',
-			'type' => 'Тип',
-			'timestamp' => 'Дата',
+			'message_id' => 'Сообщение',
 			'status' => 'Статус',
 		);
 	}
         
     public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria;
-
 		$criteria->compare('id',$this->id);
-		$criteria->compare('event_id',$this->event_id);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('type',$this->type,true);
-		$criteria->compare('timestamp',$this->timestamp,true);
+		$criteria->compare('message_id',$this->message_id);
 		$criteria->compare('status',$this->status,true);
-
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

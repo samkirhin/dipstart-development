@@ -28,7 +28,6 @@ class Zakaz extends CActiveRecord {
 	private $_model;
 	private $_rules = array();
 	
-	public static $table_prefix;
 	public static $files_folder;
 
     /*private $_job_name;
@@ -51,14 +50,11 @@ class Zakaz extends CActiveRecord {
 	 * @return string the associated database table name
 	 */
 	public function tableName() {
-		if(isset(self::$table_prefix))
-			return self::$table_prefix.'Projects';
-		else
-			return 'Projects';
+		return Company::getId().'_Projects';
 	}
 	public function getFields($role = false) {
 		if (!$this->_model || $role) {
-			if (User::model()->isAdmin()) {
+			if (get_class(Yii::app())=='CConsoleApplication' || User::model()->isAdmin()) {
 				$this->_model=ProjectField::model()->sort()->findAll();
 			} elseif (User::model()->isManager()) {
 				$this->_model=ProjectField::model()->forManager()->findAll();
