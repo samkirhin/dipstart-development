@@ -246,6 +246,7 @@ class Profile extends UActiveRecord
 			
 			$this->notification_time = $this->hours . ';' . $this->minutes;
 		}
+		else $this->notification_time = '';
 		return parent::beforeValidate();
 	}
 	public function beforeSave(){

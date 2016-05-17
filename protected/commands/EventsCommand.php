@@ -14,7 +14,7 @@ class EventsCommand extends CConsoleCommand {
 			self::manager();
 		}
     }
-	
+		
 	// Событие у исполнителя - отправляет шаблон на емаил уведомление об этом (берем из справочника)
 	public function executor() {
 		$usersModel = User::model()->findAllNotificationExecutors();
@@ -30,7 +30,7 @@ class EventsCommand extends CConsoleCommand {
 					if ($date >= $dateStart && $date < strtotime(date('Y-m-d H:i',time()))) {
 					//if (strtotime(date('Y-m-d H:i',time())) == $date) {
 						echo 'Email zakaz #'.$zakaz->id."\n";
-						$templatesModel = Templates::model()->findByPk(21);
+						$templatesModel = Templates::model()->findByAttributes(array('type_id'=>'32'));
 						
 						$email = new Emails;
 						$email->from_id	= 1;
@@ -63,6 +63,16 @@ class EventsCommand extends CConsoleCommand {
 			//if (strtotime(date('Y-m-d H:i',strtotime($projectStage->date))) == strtotime(date('Y-m-d H:i',time()))) {
 				Yii::import('application.modules.project.components.EventHelper');
 				EventHelper::stageExpired($projectStage->proj_id);
+				
+				// Send message executor, when completion of the point
+				echo 'Email stage zakaz #'.$projectStage->id."\n";
+				$templatesModel = Templates::model()->findByAttributes(array('type_id'=>'33'));
+				
+				$email = new Emails;
+				$email->from_id	= 1;
+				$email->to_id 	= $projectStage->author_id;
+				$email->name 	= $projectStage->author->full_name;
+				$email->sendTo($user->email, $templatesModel->title, $templatesModel->text);
 			}
 		}
 	}
