@@ -115,7 +115,6 @@ $customer = $model->user;
 									</div>
 									<?php $this->renderPartial('_form', array('model' => $model, 'form' => $form)); ?>
 
-									
 
 									<div class="form-item">
 										<h3> <?=ProjectModule::t('Deadlines')?> </h3>
@@ -207,7 +206,7 @@ $customer = $model->user;
 
         <div class="col-xs-4 left-column">
             <div class="row zero-edge">
-               <div class="col-xs-12 statusBlock">
+				<div class="col-xs-12 statusBlock">
                    <!--<span class="label label-warning"><b><?php //echo $message; ?></b></span>-->
 				   <span class="block-title"><?php echo $form->labelEx($model, 'status'); ?>:&nbsp;</span>
 				   <?=CHtml::dropDownList('Zakaz_status', $model->status, CHtml::listData(ProjectStatus::model()->findAll(), 'id', 'status'),
@@ -219,13 +218,22 @@ $customer = $model->user;
 					<?=Tools::hint($hints['Zakaz_status'], 'hint-block __status')?>
 					<!--<button class="btn btn-primary btn-spam" onclick="spam(<?php echo $model->id; ?>);" href=""><?=ProjectModule::t('Search author')?></button>-->
 					<br><span class="last-delivery"><?=ProjectModule::t('Last delivery').': '.$model->last_spam ?></span>
-               </div>
-			   <hr>
-			   <div class="col-xs-12 linkToAuthors">
+				</div>
+
+			    <hr>
+			   
+				<div class="col-xs-12 techspecBlock">
+                    <input type="checkbox" name="technicalspec" id="technicalspec" data-id="<?=$model->id?>" <?=($model->technicalspec ? 'checked="checked"' : '')?> />
+                    <label for="technicalspec"><?=ProjectModule::t('technicalspec')?></label>
+				</div>
+
+				<hr>
+
+				<div class="col-xs-12 linkToAuthors">
 					<span class="block-title"><?=ProjectModule::t('Link for freelancer')?>:</span><br>
 					<?='http://'.$_SERVER["HTTP_HOST"].Yii::app()->createUrl('/project/chat/view',array('orderId'=>$model->id));?>
 					<?=Tools::hint($hints['Zakaz_link'], 'hint-block __link')?>
-			   </div>
+				</div>
             </div>
 			<hr>
             <?php if ($isModified) echo '<span><b>'. ProjectModule::t('Order moderation') .'</b></span>';?>

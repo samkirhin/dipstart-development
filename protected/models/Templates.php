@@ -13,6 +13,7 @@
 class Templates extends CActiveRecord
 {
 	const TYPE_AUTHOR = 2;
+	const TYPE_CORRECTOR = 3;
 	const TYPE_CUSTOMER = 1;
 	const TYPE_AUTHOR_RESPONSE_PROJECT = 25;
 	// 26 - мыло для техрука
@@ -121,6 +122,7 @@ class Templates extends CActiveRecord
 			23 => Yii::t('site','Service mail: new revision'), //О новой доработке
 			24 => Yii::t('site','Service mail: your salary'), //Об оплате заказа
 			25 => Yii::t('site','Message for an author in response to project'), //Сообщение для автора при отклике на проект
+			26 => Yii::t('site','Notification for correctors'), // Уведомление для технических руководителей
 			27 => Yii::t('site','Message for a customer when the agreement was not accepted'), //Сообщение для клиента, когда он не согласен с условиями соглашения
 			28 => Yii::t('site','Message for a manager that the agreement was not accepted by the customer'), //Сообщение для менеджера, что соглашение не было принято заказчиком
 			29 => Yii::t('site','Button in chat for author'), // Шаблоны для кнопок в чате исполнителя

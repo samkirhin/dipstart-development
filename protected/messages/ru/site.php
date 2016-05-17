@@ -107,6 +107,7 @@ return array(
     'Profile'=>'Профиль',
     'Orders'=>'Заказы',
     'New projects'=>'Новые проекты',
+    'New projects for technical'=>'Проекты для технических руководителей',
     'NEW ORDERS'=>'Новые заказы',
     'My orders'=>'Мои заказы',
     'Create order'=>'Создать заказ',

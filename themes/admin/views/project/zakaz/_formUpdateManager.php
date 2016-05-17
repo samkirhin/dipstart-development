@@ -76,6 +76,7 @@
                     <option value="" selected><?= ProjectModule::t('Not selected')?></option>
                     <option value="<?= Templates::TYPE_AUTHOR ?>"><?= ProjectModule::t('to executor')?></option>
                     <option value="<?= Templates::TYPE_CUSTOMER ?>"><?= ProjectModule::t('to customer')?></option>
+                    <option value="<?= Templates::TYPE_CORRECTOR ?>"><?= ProjectModule::t('to corrector')?></option>
                 </select>
 				<?=Tools::hint($hints['Zakaz_recipient'], 'hint-block __recipient')?>
             </label>

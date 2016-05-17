@@ -289,9 +289,14 @@ class Zakaz extends CActiveRecord {
 						array_push($rules,$field_rule);
 					}
 				}
+
+				// include static fields
+				$fields .= ' , technicalspec';
+				array_push($numerical, 'technicalspec');
 				array_push($numerical, 'status');
 				array_push($numerical, 'user_id');
 				array_push($numerical, 'executor');
+
 				array_push($rules,array(implode(',',$required), 'required'));
 				array_push($rules,array(implode(',',$numerical), 'numerical', 'integerOnly'=>true));
 				array_push($rules,array(implode(',',$float), 'type', 'type'=>'float'));
@@ -374,6 +379,7 @@ class Zakaz extends CActiveRecord {
 			'notes' => ProjectModule::t('Notes for manager'),
 			'author_notes' => ProjectModule::t('author_notes'),
 			'closestDate' => ProjectModule::t('closestDate'),
+			'technicalspec' => ProjectModule::t('technicalspec'),
 			'lastPartStatus' => ProjectModule::t('lastPartStatus'),
 			'lastPartDate' => ProjectModule::t('lastPartDate'),
 		);

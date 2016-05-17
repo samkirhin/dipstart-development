@@ -67,7 +67,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		$model->moderated = 1;
 		
 		$orderId = $model->order;
-		if($model->recipient) {
+		if($model->recipient > 0) {
 			$user = User::model()->findByPk($model->recipient);
 			//$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
 			
@@ -113,6 +113,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			$obj = array(
 				"order"=>$chat_id,
 				"sender"=>$identity,
+				"sender_role"=>ProjectMessages::model()->getRoleId(User::model()->getUserRole($identity)),
 				"date"=>date('Y-m-d H:i:s'),
 				"message"=>$message_filtered,
 			);
@@ -120,11 +121,16 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			if (isset($postdata['index']) && ($postdata['index']==0)){
 				if ($postdata['recipient']=='Author'){
 					$obj['recipient'] = $order->attributes['executor'];
+					$obj['recipient_role'] = ProjectMessages::model()->getRoleId('Author');
                     if ($obj['recipient']==0) $obj['recipient']=-1;
 				} elseif ($postdata['recipient']=='Customer') {
 					$obj['recipient'] = $order->attributes['user_id'];
+					$obj['recipient_role'] = ProjectMessages::model()->getRoleId('Customer');
 				/*} elseif (isset($postdata['recipient'])){
 					$obj['recipient'] = $postdata['recipient'];*/
+				} elseif ($postdata['recipient']=='Corrector') {
+					$obj['recipient_role'] = ProjectMessages::model()->getRoleId('Corrector');
+					$obj['recipient']=-2;
 				} else $obj['recipient']=0;
 				$newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 			}
@@ -143,9 +149,22 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 
 					}
 				else {
-                    if ($postdata['recipient']=='Customer') $obj['recipient']=$order->attributes['user_id'];
-                    if ($postdata['recipient']=='Author') $obj['recipient']=$order->attributes['executor'];
-                    if (is_numeric($postdata['recipient'])) $obj['recipient']=$postdata['recipient'];
+                    if ($postdata['recipient']=='Customer') {
+                    	$obj['recipient']=$order->attributes['user_id'];
+                    	$obj['recipient_role'] = ProjectMessages::model()->getRoleId('Customer');
+                    }
+                    if ($postdata['recipient']=='Author') {
+                    	$obj['recipient']=$order->attributes['executor'];
+                    	$obj['recipient_role'] = ProjectMessages::model()->getRoleId('Author');
+                    }
+                    if ($postdata['recipient']=='Corrector') {
+                    	$obj['recipient']=-2;
+                    	$obj['recipient_role'] = ProjectMessages::model()->getRoleId('Corrector');
+                    }
+                    if (is_numeric($postdata['recipient'])) {
+                    	$obj['recipient']=$postdata['recipient'];
+                    	$obj['recipient_role'] = ProjectMessages::model()->findByPk($postdata['index'])->attributes['sender_role'];
+                    }
 					$newid=$this->getDb()->createCommand()->insert($this->getTableName(),$obj);
 				}
 			}

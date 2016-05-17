@@ -88,6 +88,12 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 		);
 		?>
 	</div>
+	<?php
+		if (User::model()->isCorrector()) {
+			echo $form->hiddenField($model, 'technicalspec', array('value' => 0));
+			echo CHtml::hiddenField('accepted', 1);
+		}
+	?>
 	<?php if ( $isGuest ) { ?>
 	<div class="form-item">
 	<?php echo $form->labelEx($user,'email'); ?><br/>
@@ -101,7 +107,7 @@ Yii::app()->clientScript->registerScriptFile('/js/worktypes.js');
 	</div>
 	<?php } ?>
 	<div class="form-save">
-		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create order') : ProjectModule::t('Save'), array('class' => 'btn btn-primary')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? ProjectModule::t('Create') : (User::model()->isCorrector() ? ProjectModule::t('Technical spec accepted') : ProjectModule::t('Save')), array('class' => 'btn btn-primary')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

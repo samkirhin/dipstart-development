@@ -36,7 +36,9 @@ if (Company::getId()){
 	$columns[] = 'closestDate';
 }
 
-if (isset($only_new)) {
+if (User::model()->isCorrector() && $tech) {
+	$url = Yii::app()->createUrl('/project/chat',array('role'=>'Corrector', 'orderId'=>''));
+} elseif (isset($only_new)) {
 	$url = Yii::app()->createUrl('/project/chat/view',array('orderId'=>'')).'/';
 	if (User::model()->isAuthor()) {
 		if(!$profile) echo '<div class="advice">'.ProjectModule::t('It is recommended to fill in the profile...').'</div>';

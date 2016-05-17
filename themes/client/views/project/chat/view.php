@@ -67,7 +67,7 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 			</div>
 			<div class="col-xs-8 chat-accessories-block">
 				<?php
-				$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId, 'buttonTemplates'=>$buttonTemplates));
+				$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId, 'buttonTemplates'=>$buttonTemplates, 'role'=>'Author'));
 				?>
 			</div><?
 		}

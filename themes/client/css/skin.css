@@ -1375,6 +1375,10 @@ ul.files-list {
 	overflow: hidden;
 	margin-bottom: 0px;
 }
+.chat-buttons h4{
+  font-size: 14px;
+  font-weight: normal;
+}
 .btn-link {
 	color: white;
 }
