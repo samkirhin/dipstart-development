@@ -76,5 +76,22 @@ class ModerateBehavior extends CActiveRecordBehavior
 
             $this->owner->attributes = $this->old_attributes;
         }
+        else
+        {
+            foreach ($this->old_attributes as $key => $value) {
+                $old_value = $value;
+                $new_value = $this->owner->$key;
+                if ($old_value != $new_value && $key != 'executor_event')
+                    $is_change = true;
+            }
+            if ($is_change) {
+                $events = explode(",", $this->owner->attributes['executor_event']);
+                if (!in_array(1, $events))
+                {
+                    $events[] = 1;
+                    $this->owner->attributes['executor_event'] = implode(",", $events);
+                }
+            }
+        }
     }
 }

@@ -43,6 +43,12 @@ class Zakaz extends CActiveRecord {
     public $dateOutcomeFormat = 'dd.MM.yyyy';
     
     public $unixtime = '';
+    public $executorEvents = [
+    	1 => 'Изменение в информации о заказе',
+		2 => 'Сообщение в чате',
+		3 => 'Изменение сроков',
+		4 => 'Добавлена доработка',
+    ];
 	
 	/**
 	 * @return string the associated database table name
@@ -210,6 +216,14 @@ class Zakaz extends CActiveRecord {
 		return $date;
 	}
 
+	public function getExecutorEvents(){
+		$events = explode(",", $this->executor_event);
+		$eventsName = [];
+		foreach ($events as $item)
+			$eventsName[] = $this->executorEvents[$item];
+		return implode(", ", $eventsName);
+	}
+
     public function init()
     {
         parent::init();
@@ -332,6 +346,7 @@ class Zakaz extends CActiveRecord {
 			'notes' => ProjectModule::t('Notes'),
 			'author_notes' => ProjectModule::t('author_notes'),
 			'closestDate' => ProjectModule::t('closestDate'),
+			'executor_event' => ProjectModule::t('executor_event'),
 		);
 		$projectFields = $this->getFields();
 		if ($projectFields) {

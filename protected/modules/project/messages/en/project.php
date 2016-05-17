@@ -117,6 +117,7 @@ return array(
 	'To pay:' => 'To pay:',
 	'Payed:' => 'Payed:',
 	'closestDate' => 'Closest stages deadline',
+    'executor_event' => 'Events for executor',
 
     //Блок оплаты
     'Payments' => 'Payments',

@@ -19,6 +19,12 @@ if (Campaign::getId()){
 		'title',
 		'closestDate',
 	);
+	if (!isset($only_new))
+		$columns[] = [
+			'name' => 'executor_event',
+            'value' => '$data->getExecutorEvents()',
+            'type' => 'raw',
+		];
 }
 
 if (isset($only_new) && User::model()->isAuthor()) {
