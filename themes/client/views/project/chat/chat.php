@@ -17,7 +17,7 @@ $criteria->addCondition(
 	(
 		sender='.Yii::app()->user->id.' OR 
 		recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').') OR
-		('.(User::model()->isCorrector() ? 'TRUE' : 'FALSE').' AND (sender_role="Corrector" OR recipient_role="Corrector"))
+		('.(User::model()->isCorrector() ? 'TRUE' : 'FALSE').' AND (sender_role = '.ProjectMessages::model()->getRoleId('Corrector').' OR recipient_role = '.ProjectMessages::model()->getRoleId('Corrector').'))
 	)'
 );
 //$criteria->addCondition('(moderated=1 OR sender='.Yii::app()->user->id.') AND (sender='.Yii::app()->user->id.' OR recipient IN ('.Yii::app()->user->id.',0'.((User::model()->isAuthor())?',-1':'').'))');
@@ -41,7 +41,7 @@ if (empty($messages)) {
     <?php foreach ($messages as $message): 
 //		$message->message = str_replace('<br>',"\x0D\x0A",$message->message);
 		$msg_role = 'manager-message';
-		$role = $message->sender_role ? $message->sender_role : User::model()->getUserRole($message->senderObject->id);
+		$role = $message->sender_role ? ProjectMessages::model()->getRole($message->sender_role) : User::model()->getUserRole($message->senderObject->id);
 		$isAuthor = ($role == 'Author' || $role == 'Corrector');
 		$isCorrector = ($role == 'Corrector');
 		$isCustomer = ($role == 'Customer');
@@ -56,7 +56,7 @@ if (empty($messages)) {
 			}
 		}
 		if($isCustomer) $msg_role = 'customer-message';
-		$recipientRole = $message->recipient_role ? $message->recipient_role : User::model()->getUserRole($message->recipientObject->id);
+		$recipientRole = $message->recipient_role ? ProjectMessages::model()->getRole($message->recipient_role) : User::model()->getUserRole($message->recipientObject->id);
 		if ($recipientRole == 'Admin') $toRecipient = ProjectModule::t('to admin');
 		elseif ($recipientRole == 'Manager') $toRecipient = ProjectModule::t('to manager');
 		elseif ($recipientRole == 'Customer') $toRecipient = ProjectModule::t('to customer');
