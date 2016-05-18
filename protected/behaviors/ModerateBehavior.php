@@ -78,18 +78,48 @@ class ModerateBehavior extends CActiveRecordBehavior
         }
         else
         {
-            foreach ($this->old_attributes as $key => $value) {
-                $old_value = $value;
-                $new_value = $this->owner->$key;
-                if ($old_value != $new_value && $key != 'executor_event')
-                    $is_change = true;
-            }
-            if ($is_change) {
-                $events = explode(",", $this->owner->attributes['executor_event']);
-                if (!in_array(1, $events))
-                {
-                    $events[] = 1;
-                    $this->owner->attributes['executor_event'] = implode(",", $events);
+            if (!$this->owner->isNewRecord)
+            {
+                $authorInformedUpdated = false;
+                foreach ($this->old_attributes as $key => $value) {
+                    $old_value = $value;
+                    $new_value = $this->owner->$key;
+                    if ($old_value != $new_value && $key != 'executor_event')
+                        $is_change = true;
+                    if ($old_value != $new_value && $key == 'author_informed')
+                        $authorInformedUpdated = true;
+                }
+                if ($is_change) {
+                    if ($this->owner->executor_event)
+                    {
+                        $events = explode(",", $this->owner->executor_event);
+                        if (!in_array(1, $events))
+                        {
+                            $events[] = 1;
+                            $this->owner->executor_event = implode(",", $events);
+                        }
+                    }
+                    else
+                    {
+                        $events = [1];
+                        $this->owner->executor_event = implode(",", $events);
+                    }
+                }
+                if ($authorInformedUpdated) {
+                    if ($this->owner->executor_event)
+                    {
+                        $events = explode(",", $this->owner->executor_event);
+                        if (!in_array(3, $events))
+                        {
+                            $events[] = 3;
+                            $this->owner->executor_event = implode(",", $events);
+                        }
+                    }
+                    else
+                    {
+                        $events = [3];
+                        $this->owner->executor_event = implode(",", $events);
+                    }
                 }
             }
         }
