@@ -253,6 +253,7 @@ class ZakazPartsController extends Controller {
 		$model->title = $this->_request->getParam('name');
 		$model->author_id = $zakaz->executor;
 		if ( $model->save() ) {
+			$zakaz->setCustomerEvents(2);
 			$this->_response-> setData(array(
 				'result'=>$model->id
 			));

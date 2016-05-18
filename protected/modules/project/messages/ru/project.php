@@ -128,6 +128,7 @@ return array(
 	'Payed:' => 'Уже оплачено:',
 	'closestDate' => 'Дата сдачи ближайшей части',
     'executor_event' => 'События для исполнителя',
+    'customer_event' => 'События для заказчика',
 	'New part' => 'Новая Часть',
 	'New revision' => 'Новая доработка',
 	'Stage ready' => 'Этап готов',

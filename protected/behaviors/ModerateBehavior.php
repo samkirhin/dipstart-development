@@ -78,7 +78,7 @@ class ModerateBehavior extends CActiveRecordBehavior
         }
         else
         {
-            if (!$this->owner->isNewRecord)
+            if (!$this->owner->isNewRecord && get_class($this->owner) == 'Zakaz')
             {
                 $authorInformedUpdated = false;
                 foreach ($this->old_attributes as $key => $value) {
@@ -100,10 +100,7 @@ class ModerateBehavior extends CActiveRecordBehavior
                         }
                     }
                     else
-                    {
-                        $events = [1];
-                        $this->owner->executor_event = implode(",", $events);
-                    }
+                        $this->owner->executor_event = 1;
                 }
                 if ($authorInformedUpdated) {
                     if ($this->owner->executor_event)
@@ -116,10 +113,7 @@ class ModerateBehavior extends CActiveRecordBehavior
                         }
                     }
                     else
-                    {
-                        $events = [3];
-                        $this->owner->executor_event = implode(",", $events);
-                    }
+                        $this->owner->executor_event = 3;
                 }
             }
         }

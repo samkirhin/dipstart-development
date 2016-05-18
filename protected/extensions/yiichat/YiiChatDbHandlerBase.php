@@ -70,25 +70,15 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		//$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
 		
 		$role = $user->getUserRole($user->id);
-		if($role == 'Customer') $type_id = Emails::TYPE_16; // Заказчику о сообщении в чате
+		if($role == 'Customer') {
+			$type_id = Emails::TYPE_16; // Заказчику о сообщении в чате
+			$orderModel = Zakaz::model()->findByPk($orderId);
+			$orderModel->setCustomerEvents(1);
+		}
 		if($role == 'Author') {
 			$type_id = Emails::TYPE_20; // Исполнителю о сообщении в чате
 			$orderModel = Zakaz::model()->findByPk($orderId);
-			if ($orderModel->executor_event)
-            {
-                $events = explode(",", $orderModel->executor_event);
-                if (!in_array(2, $events))
-                {
-                    $events[] = 2;
-                    $orderModel->executor_event = implode(",", $events);
-                }
-            }
-            else
-            {
-                $events = [2];
-                $orderModel->executor_event = implode(",", $events);
-            }
-            $orderModel->save();
+			$orderModel->setExecutorEvents(2);
 		}
 		
 		$email = new Emails;
@@ -182,23 +172,10 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			
 			if (User::model()->getUserRole($obj['recipient']->id)=='Customer') {
 				$type_id = Emails::TYPE_16;
+				$order->setCustomerEvents(1);
 			} else if (User::model()->getUserRole($obj['recipient']->id)=='Author') {
 				$type_id = Emails::TYPE_20;
-				if ($order->executor_event)
-	            {
-	                $events = explode(",", $order->executor_event);
-	                if (!in_array(2, $events))
-	                {
-	                    $events[] = 2;
-	                    $order->executor_event = implode(",", $events);
-	                }
-	            }
-	            else
-	            {
-	                $events = [2];
-	                $order->executor_event = implode(",", $events);
-	            }
-	            $order->save();
+				$order->setExecutorEvents(2);
 			}
 			$email = new Emails;
 			$rec   = Templates::model()->findAll("`type_id`='$type_id'");

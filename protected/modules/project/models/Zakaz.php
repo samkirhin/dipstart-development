@@ -49,6 +49,10 @@ class Zakaz extends CActiveRecord {
 		3 => 'Изменение сроков',
 		4 => 'Добавлена доработка',
     ];
+    public $customerEvents = [
+		1 => 'Сообщение в чате',
+		2 => 'Добавлен этап',
+    ];
 	
 	/**
 	 * @return string the associated database table name
@@ -217,11 +221,55 @@ class Zakaz extends CActiveRecord {
 	}
 
 	public function getExecutorEvents(){
-		$events = explode(",", $this->executor_event);
-		$eventsName = [];
-		foreach ($events as $item)
-			$eventsName[] = $this->executorEvents[$item];
-		return implode(", ", $eventsName);
+		if ($this->executor_event)
+		{
+			$events = explode(",", $this->executor_event);
+			$eventsName = [];
+			foreach ($events as $item)
+				$eventsName[] = $this->executorEvents[$item];
+			return implode(",<br />", $eventsName);
+		}
+	}
+
+	public function getCustomerEvents(){
+		if ($this->customer_event)
+		{
+			$events = explode(",", $this->customer_event);
+			$eventsName = [];
+			foreach ($events as $item)
+				$eventsName[] = $this->customerEvents[$item];
+			return implode(",<br />", $eventsName);
+		}
+	}
+
+	public function setExecutorEvents($eventId){
+		if ($this->executor_event)
+        {
+            $events = explode(",", $this->executor_event);
+            if (!in_array($eventId, $events))
+            {
+                $events[] = $eventId;
+                $this->executor_event = implode(",", $events);
+            }
+        }
+        else
+        	$this->executor_event = $eventId;
+        $this->save(false);
+	}
+
+	public function setCustomerEvents($eventId){
+		if ($this->customer_event)
+        {
+            $events = explode(",", $this->customer_event);
+            if (!in_array($eventId, $events))
+            {
+                $events[] = $eventId;
+                $this->customer_event = implode(",", $events);
+            }
+        }
+        else
+        	$this->customer_event = $eventId;
+        $this->save(false);
 	}
 
     public function init()
@@ -347,6 +395,7 @@ class Zakaz extends CActiveRecord {
 			'author_notes' => ProjectModule::t('author_notes'),
 			'closestDate' => ProjectModule::t('closestDate'),
 			'executor_event' => ProjectModule::t('executor_event'),
+			'customer_event' => ProjectModule::t('customer_event'),
 		);
 		$projectFields = $this->getFields();
 		if ($projectFields) {
