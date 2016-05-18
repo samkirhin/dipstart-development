@@ -1,7 +1,7 @@
 <?php
 class EventsCommand extends CConsoleCommand {
 	
-	const INTERVAL = 60; // Интервал запуска скрипта в минутах
+	const INTERVAL = 5; // Интервал запуска скрипта в минутах
 	
     public function run($args) {
 		//echo 'echo: '.get_class(Yii::app())."\n";
