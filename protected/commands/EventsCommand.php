@@ -21,13 +21,12 @@ class EventsCommand extends CConsoleCommand {
 		if (is_array($usersModel))
 			foreach ($usersModel as $user) {
 				foreach ($user->zakaz_executor as $zakaz) {
-					$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
+					$time = explode(':', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 					if (count($time)<2) $time[1] = 0;
 					$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
-					$dateStart = strtotime(date('Y-m-d H:i',time())) - (self::INTERVAL * 60);
-		
-					if ($date >= $dateStart && $date < strtotime(date('Y-m-d H:i',time()))) {
+					$dateStart = strtotime(date('Y-m-d H:i',$date)) - (self::INTERVAL * 60);
+					if (time() > $dateStart && time() <= $date ) {
 						echo 'Email zakaz #'.$zakaz->id."\n";
 						$templatesModel = Templates::model()->findByAttributes(array('type_id'=>'32'));
 						
@@ -41,13 +40,12 @@ class EventsCommand extends CConsoleCommand {
 				
 				// Send message executor, when completion of the point
 				foreach ($user->zakaz_stage as $stage) {
-					$time = explode(';', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
+					$time = explode(':', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
 					if (count($time)<2) $time[1] = 0;
 					$date = date('Y-m-d H:i',strtotime($stage->date));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
-					$dateStart = strtotime(date('Y-m-d H:i',time())) - (self::INTERVAL * 60);
-					
-					if ($date >= $dateStart && $date < strtotime(date('Y-m-d H:i',time()))) {
+					$dateStart = strtotime(date('Y-m-d H:i',$date)) - (self::INTERVAL * 60);
+					if (time() > $dateStart && time() <= $date ) {
 						echo 'Email stage zakaz #'.$stage->id."\n";
 						$templatesModel = Templates::model()->findByAttributes(array('type_id'=>'33'));
 						

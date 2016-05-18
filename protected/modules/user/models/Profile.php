@@ -241,10 +241,10 @@ class Profile extends UActiveRecord
 			$validator->attributes = array('notification_time');
 			$this->validatorList->add($validator);*/
 			
-			//if (!empty($this->hours) && !empty($this->minutes)) $this->notification_time = $this->hours . ';' . $this->minutes;
+			//if (!empty($this->hours) && !empty($this->minutes)) $this->notification_time = $this->hours . ':' . $this->minutes;
 			//else $this->notification_time = '';
 			
-			$this->notification_time = $this->hours . ';' . $this->minutes;
+			$this->notification_time = $this->hours . ':' . $this->minutes;
 		}
 		else $this->notification_time = '';
 		return parent::beforeValidate();
@@ -326,7 +326,7 @@ class Profile extends UActiveRecord
 	
 	public function getHours()
 	{
-		if ($this->_hours === null) $this->_hours = explode(';', $this->notification_time)[0];
+		if ($this->_hours === null) $this->_hours = explode(':', $this->notification_time)[0];
 		return $this->_hours;
 	}
 	public function setHours($value)
@@ -336,7 +336,7 @@ class Profile extends UActiveRecord
 	
 	public function getMinutes()
 	{
-		if ($this->_minutes === null) $this->_minutes = explode(';', $this->notification_time)[1];
+		if ($this->_minutes === null) $this->_minutes = explode(':', $this->notification_time)[1];
 		return $this->_minutes;
 	}
 	public function setMinutes($value)
