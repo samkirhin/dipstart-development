@@ -128,6 +128,8 @@ class Templates extends CActiveRecord
 			29 => Yii::t('site','Button in chat for author'), // Шаблоны для кнопок в чате исполнителя
 			30 => Yii::t('site','Button in chat for guest'), // Шаблон для кнопок в заказе гостя
 			31 => Yii::t('site','Hint for customer when he sending a message'), // Шаблон для кнопок в заказе гостя
+			32 => Yii::t('site','Notification for executor about the occurrence timing of the completion of the order'), // Шаблон уведовления о сроках завершения заказа
+			33 => Yii::t('site','Notification for executor about the occurrence timing of the completion of the completion point'), // Шаблон уведовления о сроках завершения этапа заказа
 		);
 	}
 	

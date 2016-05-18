@@ -250,4 +250,6 @@ return array(
 	'%specialization%' => '%специальность%',
 	'%the name of the stage%' => '%название части%',
 	'%new order%' => '%новый заказ%',
+	'Notification for executor about the occurrence timing of the completion of the order' => 'Уведовление о наступлении сроков завершения заказа',
+	'Notification for executor about the occurrence timing of the completion of the completion point' => 'Уведовление о наступлении сроков завершения этапа заказа',
 );

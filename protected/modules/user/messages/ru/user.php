@@ -251,5 +251,7 @@ return array(
 	'Edit assignments' => 'Редактировать тип пользователя',
 	'Rating' => 'Рейтинг',
 	'Recive new projects notifications' => 'Получать уведомления о новых проектах',
+	'Receive notification of the occurrence of terms' => 'Получать уведомление о наступлении сроков',
+	'Time notification' => 'Время за которое необходимо уведомить',
 );
 
