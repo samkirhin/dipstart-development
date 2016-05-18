@@ -145,6 +145,25 @@ class ChangesController extends Controller {
             try {
                 if ($model->isAllowedAdd() && $model->save(false)) {
                     if (!(User::model()->isManager() || User::model()->isAdmin())) EventHelper::addChanges($model->project_id);
+                    if ($model->moderate == 1)
+                    {
+                        $orderModel = Zakaz::model()->findByPk($model->project_id);
+                        if ($orderModel->executor_event)
+                        {
+                            $events = explode(",", $orderModel->executor_event);
+                            if (!in_array(4, $events))
+                            {
+                                $events[] = 4;
+                                $orderModel->executor_event = implode(",", $events);
+                            }
+                        }
+                        else
+                        {
+                            $events = [4];
+                            $orderModel->executor_event = implode(",", $events);
+                        }
+                        $orderModel->save();
+                    }
                     echo CJSON::encode(array('success' => true));
                     Yii::app()->end();
                 } else {
@@ -192,6 +211,24 @@ class ChangesController extends Controller {
             }
 
             if ($model->save(false)) {
+                if ($model->moderate == 1 && $order)
+                {
+                    if ($order->executor_event)
+                    {
+                        $events = explode(",", $order->executor_event);
+                        if (!in_array(4, $events))
+                        {
+                            $events[] = 4;
+                            $order->executor_event = implode(",", $events);
+                        }
+                    }
+                    else
+                    {
+                        $events = [4];
+                        $order->executor_event = implode(",", $events);
+                    }
+                    $order->save();
+                }
                 echo CJSON::encode(array('success' => true, 'approve' => ($model->isModerate() ? 'true' : 'false')));
                 Yii::app()->end();
             }
