@@ -40,7 +40,7 @@ class ModerateBehavior extends CActiveRecordBehavior
                     $new_value = $this->owner->$key;
                 }
 
-                if ($old_value != $new_value) {
+                if ($old_value != $new_value && $key != 'executor_event' && $key != 'customer_event') {
                     
                     $is_change = true;
 
@@ -74,6 +74,8 @@ class ModerateBehavior extends CActiveRecordBehavior
                 Moderate::model()->updateAll(['event_id'=>$event_id], 'event_id=:event_id', [':event_id'=>$tmp_event_id]);
             }
 
+            $this->old_attributes['executor_event'] = $this->owner->attributes['executor_event'];
+            $this->old_attributes['customer_event'] = $this->owner->attributes['customer_event'];
             $this->owner->attributes = $this->old_attributes;
         }
         else
@@ -84,7 +86,7 @@ class ModerateBehavior extends CActiveRecordBehavior
                 foreach ($this->old_attributes as $key => $value) {
                     $old_value = $value;
                     $new_value = $this->owner->$key;
-                    if ($old_value != $new_value && $key != 'executor_event')
+                    if ($old_value != $new_value && $key != 'executor_event' && $key != 'customer_event')
                         $is_change = true;
                     if ($old_value != $new_value && $key == 'author_informed')
                         $authorInformedUpdated = true;

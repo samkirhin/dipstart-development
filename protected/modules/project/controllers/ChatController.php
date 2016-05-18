@@ -134,6 +134,12 @@ class ChatController extends Controller {
 		$parts = ZakazParts::model()->findAll(array(
 			'condition' => "`proj_id`='$orderId'",
 		));
+
+		if (User::model()->isExecutor($order->id))
+			$order->executor_event = null;
+		if (User::model()->isCustomer())
+			$order->customer_event = null;
+		$order->save(false);
 		
 		$moderate_types = EventHelper::get_moderate_types_string();
         $events = Events::model()->findAll(array(
