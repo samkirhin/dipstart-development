@@ -61,7 +61,7 @@ class Moderate extends CActiveRecord
                 $model->{$this->attribute} = $this->new_value;
             }
 
-            $events = explode(",", $model->executor_event;
+            $events = explode(",", $model->executor_event);
             if (!in_array(1, $events))
             {
                 $events[] = 1;
