@@ -4,12 +4,19 @@ class EventsCommand extends CConsoleCommand {
 	const INTERVAL = 5; // Интервал запуска скрипта в минутах
 	
     public function run($args) {
-		//echo 'echo: '.get_class(Yii::app())."\n";
 		$companies = Company::model()->findAll('frozen=:p',array(':p'=>'0'));
 		
 		foreach($companies as $company) {
 			Company::setActive($company);
 			Yii::app()->language = Company::getLanguage();
+			User::model()->refreshMetaData();
+			AuthAssignment::model()->refreshMetaData();
+			ProfileField::model()->refreshMetaData();
+			Profile::model()->refreshMetaData();
+			Zakaz::model()->refreshMetaData();
+			ZakazParts::model()->refreshMetaData();
+			Events::model()->refreshMetaData();
+			Templates::model()->refreshMetaData();
 			self::executor();
 			self::manager();
 		}
@@ -21,7 +28,8 @@ class EventsCommand extends CConsoleCommand {
 		if (is_array($usersModel))
 			foreach ($usersModel as $user) {
 				foreach ($user->zakaz_executor as $zakaz) {
-					$time = explode(':', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
+					if(isset($user->profile)) $time = explode(':', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
+					else $time[0] = 0;
 					if (count($time)<2) $time[1] = 0;
 					$date = date('Y-m-d H:i',strtotime($zakaz->author_informed));
 					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
@@ -29,33 +37,37 @@ class EventsCommand extends CConsoleCommand {
 					if (time() > $dateStart && time() <= $date ) {
 						echo 'Email zakaz #'.$zakaz->id."\n";
 						$templatesModel = Templates::model()->findByAttributes(array('type_id'=>'32'));
-						
-						$email = new Emails;
-						$email->from_id	= 1;
-						$email->to_id 	= $user->id;
-						$email->name 	= $user->full_name;
-						$email->sendTo($user->email, $templatesModel->title, $templatesModel->text);
+						if($templatesModel) {
+							$email = new Emails;
+							$email->from_id	= 1;
+							$email->to_id 	= $user->id;
+							$email->name 	= $user->full_name;
+							$email->sendTo($user->email, $templatesModel->title, $templatesModel->text);
+						}
+					}
+					
+					// Send message executor, when completion of the point
+					foreach ($zakaz->parts as $stage) {
+						if(isset($user->profile)) $time = explode(':', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
+						else $time[0] = 0;
+						if (count($time)<2) $time[1] = 0;
+						$date = date('Y-m-d H:i',strtotime($stage->date));
+						$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
+						$dateStart = strtotime(date('Y-m-d H:i',$date)) - (self::INTERVAL * 60);
+						if (time() > $dateStart && time() <= $date ) {
+							echo 'Email stage zakaz #'.$stage->id."\n";
+							$templatesModel = Templates::model()->findByAttributes(array('type_id'=>'33'));
+							if($templatesModel) {
+								$email = new Emails;
+								$email->from_id	= 1;
+								$email->to_id 	= $user->id;
+								$email->name 	= $user->full_name;
+								$email->sendTo($user->email, $templatesModel->title, $templatesModel->text);
+							}
+						}
 					}
 				}
 				
-				// Send message executor, when completion of the point
-				foreach ($user->zakaz_stage as $stage) {
-					$time = explode(':', $user->profile->notification_time); // время X, за которое надо уведомлять (количество часов и минут), формат "5;48"
-					if (count($time)<2) $time[1] = 0;
-					$date = date('Y-m-d H:i',strtotime($stage->date));
-					$date = strtotime($date)-(int)$time[0]*60*60-(int)$time[1]*60;
-					$dateStart = strtotime(date('Y-m-d H:i',$date)) - (self::INTERVAL * 60);
-					if (time() > $dateStart && time() <= $date ) {
-						echo 'Email stage zakaz #'.$stage->id."\n";
-						$templatesModel = Templates::model()->findByAttributes(array('type_id'=>'33'));
-						
-						$email = new Emails;
-						$email->from_id	= 1;
-						$email->to_id 	= $user->id;
-						$email->name 	= $user->full_name;
-						$email->sendTo($user->email, $templatesModel->title, $templatesModel->text);
-					}
-				}
 			}
 	}
 	
@@ -65,7 +77,9 @@ class EventsCommand extends CConsoleCommand {
 		$projectsModel = Zakaz::model()->findAll();
 		foreach ($projectsModel as $project) {
 			$dateStart = strtotime(date('Y-m-d H:i',time())) - (self::INTERVAL * 60);
+			//echo 'order #'.$project->id.' '.$project->title.': '.$project->manager_informed."\n";
 			if (strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) >= $dateStart && strtotime(date('Y-m-d H:i',strtotime($project->manager_informed))) < strtotime(date('Y-m-d H:i',time()))) {
+				//echo Company::getId().' #'.$project->id.' manager informed'."\n";
 				Yii::import('application.modules.project.components.EventHelper');
 				EventHelper::managerInformed($project->id);
 			}

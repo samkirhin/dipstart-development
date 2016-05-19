@@ -1,6 +1,6 @@
 <?php
 
-class Profile extends UActiveRecord
+class Profile extends CActiveRecord
 {
 	/**
 	 * The followings are the available columns in table 'profiles':
@@ -22,7 +22,7 @@ class Profile extends UActiveRecord
 	//public static $table_prefix;
 	
 	public function tableName() {
-		return Company::getId().'_'.Yii::app()->getModule('user')->tableProfiles;
+		return Company::getId().'_'.'Profiles'; //Yii::app()->getModule('user')->tableProfiles;
 	}
 	
 	/**
@@ -122,7 +122,7 @@ class Profile extends UActiveRecord
 		// class name for the relations automatically generated below.
 		$relations = array(
 			'user'=>array(self::HAS_ONE, 'User', 'id'),
-			'categories'=>array(self::HAS_MANY, 'Categories', array('id'=>'discipline')),
+			//'categories'=>array(self::HAS_MANY, 'Categories', array('id'=>'discipline')),
 			'AuthAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
 		);
 		if (isset(Yii::app()->getModule('user')->profileRelations))

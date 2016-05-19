@@ -114,7 +114,7 @@ class Emails extends CActiveRecord {
 		}
 		$this->page_psw			= '';
 		$this->support			= Company::getSupportEmail();
-		$this->campaign			= '';
+		$this->campaign			= Company::getName();
 		$this->company			= Company::getName();
 		$this->name				= '';
 		$this->login			= '';
@@ -125,7 +125,7 @@ class Emails extends CActiveRecord {
 		$this->num_order		= '';
 		$this->subject_order	= '';
 		$this->price_order		= '';
-		$this->price_order_part =  '';
+		$this->price_order_part = '';
 		$this->sum_order		= '';
 		$this->message			= '';
 		$this->page_payment		= '';
@@ -269,10 +269,12 @@ class Emails extends CActiveRecord {
 			"Content-Type: text/plain; charset=UTF-8\r\n".
 			"From: $from\r\n";
 			
-//echo 'mail $to:'.$to;
-//echo '<br>$headers='.$headers;
+//echo "\n".'mail to:'.$to;
+//echo "\n".'subject:'.$subject;
+//echo "\n".'headers: '.$headers;
+//echo "\n".'body: '.$body;
 		$result = mail( $to, $subject,$body,$headers);
-//echo '<br>$result='.$result;
+//echo "\n".'result='.$result;
 		$this->from		= $this->from_id;;
 		$this->to		= $this->to_id;
 		$this->body		= $body;		
