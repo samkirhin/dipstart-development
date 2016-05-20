@@ -82,6 +82,7 @@ $upload_params = array('id' => $order->id);
 			<div class="col-xs-12 project-changes">
 				<?php $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
 					'project' => $order,
+					'isCorrector' => $isCorrector,
 				)); ?>
 			</div>
 		</div>

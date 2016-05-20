@@ -19,6 +19,7 @@ class ChangesWidget extends CWidget
 	public $hints;
     public $changes;
     public $project;
+    public $isCorrector;
     protected $userObj;
 
     public function init() {
@@ -26,7 +27,7 @@ class ChangesWidget extends CWidget
         $this->changes = new CArrayDataProvider(Yii::app()->db->createCommand()
             ->select('CONCAT("/' . ProjectChanges::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
             ->from(ProjectChanges::$table_prefix.'ProjectChanges')
-            ->where('project_id =' . (int)$this->project->id . ($this->userObj->isAuthor() ? ' AND moderate=1' : ''))
+            ->where('project_id =' . (int)$this->project->id . (User::model()->isManager() || User::model()->isAdmin() ? '' : (' AND (user_id = '.$this->userObj->id.' OR moderate=1)' )))
             ->queryAll(),
             array(
                 'pagination' => false,
