@@ -41,6 +41,7 @@ class PaymentController extends Controller {
 			$params = Yii::app()->request->getParam('Payment');
 			$model->setAttributes($params);
 			Yii::app()->user->setState('PaymentFilterState', $params);
+			$test = '=);';
 		}
 
 		$data = $model->getTotalData();
@@ -59,6 +60,7 @@ class PaymentController extends Controller {
 		$this->render('admin',array(
 			'model'=>$model,
 			'data'=>$data,
+			'test'=>$test,
 		));
     }
 	
