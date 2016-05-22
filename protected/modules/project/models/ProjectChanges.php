@@ -187,7 +187,7 @@ class ProjectChanges extends CActiveRecord {
         $result = Yii::app()->db->createCommand()
                                 ->select('CONCAT("/' . self::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
                                 ->from($this->tableName())
-                                ->where('project_id =' . (int)$project_id . (User::model()->isAuthor()?' AND moderate=1':''))
+                                ->where('project_id =' . (int)$project_id . (User::model()->isManager() || User::model()->isAdmin() ? '' : (' AND (user_id = '.Yii::app()->user->id.' OR moderate=1)' )))
                                 ->queryAll();
 
         return CHtml::encodeArray($result);
@@ -264,7 +264,7 @@ class ProjectChanges extends CActiveRecord {
      */
     public function isAllowedAdd() {
 
-        if (User::model()->isManager() | User::model()->isAdmin()) {
+        if (User::model()->isManager() || User::model()->isAdmin() || User::model()->isCorrector()) {
             return true;
         }
         $project = Zakaz::model()->findByPk($this->project_id);
