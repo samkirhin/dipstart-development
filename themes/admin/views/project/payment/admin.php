@@ -36,10 +36,10 @@ $(document).ready(function () {
 		if($data->approve == Payment::REJECTED) $html .= Yii::t('site','Rejected');
 		return $html;
 	}
-	
+	$provider = $model->search('0');
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'buh_transaction_in',
-		'dataProvider' => $model->search('0'),
+		'dataProvider' => $provider,
 		'filter'=>$model,
 		'columns'=>array(
 			array(
@@ -47,7 +47,8 @@ $(document).ready(function () {
 				'type' => 'raw',
 				'value'=>function($data) {
 					return CHtml::link($data->order_id,array('zakaz/update','id'=>$data->order_id));
-				}
+				},
+				'footer'=>$provider->itemCount,
 			),
 			array(
 				'name' => 'receive_date',
@@ -99,7 +100,10 @@ $(document).ready(function () {
 			/*array(
 				'name' => 'profileUser.AuthAssignment.AuthItem.description',
 			),*/
-			'summ',
+			array(
+				'name' => 'summ',
+				'footer'=>$model->pageTotal($provider),
+			),
 			array(
 				'header' => Yii::t('site','Payment method'),
 				'type' => 'raw',
@@ -199,7 +203,7 @@ $(document).ready(function () {
 			),
 		),
 	));
-	?>
+	echo $test;?>
 	Количество: <b><?= $data['in']['count'] ?></b>
 	<br>
 	Сумма: <b><?= $data['in']['sum'] ?>&nbsp;р.</b>
@@ -209,9 +213,10 @@ $(document).ready(function () {
 <div id="out" style="display: none;">
 	<h3><?=ProjectModule::t('Pay for all')?></h3>
 	<?php
+	$provider = $model->search('1,2,3');
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'buh_transaction_out',
-		'dataProvider' => $model->search('1,2,3'),
+		'dataProvider' => $provider,
 		'filter'=>$model,
 		'columns'=>array(
 			array(
@@ -219,7 +224,8 @@ $(document).ready(function () {
 				'type' => 'raw',
 				'value'=>function($data) {
 					return CHtml::link($data->order_id,array('zakaz/update','id'=>$data->order_id));
-				}
+				},
+				'footer'=>$provider->itemCount,
 			),
 			array(
 				'name' => 'receive_date',
@@ -271,7 +277,10 @@ $(document).ready(function () {
 			array(
 				'name' => 'profileUser.AuthAssignment.AuthItem.description',
 			),
-			'summ',
+			array(
+				'name' => 'summ',
+				'footer'=>$model->pageTotal($provider),
+			),
 			array(
 				'header' => Yii::t('site','Payment method'),
 				'type' => 'raw',
