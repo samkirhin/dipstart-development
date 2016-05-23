@@ -253,7 +253,6 @@ class ZakazPartsController extends Controller {
 		$model->title = $this->_request->getParam('name');
 		$model->author_id = $zakaz->executor;
 		if ( $model->save() ) {
-			$zakaz->setCustomerEvents(2);
 			$this->_response-> setData(array(
 				'result'=>$model->id
 			));
@@ -377,6 +376,8 @@ class ZakazPartsController extends Controller {
 				$subject_order = $order->title;
 				$user_id = $order->user_id;
 				$user = User::model()->findByPk($user_id);
+
+				$order->setCustomerEvents(2);
 
 				$email = new Emails;
 				if (count($parts) > 0)  $type_id = Emails::TYPE_14; else

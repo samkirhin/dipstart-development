@@ -43,16 +43,23 @@ class Zakaz extends CActiveRecord {
     public $dateOutcomeFormat = 'dd.MM.yyyy';
     
     public $unixtime = '';
-    public $executorEvents = [
-    	1 => ProjectModule::t('Change in the ordering information'),
-		2 => ProjectModule::t('Message in chat'),
-		3 => ProjectModule::t('Changing the timing'),
-		4 => ProjectModule::t('Added revision'),
-    ];
-    public $customerEvents = [
-		1 => ProjectModule::t('Message in chat'),
-		2 => ProjectModule::t('Added step'),
-    ];
+    
+
+    public function executorEventsArr() {
+    	return array(
+	    	1 => ProjectModule::t('Change in the ordering information'),
+			2 => ProjectModule::t('Message in chat'),
+			3 => ProjectModule::t('Changing the timing'),
+			4 => ProjectModule::t('Added revision'),
+	    );
+    }
+
+    public function customerEventsArr() {
+    	return array(
+			1 => ProjectModule::t('Message in chat'),
+			2 => ProjectModule::t('Added step'),
+	    );
+    }
 	
 	/**
 	 * @return string the associated database table name
@@ -226,7 +233,7 @@ class Zakaz extends CActiveRecord {
 			$events = explode(",", $this->executor_event);
 			$eventsName = [];
 			foreach ($events as $item)
-				$eventsName[] = $this->executorEvents[$item];
+				$eventsName[] = $this->executorEventsArr()[$item];
 			return implode(",<br />", $eventsName);
 		}
 	}
@@ -237,7 +244,7 @@ class Zakaz extends CActiveRecord {
 			$events = explode(",", $this->customer_event);
 			$eventsName = [];
 			foreach ($events as $item)
-				$eventsName[] = $this->customerEvents[$item];
+				$eventsName[] = $this->customerEventsArr()[$item];
 			return implode(",<br />", $eventsName);
 		}
 	}
