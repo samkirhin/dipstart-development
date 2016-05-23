@@ -144,6 +144,9 @@ return array(
 	'lastPartDate' => 'Дата сдачи ближайшей части',
 	'lastPartStatus' => 'Статус ближайшей части',
 	'New part' => 'Новая Часть', // to delete
+    'executor_event' => 'События для исполнителя',
+    'customer_event' => 'События для заказчика',
+	'New part' => 'Новая Часть',
 	'New revision' => 'Новая доработка',
 	'Delete revision' => 'Удалить доработку',
 	'Stage ready' => 'Этап готов',

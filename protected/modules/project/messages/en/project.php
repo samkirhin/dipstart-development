@@ -120,6 +120,8 @@ return array(
 	'Payed:' => 'Payed:',
 	'closestDate' => 'Closest stages deadline',
     'technicalspec' => 'Requires a technical specialist',
+    'executor_event' => 'Events for executor',
+    'customer_event' => 'Events for customer',
 
     //Блок оплаты
     'Payments' => 'Payments',

@@ -60,6 +60,8 @@ class Moderate extends CActiveRecord
             }
 
             $model->save(false);
+            $model->setExecutorEvents(1);
+
             $this->delete();
         } catch (Exception $ex) {
             print_r ($ex);
