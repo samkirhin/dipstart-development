@@ -44,14 +44,14 @@ class Zakaz extends CActiveRecord {
     
     public $unixtime = '';
     public $executorEvents = [
-    	1 => 'Изменение в информации о заказе',
-		2 => 'Сообщение в чате',
-		3 => 'Изменение сроков',
-		4 => 'Добавлена доработка',
+    	1 => ProjectModule::t('Change in the ordering information'),
+		2 => ProjectModule::t('Message in chat'),
+		3 => ProjectModule::t('Changing the timing'),
+		4 => ProjectModule::t('Added revision'),
     ];
     public $customerEvents = [
-		1 => 'Сообщение в чате',
-		2 => 'Добавлен этап',
+		1 => ProjectModule::t('Message in chat'),
+		2 => ProjectModule::t('Added step'),
     ];
 	
 	/**

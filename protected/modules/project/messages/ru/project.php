@@ -75,6 +75,12 @@ return array(
     'Job name' => 'Имя работы',
     'Name of educational discipline' => 'Наименование учебной дисциплина',
     'The new revision' => 'Новая доработка',
+    'Change in the ordering information' => 'Изменение в информации о заказе',
+    'Message in chat' => 'Сообщение в чате',
+    'Changing the timing' => 'Изменение сроков',
+    'Added revision' => 'Добавлена доработка',
+    'Added step' => 'Добавлен этап',
+
     ///project/zakaz/update/id/x
     'Author' => 'Автор',
     'Customer' => 'Заказчик',
