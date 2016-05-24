@@ -102,6 +102,7 @@ class Controller extends RController
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
 					);
                     Yii::app()->theme='client';
+					if (Yii::app()->getRequest()->getRequestUri()=='/project/zakaz/list') $this->redirect('/');
                     break;
             }
 
