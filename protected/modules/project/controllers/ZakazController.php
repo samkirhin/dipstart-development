@@ -802,8 +802,8 @@ class ZakazController extends Controller {
 
 		if(!empty($authors)) {
 
-            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
-            $mail = new YiiMailer(/*'invite', ['link' => $link]*/);
+            /*$link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
+            $mail = new YiiMailer('invite', ['link' => $link]);
 			$mail->clearLayout();
             $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
             $mail->setSubject('Приглашение в проект');
@@ -812,7 +812,7 @@ class ZakazController extends Controller {
             foreach ($authors as $author) {
 //                $mail->setTo($author->email);
 //                if($author->getUserRole($author->id)=='Author') $mail->send();
-            }
+            }*/
             
 			// новая рассылка
 
@@ -826,10 +826,6 @@ class ZakazController extends Controller {
 						$specials = explode(',',$user->profile->$field);
 						if (!in_array($order->$field, $specials)) continue 2;
 					}
-					//if($user->profile->specials2) {
-					//	$specials = explode(',',$user->profile->specials2);
-					//	if (!in_array($order->specials2, $specials)) continue;
-					//}
 				}
 				$email = new Emails;
 
@@ -883,8 +879,8 @@ class ZakazController extends Controller {
 			$authors = User::model()->with('profile','AuthAssignment')->findAll($criteria);
 
 			if(!empty($authors)) {
-	            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
-	            /*$mail = new YiiMailer();
+	            /*$link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
+	            $mail = new YiiMailer();
 				$mail->clearLayout();
 	            $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
 	            $mail->setSubject('Приглашение в проект');
