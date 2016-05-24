@@ -130,7 +130,7 @@ class CompanyController extends Controller {
 		if(isset($_POST['code']) && $_POST['code']) {
 			$sql_input = $_POST['code'];
 			preg_match_all(
-              '/[a-zA-Z0-9()``,\s_]*;/',
+              '/.+;\r\n/sU',
               $sql_input,
 			  $out,
 			  PREG_SET_ORDER);
@@ -138,14 +138,19 @@ class CompanyController extends Controller {
 				$echo .= '<br>Command:<br>';
 				$cmd = $command[0];
 				foreach(Company::getList() as $key=>$company){
-					$cur_cmd = preg_replace('/[1-3]+_/',$key.'_',$cmd);
+					$cur_cmd = preg_replace('/[0-9]+_/',$key.'_',$cmd);
 					$sql .= $cur_cmd."\n";
 					$echo .= $cur_cmd."<br>";
 					//$sql_mass[] = $cur_cmd;
 				}
 			}
-			$rows = Yii::app()->db->createCommand($sql)->execute();
-			$echo = 'Success: '.$rows.' rows...<br>'.$echo;
+			try {
+				$rows = Yii::app()->db->createCommand($sql)->execute();
+				$echo = 'Success: '.$rows.' rows...<br>'.$echo;
+			} catch (Exception $e) {
+				$echo = 'Error!<br>'.$echo.'<br>'.$e;
+			}
+			
 		}
 	
 		$this->render('sql',array(

@@ -822,7 +822,7 @@ class ZakazController extends Controller {
             foreach ($authors as $user) {
 				
 				foreach ($spamFields as $field) {
-					if($user->profile->$field) {
+					if(isset($user->profile) && $user->profile->$field) {
 						$specials = explode(',',$user->profile->$field);
 						if (!in_array($order->$field, $specials)) continue 2;
 					}
@@ -867,7 +867,7 @@ class ZakazController extends Controller {
 		if ($val)
 		{
 			$criteria = new CDbCriteria();
-	        if(Campaign::getId()) {
+	        if(Company::getId()) {
 				$projectFields = $order->getFields();
 				if ($projectFields) 
 					foreach($projectFields as $field) {
