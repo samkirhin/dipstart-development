@@ -9,6 +9,7 @@ $items = array();
 $role = User::model()->getUserRole();
 switch ($role){
 	case 'root':
+		$items[] = array('label'=>Yii::t('site','SQL'), 'url'=>array('/company/sql'));
 		$items[] = array('label'=>Yii::t('site','List companies'), 'url'=>array('/company/list'));
 		$items[] = array('label'=>Yii::t('site','Create company'), 'url'=>array('/company/create'));
 		$items[] = array('label'=>Yii::t('site','Edit company'), 'url'=>array('/company/edit'));
