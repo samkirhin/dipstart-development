@@ -50,6 +50,7 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 				?>
 			</div>
 			<div class="col-xs-6"><?php
+				//if(Yii::app()->user->id) 
 				$this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
 					'project' => $order,
 				));

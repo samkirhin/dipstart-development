@@ -27,7 +27,7 @@ class ChangesWidget extends CWidget
         $this->changes = new CArrayDataProvider(Yii::app()->db->createCommand()
             ->select('CONCAT("/' . ProjectChanges::$file_path . '/",file)  as `file`, file as `filename`, comment, id, moderate, date_create')
             ->from(ProjectChanges::model()->tableName())
-            ->where('project_id =' . (int)$this->project->id . (User::model()->isManager() || User::model()->isAdmin() ? '' : (' AND (user_id = '.Yii::app()->user->id.' OR moderate=1)' )))
+            ->where('project_id =' . (int)$this->project->id . (User::model()->isManager() || User::model()->isAdmin() ? '' : (' AND (user_id = '.(Yii::app()->user->id)?Yii::app()->user->id:(-1).' OR moderate=1)' )))
             ->queryAll(),
             array(
                 'pagination' => false,
