@@ -840,7 +840,8 @@ class ZakazController extends Controller {
 				$email->login= $user->username;
 				$email->num_order = $orderId;
 				$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-				$specials = Catalog::model()->findByPk($order->specials);
+				$specials = (isset($order->specials))?$order->specials:$order->specials2;
+				$specials = Catalog::model()->findByPk($specials);
 				$email->specialization	= $specials->cat_name;
 				$email->name_order		= $order->title;		
 				$email->subject_order	= $order->title;		
@@ -883,12 +884,12 @@ class ZakazController extends Controller {
 
 			if(!empty($authors)) {
 	            $link = $this->createAbsoluteUrl('/project/chat/', ['orderId' => $orderId]);
-	            $mail = new YiiMailer();
+	            /*$mail = new YiiMailer();
 				$mail->clearLayout();
 	            $mail->setFrom(Yii::app()->params['supportEmail'], Yii::app()->name);
 	            $mail->setSubject('Приглашение в проект');
 				$link = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-	            $mail->setBody('<a href="'.$link.'">'.$link.'</a>');
+	            $mail->setBody('<a href="'.$link.'">'.$link.'</a>');*/
 	            
 				// новая рассылка
 
@@ -896,8 +897,8 @@ class ZakazController extends Controller {
 				$rec   = Templates::model()->findAll("`type_id`='$typeId'");
 			
 	            foreach ($authors as $user) {
-					$specials = explode(',',$user->profile->specials);
-					if (!in_array($order->specials, $specials)) continue;
+					//$specials = explode(',',$user->profile->specials);
+					//if (!in_array($order->specials, $specials)) continue;
 					
 					$email = new Emails;
 					$email->to_id = $user->id;
@@ -906,7 +907,8 @@ class ZakazController extends Controller {
 					$email->login= $user->username;
 					$email->num_order = $orderId;
 					$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
-					$specials = Catalog::model()->findByPk($order->specials);
+					$specials = (isset($order->specials))?$order->specials:$order->specials2;
+					$specials = Catalog::model()->findByPk($specials);
 					$email->specialization	= $specials->cat_name;
 					$email->name_order		= $order->title;		
 					$email->subject_order	= $order->title;		
