@@ -532,3 +532,7 @@ button.change-approve {
 #user-grid_c0 {
 	width: 55px;
 }
+textarea#code {
+	min-width: 100%;
+	min-height: 300px;
+}
