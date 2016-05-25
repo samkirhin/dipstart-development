@@ -133,8 +133,10 @@ class ZakazPartsController extends Controller {
 		$this->_prepairJson();
 		$partId = $this->_request->getParam('id');
 		$model = ZakazParts::model()->findByPk($partId);
+		$beforeDate = $model->dbdate;
 		foreach ($this->_request->_params as $par=>$val)
 			$model->$par =$val;
+		$afterDate = $model->dbdate;
 		/*if ($this->_request->isParam('files')) {
 			$files = $this->_request->getParam('files');
 			$path = $folder.$partId.'/';
@@ -153,6 +155,12 @@ class ZakazPartsController extends Controller {
 				$fileModel->save();
 			}
 		}*/
+
+		if ($beforeDate != $afterDate)
+		{
+			$order = Zakaz::model()->findByPk($model->proj_id);
+			$order->setExecutorEvents(3);
+		}
 
 		$this->_response->setData(array(
 			'result' => $model->save()
