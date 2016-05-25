@@ -74,6 +74,11 @@ return array(
     'Job name' => 'Job name',
     'Name of educational discipline' => 'Name of educational discipline',
     'The new revision' => 'The new revision',
+    'Change in the ordering information' => 'Change in the ordering information',
+    'Message in chat' => 'Message in chat',
+    'Changing the timing' => 'Changing the timing',
+    'Added revision' => 'Added revision',
+    'Added step' => 'Added step',
 
     ///project/zakaz/update/id/x
     'Customer' => 'Customer',
@@ -120,6 +125,8 @@ return array(
 	'Payed:' => 'Payed:',
 	'closestDate' => 'Closest stages deadline',
     'technicalspec' => 'Requires a technical specialist',
+    'executor_event' => 'Events for executor',
+    'customer_event' => 'Events for customer',
 
     //Блок оплаты
     'Payments' => 'Payments',

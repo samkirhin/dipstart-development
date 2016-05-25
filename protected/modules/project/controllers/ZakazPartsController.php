@@ -344,6 +344,8 @@ class ZakazPartsController extends Controller {
 				$user_id = $order->user_id;
 				$user = User::model()->findByPk($user_id);
 
+				$order->setCustomerEvents(2);
+
 				$email = new Emails;
 				if (count($parts) > 0)  $type_id = Emails::TYPE_14; else
 										$type_id = Emails::TYPE_15;

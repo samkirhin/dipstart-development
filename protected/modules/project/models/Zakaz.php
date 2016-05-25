@@ -42,6 +42,23 @@ class Zakaz extends CActiveRecord {
     public $dateOutcomeFormat = 'dd.MM.yyyy';
     
     public $unixtime = '';
+    
+
+    public function executorEventsArr() {
+    	return array(
+	    	1 => ProjectModule::t('Change in the ordering information'),
+			2 => ProjectModule::t('Message in chat'),
+			3 => ProjectModule::t('Changing the timing'),
+			4 => ProjectModule::t('Added revision'),
+	    );
+    }
+
+    public function customerEventsArr() {
+    	return array(
+			1 => ProjectModule::t('Message in chat'),
+			2 => ProjectModule::t('Added step'),
+	    );
+    }
 	
 	private $_lastPartStatus = null;
 	private $_lastPartDate = null;
@@ -248,6 +265,58 @@ class Zakaz extends CActiveRecord {
 		}
 	}
 
+	public function getExecutorEvents(){
+		if ($this->executor_event)
+		{
+			$events = explode(",", $this->executor_event);
+			$eventsName = [];
+			foreach ($events as $item)
+				$eventsName[] = $this->executorEventsArr()[$item];
+			return implode(",<br />", $eventsName);
+		}
+	}
+
+	public function getCustomerEvents(){
+		if ($this->customer_event)
+		{
+			$events = explode(",", $this->customer_event);
+			$eventsName = [];
+			foreach ($events as $item)
+				$eventsName[] = $this->customerEventsArr()[$item];
+			return implode(",<br />", $eventsName);
+		}
+	}
+
+	public function setExecutorEvents($eventId){
+		if ($this->executor_event)
+        {
+            $events = explode(",", $this->executor_event);
+            if (!in_array($eventId, $events))
+            {
+                $events[] = $eventId;
+                $this->executor_event = implode(",", $events);
+            }
+        }
+        else
+        	$this->executor_event = $eventId;
+        $this->save(false);
+	}
+
+	public function setCustomerEvents($eventId){
+		if ($this->customer_event)
+        {
+            $events = explode(",", $this->customer_event);
+            if (!in_array($eventId, $events))
+            {
+                $events[] = $eventId;
+                $this->customer_event = implode(",", $events);
+            }
+        }
+        else
+        	$this->customer_event = $eventId;
+        $this->save(false);
+	}
+
     public function init()
     {
         parent::init();
@@ -303,6 +372,8 @@ class Zakaz extends CActiveRecord {
 				array_push($rules,array(implode(',',$decimal), 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/'));
 				array_push($rules,array('dbmax_exec_date, dbmanager_informed, dbauthor_informed,unixtime', 'safe'));
 				array_push($rules,array('id, dbdate, dbmanager_informed, lastPartStatus, lastPartDate,'.$fields, 'safe', 'on'=>'search'));
+				array_push($rules,array('dbmax_exec_date, dbmanager_informed, dbauthor_informed,unixtime, executor_event, customer_event', 'safe'));
+				array_push($rules,array('id, dbdate, dbmanager_informed'.$fields, 'safe', 'on'=>'search'));
 				$this->_rules = $rules;
 			}
 		return $this->_rules;
@@ -316,7 +387,7 @@ class Zakaz extends CActiveRecord {
 				array('title', 'length', 'max'=>255),
 				array('executor', 'length', 'max'=>10),
 				array('text, date_finishend, date_finishstart, max_exec_date, date_finish, author_informed, manager_informed, date, add_demands, notes, author_notes, time_for_call, edu_dep,unixtime', 'safe'),
-				array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, pages', 'safe'),
+				array('dbdate_finishend, dbdate_finishstart, dbmax_exec_date, dbdate_finish, dbauthor_informed, dbmanager_informed, dbdate, pages, executor_event, customer_event', 'safe'),
 				// The following rule is used by search().
 				// @todo Please remove those attributes that should not be searched.
 				array('id, jobName, catName, title, dateCreation, dateFinish, managerInformed', 'safe', 'on'=>'search'),
@@ -382,6 +453,8 @@ class Zakaz extends CActiveRecord {
 			'technicalspec' => ProjectModule::t('technicalspec'),
 			'lastPartStatus' => ProjectModule::t('lastPartStatus'),
 			'lastPartDate' => ProjectModule::t('lastPartDate'),
+			'executor_event' => ProjectModule::t('executor_event'),
+			'customer_event' => ProjectModule::t('customer_event'),
 		);
 		$projectFields = $this->getFields();
 		if ($projectFields) {
