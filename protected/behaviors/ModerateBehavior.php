@@ -94,19 +94,6 @@ class ModerateBehavior extends CActiveRecordBehavior
                     if ($old_value != $new_value && $key == 'author_informed')
                         $authorInformedUpdated = true;
                 }
-                if ($is_change) {
-                    if ($this->owner->executor_event)
-                    {
-                        $events = explode(",", $this->owner->executor_event);
-                        if (!in_array(1, $events))
-                        {
-                            $events[] = 1;
-                            $this->owner->executor_event = implode(",", $events);
-                        }
-                    }
-                    else
-                        $this->owner->executor_event = 1;
-                }
                 if ($authorInformedUpdated) {
                     if ($this->owner->executor_event)
                     {
@@ -119,6 +106,19 @@ class ModerateBehavior extends CActiveRecordBehavior
                     }
                     else
                         $this->owner->executor_event = 3;
+                }
+                elseif ($is_change) {
+                    if ($this->owner->executor_event)
+                    {
+                        $events = explode(",", $this->owner->executor_event);
+                        if (!in_array(1, $events))
+                        {
+                            $events[] = 1;
+                            $this->owner->executor_event = implode(",", $events);
+                        }
+                    }
+                    else
+                        $this->owner->executor_event = 1;
                 }
             }
         }
