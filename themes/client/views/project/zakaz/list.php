@@ -19,6 +19,7 @@ if (Company::getId()){
 		'id',
 		'title',
 	);
+
 	if (ProjectField::model()->inTableByVarname('specials')) {
 		$columns[] = array(
 			'name'=>'specials',
@@ -34,6 +35,13 @@ if (Company::getId()){
 		);
 	}
 	$columns[] = 'closestDate';
+
+	if (!isset($only_new))
+		$columns[] = [
+			'name' => 'executor_event',
+            'value' => '$data->getExecutorEvents()',
+            'type' => 'raw',
+		];
 }
 
 if (User::model()->isCorrector() && $tech) {

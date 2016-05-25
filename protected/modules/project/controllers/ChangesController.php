@@ -147,6 +147,11 @@ class ChangesController extends Controller {
             try {
                 if ($model->isAllowedAdd() && $model->save(false)) {
                     if (!(User::model()->isManager() || User::model()->isAdmin())) EventHelper::addChanges($model->project_id);
+                    if ($model->moderate == 1)
+                    {
+                        $orderModel = Zakaz::model()->findByPk($model->project_id);
+                        $orderModel->setExecutorEvents(4);
+                    }
                     echo CJSON::encode(array('success' => true));
                     Yii::app()->end();
                 } else {
@@ -194,6 +199,8 @@ class ChangesController extends Controller {
             }
 
             if ($model->save(false)) {
+                if ($model->moderate == 1 && $order)
+                    $order->setExecutorEvents(4);
                 echo CJSON::encode(array('success' => true, 'approve' => ($model->isModerate() ? 'true' : 'false')));
                 Yii::app()->end();
             }
