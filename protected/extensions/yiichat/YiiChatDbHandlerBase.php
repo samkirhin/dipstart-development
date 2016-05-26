@@ -197,7 +197,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
             if($obj['recipient']) $obj['recipient']->superuser = $obj['recipient']->getRelated('AuthAssignment');
             $obj['sender']=User::model()->findByPk($obj['sender']);
             $obj['sender']->superuser=$obj['sender']->getRelated('AuthAssignment');
-			$specials = ($order->specials)?$order->specials:$order->specials2;
+			$specials = isset($order->specials)?$order->specials:$order->specials2;
 			$title = Catalog::model()->findByPk($specials)->cat_name . '. ' . $order->attributes['title'] . '. '.Yii::t('site','You have received a new message.');
 			$message = CHtml::link(Yii::t('site','Link to order page'), Yii::app()->createAbsoluteUrl('/project/chat', array('orderId' => $chat_id))).'<br />'.$obj['message'];
 			$headers = 'From: no-reply@'.$_SERVER['SERVER_NAME'] . "\r\n" .
