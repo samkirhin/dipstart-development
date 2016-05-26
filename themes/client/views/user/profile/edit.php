@@ -4,7 +4,7 @@
 ?><!--<div class="row"><div class="col-md-offset-3 col-md-4"><h3><?php //echo UserModule::t('Edit profile'); ?></h3></div></div>-->
 <script type="text/javascript">
 $(document).ready(function () {
-	$("#Profile_notification").live("click", function(){
+	$("#Profile_notification").on("click", function(){
 		if ($(this).is(":checked")) $('#notificationParams').show();
 		else $('#notificationParams').hide();
 	});

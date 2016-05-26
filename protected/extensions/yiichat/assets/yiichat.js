@@ -275,6 +275,7 @@ var YiiChat = function (options) {
                         error: function (e) {
                             clear();
                             options.onError('init_error', e.responseText, e);
+							console.log("Error: ",e.responseText);
                         }
                     });
                 });
