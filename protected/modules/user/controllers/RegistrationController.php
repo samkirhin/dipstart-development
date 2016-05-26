@@ -29,6 +29,15 @@ class RegistrationController extends Controller
 				$AuthAssignment->attributes=array('itemname'=>$role,'userid'=>$model->id);
 				$AuthAssignment->save();
 				
+				if ($role == 'Author') {
+					if($model->profile == null) {
+						$profile = new Profile;
+						$profile->user_id = $model->id;
+						$profile->mailing_for_executors = 1;
+						$profile->save();
+					}
+				}
+				
 				$webmasterlog = new WebmasterLog();
 				$webmasterlog->pid = $model->pid;
 				$webmasterlog->uid = $model->id;
