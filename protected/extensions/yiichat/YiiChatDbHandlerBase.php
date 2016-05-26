@@ -206,7 +206,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 				'X-Mailer: PHP/' . phpversion();
 			//mail($obj['recipient']->attributes['email'],$title,$message,$headers);
 			
-			if (User::model()->getUserRole($obj['recipient']->id)=='Customer') {
+			/*if (User::model()->getUserRole($obj['recipient']->id)=='Customer') {
 				$type_id = Emails::TYPE_16;
 				$order->setCustomerEvents(1);
 			} else if (User::model()->getUserRole($obj['recipient']->id)=='Author') {
@@ -220,7 +220,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			$email->num_order = $chat_id;
 			$email->message = strip_tags($obj['message']);
 			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$chat_id;
-			$email->sendTo( $obj['recipient']->email, $rec[0]->title, $rec[0]->text, $type_id);
+			$email->sendTo( $obj['recipient']->email, $rec[0]->title, $rec[0]->text, $type_id);*/
 			
             if ($postdata['flags'])
                 foreach($postdata['flags'] as $v)
