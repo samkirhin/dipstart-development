@@ -50,8 +50,8 @@ class RegistrationController extends Controller
 				$email->to_id   = $user->id;
 				
 				$rec   = Templates::model()->findAll("`type_id`='$type_id'");
-				$id = Campaign::getId();
-				$email->campaign = Campaign::getName();
+				$id = Company::getId();
+				$email->company = Company::getName();
 				$email->name = $model->full_name;
 				$email->login= $model->email;
 				$email->password= $soucePassword;
