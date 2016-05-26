@@ -68,7 +68,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		
 		$orderId = $model->order;
 
-		if($model->recipient > 0) {
+		/*if($model->recipient > 0) {
 			$user = User::model()->findByPk($model->recipient);
 			//$profile = Profile::model()->findAll("`user_id`='$model->recipient'");
 			
@@ -84,7 +84,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			$email->message = $model->message;
 			$email->page_order = 'http://'.$_SERVER['SERVER_NAME'].'/project/chat?orderId='.$orderId;
 			$email->sendTo( $user->email, $rec[0]->title, $rec[0]->text, $type_id);
-		}
+		}*/
 
 		if($user = User::model()->findByPk($model->recipient)) {
 			$role = $user->getUserRole($user->id);
