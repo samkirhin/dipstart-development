@@ -308,14 +308,14 @@ class Profile extends CActiveRecord
 		return $res;
 	}
     
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             'ModerateBehavior' => [
                 'class' => 'ModerateBehavior'
             ]
         ];
-    }
+    }*/
 	
 	public function getTime($type) {
 		$time = array('0' => '0');
