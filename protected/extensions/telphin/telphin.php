@@ -205,6 +205,7 @@ class telphin
         $url = '/uapi/cdr/';
         $result = $this->basicGet($url,$data);
         $result = json_decode($result);
+		//print_r($result);
         //
         $call = [];
         foreach ($result->entry as $key => $record) {
@@ -212,8 +213,8 @@ class telphin
                 $line = [];
                 $published = strtotime($record->published);
                 $line['published'] = $published;
-                $answered = $view->answered;
-                if(!is_null($answered)) {
+                $answered = isset($view->answered)?$view->answered:false;
+                if(!($answered)) {
                     $answered = strtotime($answered);
                     $line['answerDuration'] = $answered - $published;
                 } else {
