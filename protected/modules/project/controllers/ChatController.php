@@ -164,6 +164,7 @@ class ChatController extends Controller {
 		if(User::model()->isAuthor() && (!User::model()->isCorrector() || !$order->technicalspec) && !User::model()->isExecutor($orderId)){
 			$this->redirect(Yii::app()->createUrl('/project/chat/view',array('orderId'=>$orderId)));
 		}
+		if(User::model()->isCustomer() && $order->user_id != Yii::app()->user->id) $this->redirect('/');
 		
 		$parts = ZakazParts::model()->findAll(array(
 			'condition' => "`proj_id`='$orderId'",
