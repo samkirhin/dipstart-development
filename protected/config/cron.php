@@ -45,5 +45,13 @@ return array(
  
         // Соединение с СУБД
 		'db'=>include 'db.php',
+		
+		'cdr' => [
+            'class' => 'application.components.TelphinCdrComponent',
+            //'app_id' => '********************************',
+            //'app_secret' => '********************************',
+            'extension' => 100,
+            'count' => 2000,
+        ],
     ),
 );

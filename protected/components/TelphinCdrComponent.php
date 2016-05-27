@@ -17,16 +17,18 @@ class TelphinCdrComponent  extends CComponent
 	/**
 	 * Initializes the component.
 	 */
-	public function init() {
-		$company = Company::getCompany();
-		if($company->telfin_id) $this->app_id = $company->telfin_id;
-		if($company->telfin_secret) $this->app_secret = $company->telfin_secret;
-        if($this->app_id && $this->app_secret) $this->telfin = new telphin(
-            $this->app_id,
-            $this->app_secret,
-            $this->extension,
-            $this->host
-        );
+	public function init($who=null) {
+		if (get_class(Yii::app())!='CConsoleApplication' || $who == 'cron') {
+			$company = Company::getCompany();
+			if($company->telfin_id) $this->app_id = $company->telfin_id;
+			if($company->telfin_secret) $this->app_secret = $company->telfin_secret;
+			if($this->app_id && $this->app_secret) $this->telfin = new telphin(
+				$this->app_id,
+				$this->app_secret,
+				$this->extension,
+				$this->host
+			);
+		}
     }
 
     
@@ -51,6 +53,7 @@ class TelphinCdrComponent  extends CComponent
     }
     
     public function refresh() {
+		//echo '!!';
         $result = $this->telfin->cdr([
             'count'=>$this->count
         ]);
