@@ -73,7 +73,8 @@ class ChatController extends Controller {
 	/**
 	 *  Вывод и добавление сообщений
 	 */
-    public function actionIndex($orderId) {
+    public function actionIndex($orderId, $role = null) {
+    	$isCorrector = $role == 'Corrector' ? 1 : 0;
 		$isGuest = Yii::app()->user->isGuest;
 		if ($isGuest) {
 			$url = 'http://'.$_SERVER['SERVER_NAME'].'/user/login';
@@ -81,6 +82,7 @@ class ChatController extends Controller {
 		}
 		
 		Yii::app()->session['project_id'] = $orderId;
+		$order = Zakaz::model()->resetScope()->findByPk($orderId);
 		
         if (Yii::app()->request->isAjaxRequest) {
             if (Yii::app()->request->getPost('ProjectMessages')) {
@@ -102,38 +104,77 @@ class ChatController extends Controller {
                 $model->attributes = Yii::app()->request->getPost('ProjectMessages');
                 $model->date = date('Y-m-d H:i:s');
                 switch ($model->recipient) {
-                    case 'manager':
+                	case 'author_to_manager':
+                		$model->sender_role = ProjectMessages::model()->getRoleId('Author');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Admin');
+                		$model->recipient = 1;
+                        break;
+                    case 'customer_to_manager':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Customer');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Admin');
+                		$model->recipient = 1;
+                        break;
+                    case 'corrector_to_manager':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Admin');
                         $model->recipient = 1;
                         break;
-                    case 'customer':
-						if (User::model()->isCustomer()) {
-                            $model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
-							//$type_id = Emails::TYPE_20;
-                        } else if (User::model()->isAuthor()) {
-                            $model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
-							//$type_id = Emails::TYPE_16;
-						};
-
+                    case 'author_to_customer':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Author');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Customer');
+                    	$model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
+                    	break;
+                    case 'corrector_to_customer':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Customer');
+                    	$model->recipient = Zakaz::model()->findByPk($orderId)->attributes['user_id'];
+                    	break;
+                    case 'customer_to_author':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Customer');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Author');
+                    	$model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
+                    	break;
+                    case 'corrector_to_author':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Author');
+                    	$model->recipient = Zakaz::model()->resetScope()->findByPk($orderId)->attributes['executor'];
+                    	break;
+                    case 'author_to_corrector':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Author');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient = -2;
+                		break;
+                    case 'customer_to_corrector':
+                    	$model->sender_role = ProjectMessages::model()->getRoleId('Customer');
+                		$model->recipient_role = ProjectMessages::model()->getRoleId('Corrector');
+                		$model->recipient = -2;
                         break;
                 }
 				$model->save();
                 EventHelper::addMessage($orderId, $model->message);
             }
             $this->renderPartial('chat', array(
-                'orderId' => $orderId,
+            	'order'		=> $order,
+                'orderId' 	=> $orderId,
 				'isGuest'	=> $isGuest,
             ));
             Yii::app()->end();
         }
-		
-		if(User::model()->isAuthor() && !User::model()->isExecutor($orderId)){
+
+		if(User::model()->isAuthor() && (!User::model()->isCorrector() || !$order->technicalspec) && !User::model()->isExecutor($orderId)){
 			$this->redirect(Yii::app()->createUrl('/project/chat/view',array('orderId'=>$orderId)));
 		}
+		if(User::model()->isCustomer() && $order->user_id != Yii::app()->user->id) $this->redirect('/');
 		
-		$order = Zakaz::model()->resetScope()->findByPk($orderId);
 		$parts = ZakazParts::model()->findAll(array(
 			'condition' => "`proj_id`='$orderId'",
 		));
+
+		if (User::model()->isExecutor($order->id))
+			$order->executor_event = null;
+		if (User::model()->isCustomer())
+			$order->customer_event = null;
+		$order->save(false);
 		
 		$moderate_types = EventHelper::get_moderate_types_string();
         $events = Events::model()->findAll(array(
@@ -142,6 +183,9 @@ class ChatController extends Controller {
 			),
 			array(':event_id'=> $orderId) 			
 		);
+		$PaymentImages = PaymentImage::model()->findAll(array(
+			'condition' => "`project_id`='$orderId'",
+		));
 		$moderated = count($events) == 0;
         $this->render('index', array(
             'orderId'	=> $orderId,
@@ -149,6 +193,8 @@ class ChatController extends Controller {
             'executor'	=> Zakaz::getExecutor($orderId),
 			'moderated'	=> $moderated,
 			'parts'		=> $parts,
+			'PaymentImages' => $PaymentImages,
+			'isCorrector' => $isCorrector,
         ));
     }
 	
@@ -157,6 +203,7 @@ class ChatController extends Controller {
 		$parts = ZakazParts::model()->findAll(array(
 			'condition' => "`proj_id`='$orderId'",
 		));
+		$messageForAuthor = Templates::model()->getTemplate(Templates::TYPE_AUTHOR_RESPONSE_PROJECT);
 		//$isGuest = Yii::app()->user->isGuest;
 		$isGuest = Yii::app()->user->isGuest();
 		if ($isGuest || User::model()->isManager()) {
@@ -179,7 +226,13 @@ class ChatController extends Controller {
 			// проект, отправляем его на регистрацию
 			if (!$moderated) $this->redirect( Yii::app()->createUrl('user/login'));
 			*/
+		} elseif (Yii::app()->user->id == $order->executor) { // Current executor
+			$this->redirect( Yii::app()->createUrl('/project/chat',array('orderId'=>$orderId)));
 		}
+
+		if ($isGuest || User::model()->isAuthor())
+			$buttonTemplates = Templates::model()->findAllByAttributes(array('type_id'=>($isGuest ? 30 : 29)));
+
 		$this->render('view', array(
 			'orderId'	=> $orderId,
 			'order'		=> $order,
@@ -187,19 +240,12 @@ class ChatController extends Controller {
 			//'moderated'	=> $moderated,
 			'isGuest'	=> $isGuest,
 			'parts'		=> $parts,
+			'messageForAuthor'	=> $messageForAuthor,
+			'buttonTemplates'	=> $buttonTemplates,
 		));
         //Yii::app()->end();
 	}
 	
-	public function actionUpload() {
-		$folder='uploads/c'.Campaign::getId().'/'.$_GET['id'].'/';
-		$result = Tools::uploadMaterials($folder);
-		echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-		if ($result['success'] && User::model()->isCustomer()) {
-			EventHelper::materialsAdded($_GET['id']);
-		}
-    }
-    
     /*
      * Rename attachment file
      */

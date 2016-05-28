@@ -25,25 +25,16 @@ class Controller extends RController
 
     public function init(){
 		// --- Организации
-		$c_id = Campaign::getId();
+		$c_id = Company::getId();
 		if ($c_id) {
-			//Payment::$table_prefix = $c_id.'_';
-			//Profile::$table_prefix = $c_id.'_';
-			//ProfileField::$table_prefix = $c_id.'_';
-			ProjectChanges::$table_prefix = $c_id.'_';
+			if(Company::getCompany()->frozen) {
+				echo 'Where is my money, dude ?!?!?!';
+				die;
+			}
 			ProjectChanges::$file_path = 'uploads/c'.$c_id.'/changes_documents';
-			//ProjectMessages::$table_prefix = $c_id.'_';
-			ProjectPayments::$table_prefix = $c_id.'_';
-			Zakaz::$table_prefix = $c_id.'_';
 			Zakaz::$files_folder = '/uploads/c'.$c_id.'/';
-			Events::$table_prefix = $c_id.'_';
-			ZakazParts::$table_prefix = $c_id.'_';
-			//UpdateProfile::$table_prefix = $c_id.'_';
-			ZakazPartsFiles::$table_prefix = $c_id.'_';
-            //PaymentImage::$table_prefix = $c_id.'_';
-			Emails::$table_prefix = $c_id.'_';
 			
-			Yii::app()->language = Campaign::getLanguage();
+			Yii::app()->language = Company::getLanguage();
 		} else {
 			$tmp = explode('.',$_SERVER['SERVER_NAME']);
 			if (array_shift($tmp)=='www') {
@@ -58,28 +49,42 @@ class Controller extends RController
             switch (User::model()->getUserRole()) {
                 case ('Manager'):
                 case ('Admin'):
+				case ('root'):
                     Yii::app()->theme='admin';
                     break;
                 case ('Author'):
-                    $this->menu = array(
-						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
-						array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
-						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-                        //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
-                    );
-					$this->authMenu = array(
+                	if (User::model()->isCorrector())
+	                    $this->menu = array(
+							array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
+							array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
+							array('label'=>Yii::t('site','New projects for technical'), 'url'=>array('/project/zakaz/listtech')),
+	                        array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement')),
+							//array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
+							array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Далее выводится в обратном порядке
+							array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
+	                    );
+	                else
+	                	$this->menu = array(
+							array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
+							array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
+	                        array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement')),
+							//array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
+							array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Далее выводится в обратном порядке
+							array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
+	                    );
+					/*$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
-					);
+					);*/
                     Yii::app()->theme='client';
                     break;
                 case ('Customer'):
                     $this->menu = array(
 						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/customerOrderList')),
 						array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create')),
-						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                         //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
+						array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement')),
+						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
+						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
                     );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
@@ -89,14 +94,15 @@ class Controller extends RController
                 case ('Webmaster'):
                     $this->menu = array(
 						array('label'=>Yii::t('site','Stats'), 'url'=>array('/partner/stats')),
-						array('label'=>Yii::t('site','Promo materials'), 'url'=>array('/partner/naterials')),
+						array('label'=>Yii::t('site','Promo materials'), 'url'=>array('/partner/materials')),
+						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
 						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
                     );
 					$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
 					);
                     Yii::app()->theme='client';
+					if (Yii::app()->getRequest()->getRequestUri()=='/project/zakaz/list') $this->redirect('/');
                     break;
             }
 

@@ -119,15 +119,14 @@ INSERT INTO `1_PartStatus` (`id`, `status`) VALUES
 CREATE TABLE IF NOT EXISTS `1_Payment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
-  `receive_date` date DEFAULT NULL,
-  `pay_date` date DEFAULT NULL,
+  `receive_date` datetime DEFAULT NULL,
+  `pay_date` datetime DEFAULT NULL,
   `theme` varchar(255) DEFAULT NULL,
   `manager` varchar(100) DEFAULT NULL,
   `user` varchar(100) DEFAULT NULL,
   `summ` float(10,2) DEFAULT NULL,
-  `details_ya` varchar(255) DEFAULT NULL,
-  `details_wm` varchar(255) DEFAULT NULL,
-  `details_bank` text,
+  `details_type` int(11) NOT NULL,
+  `details_number` varchar(255) NOT NULL,
   `payment_type` tinyint(1) DEFAULT NULL,
   `approve` tinyint(1) DEFAULT NULL,
   `method` varchar(100) DEFAULT NULL,
@@ -272,6 +271,7 @@ CREATE TABLE IF NOT EXISTS `1_ProjectFields` (
   `default` varchar(255) NOT NULL DEFAULT '' COMMENT 'По умолчанию',
   `position` int(3) NOT NULL DEFAULT '0' COMMENT 'Позиция',
   `visible` int(1) NOT NULL DEFAULT '0' COMMENT 'Видимое',
+  `work_types` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `varname` (`varname`,`visible`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Таблица для хранения полей профиля пользователя' AUTO_INCREMENT=18 ;
@@ -285,7 +285,6 @@ INSERT INTO `1_ProjectFields` (`id`, `varname`, `title`, `field_type`, `field_si
 (2, 'description', 'Требуемый функционал', 'TEXT', '0', 2, '', '', 3, 1),
 (5, 'soderjanie', 'План', 'TEXT', '0', 2, '', '', 1, 1),
 (7, 'specials', 'Специализация проекта', 'LIST', '0', 3, 'Укажите специальность', '', 0, 1),
-(8, 'technicalspec', 'Необходимость тех. спец.', 'BOOL', '0', 2, '', '0', 5, 2),
 (9, 'opisanie', 'Описание проекта в целом', 'TEXT', '0', 2, '', '', 2, 1),
 (13, 'result_form', 'В каком виде выдавать результат работы?', 'TEXT', '0', 2, '', '', 8, 1),
 (14, 'tech', 'Технологии используемые в задаче', 'TEXT', '0', 2, '', '', 0, 1),
@@ -302,7 +301,9 @@ CREATE TABLE IF NOT EXISTS `1_ProjectMessages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `message` text NOT NULL,
   `sender` int(11) NOT NULL,
+  `sender_role` INT NULL DEFAULT NULL,
   `recipient` int(11) NOT NULL,
+  `recipient_role` INT NULL DEFAULT NULL,
   `moderated` tinyint(1) NOT NULL,
   `date` datetime NOT NULL,
   `order` int(11) NOT NULL,
@@ -352,6 +353,7 @@ CREATE TABLE IF NOT EXISTS `1_Projects` (
   `title` varchar(255) NOT NULL COMMENT 'Наименование',
   `add_demands` text COMMENT 'Доп. требования',
   `status` tinyint(4) DEFAULT '0' COMMENT 'Статус проекта',
+  `last_spam` TIMESTAMP NULL,
   `executor` int(10) unsigned DEFAULT '0' COMMENT 'ID исполнителя',
   `notes` text NOT NULL COMMENT 'Заметки',
   `date` timestamp NULL DEFAULT NULL,
@@ -513,8 +515,8 @@ INSERT INTO `1_Templates` (`id`, `name`, `title`, `text`, `type_id`) VALUES
 (43, 'Email: Срок сдачи подошёл', 'Сегодня срок сдачи части заказа ', 'Здравствуйте %имя%.\r\n\r\nНапоминаем Вам, что сегодня - срок сдачи части %название части% по заказу %ссылка на заказ%.\r\n\r\nЕсли Вы по каким-либо причинам не можете закончить работу или есть задержка со сроками - уведомите об этом менеджера заранее.\r\n\r\nБлагодарим  за Вашу ответственность.', 22),
 (44, 'Email: Новая доработка', 'Новая доработка', 'Здравствуйте %имя%.\r\n\r\nОбращаем Ваше внимание! \r\nЗаказчик загрузил замечания в форму заказа %ссылка на заказ%, требуется корректировка одной из частей.\r\nЗамечания Вы можете найти в форме заказа в разделе “Доработки”. \r\n\r\nТакже обратите внимание на блок “Части”, данные доработки будут добавлены как новая часть и будет установлен срок их сдачи.', 23),
 (45, 'Email: Исполнителю о зарплате', 'Оплата заказа', 'Здравствуйте %Имя%.\r\n\r\nПо заказу %ссылка на заказ% выставлено к оплате %сумма из выставлено к оплате% рублей.\r\n\r\nОжидайте поступления средств на Ваш счет.', 24),
-(46, 'Исполнителю', 'АВТОРУ максимальный бюджет', 'Максимальный бюджет этого заказа 1200 р, рассмотрите, пожалуйста, возможность выполнения. ', 2);
-
+(46, 'Исполнителю', 'АВТОРУ максимальный бюджет', 'Максимальный бюджет этого заказа 1200 р, рассмотрите, пожалуйста, возможность выполнения. ', 2),
+(47, 'Email: Рассылка тех.рук. о свободном заказе', 'Появился новый заказ для тех.рук. по Вашей специальности (%специальность%)', 'Здравствуйте %имя%\r\nОповещаем Вас о поступлении нового заказа.\r\n\r\nНаименование: %Наименование% \r\nСпециальность: %специальность%\r\nСсылка: %ссылка на заказ%\r\n\r\n\r\nПодробнее узнать о заказе, задать уточняющие вопросы, сообщить о Вашем желании стать Исполнителем этой работы Вы можете в чате, перейдя по этой ссылке %ссылка на заказ%, Предварительно авторизуйтесь в своем личном кабинете (для того что бы каждый раз не авторизовываться поставьте галочку "Запомнить" при авторизации).\r\nЕсли Вы хотите стать автором этой работы, напишите в чат желаемую цену и в течении суток Вы получите ответ о результате. Если Вы делали заявку три раза, указывая при этом адекватную сложности заказа и своему рейтингу цену и Вас не назначили на заказ, подпишите менеджеру "я Исполнитель на очереди" и Вам дадут этот заказ.\r\nПожалуйста, внимательно просмотрите всю информацию о заказе, сроках и подробности написания работы!\r\nО назначении Вас исполнителем заказа Вы будете оповещены по электронной почте\r\n', 26);
 -- --------------------------------------------------------
 
 --
@@ -578,15 +580,30 @@ CREATE TABLE IF NOT EXISTS `1_WebmasterLogs` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `1_ManagerLogs`
+--
+
+CREATE TABLE IF NOT EXISTS `1_ManagerLogs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `action` int(3) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `1_ZakazPartsFiles`
 --
 
 CREATE TABLE IF NOT EXISTS `1_ZakazPartsFiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `part_id` int(11) DEFAULT NULL,
-  `orig_name` varchar(100) DEFAULT NULL,
-  `file_name` varchar(100) DEFAULT NULL,
-  `comment` text,
+  `orig_name` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `approved` INT( 1 ) NOT NULL DEFAULT  '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -700,7 +717,6 @@ INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
 ('project.changes.list', 0, 'Changes.List', NULL, 'N;'),
 ('project.chat.apiRenameFile', 0, 'Chat.ApiRenameFile (only for owner) - delete materials by customer', 'return ChatController::allowOnlyOwner();', 'N;'),
 ('project.chat.index', 0, 'Chat.Index', NULL, 'N;'),
-('project.chat.upload', 0, 'Chat.Upload', NULL, 'N;'),
 ('project.chat.view', 0, 'Chat.View', NULL, 'N;'),
 ('project.event.delete', 0, 'Event.Delete', NULL, 'N;'),
 ('project.event.index', 0, 'Event.Index', NULL, 'N;'),
@@ -729,6 +745,7 @@ INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
 ('project.zakazParts.apiApprove', 0, 'ZakazParts.ApiApprove (file)', NULL, 'N;'),
 ('project.zakazParts.apiCreate', 0, 'ZakazParts.ApiCreate', NULL, 'N;'),
 ('project.zakazParts.apiDelete', 0, 'ZakazParts.ApiDelete', NULL, 'N;'),
+('project.zakazParts.apiDeleteFile', 0, 'ZakazParts.ApiDeleteFile', NULL, 'N;'),
 ('project.zakazParts.apiEditPart', 0, 'ZakazParts.ApiEditPart', NULL, 'N;'),
 ('project.zakazParts.status', 0, 'ZakazParts.Status', NULL, 'N;'),
 ('project.zakazParts.upload', 0, 'ZakazParts.Upload', NULL, 'N;'),
@@ -794,7 +811,6 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 ('Manager', 'project.chat.apiRenameFile'),
 ('Author', 'project.chat.index'),
 ('Customer', 'project.chat.index'),
-('Customer', 'project.chat.upload'),
 ('Author', 'project.chat.view'),
 ('Guest', 'project.chat.view'),
 ('Manager', 'project.event.delete'),
@@ -817,7 +833,7 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 ('Author', 'project.zakaz.ownList'),
 ('Manager', 'project.zakaz.preview'),
 ('Manager', 'project.zakaz.spam'),
-('Author', 'project.zakaz.update'),
+('Customer', 'project.zakaz.update'),
 ('Manager', 'project.zakaz.update'),
 ('Customer', 'project.zakaz.upload'),
 ('Guest', 'project.zakaz.upload'),
@@ -827,10 +843,12 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 ('Manager', 'project.zakazParts.apiApprove'),
 ('Manager', 'project.zakazParts.apiCreate'),
 ('Manager', 'project.zakazParts.apiDelete'),
+('Manager', 'project.zakazParts.apiDeleteFile'),
 ('Manager', 'project.zakazParts.apiEditPart'),
 ('Author', 'project.zakazParts.status'),
 ('Customer', 'project.zakazParts.status'),
 ('Author', 'project.zakazParts.upload'),
+('Manager', 'project.zakazParts.upload'),
 ('Author', 'recovery'),
 ('Customer', 'recovery'),
 ('Guest', 'recovery'),
@@ -858,6 +876,7 @@ INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `frozen` int(1) NOT NULL DEFAULT '0',
   `organization` int(11) NOT NULL COMMENT 'Принадлежность к организации',
   `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'Название кампании',
   `domains` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -867,10 +886,15 @@ CREATE TABLE IF NOT EXISTS `Companies` (
   `Payment2Chekout` int(11) NOT NULL,
   `Payment2ChekoutHash` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `FrontPage` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `logo` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `header` text CHARACTER SET utf8,
+  `text4guests` text CHARACTER SET utf8,
+  `text4customers` text CHARACTER SET utf8,
   `WebmasterFirstOrderRate` float DEFAULT NULL,
   `WebmasterSecondOrderRate` float DEFAULT NULL,
+  `telfin_id` VARCHAR( 32 ) NULL DEFAULT NULL,
+  `telfin_secret` VARCHAR( 32 ) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -878,8 +902,8 @@ CREATE TABLE IF NOT EXISTS `Companies` (
 -- Дамп данных таблицы `Companies`
 --
 
-INSERT INTO `Companies` (`id`, `organization`, `name`, `domains`, `language`, `supportEmail`, `PaymentCash`, `Payment2Chekout`, `Payment2ChekoutHash`, `FrontPage`, `logo`, `header`, `WebmasterFirstOrderRate`, `WebmasterSecondOrderRate`) VALUES
-(1, 1, 'Программариус', 'adco.obshya.com,adco2.obshya.com,programmarius.admintrix.com', 'ru', 'no-reply@programmarius.ru', 1, 0, '', 'http://programmarius.ru/', 'tools.png', '<br />Компания по созданию сайтов любой сложности.', 30, 10);
+INSERT INTO `Companies` (`id`, `frozen`, `organization`, `name`, `domains`, `language`, `supportEmail`, `PaymentCash`, `Payment2Chekout`, `Payment2ChekoutHash`, `FrontPage`, `icon`, `logo`, `header`, `WebmasterFirstOrderRate`, `WebmasterSecondOrderRate`) VALUES
+(1, 0, 1, 'Программариус', 'adco.obshya.com,adco2.obshya.com,programmarius.admintrix.com,dipstart.dev', 'ru', 'no-reply@programmarius.ru', 1, 0, '', '', '', '', '<br />Компания по созданию сайтов любой сложности.', 30, 10);
 
 -- --------------------------------------------------------
 
@@ -898,6 +922,37 @@ CREATE TABLE IF NOT EXISTS `Rights` (
 -- Дамп данных таблицы `Rights`
 --
 
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `cdr` для логов телефонии
+--
+
+CREATE TABLE IF NOT EXISTS `1_cdr` (
+  `id` char(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `published` int(11) NOT NULL,
+  `answerDuration` int(11) DEFAULT NULL,
+  `source` varchar(255) COLLATE utf8_bin NOT NULL,
+  `destination` varchar(255) COLLATE utf8_bin NOT NULL,
+  `duration` int(11) NOT NULL,
+  `flow` enum('IN','OUT','LOCAL') COLLATE utf8_bin NOT NULL,
+  `result` enum('ANSWERED','BUSY','FAILED','NO_ANSWER','UNKNOWN','NOT_ALLOWED') COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `1_TipDone` для записи состояний подсказок для менеджера
+--
+
+CREATE TABLE IF NOT EXISTS `1_TipDone` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`message_id` int(11) NOT NULL,
+`status` varchar(100) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
 

@@ -1,6 +1,6 @@
 <?php
 Yii::app()->getClientScript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/price.js');
-$c_id = Campaign::getId();
+$c_id = Company::getId();
 $url = '/uploads/c'.$c_id.'/temp/'.$project->unixtime.'/';
 $html_string = $project->generateMaterialsList($url, true);
 $form=$this->beginWidget('CActiveForm',array(
@@ -207,15 +207,12 @@ $form=$this->beginWidget('CActiveForm',array(
 					$this->widget('ext.EAjaxUpload.EAjaxUpload',
                         array(
                             'id' => 'justFileUpload',
-                            'postParams' => array(
-                                'unixtime' => $project->unixtime,
-                            ),
                             'config' => array(
                                 'action' => $this->createUrl('/project/zakaz/upload', array('unixtime' => $project->unixtime)),
                                 'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Attach materials to the order') .'</div><ul class="qq-upload-list">'.$html_string.'</ul></div></div>',
-                                'disAllowedExtensions' => array('exe'),
-                                'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
-                                'minSizeLimit' => 10,// minimum file size in bytes
+                                'disAllowedExtensions' => array('exe','scr'),
+                                'sizeLimit' => 200 * 1024 * 1024,// maximum file size in bytes
+                                'minSizeLimit' => 1,// minimum file size in bytes
                                 'onComplete' => "js:function(id, fileName, responseJSON){}"
                             )
                         )

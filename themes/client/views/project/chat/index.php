@@ -1,23 +1,22 @@
 <?php
 Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl . '/css/custom.css');
-// --- campaign      генерируем список загруженных материалов
+
 if(isset(Zakaz::$files_folder)){
 	$url = Zakaz::$files_folder.$order->id.'/';
 } else {
 	$url = '/uploads/'.$order->id.'/';
 }
-$html_string = $order->generateMaterialsList($url);
-// ---
+$uploaded_files = $order->generateMaterialsList($url);
+$upload_params = array('id' => $order->id);
 ?>
 <div class="container container-chat">
 	<?php
-		if (User::model()->isCustomer() && (!$order->is_active || !$moderated)) {
+		if (User::model()->isExecutor($order->id) && !$isCorrector) { // Если назначен исполнитель, и именнно он смотрит
+			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
+		} elseif ((User::model()->isCustomer() || User::model()->isCorrector()) && (!$order->is_active || !$moderated)) {
 			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
 		}
-		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
-			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
-		};	
 	?>
 	<div class="col-xs-12 info-block" style="margin-bottom: 15px;">
 		<div class="panel-group" id="info-block">
@@ -30,17 +29,18 @@ $html_string = $order->generateMaterialsList($url);
 					</h4>
 				</div>
 
-				<div id="infoZakaz" class="panel-collapse collapse">
+				<div id="infoZakaz" class="panel-collapse <?=(User::model()->isCorrector() ? '' : 'collapse')?>">
 					<div class="panel-body">
 
 						<div class="col-xs-12 aboutZakaz">
-						<!--<div class="row">-->
 							<?php
-							if (User::model()->isAuthor()) {
+							if (User::model()->isExecutor($order->id) && !$isCorrector) {
 								$this->renderPartial('/zakaz/_view', array('model' => $order));
-							} elseif(User::model()->isCustomer()) {
+							} elseif (User::model()->isCustomer() || User::model()->isCorrector()) {
 								if ($order->is_active) {
-									$this->renderPartial('/zakaz/_form', array('model' => $order));
+									$this->renderPartial('/zakaz/_form', array('model' => $order,
+																		'upload_params' => $upload_params,
+																		'uploaded_files' => $uploaded_files));
 								} else {
 									$this->renderPartial('/zakaz/_orderInModerate', array('model' => $order));
 								}
@@ -57,8 +57,7 @@ $html_string = $order->generateMaterialsList($url);
 
 	<div class="col-xs-12 rating-line"><?php
 
-		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
-			echo '<div class="my-rating author-raiting">'.ProjectModule::t('My rating:').' <span class="value">'.Profile::model()->findByPk($order->executor)->rating.'</span></div>';
+		if(User::model()->isExecutor($order->id) && !$isCorrector) { // Если назначен исполнитель, и именнно он смотрит
 			$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
 			echo '<div class="my-rating">'.ProjectModule::t('Work price:').' <span class="value">'.$payment->work_price.'</span></div>'; //Стоимость проекта для автора
 			echo '<div class="my-rating">'.ProjectModule::t('To pay:').' <span class="value">'.$payment->to_pay.'</span></div>';
@@ -73,10 +72,9 @@ $html_string = $order->generateMaterialsList($url);
 	<div class="col-xs-4">
 		<div class="row">
 			<?php
-			$this->renderPartial('payment',array('order'=>$order));
-			?>
-			
-			<?php
+			$this->renderPartial('_payment',array('order'=>$order, 'images'=>$PaymentImages));
+
+			if (User::model()->isCustomer()) echo '<h7 class="center">'.ProjectModule::t('Completed stages').':</h7>';
 			$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
 				'projectId' => $order->id,
 			));
@@ -84,30 +82,10 @@ $html_string = $order->generateMaterialsList($url);
 			<div class="col-xs-12 project-changes">
 				<?php $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
 					'project' => $order,
+					'isCorrector' => $isCorrector,
 				)); ?>
 			</div>
 		</div>
-		<?php
-		if (User::model()->isCustomer()) {
-			
-			$this->widget('ext.EAjaxUpload.EAjaxUpload',
-				array(
-					'id' => 'justFileUpload',
-					'postParams' => array(
-						'id' => $order->id,
-					),
-					'config' => array(
-						'action' => $this->createUrl('/project/chat/upload', array('id' => $order->id)),
-						'template' => '<div class="qq-uploader"><div class="qq-upload-drop-area"><span>'. ProjectModule::t('Drag and drop files here') .'</span><div class="qq-upload-button">'. ProjectModule::t('Attach materials to the order') .'</div><ul class="qq-upload-list">'.$html_string.'</ul></div></div>',
-						'disAllowedExtensions' => array('exe'),
-						'sizeLimit' => 10 * 1024 * 1024,// maximum file size in bytes
-						'minSizeLimit' => 10,// minimum file size in bytes
-						'onComplete' => "js:function(id, fileName, responseJSON){}"
-					)
-				)
-			);
-		}
-		?>
 	</div>
 	<div class="col-xs-8">
 		
@@ -119,12 +97,15 @@ $html_string = $order->generateMaterialsList($url);
 			?>
 		</div>
 		<?php 
-		$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId));
+		if (User::model()->isExecutor($order->id) && !$isCorrector) 	$role = 'Executor';
+		elseif (User::model()->isCustomer()) 							$role = 'Customer';
+		elseif (User::model()->isCorrector()) 							$role = 'Corrector';
+		$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId, 'role'=>$role ));
 		?>
 	</div>
 </div>
 
-<?php if (User::model()->isAuthor() && $order->executor == 0) : ?>
+<?php if (User::model()->isAuthor() && !User::model()->isCorrector() && $order->executor == 0) : ?>
     
 <script>
     var e = $(".info-block");

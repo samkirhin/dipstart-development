@@ -214,6 +214,11 @@ class UserModule extends CWebModule
 		}
 		return self::$_admins;
 	}
+	public static function getAdminsAndRoot() {
+		$arr = UserModule::getAdmins();
+		array_push($arr,'root');
+		return $arr;
+	}
 	
 	/**
 	 * Send mail method

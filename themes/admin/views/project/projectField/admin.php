@@ -1,11 +1,7 @@
 <?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->theme->baseUrl.'/css/manager.css');?>
 <?php
-$this->breadcrumbs=array(
-	UserModule::t('Project Fields')=>array('admin'),
-	UserModule::t('Manage'),
-);
 $this->menu=array(
-    array('label'=>UserModule::t('Create Project Field'), 'url'=>array('create')),
+    array('label'=>ProjectModule::t('Create Project Field'), 'url'=>array('create')),
 );
 
 $this->widget('zii.widgets.CMenu', array(
@@ -28,7 +24,7 @@ $('.search-form form').submit(function(){
 
 
 ?>
-<h1><?php echo UserModule::t('Manage Project Fields'); ?></h1>
+<h1><?php echo ProjectModule::t('Manage Project Fields'); ?></h1>
 <div class="row white-bg inside-block">
 <div class="col-md-12">
 <p><?php echo UserModule::t("You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done."); ?></p>
@@ -76,6 +72,12 @@ $('.search-form form').submit(function(){
 			'name'=>'visible',
 			'value'=>'ProjectField::itemAlias("visible",$data->visible)',
 			'filter'=>ProjectField::itemAlias("visible"),
+		),
+		array(
+			'name'=>'work_types',
+			'type'=>'raw',
+			'value'=>'"<a href=\"/project/projectField/workTypes?id=".$data->id."\">".
+						(($data->work_types==null)?"(".UserModule::t("All").")":$data->work_types) ."</a>"',
 		),
 		array(
 			'class'=>'CButtonColumn',

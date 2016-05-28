@@ -1,0 +1,6 @@
+---
+app_name: dipstart
+composer_github_oauth: ~
+mysql_user: dipstart
+mysql_password: dipstart
+mysql_database: dipstart

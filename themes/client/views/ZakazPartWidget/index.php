@@ -15,7 +15,7 @@
 		<?=$this->status;?>
 	</div>
 	<div class="stage-first-column">
-		<?=ProjectModule::t('Deadline');?>:
+		<?=ProjectModule::t('Stage deadline');?>:
 	</div>
 	<div class="stage-second-column">
 		<?=$data['dbdate'];?>
@@ -31,12 +31,15 @@
 	</div>
 	<div class="stage-second-column">
 		<?php foreach ($data['files'] as $k => $v){
-			//echo '<div class="row">';
-			if ($v['id']!=0) echo '<a href="' . $v['file_name'] . '" id="parts_file" data-part="' . $data['id'] . '">';
-			if (User::model()->isAuthor() || ($v['id']!=0)) echo $v['orig_name'];
-			if ($v['id']!=0) echo '</a>';
-			//echo '</div>';
-			echo '<br>';
+			if ($v['approved']) {
+				echo '<div class="stage-file">';
+				echo '<a target="_blank" href="'.
+					ZakazPartsFiles::model()->folder(). $v['part_id'] . '/' . $v['file_name'] .
+					'" title="'.$v['orig_name'].'" data-part="' . $data['id'] . '">'.$v['orig_name'].
+				'</a>';
+				echo '</div>';
+				echo '<br>';
+			}
 		} ?>
 	</div>
 	<div class="clear"></div>
