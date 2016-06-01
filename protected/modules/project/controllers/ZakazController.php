@@ -21,7 +21,8 @@ class ZakazController extends Controller {
 	actionSetTechSpec       - сохранение и рассылка по техническим руководителям
 	actionApiApproveFile    - модерация файла
 	actionApiRemoveFile     - удаление файла
-	actionUpload            - загрузка файлов в заказе 
+	actionUpload            - загрузка файлов в заказе
+	actionTree              - страница древовидной структуры
 	*/
 	/*public function filters() {
         return array(
@@ -296,7 +297,8 @@ class ZakazController extends Controller {
             if (is_array($data)) {
                 $model=$this->loadModel($data['id']);
                 echo json_encode($model->$field=$data['data']);
-                echo json_encode($model->save());
+				echo json_encode($model->save());
+				echo json_encode($model->errors);
                 Yii::app()->end();
             }
             $this->renderPartial('_order_list_update');
@@ -969,6 +971,40 @@ class ZakazController extends Controller {
 			EventHelper::materialsAdded($id);
 		}
     }
+	
+	public function actionTree() {
+		//if(User::model()->isCustomer())
+		$orders = Zakaz::model()->findAllByAttributes(['user_id'=>Yii::app()->user->id]);
+
+		$trees = array();
+		$forest = array();
+		$childs = array();// order_id => array(childs)
+		foreach ($orders as $order){
+			//if(!in_array($order->id, $picked, true)) {
+				//while ($order) {
+					//$picked[] = $order->id;
+					$trees[$order->id] = $order->title;
+					if($order->parent_id) {
+						$childs[$order->parent_id][] = $order->id;
+						//$order = Zakaz::model()->findAllByAttributes(['id'=>$order->parent_id]);
+					}
+					else {
+						$forest[] = $order->id;
+					}
+				//}
+			//}
+		}
+		//$forest
+		$this->render('tree',array(
+			'forest'=> $forest,
+            'trees' => $trees,
+            'childs' => $childs,
+            //'dataProvider_done' => null,
+			//'profile' => $user->profile,
+			//'only_new' => $new,
+			//'tech' => 1,
+		));
+	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

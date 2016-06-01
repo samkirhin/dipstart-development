@@ -374,7 +374,7 @@ CREATE TABLE IF NOT EXISTS `1_Projects` (
   `time_to_connect` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Таблица для хранения проектов (заказов)' AUTO_INCREMENT=2 ;
-
+ALTER TABLE  `1_Projects` ADD  `parent_id` INT NULL DEFAULT NULL , ADD INDEX (  `parent_id` );
 --
 -- Дамп данных таблицы `1_Projects`
 --
@@ -895,6 +895,7 @@ CREATE TABLE IF NOT EXISTS `Companies` (
   `WebmasterSecondOrderRate` float DEFAULT NULL,
   `telfin_id` VARCHAR( 32 ) NULL DEFAULT NULL,
   `telfin_secret` VARCHAR( 32 ) NULL DEFAULT NULL,
+  `module_tree` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 

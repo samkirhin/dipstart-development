@@ -53,42 +53,32 @@ class Controller extends RController
                     Yii::app()->theme='admin';
                     break;
                 case ('Author'):
-                	if (User::model()->isCorrector())
-	                    $this->menu = array(
-							array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
-							array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
-							array('label'=>Yii::t('site','New projects for technical'), 'url'=>array('/project/zakaz/listtech')),
-	                        array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement')),
-							//array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-							array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Далее выводится в обратном порядке
-							array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-	                    );
-	                else
-	                	$this->menu = array(
-							array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList')),
-							array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list')),
-	                        array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement')),
-							//array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-							array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Далее выводится в обратном порядке
-							array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-	                    );
-					/*$this->authMenu = array(
-					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
-					);*/
+					$menu[] = array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/ownList'));
+                	$menu[] = array('label'=>Yii::t('site','New projects'), 'url'=>array('/project/zakaz/list'));
+					if (User::model()->isCorrector()) {
+	                    $menu[] = array('label'=>Yii::t('site','New projects for technical'), 'url'=>array('/project/zakaz/listtech'));
+						//if (Company::getCompany()->module_tree) $menu[] = array('label'=>Yii::t('site','Tree structure'), 'url'=>array('/project/zakaz/tree'));
+					}
+					if (Company::getCompany()->agreement4executors && Company::getCompany()->agreement4executors != '') $menu[] = array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement'));
+					//$menu[] = array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account'));
+					$menu[] = array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout'));// Далее выводится в обратном порядке
+					$menu[] = array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit'));
+					$this->menu = $menu;
+
                     Yii::app()->theme='client';
                     break;
                 case ('Customer'):
-                    $this->menu = array(
-						array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/customerOrderList')),
-						array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create')),
-                        //array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account')),
-						array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement')),
-						array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),// Даллее выводится в обратном порядке
-						array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit')),
-                    );
-					$this->authMenu = array(
+						$menu[] = array('label'=>Yii::t('site','My orders'), 'url'=>array('/project/zakaz/customerOrderList'));
+						if (Company::getCompany()->module_tree) $menu[] = array('label'=>Yii::t('site','Tree structure'), 'url'=>array('/project/zakaz/tree'));
+						$menu[] = array('label'=>Yii::t('site','Create order'), 'url'=>array('/project/zakaz/create'));
+                        //$menu[] = array('label'=>Yii::t('site','Personal account'), 'url'=>array('/user/profile/account'));
+						if (Company::getCompany()->agreement4customers && Company::getCompany()->agreement4customers != '') $menu[] = array('label'=>Yii::t('site','User Agreement'), 'url'=>array('/site/agreement'));
+						$menu[] = array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout'));// Даллее выводится в обратном порядке
+						$menu[] = array('label'=>Yii::t('site','Profile'), 'url'=>array('/user/profile/edit'));
+                    $this->menu = $menu;
+					/*$this->authMenu = array(
 					    array('label'=>Yii::t('site','Logout'), 'url'=>array('/user/logout')),
-					);
+					);*/
                     Yii::app()->theme='client';
                     break;
                 case ('Webmaster'):

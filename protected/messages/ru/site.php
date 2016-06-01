@@ -204,7 +204,7 @@ return array(
 	'Check All' => 'Выбрать все',
 	'UnCheck All' => 'Сбросить все',
 	'Link is absent' => 'Ссылка отсутствует',
-	
+	'Tree structure' => 'Древовидная структура',
 	//sms
     'Invalid parameters' => 'Ошибка в параметрах',
     'Invalid login or password' => 'Неверный логин или пароль',

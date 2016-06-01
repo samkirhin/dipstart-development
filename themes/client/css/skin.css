@@ -1386,3 +1386,7 @@ ul.files-list {
 	text-decoration: none;
 	color: white;
 }
+
+.parentBlock select {
+	width: 100%;
+}
