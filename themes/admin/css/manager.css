@@ -200,6 +200,9 @@ div.rightBorder, div.leftBorder {
     padding: 0;
     margin: 0px 0 10px 0;
 }
+.parentBlock select {
+    width: 50%;
+}
 .hint-block {
     display: inline-block;
 	width: 7px;

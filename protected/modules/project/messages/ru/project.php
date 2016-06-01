@@ -177,7 +177,8 @@ return array(
     'Confirm payment from client:' => 'Подтвердить платеж от клиента:',
 	'Last delivery' => 'Последняя рассылка',
 	'Remove stage' => 'Удалить этап',
-    //Блок советов
+    'Parent order' => 'Вышестоящий заказ',
+	'Order childrens' => 'Подзаказы',
     'Tips' => 'Советы',
 
     'List ZakazParts' => 'Список этапов проекта',

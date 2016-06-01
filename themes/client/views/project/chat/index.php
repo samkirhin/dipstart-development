@@ -74,6 +74,10 @@ $upload_params = array('id' => $order->id);
 			<?php
 			$this->renderPartial('_payment',array('order'=>$order, 'images'=>$PaymentImages));
 
+			if (Company::getCompany()->module_tree && (User::model()->isCustomer() || User::model()->isCorrector())) $this->widget('application.modules.project.widgets.zakazTree.ZakazTreeWidget', array(
+                'project'=>$order,
+            ));
+			
 			if (User::model()->isCustomer()) echo '<h7 class="center">'.ProjectModule::t('Completed stages').':</h7>';
 			$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
 				'projectId' => $order->id,

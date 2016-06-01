@@ -269,6 +269,12 @@ $customer = $model->user;
                 </div>
             </div>
 			<hr>
+			
+			<?php
+			if (Company::getCompany()->module_tree) $this->widget('application.modules.project.widgets.zakazTree.ZakazTreeWidget', array(
+                'project'=>$model,
+            ));
+			?>
 
             <?php Yii::app()->getClientscript()->registerScriptFile(Yii::app()->theme->baseUrl.'/js/manager.js');?>
 			<!-- Начало блока добавления этапов менеджера -->

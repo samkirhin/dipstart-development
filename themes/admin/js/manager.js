@@ -277,17 +277,21 @@ $( document ).ready( function() {
             if (response.data)obj.remove();
         });
     });
-	$('form#zakaz-form select, form#zakaz-form input:checkbox').on('change',function(event){
+	$('#Zakaz_parent_id, form#zakaz-form select, form#zakaz-form input:checkbox').on('change',function(event){
         var data = $(this).val();
+		var elid = $(this).attr('id');
+		var id = $('#order_number').html();
 		if($(this).attr('type')=='checkbox') {
 			if($(this).prop('checked')) data = 1; else data = 0;
 		}
-        var elid = $(this).attr('id');
-        var id = $('#order_number').html();
+		console.log(id+' '+elid+' '+data);
+        //var elid = $(this).attr('id');
+        //var id = $('#order_number').html();
         $.post('/project/zakaz/update?id='+id,
             {'data': data,'id':id,'elid': elid},
         function (response) {
-            if (response.data)obj.remove();
+			console.log(response);
+            //if (response.data)obj.remove();
         });
     });
 

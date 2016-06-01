@@ -114,6 +114,11 @@
 		<?php echo $form->textField($model,'telfin_secret',array('size'=>60,'maxlength'=>32)); ?>
 		<?php echo $form->error($model,'telfin_secret'); ?>
 	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'module_tree'); ?>
+		<?php echo $form->checkBox($model,'module_tree'); ?>
+		<?php echo $form->error($model,'module_tree'); ?>
+	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(UserModule::t('Save')); ?>
 	</div>
