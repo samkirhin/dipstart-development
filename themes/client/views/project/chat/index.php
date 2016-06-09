@@ -69,7 +69,7 @@ $upload_params = array('id' => $order->id);
 	</div>
 	<?php endif;?>
 	
-	<div class="col-xs-4">
+	<div class="col-xs-4 __changes">
 		<div class="row">
 			<?php
 			$this->renderPartial('_payment',array('order'=>$order, 'images'=>$PaymentImages));
@@ -91,7 +91,7 @@ $upload_params = array('id' => $order->id);
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-8">
+	<div class="col-xs-8 __chat">
 		
 		<div id="chat" class="user-chat-block">
 			<?php $this->renderPartial('chat',array('order'=>$order, 'orderId'=>$orderId));?>

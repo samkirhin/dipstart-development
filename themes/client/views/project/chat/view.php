@@ -35,13 +35,13 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 		
 		if ($order->is_active) {
 		?>
-			<div class="col-xs-6">
+			<div class="col-xs-6 order-info">
 				<h5 class="title"><?=ProjectModule::t('Ordering Information').' №'.$order->id ?>:</h5>
 				<?php
 				$this->renderPartial('/zakaz/_view', array('model' => $order));
 				?>
 			</div>
-			<div class="col-xs-6">
+			<div class="col-xs-6 work-stage">
 				<h5 class="title"><?=ProjectModule::t('Work stages') ?>:</h5>
 				<?php
 				$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
@@ -49,7 +49,7 @@ if(!$isGuest) Yii::app()->clientScript->registerScriptFile('/js/chat.js');
 				));
 				?>
 			</div>
-			<div class="col-xs-6"><?php
+			<div class="col-xs-6 order-changes"><?php
 				//if(Yii::app()->user->id) 
 				$this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
 					'project' => $order,

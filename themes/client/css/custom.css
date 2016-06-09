@@ -951,3 +951,56 @@ div.stage-second-column {
     margin: 0px;
     padding: 0px;
 }
+
+@media screen and (max-width: 600px){
+    table.detail-view
+    {
+        width: 100% !important;
+    }
+    div.rating-line
+    {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 12px;
+        margin-bottom: 32px;
+    }
+    div.rating-line div.my-rating
+    {
+        display: block;
+        width: 100%;
+    }
+    .col-xs-12.project-changes
+    {
+        padding: 0;
+    }
+    .col-xs-4.__changes,
+    .col-xs-8.__chat
+    {
+        width: 100%;
+    }
+    div#chatWindow{
+        position: relative;
+    }
+    div#chatWindow::after
+    {
+        /*content: "Здесь будет ваша переписка";*/
+        display: block!important;
+        position: absolute!important;
+        width: 200px;
+        top: 40%!important;
+        left: 50%!important;
+        text-align: center;
+        margin-left: -100px;
+        font-size: 1.5rem!important;
+        font-weight: bold!important;
+        text-transform: uppercase!important;
+        color: #EDEDED!important;
+    }
+    .zakaz-info-header
+    {
+        margin: 10px 0;
+    }
+    .panel-body {
+        padding: 10px;
+    }
+}
