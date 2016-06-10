@@ -1463,9 +1463,13 @@ ul.files-list {
     display: inline-block;
     margin-left: 0;
     margin-right: 10px;
+    margin-bottom: 3px;
     font-size: 12px;
   }
   .note{
     margin: 10px 0;
+  }
+  .guest-links {
+    overflow: hidden;
   }
 }

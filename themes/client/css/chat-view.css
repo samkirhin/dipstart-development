@@ -246,6 +246,7 @@ div.text4guests {
 		padding-left: 10px;
 		padding-right: 10px;
 		margin-left: 0;
+		margin-top: 0;
 	}
 	div.col-xs-6.order-info,
 	div.col-xs-6.work-stage,
@@ -276,5 +277,8 @@ div.text4guests {
         text-align: center;
         margin-left: -100px;
         font-size: 20px;
+	}
+	.heading{
+		border:none;
 	}
 }

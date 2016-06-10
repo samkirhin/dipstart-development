@@ -969,7 +969,8 @@ div.stage-second-column {
         display: block;
         width: 100%;
     }
-    .col-xs-12.project-changes
+    .col-xs-12.project-changes,
+    .col-xs-12.stage-block
     {
         padding: 0;
     }
