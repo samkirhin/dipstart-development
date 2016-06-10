@@ -204,7 +204,8 @@ return array(
 	'Work types' => 'Типы работ',
 	'Error' => 'Ошибка',
 	'Authority Error' => 'Ошибка авторизации',
-  'This is registration' => 'Регистрация',
+	'This is registration' => 'Регистрация',
+	'Call back' => 'Обратный звонок',
   'Profile message for Authors' => 'Чтобы мы могли предлагать Вам проекты вашего профиля, укажите свои направления.',
   'Update profile' => 'Изменения сохранены и будут доступны после модерации.',
 	// специализации
