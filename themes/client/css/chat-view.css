@@ -2,19 +2,19 @@
 	/*background-color: white;*/
 	padding-bottom: 17px;
 	border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
+	border-top-right-radius: 14px;
 }
 .heading {
 	border-bottom: 1px solid #ddd;
 }
 .container-view h2{
-    text-align: center;
+	text-align: center;
 }
 .title {
 	color: #337AB7;
-    width: 100%;
-    display: block;
-    text-align: center;
+	width: 100%;
+	display: block;
+	text-align: center;
 }
 h4.title {
 	line-height: 25px;
@@ -35,8 +35,8 @@ h5.title {
 	background: #eee;
 }
 .container-view .materials-files {
-    list-style-type: none;
-    padding-left: 0px;
+	list-style-type: none;
+	padding-left: 0px;
 }
 .container-view .materials-files br {
 	display: none;
@@ -50,10 +50,10 @@ div.notes-author {
 	padding: 15px;
 }
 .container-view .list-view {
-    padding-top: 0px;
+	padding-top: 0px;
 }
 .container-view .items {
-    margin-top: 5px;
+	margin-top: 5px;
 }
 .container-view .list-changes-block {
 	margin-bottom: 5px;
@@ -97,22 +97,22 @@ div.chat-buttons input {
 	clear: both;
 }
 div.stage {
-    color: #333;
-    background-color: #f5f5f5;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
+	color: #333;
+	background-color: #f5f5f5;
+	padding: 10px 15px;
+	border: 1px solid #ddd;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
 	margin-bottom: 18px;
 }
 div.stage-number {
 	position: absolute;
 	margin-top: -25px;
 	margin-left: -35px;
-    color: #111;
-    background-color: #fafafa;
-    padding: 7px 7px;
-    border: 1px solid #ddd;
+	color: #111;
+	background-color: #fafafa;
+	padding: 7px 7px;
+	border: 1px solid #ddd;
 	border-radius: 18px;
 	width: 36px;
 	text-align: center;
@@ -134,24 +134,24 @@ div.stage-file {
 	width: 100%;
 }
 div#chatWindow::before {
-    display: block;
-    position: absolute;
-    top: 46%;
-    left: 16%;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #D2D2D2;
+	display: block;
+	position: absolute;
+	top: 46%;
+	left: 16%;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #D2D2D2;
 }
 div#chatWindow::after {
-    display: block;
-    position: absolute;
-    top: 38%;
-    left: 28%;
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #EDEDED;
+	display: block;
+	position: absolute;
+	top: 38%;
+	left: 28%;
+	font-size: 20px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #EDEDED;
 }
 .container-view .btn-green {
 	width: auto;
@@ -237,4 +237,48 @@ div.text4guests {
 	padding-top: 4px;
 	padding-bottom: 4px;
 	border-radius: 10px;
+}
+
+@media screen and (max-width: 600px){
+	div.col-xs-8.take-block
+	{
+		width: 100%;
+		padding-left: 10px;
+		padding-right: 10px;
+		margin-left: 0;
+		margin-top: 0;
+	}
+	div.col-xs-6.order-info,
+	div.col-xs-6.work-stage,
+	div.col-xs-6.order-changes
+	{
+		width: 100%;
+	}
+	div.col-xs-8.user-chat-block,
+	.col-xs-8.chat-accessories-block
+	{
+		margin-left: 0;
+		width: 100%;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	div#chatWindow::before {
+		width: 200px;
+		top: 30%;
+        left: 50%;
+        text-align: center;
+        margin-left: -100px;
+        font-size: 1.5rem;
+	}
+	div#chatWindow::after {
+		width: 200px;
+		top: 60%;
+        left: 50%;
+        text-align: center;
+        margin-left: -100px;
+        font-size: 20px;
+	}
+	.heading{
+		border:none;
+	}
 }
