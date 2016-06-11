@@ -1390,3 +1390,86 @@ ul.files-list {
 .parentBlock select {
 	width: 100%;
 }
+
+@media screen and (max-width: 600px){
+  .nav-tabs > li
+  {
+    margin: 0;
+    text-align: right;
+  }
+  .nav-tabs > li > a
+  {
+    padding-right: 30px;
+  }
+  .header .nav-tabs
+  {
+    padding-left: 10px;
+  }
+  header div#control-menu li a,
+  header div#control-menu li:last-child a, 
+  header div#control-menu li:nth-last-child(2),
+  header div#control-menu li:nth-last-child(2) a
+  {
+    border-radius: 0;
+    margin: 0;
+  }
+  header div#control-menu li:nth-last-child(2),
+  header div#control-menu li:nth-last-child(2) a
+  {
+    width: 100%;
+  }
+  header div#control-menu li:first-child a
+  {
+    border-radius: 15px 0px 0px 0px;
+  }
+  div.content-clearfix .nav-tabs
+  {
+    padding-left: 40px;
+  }
+  div.content-clearfix .nav-tabs > li,
+  div.content-clearfix .nav-tabs > li > a
+  {
+    height: auto;
+    border-radius: 0;
+  }
+  div.content-clearfix .nav-tabs > li:first-child > a
+  {
+    border-radius: 15px 0px 0px 0px;
+  }
+  div.first-tab, 
+  div.second-tab
+  {
+    margin: 0;
+  }
+  div.summary,
+  div.content-clearfix .grid-view table.items th:nth-child(1),
+  div.content-clearfix .grid-view table.items th:nth-child(3),
+  div.content-clearfix .grid-view table.items th:nth-child(5),
+  div.content-clearfix .grid-view table.items td:nth-child(1),
+  div.content-clearfix .grid-view table.items td:nth-child(3),
+  div.content-clearfix .grid-view table.items td:nth-child(5),
+  div.content-clearfix #zakaz-grid-current table.items th:nth-child(1),
+  div.content-clearfix #zakaz-grid-current table.items th:nth-child(3),
+  div.content-clearfix #zakaz-grid-current table.items td:nth-child(1),
+  div.content-clearfix #zakaz-grid-current table.items td:nth-child(3)
+  {
+    display: none;
+  }
+  #profile-form select
+  {
+    width: 100% !important;
+  }
+  div.chat-buttons input {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    font-size: 12px;
+  }
+  .note{
+    margin: 10px 0;
+  }
+  .guest-links {
+    overflow: hidden;
+  }
+}

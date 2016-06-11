@@ -138,13 +138,14 @@ var YiiChat = function (options) {
 					return;
 				}
 				if (post.sender.superuser.itemname == 'Author') {
-                    
+                    //console.log(post.sender_role);
                     rating = 
                             '<div><img class="left" data-ownerid="' + post.sender.superuser.userid + '" />' +
                             '<div class="rating ' + post.sender.superuser.userid + '">' + post.sender.rating + '</div>' + 
                             '<img class="right" data-ownerid="' + post.sender.superuser.userid + '" /></div>';
-                    
-                    if (options.executor == post.sender.superuser.userid) {
+                    if (post.sender_role == 'Corrector') {
+						tmp_html = "chtpl0-user-icon-5 usual-cursor";
+					} else if (options.executor == post.sender.superuser.userid) {
                         tmp_html = "toggleexecutor executor-unset";
                     } else {
                         tmp_html = "toggleexecutor executor-set";
