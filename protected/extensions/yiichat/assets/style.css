@@ -46,6 +46,9 @@ cursor: default;
 .chtpl0-chatblock button.chtpl0-user-icon-4{
 	background-image: url(./image/icon4.png);
 }
+.chtpl0-chatblock button.chtpl0-user-icon-5{
+	background-image: url(./image/corrector.png);
+}
 .chtpl0-panel{
 	height: 37px;
 	width: 100%;
