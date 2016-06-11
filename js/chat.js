@@ -47,7 +47,7 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	function view_chat(name, message, id){
+	function view_chat(name, message, id, cost/* = null*/){
 	    message = Trim(message);
         if (message.length<=0) return false;
         var role = parseInt($('div#message_send').data('role'));
@@ -56,18 +56,17 @@ $(document).ready(function() {
         var html_message_send = 
             '<div class="message_send info"><div class="message_send flash-success"><a>'+message_send+'</a></div></div>';
         $('#message_send div.message_send').remove();
-		var cost = $('input#cost').val();
         $.post('/project/chat?orderId='+order,{
-            ProjectMessages:{
-		id: id,
-                message: message,
-                recipient: name,
-		order: order,
-		cost: cost
-            }
+			ProjectMessages:{
+				id: id,
+				message: message,
+				recipient: name,
+				order: order,
+				cost: cost
+			}
         },function(data){
               $('#chat').html(data);
-		      if(cost) $($('div.take-block').data('message')).appendTo('div.chat-view');
+		      if (cost != null) $('div.post.chtpl0-msg.author-message').filter(':last').before(($('div.take-block').data('message')));
               $('.chat-view').scrollTop(10000);
               $('#message').val('');
 			  $('<style>div#chatWindow::before{display:none} div#chatWindow::after{display:none}</style>').appendTo('head');
@@ -89,10 +88,10 @@ $(document).ready(function() {
 		return false;
     });
     $('#salary-to-chat').click(function(){
-		if($('input#cost').val()) {
-			view_chat( 'manager', $(this).val(), 0);
-			$('input#cost').val('');
-		}
+		var cost = $('input#cost').val();
+		view_chat( 'author_to_manager', $(this).val(), 0, cost);
+		$('input#cost').val('');
+		$("body,html").animate({scrollTop: $('#chatWindow').offset().top}, 500);
 		return false;
     });
     $('.chat-edit').click(function(){
@@ -129,6 +128,10 @@ $(document).ready(function() {
         return false;
     });
 	$('.chat-view').scrollTop(10000);
+
+	$('.message-buttons-items .btn-message').click(function(){
+		$('#message').val($(this).parent().find('.message-buttons-text-hidden').html());
+	});
 });
 function zakaz_done(part_id) { /* Stage is ready */
 		var orderId = $('#order').val();
@@ -142,6 +145,7 @@ function zakaz_done(part_id) { /* Stage is ready */
 				}else{
 					document.getElementById('zakaz-done-'+part_id).style.display = 'none';
 					document.getElementById('partStatus-status-'+part_id).innerHTML = answer;
+					$('#stage-'+part_id+' .partStatus').show();
 				}
 			}
 		});

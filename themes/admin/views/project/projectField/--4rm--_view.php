@@ -23,4 +23,8 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('required')); ?>:</b>
 	<?php echo CHtml::encode($data->required); ?>
 	<br />
+	
+	<b><?php echo CHtml::encode($data->getAttributeLabel('work_types')); ?>:</b>
+	<?php echo CHtml::encode($data->work_types); ?>
+	<br />
 </div>

@@ -1,0 +1,9 @@
+---
+- name: Prepare application.
+  command: "{{item}}"
+  args:
+    chdir: /vagrant
+  ignore_errors: yes
+  with_items:
+    - composer install -n --optimize-autoloader --prefer-dist
+    - mysql -u dipstart -pdipstart dipstart < project.sql

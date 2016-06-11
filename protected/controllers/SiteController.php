@@ -36,8 +36,8 @@ class SiteController extends Controller {
 				$this->render('index', array(
 					'role' => 'stranger'
 				));
-			} elseif (Campaign::getFrontPage()) {
-				$this->redirect(Campaign::getFrontPage());
+			} elseif (Company::getFrontPage()) {
+				$this->redirect(Company::getFrontPage());
 			} else {
 				$this->redirect('/user/login');
 			}
@@ -68,6 +68,12 @@ class SiteController extends Controller {
 		}
 	}
 
+	public function actionAgreement()
+	{
+		$agreement = Company::getAgreement();
+		$this->render('agreement',array('agreement'=>$agreement));
+	}
+	
 	/**
 	 * Displays the contact page
 	 */

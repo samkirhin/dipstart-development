@@ -25,6 +25,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<?php $company = Company::getCompany();
+	if($company->icon) echo '<link rel="shortcut icon" href="'.Yii::app()->getBaseUrl(/*true*/).'/'.$company->getFilesPath().'/'.$company->icon.'" type="image/x-icon">'."\n";?>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     <meta name="description" content="{$description}" />
     <meta name="keywords" content="{$keywords}"/>
@@ -32,6 +34,7 @@
     <!--[if lte IE 8]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/js/jquery.placeholder.js"></script>
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/css/main.css" />
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/css/skin.css" />
     <link href='http://fonts.googleapis.com/css?family=Lobster&subset=cyrillic' rel='stylesheet' type='text/css' />
@@ -45,9 +48,9 @@
     <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.css" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700,700italic&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Quicksand&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
+    <!--<link rel="shortcut icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
     <link rel="icon" type="image/ico" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
-    <link rel="icon" type="image/x-icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/favicon.ico"/>-->
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/css/gamma-teal-0.css" />
 </head>
 <?php
