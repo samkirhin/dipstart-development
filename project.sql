@@ -893,11 +893,13 @@ CREATE TABLE IF NOT EXISTS `Companies` (
   `text4customers` text CHARACTER SET utf8,
   `WebmasterFirstOrderRate` float DEFAULT NULL,
   `WebmasterSecondOrderRate` float DEFAULT NULL,
+  `agreement4customers` text CHARACTER SET utf8,
+  `agreement4executors` text CHARACTER SET utf8,
   `telfin_id` VARCHAR( 32 ) NULL DEFAULT NULL,
   `telfin_secret` VARCHAR( 32 ) NULL DEFAULT NULL,
   `module_tree` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Дамп данных таблицы `Companies`
