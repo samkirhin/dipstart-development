@@ -13,14 +13,13 @@
 /* Small Devices, Tablets */
 @media only screen and (max-width : 769px) {
     div.form-container {
-        margin-left: 15px !important;
-        margin-right: 15px !important;
+        margin-left: 10px !important;
+        margin-right: 10px !important;
     }
     
     div.form-item {
-        width: -webkit-calc(100% - 18px);
-        width: calc(100% - 18px);
-        margin: 5px 9px;
+        width: 100%;
+        margin: 5px 0;
         float: left;
         border-radius: 1.5px;
     }
@@ -37,6 +36,20 @@
         padding-bottom: 20px;
     }
     
+    div.form-item input[type="text"].hasDatepicker {
+        width: 93%;
+        width: -webkit-calc(100% - 40px);
+        width: calc(100% - 40px);
+    }
+
+    div.form-item input[type="text"].hasDatepicker + label{
+        display: block;
+    }
+
+    .panel-body div.form-container {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }
 
 /* Custom, iPhone Retina */

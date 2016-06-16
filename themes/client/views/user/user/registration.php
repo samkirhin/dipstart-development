@@ -42,9 +42,14 @@ $form=$this->beginWidget('UActiveForm', array(
 	'htmlOptions' => array('enctype'=>'multipart/form-data'),
 )); ?>
 
-  <div class="form-group" style="text-align: center; font-weight: bold;">
-      <?=ProjectModule::t('This is registration')?>
-  </div>
+	<div class="form-group" style="text-align: center; font-weight: bold;">
+	<?php
+	if(!isset($_GET['role']) || $_GET['role']=='' || $_GET['role']=='Customer')
+		echo ProjectModule::t('Call back');
+	else
+		echo ProjectModule::t('This is registration');
+	?>
+	</div>
   
 	<div class="form-group">
         <!--<?php //echo CHtml::activeLabelEx($model,'username'); ?> <br />-->
@@ -71,7 +76,12 @@ $form=$this->beginWidget('UActiveForm', array(
 	</div>	
 	-->
 	<div class="row user_submit">
-		<?php echo CHtml::submitButton(UserModule::t("Register"));?>
+		<?php
+		if(!isset($_GET['role']) || $_GET['role']=='' || $_GET['role']=='Customer')
+			echo CHtml::submitButton(ProjectModule::t('Call back'));
+		else 
+			echo CHtml::submitButton(UserModule::t("Register"));
+		?>
 	</div>
 
 <?php $this->endWidget(); ?>

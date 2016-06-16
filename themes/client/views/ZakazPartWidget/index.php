@@ -15,7 +15,7 @@
 		<?=$this->status;?>
 	</div>
 	<div class="stage-first-column">
-		<?=ProjectModule::t('Deadline');?>:
+		<?=ProjectModule::t('Stage deadline');?>:
 	</div>
 	<div class="stage-second-column">
 		<?=$data['dbdate'];?>

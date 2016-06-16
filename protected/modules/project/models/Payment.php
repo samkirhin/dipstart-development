@@ -12,9 +12,8 @@
  * @property string $manager
  * @property string $user
  * @property double $summ
- * @property string $details_ya
- * @property string $details_wm
- * @property string $details_bank
+ * @property integer $details_type
+ * @property string $details_number
  * @property integer $payment_type
  * @property integer $approve
  * @property string $method
@@ -49,7 +48,7 @@ class Payment extends CActiveRecord {
 			array('theme, , details_number', 'length', 'max'=>255),
 			array('manager, user, method', 'length', 'max'=>100),
                         array('user', 'email'),
-			array('receive_date, pay_date, details_bank, payment_type', 'safe'),
+			array('receive_date, pay_date, details_number, payment_type', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, order_id, receive_date, pay_date, theme, manager, user, summ, details_type, details_number, payment_type, approve, method', 'safe', 'on'=>'search'),
@@ -155,9 +154,15 @@ class Payment extends CActiveRecord {
 		return true;
 	}
 	
-	public function getTotalData()
-	{
+	public function getTotalData() { // Is it need ?
 		return Yii::app()->db->createCommand("SELECT payment_type, SUM(summ) AS s, COUNT(*) AS ctn FROM `" . self::tableName() . "` GROUP BY payment_type ORDER BY payment_type")->queryAll();
+	}
+	
+	public function pageTotal($provider) {
+		$total=0;
+		foreach($provider->data as $item)
+			$total+=$item->summ;
+		return $total;
 	}
         
 	/**

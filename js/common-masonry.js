@@ -12,6 +12,9 @@ $(window).load(function() {
 		setTimeout(function(){
 			masonry();
 		}, 400);
+		setTimeout(function(){
+			masonry();
+		}, 600);
 	};
 	waitIfNotReady();
 });

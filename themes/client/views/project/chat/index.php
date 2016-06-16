@@ -12,12 +12,11 @@ $upload_params = array('id' => $order->id);
 ?>
 <div class="container container-chat">
 	<?php
-		if (User::model()->isCustomer() && (!$order->is_active || !$moderated)) {
+		if (User::model()->isExecutor($order->id) && !$isCorrector) { // Если назначен исполнитель, и именнно он смотрит
+			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
+		} elseif ((User::model()->isCustomer() || User::model()->isCorrector()) && (!$order->is_active || !$moderated)) {
 			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','AfterModerate').'.</font></div>';
 		}
-		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
-			echo '<div class="zakaz-info-header" ><font color="green">'.YII::t('site','YouAreExecutor').'</font></div>';
-		};	
 	?>
 	<div class="col-xs-12 info-block" style="margin-bottom: 15px;">
 		<div class="panel-group" id="info-block">
@@ -30,14 +29,14 @@ $upload_params = array('id' => $order->id);
 					</h4>
 				</div>
 
-				<div id="infoZakaz" class="panel-collapse collapse">
+				<div id="infoZakaz" class="panel-collapse <?=(User::model()->isCorrector() ? '' : 'collapse')?>">
 					<div class="panel-body">
 
 						<div class="col-xs-12 aboutZakaz">
 							<?php
-							if (User::model()->isAuthor()) {
+							if (User::model()->isExecutor($order->id) && !$isCorrector) {
 								$this->renderPartial('/zakaz/_view', array('model' => $order));
-							} elseif(User::model()->isCustomer()) {
+							} elseif (User::model()->isCustomer() || User::model()->isCorrector()) {
 								if ($order->is_active) {
 									$this->renderPartial('/zakaz/_form', array('model' => $order,
 																		'upload_params' => $upload_params,
@@ -58,8 +57,7 @@ $upload_params = array('id' => $order->id);
 
 	<div class="col-xs-12 rating-line"><?php
 
-		if(User::model()->isExecutor($order->id)) { // Если назначен исполнитель, и именнно он смотрит
-			echo '<div class="my-rating author-raiting">'.ProjectModule::t('My rating:').' <span class="value">'.Profile::model()->findByPk($order->executor)->rating.'</span></div>';
+		if(User::model()->isExecutor($order->id) && !$isCorrector) { // Если назначен исполнитель, и именнно он смотрит
 			$payment = ProjectPayments::model()->findByAttributes(array('order_id'=>$order->id));
 			echo '<div class="my-rating">'.ProjectModule::t('Work price:').' <span class="value">'.$payment->work_price.'</span></div>'; //Стоимость проекта для автора
 			echo '<div class="my-rating">'.ProjectModule::t('To pay:').' <span class="value">'.$payment->to_pay.'</span></div>';
@@ -71,13 +69,16 @@ $upload_params = array('id' => $order->id);
 	</div>
 	<?php endif;?>
 	
-	<div class="col-xs-4">
+	<div class="col-xs-4 __changes">
 		<div class="row">
 			<?php
 			$this->renderPartial('_payment',array('order'=>$order, 'images'=>$PaymentImages));
-			?>
+
+			if (Company::getCompany()->module_tree && (User::model()->isCustomer() || User::model()->isCorrector())) $this->widget('application.modules.project.widgets.zakazTree.ZakazTreeWidget', array(
+                'project'=>$order,
+            ));
 			
-			<?php
+			if (User::model()->isCustomer()) echo '<h7 class="center">'.ProjectModule::t('Completed stages').':</h7>';
 			$this->widget('application.modules.project.widgets.zakazParts.ZakazPartWidget', array(
 				'projectId' => $order->id,
 			));
@@ -85,11 +86,12 @@ $upload_params = array('id' => $order->id);
 			<div class="col-xs-12 project-changes">
 				<?php $this->widget('application.modules.project.widgets.changes.ChangesWidget', array(
 					'project' => $order,
+					'isCorrector' => $isCorrector,
 				)); ?>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-8">
+	<div class="col-xs-8 __chat">
 		
 		<div id="chat" class="user-chat-block">
 			<?php $this->renderPartial('chat',array('order'=>$order, 'orderId'=>$orderId));?>
@@ -99,12 +101,15 @@ $upload_params = array('id' => $order->id);
 			?>
 		</div>
 		<?php 
-		$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId));
+		if (User::model()->isExecutor($order->id) && !$isCorrector) 	$role = 'Executor';
+		elseif (User::model()->isCustomer()) 							$role = 'Customer';
+		elseif (User::model()->isCorrector()) 							$role = 'Corrector';
+		$this->renderPartial('_accessories',array('order'=>$order, 'orderId'=>$orderId, 'role'=>$role ));
 		?>
 	</div>
 </div>
 
-<?php if (User::model()->isAuthor() && $order->executor == 0) : ?>
+<?php if (User::model()->isAuthor() && !User::model()->isCorrector() && $order->executor == 0) : ?>
     
 <script>
     var e = $(".info-block");

@@ -84,6 +84,11 @@ div.form-item input[type="text"], div.form-item select {
     border-radius: 1.5px;
     background-color: #fff !important;
 }
+div.form-item input[type="text"].hasDatepicker {
+	display: inline-block;
+	width: 174px;
+	margin-right: -33px;
+}
 
 div.form-item select {
     background-image: url(../images/arrow-down.png);

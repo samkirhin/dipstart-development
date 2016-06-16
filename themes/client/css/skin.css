@@ -1,13 +1,6 @@
 ﻿/* Skin "adaptive_dipstart" by Artem */
-body {
-    font-family:arial, sans-serif;
-    color:#333;
-    /*background-color: #DEE3E9;*/
-}
-/*
-a { color:#004dd9; }
-a:hover { color:#ea0000; }
-a:visited { color:#551a8b; }
+
+a:hover { color:#551a8b; }
 
 ul li, ol li {
   padding:0 0 0.4em 0;
@@ -409,6 +402,7 @@ padding: 5px 10px;
     /*width: 160px;*/ 
     text-align: center;
 	margin-left: 5px;
+	padding-bottom: 0;
 }
 
 #touch-menu {display:none;}
@@ -430,13 +424,6 @@ padding: 5px 0 0 0;
 background: none;
 height: 35px;
 margin: 0;
-}
-
-#new-changes-collapse {
-border: 1px solid #ddd;
-padding: 15px;
-margin-top: 15px;
-background-color: #F8F8F8;
 }
 
 #justFileUpload {padding: 15px;}
@@ -476,8 +463,9 @@ border: 1px solid #ddd;
 .qq-upload-button:hover {color: #868686;	border: 1px solid #ccc;-webkit-transition: all 0.3s ease;transition: all 0.3s ease;	}
 
 .qq-upload-list {
-margin: 0;
-padding-top: 10px;
+	margin: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .qq-upload-list li {
@@ -495,7 +483,6 @@ font-weight: normal;
 }
 
 .qq-upload-button {width: 90%; background-color: green;margin: 15px auto;}
-.qq-upload-list {margin:0;}
 .info-block {
 	margin-top: 10px;
 } 
@@ -667,9 +654,8 @@ p {font-size: 13px;}
 .qq-upload-fail .qq-upload-failed-text {display:inline;}
 
 .chtpl0-chatblock{
-	font-family: 'Roboto';
 	width: 822px;
-	height: 450px;
+	height: 330px;
 }
 .chtpl0-chatblock button{
 display: block;
@@ -813,7 +799,7 @@ width: 50%;*/
 	display: inline;
 	position: relative;
 	top: -2px;
-	margin-right: 20px;
+	margin-right: 5px;
  margin-left: 5px;
 }
 
@@ -929,7 +915,7 @@ color: #FFFFFF;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 0;
-    min-height: 400px;
+    min-height: 300px;
     background-color: #fff;
 }
 
@@ -1031,8 +1017,6 @@ padding: 10px;
 #new-changes-collapse {
 border: 1px solid #ddd;
 padding: 15px;
-margin-top: 15px;
-background-color: #F8F8F8;
 overflow: hidden;
 margin: 15px;
 }
@@ -1262,12 +1246,16 @@ header div#control-menu li a {
     background-color: #6a7488;
 }*/
 
-header div#control-menu li:last-child {
+header div#control-menu li:nth-last-child(2){
     float: right;
     width: 100px;
 }
 
-header div#control-menu li:last-child a {
+header div#control-menu li:last-child {
+    float: right;
+}
+
+header div#control-menu li:last-child a, header div#control-menu li:nth-last-child(2) a  {
 	border-radius: 0px 15px 0px 0px;
 }
 /*
@@ -1368,6 +1356,120 @@ div.chat-buttons input {
 .gray {
 	color: #bbb;
 }
-.part_files .row {
+.center {
+	text-align: center;
+}
+h7.center {
+	width: 100%;
+	display: block;
+}
+.btn {
+	font-size: 15px;
+}
+.clear {
+	clear: both;
+}
+ul.files-list {
+	list-style: none;
+	padding-left: 0px;
 	overflow: hidden;
+	margin-bottom: 0px;
+}
+.chat-buttons h4{
+  font-size: 14px;
+  font-weight: normal;
+}
+.btn-link {
+	color: white;
+}
+.btn-link:active, .btn-link:hover, .btn-link:focus, .btn-link:active {
+	text-decoration: none;
+	color: white;
+}
+
+.parentBlock select {
+	width: 100%;
+}
+
+@media screen and (max-width: 600px){
+  .nav-tabs > li
+  {
+    margin: 0;
+    text-align: right;
+  }
+  .nav-tabs > li > a
+  {
+    padding-right: 30px;
+  }
+  .header .nav-tabs
+  {
+    padding-left: 10px;
+  }
+  header div#control-menu li a,
+  header div#control-menu li:last-child a, 
+  header div#control-menu li:nth-last-child(2),
+  header div#control-menu li:nth-last-child(2) a
+  {
+    border-radius: 0;
+    margin: 0;
+  }
+  header div#control-menu li:nth-last-child(2),
+  header div#control-menu li:nth-last-child(2) a
+  {
+    width: 100%;
+  }
+  header div#control-menu li:first-child a
+  {
+    border-radius: 15px 0px 0px 0px;
+  }
+  div.content-clearfix .nav-tabs
+  {
+    padding-left: 40px;
+  }
+  div.content-clearfix .nav-tabs > li,
+  div.content-clearfix .nav-tabs > li > a
+  {
+    height: auto;
+    border-radius: 0;
+  }
+  div.content-clearfix .nav-tabs > li:first-child > a
+  {
+    border-radius: 15px 0px 0px 0px;
+  }
+  div.first-tab, 
+  div.second-tab
+  {
+    margin: 0;
+  }
+  div.summary,
+  div.content-clearfix .grid-view table.items th:nth-child(1),
+  div.content-clearfix .grid-view table.items th:nth-child(3),
+  div.content-clearfix .grid-view table.items th:nth-child(5),
+  div.content-clearfix .grid-view table.items td:nth-child(1),
+  div.content-clearfix .grid-view table.items td:nth-child(3),
+  div.content-clearfix .grid-view table.items td:nth-child(5),
+  div.content-clearfix #zakaz-grid-current table.items th:nth-child(1),
+  div.content-clearfix #zakaz-grid-current table.items th:nth-child(3),
+  div.content-clearfix #zakaz-grid-current table.items td:nth-child(1),
+  div.content-clearfix #zakaz-grid-current table.items td:nth-child(3)
+  {
+    display: none;
+  }
+  #profile-form select
+  {
+    width: 100% !important;
+  }
+  div.chat-buttons input {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    font-size: 12px;
+  }
+  .note{
+    margin: 10px 0;
+  }
+  .guest-links {
+    overflow: hidden;
+  }
 }

@@ -133,8 +133,10 @@ class ZakazPartsController extends Controller {
 		$this->_prepairJson();
 		$partId = $this->_request->getParam('id');
 		$model = ZakazParts::model()->findByPk($partId);
+		$beforeDate = $model->dbdate;
 		foreach ($this->_request->_params as $par=>$val)
 			$model->$par =$val;
+		$afterDate = $model->dbdate;
 		/*if ($this->_request->isParam('files')) {
 			$files = $this->_request->getParam('files');
 			$path = $folder.$partId.'/';
@@ -153,6 +155,12 @@ class ZakazPartsController extends Controller {
 				$fileModel->save();
 			}
 		}*/
+
+		if ($beforeDate != $afterDate)
+		{
+			$order = Zakaz::model()->findByPk($model->proj_id);
+			$order->setExecutorEvents(3);
+		}
 
 		$this->_response->setData(array(
 			'result' => $model->save()
@@ -322,7 +330,8 @@ class ZakazPartsController extends Controller {
 			if(User::model()->isOwner($stage->proj_id) && $stage->status_id == 3) {
 				$stage->status_id = 4;
 				$stage->save();
-				echo $stage->status->status;
+				//echo $stage->status->status;
+				echo ProjectModule::t('Approved by me');
 				EventHelper::stageDoneByCustomer($stage->proj_id, $stage->title);
 			}else{
 				echo 'Wrong base status';
@@ -342,6 +351,8 @@ class ZakazPartsController extends Controller {
 				$subject_order = $order->title;
 				$user_id = $order->user_id;
 				$user = User::model()->findByPk($user_id);
+
+				$order->setCustomerEvents(2);
 
 				$email = new Emails;
 				if (count($parts) > 0)  $type_id = Emails::TYPE_14; else

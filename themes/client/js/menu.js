@@ -26,13 +26,11 @@ $(document).ready(function(){
     
     //$('input.btn-chat').on('click', chatEmpty);
    
-    $('div#new-changes-block button.addPart').append('<i style="font-size: 1.4em!important; margin-left: 4px; color: rgb(197, 225, 165);" class="fa fa-check fa-lg">');
-    
-    $('div.info-block h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
-    
-    $('div.project-changes div.panel-heading h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-up fa-lg">');
-
-    $('div.project-left-bar div.col-xs-12').not('.project-changes').find('div#accordion .panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
+    //$('div#new-changes-block button.addPart').append('<i style="font-size: 1.4em!important; margin-left: 4px; color: rgb(197, 225, 165);" class="fa fa-check fa-lg">');
+	$('div.info-block h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
+	$('div.stage-block h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-up fa-lg">');
+    //$('div.project-changes div.panel-heading h4.panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-up fa-lg">');
+    //$('div.project-left-bar div.col-xs-12').not('.project-changes').find('div#accordion .panel-title a').append('<i style="font-size: 1.8em!important;" class="fa fa-angle-down fa-lg">');
     
     
     var arrow = 'fa-angle-down fa-lg';
@@ -46,7 +44,7 @@ $(document).ready(function(){
         }
     });
     
-    $('div.project-changes div.panel-heading h4.panel-title a').on('click', function() {
+    $('div.stage-block div.panel-heading h4.panel-title a').on('click', function() {
         if ($(this).children('i').hasClass('fa-angle-down fa-lg')) {
             $(this).children('i').removeClass('fa-angle-down fa-lg').addClass('fa-angle-up fa-lg');
         } else {
@@ -54,13 +52,13 @@ $(document).ready(function(){
         }
     });
     
-    $('div.project-left-bar div.col-xs-12').not('.project-changes').find('div#accordion .panel-title a').on('click', function() {
+    /*$('div.project-left-bar div.col-xs-12').not('.project-changes').find('div#accordion .panel-title a').on('click', function() {
         if ($(this).children('i').hasClass('fa-angle-down fa-lg')) {
             $(this).children('i').removeClass('fa-angle-down fa-lg').addClass('fa-angle-up fa-lg');
         } else {
             $(this).children('i').removeClass('fa-angle-up fa-lg').addClass('fa-angle-down fa-lg');
         }
-    });
+    });*/
     
     var activeLi = $('li').has('a[href="/project/zakaz/ownList"]');
     if (activeLi.hasClass('active')) {
